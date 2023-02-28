@@ -1,0 +1,32 @@
+<p>dodaj-zaposlenog works!</p>
+<div class="container my-5">
+    <h1 class="mb-3">Dodaj novog zaposlenog</h1>
+
+    <div class="row">
+        <div class="col-6">
+            <form #form="ngForm" (ngSubmit)="addZaposlenog()">
+                <div class="mb-3">
+                    <label for="" class="form-label">Ime</label>
+                    <input type="text" class="form-control" id="ime" name="ime" [(ngModel)] = "addZaposlenogRequest.ime">
+                  </div>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email"  name="email" [(ngModel)] = "addZaposlenogRequest.email">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Telefon</label>
+                  <input type="text" class="form-control" id="telefon"  name="telefon" [(ngModel)] = "addZaposlenogRequest.telefon">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Plata</label>
+                    <input type="number" class="form-control" id="plata"  name="plata" [(ngModel)] = "addZaposlenogRequest.plata">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Odeljenje</label>
+                    <input type="text" class="form-control" id="odeljenje"  name="odeljenje" [(ngModel)] = "addZaposlenogRequest.odeljenje">
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </form>
+        </div>
+    </div>
+</div>
