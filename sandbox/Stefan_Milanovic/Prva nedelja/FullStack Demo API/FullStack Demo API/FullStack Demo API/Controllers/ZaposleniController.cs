@@ -7,11 +7,11 @@ namespace FullStack_Demo_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ZaposleniControler : Controller
+    public class ZaposleniController : Controller
     {
         private readonly FullStackDemoDbContext _fullStackDemoDbContext;
 
-        public ZaposleniControler(FullStackDemoDbContext fullStackDemoDbContext)
+        public ZaposleniController(FullStackDemoDbContext fullStackDemoDbContext)
         {
             this._fullStackDemoDbContext = fullStackDemoDbContext;
         }
@@ -19,9 +19,9 @@ namespace FullStack_Demo_API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllZaposleni()
         {
-            var zaposleni = await _fullStackDemoDbContext.Zaposleni.ToListAsync();
-            
-            return Ok(zaposleni);
+            var zaposlen = await _fullStackDemoDbContext.Zaposleni.ToListAsync();
+
+            return Ok(zaposlen);
         }
 
         [HttpPost]

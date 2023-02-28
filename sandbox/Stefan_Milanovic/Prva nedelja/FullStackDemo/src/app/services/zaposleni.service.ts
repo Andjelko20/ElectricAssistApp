@@ -9,16 +9,18 @@ import { Zaposleni } from '../models/zaposlen.model';
 })
 export class ZaposleniService {
 
-  baseApiUrl: string = environment.baseApiUrl;
-  constructor(private http: HttpClient) { }
+  baseApiUrl: string; // = environment.baseApiUrl;
+  constructor(private http: HttpClient) { 
+    this.baseApiUrl = environment.baseApiUrl;
+  }
 
   getAllZaposleni(): Observable<Zaposleni[]> {
-    return this.http.get<Zaposleni[]>(this.baseApiUrl + '/api/ZaposleniControler') // primili smo podatke o zaposlenima iz baze, sad ih trebamo mapirati na front
+    return this.http.get<Zaposleni[]>(this.baseApiUrl + '/api/zaposleni') // primili smo podatke o zaposlenima iz baze, sad ih trebamo mapirati na front
   }
 
   addZaposlenog(addZaposlenogRequest: Zaposleni): Observable<Zaposleni> {
     addZaposlenogRequest.id = '00000000-0000-0000-0000-000000000000';
-    return this.http.post<Zaposleni>(this.baseApiUrl + '/api/ZaposleniControler', addZaposlenogRequest);
+    return this.http.post<Zaposleni>(this.baseApiUrl + '/api/zaposleni', addZaposlenogRequest);
   }
 
   getZaposlenog(id: string): Observable<Zaposleni> {
