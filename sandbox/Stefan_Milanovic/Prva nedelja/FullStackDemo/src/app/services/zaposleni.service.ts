@@ -26,4 +26,9 @@ export class ZaposleniService {
   getZaposlenog(id: string): Observable<Zaposleni> {
     return this.http.get<Zaposleni>(this.baseApiUrl + '/api/zaposleni/' + id);  
   }
+
+  updateZaposlenog(id: string, updateZaposlenogRequest: Zaposleni): Observable<Zaposleni>
+  {
+    return this.http.put<Zaposleni>(this.baseApiUrl + '/api/zaposleni/' + id, updateZaposlenogRequest);
+  }
 }

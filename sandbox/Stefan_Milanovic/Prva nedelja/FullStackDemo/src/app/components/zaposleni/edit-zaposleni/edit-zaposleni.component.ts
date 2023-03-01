@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Zaposleni } from 'src/app/models/zaposlen.model';
 import { ZaposleniService } from 'src/app/services/zaposleni.service';
 
@@ -19,7 +19,7 @@ export class EditZaposleniComponent implements OnInit {
     odeljenje: ''
   };
 
-  constructor(private route: ActivatedRoute, private zaposleniService: ZaposleniService) { }
+  constructor(private route: ActivatedRoute, private zaposleniService: ZaposleniService, private router: Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe({
@@ -39,4 +39,13 @@ export class EditZaposleniComponent implements OnInit {
     })
   }
 
+  updateZaposlenog()
+  {
+    this.zaposleniService.updateZaposlenog(this.zaposlenDetails.id, this.zaposlenDetails)
+    .subscribe({
+      next: (response) => {
+        this.router.navigate(['zaposleni']);
+      }
+    });
+  }
 }

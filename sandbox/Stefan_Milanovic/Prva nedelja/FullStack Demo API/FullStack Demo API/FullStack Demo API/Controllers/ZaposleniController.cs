@@ -2,6 +2,7 @@
 using FullStack_Demo_API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace FullStack_Demo_API.Controllers
 {
@@ -47,6 +48,27 @@ namespace FullStack_Demo_API.Controllers
             }
 
             return Ok(zaposleni);
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateZaposlenog([FromRoute] Guid id, Zaposlen updateZaposleniRequest)
+        {
+            var zaposlen = await _fullStackDemoDbContext.Zaposleni.FindAsync(id);
+            if(zaposlen == null)
+            {
+                return NotFound();
+            }
+
+            zaposlen.ime = updateZaposleniRequest.ime;
+            zaposlen.email = updateZaposleniRequest.email;
+            zaposlen.plata = updateZaposleniRequest.plata;
+            zaposlen.telefon = updateZaposleniRequest.telefon;
+            zaposlen.odeljenje = updateZaposleniRequest.odeljenje;
+
+            await _fullStackDemoDbContext.SaveChangesAsync();
+
+            return Ok(zaposlen);
         }
     }
 }
