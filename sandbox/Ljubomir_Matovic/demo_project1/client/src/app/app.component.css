@@ -1,0 +1,76 @@
+.container{
+    padding: 3em;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+h1{
+    text-align: center;
+}
+
+.note-container{
+    display: flex;
+    width: 1000px;
+    padding-top: 5em;
+}
+
+.note-form,.note-grid{
+    width: 50%;
+    padding: 2em;
+}
+
+.form-group{
+    margin-bottom: 1em;
+}
+
+label{
+    display: block;
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+input[type="text"],textarea{
+    width: 100%;
+    padding: 0.2em 0.3em;
+}
+textarea{
+    resize: vertical;
+}
+
+.note-form button{
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+    padding: 0.5em 1em;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.note-row{
+    width: 100%;
+    display: flex;
+    margin-bottom: 0.2em;
+}
+
+.note-row-details{
+    background-color: #eeeeee;
+    flex-grow: 1;
+    padding: 0.4em 1em;
+    margin-right: 0.2em;
+    cursor: pointer;
+}
+
+.note-row-action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.note-row-action a{
+    display: block;
+    cursor: pointer;
+    background-color: #ef5350;
+    color: white;
+    padding: 1em;
+}
