@@ -1,0 +1,11 @@
+<h1 id="title">ToDo List</h1>
+<div id="divAdd">
+    <input type="text" id="inputAdd" placeholder="Enter new item" name="item" [(ngModel)]="addItemValue">
+    <button type="button" id="btnAdd" (click)="addItem()">Add new</button>
+</div>
+
+<table>
+    <tr *ngFor="let item of items">
+        <td>{{item.name}}</td>
+    </tr>
+</table>
