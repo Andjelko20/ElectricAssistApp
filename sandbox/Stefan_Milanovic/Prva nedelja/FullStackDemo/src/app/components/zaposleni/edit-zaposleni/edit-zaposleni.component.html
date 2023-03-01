@@ -29,7 +29,8 @@
                     <label for="odeljenje" class="form-label">Odeljenje</label>
                     <input type="text" class="form-control" id="odeljenje"  name="odeljenje" [(ngModel)] = "zaposlenDetails.odeljenje">
                 </div>
-                <button type="submit" class="btn btn-primary">Izmeni</button>
+                <button type="submit" class="btn btn-primary mr-5">Izmeni</button>&nbsp;
+                <button type="button" class="btn btn-danger" (click)="deleteZaposlenog(zaposlenDetails.id)">Obrisi</button>
               </form>
         </div>
     </div>

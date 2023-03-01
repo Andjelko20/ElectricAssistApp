@@ -31,4 +31,9 @@ export class ZaposleniService {
   {
     return this.http.put<Zaposleni>(this.baseApiUrl + '/api/zaposleni/' + id, updateZaposlenogRequest);
   }
+
+  deleteZaposlenog(id: string): Observable<Zaposleni>
+  {
+    return this.http.delete<Zaposleni>(this.baseApiUrl + '/api/zaposleni/' + id);
+  }
 }

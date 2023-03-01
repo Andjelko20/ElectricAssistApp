@@ -48,4 +48,14 @@ export class EditZaposleniComponent implements OnInit {
       }
     });
   }
+
+  deleteZaposlenog(id: string)
+  {
+    this.zaposleniService.deleteZaposlenog(id)
+    .subscribe({
+      next: (response) => {
+        this.router.navigate(['zaposleni']);
+      }
+    });
+  }
 }
