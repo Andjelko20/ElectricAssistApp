@@ -1,0 +1,33 @@
+#title{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: darkblue;
+    text-align: center;
+}
+
+#divAdd{
+    position: relative;
+    left: 450px;
+}
+
+#inputAdd
+{
+    width: 320px;
+    height: 35px;
+}
+
+#btnAdd{
+    background-color: darkblue;
+    color: white;
+    width: 80px;
+    height: 39px;
+    border: 2px solid darkblue;
+}
+
+#btnAdd:hover{
+    background-color: white;
+    color: darkblue;
+    width: 80px;
+    height: 43px;
+    border: 2px solid darkblue;
+}
+
