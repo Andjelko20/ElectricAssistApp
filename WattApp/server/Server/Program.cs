@@ -39,6 +39,8 @@ builder.Services.AddDbContext<SqliteDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"));
 });
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -50,6 +52,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Allow CORS for all origins, headers and methods 
+app.UseCors(builder => {
+    builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();
+});
 //app.UseStaticFiles();
 
 app.UseRouting();
