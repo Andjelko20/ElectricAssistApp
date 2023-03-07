@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Route,Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
 	selector: 'app-login',
@@ -11,7 +13,7 @@ export class LoginComponent implements OnInit {
 	password='';
 	errorMsg='';
 
-	constructor() { }
+	constructor(private authService: AuthService,private router:Router) { }
 
 	ngOnInit(): void {
 	}
@@ -25,6 +27,31 @@ export class LoginComponent implements OnInit {
 			this.errorMsg="Lozinka je obavezna";
 			return;
 		}
+		this.authService.login(this.username,this.password)
+		.subscribe(
+			{
+				next:response=>{
+					if(response.status==401)
+					{
+						this.errorMsg = "Pogresno korisnicko ime/lozinka!";
+						return;
+					}
+					let body = response.body as any;
+					localStorage.setItem("token",body.token);
+					this.router.navigate(["/home"]);
+				},
+				error:response=>{
+					if(response.status==401)
+					{
+						this.errorMsg = "Pogresno korisnicko ime/lozinka!";
+						return;
+					}
+					let body = response.body as any;
+					localStorage.setItem("token",body.token);
+					this.router.navigate(["/home"]);
+				}
+			}
+		  );
 		
 
 	}

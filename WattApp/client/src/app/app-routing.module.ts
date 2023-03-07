@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { UnauthenticatedGuard } from './guards/unauthenticated.guard';
+import { AuthenticatedGuard } from './guards/authenticated.guard';
 
 const routes: Routes = [
-	{path:'',redirectTo:'login',pathMatch:'full'},
-	{path:'login',component:LoginComponent},
-	{path:'home',component:HomeComponent},
-	{path:'**',component:LoginComponent}
+	{path:'',redirectTo:'home',pathMatch:'full'},
+	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
+	{path:'home',component:HomeComponent,canActivate:[AuthenticatedGuard]},
+	{path:'**',redirectTo:"login"}
 ];
 
 @NgModule({
