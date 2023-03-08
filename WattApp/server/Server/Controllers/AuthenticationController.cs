@@ -27,7 +27,7 @@ namespace Server.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState.Values.Select(x=>x.Errors.Select(y=>y.ErrorMessage.Trim() )));
+                return BadRequest(ModelState.Values.SelectMany(x=>x.Errors).Select(y=>y.ErrorMessage).ToList());
             }
             UserModel? user = await userContext.Users.FirstOrDefaultAsync(user => user.Username == requestBody.Username);
             if (user == null)
