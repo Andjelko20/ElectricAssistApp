@@ -1,0 +1,40 @@
+<div class="global">
+    <div class="constainer my-5">
+        <h1 class="mb-3">Update</h1>
+        <div class="row-2">
+            <div class="col-4">
+                <form #form="ngForm" (ngSubmit)="upDate()">
+
+                    <div class="mb-3">
+                        <label for="id" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="id" name="id" [(ngModel)]="updateUserRequest.name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="updateUserRequest.userName">
+                    </div>
+
+
+                    <div class="form-group col-md-4">
+                        <label for="role">Bock</label>
+                        <select id="block" class="form-control" name="block" [(ngModel)]="updateUserRequest.block">
+                      <option selected>Choose...</option>
+                      <option>No</option>
+                      <option>Yes</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="role">Role</label>
+                        <select id="role" class="form-control" name="role" [(ngModel)]="updateUserRequest.role">
+                      <option selected>Choose...</option>
+                      <option>DSO</option>
+                      <option>Prosumer</option>
+                    </select>
+                    </div>
+                    <button type=" submit " class="btn btn-primary mr-5 ">Save</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

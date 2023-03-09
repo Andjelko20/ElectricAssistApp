@@ -1,1 +1,32 @@
-<p>home works!</p>
+<div class="first">
+    <br>
+    <h2>List </h2>
+    <br>
+    <table *ngIf="users">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>User name</th>
+                <th>Block</th>
+                <th>Role</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{user.name}}</td>
+                <td>{{user.userName}}</td>
+                <td>{{user.block}} </td>
+                <td>{{user.role}}</td>
+                <td><button style="width: 80px; height:30px" [routerLink]='["/update"]'> UPDATE</button></td>
+                <td><button style="width: 80px; height:30px"> BLOCK</button></td>
+                <td><button style="width: 80px; height:30px" (click)="delete(user.name)">DELETE</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <button style="width: 50px; height:50px " [routerLink]='["/add-comp"]'>ADD</button>
+
+</div>
