@@ -24,6 +24,8 @@ namespace Server.Models
         [ForeignKey(nameof(RoleModel.Id))]
         public int RoleId { get; set; }
 
+        public RoleModel Role { get; set; }
+
         [Required]
         public bool Blocked { get; set; }
 

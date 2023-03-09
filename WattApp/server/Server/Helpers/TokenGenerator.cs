@@ -18,12 +18,14 @@ namespace Server.Helpers
         {
             var key = Encoding.ASCII.GetBytes(config.GetSection("JwtConfig:SecretKey").Value);//jwtConfig.SecretKey);
             var jwtTokenHandler = new JwtSecurityTokenHandler();
-
+            
             var tokenDescriptior = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("Id", user.Id.ToString())
+                    new Claim("Id", user.Id.ToString()),
+                    new Claim("Role",user.Role.Name),
+                    new Claim(ClaimTypes.Role,user.Role.Name)
                 }),
                 Expires = DateTime.Now.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)

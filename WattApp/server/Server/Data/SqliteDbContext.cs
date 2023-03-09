@@ -14,6 +14,14 @@ namespace Server.Data
         public DbSet<UserModel> Users { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserModel>()
+           .HasOne(u => u.Role)
+           .WithMany()
+           .HasForeignKey(u => u.RoleId);
+        }
+
         public static void Seed(IApplicationBuilder applicationBuilder)
         {
             using(var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
