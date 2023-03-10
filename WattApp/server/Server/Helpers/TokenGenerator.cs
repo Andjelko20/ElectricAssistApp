@@ -23,8 +23,7 @@ namespace Server.Helpers
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("Id", user.Id.ToString()),
-                    new Claim("Role",user.Role.Name),
+                    new Claim(ClaimTypes.Actor, user.Id.ToString()),
                     new Claim(ClaimTypes.Role,user.Role.Name)
                 }),
                 Expires = DateTime.Now.AddHours(2),

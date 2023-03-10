@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
+using Server.DTO;
+using System.Security.Claims;
 
 namespace Server.Controllers
 {
@@ -70,6 +72,21 @@ namespace Server.Controllers
             {
                 return StatusCode(500, new { message = "Internal server error" });
             }
+        }
+
+        [HttpPut]
+        [Route("set_blocked_status")]
+        [Authorize(Roles ="admin")]
+        public async Task<IActionResult> BlockUser([FromBody] BlockedStatusDTO requestBody)
+        {
+            var context = HttpContext.User.Identity as ClaimsIdentity;
+            int id = int.Parse(context.FindFirst(ClaimTypes.Actor).Value);
+            var user = await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
+            if (user==null)
+                return NotFound(new { message="User doesn't exists" });
+            user.Blocked = requestBody.Status;
+            await _sqliteDb.SaveChangesAsync();
+            return Ok(new {message="User is blocked successfully"});
         }
     }
 }

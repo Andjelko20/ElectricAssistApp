@@ -52,7 +52,7 @@ namespace Server.Controllers
         public IActionResult GetAuthorized()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            return Ok(new { message = "You are authorized", id = identity.FindFirst("Id").Value });
+            return Ok(new { message = "You are authorized", id = identity.FindFirst(ClaimTypes.Actor).Value });
         }
     }
 }
