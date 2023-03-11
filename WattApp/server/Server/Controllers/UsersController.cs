@@ -88,5 +88,21 @@ namespace Server.Controllers
             await _sqliteDb.SaveChangesAsync();
             return Ok(new {message="User is blocked successfully"});
         }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        [Authorize(Roles ="admin")]
+        public async Task<IActionResult> DeleteUser([FromRoute] int id)
+        {
+            var user=await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
+            if (user != null)
+            {
+                _sqliteDb.Remove(user);
+                await _sqliteDb.SaveChangesAsync();
+                return Ok(new {message="Deleted user"});
+            }
+
+            return NotFound(new { message ="User with id "+id.ToString()+" not found."});
+        }
     }
 }
