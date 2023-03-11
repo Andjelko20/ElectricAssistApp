@@ -5,3 +5,5 @@ https://www.infragistics.com/products/ignite-ui-angular/angular/components/chart
 https://mdbootstrap.com/docs/angular/data/charts/
 
 https://canvasjs.com/angular-charts/
+
+https://www.chartjs.org/
