@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
+using Server.Middlewares;
 
 namespace Server.Controllers
 {
@@ -29,10 +30,12 @@ namespace Server.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginDTO requestBody)
         {
+            /*
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.Values.SelectMany(x=>x.Errors).Select(y=>y.ErrorMessage).ToList());
             }
+            */
             UserModel? user = await _sqliteDb.Users.Include(u=>u.Role).FirstOrDefaultAsync(user => user.Username == requestBody.Username);
             if (user == null)
             {

@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using Server.Helpers;
 using Server.Data;
 using Microsoft.EntityFrameworkCore;
+using Server.Filters;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Server
 {
@@ -20,6 +22,14 @@ namespace Server
 
             builder.Services.Add(new ServiceDescriptor(typeof(TokenGenerator), new TokenGenerator(builder.Configuration)));
 
+            builder.Services.Configure<ApiBehaviorOptions>(options
+                => options.SuppressModelStateInvalidFilter = true);
+
+            builder.Services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(BadRequestValidationFilter));
+            });
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -35,7 +45,7 @@ namespace Server
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false, // for dev
                     ValidateAudience = false, // for dev
-                    RequireExpirationTime = true, // false for dev
+                    RequireExpirationTime = true,
                     ValidateLifetime = true
                 };
             });
