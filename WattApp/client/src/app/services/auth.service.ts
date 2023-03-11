@@ -13,7 +13,10 @@ export class AuthService {
   login(username:string,password:string){
       return this.http.post(environment.serverUrl + "/api/authentication", {username,password},{observe:"response"});
   }
-
+  logout()
+  {
+    return this.http.get(environment.serverUrl );
+  }
   getAllUsers():Observable<Users[]>
   {
     return this.http.get<Users[]>(environment.serverUrl+'/api/home');

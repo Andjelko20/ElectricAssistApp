@@ -11,8 +11,8 @@ const routes: Routes = [
 	{path:'',redirectTo:'home',pathMatch:'full'},
 	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'home',component:HomeComponent,canActivate:[AuthenticatedGuard]},
-	{path:'add-comp',component:AddCompComponent},
-	{path:'update/:id',component:UpdateComponent},
+	{path:'add-comp',component:AddCompComponent,canActivate:[AuthenticatedGuard]},
+	{path:'update/:id',component:UpdateComponent,canActivate:[AuthenticatedGuard]},
 	{path:'**',redirectTo:"login"}
 	
 	

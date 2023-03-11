@@ -2,7 +2,6 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Users } from '../models/users.model';
 import { AuthService } from '../services/auth.service';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -66,6 +65,12 @@ export class HomeComponent implements OnInit {
       }
     }
     
+  }
+  logout()
+  {
+    localStorage.removeItem('token');
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 
 }
