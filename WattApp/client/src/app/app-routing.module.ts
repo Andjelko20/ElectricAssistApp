@@ -12,7 +12,7 @@ const routes: Routes = [
 	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'home',component:HomeComponent,canActivate:[AuthenticatedGuard]},
 	{path:'add-comp',component:AddCompComponent},
-	{path:'update',component:UpdateComponent},
+	{path:'update/:id',component:UpdateComponent},
 	{path:'**',redirectTo:"login"}
 	
 	

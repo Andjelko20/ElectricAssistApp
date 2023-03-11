@@ -5,8 +5,10 @@
     <table *ngIf="users">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Name</th>
                 <th>User name</th>
+                <th>Password</th>
                 <th>Block</th>
                 <th>Role</th>
                 <th></th>
@@ -16,13 +18,16 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of users">
+                <td>{{user.id}}</td>
                 <td>{{user.name}}</td>
                 <td>{{user.userName}}</td>
+                <td>{{user.password}}</td>
                 <td>{{user.block}} </td>
                 <td>{{user.role}}</td>
-                <td><button style="width: 80px; height:30px" [routerLink]='["/update"]'> UPDATE</button></td>
-                <td><button style="width: 80px; height:30px"> BLOCK</button></td>
-                <td><button style="width: 80px; height:30px" (click)="delete(user.name)">DELETE</button></td>
+                <td><button style="width: 80px; height:30px" [routerLink]='["/update",user.id]'> UPDATE</button></td>
+                <td><button style="width: 80px; height:30px" (click)="block(user.block,user.id)"> BLOCK</button></td>
+                <td><button style="width: 80px; height:30px" (click)="delete(user.id)">DELETE</button></td>
+
             </tr>
         </tbody>
     </table>

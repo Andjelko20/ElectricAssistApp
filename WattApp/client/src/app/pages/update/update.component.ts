@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-update',
@@ -8,20 +9,50 @@ import { Users } from 'src/app/models/users.model';
   styleUrls: ['./update.component.css']
 })
 export class UpdateComponent implements OnInit {
-  updateUserRequest:Users={
+  updateUserDetail:Users={
     id:'',
     name:'',
     userName:'',
+    password:'',
     block:'',
     role:''
   }
-  constructor(private route:ActivatedRoute,private router:Router) { }
+  constructor(private route:ActivatedRoute,private router:Router,private updateService:AuthService) { }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe({
+      next:(params)=>
+      {
+        const id = params.get('id');
+        if(id)
+        {
+          this.updateService.getUsers(id)
+          .subscribe({
+            next:(response)=>{
+              this.updateUserDetail=response;
+            }
+          });
+        }
+      }
+    })
   }
+  onSelectedBlock(value:string):void
+  {
+    this.updateUserDetail.block = value;
+  }
+  onSelectedRole(value:string):void
+  {
+    this.updateUserDetail.role = value;
+  }
+  
   upDate()
   {
-
+    this.updateService.upDate(this.updateUserDetail.id,this.updateUserDetail)
+    .subscribe({
+      next:(response)=>{
+        this.router.navigate(['home']);
+      }
+    });
   }
 
 }

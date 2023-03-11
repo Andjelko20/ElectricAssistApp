@@ -4,20 +4,26 @@
         <div class="row-2">
             <div class="col-4">
                 <form #form="ngForm" (ngSubmit)="upDate()">
-
                     <div class="mb-3">
                         <label for="id" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id" name="id" [(ngModel)]="updateUserRequest.name">
+                        <input type="text" class="form-control" id="id" name="id" [(ngModel)]="updateUserDetail.id">
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="updateUserRequest.userName">
+                        <input type="text" class="form-control" id="id" name="name" [(ngModel)]="updateUserDetail.name">
                     </div>
-
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">User name</label>
+                        <input type="text" class="form-control" id="name" name="userName" [(ngModel)]="updateUserDetail.userName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" class="form-control" id="password" name="password" [(ngModel)]="updateUserDetail.password">
+                    </div>
 
                     <div class="form-group col-md-4">
                         <label for="role">Bock</label>
-                        <select id="block" class="form-control" name="block" [(ngModel)]="updateUserRequest.block">
+                        <select #teams id="block" class="form-control" (change)="onSelectedRole(teams.value)" name="block" [(ngModel)]="updateUserDetail.block">
                       <option selected>Choose...</option>
                       <option>No</option>
                       <option>Yes</option>
@@ -25,12 +31,13 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="role">Role</label>
-                        <select id="role" class="form-control" name="role" [(ngModel)]="updateUserRequest.role">
+                        <select #teams id="role" class="form-control" name="role" (change)="onSelectedRole(teams.value)" [(ngModel)]="updateUserDetail.role">
                       <option selected>Choose...</option>
                       <option>DSO</option>
                       <option>Prosumer</option>
                     </select>
                     </div>
+
                     <button type=" submit " class="btn btn-primary mr-5 ">Save</button>
 
                 </form>

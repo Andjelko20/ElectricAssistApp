@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Users } from '../models/users.model';
 import { AuthService } from '../services/auth.service';
 
@@ -12,32 +12,60 @@ export class HomeComponent implements OnInit {
   
   users:Users[] = [
     {
-      id:'1',
-      name:"Marko",
-      userName:"Markovic",
-      block:"NO",
-      role:"DSO"
+      id:"1",
+      name:'fsdf',
+      userName:'dsda',
+      password:'54646',
+      block:'YES',
+      role:'dso'
     },
     {
-      id:'2',
-      name:"Sasa",
-      userName:"Sasic",
-      block:"YES",
-      role:"Prosumer"
+      id:"2",
+      name:'fsdf',
+      userName:'dsda',
+      password:'54654',
+      block:'NO',
+      role:'dso'
     }
-  ]
+  ];
  
-  constructor(private router:Router,private deleteService:AuthService) { }
+  constructor(private router:Router,private usersService:AuthService,
+    private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-  }
-  delete(name:string)
+    
+    }
+
+  getUsers()
   {
-    this.deleteService.delete(name)
-    .subscribe({
-      next:(response)=>{
-        this.router.navigate(['user']);
-      }
-    });
+    return this.users;
   }
+
+  delete(id:string)
+  {
+    if(confirm('Are you sere to delete? '+id))
+    {
+      if(id)
+        {
+          this.usersService.delete(id)
+          .subscribe(()=>this.getUsers);
+        }  
+    }
+  }
+
+  block(block:string,id:string)
+  {
+    if(block=="YES")
+    {
+      alert("You cant change, becouse is allready blocked! "+id);
+    }
+    else{
+      if(confirm('Are you sure you want to block them? '+id))
+      {
+          console.log("Block them!");
+      }
+    }
+    
+  }
+
 }

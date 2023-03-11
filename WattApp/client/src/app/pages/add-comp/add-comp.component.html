@@ -4,29 +4,35 @@
     <form #form="ngForm" (ngSubmit)="addUsers()">
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="inputEmail4">Name</label>
+                <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addUserRequest.name">
             </div>
             <div class="form-group col-md-6">
-                <label for="inputPassword4">User name</label>
+                <label for="userName">User name</label>
                 <input type="text" class="form-control" id="userName" name="userName" [(ngModel)]="addUserRequest.userName">
             </div>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="role">Bock</label>
-            <select id="block" class="form-control" name="block" [(ngModel)]="addUserRequest.block">
-          <option selected>Choose...</option>
+
+            <div class="form-group col-md-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="text" class="form-control" id="password" name="password" [(ngModel)]="addUserRequest.password">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="role">Bock</label>
+                <select #teams id="block" class="form-control" (change)="onSelectedBlock(teams.value)" name="block" [(ngModel)]="addUserRequest.block">
+          <option default>Choose...</option>
           <option>No</option>
           <option>Yes</option>
         </select>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="role">Role</label>
-            <select id="role" class="form-control" name="role" [(ngModel)]="addUserRequest.role">
-          <option selected>Choose...</option>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="role">Role</label>
+                <select #teams id="role" class="form-control" (change)="onSelectedRole(teams.value)" name="role" [(ngModel)]="addUserRequest.role">
+          <option default>Choose...</option>
           <option>DSO</option>
           <option>Prosumer</option>
         </select>
+            </div>
         </div>
 
         <button class="btn btn-primary">ADD</button>

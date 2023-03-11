@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-add-comp',
@@ -11,16 +13,30 @@ export class AddCompComponent implements OnInit {
     id:'',
     name:'',
     userName:'',
+    password:'',
     block:'',
     role:''
   }
-  constructor() { }
+  constructor(private usersService:AuthService,private router:Router) { }
 
   ngOnInit(): void {
   }
-
+  onSelectedBlock(value:string):void
+  {
+    this.addUserRequest.block = value;
+  }
+  onSelectedRole(value:string):void
+  {
+    this.addUserRequest.role = value;
+  }
+  
   addUsers()
   {
-    console.log(this.addUserRequest);
+    this.usersService.addUsers(this.addUserRequest)
+    .subscribe({
+      next:(users)=>{
+        this.router.navigate(['/home']);
+      }
+    });
   }
 }
