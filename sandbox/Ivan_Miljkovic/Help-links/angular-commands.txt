@@ -1,0 +1,12 @@
+ng new 
+
+ng serve --open/ ng serve
+
+ng serve --port 4201
+
+ng generate component heroes/ ng g c hero
+
+ng generate service heroes
+
+ng generate guard services/auth
+
