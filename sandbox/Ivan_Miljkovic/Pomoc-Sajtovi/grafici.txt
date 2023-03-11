@@ -3,3 +3,5 @@ https://www.ngdevelop.tech/best-angular-chart-libraries/
 https://www.infragistics.com/products/ignite-ui-angular/angular/components/charts/chart-overview
 
 https://mdbootstrap.com/docs/angular/data/charts/
+
+https://canvasjs.com/angular-charts/
