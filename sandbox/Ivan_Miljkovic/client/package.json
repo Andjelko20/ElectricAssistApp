@@ -22,6 +22,7 @@
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
     "chart.js": "^4.2.1",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "cors": "^2.8.5",
     "ng2-charts": "^4.1.1",
     "rxjs": "~7.8.0",
