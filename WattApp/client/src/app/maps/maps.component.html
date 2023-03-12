@@ -3,7 +3,12 @@
             [center]="center"
             [zoom]="zoom"
             (mapClick)="moveMap($event)"
+            (mapClick)="addMarker($event)"
             (mapMousemove)="move($event)">
+        <map-marker *ngFor="let markerPosition of markerPositions"
+            [position]="markerPosition"
+            [options]="markerOptions">
+        </map-marker>
 </google-map>
 
 <div>Latitude: {{display?.lat}}</div>
