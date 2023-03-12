@@ -72,7 +72,7 @@ namespace Server.Middlewares
             await _next(context);
         }
 
-        private bool HasUserRole(SqliteDbContext _sqliteDb,int userId, string userRole)
+        private static bool HasUserRole(SqliteDbContext _sqliteDb,int userId, string userRole)
         {
             RoleModel role = _sqliteDb.Roles.FirstOrDefault(role => role.Name == userRole);
             if (role == null)

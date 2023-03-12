@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.DTO;
+using Server.Helpers;
+using Server.Models;
 using System.Security.Claims;
 
 namespace Server.Controllers
@@ -93,13 +96,73 @@ namespace Server.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("set_blocked_status")]
+        [HttpPost]
         [Authorize(Roles ="admin")]
-        public async Task<IActionResult> BlockUser([FromBody] BlockedStatusDTO requestBody)
+        public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO requestBody)
         {
-            var context = HttpContext.User.Identity as ClaimsIdentity;
-            int id = int.Parse(context.FindFirst(ClaimTypes.Actor).Value);
+            try
+            {
+                UserModel user = new UserModel
+                {
+                    Username = requestBody.Username,
+                    Name = requestBody.Name,
+                    Password = HashGenerator.Hash(requestBody.Password),
+                    Blocked = requestBody.Blocked,
+                    RoleId = requestBody.RoleId
+                };
+
+                _sqliteDb.Users.Add(user);
+                await _sqliteDb.SaveChangesAsync();
+                return Ok(new { message="Creted" });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal Server Error" });
+            }
+
+        }
+
+        [HttpPut]
+        [Route("{id:int}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateUser([FromBody] UserUpdateDTO requestBody, [FromRoute]int id)
+        {
+            try
+            {
+                var context = HttpContext.User.Identity as ClaimsIdentity;
+                int userId = int.Parse(context.FindFirst(ClaimTypes.Actor).Value);
+                string role = context.FindFirst(ClaimTypes.Role).Value;
+                if (role != "admin" && userId != id)
+                {
+                    var dict = new Dictionary<string, string?>();
+                    dict.Add("message", "Forbidden");
+                    return Forbid(new AuthenticationProperties());
+                }
+                var user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == id);
+                if (user == null)
+                    return NotFound(new { message = "User doesn't exists" });
+                user.Username = requestBody.Username;
+                user.Name = requestBody.Name;
+                if (role == "admin" && requestBody.RoleId > 0)
+                {
+                    user.RoleId = requestBody.RoleId;
+                    user.Blocked = requestBody.Blocked;
+                }
+                _sqliteDb.Users.Update(user);   
+                await _sqliteDb.SaveChangesAsync();
+                return Ok(new { message = "User is updated successfully" });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal Server Error" });
+            }
+        }
+
+        [HttpPut]
+        [Route("set_blocked_status/{id:int}")]
+        [Authorize(Roles ="admin")]
+        public async Task<IActionResult> BlockUser([FromBody] BlockedStatusDTO requestBody, [FromRoute] int id)
+        {
             var user = await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
             if (user==null)
                 return NotFound(new { message="User doesn't exists" });
