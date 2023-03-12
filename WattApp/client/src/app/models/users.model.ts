@@ -8,3 +8,8 @@ export interface Users {
 
 
 }
+export interface Register{
+    name: string;
+    userName: string;
+    password:string;
+}

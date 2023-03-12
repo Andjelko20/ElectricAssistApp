@@ -1,0 +1,22 @@
+<div class="login-container">
+    <div class="logo">Login</div>
+    <div class="login-form-wrapper">
+        <div class="login-form">
+            <div class="form-group">
+                <label for="username">User name</label>
+                <input type="text" name="username" class="form-control" [(ngModel)]="username" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" class="form-control" [(ngModel)]="password" />
+            </div>
+            <div class="btn-container">
+                <button class="btn btn-dark" (click)="login()">Login</button><br><br>
+                <a class="link" [routerLink]='["/register"]'>Register</a>
+            </div>
+            <div class="error-message">
+                {{errorMsg}}
+            </div>
+        </div>
+    </div>
+</div>

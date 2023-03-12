@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit,ElementRef,ViewChild } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Users } from '../models/users.model';
-import { AuthService } from '../services/auth.service';
+import { Users } from '../../models/users.model';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

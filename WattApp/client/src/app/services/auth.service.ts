@@ -37,7 +37,6 @@ export class AuthService {
   {
     return this.http.put<Users>('/api/home'+id,updateRequest);
   }
-
   // delete(id:string):Observable<Users>
   // {
   //   return this.http.delete<Users>(environment.serverUrl+"/"+id); 

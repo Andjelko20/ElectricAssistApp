@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Route,Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
 	selector: 'app-login',
@@ -20,11 +20,11 @@ export class LoginComponent implements OnInit {
 
 	login(){
 		if(this.username.trim().length===0){
-			this.errorMsg="Korisničko ime je obavezno";
+			this.errorMsg="User name is required";
 			return;
 		}
 		if(this.password.trim().length===0){
-			this.errorMsg="Lozinka je obavezna";
+			this.errorMsg="Password is required";
 			return;
 		}
 		this.authService.login(this.username,this.password)
