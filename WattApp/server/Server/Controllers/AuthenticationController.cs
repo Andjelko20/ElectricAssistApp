@@ -26,7 +26,9 @@ namespace Server.Controllers
             this._sqliteDb = _sqliteDb;
             this.logger = logger;
         }
+
         [HttpPost]
+        [Route("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginDTO requestBody)
         {
@@ -49,6 +51,29 @@ namespace Server.Controllers
                 return Unauthorized(new { message = "User is blocked" });
             return Ok(new { token = tokenGenerator.GenerateJwtToken(user) });
         }
+
+        [HttpPost]
+        [Route("register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody]UserModel requestBody)
+        {
+            RoleModel? role = await _sqliteDb.Roles.FirstOrDefaultAsync(r => r.Name == "guest");
+            if (role == null)
+            {
+                return StatusCode(500,new {message="Internal Server Error"});
+            }
+            if (_sqliteDb.Users.Any(u => u.Username == requestBody.Username))
+            {
+                return BadRequest(new {message="User already exists"});
+            }
+            requestBody.RoleId = role.Id;
+            requestBody.Password = HashGenerator.Hash(requestBody.Password);
+            requestBody.Blocked = false;
+            await _sqliteDb.Users.AddAsync(requestBody);
+            await _sqliteDb.SaveChangesAsync();
+            return Ok(new { message = "Registered successfully" });
+        }
+
 
         [HttpGet]
         [Authorize]

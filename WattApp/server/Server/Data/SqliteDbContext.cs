@@ -46,7 +46,18 @@ namespace Server.Data
                         {
                             Id=3,
                             Name="prosumer"
+                        },
+                        new RoleModel()
+                        {
+                            Id=4,
+                            Name="guest"
+                        },
+                        new RoleModel()
+                        {
+                            Id=5,
+                            Name="superadmin"
                         }
+
                     });
                     context.SaveChanges();
                 }

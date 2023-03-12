@@ -50,7 +50,7 @@ namespace Server.Helpers
         /// <returns>The hash.</returns>
         public static string Hash(string password)
         {
-            return Hash(password, 10000);
+            return Hash(password, 30);
         }
 
         /// <summary>
