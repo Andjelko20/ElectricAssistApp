@@ -60,6 +60,25 @@ namespace Server.Controllers
         }
 
         [HttpGet]
+        [Route("{id:int}")]
+        [Authorize(Roles ="admin")]
+        public async Task<IActionResult> GetUserById([FromRoute]int id)
+        {
+            var user = await _sqliteDb.Users.Include(u=>u.Role).FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                return NotFound(new { message="User with id "+id.ToString()+" doesn\'t exist" });
+            }
+            return Ok(new
+            {
+                Name=user.Name,
+                Username=user.Username,
+                Role=user.Role.Name,
+                Blocked=user.Blocked
+            });
+        }
+
+        [HttpGet]
         [Route("roles")]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetRoles()
