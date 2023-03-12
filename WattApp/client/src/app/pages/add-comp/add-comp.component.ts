@@ -35,7 +35,8 @@ export class AddCompComponent implements OnInit {
     this.usersService.addUsers(this.addUserRequest)
     .subscribe({
       next:(users)=>{
-        this.router.navigate(['/home']);
+         this.router.navigate(['/home']);
+      
       }
     });
   }

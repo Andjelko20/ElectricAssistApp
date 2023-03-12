@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit,ElementRef,ViewChild } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Users } from '../models/users.model';
 import { AuthService } from '../services/auth.service';
@@ -25,6 +25,22 @@ export class HomeComponent implements OnInit {
       password:'54654',
       block:'NO',
       role:'dso'
+    },
+    {
+      id:"3",
+      name:'fsdf',
+      userName:'dsda',
+      password:'54654',
+      block:'NO',
+      role:'dso'
+    },
+    {
+      id:"4",
+      name:'fsdf',
+      userName:'dsda',
+      password:'54654',
+      block:'NO',
+      role:'dso'
     }
   ];
  
@@ -39,29 +55,34 @@ export class HomeComponent implements OnInit {
   {
     return this.users;
   }
-
-  delete(id:string)
+  removeObject={};
+  delete(id:string,index:number)
   {
     if(confirm('Are you sere to delete? '+id))
     {
       if(id)
         {
-          this.usersService.delete(id)
-          .subscribe(()=>this.getUsers);
+          this.removeObject =this.users.splice(index,1);
         }  
     }
   }
-
-  block(block:string,id:string)
+ 
+ 
+  block(user:Users,i:number)
   {
-    if(block=="YES")
+    if(user.block=="YES")
     {
-      alert("You cant change, becouse is allready blocked! "+id);
+      if(confirm('Are you sure you want to unblock them? '+user.id))
+      {     
+        user.block = "NO";
+        this.users[i] = user;
+      }
     }
     else{
-      if(confirm('Are you sure you want to block them? '+id))
+      if(confirm('Are you sure you want to block them? '+user.id))
       {
-          console.log("Block them!");
+        user.block = "YES";
+        this.users[i] = user;
       }
     }
     

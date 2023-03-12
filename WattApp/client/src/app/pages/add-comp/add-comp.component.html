@@ -20,15 +20,13 @@
             <div class="form-group col-md-4">
                 <label for="role">Bock</label>
                 <select #teams id="block" class="form-control" (change)="onSelectedBlock(teams.value)" name="block" [(ngModel)]="addUserRequest.block">
-          <option default>Choose...</option>
           <option>No</option>
           <option>Yes</option>
         </select>
             </div>
             <div class="form-group col-md-4">
                 <label for="role">Role</label>
-                <select #teams id="role" class="form-control" (change)="onSelectedRole(teams.value)" name="role" [(ngModel)]="addUserRequest.role">
-          <option default>Choose...</option>
+                <select #teams id="role" class="form-control" (change)="onSelectedRole(teams.value)" name="role" [(ngModel)]="addUserRequest.role">     
           <option>DSO</option>
           <option>Prosumer</option>
         </select>

@@ -22,17 +22,15 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="role">Bock</label>
-                        <select #teams id="block" class="form-control" (change)="onSelectedRole(teams.value)" name="block" [(ngModel)]="updateUserDetail.block">
-                      <option selected>Choose...</option>
+                        <label for="role">Block</label>
+                        <select #teams id="block" class="form-control" name="block" [(ngModel)]="updateUserDetail.block" (change)="onSelectedBlock(teams.value)">
                       <option>No</option>
                       <option>Yes</option>
                     </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="role">Role</label>
-                        <select #teams id="role" class="form-control" name="role" (change)="onSelectedRole(teams.value)" [(ngModel)]="updateUserDetail.role">
-                      <option selected>Choose...</option>
+                        <select #teams id="role" class="form-control" name="role" [(ngModel)]="updateUserDetail.role" (change)="onSelectedRole(teams.value)">
                       <option>DSO</option>
                       <option>Prosumer</option>
                     </select>

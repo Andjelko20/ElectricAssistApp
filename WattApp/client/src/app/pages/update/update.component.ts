@@ -47,6 +47,8 @@ export class UpdateComponent implements OnInit {
   
   upDate()
   {
+    // this.onSelectedBlock(this.updateUserDetail.block);
+    // console.log("Azuriran objekat: ",this.updateUserDetail);
     this.updateService.upDate(this.updateUserDetail.id,this.updateUserDetail)
     .subscribe({
       next:(response)=>{

@@ -30,20 +30,17 @@ export class AuthService {
 
   getUsers(id:string):Observable<Users>
   {
-    return this.http.get<Users>(environment.serverUrl+"/api/home"+id);
+    return this.http.get<Users>("/api/home"+id);
   }
 
   upDate(id:string,updateRequest:Users):Observable<Users>
   {
-    return this.http.put<Users>('/api/home/'+id,updateRequest);
+    return this.http.put<Users>('/api/home'+id,updateRequest);
   }
 
-  delete(id:string):Observable<Users>
-  {
-    return this.http.delete<Users>(environment.serverUrl+"/"+id); 
-  }
-  block(id:string,blockRequest:Users):Observable<Users>
-  {
-    return this.http.put<Users>(environment.serverUrl+"/"+id,blockRequest); 
-  }
+  // delete(id:string):Observable<Users>
+  // {
+  //   return this.http.delete<Users>(environment.serverUrl+"/"+id); 
+  // }
+  
 }
