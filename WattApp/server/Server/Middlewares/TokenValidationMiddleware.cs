@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Server.Data;
+using Server.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 namespace Server.Middlewares
 {
@@ -10,16 +13,16 @@ namespace Server.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly IConfiguration _configuration;
-        private readonly SqliteDbContext _sqliteDb;
+        public readonly ILogger<TokenValidationMiddleware> logger;
 
-        public TokenValidationMiddleware(RequestDelegate next, IConfiguration configuration,SqliteDbContext sqliteDb)
+        public TokenValidationMiddleware(RequestDelegate next, IConfiguration configuration,ILogger<TokenValidationMiddleware> logger)
         {
             _next = next;
             _configuration = configuration;
-            _sqliteDb = sqliteDb;
+            this.logger = logger;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, SqliteDbContext _sqliteDb)
         {
             var token = context.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
 
@@ -27,8 +30,9 @@ namespace Server.Middlewares
             {
                 try
                 {
+                    logger.LogInformation("Provera");
                     var tokenHandler = new JwtSecurityTokenHandler();
-                    var key = Encoding.ASCII.GetBytes(_configuration["Jwt:SecretKey"]);
+                    var key = Encoding.ASCII.GetBytes(_configuration["JwtConfig:SecretKey"]);
                     var validationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
@@ -39,14 +43,12 @@ namespace Server.Middlewares
 
                     var claims = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
 
-                    var userIdClaim = claims.FindFirst(c => c.Type == "id");
-                    var userRoleClaim = claims.FindFirst(c => c.Type == "role");
+                    var userIdClaim = claims.FindFirst(c => c.Type == ClaimTypes.Actor);
+                    var userRoleClaim = claims.FindFirst(c => c.Type == ClaimTypes.Role);
 
                     if (userIdClaim == null || userRoleClaim == null)
                     {
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        await context.Response.WriteAsync("Bad token");
-                        return;
+                        throw new Exception();
                     }
 
                     var userId = int.Parse(userIdClaim.Value);
@@ -54,17 +56,15 @@ namespace Server.Middlewares
 
                     // Check if user with the given ID has the required role
                     // You will need to implement your own logic here
-                    if (!HasUserRole(userId, userRole))
+                    if (!HasUserRole(_sqliteDb,userId, userRole))
                     {
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        await context.Response.WriteAsync("Bad token");
-                        return;
+                        throw new Exception();
                     }
                 }
                 catch (Exception ex)
                 {
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    await context.Response.WriteAsync("Bad token");
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(new { message = "Bad token" }));
                     return;
                 }
             }
@@ -72,9 +72,21 @@ namespace Server.Middlewares
             await _next(context);
         }
 
-        private bool HasUserRole(int userId, string userRole)
+        private bool HasUserRole(SqliteDbContext _sqliteDb,int userId, string userRole)
         {
-            return true;
+            RoleModel role = _sqliteDb.Roles.FirstOrDefault(role => role.Name == userRole);
+            if (role == null)
+                return false;
+            int roleId = role.Id;
+            return _sqliteDb.Users.Any(user=>user.Id==userId && user.RoleId==roleId);
+        }
+    }
+    public static class TokenValidationMiddlewareExtensions
+    {
+        public static IApplicationBuilder UseTokenValidation(
+            this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<TokenValidationMiddleware>();
         }
     }
 }

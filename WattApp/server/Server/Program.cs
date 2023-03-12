@@ -6,6 +6,7 @@ using Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Server.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Server.Middlewares;
 
 namespace Server
 {
@@ -86,6 +87,8 @@ namespace Server
             app.MapControllers();
 
             SqliteDbContext.Seed(app);
+
+            app.UseTokenValidation();
 
             app.Run();
         }
