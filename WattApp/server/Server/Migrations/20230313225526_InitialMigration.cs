@@ -1,23 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Server.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ChargingSchedulers",
+                name: "ChargingScheduler",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
+                    DeviceId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Day = table.Column<string>(type: "TEXT", nullable: false),
+                    Time = table.Column<string>(type: "TEXT", nullable: false),
+                    Comment = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChargingSchedulers", x => x.Id);
+                    table.PrimaryKey("PK_ChargingScheduler", x => new { x.DeviceId, x.Day, x.Time });
                 });
 
             migrationBuilder.CreateTable(
@@ -45,6 +48,20 @@ namespace Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeviceEnergyUsage",
+                columns: table => new
+                {
+                    DeviceId = table.Column<long>(type: "INTEGER", nullable: false),
+                    StartTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
+                    EndTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
+                    KWh = table.Column<float>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeviceEnergyUsage", x => new { x.DeviceId, x.StartTime, x.EndTime });
                 });
 
             migrationBuilder.CreateTable(
@@ -96,6 +113,21 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InclusionScheduler",
+                columns: table => new
+                {
+                    DeviceId = table.Column<long>(type: "INTEGER", nullable: false),
+                    TurnOn = table.Column<TimeOnly>(type: "TEXT", nullable: false),
+                    TurnOff = table.Column<TimeOnly>(type: "TEXT", nullable: false),
+                    Day = table.Column<string>(type: "TEXT", nullable: false),
+                    Comment = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InclusionScheduler", x => new { x.DeviceId, x.TurnOn, x.TurnOff });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -120,6 +152,21 @@ namespace Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Settlements", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserEnergyUsage",
+                columns: table => new
+                {
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    Consumption = table.Column<float>(type: "REAL", nullable: false),
+                    Production = table.Column<float>(type: "REAL", nullable: false),
+                    EnergyStock = table.Column<float>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserEnergyUsage", x => new { x.UserId, x.Date });
                 });
 
             migrationBuilder.CreateTable(
@@ -154,13 +201,16 @@ namespace Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ChargingSchedulers");
+                name: "ChargingScheduler");
 
             migrationBuilder.DropTable(
                 name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "DeviceEnergyUsage");
 
             migrationBuilder.DropTable(
                 name: "DeviceModels");
@@ -172,10 +222,16 @@ namespace Server.Migrations
                 name: "DeviceTypes");
 
             migrationBuilder.DropTable(
+                name: "InclusionScheduler");
+
+            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Settlements");
+
+            migrationBuilder.DropTable(
+                name: "UserEnergyUsage");
 
             migrationBuilder.DropTable(
                 name: "Users");

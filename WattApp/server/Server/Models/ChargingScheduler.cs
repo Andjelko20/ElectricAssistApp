@@ -6,14 +6,9 @@ namespace Server.Models
     public class ChargingScheduler
     {
         [ForeignKey(nameof(Device.Id))]
-        [Column(Order = 1)]
-        public long Id { get; set; }
-        [Key]
-        [Column(Order = 1)] 
-        public String day;
-        [Key]
-        [Column(Order = 2)]
-        public String time;
-        public String comment;
+        public long DeviceId { get; set; }
+        public String Day { get; set; }
+        public String Time { get; set; }
+        public String Comment { get; set; }
     }
 }

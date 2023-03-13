@@ -22,7 +22,14 @@ namespace Server.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Settlement> Settlements { get; set; }
-        public DbSet<ChargingScheduler> ChargingSchedulers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ChargingScheduler>().HasKey(cs => new { cs.DeviceId, cs.Day, cs.Time });
+            modelBuilder.Entity<InclusionScheduler>().HasKey(s => new { s.DeviceId, s.TurnOn, s.TurnOff });
+            modelBuilder.Entity<UserEnergyUsage>().HasKey(ueu => new { ueu.UserId, ueu.Date });
+            modelBuilder.Entity<DeviceEnergyUsage>().HasKey(deu => new { deu.DeviceId, deu.StartTime, deu.EndTime });
+        }
 
 
         public static void Seed(IApplicationBuilder applicationBuilder)
