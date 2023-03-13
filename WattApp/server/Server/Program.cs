@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Server.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Server.Middlewares;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace Server
 {
@@ -58,6 +60,42 @@ namespace Server
 
             builder.Services.AddCors();
 
+            builder.Services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version="v1",
+                    Title="ElectricAssist API",
+                    Description="API dokumentacija za projekat iz SI"
+                });
+                swagger.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Scheme = "bearer"
+                });
+
+                swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "bearer"
+                            }
+                        },
+                        new List<string>()
+                    }
+                });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                swagger.IncludeXmlComments(xmlPath);
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -66,6 +104,15 @@ namespace Server
                 //app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }
+            else
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(config =>
+                {
+                    config.SwaggerEndpoint("/swagger/v1/swagger.json", "ElectricAssist API");
+                    config.RoutePrefix = "/api/docs";
+                });
             }
 
             app.UseHttpsRedirection();
