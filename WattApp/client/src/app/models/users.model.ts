@@ -13,3 +13,8 @@ export interface Register{
     userName: string;
     password:string;
 }
+export interface Token {
+    sub: string;
+    iat: number;
+    exp: number;
+  }

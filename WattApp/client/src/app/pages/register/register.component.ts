@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
   confirmPassword='';
   errorMsg='';
   constructor(private router: Router, private registerService: AuthService) { }
-  
+
   ngOnInit(): void {
     
   }
@@ -47,5 +47,5 @@ export class RegisterComponent implements OnInit {
 			return;
 		}
   }
-
+//ko dobijem da nije admin on ga redirektuje 
 }
