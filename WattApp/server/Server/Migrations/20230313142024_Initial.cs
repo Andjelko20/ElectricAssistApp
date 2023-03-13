@@ -4,10 +4,22 @@
 
 namespace Server.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ChargingSchedulers",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChargingSchedulers", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Cities",
                 columns: table => new
@@ -141,6 +153,9 @@ namespace Server.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ChargingSchedulers");
+
             migrationBuilder.DropTable(
                 name: "Cities");
 

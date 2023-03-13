@@ -22,6 +22,7 @@ namespace Server.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Settlement> Settlements { get; set; }
+        public DbSet<ChargingScheduler> ChargingSchedulers { get; set; }
 
 
         public static void Seed(IApplicationBuilder applicationBuilder)

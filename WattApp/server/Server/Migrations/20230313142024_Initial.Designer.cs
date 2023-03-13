@@ -10,13 +10,25 @@ using Server.Data;
 namespace Server.Migrations
 {
     [DbContext(typeof(SqliteDbContext))]
-    [Migration("20230313115151_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230313142024_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
+
+            modelBuilder.Entity("Server.Models.ChargingScheduler", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnOrder(1);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChargingSchedulers");
+                });
 
             modelBuilder.Entity("Server.Models.Device", b =>
                 {
