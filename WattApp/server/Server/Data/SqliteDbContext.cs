@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
 using Server.Helpers;
 using Server.Models;
+using Server.Models.DropDowns.Devices;
+using Server.Models.DropDowns.Location;
 
 namespace Server.Data
 {
@@ -13,6 +16,13 @@ namespace Server.Data
         }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<DeviceModel> DeviceModels { get; set; }
+        public DbSet<DeviceType> DeviceTypes { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Settlement> Settlements { get; set; }
+
 
         public static void Seed(IApplicationBuilder applicationBuilder)
         {

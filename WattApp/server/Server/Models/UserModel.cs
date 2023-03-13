@@ -13,9 +13,11 @@ namespace Server.Models
 
         [Required]
         public string Name { get; set; }
+        //[Required]
+        //public string LastName { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        public string Username { get; set; } 
 
         [Required]
         public string Password { get; set; }
@@ -26,6 +28,12 @@ namespace Server.Models
 
         [Required]
         public bool Blocked { get; set; }
+
+        public string? Address { get; set; }
+        public long CountryId { get; set; } 
+        public long CityId { get; set; }
+        public string? PhoneNumeber { get; set; }
+        public string? Email { get; set; }
 
 
 
