@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Server.Helpers
+namespace Server.Utilities
 {
     public class TokenGenerator
     {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Server.Helpers;
+using Server.Utilities;
 using Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Server.Filters;

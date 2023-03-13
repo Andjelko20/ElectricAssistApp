@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Server.Helpers;
+using Server.Utilities;
 using Server.Models;
 
 namespace Server.Data

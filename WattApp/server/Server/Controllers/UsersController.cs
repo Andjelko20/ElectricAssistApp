@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
-using Server.DTO;
-using Server.Helpers;
+using Server.DTOs;
+using Server.Utilities;
 using Server.Models;
 using System.Security.Claims;
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Server.DTO
+namespace Server.DTOs
 {
     public class BlockedStatusDTO
     {

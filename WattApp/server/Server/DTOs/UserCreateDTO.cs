@@ -1,7 +1,7 @@
 ﻿using Server.ValidationAtributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace Server.DTO
+namespace Server.DTOs
 {
     public class UserCreateDTO
     {
