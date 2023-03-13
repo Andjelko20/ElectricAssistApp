@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Chart,registerables } from 'node_modules/chart.js'
 Chart.register(...registerables)
 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 Chart.register(ChartDataLabels);
+
+
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
@@ -11,56 +14,103 @@ Chart.register(ChartDataLabels);
 })
 export class PieChartComponent implements OnInit {
 
+  itemList: string[] = ['Aerodrom', 'Bagremar', 'Erdoglija', 'Bresnica', 'Stanovo', 'Belosevac'];
   constructor() {
     
   }
   ngOnInit(): void {
     this.PieChart();
   }
-  PieChart()
-  {
 
-    const Piechart =new Chart("piechart", {
+  PieChart(){
+    var data= [{
+      label: 'Percentage of Consumption',
+      data: [30, 20, 15, 15, 14, 6],
+      // backgroundColor: [
+      //         "#4b77a9",
+      //         "#5f255f",
+      //         "#d21243",
+      //         "#B27200",
+      //         "#00000"
+      //     ],
+      borderWidth: 1,
+      borderColor: "#000"
+    }]
+    var options = {
+      tooltips: {
+          enabled: false
+      },
+      plugins: {
+          datalabels: {
+              formatter: (value: number, ctx: { chart: { data: { datasets: { data: any; }[]; }; }; }) => {
+              let sum = 0;
+              let dataArr = ctx.chart.data.datasets[0].data;
+              dataArr.map((data: number) => {
+                sum += data;
+              });
+              let percentage = (value * 100 / sum).toFixed(2) + "%";
+              return percentage;
+            },
+              color: '#fff',
+          }
+      }
+    };    
+    var ctx = "piechart";
+    var myChart = new Chart(ctx, {
       
       type: 'pie',
       data: {
-        labels: ['Aerodrom', 'Bagremar', 'Erdoglija', 'Bresnica', 'Stanovo', 'Belosevac'],
-        datasets: [{
-          label: 'Percentage of Consumption',
-          data: [30, 20, 15, 15, 14, 6],
-          borderWidth: 1
-        }]
-
+        labels: this.itemList,
+          datasets: data
       },
-      plugins: [ChartDataLabels],
-      options:{
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Pie Chart'
-          },
-          datalabels: {
-            formatter: (value, ctx) => {
-                let sum = 0;
-                let dataArr = ctx.chart.data.datasets[0].data;
-                dataArr.map(data => {
-                    sum += data;
-                });
-                let percentage = (value*100 / sum).toFixed(2)+"%";
-                return percentage;
-            },
-            color: '#fff',
-        }
-          
-        }
-        
-      },
-      
-      
+      options: options
     });
+  }
+
+  // PieChart()
+  // {
+
+  //   const Piechart =new Chart("piechart", {
+      
+  //     type: 'pie',
+  //     data: {
+  //       labels: ['Aerodrom', 'Bagremar', 'Erdoglija', 'Bresnica', 'Stanovo', 'Belosevac'],
+  //       datasets: [{
+  //         label: 'Percentage of Consumption',
+  //         data: [30, 20, 15, 15, 14, 6],
+  //         borderWidth: 1
+  //       }]
+
+  //     },
+  //     plugins: [ChartDataLabels],
+  //     options:{
+  //       plugins: {
+  //         legend: {
+  //           position: 'top',
+  //         },
+  //         title: {
+  //           display: true,
+  //           text: 'Pie Chart'
+  //         },
+  //         datalabels: {
+  //           formatter: (value, ctx) => {
+  //               let sum = 0;
+  //               let dataArr = ctx.chart.data.datasets[0].data;
+  //               dataArr.map(data => {
+  //                   sum += data;
+  //               });
+  //               let percentage = (value*100 / sum).toFixed(2)+"%";
+  //               return percentage;
+  //           },
+  //           color: '#fff',
+  //       }
+          
+  //       }
+        
+  //     },
+      
+      
+  //   });
     
   } 
 // }
