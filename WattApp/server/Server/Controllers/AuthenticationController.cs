@@ -26,7 +26,7 @@ namespace Server.Controllers
             this._sqliteDb = _sqliteDb;
             this.logger = logger;
         }
-        /// <summary>API za logovanje korisnika</summary>
+        /// <summary>Login</summary>
         /// <response code="200">Success</response>
         /// <response code="400">Bad request</response>
         [HttpPost]
@@ -47,7 +47,9 @@ namespace Server.Controllers
                 return Unauthorized(new { message = "User is blocked" });
             return Ok(new { token = tokenGenerator.GenerateJwtToken(user) });
         }
-
+        /// <summary>
+        /// Register as guest
+        /// </summary>
         [HttpPost]
         [Route("register")]
         [AllowAnonymous]

@@ -33,7 +33,9 @@ namespace Server.Controllers
             _sqliteDb = sqliteDb;
             this.logger = logger;
         }   
-
+        /// <summary>
+        /// Get 20 users per page
+        /// </summary>
         [HttpGet]
         [Route("page/{page:int}")]
         [Authorize(Roles ="admin")]
@@ -71,7 +73,9 @@ namespace Server.Controllers
                 return StatusCode(500, new {message="Internal server error"});
             }
         }
-
+        /// <summary>
+        /// Get single user
+        /// </summary>
         [HttpGet]
         [Route("{id:int}")]
         [Authorize(Roles ="admin")]
@@ -90,7 +94,9 @@ namespace Server.Controllers
                 Blocked=user.Blocked
             });
         }
-
+        /// <summary>
+        /// Get all roles
+        /// </summary>
         [HttpGet]
         [Route("roles")]
         [Authorize(Roles = "admin")]
@@ -106,7 +112,7 @@ namespace Server.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Create user
         /// </summary>
         /// <response code="200">Success</response>
         /// <response code="400">Bad request</response>
@@ -136,33 +142,23 @@ namespace Server.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Update user by admin
+        /// </summary>
         [HttpPut]
         [Route("{id:int}")]
-        [Authorize]
-        public async Task<IActionResult> UpdateUser([FromBody] UserUpdateDTO requestBody, [FromRoute]int id)
+        [Authorize(Roles ="admin")]
+        public async Task<IActionResult> UpdateUserByAdmin([FromBody] UserUpdateDTO requestBody, [FromRoute]int id)
         {
             try
             {
-                var context = HttpContext.User.Identity as ClaimsIdentity;
-                int userId = int.Parse(context.FindFirst(ClaimTypes.Actor).Value);
-                string role = context.FindFirst(ClaimTypes.Role).Value;
-                if (role != "admin" && userId != id)
-                {
-                    var dict = new Dictionary<string, string?>();
-                    dict.Add("message", "Forbidden");
-                    return Forbid(new AuthenticationProperties());
-                }
                 var user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == id);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
                 user.Username = requestBody.Username;
                 user.Name = requestBody.Name;
-                if (role == "admin" && requestBody.RoleId > 0)
-                {
-                    user.RoleId = requestBody.RoleId;
-                    user.Blocked = requestBody.Blocked;
-                }
+                user.RoleId = requestBody.RoleId;
+                user.Blocked = requestBody.Blocked;
                 _sqliteDb.Users.Update(user);   
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message = "User is updated successfully" });
@@ -173,6 +169,34 @@ namespace Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Update logged in user data
+        /// </summary>
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> UpdateLoggedInUser([FromBody] UserUpdateDTO requestBody)
+        {
+            try
+            {
+                var context = HttpContext.User.Identity as ClaimsIdentity;
+                int userId = int.Parse(context.FindFirst(ClaimTypes.Actor).Value);
+                var user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == userId);
+                if (user == null)
+                    return NotFound(new { message = "User doesn't exists" });
+                user.Username = requestBody.Username;
+                user.Name = requestBody.Name;
+                _sqliteDb.Users.Update(user);
+                await _sqliteDb.SaveChangesAsync();
+                return Ok(new { message = "User is updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal Server Error" });
+            }
+        }
+        /// <summary>
+        /// Block or unblock user
+        /// </summary>
         [HttpPut]
         [Route("set_blocked_status/{id:int}")]
         [Authorize(Roles ="admin")]
@@ -186,6 +210,9 @@ namespace Server.Controllers
             return Ok(new {message="User is blocked successfully"});
         }
 
+        /// <summary>
+        /// Delete user
+        /// </summary>
         [HttpDelete]
         [Route("{id:int}")]
         [Authorize(Roles ="admin")]
@@ -200,6 +227,25 @@ namespace Server.Controllers
             }
 
             return NotFound(new { message ="User with id "+id.ToString()+" not found."});
+        }
+        /// <summary>
+        /// Change password
+        /// </summary>
+        [HttpPut]
+        [Route("change_password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordDTO requestBody)
+        {
+            var credentials = HttpContext.User.Identity as ClaimsIdentity;
+            int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+            UserModel user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == userId);
+            if (!HashGenerator.Verify(requestBody.OldPassword, user.Password))
+            {
+                return BadRequest(new { message = "Old password is not valid" });
+            }
+            user.Password = HashGenerator.Hash(requestBody.NewPassword);
+            await _sqliteDb.SaveChangesAsync();
+            return Ok(new { message = "Password changed successfully" });
         }
     }
 }
