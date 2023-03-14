@@ -21,6 +21,7 @@
     "@angular/router": "^14.2.0",
     "bootstrap": "^5.2.3",
     "rxjs": "~7.5.0",
+    "update": "^0.7.4",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
