@@ -8,17 +8,20 @@ namespace Server.Models
     {
         [Key]
         public long Id { get; set; }
+       
+        [Required]
+        [ForeignKey(nameof(UserModel.Id))]
+        public long UserId { get; set; }
         [Required]
         [ForeignKey(nameof(DeviceType.Id))]
         public long DeviceTypeId { get; set; } //from dropdown -> consumption, production, stock
         [Required]
-        [ForeignKey(nameof(UserModel.Id))]
-        public long UserId { get; set; }
-        public string DeviceBrand { get; set; } = string.Empty;
+        [ForeignKey(nameof(DeviceBrand.Id))]
+        public long DeviceBrandId { get; set; } //from dropdown -> fox, vivax, tesla...
         [Required]
         [ForeignKey(nameof(DeviceModel.Id))] 
         public long DeviceModelId { get; set; } //from dropdown -> tv, car, other...
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; }
         public float EnergyInKwh { get; set; }
         public bool Visibility { get; set; } = false;
         public bool Controlability { get; set; } = false;

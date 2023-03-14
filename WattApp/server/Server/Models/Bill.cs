@@ -5,8 +5,6 @@ namespace Server.Models
 {
     public class Bill
     {
-        [Key]
-        public long Id { get; set; }
         [ForeignKey(nameof(UserModel.Id))]
         [Required]
         public long UserId { get; set; }

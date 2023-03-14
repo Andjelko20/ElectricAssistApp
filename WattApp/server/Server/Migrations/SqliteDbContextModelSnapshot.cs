@@ -17,6 +17,25 @@ namespace Server.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
 
+            modelBuilder.Entity("Server.Models.Bill", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Month")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("Consumption")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("Value")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("UserId", "Month");
+
+                    b.ToTable("Bills");
+                });
+
             modelBuilder.Entity("Server.Models.ChargingScheduler", b =>
                 {
                     b.Property<long>("DeviceId")
@@ -33,7 +52,7 @@ namespace Server.Migrations
 
                     b.HasKey("DeviceId", "Day", "Time");
 
-                    b.ToTable("ChargingScheduler");
+                    b.ToTable("ChargingSchedulers");
                 });
 
             modelBuilder.Entity("Server.Models.Device", b =>
@@ -45,9 +64,8 @@ namespace Server.Migrations
                     b.Property<bool>("Controlability")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("DeviceBrand")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<long>("DeviceBrandId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<long>("DeviceModelId")
                         .HasColumnType("INTEGER");
@@ -59,7 +77,6 @@ namespace Server.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("TurnOn")
@@ -74,6 +91,22 @@ namespace Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Devices");
+                });
+
+            modelBuilder.Entity("Server.Models.DeviceDefaultSettings", b =>
+                {
+                    b.Property<long>("DeviceModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("DeviceBrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float?>("DefaultKwh")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("DeviceModelId", "DeviceBrandId");
+
+                    b.ToTable("DeviceDefaultSettings");
                 });
 
             modelBuilder.Entity("Server.Models.DeviceEnergyUsage", b =>
@@ -92,7 +125,22 @@ namespace Server.Migrations
 
                     b.HasKey("DeviceId", "StartTime", "EndTime");
 
-                    b.ToTable("DeviceEnergyUsage");
+                    b.ToTable("DeviceEnergyUsages");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceBrand", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceBrands");
                 });
 
             modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceModel", b =>
@@ -100,9 +148,6 @@ namespace Server.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<float>("DefaultKwh")
-                        .HasColumnType("REAL");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -184,6 +229,9 @@ namespace Server.Migrations
                     b.Property<long>("DeviceId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Day")
+                        .HasColumnType("TEXT");
+
                     b.Property<TimeOnly>("TurnOn")
                         .HasColumnType("TEXT");
 
@@ -193,13 +241,19 @@ namespace Server.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Day")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.HasKey("DeviceId", "Day", "TurnOn", "TurnOff");
 
-                    b.HasKey("DeviceId", "TurnOn", "TurnOff");
+                    b.ToTable("InclusionSchedulers");
+                });
 
-                    b.ToTable("InclusionScheduler");
+            modelBuilder.Entity("Server.Models.Price", b =>
+                {
+                    b.Property<float>("PriceGreenZoneCheapPower")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("PriceGreenZoneCheapPower");
+
+                    b.ToTable("Price");
                 });
 
             modelBuilder.Entity("Server.Models.RoleModel", b =>
@@ -236,7 +290,7 @@ namespace Server.Migrations
 
                     b.HasKey("UserId", "Date");
 
-                    b.ToTable("UserEnergyUsage");
+                    b.ToTable("UserEnergyUsages");
                 });
 
             modelBuilder.Entity("Server.Models.UserModel", b =>

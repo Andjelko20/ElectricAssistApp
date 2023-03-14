@@ -5,7 +5,7 @@ namespace Server.Models
 {
     public class Price
     {
-        [Required]
-        private float PriceGreenZoneCheapPower { get; set; }
+        [Key]
+        public float PriceGreenZoneCheapPower { get; set; }
     }
 }

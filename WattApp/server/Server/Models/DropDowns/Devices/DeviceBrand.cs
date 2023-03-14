@@ -2,12 +2,12 @@
 
 namespace Server.Models.DropDowns.Devices
 {
-    public class DeviceModel
+    public class DeviceBrand
     {
-        //Frizider, TV, Bojler, Ostalo
+        //Vox, Vivax, Tesla...
         [Key]
         public long Id { get; set; }
         [Required]
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
     }
 }
