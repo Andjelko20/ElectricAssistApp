@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Route,Router,NavigationEnd } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import jwt_decode from "jwt-decode";
-import { Token } from '../../models/users.model';
+// import jwt_decode from "jwt-decode";
+// import { Token } from '../../models/users.model';
 
 @Component({
 	selector: 'app-login',
@@ -18,12 +18,12 @@ export class LoginComponent implements OnInit {
 	constructor(private authService: AuthService,private router:Router) { }
 
 	ngOnInit(): void {
-		this.router.events.subscribe(event => {
-			if (event instanceof NavigationEnd) {
-			  // pozovite funkciju za proveru tokena ovde
-			  this.checkToken();
-			}
-		  });
+		// this.router.events.subscribe(event => {
+		// 	if (event instanceof NavigationEnd) {
+		// 	  // pozovite funkciju za proveru tokena ovde
+		// 	  this.checkToken();
+		// 	}
+		//   });
 	}
 
 	login(){
@@ -61,27 +61,27 @@ export class LoginComponent implements OnInit {
 			}
 		  );
 	}
-	checkToken() {
-		const token = localStorage.getItem('token');
-		if (token) {
-		const decodeToken = jwt_decode(token) as Token;
-		const currentTime = new Date().getTime() / 1000;
+	// checkToken() {
+	// 	const token = localStorage.getItem('token');
+	// 	if (token) {
+	// 	const decodeToken = jwt_decode(token) as Token;
+	// 	const currentTime = new Date().getTime() / 1000;
 
-		if (currentTime > decodeToken.exp) {
-			alert('Token je istekao!');
-			// preusmeri korisnika na login stranicu
-			this.router.navigate(['/login']);
-		} else {
-			// token je validan
-			// dohvati podatke o korisniku
-			const userId = decodeToken.sub;
-			// ...
-		}
-		} else {
-		// token ne postoji u local storage-u
-		// preusmeri korisnika na login stranicu
-		alert("Token ne postoji u local storage-u");
-		this.router.navigate(['/login']);
-		}
-	}
+	// 	if (currentTime > decodeToken.exp) {
+	// 		alert('Token je istekao!');
+	// 		// preusmeri korisnika na login stranicu
+	// 		this.router.navigate(['/login']);
+	// 	} else {
+	// 		// token je validan
+	// 		// dohvati podatke o korisniku
+	// 		const userId = decodeToken.sub;
+	// 		// ...
+	// 	}
+	// 	} else {
+	// 	// token ne postoji u local storage-u
+	// 	// preusmeri korisnika na login stranicu
+	// 	alert("Token ne postoji u local storage-u");
+	// 	this.router.navigate(['/login']);
+	// 	}
+	// }
 }

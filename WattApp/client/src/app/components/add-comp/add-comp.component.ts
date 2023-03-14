@@ -10,18 +10,18 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AddCompComponent implements OnInit {
   addUserRequest:Users={
-    id:'',
+    id:0,
     name:'',
     userName:'',
     password:'',
-    block:'',
+    block:false,
     role:''
   }
   constructor(private usersService:AuthService,private router:Router) { }
 
   ngOnInit(): void {
   }
-  onSelectedBlock(value:string):void
+  onSelectedBlock(value:boolean):void
   {
     this.addUserRequest.block = value;
   }

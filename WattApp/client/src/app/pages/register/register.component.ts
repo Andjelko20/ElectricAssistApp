@@ -11,11 +11,11 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   users:Users= {
-    id: '',
+    id: 0,
     name: '',
     userName: '',
     password:'',
-    block: '',
+    block: false,
     role:'',
 }
   registerName='';

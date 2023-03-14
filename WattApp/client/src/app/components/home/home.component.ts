@@ -9,79 +9,68 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent implements OnInit {
   
-  users:Users[] = [
-    {
-      id:"1",
-      name:'fsdf',
-      userName:'dsda',
-      password:'54646',
-      block:'YES',
-      role:'dso'
-    },
-    {
-      id:"2",
-      name:'fsdf',
-      userName:'dsda',
-      password:'54654',
-      block:'NO',
-      role:'dso'
-    },
-    {
-      id:"3",
-      name:'fsdf',
-      userName:'dsda',
-      password:'54654',
-      block:'NO',
-      role:'dso'
-    },
-    {
-      id:"4",
-      name:'fsdf',
-      userName:'dsda',
-      password:'54654',
-      block:'NO',
-      role:'dso'
-    }
-  ];
+  users:Users[] = [{
+    id: 1,
+    name: 'na',
+    userName: 'string',
+    password:'ddd',
+    block: false,
+    role:'dso'
+  }];
  
   constructor(private router:Router,private usersService:AuthService,
     private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-    
+    this.usersService.getAllUsers().subscribe(users => {
+     this.getUsers();
+    });
     }
-
+  blockUser(id: number) {
+      this.usersService.blockUser(id).subscribe(() => {
+        const userIndex = this.users.findIndex(user => user.id === id);
+        this.users[userIndex].block = true;
+      });
+  }
+  unblockUser(id: number) {
+      this.usersService.unblockUser(id).subscribe(() => {
+        const userIndex = this.users.findIndex(user => user.id === id);
+        this.users[userIndex].block = false;
+      });
+  }
   getUsers()
   {
     return this.users;
   }
-  removeObject={};
-  delete(id:string,index:number)
+
+  delete(id:number)
   {
     if(confirm('Are you sere to delete? '+id))
     {
-      if(id)
-        {
-          this.removeObject =this.users.splice(index,1);
-        }  
+      this.usersService.delete(id)
+      .subscribe({
+        next:(response)=>{
+          this.router.navigate(['home']);
+        }
+      });
     }
   }
  
  
   block(user:Users,i:number)
   {
-    if(user.block=="YES")
+    if(user.block==true)
     {
       if(confirm('Are you sure you want to unblock them? '+user.id))
       {     
-        user.block = "NO";
+        user.block = false;
         this.users[i] = user;
       }
     }
     else{
       if(confirm('Are you sure you want to block them? '+user.id))
       {
-        user.block = "YES";
+        user.block = true;
         this.users[i] = user;
       }
     }

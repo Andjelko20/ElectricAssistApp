@@ -10,11 +10,11 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class UpdateComponent implements OnInit {
   updateUserDetail:Users={
-    id:'',
+    id:0,
     name:'',
     userName:'',
     password:'',
-    block:'',
+    block:false,
     role:''
   }
   constructor(private route:ActivatedRoute,private router:Router,private updateService:AuthService) { }
@@ -23,10 +23,9 @@ export class UpdateComponent implements OnInit {
     this.route.paramMap.subscribe({
       next:(params)=>
       {
-        const id = params.get('id');
-        if(id)
+        if(this.updateUserDetail.id)
         {
-          this.updateService.getUsers(id)
+          this.updateService.getUsers(this.updateUserDetail.id)
           .subscribe({
             next:(response)=>{
               this.updateUserDetail=response;
@@ -36,14 +35,7 @@ export class UpdateComponent implements OnInit {
       }
     })
   }
-  onSelectedBlock(value:string):void
-  {
-    this.updateUserDetail.block = value;
-  }
-  onSelectedRole(value:string):void
-  {
-    this.updateUserDetail.role = value;
-  }
+  
   
   upDate()
   {
