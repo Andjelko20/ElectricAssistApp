@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Server.Models
 {
@@ -23,6 +24,8 @@ namespace Server.Models
         [Required]
         [ForeignKey(nameof(RoleModel.Id))]
         public int RoleId { get; set; }
+
+        public RoleModel? Role { get; set; }
 
         [Required]
         public bool Blocked { get; set; }
