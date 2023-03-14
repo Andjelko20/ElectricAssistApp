@@ -4,6 +4,7 @@ namespace Server.Models.DropDowns.Devices
 {
     public class DeviceModel
     {
+        //Frizider, TV, Bojler, Ostalo
         [Key]
         public long Id { get; set; }
         [Required]

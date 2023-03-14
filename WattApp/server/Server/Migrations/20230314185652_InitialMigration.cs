@@ -16,7 +16,7 @@ namespace Server.Migrations
                     DeviceId = table.Column<long>(type: "INTEGER", nullable: false),
                     Day = table.Column<string>(type: "TEXT", nullable: false),
                     Time = table.Column<string>(type: "TEXT", nullable: false),
-                    Comment = table.Column<string>(type: "TEXT", nullable: false)
+                    Comment = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,9 +55,9 @@ namespace Server.Migrations
                 columns: table => new
                 {
                     DeviceId = table.Column<long>(type: "INTEGER", nullable: false),
-                    StartTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
-                    EndTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
-                    KWh = table.Column<float>(type: "REAL", nullable: false)
+                    StartTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EnergyInKWh = table.Column<float>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,7 +120,7 @@ namespace Server.Migrations
                     TurnOn = table.Column<TimeOnly>(type: "TEXT", nullable: false),
                     TurnOff = table.Column<TimeOnly>(type: "TEXT", nullable: false),
                     Day = table.Column<string>(type: "TEXT", nullable: false),
-                    Comment = table.Column<string>(type: "TEXT", nullable: false)
+                    Comment = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -160,9 +160,9 @@ namespace Server.Migrations
                 {
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    Consumption = table.Column<float>(type: "REAL", nullable: false),
-                    Production = table.Column<float>(type: "REAL", nullable: false),
-                    EnergyStock = table.Column<float>(type: "REAL", nullable: false)
+                    Consumption = table.Column<float>(type: "REAL", nullable: true),
+                    Production = table.Column<float>(type: "REAL", nullable: true),
+                    EnergyStock = table.Column<float>(type: "REAL", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -175,15 +175,16 @@ namespace Server.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    RoleId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Username = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: false),
                     Blocked = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CountryId = table.Column<long>(type: "INTEGER", nullable: true),
+                    CityId = table.Column<long>(type: "INTEGER", nullable: true),
+                    SettlementId = table.Column<long>(type: "INTEGER", nullable: true),
                     Address = table.Column<string>(type: "TEXT", nullable: true),
-                    CountryId = table.Column<long>(type: "INTEGER", nullable: false),
-                    CityId = table.Column<long>(type: "INTEGER", nullable: false),
-                    PhoneNumeber = table.Column<string>(type: "TEXT", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>

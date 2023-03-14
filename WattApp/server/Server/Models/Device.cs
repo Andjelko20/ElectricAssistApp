@@ -20,8 +20,8 @@ namespace Server.Models
         public long DeviceModelId { get; set; } //from dropdown -> tv, car, other...
         public string Name { get; set; } = string.Empty;
         public float EnergyInKwh { get; set; }
-        public bool Visibility { get; set; }
-        public bool Controlability { get; set; }
+        public bool Visibility { get; set; } = false;
+        public bool Controlability { get; set; } = false;
         public bool TurnOn { get; set; } = false;
 
     }

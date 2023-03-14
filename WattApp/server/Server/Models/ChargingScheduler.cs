@@ -9,6 +9,6 @@ namespace Server.Models
         public long DeviceId { get; set; }
         public String Day { get; set; }
         public String Time { get; set; }
-        public String Comment { get; set; }
+        public String? Comment { get; set; }
     }
 }

@@ -11,7 +11,7 @@ using Server.Data;
 namespace Server.Migrations
 {
     [DbContext(typeof(SqliteDbContext))]
-    [Migration("20230313225526_InitialMigration")]
+    [Migration("20230314185652_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,6 @@ namespace Server.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("DeviceId", "Day", "Time");
@@ -84,13 +83,13 @@ namespace Server.Migrations
                     b.Property<long>("DeviceId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<TimeOnly>("StartTime")
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeOnly>("EndTime")
+                    b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("KWh")
+                    b.Property<float>("EnergyInKWh")
                         .HasColumnType("REAL");
 
                     b.HasKey("DeviceId", "StartTime", "EndTime");
@@ -194,7 +193,6 @@ namespace Server.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Day")
@@ -229,13 +227,13 @@ namespace Server.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("Consumption")
+                    b.Property<float?>("Consumption")
                         .HasColumnType("REAL");
 
-                    b.Property<float>("EnergyStock")
+                    b.Property<float?>("EnergyStock")
                         .HasColumnType("REAL");
 
-                    b.Property<float>("Production")
+                    b.Property<float?>("Production")
                         .HasColumnType("REAL");
 
                     b.HasKey("UserId", "Date");
@@ -255,10 +253,10 @@ namespace Server.Migrations
                     b.Property<bool>("Blocked")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("CityId")
+                    b.Property<long?>("CityId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("CountryId")
+                    b.Property<long?>("CountryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
@@ -272,10 +270,13 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PhoneNumeber")
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("RoleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("SettlementId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Username")

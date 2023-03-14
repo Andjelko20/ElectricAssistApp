@@ -17,6 +17,6 @@ namespace Server.Models
         public float Consumption { get; set; }
         [Required]
         [Range(0, float.MaxValue)]
-        public float Value { get; set; } //izracunava se na osnovu pola Consumption i podataka iz tabele Prices
+        public float Value { get; set; } //izracunava se na osnovu polja Consumption i podataka iz tabele Prices
     }
 }
