@@ -26,18 +26,14 @@ namespace Server.Controllers
             this._sqliteDb = _sqliteDb;
             this.logger = logger;
         }
-
+        /// <summary>API za logovanje korisnika</summary>
+        /// <response code="200">Success</response>
+        /// <response code="400">Bad request</response>
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginDTO requestBody)
         {
-            /*
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState.Values.SelectMany(x=>x.Errors).Select(y=>y.ErrorMessage).ToList());
-            }
-            */
             UserModel? user = await _sqliteDb.Users.Include(u=>u.Role).FirstOrDefaultAsync(user => user.Username == requestBody.Username);
             if (user == null)
             {
@@ -55,7 +51,7 @@ namespace Server.Controllers
         [HttpPost]
         [Route("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody]UserModel requestBody)
+        public async Task<IActionResult> Register([FromBody]UserCreateDTO requestBody)
         {
             RoleModel? role = await _sqliteDb.Roles.FirstOrDefaultAsync(r => r.Name == "guest");
             if (role == null)
@@ -66,21 +62,17 @@ namespace Server.Controllers
             {
                 return BadRequest(new {message="User already exists"});
             }
-            requestBody.RoleId = role.Id;
-            requestBody.Password = HashGenerator.Hash(requestBody.Password);
-            requestBody.Blocked = false;
-            await _sqliteDb.Users.AddAsync(requestBody);
+            UserModel user = new UserModel
+            {
+                Name= requestBody.Name,
+                Username=requestBody.Username,
+                Password=HashGenerator.Hash(requestBody.Password),
+                RoleId=role.Id,
+                Blocked=false
+            };
+            await _sqliteDb.Users.AddAsync(user);
             await _sqliteDb.SaveChangesAsync();
             return Ok(new { message = "Registered successfully" });
-        }
-
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult GetAuthorized()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            return Ok(new { message = "You are authorized", id = identity.FindFirst(ClaimTypes.Actor).Value });
         }
     }
 }

@@ -10,6 +10,16 @@ using System.Security.Claims;
 
 namespace Server.Controllers
 {
+    public class Message
+    {
+        public string message;
+        public Message(string message)
+        {
+            this.message = message;
+        }
+    }
+
+
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : Controller
@@ -95,7 +105,11 @@ namespace Server.Controllers
                 return StatusCode(500, new { message = "Internal server error" });
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <response code="200">Success</response>
+        /// <response code="400">Bad request</response>
         [HttpPost]
         [Authorize(Roles ="admin")]
         public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO requestBody)
@@ -117,7 +131,8 @@ namespace Server.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(500, new { message = "Internal Server Error" });
+                //return StatusCode(400, new { message = "Already exists user with that username" });
+                return StatusCode(400, new Message("Already exists user with that username"));
             }
 
         }

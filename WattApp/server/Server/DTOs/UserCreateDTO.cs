@@ -16,9 +16,8 @@ namespace Server.DTOs
 
         public bool Blocked { get; set; }
 
-        [Required]
         [MinValue(1)]
-        public int RoleId { get; set; }
+        public int RoleId { get; set; } = 4;
 
         public UserCreateDTO()
         {
