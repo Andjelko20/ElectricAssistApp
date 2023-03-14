@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Server.Middlewares;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Server
 {
@@ -75,7 +77,7 @@ namespace Server
                     In = ParameterLocation.Header,
                     Scheme = "bearer"
                 });
-
+                /*
                 swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -90,6 +92,9 @@ namespace Server
                         new List<string>()
                     }
                 });
+                */
+
+                swagger.OperationFilter<AuthResponsesOperationFilter>();
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -111,7 +116,7 @@ namespace Server
                 app.UseSwaggerUI(config =>
                 {
                     config.SwaggerEndpoint("/swagger/v1/swagger.json", "ElectricAssist API");
-                    config.RoutePrefix = "/api/docs";
+                    config.RoutePrefix = "api/docs";
                 });
             }
 
