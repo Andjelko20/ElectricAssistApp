@@ -1,17 +1,14 @@
+import { style } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { tick } from '@angular/core/testing';
 
-import { Chart,registerables } from 'node_modules/chart.js'
+import { Chart,Legend,registerables, Title } from 'node_modules/chart.js'
 Chart.register(...registerables)
 
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-Chart.register(ChartDataLabels);
 
-// const SAMPLE_BARCHART_DATA: any[] = [
-//   { data: [65, 59, 80, 81, 56, 54, 30], label: 'Consumption'},
-//   { data: [25, 39, 60, 91, 36, 54, 50], label: 'Production'}
-// ];
 
-// const SAMPLE_BARCHART_LABELS: string[] = ['Aerodrom', 'Bagremar', 'Erdoglija', 'Bresnica', 'Stanovo', 'Belosevac','Pivara'];
+Chart.defaults.color = "#fff";
+Chart.defaults.color = "#fff";
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
@@ -23,20 +20,12 @@ export class BarChartComponent implements OnInit{
   constructor() {
     
   }
-  // public barChartData: any[]=SAMPLE_BARCHART_DATA;
-  // public barChartLabels: string[]=SAMPLE_BARCHART_LABELS;
-  // public barChartType = 'bar';
-  // public barChartLegend = true;
-  // public barChartOptions: any = {
-  //   scaleShowVerticalLines: false,
-  //   responsive: true
-  // };
 
   ngOnInit(): void {
     this.BarPlot();
   }
   BarPlot(){
-    
+    var levo,desno
     const Linechart =new Chart("barplot", {
         type: 'bar',
         data : {
@@ -44,24 +33,80 @@ export class BarChartComponent implements OnInit{
           datasets: [
             {
               label: 'Consumption',
-              data: [130,10,23,120,70,90,80,79,45,34,76,89],
-              borderColor: 'rgb(255, 99, 132)',
-              backgroundColor: 'rgb(255, 99, 132)'
+              data: [111,10,23,120,70,90,80],
+              borderColor: 'rgb(128, 0, 128)',
+              backgroundColor: 'rgb(128, 0, 128)'
+              
             },
             {
               label: 'Production',
-              data: [21,100,41,60,120,140,80,10,20,30,150,140],
-              borderColor: 'rgb(54, 162, 235)',
-              backgroundColor: 'rgb(54, 162, 235)'
-            }
+              data: [21,100,41,60,110,110,80],
+              borderColor: 'rgb(255, 165, 0)',
+              backgroundColor: 'rgb(255, 165, 0)'
+            },
+            {
+              label: 'Number of Users',
+              data: [111,10,23,150,70,90,80],
+              borderColor: 'rgb(0, 128, 0)',
+              backgroundColor: 'rgb(0, 128, 0)',
+              yAxisID: 'Users',
+              
+            },
           ]
+          
         },
         options: 
         {
+          scales:{
+            y: {
+              position: "left",
+              suggestedMin: 5,
+              suggestedMax: 140,
+              title:{
+                display:true,
+                text: "consumption in kWh"
+              }
+            }
+            ,
+            x:{
+              title:{
+                display:true,
+                text: "communities"
+              }
+            }
+            ,
+            Users:{
+              position:"right",
+              title:{
+                display:true,
+                text: "number of users"
+              }
+            }
+            
+            
+          },
           responsive: true,
           plugins: {
+            
             legend: {
-              position: 'top',
+              onHover: function (event, legendItem, legend) {
+                document.body.style.cursor = 'pointer';
+              },
+              onLeave: function (event, legendItem, legend) {
+                  document.body.style.cursor = 'default';
+              },
+              
+              position: 'bottom',
+              labels: {
+                usePointStyle: true,
+                
+                // font:{
+                //   size:12
+                // } 
+                // ,
+                // boxHeight:10,
+                // boxWidth:10
+              }
             },
             title: {
               display: true,
