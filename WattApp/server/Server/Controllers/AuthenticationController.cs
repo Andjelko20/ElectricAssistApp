@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
-using Server.DTO;
-using Server.Helpers;
+using Server.DTOs;
+using Server.Utilities;
 using Server.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
+using Server.Middlewares;
 
 namespace Server.Controllers
 {
@@ -16,20 +18,23 @@ namespace Server.Controllers
     public class AuthenticationController:Controller
     {
         public readonly TokenGenerator tokenGenerator;
-        public readonly SqliteDbContext userContext;
-        public AuthenticationController(TokenGenerator tokenGenerator,SqliteDbContext userDbContext)
+        public readonly SqliteDbContext _sqliteDb;
+        public readonly ILogger<AuthenticationController> logger;
+        public AuthenticationController(TokenGenerator tokenGenerator,SqliteDbContext _sqliteDb, ILogger<AuthenticationController> logger)
         {
-            this.tokenGenerator=tokenGenerator;
-            this.userContext=userDbContext;
+            this.tokenGenerator = tokenGenerator;
+            this._sqliteDb = _sqliteDb;
+            this.logger = logger;
         }
+        /// <summary>Login</summary>
+        /// <response code="200">Success</response>
+        /// <response code="400">Bad request</response>
         [HttpPost]
+        [Route("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginDTO requestBody)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState.Values.SelectMany(x=>x.Errors).Select(y=>y.ErrorMessage).ToList());
-            }
-            UserModel? user = await userContext.Users.FirstOrDefaultAsync(user => user.Username == requestBody.Username);
+            UserModel? user = await _sqliteDb.Users.Include(u=>u.Role).FirstOrDefaultAsync(user => user.Username == requestBody.Username);
             if (user == null)
             {
                 return Unauthorized(new { message = "Bad credentials" });
@@ -42,13 +47,34 @@ namespace Server.Controllers
                 return Unauthorized(new { message = "User is blocked" });
             return Ok(new { token = tokenGenerator.GenerateJwtToken(user) });
         }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult GetAuthorized()
+        /// <summary>
+        /// Register as guest
+        /// </summary>
+        [HttpPost]
+        [Route("register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody]UserCreateDTO requestBody)
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            return Ok(new { message = "You are authorized", id = identity.FindFirst("Id").Value });
+            RoleModel? role = await _sqliteDb.Roles.FirstOrDefaultAsync(r => r.Name == "guest");
+            if (role == null)
+            {
+                return StatusCode(500,new {message="Internal Server Error"});
+            }
+            if (_sqliteDb.Users.Any(u => u.Username == requestBody.Username))
+            {
+                return BadRequest(new {message="User already exists"});
+            }
+            UserModel user = new UserModel
+            {
+                Name= requestBody.Name,
+                Username=requestBody.Username,
+                Password=HashGenerator.Hash(requestBody.Password),
+                RoleId=role.Id,
+                Blocked=false
+            };
+            await _sqliteDb.Users.AddAsync(user);
+            await _sqliteDb.SaveChangesAsync();
+            return Ok(new { message = "Registered successfully" });
         }
     }
 }

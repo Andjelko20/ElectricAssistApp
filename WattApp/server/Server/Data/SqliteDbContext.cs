@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Server.Helpers;
+using Server.Utilities;
 using Server.Models;
 
 namespace Server.Data
@@ -13,6 +13,14 @@ namespace Server.Data
         }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserModel>()
+           .HasOne(u => u.Role)
+           .WithMany()
+           .HasForeignKey(u => u.RoleId);
+        }
 
         public static void Seed(IApplicationBuilder applicationBuilder)
         {
@@ -38,7 +46,18 @@ namespace Server.Data
                         {
                             Id=3,
                             Name="prosumer"
+                        },
+                        new RoleModel()
+                        {
+                            Id=4,
+                            Name="guest"
+                        },
+                        new RoleModel()
+                        {
+                            Id=5,
+                            Name="superadmin"
                         }
+
                     });
                     context.SaveChanges();
                 }
