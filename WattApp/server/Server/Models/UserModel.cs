@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Server.Models.DropDowns.Location;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Server.Models
 {
@@ -10,9 +11,6 @@ namespace Server.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        [ForeignKey(nameof(RoleModel.Id))]
-        public int RoleId { get; set; }
         [Required]
         public string Name { get; set; }
 
@@ -34,8 +32,12 @@ namespace Server.Models
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
+        [ForeignKey(nameof(RoleModel.Id))]
+        public int RoleId { get; set; }
 
+        public RoleModel? Role { get; set; }
 
-
+        [Required]
+        public bool Blocked { get; set; }
     }
 }

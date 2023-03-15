@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
-using Server.Helpers;
+using Server.Utilities;
 using Server.Models;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
@@ -43,6 +43,14 @@ namespace Server.Data
         }
 
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserModel>()
+           .HasOne(u => u.Role)
+           .WithMany()
+           .HasForeignKey(u => u.RoleId);
+        }
+
         public static void Seed(IApplicationBuilder applicationBuilder)
         {
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
@@ -67,7 +75,18 @@ namespace Server.Data
                         {
                             Id=3,
                             Name="prosumer"
+                        },
+                        new RoleModel()
+                        {
+                            Id=4,
+                            Name="guest"
+                        },
+                        new RoleModel()
+                        {
+                            Id=5,
+                            Name="superadmin"
                         }
+
                     });
                     context.SaveChanges();
                 }

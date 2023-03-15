@@ -1,0 +1,9 @@
+npm install ng2-charts --save
+
+npm install chart.js
+
+npm install ngx-cookie-service
+
+npm i cors
+
+npm install chartjs-plugin-datalabels --save
