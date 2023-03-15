@@ -110,7 +110,7 @@ export class BarChartComponent implements OnInit{
             },
             title: {
               display: true,
-              text: 'Line Chart'
+              text: 'Bar plot'
             }
           }
         }

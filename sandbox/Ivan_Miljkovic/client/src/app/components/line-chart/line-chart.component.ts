@@ -22,7 +22,7 @@ export class LineChartComponent implements OnInit {
     const Linechart =new Chart("linechart", {
       type: 'line',
       data : {
-        labels: [1,2,3,4,5,6,7,8,9,10,11,12],
+        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'],
         
         datasets: [
           {

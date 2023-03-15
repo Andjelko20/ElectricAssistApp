@@ -78,14 +78,11 @@ export class PieChartComponent implements OnInit {
               onLeave: function (event, legendItem, legend) {
                   document.body.style.cursor = 'default';
               },
-              title:{
-                display:true,
-                text: "Communities that consumes and produces"
-              }
+              
             },
             title: {
               display: true,
-              text: 'Pie Chart'
+              text: 'Communities that consumes and produces'
             }
             
         }}
