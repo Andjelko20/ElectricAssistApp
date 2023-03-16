@@ -1,0 +1,61 @@
+.first {
+    width: 80%;
+    padding-left: 20%;
+}
+
+table,
+td,
+th {
+    border: 1px solid black;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+th {
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    padding: 15px;
+}
+
+button {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #04AA6D;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}

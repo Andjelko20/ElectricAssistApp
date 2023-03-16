@@ -1,0 +1,50 @@
+<div>
+    <ul>
+        <li><a (click)="logout()"> LOGOUT</a></li>
+    </ul>
+
+</div>
+<div class="first">
+    <br>
+
+    <br>
+    <h2>List </h2>
+    <br>
+
+    <table *ngIf="users">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>User name</th>
+                <th>Block</th>
+                <th>Role</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users index as i">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.userName}}</td>
+                <td>{{user.block}} </td>
+                <td>{{user.role}}</td>
+                <td><button style="width: 84px; height:30px" [routerLink]='["/update","edit",user.id]'> UPDATE</button></td>
+                <td>
+                    <button style="width: 84px; height:30px" *ngIf="user.block===true" (click)="unblockUser(user.id)"> UNBLOCK</button>
+                    <button style="width: 84px; height:30px" *ngIf="user.block===false" (click)="blockUser(user.id)"> BLOCK</button>
+                </td>
+                <td><button style="width: 84px; height:30px" [routerLink]='["/change-password"]'> PASSWORD</button></td>
+
+                <td><button style="width: 84px; height:30px" (click)="delete(user.id)">DELETE</button></td>
+
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <button style="width: 84px; height:30px " [routerLink]='["/add-comp"]'>ADD</button>
+
+</div>

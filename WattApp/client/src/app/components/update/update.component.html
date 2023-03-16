@@ -1,0 +1,45 @@
+<div class="global">
+    <div class="constainer my-5">
+        <h1 class="mb-3">Update</h1>
+        <div class="row-2">
+            <div class="col-4">
+                <form #form="ngForm" (ngSubmit)="upDate()">
+                    <div class="mb-3">
+                        <label for="id" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="id" name="id" [(ngModel)]="updateUserDetail.id">
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="id" name="name" [(ngModel)]="updateUserDetail.name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="userName" class="form-label">User name</label>
+                        <input type="text" class="form-control" id="name" name="userName" [(ngModel)]="updateUserDetail.userName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" class="form-control" id="password" name="password" [(ngModel)]="updateUserDetail.password">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="role">Block</label>
+                        <select id="block" class="form-control" name="block" [(ngModel)]="updateUserDetail.block">
+                      <option>false</option>
+                      <option>true</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="role">Role</label>
+                        <select #teams id="role" class="form-control" name="role" [(ngModel)]="updateUserDetail.role">
+                      <option>DSO</option>
+                      <option>Prosumer</option>
+                    </select>
+                    </div>
+
+                    <button type=" submit " class="btn btn-primary mr-5 ">Save</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
