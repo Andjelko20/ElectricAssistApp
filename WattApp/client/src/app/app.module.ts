@@ -11,6 +11,8 @@ import { UpdateComponent } from './components/update/update.component';
 import { AddCompComponent } from './components/add-comp/add-comp.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { MapsComponent } from './maps/maps.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -20,13 +22,15 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     UpdateComponent,
     AddCompComponent,
     RegisterComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    MapsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-	  FormsModule,
-    HttpClientModule
+	FormsModule,
+    HttpClientModule,
+    GoogleMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

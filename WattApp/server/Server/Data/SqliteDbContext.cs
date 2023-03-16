@@ -16,6 +16,7 @@ namespace Server.Data
         }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
+        /*
         public DbSet<Device> Devices { get; set; }
         public DbSet<DeviceModel> DeviceModels { get; set; }
         public DbSet<DeviceType> DeviceTypes { get; set; }
@@ -30,18 +31,7 @@ namespace Server.Data
         public DbSet<DeviceEnergyUsage> DeviceEnergyUsages { get; set; }
         public DbSet<DeviceDefaultSettings> DeviceDefaultSettings { get; set; }
         public DbSet<Bill> Bills { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ChargingScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.Time });
-            modelBuilder.Entity<InclusionScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.TurnOn, x.TurnOff });
-            modelBuilder.Entity<UserEnergyUsage>().HasKey(x => new { x.UserId, x.Date });
-            modelBuilder.Entity<DeviceEnergyUsage>().HasKey(x => new { x.DeviceId, x.StartTime, x.EndTime });
-            modelBuilder.Entity<DeviceDefaultSettings>().HasKey(x => new { x.DeviceModelId, x.DeviceBrandId });
-            modelBuilder.Entity<Bill>().HasKey(x => new { x.UserId, x.Month });
-
-        }
-
+        */
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +39,14 @@ namespace Server.Data
            .HasOne(u => u.Role)
            .WithMany()
            .HasForeignKey(u => u.RoleId);
+            /*
+            modelBuilder.Entity<ChargingScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.Time });
+            modelBuilder.Entity<InclusionScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.TurnOn, x.TurnOff });
+            modelBuilder.Entity<UserEnergyUsage>().HasKey(x => new { x.UserId, x.Date });
+            modelBuilder.Entity<DeviceEnergyUsage>().HasKey(x => new { x.DeviceId, x.StartTime, x.EndTime });
+            modelBuilder.Entity<DeviceDefaultSettings>().HasKey(x => new { x.DeviceModelId, x.DeviceBrandId });
+            modelBuilder.Entity<Bill>().HasKey(x => new { x.UserId, x.Month });
+            */
         }
 
         public static void Seed(IApplicationBuilder applicationBuilder)
@@ -114,6 +112,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                /*
                 if (!context.DeviceTypes.Any())
                 {
                     context.DeviceTypes.AddRange(new[]
@@ -308,6 +307,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                */
             }
         }
 

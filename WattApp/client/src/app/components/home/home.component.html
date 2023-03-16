@@ -21,7 +21,7 @@
                 <th>Role</th>
                 <th></th>
                 <th></th>
-                <th></th>
+                <!--<th></th>-->
                 <th></th>
             </tr>
         </thead>
@@ -32,12 +32,12 @@
                 <td>{{user.userName}}</td>
                 <td>{{user.block}} </td>
                 <td>{{user.role}}</td>
-                <td><button style="width: 84px; height:30px" [routerLink]='["/update","edit",user.id]'> UPDATE</button></td>
+                <td><a [routerLink]='["/update",user.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
                 <td>
                     <button style="width: 84px; height:30px" *ngIf="user.block===true" (click)="unblockUser(user.id)"> UNBLOCK</button>
                     <button style="width: 84px; height:30px" *ngIf="user.block===false" (click)="blockUser(user.id)"> BLOCK</button>
                 </td>
-                <td><button style="width: 84px; height:30px" [routerLink]='["/change-password"]'> PASSWORD</button></td>
+                <!--<td><a [routerLink]='["/change-password"]'><button style="min-width: 84px; height:30px" > PASSWORD</button></a></td>-->
 
                 <td><button style="width: 84px; height:30px" (click)="delete(user.id)">DELETE</button></td>
 

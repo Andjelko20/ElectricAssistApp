@@ -6,7 +6,7 @@
                 <form #form="ngForm" (ngSubmit)="upDate()">
                     <div class="mb-3">
                         <label for="id" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id" name="id" [(ngModel)]="updateUserDetail.id">
+                        <input type="text" class="form-control" id="id" name="id" [(ngModel)]="updateUserDetail.id" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -16,11 +16,12 @@
                         <label for="userName" class="form-label">User name</label>
                         <input type="text" class="form-control" id="name" name="userName" [(ngModel)]="updateUserDetail.userName">
                     </div>
+					<!--
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="text" class="form-control" id="password" name="password" [(ngModel)]="updateUserDetail.password">
                     </div>
-
+					-->
                     <div class="form-group col-md-4">
                         <label for="role">Block</label>
                         <select id="block" class="form-control" name="block" [(ngModel)]="updateUserDetail.block">
@@ -31,8 +32,7 @@
                     <div class="form-group col-md-4">
                         <label for="role">Role</label>
                         <select #teams id="role" class="form-control" name="role" [(ngModel)]="updateUserDetail.role">
-                      <option>DSO</option>
-                      <option>Prosumer</option>
+                      <option *ngFor="let role of roles" [value]="role?.id" >{{role?.name}}</option>
                     </select>
                     </div>
 

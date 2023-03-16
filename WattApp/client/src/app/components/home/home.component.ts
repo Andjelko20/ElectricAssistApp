@@ -23,7 +23,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.usersService.getAllUsers().subscribe(users => {
-     this.getUsers();
+     this.users=users.data.map((u:any)=>({
+		id:u.id,
+		name:u.name,
+		userName:u.username,
+		password:u.password,
+		block:u.blocked,
+		role:u.role
+	 }as Users));
     });
     }
   blockUser(id: number) {

@@ -23,6 +23,7 @@ namespace Server.Models
         [Required]
         public bool Blocked { get; set; } = false;
 
+        /*
         [ForeignKey(nameof(Country.Id))]
         public long? CountryId { get; set; }
         [ForeignKey(nameof(City.Id))]
@@ -32,12 +33,10 @@ namespace Server.Models
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
+        */
         [ForeignKey(nameof(RoleModel.Id))]
         public int RoleId { get; set; }
 
         public RoleModel? Role { get; set; }
-
-        [Required]
-        public bool Blocked { get; set; }
     }
 }

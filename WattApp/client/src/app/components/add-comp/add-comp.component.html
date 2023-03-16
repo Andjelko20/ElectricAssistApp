@@ -14,7 +14,7 @@
 
             <div class="form-group col-md-6">
                 <label for="password" class="form-label">Password</label>
-                <input type="text" class="form-control" id="password" name="password" [(ngModel)]="addUserRequest.password">
+                <input type="password" class="form-control" id="password" name="password" [(ngModel)]="addUserRequest.password">
             </div>
 
             <div class="form-group col-md-4">
@@ -27,12 +27,11 @@
             <div class="form-group col-md-4">
                 <label for="role">Role</label>
                 <select #teams id="role" class="form-control" name="role" [(ngModel)]="addUserRequest.role">     
-          <option>DSO</option>
-          <option>Prosumer</option>
+          <option *ngFor="let role of roles index as i" [value]="role?.id">{{role?.name}}</option>
         </select>
             </div>
         </div>
 
-        <a class="btn btn-primary">ADD</a>
+        <button class="btn btn-primary">ADD</button>
     </form>
 </div>
