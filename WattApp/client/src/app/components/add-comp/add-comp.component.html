@@ -1,0 +1,37 @@
+<div class="global">
+    <br>
+    <h1>Add</h1>
+    <form #form="ngForm" (ngSubmit)="addUsers()">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addUserRequest.name">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="userName">User name</label>
+                <input type="text" class="form-control" id="userName" name="userName" [(ngModel)]="addUserRequest.userName">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" [(ngModel)]="addUserRequest.password">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="role">Block</label>
+                <select #teams id="block" class="form-control" name="block" [(ngModel)]="addUserRequest.block">
+          <option>false</option>
+          <option>true</option>
+        </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="role">Role</label>
+                <select #teams id="role" class="form-control" name="role" [(ngModel)]="addUserRequest.role">     
+          <option *ngFor="let role of roles index as i" [value]="role?.id">{{role?.name}}</option>
+        </select>
+            </div>
+        </div>
+
+        <button class="btn btn-primary">ADD</button>
+    </form>
+</div>
