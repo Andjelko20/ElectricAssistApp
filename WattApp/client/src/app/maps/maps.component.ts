@@ -14,21 +14,41 @@ export class MapsComponent implements OnInit {
   latitude = 0.0;
   longitude = 0.0;
   brojac = 1;
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    navigator.geolocation.getCurrentPosition((position) =>{
+      this.center ={
+        lat: 44.01749823218476,
+        lng: 20.90721429411449,
+      }
+    })
+
+  }
   
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow | undefined;
   display: any;
     center: google.maps.LatLngLiteral = {
         lat: 24,
         lng: 12
+
     };
-    zoom = 4;
+    zoom = 18 ;
     markerOptions: google.maps.MarkerOptions = {
       draggable: false
   };
-  markerPositions: google.maps.LatLngLiteral[] = [];
+  markerPositions: google.maps.LatLngLiteral[] = [{
+    lat:44.01585976728324,
+    lng:20.908619344913156
+  },{
+    lat:44.01720922445889,
+    lng:20.90731151378836
+  },{
+    lat:44.01604418158692,
+    lng:20.90606696880545
+  }];
   addMarker(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) {
+      console.log(event)
+      
       this.markerPositions.push(event.latLng.toJSON())
       this.latitude = event.latLng.lat();
       this.longitude = event.latLng.lng();
