@@ -13,7 +13,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { MapsComponent } from './maps/maps.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-
+import { LeafletModule } from '@asymmetrik/ngx-leaflet'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,9 +28,10 @@ import { GoogleMapsModule } from '@angular/google-maps';
   imports: [
     BrowserModule,
     AppRoutingModule,
-	FormsModule,
+	  FormsModule,
     HttpClientModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    LeafletModule
   ],
   providers: [],
   bootstrap: [AppComponent]
