@@ -22,7 +22,7 @@ export class MapsComponent implements OnInit {
   options: Leaflet.MapOptions = {
     layers: getLayers(),
     zoom: 12,
-    center: new Leaflet.LatLng(43.530147, 16.488932)
+    center: new Leaflet.LatLng(44.017319, 20.907224)
   };
 }
 // const key = '8OcvVK6xO305e42bAe02';
@@ -106,7 +106,7 @@ export class MapsComponent implements OnInit {
 
 export const getMarkers = (): Leaflet.Marker[] => {
   return [
-    new Leaflet.Marker(new Leaflet.LatLng(43.5121264, 16.4700729), {
+    new Leaflet.Marker(new Leaflet.LatLng(44.017319, 20.907224), {
       icon: new Leaflet.Icon({
         iconSize: [50, 41],
         iconAnchor: [13, 41],
@@ -114,7 +114,7 @@ export const getMarkers = (): Leaflet.Marker[] => {
       }),
       title: 'Workspace'
     } as Leaflet.MarkerOptions),
-    new Leaflet.Marker(new Leaflet.LatLng(43.5074826, 16.4390046), {
+    new Leaflet.Marker(new Leaflet.LatLng(44.01722378323754, 20.90793433434322), {
       icon: new Leaflet.Icon({
         iconSize: [50, 41],
         iconAnchor: [13, 41],
@@ -125,16 +125,16 @@ export const getMarkers = (): Leaflet.Marker[] => {
   ] as Leaflet.Marker[];
 };
 
-export const getRoutes = (): Leaflet.Polyline[] => {
-  return [
-    new Leaflet.Polyline([
-      new Leaflet.LatLng(43.5121264, 16.4700729),
-      new Leaflet.LatLng(43.5074826, 16.4390046),
-    ] as Leaflet.LatLng[], {
-      color: '#0d9148'
-    } as Leaflet.PolylineOptions)
-  ] as Leaflet.Polyline[];
-};
+// export const getRoutes = (): Leaflet.Polyline[] => {
+//   return [
+//     new Leaflet.Polyline([
+//       new Leaflet.LatLng(44.017319, 20.907224),
+//       new Leaflet.LatLng(44.01722378323754, 20.90793433434322),
+//     ] as Leaflet.LatLng[], {
+//       color: '#0d9148'
+//     } as Leaflet.PolylineOptions)
+//   ] as Leaflet.Polyline[];
+// };
 
 export const getLayers = (): Leaflet.Layer[] => {
   return [
@@ -148,23 +148,22 @@ export const getLayers = (): Leaflet.Layer[] => {
        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>',
      } as Leaflet.TileLayerOptions),
     ...getMarkers(),
-    ...getRoutes(),
-    ...getPolygons()
+    // ...getRoutes(),
+    // ...getPolygons()
   ] as Leaflet.Layer[];
 };
 
-export const getPolygons = (): Leaflet.Polygon[] => {
-  return [
-    new Leaflet.Polygon([
-      new Leaflet.LatLng(43.5181349, 16.4537963),
-      new Leaflet.LatLng(43.517890, 16.439939),
-      new Leaflet.LatLng(43.515599, 16.446556),
-      new Leaflet.LatLng(43.518025, 16.463492)
-    ] as Leaflet.LatLng[],
-      {
-        fillColor: '#eb530d',
-        color: '#eb780d'
-      } as Leaflet.PolylineOptions)
-  ] as Leaflet.Polygon[];
-};
+// export const getPolygons = (): Leaflet.Polygon[] => {
+//   return [
+//     new Leaflet.Polygon([
+//       new Leaflet.LatLng(44.017319, 20.907224),
+//       new Leaflet.LatLng(44.01722378323754, 20.90793433434322),
+      
+//     ] as Leaflet.LatLng[],
+//       {
+//         fillColor: '#eb530d',
+//         color: '#eb780d'
+//       } as Leaflet.PolylineOptions)
+//   ] as Leaflet.Polygon[];
+// };
 
