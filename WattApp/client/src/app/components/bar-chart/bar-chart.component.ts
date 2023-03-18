@@ -1,8 +1,6 @@
-import { style } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { tick } from '@angular/core/testing';
 
-import { Chart,Legend,registerables, Title } from 'node_modules/chart.js'
+import { Chart,registerables } from 'node_modules/chart.js'
 Chart.register(...registerables)
 
 
@@ -25,7 +23,7 @@ export class BarChartComponent implements OnInit{
     this.BarPlot();
   }
   BarPlot(){
-    var levo,desno
+    
     const Linechart =new Chart("barplot", {
         type: 'bar',
         data : {

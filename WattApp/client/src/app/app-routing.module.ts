@@ -9,6 +9,7 @@ import { UpdateComponent } from './components/update/update.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { MapsComponent } from "./pages/maps/maps.component";
+import { ChartsComponent } from './pages/charts/charts.component';
 //import { ChartsComponent } from './pages/charts/charts.component';
  
 const routes: Routes = [
@@ -20,7 +21,7 @@ const routes: Routes = [
 	{path:'register',component:RegisterComponent},
 	{path:'change-password',component:ChangePasswordComponent},
 	{path:'maps',component:MapsComponent},
-	//{path:'charts',component:ChartsComponent},
+	{path:'charts',component:ChartsComponent},
 	{path:'**',redirectTo:"login"}
 ];
 

@@ -13,6 +13,10 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+import { ChartsComponent } from './pages/charts/charts.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { GoogleMapsModule } from '@angular/google-maps';
     AddCompComponent,
     RegisterComponent,
     ChangePasswordComponent,
-    MapsComponent
+    MapsComponent,
+    PieChartComponent,
+    LineChartComponent,
+    BarChartComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule,
