@@ -8,9 +8,7 @@ import { AddCompComponent } from './components/add-comp/add-comp.component';
 import { UpdateComponent } from './components/update/update.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { MapsComponent } from "./pages/maps/maps.component";
-import { ChartsComponent } from './pages/charts/charts.component';
-//import { ChartsComponent } from './pages/charts/charts.component';
+import { ChartsComponent } from './pages/DSO/charts/charts.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'home',pathMatch:'full'},
@@ -20,7 +18,6 @@ const routes: Routes = [
 	{path:'update/:id',component:UpdateComponent,canActivate:[AuthenticatedGuard]},
 	{path:'register',component:RegisterComponent},
 	{path:'change-password',component:ChangePasswordComponent},
-	{path:'maps',component:MapsComponent},
 	{path:'charts',component:ChartsComponent},
 	{path:'**',redirectTo:"login"}
 ];
