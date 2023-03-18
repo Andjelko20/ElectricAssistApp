@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using Server.Middlewares;
+using Server.Services;
 
 namespace Server.Controllers
 {
@@ -20,7 +21,10 @@ namespace Server.Controllers
         public readonly TokenGenerator tokenGenerator;
         public readonly SqliteDbContext _sqliteDb;
         public readonly ILogger<AuthenticationController> logger;
-        public AuthenticationController(TokenGenerator tokenGenerator,SqliteDbContext _sqliteDb, ILogger<AuthenticationController> logger)
+        public AuthenticationController(
+            TokenGenerator tokenGenerator,
+            SqliteDbContext _sqliteDb, 
+            ILogger<AuthenticationController> logger)
         {
             this.tokenGenerator = tokenGenerator;
             this._sqliteDb = _sqliteDb;

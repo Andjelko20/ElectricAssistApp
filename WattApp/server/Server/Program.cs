@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Server.Services;
 
 namespace Server
 {
@@ -26,7 +27,7 @@ namespace Server
             builder.Services.AddMvc();
 
             builder.Services.Add(new ServiceDescriptor(typeof(TokenGenerator), new TokenGenerator(builder.Configuration)));
-
+            builder.Services.Add(new ServiceDescriptor(typeof(EmailService), new EmailService(builder.Configuration)));
             builder.Services.Configure<ApiBehaviorOptions>(options
                 => options.SuppressModelStateInvalidFilter = true);
 
