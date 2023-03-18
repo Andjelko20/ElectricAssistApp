@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { NgxGaugeModule } from 'ngx-gauge';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -11,12 +12,21 @@ import { UpdateComponent } from './components/update/update.component';
 import { AddCompComponent } from './components/add-comp/add-comp.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { MapsComponent } from './pages/maps/maps.component';
-import { GoogleMapsModule } from '@angular/google-maps';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
-import { ChartsComponent } from './pages/charts/charts.component';
+
+import { ProsumerHomePageComponent } from './pages/prosumer/prosumer-home-page/prosumer-home-page.component';
+import { ProsumerDevicesPageComponent } from './pages/prosumer/prosumer-devices-page/prosumer-devices-page.component';
+import { ProsumerReportsPageComponent } from './pages/prosumer/prosumer-reports-page/prosumer-reports-page.component';
+import { DsoHomePageComponent } from './pages/dso/dso-home-page/dso-home-page.component';
+import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-prediction-page.component';
+import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
+import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
+import { AdminDsoPageComponent } from './pages/dso/admin/admin-dso-page/admin-dso-page.component';
+import { WattmeterComponent } from './components/wattmeter/wattmeter.component';
+import { ChartsComponent } from './pages/dso/charts/charts.component';
+import { Wattmeter1Component } from './components/wattmeter1/wattmeter1.component';
 
 @NgModule({
   declarations: [
@@ -27,18 +37,29 @@ import { ChartsComponent } from './pages/charts/charts.component';
     AddCompComponent,
     RegisterComponent,
     ChangePasswordComponent,
-    MapsComponent,
     PieChartComponent,
     LineChartComponent,
     BarChartComponent,
-    ChartsComponent
+    ChartsComponent,
+    ProsumerHomePageComponent,
+    ProsumerDevicesPageComponent,
+    ProsumerReportsPageComponent,
+    DsoHomePageComponent,
+    DsoPredictionPageComponent,
+    DsoProsumersPageComponent,
+    AdminProsumersPageComponent,
+    AdminDsoPageComponent,
+    WattmeterComponent,
+    Wattmeter1Component,
+    
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-	FormsModule,
+	  FormsModule,
     HttpClientModule,
-    GoogleMapsModule
+    NgxGaugeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
