@@ -1,4 +1,4 @@
-<google-map height="800px"
+<!-- <google-map height="800px"
             width="1200px"
             [center]="center"
             [zoom]="zoom"
@@ -15,4 +15,10 @@
 </google-map>
 
 <div>Latitude: {{display?.lat}}</div>
-<div>Longitude: {{display?.lng}}</div>
+<div>Longitude: {{display?.lng}}</div> -->
+<!-- <link href='https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css' rel='stylesheet' /> -->
+
+<div class="map"
+     leaflet
+     [leafletOptions]="options">
+</div>

@@ -12,12 +12,11 @@ import { AddCompComponent } from './components/add-comp/add-comp.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { MapsComponent } from './pages/maps/maps.component';
-import { GoogleMapsModule } from '@angular/google-maps';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { ChartsComponent } from './pages/charts/charts.component';
-
+import { LeafletModule } from '@asymmetrik/ngx-leaflet'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,9 +35,9 @@ import { ChartsComponent } from './pages/charts/charts.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-	FormsModule,
+	  FormsModule,
     HttpClientModule,
-    GoogleMapsModule
+    LeafletModule
   ],
   providers: [],
   bootstrap: [AppComponent]
