@@ -1,10 +1,16 @@
-/* body {
+/* 
+#1C315E -tamno plava
+#3E5483 -svetlo plava
+#9FA3AA - siva
+#FFFFFF -bela
+*/
+ body {
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: #1C2228;
-    color: #1C2228;
+    background-color: #c1c3c7;
+    color: #000;
    
 }
-
+/*
 .card{
     background-color: gray;
     margin-right:2px;

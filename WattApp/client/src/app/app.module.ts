@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { NgxGaugeModule } from 'ngx-gauge';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UpdateComponent } from './components/update/update.component';
 import { AddCompComponent } from './components/add-comp/add-comp.component';
@@ -24,9 +23,15 @@ import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-
 import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
 import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
 import { AdminDsoPageComponent } from './pages/dso/admin/admin-dso-page/admin-dso-page.component';
-import { WattmeterComponent } from './components/wattmeter/wattmeter.component';
 import { ChartsComponent } from './pages/dso/charts/charts.component';
-import { Wattmeter1Component } from './components/wattmeter1/wattmeter1.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { CurrentPowerWattmeterComponent } from './components/current-power-wattmeter/current-power-wattmeter.component';
+import { ConsumptionTodayWattmeterComponent } from './components/consumption-today-wattmeter/consumption-today-wattmeter.component';
+import { ConsumptionMonthWattmeterComponent } from './components/consumption-month-wattmeter/consumption-month-wattmeter.component';
+import { ConsumptionYearWattmeterComponent } from './components/consumption-year-wattmeter/consumption-year-wattmeter.component';
+import { NgxGaugeModule } from 'ngx-gauge';
+import { NumberOfUsersMeterComponent } from './components/number-of-users-meter/number-of-users-meter.component';
 
 @NgModule({
   declarations: [
@@ -49,9 +54,13 @@ import { Wattmeter1Component } from './components/wattmeter1/wattmeter1.componen
     DsoProsumersPageComponent,
     AdminProsumersPageComponent,
     AdminDsoPageComponent,
-    WattmeterComponent,
-    Wattmeter1Component,
-    
+    NavbarComponent,
+    SidebarComponent,
+    CurrentPowerWattmeterComponent,
+    ConsumptionTodayWattmeterComponent,
+    ConsumptionMonthWattmeterComponent,
+    ConsumptionYearWattmeterComponent,
+    NumberOfUsersMeterComponent,
 
   ],
   imports: [
@@ -59,6 +68,7 @@ import { Wattmeter1Component } from './components/wattmeter1/wattmeter1.componen
     AppRoutingModule,
 	  FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     NgxGaugeModule,
   ],
   providers: [],

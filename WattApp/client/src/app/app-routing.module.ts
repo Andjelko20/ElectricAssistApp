@@ -9,11 +9,9 @@ import { UpdateComponent } from './components/update/update.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ChartsComponent } from './pages/dso/charts/charts.component';
-import { WattmeterComponent } from './components/wattmeter/wattmeter.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DsoHomePageComponent } from './pages/dso/dso-home-page/dso-home-page.component';
-import { Wattmeter1Component } from './components/wattmeter1/wattmeter1.component';
-
-
  
 const routes: Routes = [
 	{path:'',redirectTo:'home',pathMatch:'full'},
@@ -23,11 +21,8 @@ const routes: Routes = [
 	{path:'update/:id',component:UpdateComponent,canActivate:[AuthenticatedGuard]},
 	{path:'register',component:RegisterComponent},
 	{path:'change-password',component:ChangePasswordComponent},
-	{path:'meter',component:WattmeterComponent},
-	{path:'charts',component:ChartsComponent},
-	{path:'dso',component:DsoHomePageComponent},
-	{path:'wattmeter',component:WattmeterComponent},
-	{path:'wattmeter1',component:Wattmeter1Component},
+	{path:'charts',component:ChartsComponent,canActivate:[AuthenticatedGuard]},
+	{path:'dsohome',component:DsoHomePageComponent,},
 	{path:'**',redirectTo:"login"}
 ];
 
