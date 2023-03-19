@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+/* 
+#1C315E -tamno plava
+#3E5483 -svetlo plava
+#9FA3AA - siva
+#FFFFFF -bela
+*/
+ body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: #c1c3c7;
+    color: #000;
+   
+}
+/*
+.card{
+    background-color: gray;
+    margin-right:2px;
+
+   
+} */

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChartsComponent } from './charts.component';
+import { DsoHomePageComponent } from './dso-home-page.component';
 
-describe('ChartsComponent', () => {
-  let component: ChartsComponent;
-  let fixture: ComponentFixture<ChartsComponent>;
+describe('DsoHomePageComponent', () => {
+  let component: DsoHomePageComponent;
+  let fixture: ComponentFixture<DsoHomePageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChartsComponent ]
+      declarations: [ DsoHomePageComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ChartsComponent);
+    fixture = TestBed.createComponent(DsoHomePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
