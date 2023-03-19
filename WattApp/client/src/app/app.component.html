@@ -1,1 +1,21 @@
-<router-outlet></router-outlet>
+<app-navbar *ngIf="(islogg |async)"
+    id="navbar" 
+    class="navbar navbar-dark fixed-top bg-dark">
+</app-navbar>
+
+<div *ngIf="(islogg |async)"  class="container-fluid">
+    <div class="row" id="mainContent">
+        <app-sidebar 
+        id="sideBar" 
+        class="col-sm-3 col-md-1 d-none d-sm-block sideBar">
+        </app-sidebar>
+
+        <div class="col-sm-9 ml-sm-auto col-md-11 pt-3" id="dashboard">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+<div *ngIf="!(islogg |async)">
+    <router-outlet></router-outlet>
+</div>
+
