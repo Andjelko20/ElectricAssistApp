@@ -23,7 +23,6 @@ import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-
 import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
 import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
 import { AdminDsoPageComponent } from './pages/dso/admin/admin-dso-page/admin-dso-page.component';
-import { ChartsComponent } from './pages/dso/charts/charts.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CurrentPowerWattmeterComponent } from './components/current-power-wattmeter/current-power-wattmeter.component';
@@ -45,7 +44,6 @@ import { NumberOfUsersMeterComponent } from './components/number-of-users-meter/
     PieChartComponent,
     LineChartComponent,
     BarChartComponent,
-    ChartsComponent,
     ProsumerHomePageComponent,
     ProsumerDevicesPageComponent,
     ProsumerReportsPageComponent,
