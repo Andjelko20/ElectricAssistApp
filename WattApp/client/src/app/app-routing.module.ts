@@ -11,6 +11,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { ChartsComponent } from './pages/dso/charts/charts.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'home',pathMatch:'full'},
@@ -20,6 +21,7 @@ const routes: Routes = [
 	{path:'update/:id',component:UpdateComponent,canActivate:[AuthenticatedGuard]},
 	{path:'register',component:RegisterComponent},
 	{path:'change-password',component:ChangePasswordComponent},
+	{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'charts',component:ChartsComponent,canActivate:[AuthenticatedGuard]},
 	{path:'**',redirectTo:"login"}
 ];

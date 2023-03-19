@@ -1,3 +1,11 @@
 .global {
     padding-left: 20%;
 }
+
+.col-md-4 {
+    margin-left: -15px;
+}
+
+.form-label {
+    color: #1C315E;
+}

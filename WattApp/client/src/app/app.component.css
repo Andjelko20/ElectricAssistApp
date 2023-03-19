@@ -1,4 +1,4 @@
-#sideBar{
+#sideBar {
     height: 100vh;
     padding-top: 80px;
     margin-right: 20px;
@@ -6,14 +6,14 @@
     background-color: #FFFFFF!important;
 }
 
-
-#dashboard{
+#dashboard {
     margin-top: 60px;
 }
-#navbar{
 
+#navbar {
     margin: 0;
     padding: 0;
     background-color: #1C315E!important;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.2)
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.2);
+    height: 70px;
 }

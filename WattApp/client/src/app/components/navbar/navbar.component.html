@@ -1,14 +1,20 @@
- <span class="navbar-logo">
+<div class="navbar-logo">
     <button type="button" id="sidebarCollapse" class="btn btn-info">
-        <i class="fas fa-align-justify"></i>
-    </button>
-    
+            <i class="fas fa-align-justify"></i>
+        </button>
+
     <a class="navbar-brand" href="#">
-        <span><img src="../../assets/logo.png" width="55px">WattApp</span>
-        
+        <img src="../../assets/white-logo.png" class="logo">
+        <span>WattApp</span>
     </a>
-</span>
-<span class="user">
-    <i class="fas fa-user"></i> Admin
-</span>
-        
+</div>
+
+<div class="user">
+    <div class="dropdown">
+        <a class="dropbtn"><i class="fa fa-user"></i>Admin</a>
+        <div class="dropdown-content">
+            <a href="#">Settings</a>
+            <a href="#" (click)="logout()">Logout</a>
+        </div>
+    </div>
+</div>

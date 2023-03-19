@@ -1,0 +1,29 @@
+.nav {
+    position: relative;
+}
+
+.nav-link {
+    color: #1C315E;
+}
+
+.active {
+    background-color: #3E5483 !important;
+}
+
+#logout {
+    position: relative;
+    /* margin-top: 600px; */
+}
+
+#logouta {
+    color: #1C315E;
+}
+
+#logouta:hover {
+    color: white;
+}
+
+ul li :hover {
+    background-color: #1C315E;
+    color: white;
+}
