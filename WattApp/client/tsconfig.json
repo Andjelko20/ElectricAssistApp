@@ -21,10 +21,13 @@
     "lib": [
       "es2020",
       "dom"
-     ],
-	"paths": {
-		"tslib" : ["./node_modules/tslib/tslib.d.ts"]
-	}
+    ],
+    "paths": {
+      "tslib": [
+        "./node_modules/tslib/tslib.d.ts"
+      ]
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
