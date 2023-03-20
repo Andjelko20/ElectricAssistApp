@@ -11,6 +11,9 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Server.Services.Impl;
+using Server.Services;
+using Server.Mappers;
 
 namespace Server
 {
@@ -59,6 +62,12 @@ namespace Server
             {
                 options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"));
             });
+            builder.Services.AddScoped<DeviceCategoryService, DeviceCategoryServiceImpl>();
+            builder.Services.AddScoped<DeviceTypeService, DeviceTypeServiceImpl>();
+            builder.Services.AddScoped<DeviceBrandService, DeviceBrandServiceImpl>();
+            builder.Services.AddScoped<DeviceModelService, DeviceModelServiceImpl>();
+            builder.Services.AddScoped<DeviceService, DeviceServiceImpl>();
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddCors();
 

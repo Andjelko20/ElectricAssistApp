@@ -2,12 +2,12 @@
 
 namespace Server.Models.DropDowns.Devices
 {
-    public class DeviceType
+    public class DeviceCategory
     {
-        //Frizider, TV, Bojler, Ostalo
+        //Proizvodjac, potrosac, skladista
         [Key]
         public long Id { get; set; }
         [Required]
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
     }
 }

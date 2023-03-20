@@ -14,13 +14,14 @@ namespace Server.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
-                    Month = table.Column<string>(type: "TEXT", nullable: false),
+                    Month = table.Column<float>(type: "REAL", nullable: false),
+                    Year = table.Column<float>(type: "REAL", nullable: false),
                     Consumption = table.Column<float>(type: "REAL", nullable: false),
                     Value = table.Column<float>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bills", x => new { x.UserId, x.Month });
+                    table.PrimaryKey("PK_Bills", x => new { x.UserId, x.Month, x.Year });
                 });
 
             migrationBuilder.CreateTable(
@@ -78,6 +79,19 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DeviceCategories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeviceCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DeviceDefaultSettings",
                 columns: table => new
                 {
@@ -110,7 +124,11 @@ namespace Server.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    DeviceTypeId = table.Column<long>(type: "INTEGER", nullable: false),
+                    DeviceBrandId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Mark = table.Column<string>(type: "TEXT", nullable: false),
+                    EnerguInKwh = table.Column<float>(type: "REAL", nullable: false),
+                    StandByKwh = table.Column<float>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,11 +142,13 @@ namespace Server.Migrations
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
-                    DeviceTypeId = table.Column<long>(type: "INTEGER", nullable: false),
+                    DeviceCategoryId = table.Column<long>(type: "INTEGER", nullable: false),
                     DeviceBrandId = table.Column<long>(type: "INTEGER", nullable: false),
+                    DeviceTypeId = table.Column<long>(type: "INTEGER", nullable: false),
                     DeviceModelId = table.Column<long>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     EnergyInKwh = table.Column<float>(type: "REAL", nullable: false),
+                    StandByKwh = table.Column<float>(type: "REAL", nullable: false),
                     Visibility = table.Column<bool>(type: "INTEGER", nullable: false),
                     Controlability = table.Column<bool>(type: "INTEGER", nullable: false),
                     TurnOn = table.Column<bool>(type: "INTEGER", nullable: false)
@@ -225,22 +245,27 @@ namespace Server.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Username = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     Blocked = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CountryId = table.Column<long>(type: "INTEGER", nullable: true),
-                    CityId = table.Column<long>(type: "INTEGER", nullable: true),
-                    SettlementId = table.Column<long>(type: "INTEGER", nullable: true),
-                    Address = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    Email = table.Column<string>(type: "TEXT", nullable: true)
+                    RoleId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId",
+                table: "Users",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Username",
@@ -267,6 +292,9 @@ namespace Server.Migrations
                 name: "DeviceBrands");
 
             migrationBuilder.DropTable(
+                name: "DeviceCategories");
+
+            migrationBuilder.DropTable(
                 name: "DeviceDefaultSettings");
 
             migrationBuilder.DropTable(
@@ -288,9 +316,6 @@ namespace Server.Migrations
                 name: "Price");
 
             migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
                 name: "Settlements");
 
             migrationBuilder.DropTable(
@@ -298,6 +323,9 @@ namespace Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

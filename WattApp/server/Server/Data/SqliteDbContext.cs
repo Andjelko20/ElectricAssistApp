@@ -16,10 +16,9 @@ namespace Server.Data
         }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
-        /*
         public DbSet<Device> Devices { get; set; }
-        public DbSet<DeviceModel> DeviceModels { get; set; }
         public DbSet<DeviceType> DeviceTypes { get; set; }
+        public DbSet<DeviceCategory> DeviceCategories { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Settlement> Settlements { get; set; }
@@ -31,7 +30,8 @@ namespace Server.Data
         public DbSet<DeviceEnergyUsage> DeviceEnergyUsages { get; set; }
         public DbSet<DeviceDefaultSettings> DeviceDefaultSettings { get; set; }
         public DbSet<Bill> Bills { get; set; }
-        */
+        public DbSet<DeviceModel> DeviceModels { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,14 +39,13 @@ namespace Server.Data
            .HasOne(u => u.Role)
            .WithMany()
            .HasForeignKey(u => u.RoleId);
-            /*
             modelBuilder.Entity<ChargingScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.Time });
             modelBuilder.Entity<InclusionScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.TurnOn, x.TurnOff });
             modelBuilder.Entity<UserEnergyUsage>().HasKey(x => new { x.UserId, x.Date });
             modelBuilder.Entity<DeviceEnergyUsage>().HasKey(x => new { x.DeviceId, x.StartTime, x.EndTime });
             modelBuilder.Entity<DeviceDefaultSettings>().HasKey(x => new { x.DeviceModelId, x.DeviceBrandId });
-            modelBuilder.Entity<Bill>().HasKey(x => new { x.UserId, x.Month });
-            */
+            modelBuilder.Entity<Bill>().HasKey(x => new { x.UserId, x.Month, x.Year });
+        
         }
 
         public static void Seed(IApplicationBuilder applicationBuilder)
@@ -112,55 +111,68 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
-                /*
-                if (!context.DeviceTypes.Any())
-                {
-                    context.DeviceTypes.AddRange(new[]
-                    {
-                        new DeviceType()
-                        {
-                            Name = "Electricity Producer"
-                        }, 
-                        new DeviceType()
-                        {
-                            Name = "Electricity Consumer"
-                        }, 
-                        new DeviceType(){
-                            Name = "Electricity Stock"
-                        }
-                    }
-                    );
-                    context.SaveChanges();
-                }
                 if (!context.DeviceModels.Any())
                 {
                     context.DeviceModels.AddRange(new[]
                     {
                         new DeviceModel()
                         {
+                            Mark = "oznaka1", 
+                            EnerguInKwh = 10,
+                            StandByKwh = 10
+                        }
+                    }) ;
+                    context.SaveChanges();
+                }
+                
+                if (!context.DeviceCategories.Any())
+                {
+                    context.DeviceCategories.AddRange(new[]
+                    {
+                        new DeviceCategory()
+                        {
+                            Name = "Electricity Producer"
+                        }, 
+                        new DeviceCategory()
+                        {
+                            Name = "Electricity Consumer"
+                        }, 
+                        new DeviceCategory(){
+                            Name = "Electricity Stock"
+                        }
+                    }
+                    );
+                    context.SaveChanges();
+                }
+                if (!context.DeviceTypes.Any())
+                {
+                    context.DeviceTypes.AddRange(new[]
+                    {
+                        new DeviceType()
+                        {
                             Name = "Fridge"
                         },
-                        new DeviceModel()
+                        new DeviceType()
                         {
                             Name = "TV"
                         },
-                        new DeviceModel()
+                        new DeviceType()
                         {
                             Name = "Freezer"
                         },
-                        new DeviceModel()
+                        new DeviceType()
                         {
                             Name = "Boiler"
                         },
-                        new DeviceModel()
+                        new DeviceType()
                         {
                             Name = "Electric car"
                         },
-                        new DeviceModel()
+                        new DeviceType()
                         {
                             Name = "Solar panel"
                         },
-                        new DeviceModel()
+                        new DeviceType()
                         {
                             Name = "Other"
                         }
@@ -307,7 +319,27 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
-                */
+                if (!context.Devices.Any())
+                {
+                    context.Devices.AddRange(new[]
+                    {
+                        new Device()
+                        {
+                            UserId = 1, 
+                            DeviceCategoryId = 1, 
+                            DeviceTypeId = 1, 
+                            DeviceBrandId = 1, 
+                            DeviceModelId = 1, 
+                            EnergyInKwh = 10, 
+                            StandByKwh = 10, 
+                            Visibility = true, 
+                            Controlability = true, 
+                            TurnOn = false
+                        }
+                    });
+                    context.SaveChanges();
+                }
+                
             }
         }
 
