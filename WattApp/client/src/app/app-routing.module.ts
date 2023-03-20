@@ -8,7 +8,6 @@ import { AddCompComponent } from './components/add-comp/add-comp.component';
 import { UpdateComponent } from './components/update/update.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { ChartsComponent } from './pages/charts/charts.component';
 import { MapsComponent } from './components/maps/maps.component';
 //import { ChartsComponent } from './pages/charts/charts.component';
  
@@ -19,9 +18,8 @@ const routes: Routes = [
 	{path:'add-comp',component:AddCompComponent,canActivate:[AuthenticatedGuard]},
 	{path:'update/:id',component:UpdateComponent,canActivate:[AuthenticatedGuard]},
 	{path:'register',component:RegisterComponent},
-	{path:'change-password',component:ChangePasswordComponent},
 	{path:'maps',component:MapsComponent},
-	{path:'charts',component:ChartsComponent},
+	{path:'change-password',component:ChangePasswordComponent},
 	{path:'**',redirectTo:"login"}
 ];
 

@@ -1,0 +1,44 @@
+.card-group{
+    margin-top: 10px;
+    
+}
+.overview{
+    background-color: white;
+    box-shadow: 2px 4px grey;
+    border: 1px solid black;
+}
+.consumption{
+    background-color: white;  
+    border: 1px solid black;
+}
+.price{
+
+    margin-right: 10px;
+    background-color: white;
+    box-shadow: 2px 4px grey;
+    border: 1px solid black;
+}
+.price-body{
+    border: 1px solid black;
+    text-align: center;
+    width: 400px;
+    margin-top: 4px;
+    font-size: 25px;
+    
+}
+
+.history-charts{
+
+    background-color: white;
+    box-shadow: 2px 4px grey;
+    
+    
+}
+/* .history-charts-body{
+    margin-left: 200px;
+} */
+.weather{
+    margin-right: 10px;
+    background-color: white;
+    box-shadow: 2px 4px grey;
+}
