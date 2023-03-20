@@ -16,6 +16,9 @@ namespace Server.DTOs
 
         public bool Blocked { get; set; }
 
+        [Required]
+        public string Email { get; set; }
+
         [MinValue(1)]
         public int RoleId { get; set; } = 4;
 

@@ -34,6 +34,9 @@ namespace Server.Models
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
         */
+
+        public string Email { get; set; }
+
         [ForeignKey(nameof(RoleModel.Id))]
         public int RoleId { get; set; }
 

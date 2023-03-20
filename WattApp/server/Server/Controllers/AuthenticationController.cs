@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Security.Principal;
 using Server.Middlewares;
 using Server.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace Server.Controllers
 {
@@ -21,14 +22,18 @@ namespace Server.Controllers
         public readonly TokenGenerator tokenGenerator;
         public readonly SqliteDbContext _sqliteDb;
         public readonly ILogger<AuthenticationController> logger;
+        public readonly EmailService emailService;
         public AuthenticationController(
             TokenGenerator tokenGenerator,
             SqliteDbContext _sqliteDb, 
-            ILogger<AuthenticationController> logger)
+            ILogger<AuthenticationController> logger,
+            EmailService emailService
+            )
         {
             this.tokenGenerator = tokenGenerator;
             this._sqliteDb = _sqliteDb;
             this.logger = logger;
+            this.emailService = emailService;
         }
         /// <summary>Login</summary>
         /// <response code="200">Success</response>
@@ -80,5 +85,22 @@ namespace Server.Controllers
             await _sqliteDb.SaveChangesAsync();
             return Ok(new { message = "Registered successfully" });
         }
+
+        [HttpPost]
+        [Route("generate_reset_token")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GenerateResetToken([FromBody] EmailDTO requestBody)
+        {
+            var user=await _sqliteDb.Users.SingleOrDefaultAsync(u => u.Email == requestBody.Email);
+            if (user == null)
+                return BadRequest(new Message("User not exist"));
+            emailService.SendEmail(requestBody.Email, "Naslov", "Poruka");
+            return Ok();
+        }
+    }
+    public class EmailDTO
+    {
+        [Required]
+        public string Email { get; set; }
     }
 }
