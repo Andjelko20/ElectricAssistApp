@@ -1,19 +1,39 @@
+/* :host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 #sideBar {
-    height: 100vh;
+    height: 100%;
     padding-top: 80px;
-    margin-right: 20px;
+    width: 200px;
+    top: 0;
+    left: 0;
     position: fixed;
     background-color: #FFFFFF!important;
 }
 
 #dashboard {
     margin-top: 60px;
-}
+} */
 
-#navbar {
+
+/* #navbar {
+    width: auto;
     margin: 0;
     padding: 0;
     background-color: #1C315E!important;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.2);
     height: 70px;
-}
+} */
+
+
+/* #navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+} */

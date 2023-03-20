@@ -1,20 +1,29 @@
-<div class="navbar-logo">
-    <button type="button" id="sidebarCollapse" class="btn btn-info">
-            <i class="fas fa-align-justify"></i>
-        </button>
+<div class="wrapper">
 
-    <a class="navbar-brand" href="#">
-        <img src="../../assets/white-logo.png" class="logo">
-        <span>WattApp</span>
-    </a>
-</div>
 
-<div class="user">
-    <div class="dropdown">
-        <a class="dropbtn"><i class="fa fa-user"></i>Admin</a>
-        <div class="dropdown-content">
-            <a href="#">Settings</a>
-            <a href="#" (click)="logout()">Logout</a>
-        </div>
+    <div id="content">
+
+        <nav class="navbar">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="../../assets/white-logo.png" class="logo">
+                    <span>WattApp</span>
+                </a>
+                <div class="user">
+                    <div class="dropdown">
+                        <a class="dropbtn"><i class="fa fa-user"></i> Admin</a>
+                        <div class="dropdown-content">
+                            <a href="#"><i class="fa fa-settings"></i> Settings</a>
+                            <a href="#" id="logouta" (click)="logout()"><i class="fa fa-user"></i>  Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </div>
 </div>
