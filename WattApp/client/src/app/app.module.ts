@@ -31,6 +31,8 @@ import { ConsumptionMonthWattmeterComponent } from './components/consumption-mon
 import { ConsumptionYearWattmeterComponent } from './components/consumption-year-wattmeter/consumption-year-wattmeter.component';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { NumberOfUsersMeterComponent } from './components/number-of-users-meter/number-of-users-meter.component';
+import { MapsComponent } from './components/maps/maps.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet'; 
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { NumberOfUsersMeterComponent } from './components/number-of-users-meter/
     ConsumptionMonthWattmeterComponent,
     ConsumptionYearWattmeterComponent,
     NumberOfUsersMeterComponent,
+    MapsComponent
 
   ],
   imports: [
@@ -68,6 +71,7 @@ import { NumberOfUsersMeterComponent } from './components/number-of-users-meter/
     HttpClientModule,
     ReactiveFormsModule,
     NgxGaugeModule,
+    LeafletModule
   ],
   providers: [],
   bootstrap: [AppComponent]

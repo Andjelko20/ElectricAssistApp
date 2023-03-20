@@ -28,7 +28,7 @@ export const getMarkers = (): Leaflet.Marker[] => {
         iconAnchor: [13, 41],
         iconUrl: 'assets/blue-marker.svg',
       }),
-      title: 'Workspace'
+      title: 'Marker1'
     } as Leaflet.MarkerOptions),
     new Leaflet.Marker(new Leaflet.LatLng(44.01722378323754, 20.90793433434322), {
       icon: new Leaflet.Icon({
@@ -36,7 +36,7 @@ export const getMarkers = (): Leaflet.Marker[] => {
         iconAnchor: [13, 41],
         iconUrl: 'assets/red-marker.svg',
       }),
-      title: 'Riva'
+      title: 'Marker2'
     } as Leaflet.MarkerOptions),
   ] as Leaflet.Marker[];
 };
