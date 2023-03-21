@@ -7,4 +7,26 @@ import { Component } from '@angular/core';
 })
 export class DsoHomePageComponent {
 
+  componentShown = true;
+  componentShown1 = false;
+  componentShown2 = false;
+
+  showComponent() {
+      this.componentShown = true;
+  
+    
+    this.componentShown1=false;
+    this.componentShown2=false;
+  }
+  showComponent1() {
+      this.componentShown1 = true;
+
+      this.componentShown=false;
+      this.componentShown2=false;
+  }
+  showComponent2() {
+      this.componentShown2 = true;
+      this.componentShown=false;
+      this.componentShown1=false;
+  }
 }

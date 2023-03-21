@@ -26,26 +26,26 @@ export class PieChartComponent implements OnInit {
     var data= [{
       label: 'Percentage of Consumption in kWh',
       data: [30, 20, 15, 15, 14, 6],
-      // backgroundColor: [
-      //         "#4b77a9",
-      //         "#5f255f",
-      //         "#d21243",
-      //         "#B27200",
-      //         "#00000"
-      //     ],
+      backgroundColor: [
+              "#4b77a9",
+              "#5f255f",
+              "#d21243",
+              "#B27200",
+              "#1C315E"
+          ],
       borderWidth: 1,
       borderColor: "#00000"
-    },{label: 'Percentage of Production in kWh',
-    data: [30, 20, 15, 15, 14, 6],
-    // backgroundColor: [
-    //         "#4b77a9",
-    //         "#5f255f",
-    //         "#d21243",
-    //         "#B27200",
-    //         "#00000"
-    //     ],
-    borderWidth: 1,
-    borderColor: "#00000"
+  //   },{label: 'Percentage of Production in kWh',
+  //   data: [30, 20, 15, 15, 14, 6],
+  //   // backgroundColor: [
+  //   //         "#4b77a9",
+  //   //         "#5f255f",
+  //   //         "#d21243",
+  //   //         "#B27200",
+  //   //         "#00000"
+  //   //     ],
+  //   borderWidth: 1,
+  //   borderColor: "#00000"
   },]
     var ctx = "piechart";
     var myChart = new Chart(ctx, {
@@ -71,6 +71,9 @@ export class PieChartComponent implements OnInit {
                 color: '#fff',
             },
             legend: {
+              labels:{
+                color:'#000'
+              },
               position: 'bottom',
               onHover: function (event, legendItem, legend) {
                 document.body.style.cursor = 'pointer';
@@ -79,10 +82,12 @@ export class PieChartComponent implements OnInit {
                   document.body.style.cursor = 'default';
               },
               
+              
             },
             title: {
               display: true,
-              text: 'Communities that consumes and produces'
+              text: 'Communities that consumes and produces',
+              color:'#000'
             }
             
         }}

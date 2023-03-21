@@ -1,11 +1,11 @@
-<div class="col-sm-9 ml-sm-auto col-md-11" style="border: 1px solid black;" id="sve">
+<div class="col-sm-9 ml-sm-auto col-md-11" style="border: 1px solid black;">
   <div class="card-group">
     <div class="price">
       <div class="price-body">
-        <h4 id="price-title">Current price of Electricity</h4>
-        <p><b>2.96</b> RSD/kWh</p>
+        <h1 id="price-title">Current price of Electricity</h1>
+        <p style="font-size: 55px;"><b>2.96</b> RSD/kWh</p>
         <hr style="width: 300px; margin: auto;">
-        <p style="font-size: 12px;">The predicted price may differ from the final one, it is based on...</p>
+        <p style="font-size: 15px;">The predicted price may differ from the final one, it is based on...</p>
         </div>
     </div>
     <div class="overview">
@@ -49,19 +49,27 @@
         </div>
       </div>
       <div class="history-charts">
-        <div class="csv-body">
+        <div class="csv-body" style="border: 1px solid black;">
           <span>Power and Energy </span>
-          <span> csv </span>
+          <button style="cursor: pointer;">CSV</button>
         </div>
-        <div class="csv-body">
-          <a>Day </a>
-          <a> Week </a>
-          <a> Month </a>
-          <a> Year </a>
+        <div class="chart-body" style="border: 1px solid black;margin: auto; width: 50%; padding-top: 2px;">
+          <button (click)="showComponent()" style="cursor: pointer;">Day</button>
+          <button (click)="showComponent1()" style="cursor: pointer;">Week</button>
+          <button (click)="showComponent2()" style="cursor: pointer;">Month</button>
+          <button (click)="showComponent2()" style="cursor: pointer;">Year</button>
         </div>
-        <div class="history-charts-body">
+        <div class="history-charts-body" *ngIf="componentShown">
           <app-bar-chart></app-bar-chart>
         </div>
+        <div class="history-charts-body" *ngIf="componentShown1">
+          <app-pie-chart></app-pie-chart>
+        </div>
+        <div class="history-charts-body" *ngIf="componentShown2">
+          <app-line-chart></app-line-chart>
+        </div>
+        
+        
       </div>
   </div>
 
