@@ -9,6 +9,7 @@ import { UpdateComponent } from './components/update/update.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { DsoHomePageComponent } from './pages/dso/dso-home-page/dso-home-page.component';
+import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'home',pathMatch:'full'},
@@ -19,6 +20,7 @@ const routes: Routes = [
 	{path:'register',component:RegisterComponent},
 	{path:'change-password',component:ChangePasswordComponent},
 	{path:'dsohome',component:DsoHomePageComponent,},
+	{path:'dsoprosumer',component:DsoProsumersPageComponent,},
 	{path:'**',redirectTo:"login"}
 ];
 
