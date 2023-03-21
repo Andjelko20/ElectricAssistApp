@@ -12,6 +12,7 @@ using System.Security.Principal;
 using Server.Middlewares;
 using Server.Services;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Server.Controllers
 {
@@ -94,13 +95,68 @@ namespace Server.Controllers
             var user=await _sqliteDb.Users.SingleOrDefaultAsync(u => u.Email == requestBody.Email);
             if (user == null)
                 return BadRequest(new Message("User not exist"));
-            emailService.SendEmail(requestBody.Email, "Naslov", "Poruka");
+            var resetPassword = await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r => r.UserId == user.Id);
+            bool exists = true;
+            if (resetPassword == null)
+            {
+                exists = false;
+                resetPassword = new ResetPasswordModel()
+                {
+                    UserId = user.Id,
+                };
+            }
+            resetPassword.ResetKey = CreatePassword(10);
+            resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
+            emailService.SendEmail(requestBody.Email, "Reset password", "Your code for password reset:<b>"+resetPassword.ResetKey+"</b>",true);
+            if (!exists)
+                _sqliteDb.ResetPassword.Add(resetPassword);
+            _sqliteDb.SaveChangesAsync();
+            return Ok();
+        }
+
+        public string CreatePassword(int length)
+        {
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            while (0 < length--)
+            {
+                res.Append(valid[rnd.Next(valid.Length)]);
+            }
+            return res.ToString();
+        }
+
+        [HttpPost]
+        [Route("reset_password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO requestBody)
+        {
+            _sqliteDb.ResetPassword.RemoveRange(_sqliteDb.ResetPassword.Where(r=>r.ExpireAt<DateTime.Now));
+            var resetPassword=await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r=>r.ResetKey==requestBody.ResetKey);
+            if (resetPassword == null)
+                return BadRequest();
+            var user = await _sqliteDb.Users.FirstOrDefaultAsync(u => u.Id == resetPassword.UserId);
+            if (user == null)
+                return BadRequest();
+            user.Password = requestBody.NewPassword;
+            _sqliteDb.SaveChangesAsync();
             return Ok();
         }
     }
     public class EmailDTO
     {
         [Required]
+        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", ErrorMessage = "Not email")]
         public string Email { get; set; }
+    }
+
+    public class ResetPasswordDTO
+    {
+        [Required]
+
+        public string ResetKey { get; set; }
+
+        [Required]
+        public string NewPassword { get; set; }
     }
 }
