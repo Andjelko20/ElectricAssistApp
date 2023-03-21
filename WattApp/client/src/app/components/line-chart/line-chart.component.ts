@@ -30,6 +30,7 @@ export class LineChartComponent implements OnInit {
             data: [130,10,23,120,70,90,80,79,45,34,76,89],
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgb(255, 99, 132)',
+            
           },
           {
             label: 'Consumption Bresnica',
@@ -43,8 +44,8 @@ export class LineChartComponent implements OnInit {
             label: 'Consumption Pivara',
             data: [120,100,54,80,120,140,80,10,20,30,150,140],
             borderDash: [5, 5],
-            borderColor: '#fff',
-            backgroundColor: '#fff',
+            borderColor: '#3E5483',
+            backgroundColor: '#3E5483',
           }
           ,
           {
@@ -64,19 +65,27 @@ export class LineChartComponent implements OnInit {
       options: {
         scales:{
           y: {
+            ticks:{
+              color:'#000'
+            },
             position: "left",
             suggestedMin: 5,
             suggestedMax: 140,
             title:{
               display:true,
-              text: "consumption in kWh"
+              text: "consumption in kWh",
+              color:'#000'
             }
           }
           ,
           x:{
+            ticks:{
+              color:'#000'
+            },
             title:{
               display:true,
-              text: "Past year consumption per months"
+              text: "Past year consumption per months",
+              color:'#000'
             }
           }
           ,
@@ -94,7 +103,8 @@ export class LineChartComponent implements OnInit {
             },
             labels:{
               usePointStyle: true,
-
+              color:'#000'
+           
             }
             ,
             align: "center"

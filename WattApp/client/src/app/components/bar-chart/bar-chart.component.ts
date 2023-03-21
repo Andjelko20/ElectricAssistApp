@@ -26,14 +26,16 @@ export class BarChartComponent implements OnInit{
     
     const Linechart =new Chart("barplot", {
         type: 'bar',
+       
         data : {
           labels: this.itemList,
+          
           datasets: [
             {
               label: 'Consumption',
               data: [111,10,23,120,70,90,80],
               borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)'
+              backgroundColor: 'rgb(128, 0, 128)',
               
             },
             {
@@ -42,14 +44,8 @@ export class BarChartComponent implements OnInit{
               borderColor: 'rgb(255, 165, 0)',
               backgroundColor: 'rgb(255, 165, 0)'
             },
-            {
-              label: 'Number of Users',
-              data: [111,10,23,150,70,90,80],
-              borderColor: 'rgb(0, 128, 0)',
-              backgroundColor: 'rgb(0, 128, 0)',
-              yAxisID: 'Users',
-              
-            },
+           
+            
           ]
           
         },
@@ -57,29 +53,33 @@ export class BarChartComponent implements OnInit{
         {
           scales:{
             y: {
+              ticks:{
+                color:'#000'
+              },
               position: "left",
               suggestedMin: 5,
               suggestedMax: 140,
               title:{
                 display:true,
-                text: "consumption in kWh"
+                text: "consumption in kWh",
+                color: '#000',
+                
               }
             }
             ,
             x:{
+              ticks:{
+                color:'#000'
+              },
               title:{
                 display:true,
-                text: "communities"
+                text: "communities",
+                color: '#000'
               }
             }
-            ,
-            Users:{
-              position:"right",
-              title:{
-                display:true,
-                text: "number of users"
-              }
-            }
+            
+              
+            
             
             
           },
@@ -97,7 +97,7 @@ export class BarChartComponent implements OnInit{
               position: 'bottom',
               labels: {
                 usePointStyle: true,
-                
+                color: '#000'
                 // font:{
                 //   size:12
                 // } 
@@ -108,7 +108,8 @@ export class BarChartComponent implements OnInit{
             },
             title: {
               display: true,
-              text: 'Bar plot'
+              text: 'Bar plot',
+              color: '#000'
             }
           }
         }

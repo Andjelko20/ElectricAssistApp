@@ -9,31 +9,31 @@ export class NumberOfUsersMeterComponent {
 
 
 enableThresholds: boolean = false;
-value: number = 28.3;
-thick: number = 20;
+value: number = 2222;
+thick: number = 18;
 size: number = 300;
 type: any = "semi";
 cap: any = "round";
-label: string = "Speed";
+label: string = "Active users";
 prepend: any = '';
-append: any = 'km/hr';
+append: any = 'kWh';
 min: number = 0;
-max: number = 100;
+max: number = 10000;
 foregroundColor: string = '#009688';
 backgroundColor: string = '#ebebeb';
 
 enableMarkers: boolean = false;
 
 thresholdConfig = {
-  '0': { color: 'green', bgOpacity: .2 },
-  '40': { color: 'orange', bgOpacity: .2 },
-  '75.5': { color: 'red', bgOpacity: .2 }
+  '0': { color: 'green', "bgOpacity": 0.2 },
+  '4000': { color: 'orange', "bgOpacity": 0.2 },
+  '7500': { color: 'red', "bgOpacity": 0.2 }
 };
 
 markerConfig = {
-    "30": { color: '#555', size: 8, label: '30', type: 'line'},
-    "70": { color: '#555', size: 8, label: '60', type: 'line'},
-    "100": { color: '#555', size: 8, label: '100', type: 'line'},
+    "3000": { color: '#555', size: 8, label: '30', type: 'line'},
+    "7000": { color: '#555', size: 8, label: '60', type: 'line'},
+    "10000": { color: '#555', size: 8, label: '100', type: 'line'},
 }
 
 onClick() {
