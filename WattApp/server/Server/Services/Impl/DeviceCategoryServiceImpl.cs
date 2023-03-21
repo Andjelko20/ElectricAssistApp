@@ -1,4 +1,5 @@
 ﻿using Server.Data;
+using Server.Models.DropDowns.Devices;
 
 namespace Server.Services.Impl
 {
@@ -15,6 +16,11 @@ namespace Server.Services.Impl
         {
             var category = _context.DeviceCategories.FindAsync(categoryId).Result;
             return category == null ? null : category.Name;
+        }
+
+        public List<DeviceCategory> getAllCategories()
+        {
+            return _context.DeviceCategories.ToList();
         }
     }
 }

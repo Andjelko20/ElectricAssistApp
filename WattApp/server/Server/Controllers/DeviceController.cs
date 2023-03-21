@@ -53,9 +53,9 @@ namespace Server.Controllers
         }
 
         [HttpGet("/allDevices")]
-        public List<DeviceResponseDTO> getAllDevices()
+        public List<DeviceResponseDTO> getAllDevices(long roleId)
         {
-            List<Device> devices = _deviceService.getAllDevices();
+            List<Device> devices = _deviceService.getAllDevices(roleId);
             List<DeviceResponseDTO> responses = new List<DeviceResponseDTO>();
             foreach (Device device in devices)
             {
@@ -72,9 +72,9 @@ namespace Server.Controllers
         }
 
         [HttpPut("/turnOn")]
-        public DeviceResponseDTO changeTurnOnStatus(long id)
+        public DeviceResponseDTO changeTurnOnStatus(long deviceId, UserCheckDTO userCheck)
         {
-            return _mapper.Map<DeviceResponseDTO>(_deviceService.changeTurnOnStatus(id));
+            return _mapper.Map<DeviceResponseDTO>(_deviceService.changeTurnOnStatus(deviceId, userCheck));
         }
 
         [HttpPut]
