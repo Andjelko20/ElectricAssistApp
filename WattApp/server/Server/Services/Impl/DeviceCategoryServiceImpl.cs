@@ -14,7 +14,7 @@ namespace Server.Services.Impl
         public string getCategoryNameById(long categoryId)
         {
             var category = _context.DeviceCategories.FindAsync(categoryId).Result;
-            return category.Name;
+            return category == null ? null : category.Name;
         }
     }
 }
