@@ -1,7 +1,20 @@
 .global {
+    margin-left: 10px;
+    width: 100%;
     display: flex;
     justify-content: center;
-    height: 100%;
+}
+
+input {
+    color: #1C315E;
+}
+
+.global1 {
+    box-shadow: 2px 4px gray;
+    background-color: white;
+    padding: 20px;
+    width: 50%;
+    margin-bottom: 30px;
 }
 
 h1 {
