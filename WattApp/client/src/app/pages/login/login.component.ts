@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Route,Router,NavigationEnd } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 // import jwt_decode from "jwt-decode";
 // import { Token } from '../../models/users.model';
@@ -15,7 +14,7 @@ export class LoginComponent implements OnInit {
 	username='';
 	password='';
 	errorMsg='';
-	
+
 	constructor(private authService: AuthService,private router:Router) { }
 
 	ngOnInit(): void {
@@ -28,7 +27,6 @@ export class LoginComponent implements OnInit {
 	}
 
 	login(){
-		
 		if(this.username.trim().length===0){
 			this.errorMsg="User name is required";
 			return;
@@ -48,7 +46,6 @@ export class LoginComponent implements OnInit {
 					}
 					let body = response.body as any;
 					localStorage.setItem("token",body.token);
-					this.authService.isLoginSubject.next(true)
 					this.router.navigate(["/home"]);
 				},
 				error:response=>{
@@ -59,13 +56,10 @@ export class LoginComponent implements OnInit {
 					}
 					let body = response.body as any;
 					localStorage.setItem("token",body.token);
-					this.authService.isLoginSubject.next(true)
 					this.router.navigate(["/home"]);
 				}
 			}
 		  );
-	
-    		
 	}
 	// checkToken() {
 	// 	const token = localStorage.getItem('token');
