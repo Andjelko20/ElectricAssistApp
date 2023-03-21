@@ -6,6 +6,10 @@ namespace Server.Services
     {
         public Device getDeviceById(long deviceId);
         public Device addNewDevice(Device device);
+        public List<Device> getAllDevices();
+        public Device changeTurnOnStatus(long deviceId);
+        public Device editDevice(Device device);
+        public Device deleteDeviceById(long id);
 
     }
 }

@@ -1,16 +1,12 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs;
-using Server.Mappers;
 using Server.Models;
 using Server.Services;
-using System.Globalization;
-using System.Numerics;
 
 namespace Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/devices")]
     [ApiController]
     public class DeviceController : ControllerBase
     {
@@ -41,6 +37,63 @@ namespace Server.Controllers
             deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
 
             return deviceDTO;
+        }
+
+        [HttpPost]
+        public DeviceResponseDTO addNewDevice(DeviceRequestDTO deviceRequestDTO)
+        {
+            DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.addNewDevice(_mapper.Map<Device>(deviceRequestDTO)));
+
+            deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
+            deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
+            deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
+            deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
+
+            return deviceDTO;
+        }
+
+        [HttpGet("/allDevices")]
+        public List<DeviceResponseDTO> getAllDevices()
+        {
+            List<Device> devices = _deviceService.getAllDevices();
+            List<DeviceResponseDTO> responses = new List<DeviceResponseDTO>();
+            foreach (Device device in devices)
+            {
+                DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(device);
+
+                deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
+                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
+                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
+                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
+
+                responses.Add(deviceDTO);
+            }
+            return responses;
+        }
+
+        [HttpPut("/turnOn")]
+        public DeviceResponseDTO changeTurnOnStatus(long id)
+        {
+            return _mapper.Map<DeviceResponseDTO>(_deviceService.changeTurnOnStatus(id));
+        }
+
+        [HttpPut]
+        public DeviceResponseDTO editDevice(DeviceRequestDTO deviceRequestDTO)
+        {
+            DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.editDevice(_mapper.Map<Device>(deviceRequestDTO)));
+
+            deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
+            deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
+            deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
+            deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
+
+            return deviceDTO;
+        }
+
+        [HttpDelete]
+        public DeviceResponseDTO deleteDeviceById(long id)
+        {
+           return  _mapper.Map<DeviceResponseDTO>(_deviceService.deleteDeviceById(id));
         }
     }
 }
