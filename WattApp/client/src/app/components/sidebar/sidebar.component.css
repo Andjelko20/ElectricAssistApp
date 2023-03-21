@@ -1,0 +1,37 @@
+#sidebarCollapse {
+    border: 1px solid black;
+    background-color: #1C315E;
+    border: #1C315E;
+    width: 60px;
+}
+
+.nav {
+    position: relative;
+}
+
+.nav-link {
+    color: #1C315E;
+}
+
+.active {
+    background-color: white !important;
+}
+
+#logout {
+    position: relative;
+    /* margin-top: 600px; */
+}
+
+#logouta {
+    color: #1C315E;
+    padding-left: 55px;
+}
+
+#logouta:hover {
+    color: white;
+}
+
+ul li :hover {
+    background-color: #1C315E;
+    color: white;
+}
