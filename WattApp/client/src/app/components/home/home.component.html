@@ -4,47 +4,49 @@
     </ul> 
 
 </div> -->
-<div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-11">
-    <div class="first">
-        <br>
-        <!--
+<div class="wrapper1">
+    <div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-11">
+        <div class="first">
+            <br>
+            <!--
     <br>
     <h2>List </h2>
     <br> -->
 
-        <table *ngIf="users">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>User name</th>
-                    <th>Block</th>
-                    <th>Role</th>
-                    <th></th>
-                    <!--<th></th>-->
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let user of users index as i">
-                    <td>{{user.name}}</td>
-                    <td>{{user.userName}}</td>
-                    <td>{{user.block}} </td>
-                    <td>{{user.role}}</td>
-                    <td><a [routerLink]='["/update",user.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
-                    <td>
-                        <button style="width: 84px; height:30px" *ngIf="user.block===true" (click)="unblockUser(user.id)"> UNBLOCK</button>
-                        <button style="width: 84px; height:30px" *ngIf="user.block===false" (click)="blockUser(user.id)"> BLOCK</button>
-                    </td>
-                    <!--<td><a [routerLink]='["/change-password"]'><button style="min-width: 84px; height:30px" > PASSWORD</button></a></td>-->
+            <table *ngIf="users">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>User name</th>
+                        <th>Block</th>
+                        <th>Role</th>
+                        <th></th>
+                        <!--<th></th>-->
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users index as i">
+                        <td>{{user.name}}</td>
+                        <td>{{user.userName}}</td>
+                        <td>{{user.block}} </td>
+                        <td>{{user.role}}</td>
+                        <td><a [routerLink]='["/update",user.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
+                        <td>
+                            <button style="width: 84px; height:30px" *ngIf="user.block===true" (click)="unblockUser(user.id)"> UNBLOCK</button>
+                            <button style="width: 84px; height:30px" *ngIf="user.block===false" (click)="blockUser(user.id)"> BLOCK</button>
+                        </td>
+                        <!--<td><a [routerLink]='["/change-password"]'><button style="min-width: 84px; height:30px" > PASSWORD</button></a></td>-->
 
-                    <td><button style="width: 84px; height:30px" (click)="delete(user.id)">DELETE</button></td>
+                        <td><button style="width: 84px; height:30px" (click)="delete(user.id)">DELETE</button></td>
 
-                </tr>
-            </tbody>
-        </table>
-        <br>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
 
+        </div>
+        <button id="buttonAdd" [routerLink]='["/add-comp"]'>ADD</button>
     </div>
-    <button id="buttonAdd" [routerLink]='["/add-comp"]'>ADD</button>
 </div>
