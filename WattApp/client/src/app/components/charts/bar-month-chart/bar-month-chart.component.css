@@ -1,9 +1,9 @@
-#barplot{
+#barplot {
+    height: 100%;
     color: white;
 }
-.chart{
-    width: 1500px;
-    height: 580px;
-    margin-left: 150px;
-    
+
+.chart {
+    width: 1200px;
+    height: 490px;
 }
