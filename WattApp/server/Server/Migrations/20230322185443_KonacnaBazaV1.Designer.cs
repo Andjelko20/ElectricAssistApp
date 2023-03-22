@@ -11,8 +11,8 @@ using Server.Data;
 namespace Server.Migrations
 {
     [DbContext(typeof(SqliteDbContext))]
-    [Migration("20230314231155_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230322185443_KonacnaBazaV1")]
+    partial class KonacnaBazaV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,8 +24,11 @@ namespace Server.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Month")
-                        .HasColumnType("TEXT");
+                    b.Property<float>("Month")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("Year")
+                        .HasColumnType("REAL");
 
                     b.Property<float>("Consumption")
                         .HasColumnType("REAL");
@@ -33,7 +36,7 @@ namespace Server.Migrations
                     b.Property<float>("Value")
                         .HasColumnType("REAL");
 
-                    b.HasKey("UserId", "Month");
+                    b.HasKey("UserId", "Month", "Year");
 
                     b.ToTable("Bills");
                 });
@@ -69,6 +72,9 @@ namespace Server.Migrations
                     b.Property<long>("DeviceBrandId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long>("DeviceCategoryId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<long>("DeviceModelId")
                         .HasColumnType("INTEGER");
 
@@ -80,6 +86,9 @@ namespace Server.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<float>("StandByKwh")
+                        .HasColumnType("REAL");
 
                     b.Property<bool>("TurnOn")
                         .HasColumnType("INTEGER");
@@ -130,6 +139,41 @@ namespace Server.Migrations
                     b.ToTable("DeviceEnergyUsages");
                 });
 
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.Agregations.TypeBrand", b =>
+                {
+                    b.Property<long>("TypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TypeId", "BrandId");
+
+                    b.ToTable("TypeBrands");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.Agregations.TypeBrandModel", b =>
+                {
+                    b.Property<long>("TypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("ModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("EnergyKwh")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("StandByKwh")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("TypeId", "BrandId", "ModelId");
+
+                    b.ToTable("TypeBrandModels");
+                });
+
             modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceBrand", b =>
                 {
                     b.Property<long>("Id")
@@ -145,13 +189,28 @@ namespace Server.Migrations
                     b.ToTable("DeviceBrands");
                 });
 
-            modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceModel", b =>
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceCategory", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceCategories");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceModel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Mark")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -164,6 +223,9 @@ namespace Server.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CategoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -258,6 +320,24 @@ namespace Server.Migrations
                     b.ToTable("Price");
                 });
 
+            modelBuilder.Entity("Server.Models.ResetPasswordModel", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ExpireAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ResetKey")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("ResetPassword");
+                });
+
             modelBuilder.Entity("Server.Models.RoleModel", b =>
                 {
                     b.Property<int>("Id")
@@ -301,16 +381,7 @@ namespace Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("Blocked")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("CityId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("CountryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
@@ -324,13 +395,7 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("RoleId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("SettlementId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Username")
@@ -339,10 +404,23 @@ namespace Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RoleId");
+
                     b.HasIndex("Username")
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Server.Models.UserModel", b =>
+                {
+                    b.HasOne("Server.Models.RoleModel", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 #pragma warning restore 612, 618
         }

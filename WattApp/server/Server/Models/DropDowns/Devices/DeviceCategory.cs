@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Models.DropDowns.Devices
 {
-    public class DeviceBrand
+    public class DeviceCategory
     {
-        //Vox, Vivax, Tesla...
+        //Proizvodjac, potrosac, skladista
         [Key]
         public long Id { get; set; }
         [Required]

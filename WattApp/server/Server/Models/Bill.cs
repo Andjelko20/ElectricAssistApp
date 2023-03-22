@@ -9,7 +9,9 @@ namespace Server.Models
         [Required]
         public long UserId { get; set; }
         [Required]
-        public string Month { get; set; }
+        public float Month { get; set; }
+        [Required]
+        public float Year { get; set; }
         [Required]
         [Range(0, float.MaxValue)]
         public float Consumption { get; set; }

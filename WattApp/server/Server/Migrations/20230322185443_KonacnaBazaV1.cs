@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Server.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class KonacnaBazaV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,13 +14,14 @@ namespace Server.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
-                    Month = table.Column<string>(type: "TEXT", nullable: false),
+                    Month = table.Column<float>(type: "REAL", nullable: false),
+                    Year = table.Column<float>(type: "REAL", nullable: false),
                     Consumption = table.Column<float>(type: "REAL", nullable: false),
                     Value = table.Column<float>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bills", x => new { x.UserId, x.Month });
+                    table.PrimaryKey("PK_Bills", x => new { x.UserId, x.Month, x.Year });
                 });
 
             migrationBuilder.CreateTable(
@@ -78,6 +79,19 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DeviceCategories",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeviceCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DeviceDefaultSettings",
                 columns: table => new
                 {
@@ -110,7 +124,7 @@ namespace Server.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Mark = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,11 +138,13 @@ namespace Server.Migrations
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
-                    DeviceTypeId = table.Column<long>(type: "INTEGER", nullable: false),
+                    DeviceCategoryId = table.Column<long>(type: "INTEGER", nullable: false),
                     DeviceBrandId = table.Column<long>(type: "INTEGER", nullable: false),
+                    DeviceTypeId = table.Column<long>(type: "INTEGER", nullable: false),
                     DeviceModelId = table.Column<long>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     EnergyInKwh = table.Column<float>(type: "REAL", nullable: false),
+                    StandByKwh = table.Column<float>(type: "REAL", nullable: false),
                     Visibility = table.Column<bool>(type: "INTEGER", nullable: false),
                     Controlability = table.Column<bool>(type: "INTEGER", nullable: false),
                     TurnOn = table.Column<bool>(type: "INTEGER", nullable: false)
@@ -144,6 +160,7 @@ namespace Server.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    CategoryId = table.Column<long>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -178,6 +195,20 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ResetPassword",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ResetKey = table.Column<string>(type: "TEXT", nullable: false),
+                    ExpireAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ResetPassword", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -205,6 +236,33 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TypeBrandModels",
+                columns: table => new
+                {
+                    TypeId = table.Column<long>(type: "INTEGER", nullable: false),
+                    BrandId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ModelId = table.Column<long>(type: "INTEGER", nullable: false),
+                    EnergyKwh = table.Column<float>(type: "REAL", nullable: false),
+                    StandByKwh = table.Column<float>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TypeBrandModels", x => new { x.TypeId, x.BrandId, x.ModelId });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TypeBrands",
+                columns: table => new
+                {
+                    TypeId = table.Column<long>(type: "INTEGER", nullable: false),
+                    BrandId = table.Column<long>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TypeBrands", x => new { x.TypeId, x.BrandId });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserEnergyUsages",
                 columns: table => new
                 {
@@ -225,22 +283,28 @@ namespace Server.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Username = table.Column<string>(type: "TEXT", nullable: false),
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     Blocked = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CountryId = table.Column<long>(type: "INTEGER", nullable: true),
-                    CityId = table.Column<long>(type: "INTEGER", nullable: true),
-                    SettlementId = table.Column<long>(type: "INTEGER", nullable: true),
-                    Address = table.Column<string>(type: "TEXT", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    Email = table.Column<string>(type: "TEXT", nullable: true)
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    RoleId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId",
+                table: "Users",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Username",
@@ -267,6 +331,9 @@ namespace Server.Migrations
                 name: "DeviceBrands");
 
             migrationBuilder.DropTable(
+                name: "DeviceCategories");
+
+            migrationBuilder.DropTable(
                 name: "DeviceDefaultSettings");
 
             migrationBuilder.DropTable(
@@ -288,16 +355,25 @@ namespace Server.Migrations
                 name: "Price");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "ResetPassword");
 
             migrationBuilder.DropTable(
                 name: "Settlements");
+
+            migrationBuilder.DropTable(
+                name: "TypeBrandModels");
+
+            migrationBuilder.DropTable(
+                name: "TypeBrands");
 
             migrationBuilder.DropTable(
                 name: "UserEnergyUsages");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
         }
     }
 }

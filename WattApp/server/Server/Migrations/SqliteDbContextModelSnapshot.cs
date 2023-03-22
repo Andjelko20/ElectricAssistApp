@@ -17,6 +17,307 @@ namespace Server.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
 
+            modelBuilder.Entity("Server.Models.Bill", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("Month")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("Year")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("Consumption")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("Value")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("UserId", "Month", "Year");
+
+                    b.ToTable("Bills");
+                });
+
+            modelBuilder.Entity("Server.Models.ChargingScheduler", b =>
+                {
+                    b.Property<long>("DeviceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Day")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("DeviceId", "Day", "Time");
+
+                    b.ToTable("ChargingSchedulers");
+                });
+
+            modelBuilder.Entity("Server.Models.Device", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Controlability")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("DeviceBrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("DeviceCategoryId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("DeviceModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("DeviceTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("EnergyInKwh")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("StandByKwh")
+                        .HasColumnType("REAL");
+
+                    b.Property<bool>("TurnOn")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Visibility")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Devices");
+                });
+
+            modelBuilder.Entity("Server.Models.DeviceDefaultSettings", b =>
+                {
+                    b.Property<long>("DeviceModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("DeviceBrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float?>("DefaultKwh")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("DeviceModelId", "DeviceBrandId");
+
+                    b.ToTable("DeviceDefaultSettings");
+                });
+
+            modelBuilder.Entity("Server.Models.DeviceEnergyUsage", b =>
+                {
+                    b.Property<long>("DeviceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("EnergyInKWh")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("DeviceId", "StartTime", "EndTime");
+
+                    b.ToTable("DeviceEnergyUsages");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.Agregations.TypeBrand", b =>
+                {
+                    b.Property<long>("TypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TypeId", "BrandId");
+
+                    b.ToTable("TypeBrands");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.Agregations.TypeBrandModel", b =>
+                {
+                    b.Property<long>("TypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("ModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("EnergyKwh")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("StandByKwh")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("TypeId", "BrandId", "ModelId");
+
+                    b.ToTable("TypeBrandModels");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceBrand", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceBrands");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceCategory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceCategories");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceModel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Mark")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceModels");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DeviceTypes");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Location.City", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CountryId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Location.Country", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Location.Settlement", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Settlements");
+                });
+
+            modelBuilder.Entity("Server.Models.InclusionScheduler", b =>
+                {
+                    b.Property<long>("DeviceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Day")
+                        .HasColumnType("TEXT");
+
+                    b.Property<TimeOnly>("TurnOn")
+                        .HasColumnType("TEXT");
+
+                    b.Property<TimeOnly>("TurnOff")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("DeviceId", "Day", "TurnOn", "TurnOff");
+
+                    b.ToTable("InclusionSchedulers");
+                });
+
+            modelBuilder.Entity("Server.Models.Price", b =>
+                {
+                    b.Property<float>("PriceGreenZoneCheapPower")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("PriceGreenZoneCheapPower");
+
+                    b.ToTable("Price");
+                });
+
             modelBuilder.Entity("Server.Models.ResetPasswordModel", b =>
                 {
                     b.Property<int>("UserId")
@@ -50,6 +351,28 @@ namespace Server.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("Server.Models.UserEnergyUsage", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float?>("Consumption")
+                        .HasColumnType("REAL");
+
+                    b.Property<float?>("EnergyStock")
+                        .HasColumnType("REAL");
+
+                    b.Property<float?>("Production")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("UserId", "Date");
+
+                    b.ToTable("UserEnergyUsages");
+                });
+
             modelBuilder.Entity("Server.Models.UserModel", b =>
                 {
                     b.Property<int>("Id")
@@ -60,7 +383,6 @@ namespace Server.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")

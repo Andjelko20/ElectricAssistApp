@@ -8,7 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Server.Middlewares;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Server.Services.Implementations;
 using Server.Services;
+using Server.Mappers;
 
 namespace Server
 {

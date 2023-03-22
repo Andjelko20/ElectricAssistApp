@@ -8,6 +8,8 @@ using Server.Filters;
 using Server.Services;
 using System.Reflection;
 using System.Text;
+using Server.Services.Implementations;
+using Server.Mappers;
 
 namespace Server
 {
@@ -23,6 +25,12 @@ namespace Server
             //builder.Services.Add(new ServiceDescriptor(typeof(EmailService), new EmailService(builder.Configuration)));
             builder.Services.AddTransient<IEmailService, EmailService>();
             builder.Services.AddTransient<ITokenService, TokenService>();
+			builder.Services.AddScoped<DeviceCategoryService, DeviceCategoryServiceImpl>();
+            builder.Services.AddScoped<DeviceTypeService, DeviceTypeServiceImpl>();
+            builder.Services.AddScoped<DeviceBrandService, DeviceBrandServiceImpl>();
+            builder.Services.AddScoped<DeviceModelService, DeviceModelServiceImpl>();
+            builder.Services.AddScoped<DeviceService, DeviceServiceImpl>();
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.Configure<ApiBehaviorOptions>(options
                 => options.SuppressModelStateInvalidFilter = true);

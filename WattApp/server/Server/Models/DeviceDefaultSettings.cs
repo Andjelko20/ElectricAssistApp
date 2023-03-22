@@ -6,7 +6,7 @@ namespace Server.Models
 {
     public class DeviceDefaultSettings
     {
-        [ForeignKey(nameof(DeviceModel.Id))]
+        [ForeignKey(nameof(DeviceType.Id))]
         public long DeviceModelId { get; set; }
         [ForeignKey(nameof(DeviceBrand.Id))]
         public long DeviceBrandId { get; set; }
