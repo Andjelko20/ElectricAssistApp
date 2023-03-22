@@ -1,14 +1,16 @@
 <div class="col-sm-9 ml-sm-auto col-md-11" style="border: 1px solid black;">
-    <div style="background-color: gray;">
-        <div class="tabel-map" style="border: 1px solid black;margin: auto; width: 50%; padding-top: 2px;">
-            <button (click)="showComponent()" style="cursor: pointer;">Tabelar View</button>
+    <div style="background-color: white;">
+        <div class="tabel-map" style="border: 1px solid black;margin: auto; width: 80%; padding: 2px;">
+            <span >Number of users: 243</span>
+            <button (click)="showComponent()" style="cursor: pointer; ">Tabelar View</button>
             <button (click)="showComponent1()" style="cursor: pointer;">Map</button>
         </div>
         <div class="tabel-body" *ngIf="componentShown">
-
+            <app-all-prosumers></app-all-prosumers>
         </div>
-        <div class="map-body" *ngIf="componentShown1">
-
+        <div class="map" *ngIf="componentShown1">
+            <app-maps *ngIf="componentShown1"></app-maps>
         </div>
     </div>
 </div>
+<app-maps *ngIf="componentShown1"></app-maps>
