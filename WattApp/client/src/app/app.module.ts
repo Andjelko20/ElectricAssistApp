@@ -39,6 +39,7 @@ import { LineWeekChartComponent } from './components/charts/line-week-chart/line
 import { BarMonthChartComponent } from './components/charts/bar-month-chart/bar-month-chart.component';
 import { BarYearChartComponent } from './components/charts/bar-year-chart/bar-year-chart.component';
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-pass
     BarYearChartComponent,
     BarMonthChartComponent,
     LineWeekChartComponent,
-    ForgotPasswordPageComponent
+    ForgotPasswordPageComponent,
+    ResetPasswordPageComponent
 
   ],
   imports: [

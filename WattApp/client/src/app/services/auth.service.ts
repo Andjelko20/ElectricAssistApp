@@ -31,6 +31,9 @@ export class AuthService {
   sendEmail(email:string):Observable<any>{
 	return this.http.post(environment.serverUrl+'/api/authentication/generate_reset_token',{email:email});
   }
+  resetPasswordWithResetCode(resetKey:string,newPassword:string):Observable<any>{
+	return this.http.post(environment.serverUrl+'/api/authentication/reset_password',{resetKey:resetKey,newPassword:newPassword});
+  }
   getAllUsers():Observable<any>
   {
     return this.http.get<any>(environment.serverUrl+'/api/users/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
