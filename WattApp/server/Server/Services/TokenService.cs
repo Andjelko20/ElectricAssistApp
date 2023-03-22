@@ -5,20 +5,33 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Server.Utilities
+namespace Server.Services
 {
-    public class TokenGenerator
+    /// <summary>
+    /// Create token and get data from token
+    /// </summary>
+    public class TokenService:ITokenService
     {
+        /// <summary>
+        /// Represents a set of key/value application configuration properties
+        /// </summary>
         public readonly IConfiguration config;
-        public TokenGenerator(IConfiguration config)
+
+        /// <summary>
+        /// Dependency injection
+        /// </summary>
+        /// <param name="config"></param>
+        public TokenService(IConfiguration config)
         {
             this.config = config;
         }
-        public string GenerateJwtToken(UserModel user)
+
+        /// <inheritdoc/>
+        public string CreateJwtToken(UserModel user)
         {
             var key = Encoding.ASCII.GetBytes(config.GetSection("JwtConfig:SecretKey").Value);//jwtConfig.SecretKey);
             var jwtTokenHandler = new JwtSecurityTokenHandler();
-            
+
             var tokenDescriptior = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(new[]

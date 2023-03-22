@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Server.Utilities
 {
+    /// <summary>
+    /// Hash generator
+    /// </summary>
     public class HashGenerator
     {
         /// <summary>

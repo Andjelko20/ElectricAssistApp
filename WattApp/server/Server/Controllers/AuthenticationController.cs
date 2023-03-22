@@ -16,38 +16,23 @@ using System.Text;
 
 namespace Server.Controllers
 {
-    public class PasswordGenerator
-    {
-        public static string CreatePassword(int length)
-        {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            StringBuilder res = new StringBuilder();
-            Random rnd = new Random();
-            while (0 < length--)
-            {
-                res.Append(valid[rnd.Next(valid.Length)]);
-            }
-            return res.ToString();
-        }
-    }
     
-
     [ApiController]
     [Route("api/[controller]")]
     public class AuthenticationController:Controller
     {
-        public readonly TokenGenerator tokenGenerator;
         public readonly SqliteDbContext _sqliteDb;
+        public readonly ITokenService tokenService;
         public readonly ILogger<AuthenticationController> logger;
-        public readonly EmailService emailService;
+        public readonly IEmailService emailService;
         public AuthenticationController(
-            TokenGenerator tokenGenerator,
-            SqliteDbContext _sqliteDb, 
+            SqliteDbContext _sqliteDb,
+            ITokenService tokenService,
             ILogger<AuthenticationController> logger,
-            EmailService emailService
+            IEmailService emailService
             )
         {
-            this.tokenGenerator = tokenGenerator;
+            this.tokenService = tokenService;
             this._sqliteDb = _sqliteDb;
             this.logger = logger;
             this.emailService = emailService;
@@ -71,7 +56,7 @@ namespace Server.Controllers
             }
             if (user.Blocked)
                 return Unauthorized(new { message = "User is blocked" });
-            return Ok(new { token = tokenGenerator.GenerateJwtToken(user) });
+            return Ok(new { token = tokenService.CreateJwtToken(user) });
         }
         /// <summary>
         /// Register as guest
@@ -125,12 +110,11 @@ namespace Server.Controllers
                 };
             }else if (resetPassword.ExpireAt > DateTime.Now)
                 return BadRequest();
-            resetPassword.ResetKey = PasswordGenerator.CreatePassword(10);
+            resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
             emailService.SendEmail(requestBody.Email, "Reset password", "Your code for password reset:<b>"+resetPassword.ResetKey+"</b>",true);
             if (!exists)
                 _sqliteDb.ResetPassword.Add(resetPassword);
-            _sqliteDb.ResetPassword.Remove(resetPassword);
             _sqliteDb.SaveChangesAsync();
             return Ok();
         }
@@ -151,7 +135,7 @@ namespace Server.Controllers
             if (user == null)
                 return BadRequest();
             user.Password = HashGenerator.Hash(requestBody.NewPassword);
-            _sqliteDb
+            _sqliteDb.ResetPassword.Remove(resetPassword);
             _sqliteDb.SaveChangesAsync();
             return Ok();
         }
