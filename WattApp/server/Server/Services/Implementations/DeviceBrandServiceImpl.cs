@@ -1,4 +1,5 @@
 ﻿using Server.Data;
+using Server.Models.DropDowns.Devices;
 
 namespace Server.Services.Impl
 {
@@ -16,5 +17,7 @@ namespace Server.Services.Impl
             var brand = _context.DeviceBrands.FindAsync(brandId).Result;
             return brand.Name;
         }
+
+      
     }
 }

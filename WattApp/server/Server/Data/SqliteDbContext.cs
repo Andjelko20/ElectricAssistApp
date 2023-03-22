@@ -6,6 +6,7 @@ using Server.Utilities;
 using Server.Models;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
+using Server.Models.DropDowns.Devices.Agregations;
 
 namespace Server.Data
 {
@@ -31,7 +32,9 @@ namespace Server.Data
         public DbSet<DeviceDefaultSettings> DeviceDefaultSettings { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<DeviceModel> DeviceModels { get; set; }
-        
+        public DbSet<TypeBrand> TypeBrands { get; set; }
+        public DbSet<TypeBrandModel> TypeBrandModels { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,7 +48,8 @@ namespace Server.Data
             modelBuilder.Entity<DeviceEnergyUsage>().HasKey(x => new { x.DeviceId, x.StartTime, x.EndTime });
             modelBuilder.Entity<DeviceDefaultSettings>().HasKey(x => new { x.DeviceModelId, x.DeviceBrandId });
             modelBuilder.Entity<Bill>().HasKey(x => new { x.UserId, x.Month, x.Year });
-        
+            modelBuilder.Entity<TypeBrand>().HasKey(x => new { x.TypeId, x.BrandId });
+            modelBuilder.Entity<TypeBrandModel>().HasKey(x => new { x.TypeId, x.BrandId, x.ModelId });
         }
 
         public static void Seed(IApplicationBuilder applicationBuilder)
@@ -133,9 +137,15 @@ namespace Server.Data
                     {
                         new DeviceModel()
                         {
-                            Mark = "oznaka1", 
-                            EnerguInKwh = 10,
-                            StandByKwh = 10
+                            Mark = "oznaka1"
+                        },
+                        new DeviceModel()
+                        {
+                            Mark = "oznaka2"
+                        },
+                        new DeviceModel()
+                        {
+                            Mark = "oznaka3"
                         }
                     }) ;
                     context.SaveChanges();
@@ -166,31 +176,38 @@ namespace Server.Data
                     {
                         new DeviceType()
                         {
-                            Name = "Fridge"
+                            Name = "Fridge", 
+                            CategoryId = 2
                         },
                         new DeviceType()
                         {
-                            Name = "TV"
+                            Name = "TV",
+                            CategoryId = 2
                         },
                         new DeviceType()
                         {
-                            Name = "Freezer"
+                            Name = "Freezer",
+                            CategoryId = 2
                         },
                         new DeviceType()
                         {
-                            Name = "Boiler"
+                            Name = "Boiler", 
+                            CategoryId = 2
                         },
                         new DeviceType()
                         {
-                            Name = "Electric car"
+                            Name = "Electric car", 
+                            CategoryId = 3
                         },
                         new DeviceType()
                         {
-                            Name = "Solar panel"
+                            Name = "Solar panel",
+                            CategoryId = 1
                         },
                         new DeviceType()
                         {
-                            Name = "Other"
+                            Name = "Bateries",
+                            CategoryId = 3
                         }
                     });
                     context.SaveChanges();
@@ -355,7 +372,99 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
-                
+                if (!context.TypeBrands.Any())
+                {
+                    context.TypeBrands.AddRange(new[]
+                    {
+                        new TypeBrand()
+                        {
+                            TypeId = 1,
+                            BrandId = 1
+                        },
+                        new TypeBrand()
+                        {
+                            TypeId = 1,
+                            BrandId = 2
+                        },
+                        new TypeBrand()
+                        {
+                            TypeId = 1,
+                            BrandId = 3
+                        },
+                        new TypeBrand()
+                        {
+                            TypeId = 3,
+                            BrandId = 3
+                        },
+                        new TypeBrand()
+                        {
+                            TypeId = 3,
+                            BrandId = 1
+                        },
+                        new TypeBrand()
+                        {
+                            TypeId = 6,
+                            BrandId = 4
+                        }
+                    });
+                    context.SaveChanges();
+                }
+                if (!context.TypeBrandModels.Any())
+                {
+                    context.TypeBrandModels.AddRange(new[]
+                    {
+                        new TypeBrandModel()
+                        {
+                            TypeId = 1,
+                            BrandId = 1, 
+                            ModelId = 1, 
+                            EnergyKwh = 10, 
+                            StandByKwh = 2
+                        },
+                        new TypeBrandModel()
+                        {
+                            TypeId = 1,
+                            BrandId = 2,
+                            ModelId = 2,
+                            EnergyKwh = 10,
+                            StandByKwh = 2
+                        },
+                        new TypeBrandModel()
+                        {
+                            TypeId = 1,
+                            BrandId = 3,
+                            ModelId = 3,
+                            EnergyKwh = 10,
+                            StandByKwh = 2
+                        },
+                        new TypeBrandModel()
+                        {
+                            TypeId = 3,
+                            BrandId = 3,
+                            ModelId = 1,
+                            EnergyKwh = 10,
+                            StandByKwh = 2
+                        },
+                        new TypeBrandModel()
+                        {
+                            TypeId = 3,
+                            BrandId = 1,
+                            ModelId = 2,
+                            EnergyKwh = 10,
+                            StandByKwh = 2
+                        },
+                        new TypeBrandModel()
+                        {
+                            TypeId = 6,
+                            BrandId = 4,
+                            ModelId = 3,
+                            EnergyKwh = 10,
+                            StandByKwh = 2
+                        }
+                    });
+                    context.SaveChanges();
+                }
+
             }
         }
 

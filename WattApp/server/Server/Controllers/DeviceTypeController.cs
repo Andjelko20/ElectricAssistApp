@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Server.Models.DropDowns.Devices;
 using Server.Services;
 
 namespace Server.Controllers
@@ -17,6 +18,11 @@ namespace Server.Controllers
         public string getTypeNameById(long typeId)
         {
             return _service.getTypeNameById(typeId);
+        }
+        [HttpGet("/types")]
+        public List<DeviceType> GetDeviceTypesByCategory(long categoryId)
+        {
+            return _service.GetDeviceTypesByCategory(categoryId);
         }
     }
 }

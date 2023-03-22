@@ -137,6 +137,41 @@ namespace Server.Migrations
                     b.ToTable("DeviceEnergyUsages");
                 });
 
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.Agregations.TypeBrand", b =>
+                {
+                    b.Property<long>("TypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TypeId", "BrandId");
+
+                    b.ToTable("TypeBrands");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.Agregations.TypeBrandModel", b =>
+                {
+                    b.Property<long>("TypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("BrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("ModelId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("EnergyKwh")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("StandByKwh")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("TypeId", "BrandId", "ModelId");
+
+                    b.ToTable("TypeBrandModels");
+                });
+
             modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceBrand", b =>
                 {
                     b.Property<long>("Id")
@@ -173,21 +208,9 @@ namespace Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("DeviceBrandId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("DeviceTypeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("EnerguInKwh")
-                        .HasColumnType("REAL");
-
                     b.Property<string>("Mark")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<float>("StandByKwh")
-                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
@@ -198,6 +221,9 @@ namespace Server.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CategoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")

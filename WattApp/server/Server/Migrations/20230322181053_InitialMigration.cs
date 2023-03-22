@@ -124,11 +124,7 @@ namespace Server.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DeviceTypeId = table.Column<long>(type: "INTEGER", nullable: false),
-                    DeviceBrandId = table.Column<long>(type: "INTEGER", nullable: false),
-                    Mark = table.Column<string>(type: "TEXT", nullable: false),
-                    EnerguInKwh = table.Column<float>(type: "REAL", nullable: false),
-                    StandByKwh = table.Column<float>(type: "REAL", nullable: false)
+                    Mark = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -164,6 +160,7 @@ namespace Server.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    CategoryId = table.Column<long>(type: "INTEGER", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -222,6 +219,33 @@ namespace Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Settlements", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TypeBrandModels",
+                columns: table => new
+                {
+                    TypeId = table.Column<long>(type: "INTEGER", nullable: false),
+                    BrandId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ModelId = table.Column<long>(type: "INTEGER", nullable: false),
+                    EnergyKwh = table.Column<float>(type: "REAL", nullable: false),
+                    StandByKwh = table.Column<float>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TypeBrandModels", x => new { x.TypeId, x.BrandId, x.ModelId });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TypeBrands",
+                columns: table => new
+                {
+                    TypeId = table.Column<long>(type: "INTEGER", nullable: false),
+                    BrandId = table.Column<long>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TypeBrands", x => new { x.TypeId, x.BrandId });
                 });
 
             migrationBuilder.CreateTable(
@@ -317,6 +341,12 @@ namespace Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Settlements");
+
+            migrationBuilder.DropTable(
+                name: "TypeBrandModels");
+
+            migrationBuilder.DropTable(
+                name: "TypeBrands");
 
             migrationBuilder.DropTable(
                 name: "UserEnergyUsages");

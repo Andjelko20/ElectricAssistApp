@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Server.Models.DropDowns.Devices;
 using Server.Services;
 
 namespace Server.Controllers
@@ -19,5 +21,6 @@ namespace Server.Controllers
         {
             return _service.getBrandNameById(brandId);
         }
+        
     }
 }
