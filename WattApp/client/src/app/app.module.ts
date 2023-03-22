@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -31,7 +30,9 @@ import { ConsumptionMonthWattmeterComponent } from './components/consumption-mon
 import { ConsumptionYearWattmeterComponent } from './components/consumption-year-wattmeter/consumption-year-wattmeter.component';
 import { NgxGaugeModule } from 'ngx-gauge';
 import { NumberOfUsersMeterComponent } from './components/number-of-users-meter/number-of-users-meter.component';
+import { MapsComponent } from './components/maps/maps.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { AllProsumersComponent } from './components/all-prosumers/all-prosumers.component'; 
 
 @NgModule({
   declarations: [
@@ -60,6 +61,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     ConsumptionMonthWattmeterComponent,
     ConsumptionYearWattmeterComponent,
     NumberOfUsersMeterComponent,
+    MapsComponent,
+    AllProsumersComponent
 
   ],
   imports: [
@@ -68,8 +71,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 	  FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    LeafletModule,
     NgxGaugeModule,
+    LeafletModule
   ],
   providers: [],
   bootstrap: [AppComponent]

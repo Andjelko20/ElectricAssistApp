@@ -1,3 +1,53 @@
 .global {
-    padding-left: 20%;
+    margin-left: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid black;
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center; */
+}
+
+input {
+    color: #1C315E;
+}
+
+.global1 {
+    box-shadow: 2px 4px gray;
+    background-color: white;
+    padding: 20px;
+    width: 50%;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #1C315E;
+    display: flex;
+    justify-content: center;
+    font-style: italic;
+}
+
+label {
+    color: #1C315E;
+    font-style: italic;
+    font-size: 25px;
+}
+
+form {
+    margin-top: 50px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    justify-content: center;
+    margin-left: 25%;
+    width: 100px;
+    background-color: #1C315E;
 }
