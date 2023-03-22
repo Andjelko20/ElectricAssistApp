@@ -109,10 +109,17 @@ namespace Server.Controllers
                     UserId = user.Id,
                 };
             }else if (resetPassword.ExpireAt > DateTime.Now)
-                return BadRequest();
+                return BadRequest(new Message("Reset token is already submited on your email"));
             resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
-            emailService.SendEmail(requestBody.Email, "Reset password", "Your code for password reset:<b>"+resetPassword.ResetKey+"</b>",true);
+            try
+            {
+                emailService.SendEmail(requestBody.Email, "Reset password", "Click on this link to reset your password:<a href='http://localhost:4200/reset-password/"+resetPassword.ResetKey+"'>" + resetPassword.ResetKey + "</a>", true);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,new Message("Email is not sent"));
+            }
             if (!exists)
                 _sqliteDb.ResetPassword.Add(resetPassword);
             _sqliteDb.SaveChangesAsync();
