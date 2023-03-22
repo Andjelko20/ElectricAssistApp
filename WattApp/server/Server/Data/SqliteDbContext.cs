@@ -348,6 +348,7 @@ namespace Server.Data
                         {
                             CityId = 3,
                             Name = "Petrovoradin"
+
                         }
                     });
                     context.SaveChanges();
