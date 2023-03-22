@@ -1,0 +1,10 @@
+#barplot{
+    color: white;
+    border: 1px solid black;
+}
+.chart{
+    width: 1500px;
+    height: 580px;
+    margin-left: 150px;
+
+}
