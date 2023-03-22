@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Server.Utilities;
 using Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Server.Filters;
@@ -9,97 +8,20 @@ using Microsoft.AspNetCore.Mvc;
 using Server.Middlewares;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-using Microsoft.AspNetCore.Authorization;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Server.Services;
 
 namespace Server
 {
-    internal class Program
+    /// <summary>
+    /// Server starter
+    /// </summary>
+    public partial class Program
     {
         private static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            //builder.Services.AddRazorPages();
-
-            builder.Services.AddMvc();
-
-            builder.Services.Add(new ServiceDescriptor(typeof(TokenGenerator), new TokenGenerator(builder.Configuration)));
-
-            builder.Services.Configure<ApiBehaviorOptions>(options
-                => options.SuppressModelStateInvalidFilter = true);
-
-            builder.Services.AddControllers(options =>
-            {
-                options.Filters.Add(typeof(BadRequestValidationFilter));
-            });
-
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(jwt =>
-            {
-                var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtConfig:SecretKey").Value);
-                jwt.SaveToken = true;
-                jwt.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false, // for dev
-                    ValidateAudience = false, // for dev
-                    RequireExpirationTime = true,
-                    ValidateLifetime = true
-                };
-            });
-
-            builder.Services.AddDbContext<SqliteDbContext>(options =>
-            {
-                options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"));
-            });
-
-            builder.Services.AddCors();
-
-            builder.Services.AddSwaggerGen(swagger =>
-            {
-                swagger.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version="v1",
-                    Title="ElectricAssist API",
-                    Description="API dokumentacija za projekat iz SI"
-                });
-                swagger.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Scheme = "bearer"
-                });
-                /*
-                swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "bearer"
-                            }
-                        },
-                        new List<string>()
-                    }
-                });
-                */
-
-                swagger.OperationFilter<AuthResponsesOperationFilter>();
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                swagger.IncludeXmlComments(xmlPath);
-            });
+            AddServices(builder);
 
             var app = builder.Build();
 

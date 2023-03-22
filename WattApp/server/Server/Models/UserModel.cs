@@ -34,6 +34,11 @@ namespace Server.Models
         public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
         */
+
+        [Required]
+        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",ErrorMessage ="Not email")]
+        public string Email { get; set; }
+
         [ForeignKey(nameof(RoleModel.Id))]
         public int RoleId { get; set; }
 

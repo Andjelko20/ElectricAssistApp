@@ -16,6 +16,8 @@ namespace Server.Data
         }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
+
+        public DbSet<ResetPasswordModel> ResetPassword { get; set; }
         /*
         public DbSet<Device> Devices { get; set; }
         public DbSet<DeviceModel> DeviceModels { get; set; }
@@ -96,6 +98,7 @@ namespace Server.Data
                         new UserModel()
                         {
                             Name="Admin admin",
+                            Email="matovicljubomir2002@gmail.com",
                             RoleId=1,
                             Blocked=false,
                             Username="admin",
@@ -104,6 +107,7 @@ namespace Server.Data
                         new UserModel()
                         {
                             Name="User User",
+                            Email="58-2020@pmf.kg.ac.rs",
                             RoleId=3,
                             Blocked=true,
                             Username="user",
