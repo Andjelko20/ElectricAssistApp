@@ -69,6 +69,9 @@ import { BarYearChartComponent } from './components/charts/bar-year-chart/bar-ye
     MapsComponent,
     AllProsumersComponent,
     LineDayChartComponent,
+    BarYearChartComponent,
+    BarMonthChartComponent,
+    LineWeekChartComponent
 
   ],
   imports: [
@@ -77,7 +80,8 @@ import { BarYearChartComponent } from './components/charts/bar-year-chart/bar-ye
     HttpClientModule,
     ReactiveFormsModule,
     NgxGaugeModule,
-    LeafletModule
+    LeafletModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
