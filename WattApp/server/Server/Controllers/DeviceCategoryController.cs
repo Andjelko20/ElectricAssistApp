@@ -24,7 +24,7 @@ namespace Server.Controllers
             return _service.getCategoryNameById(categoryId);
         }
 
-        [HttpGet("categories")]
+        [HttpGet("/categories")]
         public List<DeviceCategoryDTO> getAllCategories()
         {
             return _mapper.Map<List<DeviceCategoryDTO>>(_service.getAllCategories());

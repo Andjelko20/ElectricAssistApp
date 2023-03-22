@@ -11,6 +11,7 @@ namespace Server.Models
        
         [Required]
         [ForeignKey(nameof(UserModel.Id))]
+        //Promeniti!!!
         public long UserId { get; set; }
         [Required]
         [ForeignKey(nameof(DeviceCategory.Id))]

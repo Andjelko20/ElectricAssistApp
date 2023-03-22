@@ -107,6 +107,22 @@ namespace Server.Data
                             Blocked=true,
                             Username="user",
                             Password=HashGenerator.Hash("user")
+                        }, 
+                        new UserModel()
+                        {
+                            Name="DSO DSO", 
+                            RoleId = 2, 
+                            Blocked=false,
+                            Username="dsodso", 
+                            Password=HashGenerator.Hash("dsodso")
+                        },
+                        new UserModel()
+                        {
+                            Name="Prosumer",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="prosumer",
+                            Password=HashGenerator.Hash("prosumer")
                         }
                     });
                     context.SaveChanges();

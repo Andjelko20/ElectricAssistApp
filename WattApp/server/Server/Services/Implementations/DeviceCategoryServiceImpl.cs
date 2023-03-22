@@ -12,6 +12,7 @@ namespace Server.Services.Impl
             _context = context;
         }
 
+
         public string getCategoryNameById(long categoryId)
         {
             var category = _context.DeviceCategories.FindAsync(categoryId).Result;
