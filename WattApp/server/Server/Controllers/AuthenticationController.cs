@@ -14,6 +14,7 @@ using Server.Services;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Server.DTOs.Responses;
+using Server.Services.Implementations;
 
 namespace Server.Controllers
 {
@@ -26,6 +27,7 @@ namespace Server.Controllers
         public readonly ITokenService tokenService;
         public readonly ILogger<AuthenticationController> logger;
         public readonly IEmailService emailService;
+        public readonly IUserService userService;
         public AuthenticationController(
             SqliteDbContext _sqliteDb,
             ITokenService tokenService,
@@ -39,19 +41,20 @@ namespace Server.Controllers
             this.emailService = emailService;
         }
         /// <summary>Login</summary>
+        [Produces("application/json")]
         [ProducesResponseType(typeof(TokenResponseDTO),StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(BadRequestResponse),StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse),StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO),StatusCodes.Status401Unauthorized)]
 
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginDTO requestBody)
         {
-            UserModel? user = await _sqliteDb.Users.Include(u=>u.Role).FirstOrDefaultAsync(user => user.Username == requestBody.Username);
+            UserModel? user = await userService.GetUserByUsername(requestBody.Username);
             if (user == null)
             {
-                return Unauthorized(new { message = "Bad credentials" });
+                return Unauthorized(new MessageResponseDTO("Bad credentials"));
             }
             if (!HashGenerator.Verify(requestBody.Password, user.Password))
             {
@@ -59,11 +62,15 @@ namespace Server.Controllers
             }
             if (user.Blocked)
                 return Unauthorized(new { message = "User is blocked" });
-            return Ok(new { token = tokenService.CreateJwtToken(user) });
+            return Ok(new TokenResponseDTO(tokenService.CreateJwtToken(user)));
         }
         /// <summary>
         /// Register as guest
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+
         [HttpPost]
         [Route("register")]
         [AllowAnonymous]
@@ -72,11 +79,11 @@ namespace Server.Controllers
             RoleModel? role = await _sqliteDb.Roles.FirstOrDefaultAsync(r => r.Name == "guest");
             if (role == null)
             {
-                return StatusCode(500,new {message="Internal Server Error"});
+                return BadRequest(new BadRequestStatusResponse("You send role which doesn\'t exist"));
             }
             if (_sqliteDb.Users.Any(u => u.Username == requestBody.Username))
             {
-                return BadRequest(new {message="User already exists"});
+                return BadRequest(new BadRequestStatusResponse("User already exists"));
             }
             UserModel user = new UserModel
             {
@@ -88,20 +95,26 @@ namespace Server.Controllers
             };
             await _sqliteDb.Users.AddAsync(user);
             await _sqliteDb.SaveChangesAsync();
-            return Ok(new { message = "Registered successfully" });
+            return Ok(new MessageResponseDTO( "Registered successfully" ));
         }
 
         /// <summary>
         /// Send reset password token on mail
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO),StatusCodes.Status500InternalServerError)]
+
+
         [HttpPost]
         [Route("generate_reset_token")]
         [AllowAnonymous]
         public async Task<IActionResult> GenerateResetToken([FromBody] EmailDTO requestBody)
         {
-            var user=await _sqliteDb.Users.SingleOrDefaultAsync(u => u.Email == requestBody.Email);
+            var user=await userService.GetUserByEmail(requestBody.Email);
             if (user == null)
-                return BadRequest(new Message("User not exist"));
+                return BadRequest(new BadRequestStatusResponse("User not exist"));
             var resetPassword = await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r => r.UserId == user.Id);
             bool exists = true;
             if (resetPassword == null)
@@ -112,10 +125,17 @@ namespace Server.Controllers
                     UserId = user.Id,
                 };
             }else if (resetPassword.ExpireAt > DateTime.Now)
-                return BadRequest();
+                return BadRequest("Reset token is already sent. Check your email.");
             resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
-            emailService.SendEmail(requestBody.Email, "Reset password", "Your code for password reset:<b>"+resetPassword.ResetKey+"</b>",true);
+            try
+            {
+                emailService.SendEmail(requestBody.Email, "Reset password", "Your code for password reset:<b>" + resetPassword.ResetKey + "</b>", true);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent. Check if your email exist."));
+            }
             if (!exists)
                 _sqliteDb.ResetPassword.Add(resetPassword);
             _sqliteDb.SaveChangesAsync();
@@ -125,6 +145,8 @@ namespace Server.Controllers
         /// <summary>
         /// Reset password
         /// </summary>
+        [Produces("application/json")]
+
         [HttpPost]
         [Route("reset_password")]
         [AllowAnonymous]

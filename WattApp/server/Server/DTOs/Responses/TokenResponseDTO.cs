@@ -5,6 +5,11 @@ namespace Server.DTOs.Responses
     public class TokenResponseDTO
     {
         [Required]
-        public string Email { get; set; }
+        public string token { get; set; }
+
+        public TokenResponseDTO(string token)
+        {
+            this.token = token;
+        }
     }
 }

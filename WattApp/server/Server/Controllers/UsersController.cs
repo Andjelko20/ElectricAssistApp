@@ -8,19 +8,10 @@ using Server.Utilities;
 using Server.Models;
 using System.Security.Claims;
 using Server.Services;
+using Server.DTOs.Responses;
 
 namespace Server.Controllers
 {
-    public class Message
-    {
-        public string message;
-        public Message(string message)
-        {
-            this.message = message;
-        }
-    }
-
-
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : Controller
@@ -146,7 +137,7 @@ namespace Server.Controllers
             catch(Exception ex)
             {
                 //return StatusCode(400, new { message = "Already exists user with that username" });
-                return StatusCode(400, new Message("Already exists user with that username"));
+                return StatusCode(400, new MessageResponseDTO("Already exists user with that username"));
             }
 
         }
