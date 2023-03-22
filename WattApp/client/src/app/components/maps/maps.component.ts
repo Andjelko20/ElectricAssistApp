@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { catchError, map, Observable, of } from 'rxjs';
 import * as L from 'leaflet';
 
@@ -36,17 +35,21 @@ export class MapsComponent implements OnInit {
     }).addTo(this.map); // dodavanje OpenStreetMap sloja
 
     this.marker = L.marker([44.01721187973962, 20.90732574462891], { draggable: true }).addTo(this.map); // postavljanje čiode
+    const latLng = this.marker.getLatLng();
+    this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng)
 
     // postavljanje događaja na klik na mapu
     this.map.on('click', (event: L.LeafletMouseEvent) => {
       this.marker.setLatLng(event.latlng);
       this.onSubmit();
+      
     });
   }
 
   onSubmit(): void {
     const latLng = this.marker.getLatLng();
     console.log('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
+    this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng)
     // slanje podataka na server
   }
 }
