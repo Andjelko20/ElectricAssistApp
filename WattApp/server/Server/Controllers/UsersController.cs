@@ -7,6 +7,7 @@ using Server.DTOs;
 using Server.Utilities;
 using Server.Models;
 using System.Security.Claims;
+using Server.Services;
 
 namespace Server.Controllers
 {
@@ -24,21 +25,23 @@ namespace Server.Controllers
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
-        public readonly ILogger<UsersController> logger;
         public readonly SqliteDbContext _sqliteDb;
+        public readonly ILogger<UsersController> logger;
+        public readonly ITokenService tokenService;
         public readonly int NUMBER_OF_ITEMS_PER_PAGE = 20;
 
-        public UsersController(SqliteDbContext sqliteDb,ILogger<UsersController> logger)
+        public UsersController(SqliteDbContext sqliteDb,ILogger<UsersController> logger,ITokenService tokenService)
         {
             _sqliteDb = sqliteDb;
             this.logger = logger;
+            this.tokenService = tokenService;
         }   
         /// <summary>
         /// Get 20 users per page
         /// </summary>
         [HttpGet]
         [Route("page/{page:int}")]
-        [Authorize(Roles ="admin")]
+        [Authorize]//(Roles ="admin")]
         public async Task<IActionResult> GetPage([FromRoute]int page)
         {
             try
@@ -79,7 +82,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("{id:int}")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetUserById([FromRoute]int id)
         {
             var user = await _sqliteDb.Users.Include(u=>u.Role).FirstOrDefaultAsync(u => u.Id == id);
@@ -106,6 +109,8 @@ namespace Server.Controllers
         {
             try
             {
+                var id = tokenService.GetClaim(HttpContext,JwtClaims.Id);
+                logger.LogInformation(id);
                 return Ok(await _sqliteDb.Roles.ToListAsync());
             }
             catch (Exception e)

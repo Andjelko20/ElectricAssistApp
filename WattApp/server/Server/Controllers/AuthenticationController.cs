@@ -13,6 +13,7 @@ using Server.Middlewares;
 using Server.Services;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Server.DTOs.Responses;
 
 namespace Server.Controllers
 {
@@ -38,8 +39,10 @@ namespace Server.Controllers
             this.emailService = emailService;
         }
         /// <summary>Login</summary>
-        /// <response code="200">Success</response>
-        /// <response code="400">Bad request</response>
+        [ProducesResponseType(typeof(TokenResponseDTO),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestResponse),StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
