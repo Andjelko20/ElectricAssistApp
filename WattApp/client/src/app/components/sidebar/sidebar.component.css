@@ -5,6 +5,10 @@
     width: 60px;
 }
 
+#dashboard {
+    flex-wrap: wrap;
+}
+
 .nav {
     position: relative;
 }

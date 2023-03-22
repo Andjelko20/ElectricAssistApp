@@ -1,0 +1,86 @@
+<<<<<<< Updated upstream
+=======
+.head {
+    border: 1px solid black;
+    padding: 0%;
+    display: flex;
+}
+
+.card-group {
+    margin: auto;
+    margin-top: 10px;
+    /* border: 1px solid black; */
+}
+
+.overview {
+    flex-grow: 100;
+    background-color: white;
+    box-shadow: 2px 4px grey;
+    /* border: 1px solid black; */
+}
+
+.consumption {
+    background-color: white;
+    /* border: 1px solid black; */
+    margin-left: 5%;
+}
+
+.price {
+    padding: 20px;
+    margin-right: 10px;
+    background-color: white;
+    box-shadow: 2px 4px grey;
+    /* border: 1px solid black; */
+}
+
+.price-body {
+    /* border: 1px solid black; */
+    margin-top: 4px;
+    font-size: 30px;
+    padding-top: 30px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+.history-charts {
+    background-color: white;
+    box-shadow: 2px 4px grey;
+    /* border: 1px solid black; */
+    flex-grow: 100;
+}
+
+.history-charts-body {
+    margin-top: 15px;
+}
+
+
+/* .chart-body {
+    border: 1px solid black;
+    padding-top: 2px;
+} */
+
+
+/* .csv-body {
+    border: 1px solid black;
+} */
+
+.csv-body {
+    flex-grow: 100;
+}
+
+.chart-body {
+    margin-left: 40%;
+    flex-grow: 100;
+}
+
+
+/* .history-charts-body{
+    margin-left: 200px;
+} */
+
+.weather {
+    margin-right: 10px;
+    background-color: white;
+    box-shadow: 2px 4px grey;
+}
+>>>>>>> Stashed changes
