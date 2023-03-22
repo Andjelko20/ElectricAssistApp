@@ -16,6 +16,22 @@ using System.Text;
 
 namespace Server.Controllers
 {
+    public class PasswordGenerator
+    {
+        public static string CreatePassword(int length)
+        {
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            while (0 < length--)
+            {
+                res.Append(valid[rnd.Next(valid.Length)]);
+            }
+            return res.ToString();
+        }
+    }
+    
+
     [ApiController]
     [Route("api/[controller]")]
     public class AuthenticationController:Controller
@@ -87,6 +103,9 @@ namespace Server.Controllers
             return Ok(new { message = "Registered successfully" });
         }
 
+        /// <summary>
+        /// Send reset password token on mail
+        /// </summary>
         [HttpPost]
         [Route("generate_reset_token")]
         [AllowAnonymous]
@@ -104,28 +123,21 @@ namespace Server.Controllers
                 {
                     UserId = user.Id,
                 };
-            }
-            resetPassword.ResetKey = CreatePassword(10);
+            }else if (resetPassword.ExpireAt > DateTime.Now)
+                return BadRequest();
+            resetPassword.ResetKey = PasswordGenerator.CreatePassword(10);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
             emailService.SendEmail(requestBody.Email, "Reset password", "Your code for password reset:<b>"+resetPassword.ResetKey+"</b>",true);
             if (!exists)
                 _sqliteDb.ResetPassword.Add(resetPassword);
+            _sqliteDb.ResetPassword.Remove(resetPassword);
             _sqliteDb.SaveChangesAsync();
             return Ok();
         }
 
-        public string CreatePassword(int length)
-        {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            StringBuilder res = new StringBuilder();
-            Random rnd = new Random();
-            while (0 < length--)
-            {
-                res.Append(valid[rnd.Next(valid.Length)]);
-            }
-            return res.ToString();
-        }
-
+        /// <summary>
+        /// Reset password
+        /// </summary>
         [HttpPost]
         [Route("reset_password")]
         [AllowAnonymous]
@@ -138,7 +150,8 @@ namespace Server.Controllers
             var user = await _sqliteDb.Users.FirstOrDefaultAsync(u => u.Id == resetPassword.UserId);
             if (user == null)
                 return BadRequest();
-            user.Password = requestBody.NewPassword;
+            user.Password = HashGenerator.Hash(requestBody.NewPassword);
+            _sqliteDb
             _sqliteDb.SaveChangesAsync();
             return Ok();
         }
