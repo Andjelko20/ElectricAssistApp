@@ -12,7 +12,7 @@ namespace Server.Controllers
 {
     public class Message
     {
-        public string message;
+        public string message { get; set; }
         public Message(string message)
         {
             this.message = message;

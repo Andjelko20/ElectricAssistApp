@@ -13,6 +13,8 @@ import { MapsComponent } from './components/maps/maps.component';
 import { DsoHomePageComponent } from './pages/dso/dso-home-page/dso-home-page.component';
 import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
 import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
+import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'home',pathMatch:'full'},
@@ -26,6 +28,8 @@ const routes: Routes = [
 	{path:'dsohome',component:DsoHomePageComponent,},
 	{path:'dsoprosumer',component:DsoProsumersPageComponent,},
 	{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
+	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
+	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'**',redirectTo:"login"}
 ];
 
