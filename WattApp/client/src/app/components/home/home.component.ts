@@ -57,7 +57,8 @@ export class HomeComponent implements OnInit {
       this.usersService.delete(id)
       .subscribe({
         next:(response)=>{
-          this.router.navigate(['home']);
+          this.router.navigate(['/home']);
+          location.reload();
         }
       });
     }
@@ -87,6 +88,7 @@ export class HomeComponent implements OnInit {
   {
     localStorage.removeItem('token');
     localStorage.clear();
+    this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }
 

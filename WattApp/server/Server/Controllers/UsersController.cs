@@ -12,7 +12,7 @@ namespace Server.Controllers
 {
     public class Message
     {
-        public string message;
+        public string message { get; set; }
         public Message(string message)
         {
             this.message = message;
@@ -55,7 +55,8 @@ namespace Server.Controllers
                     Name = u.Name,
                     Username = u.Username,
                     Role = u.Role.Name,
-                    Blocked = u.Blocked
+                    Blocked = u.Blocked,
+                    Email=u.Email
 
                 }).ToListAsync();
 
@@ -91,7 +92,8 @@ namespace Server.Controllers
                 Name=user.Name,
                 Username=user.Username,
                 Role=user.Role.Name,
-                Blocked=user.Blocked
+                Blocked=user.Blocked,
+                Email=user.Email
             });
         }
         /// <summary>
@@ -128,7 +130,8 @@ namespace Server.Controllers
                     Name = requestBody.Name,
                     Password = HashGenerator.Hash(requestBody.Password),
                     Blocked = requestBody.Blocked,
-                    RoleId = requestBody.RoleId
+                    RoleId = requestBody.RoleId,
+                    Email=requestBody.Email
                 };
 
                 _sqliteDb.Users.Add(user);
@@ -159,6 +162,7 @@ namespace Server.Controllers
                 user.Name = requestBody.Name;
                 user.RoleId = requestBody.RoleId;
                 user.Blocked = requestBody.Blocked;
+                user.Email = requestBody.Email;
                 _sqliteDb.Users.Update(user);   
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message = "User is updated successfully" });
@@ -185,6 +189,7 @@ namespace Server.Controllers
                     return NotFound(new { message = "User doesn't exists" });
                 user.Username = requestBody.Username;
                 user.Name = requestBody.Name;
+                user.Email = requestBody.Email;
                 _sqliteDb.Users.Update(user);
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message = "User is updated successfully" });
@@ -246,6 +251,6 @@ namespace Server.Controllers
             user.Password = HashGenerator.Hash(requestBody.NewPassword);
             await _sqliteDb.SaveChangesAsync();
             return Ok(new { message = "Password changed successfully" });
-        }
+        }   
     }
 }

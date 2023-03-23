@@ -8,8 +8,13 @@ import { AddCompComponent } from './components/add-comp/add-comp.component';
 import { UpdateComponent } from './components/update/update.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { MapsComponent } from "./maps/maps.component";
-//import { ChartsComponent } from './pages/charts/charts.component';
+import { MapsComponent } from './components/maps/maps.component';
+
+import { DsoHomePageComponent } from './pages/dso/dso-home-page/dso-home-page.component';
+import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
+import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
+import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'home',pathMatch:'full'},
@@ -18,9 +23,13 @@ const routes: Routes = [
 	{path:'add-comp',component:AddCompComponent,canActivate:[AuthenticatedGuard]},
 	{path:'update/:id',component:UpdateComponent,canActivate:[AuthenticatedGuard]},
 	{path:'register',component:RegisterComponent},
-	{path:'change-password',component:ChangePasswordComponent},
 	{path:'maps',component:MapsComponent},
-	//{path:'charts',component:ChartsComponent},
+	{path:'change-password',component:ChangePasswordComponent},
+	{path:'dsohome',component:DsoHomePageComponent,canActivate:[AuthenticatedGuard]},
+	{path:'dsoprosumer',component:DsoProsumersPageComponent,canActivate:[AuthenticatedGuard]},
+	{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
+	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
+	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'**',redirectTo:"login"}
 ];
 

@@ -7,3 +7,5 @@ npm install ngx-cookie-service
 npm i cors
 
 npm install chartjs-plugin-datalabels --save
+
+npm i ngx-gauge

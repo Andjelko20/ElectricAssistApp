@@ -1,0 +1,44 @@
+<div class="row" style="margin-bottom:15px; margin-left: 20px; margin-top: 10px;">
+    <div class="col-md-2">
+        <input type="text" placeholder="Search" style="padding-bottom: 8px; padding-top: 5px; " [(ngModel)]="listFilter"/>
+        
+    </div>
+    <div class="col-md-2">
+        Filter by:
+        <select style="padding: 10px; text-align: center;">
+            <option value="option1">Aerodrom</option>
+            <option value="option2">Bresnica</option>
+            <option value="option3">Erdoglija</option>
+            <option value="option1">Bagremar</option>
+            <option value="option2">Belosevac</option>
+            <option value="option3">Pivara</option>
+          </select>
+    </div>
+    <div class="col-md-2">
+        Sort by:
+        <select style="padding: 10px; text-align: center;">
+            <option value="option1">City</option>
+            <option value="option2">Communities</option>
+            <option value="option3">Adress</option>
+          </select>
+    </div>
+</div>
+
+
+<table *ngIf="users">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Ime</th>
+        <th>Prezime</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredDrivers">
+        
+        <td>{{user.id}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.userName}}</td>
+      </tr>
+    </tbody>
+  </table>

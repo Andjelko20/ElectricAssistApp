@@ -1,21 +1,38 @@
 import { Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { catchError, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { Users } from '../models/users.model';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  
+  isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
+  private hasToken() : boolean {
+    return !!localStorage.getItem('token');
+  }
+  
   constructor(private http:HttpClient) { }
 
+  
   login(username:string,password:string){
+    
       return this.http.post(environment.serverUrl + "/api/authentication/login", {username,password},{observe:"response"});
   }
+
   logout()
   {
+    this.isLoginSubject.next(false);
     return this.http.get(environment.serverUrl );
+  }
+
+  sendEmail(email:string):Observable<any>{
+	return this.http.post(environment.serverUrl+'/api/authentication/generate_reset_token',{email:email});
+  }
+  resetPasswordWithResetCode(resetKey:string,newPassword:string):Observable<any>{
+	return this.http.post(environment.serverUrl+'/api/authentication/reset_password',{resetKey:resetKey,newPassword:newPassword});
   }
   getAllUsers():Observable<any>
   {

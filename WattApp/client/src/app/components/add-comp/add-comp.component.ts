@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -29,9 +29,10 @@ export class AddCompComponent implements OnInit {
 		this.addUserRequest.role=this.roles[0]?.id;
   	});
   }
-  onSelectedBlock(value:boolean):void
+  @ViewChild('teams') teams!: ElementRef;
+  onSelectedBlock():void
   {
-    this.addUserRequest.block = value;
+    this.addUserRequest.block = this.teams.nativeElement.value;
   }
   onSelectedRole(value:string):void
   {
