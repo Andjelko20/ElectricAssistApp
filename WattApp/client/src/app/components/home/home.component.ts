@@ -58,6 +58,7 @@ export class HomeComponent implements OnInit {
       .subscribe({
         next:(response)=>{
           this.router.navigate(['/home']);
+          location.reload();
         }
       });
     }

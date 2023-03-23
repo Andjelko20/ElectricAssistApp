@@ -122,7 +122,7 @@ export class LineDayChartComponent {
               usePointStyle: true,
               color:'#000',
               font:{
-                size:30
+                size:20
               } 
            
             }

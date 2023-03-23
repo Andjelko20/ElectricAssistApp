@@ -80,7 +80,7 @@ export class LineWeekChartComponent {
             suggestedMax: 140,
             title:{
               display:true,
-              text: "consumption in kWh",
+              text: "kWh",
               color:'#000',
               font:{
                 size:20
@@ -97,7 +97,7 @@ export class LineWeekChartComponent {
             },
             title:{
               display:true,
-              text: "Past year consumption per months",
+              text: "Days in a week",
               color:'#000',
               font:{
                 size:20
@@ -121,7 +121,7 @@ export class LineWeekChartComponent {
               usePointStyle: true,
               color:'#000',
               font:{
-                size:30
+                size:20
               } 
            
             }
@@ -130,7 +130,7 @@ export class LineWeekChartComponent {
           },
           title: {
             display: true,
-            text: ' Line Chart',
+            text: ' Consumption and production in a week',
             color:'#000',
             font:{
               size:20

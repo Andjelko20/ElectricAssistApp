@@ -100,7 +100,7 @@ export class BarChartComponent implements OnInit{
                 usePointStyle: true,
                 color: '#000',
                 font:{
-                  size:30
+                  size:20
                 } 
                 // ,
                 // boxHeight:100,

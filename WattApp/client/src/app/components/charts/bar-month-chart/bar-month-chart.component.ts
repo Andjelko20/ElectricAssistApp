@@ -114,7 +114,7 @@ export class BarMonthChartComponent {
                 usePointStyle: true,
                 color: '#000',
                 font:{
-                  size:30
+                  size:20
                 } 
                 // ,
                 // boxHeight:100,
