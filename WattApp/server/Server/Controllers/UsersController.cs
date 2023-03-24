@@ -19,13 +19,19 @@ namespace Server.Controllers
         public readonly SqliteDbContext _sqliteDb;
         public readonly ILogger<UsersController> logger;
         public readonly ITokenService tokenService;
+        public readonly IUserService userService;
         public readonly int NUMBER_OF_ITEMS_PER_PAGE = 20;
 
-        public UsersController(SqliteDbContext sqliteDb,ILogger<UsersController> logger,ITokenService tokenService)
+        public UsersController(
+            SqliteDbContext sqliteDb,
+            ILogger<UsersController> logger,
+            ITokenService tokenService,
+            IUserService userService)
         {
             _sqliteDb = sqliteDb;
             this.logger = logger;
             this.tokenService = tokenService;
+            this.userService = userService;
         }   
         /// <summary>
         /// Get 20 users per page
@@ -37,6 +43,7 @@ namespace Server.Controllers
         {
             try
             {
+                /*
                 int count = _sqliteDb.Users.Count();
                 logger.LogInformation(count.ToString());
                 int maxPage = count / NUMBER_OF_ITEMS_PER_PAGE+((count%NUMBER_OF_ITEMS_PER_PAGE!=0)?1:0);
@@ -62,6 +69,8 @@ namespace Server.Controllers
                     numberOfPages=maxPage,
                     data=users
                 });
+                */
+                return Ok(userService.GetPageOfUsers(page, 20, (user) => true));
             }
             catch(Exception e)
             {

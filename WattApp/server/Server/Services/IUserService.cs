@@ -1,4 +1,5 @@
-﻿using Server.Models;
+﻿using Server.DTOs;
+using Server.Models;
 
 namespace Server.Services
 {
@@ -6,8 +7,8 @@ namespace Server.Services
     {
         Task<UserModel?> GetUserById(int id);
         Task<UserModel?> GetUserByEmail(string email);
-        Task<UserModel?> GetUserByUsername(string email);
-        Task<UserModel?> GetPageOfUsers(int page);
+        Task<UserModel> GetUserByUsername(string email);
+        Task<DataPage<object>> GetPageOfUsers(int pageNumber, int itemsPerPage, Func<UserModel, bool> filter);
         //Task<bool> CheckPassword(string password);
 
     }
