@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs;
+using Server.Exceptions;
 using Server.Models;
 using Server.Services;
 using System.Net;
@@ -36,27 +37,52 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(DeviceResponseDTO), 200)]
         [HttpGet("{id:long}")]
         [Authorize(Roles = "dispecer, prosumer")]
-        public DeviceResponseDTO getDeviceById([FromRoute]long id)
+        public IActionResult getDeviceById([FromRoute]long id)
         {
-            DeviceResponseDTO deviceDTO = new DeviceResponseDTO();
-            if (User.IsInRole("prosumer"))
-            {
-                var credentials = HttpContext.User.Identity as ClaimsIdentity;
-                int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+            try {
+                DeviceResponseDTO deviceDTO = new DeviceResponseDTO();
+                if (User.IsInRole("prosumer"))
+                {
+                    var credentials = HttpContext.User.Identity as ClaimsIdentity;
+                    int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
-                deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.getYourDeviceById(id, userId));
+                    deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.getYourDeviceById(id, userId));
+                }
+                else
+                {
+                    deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.getDeviceById(id));
+                }
+                if(deviceDTO == null)
+                {
+                    throw new ItemNotFoundException("Device with id: " + id + " not found!");
+                }
+
+                deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
+                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
+                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
+                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
+
+                return Ok(deviceDTO);
             }
-            else
+            catch(ItemNotFoundException ex)
             {
-                deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.getDeviceById(id));
+                return NotFound(new
+                {
+                    title =  "Device not found!", 
+                    status = 404,
+                    message = ex.Message,
+                });
             }
-
-            deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
-            deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
-            deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
-            deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
-
-            return deviceDTO;
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    title = "Internal server error!",
+                    status = 500,
+                    message = "An error occurred while processing your request."
+                });
+            }
+            
         }
 
         //IActionResult
