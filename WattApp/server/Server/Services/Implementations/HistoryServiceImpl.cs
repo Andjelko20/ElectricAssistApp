@@ -15,18 +15,11 @@ namespace Server.Services.Implementations
         public List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastYear(int deviceId)
         {
             DateTime OneYearAgo = DateTime.Now.AddYears(-1); // tip DATETIME, trenutna godina 2023. -1 = 2022.
-
+            
             return _context.DeviceEnergyUsages
             .Where(u => u.DeviceId == deviceId && u.StartTime >= OneYearAgo)
             .OrderBy(u => u.StartTime)
             .ToList();
-        }
-
-        public Device addNewDevice(Device device)
-        {
-            var result = _context.Devices.Add(device);
-            _context.SaveChanges();
-            return device;
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Server
             builder.Services.AddScoped<DeviceModelService, DeviceModelServiceImpl>();
             builder.Services.AddScoped<DeviceService, DeviceServiceImpl>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddScoped<IHistoryService, HistoryServiceImpl>();
 
             builder.Services.Configure<ApiBehaviorOptions>(options
                 => options.SuppressModelStateInvalidFilter = true);
