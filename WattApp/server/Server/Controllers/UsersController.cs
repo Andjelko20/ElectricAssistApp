@@ -38,7 +38,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("page/{page:int}")]
-        [Authorize]//(Roles ="admin")]
+        [Authorize(Roles ="admin")]
         public async Task<IActionResult> GetPage([FromRoute]int page)
         {
             try
@@ -70,10 +70,15 @@ namespace Server.Controllers
                     data=users
                 });
                 */
-                return Ok(userService.GetPageOfUsers(page, 20, (user) => true));
+                return Ok(await userService.GetPageOfUsers(page, 20, (user) => true));
             }
-            catch(Exception e)
+            catch(HttpRequestException ex)
             {
+                return StatusCode((int)ex.StatusCode.Value, new MessageResponseDTO(ex.Message));
+            }
+            catch(Exception ex)
+            {
+                logger.LogInformation(ex.Message);
                 return StatusCode(500, new {message="Internal server error"});
             }
         }
@@ -85,7 +90,7 @@ namespace Server.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetUserById([FromRoute]int id)
         {
-            var user = await _sqliteDb.Users.Include(u=>u.Role).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await userService.GetUserById(id);
             if (user == null)
             {
                 return NotFound(new { message="User with id "+id.ToString()+" doesn\'t exist" });

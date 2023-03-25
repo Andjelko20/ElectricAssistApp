@@ -32,13 +32,15 @@ namespace Server.Controllers
             SqliteDbContext _sqliteDb,
             ITokenService tokenService,
             ILogger<AuthenticationController> logger,
-            IEmailService emailService
+            IEmailService emailService,
+            IUserService userService
             )
         {
             this.tokenService = tokenService;
             this._sqliteDb = _sqliteDb;
             this.logger = logger;
             this.emailService = emailService;
+            this.userService = userService;
         }
         /// <summary>Login</summary>
         [Produces("application/json")]
@@ -51,8 +53,9 @@ namespace Server.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginDTO requestBody)
         {
-            UserModel? user = await userService.GetUserByUsername(requestBody.Username);
-            if (user == null)
+            logger.LogInformation(requestBody.Username);
+            var user = await userService.GetUserByUsername(requestBody.Username);
+            if (user is null)
             {
                 return Unauthorized(new MessageResponseDTO("Bad credentials"));
             }

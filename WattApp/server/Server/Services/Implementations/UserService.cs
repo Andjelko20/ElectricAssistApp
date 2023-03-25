@@ -3,15 +3,18 @@ using Server.Data;
 using Server.DTOs;
 using Server.Models;
 using System.Linq;
+using System.Net;
 
 namespace Server.Services.Implementations
 {
     public class UserService : IUserService
     {
-        SqliteDbContext context;
-        public UserService(SqliteDbContext context)
+        public readonly SqliteDbContext context;
+        public readonly ILogger<UserService> logger;
+        public UserService(SqliteDbContext context, ILogger<UserService> logger)
         {
             this.context = context;
+            this.logger = logger;
         }
         public int GetNumberOfPages(int itemsPerPage,Func<UserModel, bool> filter)
         {
@@ -25,11 +28,13 @@ namespace Server.Services.Implementations
             DataPage<object> page = new();
             page.NumberOfPages = GetNumberOfPages(itemsPerPage,filter);
             if (page.NumberOfPages == 0)
-                throw new Exception();
+                throw new HttpRequestException("No items",null,HttpStatusCode.NotFound);
             if (page.NumberOfPages < pageNumber || pageNumber<1)
-                throw new Exception();
-            List<object> users = context.Users
-                .Where(filter)
+                throw new HttpRequestException("Invalid page number",null,HttpStatusCode.BadRequest);
+            logger.LogInformation(page.NumberOfPages.ToString());
+            List<object> users=context.Users
+                .Include(user=>user.Role)
+                .Where(user=>filter(user)&&user.Role.Name!="superadmin")
                 .Skip((pageNumber-1)*itemsPerPage)
                 .Take(itemsPerPage)
                 .Select(user=>(object)(new {
@@ -47,13 +52,23 @@ namespace Server.Services.Implementations
             return page;
         }
 
-        public async Task<UserModel?> GetUserByEmail(string email)
+        public Task<UserModel?> GetUserByEmail(string email)
         {
-            return await context.Users.Include(user=>user.Role).FirstOrDefaultAsync(user => user.Email == email);
+            return context.Users.Include(user=>user.Role).FirstOrDefaultAsync(user => user.Email == email);
         }
-        public async Task<UserModel> GetUserByUsername(string username)
+        public async Task<UserModel?> GetUserByUsername(string username)
         {
-            return await context.Users.Include(user => user.Role).FirstOrDefaultAsync(user => user.Username== username);
+            try
+            {
+                var user = await context.Users.Include(user => user.Role).FirstOrDefaultAsync(user => user.Username == username);
+                logger.LogInformation((user is Task<UserModel>).ToString());
+                return user;
+            }
+            catch(NullReferenceException ex)
+            {
+                logger.LogError(ex.Message);
+                return null;
+            }
         }
         public async Task<UserModel?> GetUserById(int id)
         {
