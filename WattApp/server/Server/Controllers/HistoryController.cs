@@ -21,7 +21,7 @@ namespace Server.Controllers
         }
 
         [HttpGet]
-        [Route("{deviceId:int}")]
+        [Route("Year/{deviceId:int}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInLastYear([FromRoute] int deviceId)
         {
@@ -32,6 +32,20 @@ namespace Server.Controllers
 
             // ukoliko postoji vrati listu svih redova
             var historyList = historyService.GetUsageHistoryForDeviceInLastYear(deviceId);
+            return Ok(historyList);
+        }
+
+        [HttpGet]
+        [Route("Month/{deviceId:int}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDeviceInMonthYear([FromRoute] int deviceId)
+        {
+            if (!_sqliteDb.DeviceEnergyUsages.Any(u => u.DeviceId == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceInLastMonth(deviceId);
             return Ok(historyList);
         }
     }

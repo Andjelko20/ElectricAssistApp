@@ -21,5 +21,15 @@ namespace Server.Services.Implementations
             .OrderBy(u => u.StartTime)
             .ToList();
         }
+
+        public List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastMonth(int deviceId)
+        {
+            DateTime OneMonthAgo = DateTime.Now.AddMonths(-1);
+
+            return _context.DeviceEnergyUsages
+            .Where(u => u.DeviceId == deviceId && u.StartTime >= OneMonthAgo)
+            .OrderBy(u => u.StartTime)
+            .ToList();
+        }
     }
 }
