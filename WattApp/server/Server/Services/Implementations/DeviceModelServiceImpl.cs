@@ -1,4 +1,6 @@
 ﻿using Server.Data;
+using Server.Exceptions;
+using Server.Models.DropDowns.Devices;
 
 namespace Server.Services.Implementations
 {
@@ -13,8 +15,10 @@ namespace Server.Services.Implementations
 
         public string getModelNameById(long modelId)
         {
-            var model = _context.DeviceModels.FindAsync(modelId).Result;
+            DeviceModel model = _context.DeviceModels.FindAsync(modelId).Result;
+            if (model == null) throw new ItemNotFoundException("Model not found!");
             return model.Mark;
+
         }
     }
 }

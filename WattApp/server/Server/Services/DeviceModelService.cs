@@ -1,4 +1,6 @@
-﻿namespace Server.Services
+﻿using Server.Models.DropDowns.Devices;
+
+namespace Server.Services
 {
     public interface DeviceModelService
     {
