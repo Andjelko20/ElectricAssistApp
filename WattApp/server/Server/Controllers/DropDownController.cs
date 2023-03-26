@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.DTOs;
 using Server.Models.DropDowns.Devices;
+using Server.Models.DropDowns.Location;
 using Server.Services;
 
 namespace Server.Controllers
@@ -35,6 +37,24 @@ namespace Server.Controllers
         {
             return _service.getDeviceModel(typeId, brandId);
         }
+
+        [HttpGet("settlements")]
+        public List<Settlement> getSettlements(long cityId)
+        {
+            return _service.getSettlements(cityId);
+        }
+        [HttpGet("cities")]
+        public List<City> getCities(long countryId)
+        {
+            return _service.getCities(countryId);
+        }
+        [HttpGet("countries")]
+        public List<Country> getCountries()
+        {
+            return _service.getCountries();
+        }
+
+
 
 
 

@@ -1,6 +1,7 @@
 ﻿using Server.Data;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Devices.Agregations;
+using Server.Models.DropDowns.Location;
 
 namespace Server.Services.Implementations
 {
@@ -16,6 +17,22 @@ namespace Server.Services.Implementations
             _deviceBrandService = deviceBrandService;
             _deviceModelService = deviceModelService;
         }
+
+        public List<Settlement> getSettlements(long cityId)
+        {
+            return _db.Settlements.Where(t => t.CityId == cityId).ToList();
+        }
+
+        public List<City> getCities(long countryId)
+        {
+            return _db.Cities.Where(c => c.CountryId == countryId).ToList();
+        }
+
+        public List<Country> getCountries()
+        {
+            return _db.Countries.ToList();
+        }
+
         public List<DeviceBrand> getDeviceBrand(long deviceTypeId)
         {
 
@@ -50,5 +67,7 @@ namespace Server.Services.Implementations
         {
             return _db.DeviceTypes.Where(x => x.CategoryId == deviceCategoryId).ToList();
         }
+
+        
     }
 }
