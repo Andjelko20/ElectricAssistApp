@@ -12,6 +12,11 @@ namespace Server.Services.Implementations
             _context = context;
         }
 
+        public DeviceBrand getBrandById(long brandId)
+        {
+            return _context.DeviceBrands.Find(brandId);
+        }
+
         public string getBrandNameById(long brandId)
         {
             var brand = _context.DeviceBrands.FindAsync(brandId).Result;
