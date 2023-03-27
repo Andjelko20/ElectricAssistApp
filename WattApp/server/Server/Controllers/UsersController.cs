@@ -32,10 +32,16 @@ namespace Server.Controllers
             this.logger = logger;
             this.tokenService = tokenService;
             this.userService = userService;
-        }   
+        }
         /// <summary>
         /// Get 20 users per page
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DataPage<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
+
         [HttpGet]
         [Route("page/{page:int}")]
         [Authorize(Roles ="admin")]
@@ -85,6 +91,11 @@ namespace Server.Controllers
         /// <summary>
         /// Get single user
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpGet]
         [Route("{id:int}")]
         [Authorize(Roles = "admin")]
@@ -107,6 +118,12 @@ namespace Server.Controllers
         /// <summary>
         /// Get all roles
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<RoleModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
+
         [HttpGet]
         [Route("roles")]
         [Authorize(Roles = "admin")]
@@ -128,6 +145,11 @@ namespace Server.Controllers
         /// </summary>
         /// <response code="200">Success</response>
         /// <response code="400">Bad request</response>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpPost]
         [Authorize(Roles ="admin")]
         public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO requestBody)
@@ -158,6 +180,12 @@ namespace Server.Controllers
         /// <summary>
         /// Update user by admin
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
+
         [HttpPut]
         [Route("{id:int}")]
         [Authorize(Roles ="admin")]
@@ -186,6 +214,11 @@ namespace Server.Controllers
         /// <summary>
         /// Update logged in user data
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpPut]
         [Authorize]
         public async Task<IActionResult> UpdateLoggedInUser([FromBody] UserUpdateDTO requestBody)
@@ -212,6 +245,11 @@ namespace Server.Controllers
         /// <summary>
         /// Block or unblock user
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpPut]
         [Route("set_blocked_status/{id:int}")]
         [Authorize(Roles ="admin")]
@@ -228,6 +266,11 @@ namespace Server.Controllers
         /// <summary>
         /// Delete user
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpDelete]
         [Route("{id:int}")]
         [Authorize(Roles ="admin")]
@@ -246,6 +289,11 @@ namespace Server.Controllers
         /// <summary>
         /// Change password
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpPut]
         [Route("change_password")]
         [Authorize]

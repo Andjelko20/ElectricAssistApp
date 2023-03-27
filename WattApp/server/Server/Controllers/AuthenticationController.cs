@@ -15,6 +15,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Server.DTOs.Responses;
 using Server.Services.Implementations;
+using Server.DTOs.Requests;
 
 namespace Server.Controllers
 {
@@ -113,7 +114,7 @@ namespace Server.Controllers
         [HttpPost]
         [Route("generate_reset_token")]
         [AllowAnonymous]
-        public async Task<IActionResult> GenerateResetToken([FromBody] EmailDTO requestBody)
+        public async Task<IActionResult> GenerateResetToken([FromBody] EmailRequestDTO requestBody)
         {
             var user=await userService.GetUserByEmail(requestBody.Email);
             if (user == null)
@@ -149,11 +150,15 @@ namespace Server.Controllers
         /// Reset password
         /// </summary>
         [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
 
         [HttpPost]
         [Route("reset_password")]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO requestBody)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestDTO requestBody)
         {
             _sqliteDb.ResetPassword.RemoveRange(_sqliteDb.ResetPassword.Where(r=>r.ExpireAt<DateTime.Now));
             var resetPassword=await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r=>r.ResetKey==requestBody.ResetKey);
@@ -165,23 +170,8 @@ namespace Server.Controllers
             user.Password = HashGenerator.Hash(requestBody.NewPassword);
             _sqliteDb.ResetPassword.Remove(resetPassword);
             _sqliteDb.SaveChangesAsync();
-            return Ok();
+            return Ok(new MessageResponseDTO("Password changed successfully"));
         }
     }
-    public class EmailDTO
-    {
-        [Required]
-        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", ErrorMessage = "Not email")]
-        public string Email { get; set; }
-    }
-
-    public class ResetPasswordDTO
-    {
-        [Required]
-
-        public string ResetKey { get; set; }
-
-        [Required]
-        public string NewPassword { get; set; }
-    }
+    
 }
