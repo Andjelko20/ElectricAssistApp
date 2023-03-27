@@ -44,6 +44,10 @@ export class MapsComponent implements OnInit {
       this.onSubmit();
       
     });
+	this.marker.on("dragend",(event:L.DragEndEvent)=>{
+		this.marker.setLatLng(event.target.getLatLng());
+      	this.onSubmit();
+	});
   }
 
   onSubmit(): void {
