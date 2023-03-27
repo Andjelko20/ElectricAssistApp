@@ -1,53 +1,51 @@
-import { Component, HostListener, OnInit,ElementRef,ViewChild } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Users } from '../../models/users.model';
-import { AuthService } from '../../services/auth.service';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ShowUsers, Users } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
+
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-admin-dso',
+  templateUrl: './admin-dso.component.html',
+  styleUrls: ['./admin-dso.component.css']
 })
-export class HomeComponent implements OnInit {
+export class AdminDsoComponent {
+
   
-  users:Users[] = [{
-    id: 1,
-    name: 'na',
-    userName: 'string',
-    password:'ddd',
-    block: false,
-    role:'dso'
-  }];
- 
+  showUsers:ShowUsers[]=[];
   constructor(private router:Router,private usersService:AuthService,
     private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.usersService.getAllUsers().subscribe(users => {
-     this.users=users.data.map((u:any)=>({
-		id:u.id,
-		name:u.name,
-		userName:u.username,
-		password:u.password,
-		block:u.blocked,
-		role:u.role
-	 }as Users));
+     this.showUsers=users.data.map((u:any)=>({
+       id: u.id,
+       name: u.name,
+       username: u.username,
+       block: u.blocked,
+       email: u.email,
+       role: u.role
+     } as ShowUsers));
     });
     }
+
+
   blockUser(id: number) {
       this.usersService.blockUser(id).subscribe(() => {
-        const userIndex = this.users.findIndex(user => user.id === id);
-        this.users[userIndex].block = true;
+        const userIndex = this.showUsers.findIndex(user => user.id === id);
+        this.showUsers[userIndex].block = true;
       });
   }
   unblockUser(id: number) {
       this.usersService.unblockUser(id).subscribe(() => {
-        const userIndex = this.users.findIndex(user => user.id === id);
-        this.users[userIndex].block = false;
+        const userIndex = this.showUsers.findIndex(user => user.id === id);
+        this.showUsers[userIndex].block = false;
       });
   }
+
+
   getUsers()
   {
-    return this.users;
+    return this.showUsers;
   }
 
   delete(id:number)
@@ -65,21 +63,21 @@ export class HomeComponent implements OnInit {
   }
  
  
-  block(user:Users,i:number)
+  block(user:ShowUsers,i:number)
   {
     if(user.block==true)
     {
       if(confirm('Are you sure you want to unblock them? '+user.id))
       {     
         user.block = false;
-        this.users[i] = user;
+        this.showUsers[i] = user;
       }
     }
     else{
       if(confirm('Are you sure you want to block them? '+user.id))
       {
         user.block = true;
-        this.users[i] = user;
+        this.showUsers[i] = user;
       }
     }
     

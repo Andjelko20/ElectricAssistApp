@@ -13,7 +13,7 @@
     <h2>List </h2>
     <br> -->
 
-        <table *ngIf="users">
+        <table *ngIf="showUsers">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -27,19 +27,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of users index as i">
-                    <td>{{user.name}}</td>
-                    <td>{{user.userName}}</td>
-                    <td>{{user.block}} </td>
-                    <td>{{user.role}}</td>
-                    <td><a [routerLink]='["/update",user.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
+                <tr *ngFor="let show of showUsers index as i">
+                    <td>{{show.name}}</td>
+                    <td>{{show.username}}</td>
+                    <td>{{show.block}} </td>
+                    <td>{{show.role}}</td>
+                    <td><a [routerLink]='["/admindsoupdate",show.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
                     <td>
-                        <button style="width: 84px; height:30px" *ngIf="user.block===true" (click)="unblockUser(user.id)"> UNBLOCK</button>
-                        <button style="width: 84px; height:30px" *ngIf="user.block===false" (click)="blockUser(user.id)"> BLOCK</button>
+                        <button style="width: 84px; height:30px" *ngIf="show.block===true" (click)="unblockUser(show.id)"> UNBLOCK</button>
+                        <button style="width: 84px; height:30px" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button>
                     </td>
                     <!--<td><a [routerLink]='["/change-password"]'><button style="min-width: 84px; height:30px" > PASSWORD</button></a></td>-->
 
-                    <td><button style="width: 84px; height:30px" (click)="delete(user.id)">DELETE</button></td>
+                    <td><button style="width: 84px; height:30px" (click)="delete(show.id)">DELETE</button></td>
 
                 </tr>
             </tbody>
@@ -47,5 +47,5 @@
         <br>
 
     </div>
-    <button id="buttonAdd" [routerLink]='["/add-comp"]'>ADD</button>
+    <button id="buttonAdd" [routerLink]='["/admindsoadd"]'>ADD</button>
 </div>

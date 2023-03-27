@@ -2,28 +2,32 @@
     <div class="global1">
         <h1>Add</h1>
 
-        <form #form="ngForm" (ngSubmit)="addUsers()">
+        <form  (ngSubmit)="addUsers()">
             <div class="form-row">
                 <div class="form-group col-md-6 ">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addUserRequest.name">
                     <br>
-                    <label for="userName">User name</label>
-                    <input type="text" class="form-control" id="userName" name="userName" [(ngModel)]="addUserRequest.userName">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" name="email" [(ngModel)]="addUserRequest.email">
+                    <br>
+                    <label for="username">User name</label>
+                    <input type="text" class="form-control" id="userName" name="username" [(ngModel)]="addUserRequest.username">
                     <br>
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" [(ngModel)]="addUserRequest.password">
                     <br>
                     <label for="role">Role</label>
-                    <select #teams id="role" class="form-control" name="role" [(ngModel)]="addUserRequest.role">     
-                        <option *ngFor="let role of roles index as i" [value]="role?.id">{{role?.name}}</option>
+
+                    <select id="role" class="form-control" name="role" [(ngModel)]="addUserRequest.roleId">     
+                        <option *ngFor="let role of roles" [value]="role.id" (change)="onSelectedRole($event)" >{{role.name}}</option>
                     </select>
                     <br>
-                    <label for="role">Block</label>
-                    <select #teams (change)="onSelectedBlock()" id="block" class="form-control" name="block" [(ngModel)]="addUserRequest.block">
+                    <!-- <label for="role">Block</label> -->
+                    <!-- <select #teams (change)="onSelectedBlock()" id="block" class="form-control" name="block" [(ngModel)]="addUserRequest.block">
                         <option>false</option>
                         <option>true</option>
-                    </select>
+                    </select> -->
                 </div>
             </div>
             <button class="btn btn-primary">ADD</button>

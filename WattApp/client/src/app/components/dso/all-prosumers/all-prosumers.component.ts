@@ -12,10 +12,11 @@ export class AllProsumersComponent implements OnInit{
   users:Users[] = [{
     id: 1,
     name: '',
-    userName: '',
+    username: '',
     password:'',
+    email:'',
     block: false,
-    role:''
+    roleId:0
   }];
   filteredDrivers: Users[] = [];
   _listFilter = '';
@@ -44,18 +45,18 @@ export class AllProsumersComponent implements OnInit{
       this.users=users.data.map((u:any)=>({
      id:u.id,
      name:u.name,
-     userName:u.username,
+     username:u.username,
      password:u.password,
      block:u.blocked,
-     role:u.role
+     roleId:u.roleId
     }as Users));
     this.filteredDrivers=users.data.map((u:any)=>({
       id:u.id,
       name:u.name,
-      userName:u.username,
+      username:u.username,
       password:u.password,
       block:u.blocked,
-      role:u.role
+      roleId:u.roleId
      }as Users));
     
      });

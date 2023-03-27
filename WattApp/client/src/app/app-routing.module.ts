@@ -1,27 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './components/home/home.component';
 import { UnauthenticatedGuard } from './guards/unauthenticated.guard';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
-import { AddCompComponent } from './components/add-comp/add-comp.component';
-import { UpdateComponent } from './components/update/update.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { MapsComponent } from './components/maps/maps.component';
-
 import { DsoHomePageComponent } from './pages/dso/dso-home-page/dso-home-page.component';
 import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
 import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
+import { MapsComponent } from './components/dso/maps/maps.component';
+import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso/admin-dso.component';
+import { AdminDsoUpdateComponent } from './components/admin/admin-dso/admin-dso-update/admin-dso-update.component';
+import { AdminDsoAddComponent } from './components/admin/admin-dso/admin-dso-add/admin-dso-add.component';
  
 const routes: Routes = [
-	{path:'',redirectTo:'home',pathMatch:'full'},
+	{path:'',redirectTo:'admindso',pathMatch:'full'},
 	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
-	{path:'home',component:HomeComponent,canActivate:[AuthenticatedGuard]},
-	{path:'add-comp',component:AddCompComponent,canActivate:[AuthenticatedGuard]},
-	{path:'update/:id',component:UpdateComponent,canActivate:[AuthenticatedGuard]},
+	{path:'admindso',component:AdminDsoComponent,canActivate:[AuthenticatedGuard]},
+	{path:'admindsoadd',component:AdminDsoAddComponent,canActivate:[AuthenticatedGuard]},
+	{path:'admindsoupdate/:id',component:AdminDsoUpdateComponent,canActivate:[AuthenticatedGuard]},
 	{path:'register',component:RegisterComponent},
 	{path:'maps',component:MapsComponent},
 	{path:'change-password',component:ChangePasswordComponent},

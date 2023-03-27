@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddCompComponent } from './add-comp.component';
+import { AdminDsoComponent } from './admin-dso.component';
 
-describe('AddCompComponent', () => {
-  let component: AddCompComponent;
-  let fixture: ComponentFixture<AddCompComponent>;
+describe('AdminDsoComponent', () => {
+  let component: AdminDsoComponent;
+  let fixture: ComponentFixture<AdminDsoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddCompComponent ]
+      declarations: [ AdminDsoComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddCompComponent);
+    fixture = TestBed.createComponent(AdminDsoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

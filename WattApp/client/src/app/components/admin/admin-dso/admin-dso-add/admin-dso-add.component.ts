@@ -1,22 +1,23 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-add-comp',
-  templateUrl: './add-comp.component.html',
-  styleUrls: ['./add-comp.component.css']
+  selector: 'app-admin-dso-add',
+  templateUrl: './admin-dso-add.component.html',
+  styleUrls: ['./admin-dso-add.component.css']
 })
-export class AddCompComponent implements OnInit {
-  addUserRequest:Users={
-    id:0,
+export class AdminDsoAddComponent {
+
+  addUserRequest={
     name:'',
-    userName:'',
+    username:'',
     password:'',
+    email:'',
     block:false,
-    role:''
+    roleId: 0
   }
   roles:Array<any>=[];
   constructor(private usersService:AuthService,private router:Router) { }
@@ -26,7 +27,7 @@ export class AddCompComponent implements OnInit {
 	.then(res=>res.json())
 	.then(res=>{
 		this.roles=res;
-		this.addUserRequest.role=this.roles[0]?.id;
+		this.addUserRequest.roleId=this.roles[0]?.id;
   	});
   }
   @ViewChild('teams') teams!: ElementRef;
@@ -34,17 +35,20 @@ export class AddCompComponent implements OnInit {
   {
     this.addUserRequest.block = this.teams.nativeElement.value;
   }
-  onSelectedRole(value:string):void
+  onSelectedRole(event:any)
   {
-    this.addUserRequest.role = value;
+    this.addUserRequest.roleId = event.target.value; 
+   
   }
   
   addUsers()
   {
+
+    console.log(this.addUserRequest)
     this.usersService.addUsers(this.addUserRequest)
     .subscribe({
-      next:(users)=>{
-         this.router.navigate(['/home']);
+      next:()=>{
+         this.router.navigate(['/admindso']);
       
       }
     });

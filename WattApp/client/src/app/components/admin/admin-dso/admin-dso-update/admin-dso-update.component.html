@@ -12,11 +12,15 @@
                     <input type="text " class="form-control " id="id " name="name " [(ngModel)]="updateUserDetail.name ">
 
                     <br>
+                    <label for="email " class="form-label ">Email</label>
+                    <input type="text " class="form-control " id="id " name="email " [(ngModel)]="updateUserDetail.email ">
+
+                    <br>
                     <label for="userName " class="form-label ">User name</label>
-                    <input type="text " class="form-control " id="name " name="userName " [(ngModel)]="updateUserDetail.userName ">
+                    <input type="text " class="form-control " id="name " name="userName " [(ngModel)]="updateUserDetail.username ">
                     <br>
                     <label for="role " class="form-label ">Role</label>
-                    <select #teams id="role " class="form-control " name="role " [(ngModel)]="updateUserDetail.role ">
+                    <select #teams id="role " class="form-control " name="role " [(ngModel)]="updateUserDetail.roleId ">
                             <option *ngFor="let role of roles " [value]="role?.id " >{{role?.name}}</option>
                         </select>
                     <br>

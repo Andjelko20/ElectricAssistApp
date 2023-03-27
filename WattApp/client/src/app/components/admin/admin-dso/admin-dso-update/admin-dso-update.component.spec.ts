@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
+import { AdminDsoUpdateComponent } from './admin-dso-update.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('AdminDsoUpdateComponent', () => {
+  let component: AdminDsoUpdateComponent;
+  let fixture: ComponentFixture<AdminDsoUpdateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
+      declarations: [ AdminDsoUpdateComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(AdminDsoUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
