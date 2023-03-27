@@ -6,28 +6,23 @@ import { JwtToken } from '../utilities/jwt-token';
 @Injectable({
   providedIn: 'root'
 })
-export class UnauthenticatedGuard implements CanActivate {
-  constructor(private router:Router){}
+export class AdminGuard implements CanActivate {
+	constructor(private router:Router){}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-	  let token=localStorage.getItem("token");
-      if(token==null){
-        return true;
-      }
-	  try{
-		let tokenObj=new JwtToken(token);
-		if(tokenObj.expired){
-			localStorage.removeItem("token");
+		let token=new JwtToken();
+		try{
+			let role=token.data.role as string;
+			if(token.expired || !(role=="admin" || role=="superadmin"))
+				throw new Error();
 			return true;
 		}
-	  }
-	  catch(error){
-		return true;
-	  }
-      this.router.navigate(["home"]);
-      
-      return false;
+		catch(error){
+			localStorage.removeItem("token")
+			this.router.navigate(["login"]);
+			return false;
+		}
   }
   
 }

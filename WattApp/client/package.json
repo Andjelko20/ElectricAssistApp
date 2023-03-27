@@ -26,7 +26,6 @@
         "chartjs-plugin-datalabels": "^2.2.0",
         "cors": "^2.8.5",
         "jquery": "^3.6.4",
-        "jwt-decode": "^3.1.2",
         "leaflet": "^1.9.3",
         "ng2-charts": "^4.1.1",
         "ngx-gauge": "^7.0.0",
