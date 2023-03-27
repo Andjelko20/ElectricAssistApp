@@ -2,6 +2,9 @@ import { Buffer } from "buffer";
 
 export class JwtToken{
 	private token:string="";
+	/**
+	 * @summary Get token from localStorage or param token 
+	 */
 	constructor();
 	constructor(token:string);
 	constructor(token?:string|undefined){
@@ -15,6 +18,12 @@ export class JwtToken{
 		}
 		this.token=token;
 	}
+
+	/**
+	 * @summary Check if token format is valid
+	 * @param token 
+	 * @returns 
+	 */
 	public isJwtToken(token: string): boolean {
 		const jwtRegex = /^([A-Za-z0-9-_=]+\.){2}([A-Za-z0-9-_=]+)$/;
 		return jwtRegex.test(token);
@@ -26,7 +35,8 @@ export class JwtToken{
 	}
 	public get expired(){
 		let {exp}=this.data;
-		console.log(exp)
-		return exp<(new Date()).getTime();
+		let date=new Date(0);
+		date.setUTCSeconds(exp);
+		return date.getTime()<(new Date()).getTime();
 	}
 }

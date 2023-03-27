@@ -7,7 +7,7 @@ import { Roles } from '../utilities/role';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminGuard implements CanActivate {
+export class DispatcherGuard implements CanActivate {
 	constructor(private router:Router){}
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -15,7 +15,7 @@ export class AdminGuard implements CanActivate {
 		let token=new JwtToken();
 		try{
 			let role=token.data.role as string;
-			if(token.expired || !(role==Roles.ADMIN_NAME || role==Roles.SUPERADMIN_NAME))
+			if(token.expired || role!=Roles.DISPATCHER_NAME)
 				throw new Error();
 			return true;
 		}

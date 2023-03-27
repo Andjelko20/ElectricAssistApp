@@ -11,9 +11,12 @@ export class AuthService {
 
   
   isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
-  private hasToken() : boolean {
+  public hasToken() : boolean {
     try{
 		let token=new JwtToken();
+		console.log(token.data)
+
+		console.log(token.expired)
 		if(token.expired)
 			throw new Error();
 		return true;
