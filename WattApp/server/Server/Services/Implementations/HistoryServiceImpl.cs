@@ -32,14 +32,34 @@ namespace Server.Services.Implementations
             .ToList();
         }
 
-        public List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastDay(int deviceId)
+        public double GetUsageHistoryForDeviceInLastDay(int deviceId)
         {
+            var device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
+            float EnergyInKwh = -1;
+            if (device != null)
+            {
+                EnergyInKwh = device.EnergyInKwh;
+            }
+            else
+            {
+                return EnergyInKwh; // kada uredjaj ne postoji vrati -1
+            }
+
             DateTime ADayAgo = DateTime.Now.AddDays(-1);
 
-            return _context.DeviceEnergyUsages
-            .Where(u => u.DeviceId == deviceId && u.StartTime >= ADayAgo)
-            .OrderBy(u => u.StartTime)
-            .ToList();
+            List<DeviceEnergyUsage> deviceEnergyUsageLista = _context.DeviceEnergyUsages
+                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= ADayAgo)
+                                                            .OrderBy(u => u.StartTime)
+                                                            .ToList();
+            double Consumption = 0.0;
+            double Hours = -1;
+            foreach (var item in deviceEnergyUsageLista)
+            {
+                Hours = (item.EndTime - item.StartTime).TotalHours;
+                Consumption += (double)Math.Round(EnergyInKwh * Hours, 2);
+            }
+
+            return Consumption;
         }
     }
 }

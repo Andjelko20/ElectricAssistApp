@@ -54,13 +54,14 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInLastDay([FromRoute] int deviceId)
         {
-            if (!_sqliteDb.DeviceEnergyUsages.Any(u => u.DeviceId == deviceId))
-            {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
                 return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
-            }
 
-            var historyList = historyService.GetUsageHistoryForDeviceInLastDay(deviceId);
-            return Ok(historyList);
+            if (!_sqliteDb.DeviceEnergyUsages.Any(u => u.DeviceId == deviceId))
+                return Ok(0.0); // jer je potrosnja 0 ako nije paljen
+
+            var HistoryForThePreviousDay = historyService.GetUsageHistoryForDeviceInLastDay(deviceId);
+            return Ok(HistoryForThePreviousDay);
         }
     }
 }

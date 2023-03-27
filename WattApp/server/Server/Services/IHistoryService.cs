@@ -6,6 +6,7 @@ namespace Server.Services
     {
         List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastYear(int deviceId);
         List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastMonth(int deviceId);
-        List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastDay(int deviceId);
+        //List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastDay(int deviceId);
+        public double GetUsageHistoryForDeviceInLastDay(int deviceId);
     }
 }
