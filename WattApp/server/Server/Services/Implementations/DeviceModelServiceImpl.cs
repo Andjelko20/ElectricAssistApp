@@ -1,4 +1,5 @@
 ﻿using Server.Data;
+using Server.Models.DropDowns.Devices;
 
 namespace Server.Services.Implementations
 {
@@ -9,6 +10,11 @@ namespace Server.Services.Implementations
         public DeviceModelServiceImpl(SqliteDbContext context)
         {
             _context = context;
+        }
+
+        public DeviceModel getDeviceModel(long modelId)
+        {
+            return _context.DeviceModels.Find(modelId);
         }
 
         public string getModelNameById(long modelId)

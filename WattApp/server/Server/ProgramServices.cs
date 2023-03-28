@@ -30,6 +30,7 @@ namespace Server
             builder.Services.AddScoped<DeviceBrandService, DeviceBrandServiceImpl>();
             builder.Services.AddScoped<DeviceModelService, DeviceModelServiceImpl>();
             builder.Services.AddScoped<DeviceService, DeviceServiceImpl>();
+            builder.Services.AddScoped<DropDownService, DropDownServiceImpl>(); ;
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.Configure<ApiBehaviorOptions>(options
