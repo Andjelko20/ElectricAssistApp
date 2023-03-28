@@ -9,7 +9,7 @@ namespace Server.Services
         Task<UserModel?>? GetUserByEmail(string email);
         Task<UserModel?> GetUserByUsername(string username);
         Task<DataPage<object>> GetPageOfUsers(int pageNumber, int itemsPerPage, Func<UserModel, bool> filter);
-        //Task<bool> CheckPassword(string password);
+        Task<List<RoleModel>> GetAllRoles();
 
     }
 }

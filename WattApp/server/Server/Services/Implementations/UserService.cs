@@ -61,18 +61,21 @@ namespace Server.Services.Implementations
             try
             {
                 var user = await context.Users.Include(user => user.Role).FirstOrDefaultAsync(user => user.Username == username);
-                logger.LogInformation((user is Task<UserModel>).ToString());
                 return user;
             }
             catch(NullReferenceException ex)
             {
-                logger.LogError(ex.Message);
                 return null;
             }
         }
-        public async Task<UserModel?> GetUserById(int id)
+        public Task<UserModel?> GetUserById(int id)
         {
-            return await context.Users.Include(user=>user.Role).FirstOrDefaultAsync(user => user.Id == id);
+            return context.Users.Include(user=>user.Role).FirstOrDefaultAsync(user => user.Id == id);
+        }
+
+        public Task<List<RoleModel>> GetAllRoles()
+        {
+            return context.Roles.ToListAsync();
         }
     }
 }

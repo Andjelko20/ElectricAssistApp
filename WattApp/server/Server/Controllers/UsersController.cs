@@ -49,33 +49,6 @@ namespace Server.Controllers
         {
             try
             {
-                /*
-                int count = _sqliteDb.Users.Count();
-                logger.LogInformation(count.ToString());
-                int maxPage = count / NUMBER_OF_ITEMS_PER_PAGE+((count%NUMBER_OF_ITEMS_PER_PAGE!=0)?1:0);
-                logger.LogInformation(maxPage.ToString());
-                if (page < 1 || page > maxPage)
-                    return BadRequest(new { message ="Page number isn\'t valid"});
-                var users = await _sqliteDb.Users.Include(u => u.Role).Skip((page - 1) * NUMBER_OF_ITEMS_PER_PAGE).Take(NUMBER_OF_ITEMS_PER_PAGE).Select(u => new
-                {
-                    Id = u.Id,
-                    Name = u.Name,
-                    Username = u.Username,
-                    Role = u.Role.Name,
-                    Blocked = u.Blocked,
-                    Email=u.Email
-
-                }).ToListAsync();
-
-                int? previousPage = (page == 1) ? null : page - 1;
-                int? nextPage = (page == maxPage) ? null : page + 1;
-                return Ok(new {
-                    previousPage=previousPage,
-                    nextPage=nextPage,
-                    numberOfPages=maxPage,
-                    data=users
-                });
-                */
                 return Ok(await userService.GetPageOfUsers(page, 20, (user) => true));
             }
             catch(HttpRequestException ex)
@@ -84,7 +57,7 @@ namespace Server.Controllers
             }
             catch(Exception ex)
             {
-                logger.LogInformation(ex.Message);
+                //logger.LogInformation(ex.Message);
                 return StatusCode(500, new {message="Internal server error"});
             }
         }
@@ -133,7 +106,7 @@ namespace Server.Controllers
             {
                 var id = tokenService.GetClaim(HttpContext,JwtClaims.Id);
                 logger.LogInformation(id);
-                return Ok(await _sqliteDb.Roles.ToListAsync());
+                return Ok(await userService.GetAllRoles());
             }
             catch (Exception e)
             {
@@ -193,7 +166,7 @@ namespace Server.Controllers
         {
             try
             {
-                var user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == id);
+                var user = await userService.GetUserById(id);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
                 user.Username = requestBody.Username;
@@ -276,7 +249,7 @@ namespace Server.Controllers
         [Authorize(Roles ="admin")]
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
-            var user=await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
+            var user=await userService.GetUserById(id);
             if (user != null)
             {
                 _sqliteDb.Remove(user);
@@ -299,9 +272,8 @@ namespace Server.Controllers
         [Authorize]
         public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordDTO requestBody)
         {
-            var credentials = HttpContext.User.Identity as ClaimsIdentity;
-            int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
-            UserModel user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == userId);
+            int userId = int.Parse(tokenService.GetClaim(HttpContext,"id"));
+            UserModel user = await userService.GetUserById(userId);
             if (!HashGenerator.Verify(requestBody.OldPassword, user.Password))
             {
                 return BadRequest(new { message = "Old password is not valid" });
