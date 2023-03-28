@@ -13,5 +13,6 @@ namespace Server.Services
         public double GetUsageHistoryForDeviceInLastYear(int deviceId);
         public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsage(int deviceId);
         public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastMonth(int deviceId);
+        public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastWeek(int deviceId);
     }
 }

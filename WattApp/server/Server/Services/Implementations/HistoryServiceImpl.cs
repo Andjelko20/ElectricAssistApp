@@ -129,7 +129,37 @@ namespace Server.Services.Implementations
                 foreach (var usage in UsageForDate)
                     EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * Device.EnergyInKwh;
 
-                Results.Insert(0, new DailyEnergyConsumptionPastMonth
+                Results.Add(new DailyEnergyConsumptionPastMonth
+                {
+                    Day = date.ToString("dd.MM.yyyy"),
+                    EnergyUsageResult = EnergyUsage
+                });
+            }
+
+            return Results;
+        }
+
+        public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastWeek(int deviceId)
+        {
+            var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
+            var EndDate = DateTime.Now.Date.AddDays(1).AddSeconds(-1);
+            var StartDate = EndDate.AddDays(-6);
+
+            var UsageList = _context.DeviceEnergyUsages
+                            .Where(u => u.DeviceId == deviceId && u.StartTime >= StartDate && u.EndTime <= EndDate)
+                            .ToList();
+
+            var Results = new List<DailyEnergyConsumptionPastMonth>();
+
+            for (var date = StartDate; date <= EndDate; date = date.AddDays(1))
+            {
+                var UsageForDate = UsageList.Where(u => u.StartTime.Date == date.Date).ToList();
+
+                double EnergyUsage = 0.0;
+                foreach (var usage in UsageForDate)
+                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * Device.EnergyInKwh;
+
+                Results.Add(new DailyEnergyConsumptionPastMonth
                 {
                     Day = date.ToString("dd.MM.yyyy"),
                     EnergyUsageResult = EnergyUsage
