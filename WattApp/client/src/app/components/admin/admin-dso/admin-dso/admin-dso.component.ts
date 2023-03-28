@@ -55,7 +55,7 @@ export class AdminDsoComponent {
       this.usersService.delete(id)
       .subscribe({
         next:(response)=>{
-          this.router.navigate(['/home']);
+          this.router.navigate(['/admindso']);
           location.reload();
         }
       });

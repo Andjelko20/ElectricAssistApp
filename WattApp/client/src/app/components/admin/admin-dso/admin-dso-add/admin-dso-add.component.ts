@@ -19,6 +19,7 @@ export class AdminDsoAddComponent {
     block:false,
     roleId: 0
   }
+  passwordGen = '';
   roles:Array<any>=[];
   constructor(private usersService:AuthService,private router:Router) { }
 
@@ -40,11 +41,14 @@ export class AdminDsoAddComponent {
     this.addUserRequest.roleId = event.target.value; 
    
   }
-  
+  generatePassword() {
+    this.passwordGen=Array(10).
+    fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").
+    map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+  }
   addUsers()
   {
-
-    console.log(this.addUserRequest)
+    this.addUserRequest.password=this.passwordGen;
     this.usersService.addUsers(this.addUserRequest)
     .subscribe({
       next:()=>{

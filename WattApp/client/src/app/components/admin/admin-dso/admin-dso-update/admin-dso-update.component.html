@@ -4,12 +4,12 @@
         <form #form="ngForm" (ngSubmit)="upDate()">
             <div class="form-row">
                 <div class="form-group col-md-6 ">
-                    <label for="id " class="form-label ">ID</label>
-                    <input type="text " class="form-control " id="id " name="id " [(ngModel)]="updateUserDetail.id " disabled>
+                    <!-- <label for="id " class="form-label ">ID</label>
+                    <input type="text " class="form-control " id="id " name="id " [(ngModel)]="updateUserDetail.id " disabled> -->
 
                     <br>
                     <label for="name " class="form-label ">Name</label>
-                    <input type="text " class="form-control " id="id " name="name " [(ngModel)]="updateUserDetail.name ">
+                    <input type="text " class="form-control " id="id " name="name " [(ngModel)]="updateUserDetail.name " disabled>
 
                     <br>
                     <label for="email " class="form-label ">Email</label>
@@ -17,18 +17,20 @@
 
                     <br>
                     <label for="userName " class="form-label ">User name</label>
-                    <input type="text " class="form-control " id="name " name="userName " [(ngModel)]="updateUserDetail.username ">
+                    <input type="text " class="form-control " id="name " name="userName " [(ngModel)]="updateUserDetail.username "disabled>
                     <br>
                     <label for="role " class="form-label ">Role</label>
                     <select #teams id="role " class="form-control " name="role " [(ngModel)]="updateUserDetail.roleId ">
                             <option *ngFor="let role of roles " [value]="role?.id " >{{role?.name}}</option>
                         </select>
                     <br>
-                    <label for="role " class="form-label ">Block</label>
-                    <select id="block " class="form-control " name="block " [(ngModel)]="updateUserDetail.block ">
-                        <option>false</option>
-                        <option>true</option>
-                    </select>
+                    <br>
+                    <!-- <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" [(ngModel)]="updateUserDetail.username" value="{{passwordGen}}" disabled>
+                    <form style="margin: 0; padding: 0;">
+                        <button class="btn btn-success" type="submit" (click)="generatePassword()">Generate password</button>
+                    </form>
+                    <br> -->
                 </div>
             </div>
             <button type=" submit " class="btn btn-primary mr-5 ">Save</button>

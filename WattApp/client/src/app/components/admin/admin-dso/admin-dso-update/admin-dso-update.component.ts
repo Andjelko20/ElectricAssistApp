@@ -21,6 +21,7 @@ export class AdminDsoUpdateComponent {
     block:false,
     roleId:0
   }
+  passwordGen=''
   constructor(private route:ActivatedRoute,private router:Router,private updateService:AuthService) { }
 
   ngOnInit(): void {
@@ -59,6 +60,11 @@ export class AdminDsoUpdateComponent {
         this.router.navigate(['admindso']);
       }
     });
+  }
+  generatePassword() {
+    this.passwordGen=Array(10).
+    fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").
+    map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
   }
 
 }
