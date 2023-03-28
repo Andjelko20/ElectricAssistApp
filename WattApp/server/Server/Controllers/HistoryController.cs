@@ -64,5 +64,21 @@ namespace Server.Controllers
             var HistoryForThePreviousDay = historyService.GetUsageHistoryForDeviceInLastDay(deviceId);
             return Ok(HistoryForThePreviousDay);
         }
+
+        /// <summary>
+        /// Consumption history for device in past year by month
+        /// </summary>
+        [HttpGet]
+        [Route("YearByMonth/{deviceId:int}")]
+
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDeviceInPastYearByMonth([FromRoute] int deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+
+            var HistoryForThePreviousYear = historyService.GetMonthlyEnergyUsage(deviceId);
+            return Ok(HistoryForThePreviousYear);
+        }
     }
 }

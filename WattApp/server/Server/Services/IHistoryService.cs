@@ -1,4 +1,5 @@
-﻿using Server.Models;
+﻿using Server.DTOs;
+using Server.Models;
 
 namespace Server.Services
 {
@@ -10,5 +11,6 @@ namespace Server.Services
         public double GetUsageHistoryForDeviceInLastDay(int deviceId);
         public double GetUsageHistoryForDeviceInLastMonth(int deviceId);
         public double GetUsageHistoryForDeviceInLastYear(int deviceId);
+        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsage(int deviceId);
     }
 }
