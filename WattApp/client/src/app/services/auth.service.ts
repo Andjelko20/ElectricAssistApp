@@ -14,9 +14,6 @@ export class AuthService {
   public hasToken() : boolean {
     try{
 		let token=new JwtToken();
-		console.log(token.data)
-
-		console.log(token.expired)
 		if(token.expired)
 			throw new Error();
 		return true;
