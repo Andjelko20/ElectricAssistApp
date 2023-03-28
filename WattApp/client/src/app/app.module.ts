@@ -40,6 +40,9 @@ import { BarMonthChartComponent } from './components/charts/bar-month-chart/bar-
 import { BarYearChartComponent } from './components/charts/bar-year-chart/bar-year-chart.component';
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
+import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
+import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
+import { ProsumerTowerComponent } from './components/prosumer-meter/prosumer-tower/prosumer-tower.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +78,10 @@ import { ResetPasswordPageComponent } from './pages/reset-password/reset-passwor
     BarMonthChartComponent,
     LineWeekChartComponent,
     ForgotPasswordPageComponent,
-    ResetPasswordPageComponent
+    ResetPasswordPageComponent,
+    ProsumerTowerComponent,
+    ProsumerHouseComponent,
+    ProsumerSolarComponent
 
   ],
   imports: [
