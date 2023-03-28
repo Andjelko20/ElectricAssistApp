@@ -1,5 +1,15 @@
 <div id="container">
-	<div class="search-container"></div>
+	<div class="search-container">
+		<form (submit)="onSubmit()">
+			<input type="text" name="search-input" [(ngModel)]="searchInput">
+			<button>Search</button>
+		</form>
+		<div class="search-result">
+			<div *ngFor="let location of locations" (click)="changeFocus(location)">
+				{{location.address.city}}
+			</div>
+		</div>
+	</div>
 	<div id="map-wrapper">
 		<div id="prosumers-map"></div>
 	</div>

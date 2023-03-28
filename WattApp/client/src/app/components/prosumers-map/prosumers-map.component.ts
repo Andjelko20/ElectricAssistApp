@@ -1,7 +1,8 @@
 import { Component,OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of } from 'rxjs';
 import * as Leaflet from 'leaflet';
+import { environment } from 'src/environments/environment';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-prosumers-map',
@@ -11,7 +12,9 @@ import * as Leaflet from 'leaflet';
 export class ProsumersMapComponent {
 	
 	  private map!: Leaflet.Map;
-	  private marker!: Leaflet.Marker;
+	  private searchUrl!:URL;
+	  public searchInput!:string;
+	  public locations:any[]=[];
 	  private prosumers=[
 		{
 			latitude:44.048325,
@@ -28,7 +31,12 @@ export class ProsumersMapComponent {
 	];
 	
 	  ngOnInit(): void {
-	
+		this.searchUrl=new URL(environment.mapSearchUrl);
+		this.searchUrl.searchParams.set("format","json");
+		this.searchUrl.searchParams.set("addressdetails","addressdetails");
+		this.searchUrl.searchParams.set("polygon_geojson","0");
+
+		
 		const icon = Leaflet.icon({
 		  iconUrl: 'assets/marker-icon.png',
 		  shadowUrl: 'assets/marker-shadow.png',
@@ -54,5 +62,21 @@ export class ProsumersMapComponent {
 			marker.bindPopup(`<b>${prosumer.name}</b> ${prosumer.consumption}`);
 		}
 	  }
-	
+
+	  onSubmit(){
+		if(this.searchInput=="")
+			return;
+		this.searchUrl.searchParams.set("q",this.searchInput);
+		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
+		.then(res=>res.json())
+		.then(res=>{
+			this.locations=res;
+		});
+	  }
+	  changeFocus(location:any){
+		let options:Leaflet.ZoomPanOptions={
+			animate:true
+		};
+		this.map.setView([location.lat,location.lon],this.map.getZoom(),options);
+	  }
 }
