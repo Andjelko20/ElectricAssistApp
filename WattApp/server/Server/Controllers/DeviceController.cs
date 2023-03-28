@@ -193,9 +193,9 @@ namespace Server.Controllers
 
         }
 
-        [HttpPut("turnOn")]
+        [HttpPut("turnOn{deviceId:long}")]
         [Authorize(Roles = "dispecer, prosumer")]
-        public IActionResult changeTurnOnStatus(long deviceId)
+        public IActionResult changeTurnOnStatus([FromRoute]long deviceId)
         {
             Device device = new Device();
             try
@@ -317,9 +317,9 @@ namespace Server.Controllers
 
         }
 
-        [HttpPut("controlability")]
+        [HttpPut("controlability{deviceId:long}")]
         [Authorize(Roles = "prosumer")]
-        public IActionResult changeDeviceControlability(long deviceId)
+        public IActionResult changeDeviceControlability([FromRoute]long deviceId)
         {
             try
             {
@@ -359,9 +359,9 @@ namespace Server.Controllers
             }
         }
 
-        [HttpPut("visibility")]
+        [HttpPut("visibility{deviceId:long}")]
         [Authorize(Roles = "prosumer")]
-        public IActionResult changeDeviceVisibility(long deviceId)
+        public IActionResult changeDeviceVisibility([FromRoute] long deviceId)
         {
             try
             {
