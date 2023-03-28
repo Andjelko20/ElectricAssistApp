@@ -171,7 +171,7 @@ a.article:hover {
     transition: all 0.3s;
 }
 
-@media (max-width: 908px) {
+@media (min-width: 688px) {
     #sidebar {
         min-width: 80px;
         max-width: 80px;

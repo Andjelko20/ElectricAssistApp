@@ -2,6 +2,9 @@
 
 namespace Server.Utilities
 {
+    /// <summary>
+    /// Password generator
+    /// </summary>
     public class PasswordGenerator
     {
         /// <summary>

@@ -13,6 +13,11 @@ namespace Server.Services.Implementations
             _context = context;
         }
 
+        public DeviceModel getDeviceModel(long modelId)
+        {
+            return _context.DeviceModels.Find(modelId);
+        }
+
         public string getModelNameById(long modelId)
         {
             DeviceModel model = _context.DeviceModels.FindAsync(modelId).Result;
