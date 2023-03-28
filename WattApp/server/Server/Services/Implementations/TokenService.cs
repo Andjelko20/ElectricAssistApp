@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Server.Models;
+using Server.Utilities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Server.Services
+namespace Server.Services.Implementations
 {
     /// <summary>
     /// Create token and get data from token
@@ -37,6 +38,7 @@ namespace Server.Services
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Actor, user.Id.ToString()),
+                    new Claim(JwtClaims.Id, user.Id.ToString()),
                     new Claim(ClaimTypes.Role,user.Role.Name)
                 }),
                 Expires = DateTime.Now.AddHours(2),
@@ -47,6 +49,12 @@ namespace Server.Services
             var jwtToken = jwtTokenHandler.WriteToken(token);
 
             return jwtToken;
+        }
+        /// <inheritdoc/>
+        public string? GetClaim(HttpContext httpContext,string index)
+        {
+            var identity = httpContext.User.Identity as ClaimsPrincipal;
+            return identity?.FindFirst(index)?.Value;
         }
 
     }

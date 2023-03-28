@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Server.Data;
 using Server.Filters;
 using Server.Services;
+using Server.Services.Implementations;
 using System.Reflection;
 using System.Text;
 using Server.Services.Implementations;
@@ -15,6 +17,10 @@ namespace Server
 {
     public partial class Program
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public static void AddServices(WebApplicationBuilder builder)
         {
             // Add services to the container.
@@ -22,9 +28,10 @@ namespace Server
 
             builder.Services.AddMvc();
 
-            //builder.Services.Add(new ServiceDescriptor(typeof(EmailService), new EmailService(builder.Configuration)));
-            builder.Services.AddTransient<IEmailService, EmailService>();
-            builder.Services.AddTransient<ITokenService, TokenService>();
+            // Adding services from Services directory
+            builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<IUserService, UserService>();
 			builder.Services.AddScoped<DeviceCategoryService, DeviceCategoryServiceImpl>();
             builder.Services.AddScoped<DeviceTypeService, DeviceTypeServiceImpl>();
             builder.Services.AddScoped<DeviceBrandService, DeviceBrandServiceImpl>();
@@ -36,11 +43,13 @@ namespace Server
             builder.Services.Configure<ApiBehaviorOptions>(options
                 => options.SuppressModelStateInvalidFilter = true);
 
+            // Filter added
             builder.Services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(BadRequestValidationFilter));
             });
 
+            // Authentication service added
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -49,6 +58,7 @@ namespace Server
             }).AddJwtBearer(jwt =>
             {
                 var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtConfig:SecretKey").Value);
+                jwt.RequireHttpsMetadata = false;
                 jwt.SaveToken = true;
                 jwt.TokenValidationParameters = new TokenValidationParameters()
                 {
@@ -57,17 +67,23 @@ namespace Server
                     ValidateIssuer = false, // for dev
                     ValidateAudience = false, // for dev
                     RequireExpirationTime = true,
-                    ValidateLifetime = true
+                    ValidateLifetime = true,
+                    ValidateActor = false
                 };
             });
 
+
+            // DbContext added
             builder.Services.AddDbContext<SqliteDbContext>(options =>
             {
                 options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite"));
             });
 
+            // CORS policy added
             builder.Services.AddCors();
 
+
+            // Swagger documentation added
             builder.Services.AddSwaggerGen(swagger =>
             {
                 swagger.SwaggerDoc("v1", new OpenApiInfo
@@ -76,6 +92,7 @@ namespace Server
                     Title = "ElectricAssist API",
                     Description = "API dokumentacija za projekat iz SI"
                 });
+                // Authentication scheme
                 swagger.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,
@@ -83,25 +100,11 @@ namespace Server
                     In = ParameterLocation.Header,
                     Scheme = "bearer"
                 });
-                /*
-                swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "bearer"
-                            }
-                        },
-                        new List<string>()
-                    }
-                });
-                */
 
+                // Added filter for authenticated and anonymous routes
                 swagger.OperationFilter<AuthResponsesOperationFilter>();
 
+                // XML comments enabled
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 swagger.IncludeXmlComments(xmlPath);
