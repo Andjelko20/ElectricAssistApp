@@ -25,7 +25,7 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInLastYear([FromRoute] int deviceId)
         {
-            if (!_sqliteDb.DeviceEnergyUsages.Any(u => u.DeviceId == deviceId)) // Any - da li postoji stavka tog id-a u bazi
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId)) // Any - da li postoji stavka tog id-a u bazi
             {
                 return NotFound(new { message = "Device with the ID: " + deviceId.ToString()  + " does not exist." }); // ako ne postoji vrati NotFound
             }

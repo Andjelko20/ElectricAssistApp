@@ -12,14 +12,30 @@ namespace Server.Services.Implementations
             _context = context;
         }
 
-        public List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastYear(int deviceId)
+        public double GetUsageHistoryForDeviceInLastYear(int deviceId)
         {
             DateTime OneYearAgo = DateTime.Now.AddYears(-1); // tip DATETIME, trenutna godina 2023. -1 = 2022.
-            
-            return _context.DeviceEnergyUsages
-            .Where(u => u.DeviceId == deviceId && u.StartTime >= OneYearAgo)
-            .OrderBy(u => u.StartTime)
-            .ToList();
+
+            List<DeviceEnergyUsage> deviceEnergyUsageLista = _context.DeviceEnergyUsages
+                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= OneYearAgo)
+                                                            .OrderBy(u => u.StartTime)
+                                                            .ToList();
+
+            var device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
+            float EnergyInKwh = -1;
+            if (device != null)
+                EnergyInKwh = device.EnergyInKwh;
+
+            double Consumption = 0.0;
+            double Hours = -1;
+            // prodjem kroz tu listu i vidim koliko sati je radio
+            foreach (var item in deviceEnergyUsageLista)
+            {
+                Hours = (item.EndTime - item.StartTime).TotalHours;
+                Consumption += (double)Math.Round(EnergyInKwh * Hours, 2);
+            }
+
+            return Consumption;
         }
 
         public double GetUsageHistoryForDeviceInLastMonth(int deviceId)
