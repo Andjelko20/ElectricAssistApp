@@ -1,3 +1,9 @@
+#content {
+    width: 100%;
+    min-height: 100%;
+    transition: all 0.3s;
+}
+
 .navbar {
     background-color: #1C315E;
 }

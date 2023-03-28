@@ -15,6 +15,7 @@ import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-pr
 import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
+import { ProsumerHomePageComponent } from './pages/prosumer/prosumer-home-page/prosumer-home-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'home',pathMatch:'full'},
@@ -30,6 +31,7 @@ const routes: Routes = [
 	{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
+	{path:'prosumer-home-page',component:ProsumerHomePageComponent},
 	{path:'**',redirectTo:"login"}
 ];
 
