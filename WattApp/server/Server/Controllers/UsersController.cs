@@ -9,6 +9,8 @@ using Server.Models;
 using System.Security.Claims;
 using Server.Services;
 using Server.DTOs.Responses;
+using Server.DTOs.Requests;
+using Server.Services.Implementations;
 
 namespace Server.Controllers
 {
@@ -20,18 +22,21 @@ namespace Server.Controllers
         public readonly ILogger<UsersController> logger;
         public readonly ITokenService tokenService;
         public readonly IUserService userService;
+        public readonly IEmailService emailService;
         public readonly int NUMBER_OF_ITEMS_PER_PAGE = 20;
 
         public UsersController(
             SqliteDbContext sqliteDb,
             ILogger<UsersController> logger,
             ITokenService tokenService,
-            IUserService userService)
+            IUserService userService,
+            IEmailService emailService)
         {
             _sqliteDb = sqliteDb;
             this.logger = logger;
             this.tokenService = tokenService;
             this.userService = userService;
+            this.emailService = emailService;
         }
         /// <summary>
         /// Get 20 users per page
@@ -162,15 +167,13 @@ namespace Server.Controllers
         [HttpPut]
         [Route("{id:int}")]
         [Authorize(Roles ="admin")]
-        public async Task<IActionResult> UpdateUserByAdmin([FromBody] UserUpdateDTO requestBody, [FromRoute]int id)
+        public async Task<IActionResult> UpdateUserByAdmin([FromBody] UpdateUserByAdminDTO requestBody, [FromRoute]int id)
         {
             try
             {
                 var user = await userService.GetUserById(id);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
-                user.Username = requestBody.Username;
-                user.Name = requestBody.Name;
                 user.RoleId = requestBody.RoleId;
                 user.Blocked = requestBody.Blocked;
                 user.Email = requestBody.Email;
@@ -281,6 +284,45 @@ namespace Server.Controllers
             user.Password = HashGenerator.Hash(requestBody.NewPassword);
             await _sqliteDb.SaveChangesAsync();
             return Ok(new { message = "Password changed successfully" });
-        }   
+        }
+
+        [HttpPut]
+        [Route("generate_reset_token_admin")]
+        [Authorize(Roles ="admin")]
+        public async Task<IActionResult> GenerateResetToken([FromBody] EmailRequestDTO requestBody)
+        {
+            var user = await userService.GetUserByEmail(requestBody.Email);
+            if (user.Role.Name == "superadmin")
+                return Forbid();
+            if (user == null)
+                return BadRequest(new BadRequestStatusResponse("User not exist"));
+            var resetPassword = await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r => r.UserId == user.Id);
+            bool exists = true;
+            if (resetPassword == null)
+            {
+                exists = false;
+                resetPassword = new ResetPasswordModel()
+                {
+                    UserId = user.Id,
+                };
+            }
+            else if (resetPassword.ExpireAt > DateTime.Now)
+                return BadRequest(new MessageResponseDTO("Reset key is already submited on your email"));
+            return BadRequest("Reset token is already sent. Check your email.");
+            resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
+            resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
+            try
+            {
+                emailService.SendEmail(requestBody.Email, "Reset password", "Click on this link to reset your password:<a href='http://localhost:4200/reset-password/" + resetPassword.ResetKey + "'>" + resetPassword.ResetKey + "</a>", true);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+            }
+            if (!exists)
+                _sqliteDb.ResetPassword.Add(resetPassword);
+            _sqliteDb.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
