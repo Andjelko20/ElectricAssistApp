@@ -41,6 +41,7 @@ import { BarYearChartComponent } from './components/charts/bar-year-chart/bar-ye
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
+import { MapInputComponent } from './components/map-input/map-input.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.
     LineWeekChartComponent,
     ForgotPasswordPageComponent,
     ResetPasswordPageComponent,
-    ProsumersMapComponent
+    ProsumersMapComponent,
+	MapInputComponent
 
   ],
   imports: [
