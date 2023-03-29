@@ -30,7 +30,7 @@ namespace Server.Services.Implementations
             _context.SaveChanges();
             return device;
         }
-
+        /// <inheritdoc/>
         public Device changeDeviceVisibility(long deviceId, long userId)
         {
             Device device = _context.Devices.FirstOrDefaultAsync(x => x.Id == deviceId && x.UserId == userId).Result;
@@ -46,7 +46,7 @@ namespace Server.Services.Implementations
             }
             return device;
         }
-
+        /// <inheritdoc/>
         public Device changeDeviceControlability(long deviceId, long userId)
         {
             Device device = _context.Devices.FirstOrDefaultAsync(x => x.Id == deviceId && x.UserId == userId).Result;
@@ -89,7 +89,7 @@ namespace Server.Services.Implementations
             }
             return null;
         }
-
+        /// <inheritdoc/>
         public Device deleteDeviceById(long id)
         {
             Device device = _context.Devices.Find(id);
@@ -97,7 +97,7 @@ namespace Server.Services.Implementations
             _context.SaveChanges();
             return device;
         }
-
+        /// <inheritdoc/>
         public Device editDevice(Device device)
         {
             _context.Devices.Update(device);
@@ -110,22 +110,22 @@ namespace Server.Services.Implementations
                 return _context.Devices.Where(src => src.Visibility == true).ToList();
         }*/
 
-        
+        /// <inheritdoc/>
         public Device getDeviceById(long deviceId)
         {
             return _context.Devices.FirstOrDefault(src => src.Id == deviceId && src.Visibility == true);
         }
-
+        /// <inheritdoc/>
         public List<Device> getMyDevices(long userId)
         {
             return _context.Devices.Where(src => src.UserId == userId).ToList();
         }
-
+        /// <inheritdoc/>
         public Device getYourDeviceById(long deviceId, long userId)
         {
             return _context.Devices.FirstOrDefaultAsync(src => src.Id == deviceId && src.UserId == userId).Result;
         }
-
+        /// <inheritdoc/>
         public List<Device> getUserDevices(long userId)
         {
             return _context.Devices.Where(src => src.UserId == userId && src.Visibility == true).ToList();

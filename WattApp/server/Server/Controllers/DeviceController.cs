@@ -34,7 +34,7 @@ namespace Server.Controllers
             _mapper = mapper;
         }
         /// <summary>
-        /// Get device details by device id. 
+        /// Get device by device id (DSO if he has permissions, for PROSUMER if its his device)
         /// </summary>
         /// 
         [ProducesResponseType(typeof(DeviceResponseDTO), 200)]
@@ -89,7 +89,9 @@ namespace Server.Controllers
             }
             
         }
-
+        /// <summary>
+        /// Get all devices from user (for DSO)
+        /// </summary>
         [HttpGet("devices{userId:long}")]
         [Authorize(Roles = "dispecer")]
         public IActionResult getUserDevices([FromRoute]long userId)
@@ -136,7 +138,7 @@ namespace Server.Controllers
 
 
         /// <summary>
-        /// Get all visible devices for every user if you are DSO and only your devices if you are PROSUMER.
+        /// Get all devices (for PROSUMER)
         /// </summary>
         [HttpGet]
         [Authorize(Roles = "prosumer")]
@@ -191,7 +193,9 @@ namespace Server.Controllers
 
         }
 
-        //IActionResult
+        /// <summary>
+        /// Add new device if you are PROSUMER or GUEST
+        /// </summary>
 
         [HttpPost]
         [Authorize(Roles = "prosumer, guest")]
@@ -234,6 +238,9 @@ namespace Server.Controllers
 
         
 
+        /// <summary>
+        /// Change turn on/off status of device (DSO + PROSUMER)
+        /// </summary>
         [HttpPut("turnOn{deviceId:long}")]
         [Authorize(Roles = "dispecer, prosumer")]
         public IActionResult changeTurnOnStatus([FromRoute]long deviceId)
@@ -358,6 +365,10 @@ namespace Server.Controllers
 
         }
 
+
+        /// <summary>
+        /// Change controlability status of device (DSO + PROSUMER)
+        /// </summary>
         [HttpPut("controlability{deviceId:long}")]
         [Authorize(Roles = "prosumer")]
         public IActionResult changeDeviceControlability([FromRoute]long deviceId)
@@ -400,6 +411,9 @@ namespace Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Change visibility status of device (DSO + PROSUMER)
+        /// </summary>
         [HttpPut("visibility{deviceId:long}")]
         [Authorize(Roles = "prosumer")]
         public IActionResult changeDeviceVisibility([FromRoute] long deviceId)
