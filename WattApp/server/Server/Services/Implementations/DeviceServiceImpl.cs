@@ -28,6 +28,10 @@ namespace Server.Services.Implementations
             if (device != null)
             {
                 device.Visibility = !(device.Visibility);
+                if(device.Visibility == false)
+                {
+                    device.Controlability = false;
+                }
                 _context.Devices.Update(device);
                 _context.SaveChangesAsync();
             }
@@ -39,12 +43,13 @@ namespace Server.Services.Implementations
             Device device = _context.Devices.FirstOrDefaultAsync(x => x.Id == deviceId && x.UserId == userId).Result;
             if (device != null)
             {
+                if (device.Visibility == false)
+                    device.Visibility = true;
                 device.Controlability = !(device.Controlability);
                 _context.Devices.Update(device);
                 _context.SaveChangesAsync();
             }
             return device;
-
         }
 
         /// <inheritdoc/>

@@ -13,13 +13,14 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" name="password" class="form-control" [(ngModel)]="password" />
+                        <input class="checkbox" type="checkbox" name="forgotpass">Remember me
                     </div>
-                    <input class="checkbox" type="checkbox" name="forgotpass">Remember me
+
                     <div class="btn-container">
                         <a class="link" [routerLink]='["/forgot-password"]'>Forgot password?</a>
-                        
-                        <button class="btn btn-dark" (click)="login()">Login</button><br><br>
-                        <a class="link" [routerLink]='["/register"]'>Register</a>
+
+                        <button class="btn btn-dark" (click)="login()">Login</button><br>
+                        <a class="linka" [routerLink]='["/register"]'>Register</a>
                     </div>
                     <div class="error-message">
                         {{errorMsg}}
@@ -30,7 +31,7 @@
 
         <div class="container2">
             <div class="login-picture">
-                <img src="assets/img/login-picture.png" height="900" width="900">
+                <img class="image" src="assets/img/login-picture.png">
             </div>
         </div>
     </div>

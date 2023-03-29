@@ -3,16 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './components/home/home.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { UpdateComponent } from './components/update/update.component';
-import { AddCompComponent } from './components/add-comp/add-comp.component';
+
 import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
-import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
-import { BarChartComponent } from './components/charts/bar-chart/bar-chart.component';
+
 
 import { ProsumerHomePageComponent } from './pages/prosumer/prosumer-home-page/prosumer-home-page.component';
 import { ProsumerDevicesPageComponent } from './pages/prosumer/prosumer-devices-page/prosumer-devices-page.component';
@@ -24,30 +21,40 @@ import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-p
 import { AdminDsoPageComponent } from './pages/dso/admin/admin-dso-page/admin-dso-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { CurrentPowerWattmeterComponent } from './components/meter/current-power-wattmeter/current-power-wattmeter.component';
-
 import { NgxGaugeModule } from 'ngx-gauge';
-import { NumberOfUsersMeterComponent } from './components/meter/number-of-users-meter/number-of-users-meter.component';
-import { MapsComponent } from './components/maps/maps.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { AllProsumersComponent } from './components/all-prosumers/all-prosumers.component'; 
-import { ConsumptionTodayWattmeterComponent } from './components/meter/consumption-today-wattmeter/consumption-today-wattmeter.component';
-import { ConsumptionYearWattmeterComponent } from './components/meter/consumption-year-wattmeter/consumption-year-wattmeter.component';
-import { ConsumptionMonthWattmeterComponent } from './components/meter/consumption-month-wattmeter/consumption-month-wattmeter.component';
-import { LineDayChartComponent } from './components/charts/line-day-chart/line-day-chart.component';
-import { LineWeekChartComponent } from './components/charts/line-week-chart/line-week-chart.component';
-import { BarMonthChartComponent } from './components/charts/bar-month-chart/bar-month-chart.component';
-import { BarYearChartComponent } from './components/charts/bar-year-chart/bar-year-chart.component';
+import { AllProsumersComponent } from './components/dso/all-prosumers/all-prosumers.component'; 
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
+import { TodayComponent } from './components/today/today.component';
+import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
+import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
+import { ProsumerTowerComponent } from './components/prosumer-meter/prosumer-tower/prosumer-tower.component';
+import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso/admin-dso.component';
+import { AdminProsumerComponent } from './components/admin/admin-prosumer/admin-prosumer/admin-prosumer.component';
+import { AdminProsumerAddComponent } from './components/admin/admin-prosumer/admin-prosumer-add/admin-prosumer-add.component';
+import { AdminProsumerUpdateComponent } from './components/admin/admin-prosumer/admin-prosumer-update/admin-prosumer-update.component';
+import { AdminDsoUpdateComponent } from './components/admin/admin-dso/admin-dso-update/admin-dso-update.component';
+import { AdminDsoAddComponent } from './components/admin/admin-dso/admin-dso-add/admin-dso-add.component';
+import { PieChartComponent } from './components/dso/charts/pie-chart/pie-chart.component';
+import { LineChartComponent } from './components/dso/charts/line-chart/line-chart.component';
+import { BarChartComponent } from './components/dso/charts/bar-chart/bar-chart.component';
+import { BarMonthChartComponent } from './components/dso/charts/bar-month-chart/bar-month-chart.component';
+import { BarYearChartComponent } from './components/dso/charts/bar-year-chart/bar-year-chart.component';
+import { LineDayChartComponent } from './components/dso/charts/line-day-chart/line-day-chart.component';
+import { LineWeekChartComponent } from './components/dso/charts/line-week-chart/line-week-chart.component';
+import { MapsComponent } from './components/dso/maps/maps.component';
+import { ConsumptionMonthWattmeterComponent } from './components/dso/meter/consumption-month-wattmeter/consumption-month-wattmeter.component';
+import { ConsumptionTodayWattmeterComponent } from './components/dso/meter/consumption-today-wattmeter/consumption-today-wattmeter.component';
+import { ConsumptionYearWattmeterComponent } from './components/dso/meter/consumption-year-wattmeter/consumption-year-wattmeter.component';
+import { CurrentPowerWattmeterComponent } from './components/dso/meter/current-power-wattmeter/current-power-wattmeter.component';
+import { NumberOfUsersMeterComponent } from './components/dso/meter/number-of-users-meter/number-of-users-meter.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
-    UpdateComponent,
-    AddCompComponent,
     RegisterComponent,
     ChangePasswordComponent,
     PieChartComponent,
@@ -75,8 +82,18 @@ import { ResetPasswordPageComponent } from './pages/reset-password/reset-passwor
     BarMonthChartComponent,
     LineWeekChartComponent,
     ForgotPasswordPageComponent,
-    ResetPasswordPageComponent
+    ResetPasswordPageComponent,
+    TodayComponent,
+    ProsumerTowerComponent,
+    ProsumerHouseComponent,
+    ProsumerSolarComponent,
 
+    AdminDsoComponent,
+    AdminProsumerComponent,
+    AdminProsumerAddComponent,
+    AdminProsumerUpdateComponent,
+    AdminDsoUpdateComponent,
+    AdminDsoAddComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs;
+using Server.Models.DropDowns.Devices;
 using Server.Services;
 using System.Globalization;
 
@@ -18,11 +19,12 @@ namespace Server.Controllers
             _service = service;
             _mapper = mapper;
         }
-        [HttpGet]
+        /*[HttpGet]
         public string getCategoryNameById(long categoryId)
         {
-            return _service.getCategoryNameById(categoryId);
-        }
+            DeviceCategory category = _service.getCategoryNameById(categoryId);
+            return category.Name;
+        }*/
 
         [HttpGet("categories")]
         public List<DeviceCategoryDTO> getAllCategories()
