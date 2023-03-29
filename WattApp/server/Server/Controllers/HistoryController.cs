@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Server.Data;
+using Server.Models;
 using Server.Services;
 
 namespace Server.Controllers
@@ -209,6 +210,24 @@ namespace Server.Controllers
 
             var HistoryForPastYearConsumption = historyService.GetUserEnergyConsumptionForPastYear(userId);
             return Ok(HistoryForPastYearConsumption);
+        }
+
+        /// <summary>
+        /// Consumption for all user`s devices in past year (by month)
+        /// </summary>
+        [HttpGet]
+        [Route("YearByMonth/User/{userId:int}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetConsumptionByUserForYearByMonth([FromRoute] int userId)
+        {
+            if (!_sqliteDb.Users.Any(u => u.Id == userId))
+                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
+                return Ok(0.0); // njemu je potrosnja 0 jer nema prijavljenih uredjaja
+
+            var HistoryForPastYearByMonthConsumption = historyService.GetMonthlyEnergyUsageForPastYear(userId);
+            return Ok(HistoryForPastYearByMonthConsumption);
         }
     }
 }

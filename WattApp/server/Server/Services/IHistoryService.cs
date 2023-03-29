@@ -20,5 +20,8 @@ namespace Server.Services
         public double GetUserEnergyConsumptionForPastWeek(int userId);
         public double GetUserEnergyConsumptionForPastMonth(int userId);
         public double GetUserEnergyConsumptionForPastYear(int userId);
+
+        // ZA PROSLEDJEN ID KORISNIKA POTROSNJA ZA GRAFIKE
+        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(int userId);
     }
 }

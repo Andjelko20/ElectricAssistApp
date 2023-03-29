@@ -258,6 +258,41 @@ namespace Server.Services.Implementations
         }
 
         // ZA PROSLEDJEN ID KORISNIKA POTROSNJA ZA GRAFIKE
+        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(int userId)
+        {
+            var userDevices = _context.Devices.Where(d => d.UserId == userId).ToList();
+            var endDate = DateTime.Now.Date.AddDays(1).AddSeconds(-1);
+            var startDate = endDate.AddYears(-1);
 
+            var monthlyUsage = new List<MonthlyEnergyConsumptionLastYear>();
+
+            for (var i = 0; i < 12; i++)
+            {
+                var monthStartDate = startDate.AddMonths(i);
+                Console.WriteLine("***** monthStartDate: " + monthStartDate);
+                var monthEndDate = monthStartDate.AddMonths(1).AddDays(-1).AddSeconds(1);
+                var monthlyEnergyUsage = 0.0;
+
+                foreach (var device in userDevices)
+                {
+                    var deviceUsages = _context.DeviceEnergyUsages
+                        .Where(u => u.DeviceId == device.Id && u.StartTime >= monthStartDate && u.EndTime <= monthEndDate)
+                        .ToList();
+
+                    foreach (var usage in deviceUsages)
+                    {
+                        monthlyEnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * device.EnergyInKwh;
+                    }
+                }
+
+                monthlyUsage.Add(new MonthlyEnergyConsumptionLastYear
+                {
+                    Month = monthStartDate.ToString("MMMM yyyy"),
+                    EnergyUsageResult = monthlyEnergyUsage
+                });
+            }
+
+            return monthlyUsage;
+        }
     }
 }
