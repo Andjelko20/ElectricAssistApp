@@ -2,6 +2,7 @@
 using Server.Data;
 using Server.DTOs;
 using Server.Models;
+using System.Runtime.Intrinsics.X86;
 
 namespace Server.Services.Implementations
 {
@@ -179,6 +180,38 @@ namespace Server.Services.Implementations
             }
 
             return Results;
+        }
+
+
+        // ZA PROSLEDJEN ID KORISNIKA
+        public double GetTotalEnergyConsumptionForUser(int userId)
+        {
+            var devicesForUser = _context.Devices.Where(d => d.UserId == userId).ToList();
+
+            if (devicesForUser.Count == 0)
+            {
+                return 0;
+            }
+
+            var deviceIds = devicesForUser.Select(d => d.Id).ToList();
+
+            var usageList = _context.DeviceEnergyUsages
+                            .Where(u => deviceIds.Contains(u.DeviceId))
+                            .ToList();
+
+            var totalEnergyConsumption = 0.0;
+
+            foreach (var device in devicesForUser)
+            {
+                var deviceUsageList = usageList.Where(u => u.DeviceId == device.Id).ToList();
+
+                foreach (var usage in deviceUsageList)
+                {
+                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * device.EnergyInKwh;
+                }
+            }
+
+            return totalEnergyConsumption;
         }
     }
 }
