@@ -34,7 +34,7 @@ namespace Server.Controllers
             _mapper = mapper;
         }
         /// <summary>
-        /// Get device details by device id. 
+        /// Get device by device id (DSO if he has permissions, for PROSUMER if its his device)
         /// </summary>
         /// 
         [ProducesResponseType(typeof(DeviceResponseDTO), 200)]
@@ -89,36 +89,40 @@ namespace Server.Controllers
             }
             
         }
-
-        //IActionResult
-
-        [HttpPost]
-        [Authorize(Roles = "prosumer, guest")]
-        public IActionResult addNewDevice([FromBody]DeviceRequestDTO deviceRequestDTO)
+        /// <summary>
+        /// Get all devices from user (for DSO)
+        /// </summary>
+        [HttpGet("devices{userId:long}")]
+        [Authorize(Roles = "dispecer")]
+        public IActionResult getUserDevices([FromRoute]long userId)
         {
             try
             {
-                DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.addNewDevice(_mapper.Map<Device>(deviceRequestDTO)));
-                if (deviceDTO == null)
+                List<Device> devices = _deviceService.getUserDevices(userId);
+                if (devices == null) throw new ItemNotFoundException("Devices not found!");
+
+                List<DeviceResponseDTO> deviceResponseDTOs = new List<DeviceResponseDTO>();
+                foreach(Device device in devices)
                 {
-                    throw new DbUpdateException("An error occurred while adding device! Please try again.");
+                    DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(device);
+
+                    responseDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(responseDTO.DeviceCategory));
+                    responseDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(responseDTO.DeviceType));
+                    responseDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(responseDTO.DeviceBrand));
+                    responseDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(responseDTO.DeviceModel));
+
+                    deviceResponseDTOs.Add(responseDTO);
                 }
-
-                deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
-                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
-                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
-                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
-
-                return Ok(deviceDTO);
+                return Ok(deviceResponseDTOs);
             }
-            catch(DbUpdateException ex)
+            catch(ItemNotFoundException ex)
             {
-                return BadRequest(new
+                return NotFound(new
                 {
-                    title = "An error occurred!", 
-                    status = 400, 
+                    title = "Devices not found!",
+                    status = 404,
                     message = ex.Message
-                });
+                }) ;
             }
             catch (Exception ex)
             {
@@ -131,28 +135,24 @@ namespace Server.Controllers
             }
         }
 
+
+
         /// <summary>
-        /// Get all visible devices for every user if you are DSO and only your devices if you are PROSUMER.
+        /// Get all devices (for PROSUMER)
         /// </summary>
         [HttpGet]
-        [Authorize(Roles = "dispecer, prosumer")]
+        [Authorize(Roles = "prosumer")]
         public IActionResult getAllDevices()
         {
             try
             {
                 List<Device> devices = new List<Device>();
                 List<DeviceResponseDTO> responseDTOs = new List<DeviceResponseDTO>();
-                if (User.IsInRole("prosumer"))
-                {
-                    var credentials = HttpContext.User.Identity as ClaimsIdentity;
-                    int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
-                    devices = _deviceService.getUsersDevices(userId);
-                }
-                else
-                {
-                    devices = _deviceService.getAllDevices();
-                }
+                var credentials = HttpContext.User.Identity as ClaimsIdentity;
+                int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+
+                devices = _deviceService.getMyDevices(userId);
                 if (devices == null || devices.Count == 0)
                 {
                     throw new ItemNotFoundException("Devices not found!");
@@ -193,6 +193,54 @@ namespace Server.Controllers
 
         }
 
+        /// <summary>
+        /// Add new device if you are PROSUMER or GUEST
+        /// </summary>
+
+        [HttpPost]
+        [Authorize(Roles = "prosumer, guest")]
+        public IActionResult addNewDevice([FromBody]DeviceRequestDTO deviceRequestDTO)
+        {
+            try
+            {
+                DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.addNewDevice(_mapper.Map<Device>(deviceRequestDTO)));
+                if (deviceDTO == null)
+                {
+                    throw new DbUpdateException("An error occurred while adding device! Please try again.");
+                }
+
+                deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
+                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
+                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
+                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
+
+                return Ok(deviceDTO);
+            }
+            catch(DbUpdateException ex)
+            {
+                return BadRequest(new
+                {
+                    title = "An error occurred!", 
+                    status = 400, 
+                    message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    title = "Internal server error!",
+                    status = 500,
+                    message = "An error occurred while processing your request."
+                });
+            }
+        }
+
+        
+
+        /// <summary>
+        /// Change turn on/off status of device (DSO + PROSUMER)
+        /// </summary>
         [HttpPut("turnOn{deviceId:long}")]
         [Authorize(Roles = "dispecer, prosumer")]
         public IActionResult changeTurnOnStatus([FromRoute]long deviceId)
@@ -317,6 +365,10 @@ namespace Server.Controllers
 
         }
 
+
+        /// <summary>
+        /// Change controlability status of device (DSO + PROSUMER)
+        /// </summary>
         [HttpPut("controlability{deviceId:long}")]
         [Authorize(Roles = "prosumer")]
         public IActionResult changeDeviceControlability([FromRoute]long deviceId)
@@ -359,6 +411,9 @@ namespace Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Change visibility status of device (DSO + PROSUMER)
+        /// </summary>
         [HttpPut("visibility{deviceId:long}")]
         [Authorize(Roles = "prosumer")]
         public IActionResult changeDeviceVisibility([FromRoute] long deviceId)

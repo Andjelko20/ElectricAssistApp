@@ -1,8 +1,19 @@
 export interface Users {
     id: number;
     name: string;
-    userName: string;
+    username: string;
     password:string;
+    email:string;
+    block: boolean;
+    roleId:number;
+
+
+}
+export interface ShowUsers {
+    id: number;
+    name: string;
+    username: string;
+    email:string;
     block: boolean;
     role:string;
 
@@ -10,7 +21,7 @@ export interface Users {
 }
 export interface Register{
     name: string;
-    userName: string;
+    username: string;
     password:string;
 }
 export interface Token {

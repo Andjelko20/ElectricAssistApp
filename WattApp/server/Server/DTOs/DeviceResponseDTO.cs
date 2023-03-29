@@ -5,6 +5,7 @@ namespace Server.DTOs
 {
     public class DeviceResponseDTO
     {
+        public long Id { get; set; }
         public long UserId { get; set; }
         public string DeviceCategory { get; set; }
         public string DeviceType { get; set; }

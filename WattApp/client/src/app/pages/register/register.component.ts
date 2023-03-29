@@ -13,10 +13,11 @@ export class RegisterComponent implements OnInit {
   users:Users= {
     id: 0,
     name: '',
-    userName: '',
+    username: '',
     password:'',
+    email:'',
     block: false,
-    role:'',
+    roleId:0,
 }
   registerName='';
   registerUserName='';
