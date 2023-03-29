@@ -102,7 +102,6 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("MonthByDay/Device/{deviceId:int}")]
-
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInPastMonthByDay([FromRoute] int deviceId)
         {
@@ -118,7 +117,6 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("WeekByDay/Device/{deviceId:int}")]
-
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInPastWeekByDay([FromRoute] int deviceId)
         {
@@ -131,7 +129,6 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("TotalConsumption/User/{userId:int}")]
-
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetTotalConsumptionByUser([FromRoute] int userId)
         {
@@ -140,6 +137,18 @@ namespace Server.Controllers
 
             var HistoryForTotalConsumption = historyService.GetTotalEnergyConsumptionForUser(userId);
             return Ok(HistoryForTotalConsumption);
+        }
+
+        [HttpGet]
+        [Route("Day/User/{userId:int}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetConsumptionByUserForPastDay([FromRoute] int userId)
+        {
+            if (!_sqliteDb.Users.Any(u => u.Id == userId))
+                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
+
+            var HistoryForPastDayConsumption = historyService.GetUserEnergyConsumptionForPastDay(userId);
+            return Ok(HistoryForPastDayConsumption);
         }
     }
 }
