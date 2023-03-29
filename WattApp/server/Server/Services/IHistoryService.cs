@@ -5,6 +5,7 @@ namespace Server.Services
 {
     public interface IHistoryService
     {
+        // ISTORIJA
         //List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastYear(int deviceId);
         //List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastMonth(int deviceId);
         //List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastDay(int deviceId);

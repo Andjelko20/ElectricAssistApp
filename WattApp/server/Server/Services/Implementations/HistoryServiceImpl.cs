@@ -117,7 +117,7 @@ namespace Server.Services.Implementations
                         Month = StartDate.ToString("MMMM yyyy"),
                         EnergyUsageResult = UsageInKwh
                     });
-                } 
+                }
             }
             return Results;
         }
@@ -136,8 +136,8 @@ namespace Server.Services.Implementations
 
             for (var date = StartDate; date <= EndDate; date = date.AddDays(1))
             {
-                var UsageForDate = UsageList.Where(u => u.StartTime.Date == date.Date ).ToList();
-                
+                var UsageForDate = UsageList.Where(u => u.StartTime.Date == date.Date).ToList();
+
                 double EnergyUsage = 0.0;
                 foreach (var usage in UsageForDate)
                     EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * Device.EnergyInKwh;
