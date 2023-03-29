@@ -49,6 +49,18 @@ namespace Server.Services.Implementations
             return GetConsumptionForForwardedList(deviceId, deviceEnergyUsageLista);
         }
 
+        public double GetUsageHistoryForDeviceInPastWeek(int deviceId)
+        {
+            DateTime AWeekAgo = DateTime.Now.AddDays(-7);
+
+            List<DeviceEnergyUsage> deviceEnergyUsageLista = _context.DeviceEnergyUsages
+                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= AWeekAgo)
+                                                            .OrderBy(u => u.StartTime)
+                                                            .ToList();
+
+            return GetConsumptionForForwardedList(deviceId, deviceEnergyUsageLista);
+        }
+
         public double GetConsumptionForForwardedList(int deviceId, List<DeviceEnergyUsage> deviceEnergyUsageLista)
         {
             var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
