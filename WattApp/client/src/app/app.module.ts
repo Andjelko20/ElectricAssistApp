@@ -41,6 +41,9 @@ import { BarYearChartComponent } from './components/charts/bar-year-chart/bar-ye
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { TodayComponent } from './components/today/today.component';
+import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
+import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
+import { ProsumerTowerComponent } from './components/prosumer-meter/prosumer-tower/prosumer-tower.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +81,9 @@ import { TodayComponent } from './components/today/today.component';
     ForgotPasswordPageComponent,
     ResetPasswordPageComponent,
     TodayComponent
+    ProsumerTowerComponent,
+    ProsumerHouseComponent,
+    ProsumerSolarComponent
 
   ],
   imports: [

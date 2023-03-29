@@ -13,5 +13,8 @@ namespace Server.Services
         /// <param name="user">Logged in user</param>
         /// <returns>JWT token</returns>
         string CreateJwtToken(UserModel user);
+
+
+        string GetClaim(HttpContext httpContext,string index);
     }
 }

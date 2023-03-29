@@ -1,13 +1,24 @@
 ﻿using System.Net;
 using System.Net.Mail;
 
-namespace Server.Services
+namespace Server.Services.Implementations
 {
+    /// <summary>
+    /// Email service implementation
+    /// </summary>
     public class EmailService:IEmailService
     {
+        /// <summary>
+        /// Represents a set of key/value application configuration properties
+        /// </summary>
         public readonly IConfiguration configuration;
+        /// <inheritdocs/>
         public readonly SmtpClient smtpClient;
 
+        /// <summary>
+        /// Dependency injection
+        /// </summary>
+        /// <param name="configuration"></param>
         public EmailService(IConfiguration configuration)
         {
             this.configuration = configuration;
@@ -20,7 +31,7 @@ namespace Server.Services
             };
 
         }   
-
+        /// <inheritdoc/>
         public void SendEmail(string destination,string subject,string body,bool isBodyHtml=false)
         {
             MailMessage message = new MailMessage();

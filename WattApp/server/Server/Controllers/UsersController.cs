@@ -7,35 +7,46 @@ using Server.DTOs;
 using Server.Utilities;
 using Server.Models;
 using System.Security.Claims;
+using Server.Services;
+using Server.DTOs.Responses;
+using Server.DTOs.Requests;
+using Server.Services.Implementations;
 
 namespace Server.Controllers
 {
-    public class Message
-    {
-        public string message { get; set; }
-        public Message(string message)
-        {
-            this.message = message;
-        }
-    }
-
-
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
-        public readonly ILogger<UsersController> logger;
         public readonly SqliteDbContext _sqliteDb;
+        public readonly ILogger<UsersController> logger;
+        public readonly ITokenService tokenService;
+        public readonly IUserService userService;
+        public readonly IEmailService emailService;
         public readonly int NUMBER_OF_ITEMS_PER_PAGE = 20;
 
-        public UsersController(SqliteDbContext sqliteDb,ILogger<UsersController> logger)
+        public UsersController(
+            SqliteDbContext sqliteDb,
+            ILogger<UsersController> logger,
+            ITokenService tokenService,
+            IUserService userService,
+            IEmailService emailService)
         {
             _sqliteDb = sqliteDb;
             this.logger = logger;
-        }   
+            this.tokenService = tokenService;
+            this.userService = userService;
+            this.emailService = emailService;
+        }
         /// <summary>
         /// Get 20 users per page
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DataPage<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
+
         [HttpGet]
         [Route("page/{page:int}")]
         [Authorize(Roles ="admin")]
@@ -43,46 +54,32 @@ namespace Server.Controllers
         {
             try
             {
-                int count = _sqliteDb.Users.Count();
-                logger.LogInformation(count.ToString());
-                int maxPage = count / NUMBER_OF_ITEMS_PER_PAGE+((count%NUMBER_OF_ITEMS_PER_PAGE!=0)?1:0);
-                logger.LogInformation(maxPage.ToString());
-                if (page < 1 || page > maxPage)
-                    return BadRequest(new { message ="Page number isn\'t valid"});
-                var users = await _sqliteDb.Users.Include(u => u.Role).Skip((page - 1) * NUMBER_OF_ITEMS_PER_PAGE).Take(NUMBER_OF_ITEMS_PER_PAGE).Select(u => new
-                {
-                    Id = u.Id,
-                    Name = u.Name,
-                    Username = u.Username,
-                    Role = u.Role.Name,
-                    Blocked = u.Blocked,
-                    Email=u.Email
-
-                }).ToListAsync();
-
-                int? previousPage = (page == 1) ? null : page - 1;
-                int? nextPage = (page == maxPage) ? null : page + 1;
-                return Ok(new {
-                    previousPage=previousPage,
-                    nextPage=nextPage,
-                    numberOfPages=maxPage,
-                    data=users
-                });
+                return Ok(await userService.GetPageOfUsers(page, 20, (user) => true));
             }
-            catch(Exception e)
+            catch(HttpRequestException ex)
             {
+                return StatusCode((int)ex.StatusCode.Value, new MessageResponseDTO(ex.Message));
+            }
+            catch(Exception ex)
+            {
+                //logger.LogInformation(ex.Message);
                 return StatusCode(500, new {message="Internal server error"});
             }
         }
         /// <summary>
         /// Get single user
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpGet]
         [Route("{id:int}")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetUserById([FromRoute]int id)
         {
-            var user = await _sqliteDb.Users.Include(u=>u.Role).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await userService.GetUserById(id);
             if (user == null)
             {
                 return NotFound(new { message="User with id "+id.ToString()+" doesn\'t exist" });
@@ -99,6 +96,12 @@ namespace Server.Controllers
         /// <summary>
         /// Get all roles
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<RoleModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
+
         [HttpGet]
         [Route("roles")]
         [Authorize(Roles = "admin")]
@@ -106,7 +109,9 @@ namespace Server.Controllers
         {
             try
             {
-                return Ok(await _sqliteDb.Roles.ToListAsync());
+                var id = tokenService.GetClaim(HttpContext,JwtClaims.Id);
+                logger.LogInformation(id);
+                return Ok(await userService.GetAllRoles());
             }
             catch (Exception e)
             {
@@ -118,6 +123,11 @@ namespace Server.Controllers
         /// </summary>
         /// <response code="200">Success</response>
         /// <response code="400">Bad request</response>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpPost]
         [Authorize(Roles ="admin")]
         public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO requestBody)
@@ -141,25 +151,29 @@ namespace Server.Controllers
             catch(Exception ex)
             {
                 //return StatusCode(400, new { message = "Already exists user with that username" });
-                return StatusCode(400, new Message("Already exists user with that username"));
+                return StatusCode(400, new MessageResponseDTO("Already exists user with that username"));
             }
 
         }
         /// <summary>
         /// Update user by admin
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
+
         [HttpPut]
         [Route("{id:int}")]
         [Authorize(Roles ="admin")]
-        public async Task<IActionResult> UpdateUserByAdmin([FromBody] UserUpdateDTO requestBody, [FromRoute]int id)
+        public async Task<IActionResult> UpdateUserByAdmin([FromBody] UpdateUserByAdminDTO requestBody, [FromRoute]int id)
         {
             try
             {
-                var user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == id);
+                var user = await userService.GetUserById(id);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
-                user.Username = requestBody.Username;
-                user.Name = requestBody.Name;
                 user.RoleId = requestBody.RoleId;
                 user.Blocked = requestBody.Blocked;
                 user.Email = requestBody.Email;
@@ -176,6 +190,11 @@ namespace Server.Controllers
         /// <summary>
         /// Update logged in user data
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpPut]
         [Authorize]
         public async Task<IActionResult> UpdateLoggedInUser([FromBody] UserUpdateDTO requestBody)
@@ -202,6 +221,11 @@ namespace Server.Controllers
         /// <summary>
         /// Block or unblock user
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpPut]
         [Route("set_blocked_status/{id:int}")]
         [Authorize(Roles ="admin")]
@@ -218,12 +242,17 @@ namespace Server.Controllers
         /// <summary>
         /// Delete user
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpDelete]
         [Route("{id:int}")]
         [Authorize(Roles ="admin")]
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
-            var user=await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
+            var user=await userService.GetUserById(id);
             if (user != null)
             {
                 _sqliteDb.Remove(user);
@@ -236,14 +265,18 @@ namespace Server.Controllers
         /// <summary>
         /// Change password
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
         [HttpPut]
         [Route("change_password")]
         [Authorize]
         public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordDTO requestBody)
         {
-            var credentials = HttpContext.User.Identity as ClaimsIdentity;
-            int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
-            UserModel user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == userId);
+            int userId = int.Parse(tokenService.GetClaim(HttpContext,"id"));
+            UserModel user = await userService.GetUserById(userId);
             if (!HashGenerator.Verify(requestBody.OldPassword, user.Password))
             {
                 return BadRequest(new { message = "Old password is not valid" });
@@ -251,6 +284,44 @@ namespace Server.Controllers
             user.Password = HashGenerator.Hash(requestBody.NewPassword);
             await _sqliteDb.SaveChangesAsync();
             return Ok(new { message = "Password changed successfully" });
-        }   
+        }
+
+        [HttpPut]
+        [Route("generate_reset_token_admin")]
+        [Authorize(Roles ="admin")]
+        public async Task<IActionResult> GenerateResetToken([FromBody] EmailRequestDTO requestBody)
+        {
+            var user = await userService.GetUserByEmail(requestBody.Email);
+            if (user == null)
+                return BadRequest(new BadRequestStatusResponse("User not exist"));
+            if (user.Role.Name == "superadmin")
+                return Forbid();
+            var resetPassword = await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r => r.UserId == user.Id);
+            bool exists = true;
+            if (resetPassword == null)
+            {
+                exists = false;
+                resetPassword = new ResetPasswordModel()
+                {
+                    UserId = user.Id,
+                };
+            }
+            else if (resetPassword.ExpireAt > DateTime.Now)
+                return BadRequest(new MessageResponseDTO("Reset key is already submited on your email"));
+            resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
+            resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
+            try
+            {
+                emailService.SendEmail(requestBody.Email, "Reset password", "Click on this link to reset your password:<a href='http://localhost:4200/reset-password/" + resetPassword.ResetKey + "'>" + resetPassword.ResetKey + "</a>", true);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+            }
+            if (!exists)
+                _sqliteDb.ResetPassword.Add(resetPassword);
+            _sqliteDb.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
