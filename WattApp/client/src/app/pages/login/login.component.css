@@ -19,51 +19,63 @@
     justify-content: center;
 }
 
+.login-form {
+    justify-content: center;
+    text-align: left;
+    max-width: 100%;
+    height: auto;
+}
+
 .login-form-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: stretch;
     font-family: 'Roboto Serif';
     font-style: normal;
-    font-weight: 600;
     font-size: 20px;
     line-height: 35px;
-    letter-spacing: 0.08em;
     color: #D9D9D9;
-    width: 500px;
-    height: 500px;
-    float: left;
+    max-width: 100%;
+    height: auto;
     background: rgba(15, 15, 15, 0.2);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 10px 10px rgba(0, 0, 0, 0.25);
     border-radius: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+}
+
+.login-form {
+    border: 1px solid #0F759B;
+    border-radius: 80px;
+    height: 500px;
 }
 
 .logo {
     background: #0F759B;
-    margin-left: 50px;
 }
 
 .container1 {
     background: #0F759B;
     float: left;
+    transition: all 0.3s;
+    width: 500px;
+    max-height: 800px;
+    text-align: center;
 }
 
 .container2 {
-    float: right;
-    border: 1px solid black;
     background: #0F759B;
+    margin-left: 0px;
+    width: 800px;
+    max-height: 800px;
+    text-align: center;
 }
 
-.login-picture {
-    margin-left: 50px;
+.image {
+    height: auto;
+    max-width: 100%;
 }
 
 .form-group {
-    width: 400px;
-    margin-bottom: 10px;
+    margin: 30px;
+    justify-content: center;
+    width: auto;
+    transition: all 0.3s;
 }
 
 .btn-container {
@@ -106,12 +118,7 @@
 
 .checkbox {
     display: inline-flex;
-    margin-right: 10px;
-}
-
-.image {
-    height: 800px;
-    width: 900px;
+    margin-left: 50px;
 }
 
 .error-message {
@@ -120,14 +127,14 @@
     justify-content: center;
 }
 
-@media (max-width:1280px) {
+@media screen and(max-width:1280px) {
     .containters {
-        min-width: 100px;
-        min-height: 100px;
+        max-width: 100px;
+        max-height: 100px;
     }
     .login-form-wrapper {
-        width: 600px;
-        height: 500px;
+        max-width: 600px;
+        max-height: 500px;
     }
     .checkbox {
         margin-left: 15px;
@@ -150,8 +157,8 @@
         min-height: 100px;
     }
     .login-form-wrapper {
-        width: 350px;
-        height: 450px;
+        max-width: 300px;
+        max-height: 450px;
     }
     .checkbox {
         margin-left: 15px;
@@ -159,7 +166,7 @@
     .form-group {
         margin-left: 15px;
         justify-content: center;
-        width: 250px;
+        width: 200px;
     }
     .linka {
         margin-top: -50px;
@@ -167,24 +174,25 @@
     .container2 {
         display: none;
     }
+    .btn-container>button {
+        max-width: 200px;
+        max-height: 50px;
+    }
 }
 
 @media screen and (min-width:320px) and (max-width:700px) {
-    .containters {
-        min-width: 80px;
-        min-height: 100px;
-    }
     .login-form-wrapper {
-        width: 250px;
-        height: 450px;
+        transition: all 0.6s;
     }
     .checkbox {
-        margin-left: 15px;
+        margin-left: 35px;
+        transition: all 0.3s;
     }
     .form-group {
-        margin-left: 15px;
+        margin: 30px;
         justify-content: center;
-        width: 180px;
+        width: auto;
+        transition: all 0.3s;
     }
     label {
         font-size: 15px;
@@ -196,8 +204,12 @@
     .checkbox {
         size: 10px;
     }
+    .linka {
+        margin-top: 2px;
+    }
     .logo>img {
-        width: 150px;
+        min-width: 150px;
+        transition: all 0.6s;
     }
     .link {
         font-size: 15px;
@@ -207,5 +219,9 @@
     }
     .container2 {
         display: none;
+    }
+    .btn-container>button {
+        max-width: 170px;
+        max-height: 50px;
     }
 }
