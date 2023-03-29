@@ -27,6 +27,12 @@ export class ProsumersMapComponent {
 			longitude:20.90732574462900,
 			name:"Mika Mikic",
 			consumption:100
+	  	},
+		{
+			latitude:44.02995805102632,
+			longitude:20.90509414672852,
+			name:"Laza Lazic",
+			consumption:100
 	  	}
 	];
 	
@@ -59,12 +65,12 @@ export class ProsumersMapComponent {
 		for(let prosumer of this.prosumers){
 			let marker=Leaflet.marker([prosumer.latitude,prosumer.longitude]).addTo(this.map);
 			marker.bindPopup(`<b>${prosumer.name}</b>${prosumer.consumption}`);
-			marker.bindTooltip("aaa",{permanent:true});
+			marker.bindTooltip(prosumer.name,{permanent:true});
 		}
 	  }
 
 	  onSubmit(){
-		if(this.searchInput=="")
+		if(this.searchInput=="" || this.searchInput==undefined)
 			return;
 		this.searchUrl.searchParams.set("q",this.searchInput);
 		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
