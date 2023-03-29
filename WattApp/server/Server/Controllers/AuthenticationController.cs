@@ -13,6 +13,9 @@ using Server.Middlewares;
 using Server.Services;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Server.DTOs.Responses;
+using Server.Services.Implementations;
+using Server.DTOs.Requests;
 
 namespace Server.Controllers
 {
@@ -25,30 +28,37 @@ namespace Server.Controllers
         public readonly ITokenService tokenService;
         public readonly ILogger<AuthenticationController> logger;
         public readonly IEmailService emailService;
+        public readonly IUserService userService;
         public AuthenticationController(
             SqliteDbContext _sqliteDb,
             ITokenService tokenService,
             ILogger<AuthenticationController> logger,
-            IEmailService emailService
+            IEmailService emailService,
+            IUserService userService
             )
         {
             this.tokenService = tokenService;
             this._sqliteDb = _sqliteDb;
             this.logger = logger;
             this.emailService = emailService;
+            this.userService = userService;
         }
         /// <summary>Login</summary>
-        /// <response code="200">Success</response>
-        /// <response code="400">Bad request</response>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(TokenResponseDTO),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse),StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO),StatusCodes.Status401Unauthorized)]
+
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginDTO requestBody)
         {
-            UserModel? user = await _sqliteDb.Users.Include(u=>u.Role).FirstOrDefaultAsync(user => user.Username == requestBody.Username);
-            if (user == null)
+            logger.LogInformation(requestBody.Username);
+            var user = await userService.GetUserByUsername(requestBody.Username);
+            if (user is null)
             {
-                return Unauthorized(new { message = "Bad credentials" });
+                return Unauthorized(new MessageResponseDTO("Bad credentials"));
             }
             if (!HashGenerator.Verify(requestBody.Password, user.Password))
             {
@@ -56,11 +66,15 @@ namespace Server.Controllers
             }
             if (user.Blocked)
                 return Unauthorized(new { message = "User is blocked" });
-            return Ok(new { token = tokenService.CreateJwtToken(user) });
+            return Ok(new TokenResponseDTO(tokenService.CreateJwtToken(user)));
         }
         /// <summary>
         /// Register as guest
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+
         [HttpPost]
         [Route("register")]
         [AllowAnonymous]
@@ -69,11 +83,11 @@ namespace Server.Controllers
             RoleModel? role = await _sqliteDb.Roles.FirstOrDefaultAsync(r => r.Name == "guest");
             if (role == null)
             {
-                return StatusCode(500,new {message="Internal Server Error"});
+                return BadRequest(new BadRequestStatusResponse("You send role which doesn\'t exist"));
             }
             if (_sqliteDb.Users.Any(u => u.Username == requestBody.Username))
             {
-                return BadRequest(new {message="User already exists"});
+                return BadRequest(new BadRequestStatusResponse("User already exists"));
             }
             UserModel user = new UserModel
             {
@@ -85,20 +99,26 @@ namespace Server.Controllers
             };
             await _sqliteDb.Users.AddAsync(user);
             await _sqliteDb.SaveChangesAsync();
-            return Ok(new { message = "Registered successfully" });
+            return Ok(new MessageResponseDTO( "Registered successfully" ));
         }
 
         /// <summary>
         /// Send reset password token on mail
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO),StatusCodes.Status500InternalServerError)]
+
+
         [HttpPost]
         [Route("generate_reset_token")]
         [AllowAnonymous]
-        public async Task<IActionResult> GenerateResetToken([FromBody] EmailDTO requestBody)
+        public async Task<IActionResult> GenerateResetToken([FromBody] EmailRequestDTO requestBody)
         {
-            var user=await _sqliteDb.Users.SingleOrDefaultAsync(u => u.Email == requestBody.Email);
+            var user=await userService.GetUserByEmail(requestBody.Email);
             if (user == null)
-                return BadRequest(new Message("User not exist"));
+                return BadRequest(new BadRequestStatusResponse("User not exist"));
             var resetPassword = await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r => r.UserId == user.Id);
             bool exists = true;
             if (resetPassword == null)
@@ -109,7 +129,7 @@ namespace Server.Controllers
                     UserId = user.Id,
                 };
             }else if (resetPassword.ExpireAt > DateTime.Now)
-                return BadRequest(new Message("Reset key is already submited on your email"));
+                return BadRequest(new MessageResponseDTO("Reset key is already submited on your email"));
             resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
             try
@@ -118,7 +138,7 @@ namespace Server.Controllers
             }
             catch
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,new Message("Email is not sent"));
+                return StatusCode(StatusCodes.Status500InternalServerError,new MessageResponseDTO("Email is not sent"));
             }
             if (!exists)
                 _sqliteDb.ResetPassword.Add(resetPassword);
@@ -129,10 +149,16 @@ namespace Server.Controllers
         /// <summary>
         /// Reset password
         /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
+
         [HttpPost]
         [Route("reset_password")]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDTO requestBody)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestDTO requestBody)
         {
             _sqliteDb.ResetPassword.RemoveRange(_sqliteDb.ResetPassword.Where(r=>r.ExpireAt<DateTime.Now));
             var resetPassword=await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r=>r.ResetKey==requestBody.ResetKey);
@@ -144,23 +170,8 @@ namespace Server.Controllers
             user.Password = HashGenerator.Hash(requestBody.NewPassword);
             _sqliteDb.ResetPassword.Remove(resetPassword);
             _sqliteDb.SaveChangesAsync();
-            return Ok();
+            return Ok(new MessageResponseDTO("Password changed successfully"));
         }
     }
-    public class EmailDTO
-    {
-        [Required]
-        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", ErrorMessage = "Not email")]
-        public string Email { get; set; }
-    }
-
-    public class ResetPasswordDTO
-    {
-        [Required]
-
-        public string ResetKey { get; set; }
-
-        [Required]
-        public string NewPassword { get; set; }
-    }
+    
 }

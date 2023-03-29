@@ -42,6 +42,9 @@ import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-pass
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { TodayComponent } from './components/today/today.component';
 import { FutureComponent } from './components/future/future.component';
+import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
+import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
+import { ProsumerTowerComponent } from './components/prosumer-meter/prosumer-tower/prosumer-tower.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +82,11 @@ import { FutureComponent } from './components/future/future.component';
     ForgotPasswordPageComponent,
     ResetPasswordPageComponent,
     TodayComponent,
-    FutureComponent
+    FutureComponent,
+    TodayComponent,
+    ProsumerTowerComponent,
+    ProsumerHouseComponent,
+    ProsumerSolarComponent
 
   ],
   imports: [

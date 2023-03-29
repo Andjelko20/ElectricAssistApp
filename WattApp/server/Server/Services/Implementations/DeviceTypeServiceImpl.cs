@@ -1,5 +1,6 @@
 ﻿using Server.Data;
 using Server.DTOs;
+using Server.Exceptions;
 using Server.Models.DropDowns.Devices;
 
 namespace Server.Services.Implementations
@@ -20,8 +21,10 @@ namespace Server.Services.Implementations
 
         public string getTypeNameById(long typeId)
         {
-            var type = _context.DeviceTypes.FindAsync(typeId).Result;
+            DeviceType type = _context.DeviceTypes.FindAsync(typeId).Result;
+            if (type == null) throw new ItemNotFoundException("Brand not found!");
             return type.Name;
+
         }
     }
 }

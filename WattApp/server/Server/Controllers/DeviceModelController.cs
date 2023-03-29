@@ -13,10 +13,10 @@ namespace Server.Controllers
         {
             _service = service;
         }
-        [HttpGet]
+        /*[HttpGet]
         public string getModelNameById(long modelId)
         {
             return _service.getModelNameById(modelId);
-        }
+        }*/
     }
 }
