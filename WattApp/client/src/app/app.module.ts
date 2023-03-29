@@ -41,6 +41,7 @@ import { BarYearChartComponent } from './components/charts/bar-year-chart/bar-ye
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { TodayComponent } from './components/today/today.component';
+import { FutureComponent } from './components/future/future.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { TodayComponent } from './components/today/today.component';
     LineWeekChartComponent,
     ForgotPasswordPageComponent,
     ResetPasswordPageComponent,
-    TodayComponent
+    TodayComponent,
+    FutureComponent
 
   ],
   imports: [

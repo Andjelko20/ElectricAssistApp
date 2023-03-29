@@ -10,6 +10,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { MapsComponent } from './components/maps/maps.component';
 import { TodayComponent } from './components/today/today.component';
+import { FutureComponent } from './components/future/future.component';
 import { DsoHomePageComponent } from './pages/dso/dso-home-page/dso-home-page.component';
 import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
 import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
@@ -31,6 +32,7 @@ const routes: Routes = [
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'today',component:TodayComponent},
+	{path:'future',component:FutureComponent},
 	{path:'**',redirectTo:"login"}
 ];
 
