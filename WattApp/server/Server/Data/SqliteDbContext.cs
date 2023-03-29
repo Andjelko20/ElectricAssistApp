@@ -71,7 +71,7 @@ namespace Server.Data
                         new RoleModel()
                         {
                             Id=2,
-                            Name="dispecer"
+                            Name="dispatcher"
                         },
                         new RoleModel()
                         {

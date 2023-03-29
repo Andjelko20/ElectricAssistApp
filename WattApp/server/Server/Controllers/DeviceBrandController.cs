@@ -16,11 +16,12 @@ namespace Server.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public string getBrandNameById(long brandId)
         {
-            return _service.getBrandNameById(brandId);
-        }
+            DeviceBrand brand = _service.getBrandNameById(brandId);
+            return brand.Name;
+        }*/
         
     }
 }

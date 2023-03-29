@@ -9,19 +9,34 @@ using System.Text.Json;
 
 namespace Server.Middlewares
 {
+    /// <summary>
+    /// Token validation middleware
+    /// </summary>
     public class TokenValidationMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly IConfiguration _configuration;
-        public readonly ILogger<TokenValidationMiddleware> logger;
 
-        public TokenValidationMiddleware(RequestDelegate next, IConfiguration configuration,ILogger<TokenValidationMiddleware> logger)
+        /// <summary>
+        /// Dependency injection
+        /// </summary>
+        /// <param name="next"></param>
+        /// <param name="configuration"></param>
+        public TokenValidationMiddleware(
+            RequestDelegate next, 
+            IConfiguration configuration
+        )
         {
             _next = next;
             _configuration = configuration;
-            this.logger = logger;
         }
 
+        /// <summary>
+        /// Check if role in token is the same as role in database
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="_sqliteDb"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context, SqliteDbContext _sqliteDb)
         {
             var token = context.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
@@ -30,7 +45,6 @@ namespace Server.Middlewares
             {
                 try
                 {
-                    logger.LogInformation("Provera");
                     var tokenHandler = new JwtSecurityTokenHandler();
                     var key = Encoding.ASCII.GetBytes(_configuration["JwtConfig:SecretKey"]);
                     var validationParameters = new TokenValidationParameters
@@ -81,8 +95,16 @@ namespace Server.Middlewares
             return _sqliteDb.Users.Any(user=>user.Id==userId && user.RoleId==roleId);
         }
     }
+    /// <summary>
+    /// Static class for using middleware
+    /// </summary>
     public static class TokenValidationMiddlewareExtensions
     {
+        /// <summary>
+        /// Allow to use app.UseTokenValidation() as method of app
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <returns></returns>
         public static IApplicationBuilder UseTokenValidation(
             this IApplicationBuilder builder)
         {

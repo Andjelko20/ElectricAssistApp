@@ -1,4 +1,5 @@
 ﻿using Server.Data;
+using Server.Exceptions;
 using Server.Models.DropDowns.Devices;
 
 namespace Server.Services.Implementations
@@ -15,8 +16,10 @@ namespace Server.Services.Implementations
 
         public string getCategoryNameById(long categoryId)
         {
-            var category = _context.DeviceCategories.FindAsync(categoryId).Result;
-            return category == null ? null : category.Name;
+            DeviceCategory category = _context.DeviceCategories.FindAsync(categoryId).Result;
+            if (category == null) throw new ItemNotFoundException("Category not found!");
+            return category.Name;
+
         }
 
         public List<DeviceCategory> getAllCategories()
