@@ -7,6 +7,7 @@ using Server.Models;
 namespace Server.Services.Implementations
 {
 
+
     public class DeviceServiceImpl : DeviceService
     {
         SqliteDbContext _context;
@@ -17,11 +18,19 @@ namespace Server.Services.Implementations
         /// <inheritdoc/>
         public Device addNewDevice(Device device)
         {
-            var result = _context.Devices.Add(device);
+            if (device.EnergyInKwh == null || device.EnergyInKwh == 0)
+            {
+                device.EnergyInKwh = _context.TypeBrandModels.FirstOrDefault(x => x.TypeId == device.DeviceTypeId && x.ModelId == device.DeviceModelId && x.BrandId == x.BrandId).EnergyKwh;
+            }
+            if (device.StandByKwh == null || device.StandByKwh == 0)
+            {
+                device.StandByKwh = _context.TypeBrandModels.FirstOrDefault(x => x.TypeId == device.DeviceTypeId && x.ModelId == device.DeviceModelId && x.BrandId == x.BrandId).StandByKwh;
+            }
+            _context.Devices.Add(device);
             _context.SaveChanges();
             return device;
         }
-
+        /// <inheritdoc/>
         public Device changeDeviceVisibility(long deviceId, long userId)
         {
             Device device = _context.Devices.FirstOrDefaultAsync(x => x.Id == deviceId && x.UserId == userId).Result;
@@ -37,7 +46,7 @@ namespace Server.Services.Implementations
             }
             return device;
         }
-
+        /// <inheritdoc/>
         public Device changeDeviceControlability(long deviceId, long userId)
         {
             Device device = _context.Devices.FirstOrDefaultAsync(x => x.Id == deviceId && x.UserId == userId).Result;
@@ -80,7 +89,7 @@ namespace Server.Services.Implementations
             }
             return null;
         }
-
+        /// <inheritdoc/>
         public Device deleteDeviceById(long id)
         {
             Device device = _context.Devices.Find(id);
@@ -88,7 +97,7 @@ namespace Server.Services.Implementations
             _context.SaveChanges();
             return device;
         }
-
+        /// <inheritdoc/>
         public Device editDevice(Device device)
         {
             _context.Devices.Update(device);
@@ -96,28 +105,31 @@ namespace Server.Services.Implementations
             return device;
         }
 
-        public List<Device> getAllDevices()
+
+        /*public List<Device> getAllDevices()
         {
                 return _context.Devices.Where(src => src.Visibility == true).ToList();
-        }
+        }*/
 
-        public List<Device> getAllUsersDevices(long userId)
-        {
-            return _context.Devices.Where(src => src.UserId == userId).ToList();
-        }
+        /// <inheritdoc/>
         public Device getDeviceById(long deviceId)
         {
-            return _context.Devices.Find(deviceId);
+            return _context.Devices.FirstOrDefault(src => src.Id == deviceId && src.Visibility == true);
         }
-
-        public List<Device> getUsersDevices(long userId)
+        /// <inheritdoc/>
+        public List<Device> getMyDevices(long userId)
         {
             return _context.Devices.Where(src => src.UserId == userId).ToList();
         }
-
+        /// <inheritdoc/>
         public Device getYourDeviceById(long deviceId, long userId)
         {
             return _context.Devices.FirstOrDefaultAsync(src => src.Id == deviceId && src.UserId == userId).Result;
+        }
+        /// <inheritdoc/>
+        public List<Device> getUserDevices(long userId)
+        {
+            return _context.Devices.Where(src => src.UserId == userId && src.Visibility == true).ToList();
         }
     }
 }

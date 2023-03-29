@@ -18,12 +18,24 @@ namespace Server.Services
         /// <returns>Device object</returns>
         public Device getYourDeviceById(long deviceId, long userId);
         /// <summary>
-        /// Dodaje nov uredjaj u bazu
+        /// Get all devices with visibility permission by userId (for DSO)
         /// </summary>
-        /// <param name="device">Uredjaj koji se dodaje</param>
-        /// <returns>Dodat uredjaj</returns>
+        /// <param name="userId">Unique user id</param>
+        /// <returns>List of devices</returns>
+        public List<Device> getUserDevices(long userId);
+        /// <summary>
+        /// Get your devices (for PROSUMER)
+        /// </summary>
+        /// <param name="userId">Unique user id</param>
+        /// <returns>List of devices</returns>
+        public List<Device> getMyDevices(long userId);
+        /// <summary>
+        /// Add new device (for PROSUMER)
+        /// </summary>
+        /// <param name="device">Device</param>
+        /// <returns>Added device</returns>
         public Device addNewDevice(Device device);
-        public List<Device> getAllDevices();
+        //public List<Device> getAllDevices();
         /// <summary>
         /// Turn on/off your device if you are PROSUMER
         /// </summary>
@@ -37,10 +49,28 @@ namespace Server.Services
         /// <param name="deviceId">Id from device you want to turn on/off</param>
         /// <returns>Device which status was changed</returns>
         public Device changeTurnOnStatus(long deviceId);
+
         public Device editDevice(Device device);
+        /// <summary>
+        /// Delete device by its unique id (for PROSUMER)
+        /// </summary>
+        /// <param name="id">Device id</param>
+        /// <returns>Deleted device</returns>
         public Device deleteDeviceById(long id);
-        public List<Device> getUsersDevices(long userId);
+        //public List<Device> getUsersDevices(long userId);
+        /// <summary>
+        /// Change the visibility status for the device by its unique id (for PROSUMER)
+        /// </summary>
+        /// <param name="deviceId">Id for device</param>
+        /// <param name="userId">Id for user</param>
+        /// <returns>Changed device</returns>
         public Device changeDeviceVisibility(long deviceId, long userId);
+        /// <summary>
+        /// Change the controlability status for the device by its unique id (for PROSUMER)
+        /// </summary>
+        /// <param name="deviceId">Id for device</param>
+        /// <param name="userId">Id for user (logged user)</param>
+        /// <returns></returns>
         public Device changeDeviceControlability(long deviceId, long userId);
     }
 }
