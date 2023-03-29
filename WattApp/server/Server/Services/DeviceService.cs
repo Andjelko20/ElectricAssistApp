@@ -17,13 +17,16 @@ namespace Server.Services
         /// <param name="deviceId">Unique device id</param>
         /// <returns>Device object</returns>
         public Device getYourDeviceById(long deviceId, long userId);
+
+        public List<Device> getUserDevices(long userId);
+        public List<Device> getMyDevices(long userId);
         /// <summary>
         /// Dodaje nov uredjaj u bazu
         /// </summary>
         /// <param name="device">Uredjaj koji se dodaje</param>
         /// <returns>Dodat uredjaj</returns>
         public Device addNewDevice(Device device);
-        public List<Device> getAllDevices();
+        //public List<Device> getAllDevices();
         /// <summary>
         /// Turn on/off your device if you are PROSUMER
         /// </summary>
@@ -39,7 +42,7 @@ namespace Server.Services
         public Device changeTurnOnStatus(long deviceId);
         public Device editDevice(Device device);
         public Device deleteDeviceById(long id);
-        public List<Device> getUsersDevices(long userId);
+        //public List<Device> getUsersDevices(long userId);
         public Device changeDeviceVisibility(long deviceId, long userId);
         public Device changeDeviceControlability(long deviceId, long userId);
     }

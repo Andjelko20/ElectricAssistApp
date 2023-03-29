@@ -7,6 +7,7 @@ using Server.Models;
 namespace Server.Services.Implementations
 {
 
+
     public class DeviceServiceImpl : DeviceService
     {
         SqliteDbContext _context;
@@ -104,21 +105,18 @@ namespace Server.Services.Implementations
             return device;
         }
 
-        public List<Device> getAllDevices()
+        /*public List<Device> getAllDevices()
         {
                 return _context.Devices.Where(src => src.Visibility == true).ToList();
-        }
+        }*/
 
-        public List<Device> getAllUsersDevices(long userId)
-        {
-            return _context.Devices.Where(src => src.UserId == userId).ToList();
-        }
+        
         public Device getDeviceById(long deviceId)
         {
             return _context.Devices.FirstOrDefault(src => src.Id == deviceId && src.Visibility == true);
         }
 
-        public List<Device> getUsersDevices(long userId)
+        public List<Device> getMyDevices(long userId)
         {
             return _context.Devices.Where(src => src.UserId == userId).ToList();
         }
@@ -126,6 +124,11 @@ namespace Server.Services.Implementations
         public Device getYourDeviceById(long deviceId, long userId)
         {
             return _context.Devices.FirstOrDefaultAsync(src => src.Id == deviceId && src.UserId == userId).Result;
+        }
+
+        public List<Device> getUserDevices(long userId)
+        {
+            return _context.Devices.Where(src => src.UserId == userId && src.Visibility == true).ToList();
         }
     }
 }
