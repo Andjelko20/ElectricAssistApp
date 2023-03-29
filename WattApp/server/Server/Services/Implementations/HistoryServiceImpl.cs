@@ -186,137 +186,35 @@ namespace Server.Services.Implementations
         // ZA PROSLEDJEN ID KORISNIKA
         public double GetTotalEnergyConsumptionForUser(int userId)
         {
-            var devicesForUser = _context.Devices.Where(d => d.UserId == userId).ToList();
-
-            if (devicesForUser.Count == 0)
-            {
-                return 0;
-            }
-
-            var deviceIds = devicesForUser.Select(d => d.Id).ToList();
-
-            var usageList = _context.DeviceEnergyUsages
-                            .Where(u => deviceIds.Contains(u.DeviceId))
-                            .ToList();
-
-            var totalEnergyConsumption = 0.0;
-
-            foreach (var device in devicesForUser)
-            {
-                var deviceUsageList = usageList.Where(u => u.DeviceId == device.Id).ToList();
-
-                foreach (var usage in deviceUsageList)
-                {
-                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * device.EnergyInKwh;
-                }
-            }
-
-            return totalEnergyConsumption;
+            int daysInPast = 0;
+            return SumEnergyConsumption(userId, daysInPast);
         }
 
         public double GetUserEnergyConsumptionForPastDay(int userId)
         {
-            var devicesForUser = _context.Devices.Where(d => d.UserId == userId).ToList();
-
-            if (devicesForUser.Count == 0)
-            {
-                return 0;
-            }
-
-            var deviceIds = devicesForUser.Select(d => d.Id).ToList();
-
-            var currentDate = DateTime.Now.Date;
-            var EndDate = currentDate.AddDays(1).AddSeconds(-1);
-            var StartDate = currentDate.AddDays(-1);
-
-            var usageList = _context.DeviceEnergyUsages
-                            .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime>=StartDate && u.EndTime<=EndDate)
-                            .ToList();
-
-            var totalEnergyConsumption = 0.0;
-
-            foreach (var device in devicesForUser)
-            {
-                var deviceUsageList = usageList.Where(u => u.DeviceId == device.Id).ToList();
-
-                foreach (var usage in deviceUsageList)
-                {
-                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * device.EnergyInKwh;
-                }
-            }
-
-            return totalEnergyConsumption;
+            int daysInPast = -1;
+            return SumEnergyConsumption(userId, daysInPast);
         }
 
         public double GetUserEnergyConsumptionForPastWeek(int userId)
         {
-            var devicesForUser = _context.Devices.Where(d => d.UserId == userId).ToList();
-
-            if (devicesForUser.Count == 0)
-            {
-                return 0;
-            }
-
-            var deviceIds = devicesForUser.Select(d => d.Id).ToList();
-
-            var currentDate = DateTime.Now.Date;
-            var EndDate = currentDate.AddDays(1).AddSeconds(-1);
-            var StartDate = currentDate.AddDays(-6);
-
-            var usageList = _context.DeviceEnergyUsages
-                            .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= StartDate && u.EndTime <= EndDate)
-                            .ToList();
-
-            var totalEnergyConsumption = 0.0;
-
-            foreach (var device in devicesForUser)
-            {
-                var deviceUsageList = usageList.Where(u => u.DeviceId == device.Id).ToList();
-
-                foreach (var usage in deviceUsageList)
-                {
-                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * device.EnergyInKwh;
-                }
-            }
-
-            return totalEnergyConsumption;
+            int daysInPast = -6;
+            return SumEnergyConsumption(userId, daysInPast);
         }
 
         public double GetUserEnergyConsumptionForPastMonth(int userId)
         {
-            var devicesForUser = _context.Devices.Where(d => d.UserId == userId).ToList();
-
-            if (devicesForUser.Count == 0)
-            {
-                return 0;
-            }
-
-            var deviceIds = devicesForUser.Select(d => d.Id).ToList();
-
-            var currentDate = DateTime.Now.Date;
-            var EndDate = currentDate.AddDays(1).AddSeconds(-1);
-            var StartDate = currentDate.AddDays(-30);
-
-            var usageList = _context.DeviceEnergyUsages
-                            .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= StartDate && u.EndTime <= EndDate)
-                            .ToList();
-
-            var totalEnergyConsumption = 0.0;
-
-            foreach (var device in devicesForUser)
-            {
-                var deviceUsageList = usageList.Where(u => u.DeviceId == device.Id).ToList();
-
-                foreach (var usage in deviceUsageList)
-                {
-                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * device.EnergyInKwh;
-                }
-            }
-
-            return totalEnergyConsumption;
+            int daysInPast = -30;
+            return SumEnergyConsumption(userId, daysInPast);
         }
 
         public double GetUserEnergyConsumptionForPastYear(int userId)
+        {
+            int daysInPast = -365;
+            return SumEnergyConsumption(userId, daysInPast);
+        }
+
+        public double SumEnergyConsumption(int userId, int daysInPast)
         {
             var devicesForUser = _context.Devices.Where(d => d.UserId == userId).ToList();
 
@@ -326,14 +224,23 @@ namespace Server.Services.Implementations
             }
 
             var deviceIds = devicesForUser.Select(d => d.Id).ToList();
+            var usageList = new List<DeviceEnergyUsage>();
+            if (daysInPast != 0)
+            {
+                var currentDate = DateTime.Now.Date;
+                var EndDate = currentDate.AddDays(1).AddSeconds(-1);
+                var StartDate = currentDate.AddDays(daysInPast);
 
-            var currentDate = DateTime.Now.Date;
-            var EndDate = currentDate.AddDays(1).AddSeconds(-1);
-            var StartDate = currentDate.AddYears(-1);
-
-            var usageList = _context.DeviceEnergyUsages
+                usageList = _context.DeviceEnergyUsages
                             .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= StartDate && u.EndTime <= EndDate)
                             .ToList();
+            }
+            else // znaci da nam treba totalna potrosnja
+            {
+                usageList = _context.DeviceEnergyUsages
+                            .Where(u => deviceIds.Contains(u.DeviceId))
+                            .ToList();
+            }
 
             var totalEnergyConsumption = 0.0;
 
