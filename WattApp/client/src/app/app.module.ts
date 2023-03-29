@@ -27,9 +27,7 @@ import { AllProsumersComponent } from './components/dso/all-prosumers/all-prosum
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { TodayComponent } from './components/today/today.component';
-import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
-import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
-import { ProsumerTowerComponent } from './components/prosumer-meter/prosumer-tower/prosumer-tower.component';
+
 import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso/admin-dso.component';
 import { AdminProsumerComponent } from './components/admin/admin-prosumer/admin-prosumer/admin-prosumer.component';
 import { AdminProsumerAddComponent } from './components/admin/admin-prosumer/admin-prosumer-add/admin-prosumer-add.component';
@@ -51,6 +49,9 @@ import { CurrentPowerWattmeterComponent } from './components/dso/meter/current-p
 import { NumberOfUsersMeterComponent } from './components/dso/meter/number-of-users-meter/number-of-users-meter.component';
 import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
 import { MapInputComponent } from './components/map-input/map-input.component';
+import { ProsumerTowerComponent } from './components/prosumers/prosumer-meter/prosumer-tower/prosumer-tower.component';
+import { ProsumerHouseComponent } from './components/prosumers/prosumer-meter/prosumer-house/prosumer-house.component';
+import { ProsumerSolarComponent } from './components/prosumers/prosumer-meter/prosumer-solar/prosumer-solar.component';
 
 @NgModule({
   declarations: [
