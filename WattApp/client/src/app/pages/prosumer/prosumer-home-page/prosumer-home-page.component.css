@@ -10,20 +10,19 @@ h2 {
 }
 
 .consumptionNow {
-    border: 1px solid black;
     display: flexbox;
     width: 10%;
-    height: 15%;
+    max-height: 20%;
     top: 31%;
     display: inline-block;
-    left: 37%;
+    left: 32%;
     position: absolute;
     transition: all 0.3s;
 }
 
 .prognosis {
     display: flex;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 17%;
     height: 15%;
     top: 2%;
@@ -34,9 +33,8 @@ h2 {
 
 .solarPowerNow {
     display: flexbox;
-    border: 1px solid black;
-    width: 11%;
-    height: 150px;
+    width: 10%;
+    max-height: 20%;
     top: 20%;
     right: 26%;
     position: absolute;
@@ -46,7 +44,6 @@ h2 {
 
 .prodactionToday {
     display: flexbox;
-    border: 1px solid black;
     width: 13%;
     height: 100px;
     position: absolute;
@@ -62,9 +59,9 @@ h2 {
 
 .powerTransmissiontower {
     width: 10%;
-    height: 15%;
+    max-height: 20%;
+    text-align: center;
     display: flex;
-    border: 1px solid black;
     position: absolute;
     top: 5%;
     margin-left: 3%;

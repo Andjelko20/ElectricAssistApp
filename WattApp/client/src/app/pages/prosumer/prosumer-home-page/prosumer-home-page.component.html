@@ -4,14 +4,20 @@
         <div class="tower">
             <img class="imgtower" src="assets/img/transmission-tower.png" alt="">
         </div>
-        <div class="powerTransmissiontower"></div>
-        <div class="consumptionNow"></div>
-        <div class="solarPowerNow"></div>
+        <div class="powerTransmissiontower">
+            <app-prosumer-tower></app-prosumer-tower>
+        </div>
+        <div class="consumptionNow">
+            <app-prosumer-solar></app-prosumer-solar>
+        </div>
+        <div class="solarPowerNow">
+            <app-prosumer-house></app-prosumer-house>
+        </div>
         <div class="prodactionToday">
             <h2><strong>Production today</strong></h2>
             <h1><strong>24.56 kWh</strong></h1>
         </div>
-        <div class="prognosis"></div>
+        <div class="prognosis"> <app-today></app-today> </div>
     </div>
 
     <div class="carbattery">
@@ -37,7 +43,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="devices">
+    <div class="devices">
         <div class="devices-item" id="slide-1">
             <div class="devices-device-item">
                 <img id="imgdevice" src="assets/img/water-heater.png" alt="">
@@ -93,5 +99,5 @@
             </div>
 
         </div>
-    </div> -->
+    </div>
 </div>

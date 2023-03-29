@@ -7,13 +7,12 @@
 
 body {
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: #1C315E;
+    background-color: rgb(198, 249, 249);
     color: #000000;
     bottom: 0;
     top: 0;
     left: 0;
     right: 0;
-    position: absolute;
 }
 
 .containters {
@@ -39,11 +38,11 @@ body {
 }
 
 .wrapper1 {
-    border: 1px solid black;
     position: absolute;
     top: 76px;
     bottom: 0;
     right: 0;
+    left: 0;
     display: flex;
     align-items: stretch;
     width: 100%;

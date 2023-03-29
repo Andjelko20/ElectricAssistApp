@@ -1,6 +1,6 @@
 .timeline{
     display: grid;
-    grid-template-columns: repeat(8,3rem);
+    grid-template-columns: repeat(8,6rem);
 }
 
 h3 {
@@ -14,5 +14,5 @@ h3 {
 
 .sub{
     border-left: thing orange solid;
-    padding: .7rem;
+    
 }

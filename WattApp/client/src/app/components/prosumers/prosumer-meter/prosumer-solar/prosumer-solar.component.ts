@@ -1,26 +1,27 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-prosumer-house',
-  templateUrl: './prosumer-house.component.html',
-  styleUrls: ['./prosumer-house.component.css']
+  selector: 'app-prosumer-solar',
+  templateUrl: './prosumer-solar.component.html',
+  styleUrls: ['./prosumer-solar.component.css']
 })
-export class ProsumerHouseComponent {
+export class ProsumerSolarComponent {
 
   
+  
 enableThresholds: boolean = false;
-value: number = 0.00;
+value: number = 5.96;
 thick: number = 15;
-size: number = 300;
+size: number =200;
 type: any = "full";
 cap: any = "round";
-label: string = "solar power now";
+label: string = "consumption now";
 prepend: any = '';
 append: any = 'kWh';
 min: number = 0;
 max: number = 10000;
-foregroundColor: string = '#8394FE';
-backgroundColor: string = '#8394FE';
+foregroundColor: string = '#80F86C';
+backgroundColor: string = '#80F86C';
 
 enableMarkers: boolean = false;
 
