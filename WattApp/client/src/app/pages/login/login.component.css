@@ -4,21 +4,6 @@
     justify-content: stretch;
 } */
 
-.containters {
-    width: 100%;
-    min-height: 100vh;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-    background: #0F759B;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-}
-
 .login-form {
     justify-content: center;
     text-align: left;
@@ -66,8 +51,15 @@
     text-align: center;
 }
 
+.login-picture {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
 .image {
-    height: auto;
+    height: 100%;
     max-width: 100%;
 }
 
@@ -127,30 +119,6 @@
     justify-content: center;
 }
 
-@media screen and(max-width:1280px) {
-    .containters {
-        max-width: 100px;
-        max-height: 100px;
-    }
-    .login-form-wrapper {
-        max-width: 600px;
-        max-height: 500px;
-    }
-    .checkbox {
-        margin-left: 15px;
-    }
-    .form-group {
-        justify-content: center;
-        width: 500px;
-    }
-    .linka {
-        margin-top: -50px;
-    }
-    .container2 {
-        display: none;
-    }
-}
-
 @media screen and(min-width:700px) {
     .containters {
         min-width: 100px;
@@ -170,9 +138,6 @@
     }
     .linka {
         margin-top: -50px;
-    }
-    .container2 {
-        display: none;
     }
     .btn-container>button {
         max-width: 200px;
