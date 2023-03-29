@@ -256,5 +256,8 @@ namespace Server.Services.Implementations
 
             return totalEnergyConsumption;
         }
+
+        // ZA PROSLEDJEN ID KORISNIKA POTROSNJA ZA GRAFIKE
+
     }
 }

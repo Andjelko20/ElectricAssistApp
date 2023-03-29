@@ -20,6 +20,9 @@ namespace Server.Controllers
             this.historyService = historyService;
         }
 
+        /// <summary>
+        /// Total device Consumption in last year
+        /// </summary>
         [HttpGet]
         [Route("Year/Device/{deviceId:int}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
@@ -35,6 +38,9 @@ namespace Server.Controllers
             return Ok(historyList);
         }
 
+        /// <summary>
+        /// Total device Consumption in last month
+        /// </summary>
         [HttpGet]
         [Route("Month/Device/{deviceId:int}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
@@ -49,9 +55,11 @@ namespace Server.Controllers
             return Ok(historyList);
         }
 
+        /// <summary>
+        /// Total device Consumption in last day
+        /// </summary>
         [HttpGet]
         [Route("Day/Device/{deviceId:int}")]
-
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInLastDay([FromRoute] int deviceId)
         {
@@ -64,10 +72,12 @@ namespace Server.Controllers
             var HistoryForThePreviousDay = historyService.GetUsageHistoryForDeviceInLastDay(deviceId);
             return Ok(HistoryForThePreviousDay);
         }
-        
+
+        /// <summary>
+        /// Total device Consumption in last week
+        /// </summary>
         [HttpGet]
         [Route("Week/Device/{deviceId:int}")]
-
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInPastWeek([FromRoute] int deviceId)
         {
@@ -86,7 +96,6 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("YearByMonth/Device/{deviceId:int}")]
-
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInPastYearByMonth([FromRoute] int deviceId)
         {
@@ -127,6 +136,9 @@ namespace Server.Controllers
             return Ok(HistoryForThePreviousMonth);
         }
 
+        /// <summary>
+        /// Consumption for all user`s devices
+        /// </summary>
         [HttpGet]
         [Route("TotalConsumption/User/{userId:int}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
@@ -139,6 +151,9 @@ namespace Server.Controllers
             return Ok(HistoryForTotalConsumption);
         }
 
+        /// <summary>
+        /// Consumption for user, past day
+        /// </summary>
         [HttpGet]
         [Route("Day/User/{userId:int}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
@@ -151,6 +166,9 @@ namespace Server.Controllers
             return Ok(HistoryForPastDayConsumption);
         }
 
+        /// <summary>
+        /// Consumption for user in past week
+        /// </summary>
         [HttpGet]
         [Route("Week/User/{userId:int}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
@@ -163,6 +181,9 @@ namespace Server.Controllers
             return Ok(HistoryForPastWeekConsumption);
         }
 
+        /// <summary>
+        /// Consumption for user in past month
+        /// </summary>
         [HttpGet]
         [Route("Month/User/{userId:int}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
@@ -175,10 +196,13 @@ namespace Server.Controllers
             return Ok(HistoryForPastMonthConsumption);
         }
 
+        /// <summary>
+        /// Consumption for user in past year
+        /// </summary>
         [HttpGet]
         [Route("Year/User/{userId:int}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetConsumptionByUserForYearMonth([FromRoute] int userId)
+        public async Task<IActionResult> GetConsumptionByUserForYear([FromRoute] int userId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
