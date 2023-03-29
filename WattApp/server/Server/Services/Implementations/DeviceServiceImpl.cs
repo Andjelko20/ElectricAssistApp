@@ -115,7 +115,7 @@ namespace Server.Services.Implementations
         }
         public Device getDeviceById(long deviceId)
         {
-            return _context.Devices.Find(deviceId);
+            return _context.Devices.FirstOrDefault(src => src.Id == deviceId && src.Visibility == true);
         }
 
         public List<Device> getUsersDevices(long userId)
