@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
@@ -21,7 +22,11 @@ export class AdminDsoUpdateComponent {
     block:false,
     roleId:0
   }
-  passwordGen=''
+  public emailErrorMessage:string="";
+	public errorMessage:string="";
+	public success:boolean=false;
+  public passwordGen='';
+  public emailUp='';
   constructor(private route:ActivatedRoute,private router:Router,private updateService:AuthService) { }
 
   ngOnInit(): void {
@@ -66,5 +71,16 @@ export class AdminDsoUpdateComponent {
     fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").
     map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
   }
-
+  sendEmail(){
+		this.emailUp=this.updateUserDetail.email;
+		this.updateService.adminChangePasswordEmail(this.emailUp).subscribe({
+			next:()=>{
+				this.success=true;
+			},
+			error:(response:HttpErrorResponse)=>{
+				this.success=false;
+				this.errorMessage=response.error.message;
+			}
+		})
+	}
 }

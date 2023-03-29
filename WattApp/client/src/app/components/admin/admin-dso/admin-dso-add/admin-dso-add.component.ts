@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
@@ -19,8 +20,13 @@ export class AdminDsoAddComponent {
     block:false,
     roleId: 0
   }
-  passwordGen = '';
+  public emailErrorMessage:string="";
+	public errorMessage:string="";
+	public success:boolean=false;
+  public passwordGen='';
+  public emailUp='';
   roles:Array<any>=[];
+  
   constructor(private usersService:AuthService,private router:Router) { }
 
   ngOnInit(): void {
@@ -57,4 +63,17 @@ export class AdminDsoAddComponent {
       }
     });
   }
+
+  sendEmail(){
+		this.emailUp=this.addUserRequest.email;
+		this.usersService.adminChangePasswordEmail(this.emailUp).subscribe({
+			next:()=>{
+				this.success=true;
+			},
+			error:(response:HttpErrorResponse)=>{
+				this.success=false;
+				this.errorMessage=response.error.message;
+			}
+		})
+	}
 }

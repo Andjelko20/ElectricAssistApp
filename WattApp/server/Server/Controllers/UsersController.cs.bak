@@ -309,7 +309,7 @@ namespace Server.Controllers
             else if (resetPassword.ExpireAt > DateTime.Now)
                 return BadRequest(new MessageResponseDTO("Reset key is already submited on your email"));
             resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
-            resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
+            resetPassword.ExpireAt = DateTime.Now.AddMinutes(1);
             try
             {
                 emailService.SendEmail(requestBody.Email, "Reset password", "Click on this link to reset your password:<a href='http://localhost:4200/reset-password/" + resetPassword.ResetKey + "'>" + resetPassword.ResetKey + "</a>", true);

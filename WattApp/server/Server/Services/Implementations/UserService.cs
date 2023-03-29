@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.DTOs;
 using Server.Models;
@@ -34,7 +34,7 @@ namespace Server.Services.Implementations
             logger.LogInformation(page.NumberOfPages.ToString());
             List<object> users=context.Users
                 .Include(user=>user.Role)
-                .Where(user=>filter(user)&&user.Role.Name!="superadmin")
+                .Where(filter)
                 .Skip((pageNumber-1)*itemsPerPage)
                 .Take(itemsPerPage)
                 .Select(user=>(object)(new {

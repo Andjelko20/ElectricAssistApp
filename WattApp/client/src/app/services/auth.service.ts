@@ -28,12 +28,6 @@ export class AuthService {
     return this.http.get(environment.serverUrl );
   }
 
-  sendEmail(email:string):Observable<any>{
-	return this.http.post(environment.serverUrl+'/api/authentication/generate_reset_token',{email:email});
-  }
-  resetPasswordWithResetCode(resetKey:string,newPassword:string):Observable<any>{
-	return this.http.post(environment.serverUrl+'/api/authentication/reset_password',{resetKey:resetKey,newPassword:newPassword});
-  }
   getAllUsers():Observable<any>
   {
     return this.http.get<any>(environment.serverUrl+'/api/users/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
@@ -67,9 +61,17 @@ export class AuthService {
     
     return this.http.put(environment.serverUrl+"/api/users/set_blocked_status/"+id,{Status: false },{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
-
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
-    return this.http.post<any>('/api/users/change_password', { oldPassword, newPassword },{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
+    return this.http.post<any>(environment.serverUrl +'/api/users/change_password', { oldPassword, newPassword },{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
+  }
+  adminChangePasswordEmail(email:string): Observable<any> {
+    return this.http.put<any>(environment.serverUrl +'/api/users/generate_reset_token_admin', {email:email},{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
+  }
+  sendEmail(email:string):Observable<any>{
+    return this.http.post(environment.serverUrl+'/api/authentication/generate_reset_token',{email:email});
+  }
+  resetPasswordWithResetCode(resetKey:string,newPassword:string):Observable<any>{   
+    return this.http.post(environment.serverUrl+'/api/authentication/reset_password',{resetKey:resetKey,newPassword:newPassword});
   }
   
 }

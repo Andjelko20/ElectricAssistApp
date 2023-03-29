@@ -7,30 +7,38 @@
                     <!-- <label for="id " class="form-label ">ID</label>
                     <input type="text " class="form-control " id="id " name="id " [(ngModel)]="updateUserDetail.id " disabled> -->
 
-                    <br>
+                    <!-- <br>
                     <label for="name " class="form-label ">Name</label>
-                    <input type="text " class="form-control " id="id " name="name " [(ngModel)]="updateUserDetail.name " disabled>
+                    <input type="text " class="form-control " id="id " name="name " [(ngModel)]="updateUserDetail.name " disabled> -->
 
                     <br>
                     <label for="email " class="form-label ">Email</label>
                     <input type="text " class="form-control " id="id " name="email " [(ngModel)]="updateUserDetail.email ">
 
-                    <br>
+                    <!-- <br>
                     <label for="userName " class="form-label ">User name</label>
                     <input type="text " class="form-control " id="name " name="userName " [(ngModel)]="updateUserDetail.username "disabled>
-                    <br>
+                    <br> -->
                     <label for="role " class="form-label ">Role</label>
                     <select #teams id="role " class="form-control " name="role " [(ngModel)]="updateUserDetail.roleId ">
                             <option *ngFor="let role of roles " [value]="role?.id " >{{role?.name}}</option>
                         </select>
                     <br>
+                    <form style="margin: 0;padding: 0;">
+                        <button type=" submit " class="btn btn-primary mr-5 " (click)="sendEmail()">Change password</button>
+                        <div *ngIf="errorMessage" style="margin: 0; padding: 0;">
+                            {{ errorMessage }}
+                        </div>
+                    </form>
+                    <br>
                     <br>
                     <!-- <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" [(ngModel)]="updateUserDetail.username" value="{{passwordGen}}" disabled>
+                    <input type="password" class="form-control" id="password" name="password" value="{{passwordGen}}" disabled>
                     <form style="margin: 0; padding: 0;">
                         <button class="btn btn-success" type="submit" (click)="generatePassword()">Generate password</button>
                     </form>
                     <br> -->
+                    
                 </div>
             </div>
             <button type=" submit " class="btn btn-primary mr-5 ">Save</button>
