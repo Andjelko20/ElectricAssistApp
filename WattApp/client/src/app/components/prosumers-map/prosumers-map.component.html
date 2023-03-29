@@ -6,7 +6,7 @@
 		</form>
 		<div class="search-result">
 			<div *ngFor="let location of locations" (click)="changeFocus(location)">
-				{{location.address.city}}
+				{{location.display_name}}
 			</div>
 		</div>
 	</div>

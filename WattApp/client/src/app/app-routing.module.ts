@@ -17,6 +17,7 @@ import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-pass
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
 import { DispatcherGuard } from './guards/dispatcher.guard';
+import { MapInputComponent } from './components/map-input/map-input.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'home',pathMatch:'full'},
@@ -32,7 +33,8 @@ const routes: Routes = [
 	{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password',component:ResetPasswordPageComponent},
-	{path:"prosumer-map",component:ProsumersMapComponent,canActivate:[DispatcherGuard]},
+	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
+	{path:"map-input",component:MapInputComponent},
 	{path:'**',redirectTo:"login"}
 ];
 

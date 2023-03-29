@@ -43,16 +43,18 @@ export class MapInputComponent {
 		  maxZoom: 18,
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
 		this.marker = Leaflet.marker([44.01721187973962, 20.90732574462891], { draggable: true }).addTo(this.map); // postavljanje čiode
-		const latLng = this.marker.getLatLng();
+		let latLng = this.marker.getLatLng();
 		this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng)
 
     	// postavljanje događaja na klik na mapu
 		this.map.on('click', (event: Leaflet.LeafletMouseEvent) => {
 			this.marker.setLatLng(event.latlng);
+			latLng = this.marker.getLatLng();
 			this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
 		});
 		this.marker.on("dragend",(event:L.DragEndEvent)=>{
 			this.marker.setLatLng(event.target.getLatLng());
+			latLng = this.marker.getLatLng();
 			this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
 		});
 	  }
@@ -61,7 +63,7 @@ export class MapInputComponent {
 		if(this.searchInput=="")
 			return;
 		this.searchUrl.searchParams.set("q",this.searchInput);
-		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
+		fetch(this.searchUrl.toString())//,{headers:{"Accept-Language":"en-US"}})
 		.then(res=>res.json())
 		.then(res=>{
 			this.locations=res;

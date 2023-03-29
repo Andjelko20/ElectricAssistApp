@@ -53,13 +53,13 @@ export class ProsumersMapComponent {
 	
 		Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		  attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-		  maxZoom: 18,
+		  maxZoom: 19,
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
 	
 		for(let prosumer of this.prosumers){
-			console.log(prosumer)
 			let marker=Leaflet.marker([prosumer.latitude,prosumer.longitude]).addTo(this.map);
-			marker.bindPopup(`<b>${prosumer.name}</b> ${prosumer.consumption}`);
+			marker.bindPopup(`<b>${prosumer.name}</b>${prosumer.consumption}`);
+			marker.bindTooltip("aaa",{permanent:true});
 		}
 	  }
 
