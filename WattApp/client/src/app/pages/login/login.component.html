@@ -13,8 +13,9 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" name="password" class="form-control" [(ngModel)]="password" />
+                        <input class="checkbox" type="checkbox" name="forgotpass">Remember me
                     </div>
-                    <input class="checkbox" type="checkbox" name="forgotpass">Remember me
+
                     <div class="btn-container">
                         <a class="link" [routerLink]='["/forgot-password"]'>Forgot password?</a>
 

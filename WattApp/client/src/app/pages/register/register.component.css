@@ -4,59 +4,53 @@
     justify-content: stretch;
 } */
 
-.containters {
-    width: 100%;
-    max-height: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-    background: #0F759B;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-}
-
 .login-form {
     justify-content: center;
     text-align: left;
     max-width: 100%;
     height: auto;
+    padding-top: 25px;
 }
 
 .login-form-wrapper {
     font-family: 'Roboto Serif';
     font-style: normal;
     font-size: 20px;
-    line-height: 35px;
     color: #D9D9D9;
-    max-width: 100%;
+    margin-left: 35px;
+    width: 80%;
     height: auto;
+    margin-bottom: 20px;
     background: rgba(15, 15, 15, 0.2);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 10px 10px rgba(0, 0, 0, 0.25);
     border-radius: 80px;
 }
 
 .login-form {
-    border: 1px solid #0F759B;
     border-radius: 80px;
-    height: auto;
+    min-height: 380px;
 }
 
 .logo {
-    width: auto;
-    text-align: center;
-    max-height: 100px;
     background: #0F759B;
 }
 
+.logo {
+    width: 100%;
+    max-height: 200px;
+    text-align: center;
+}
+
 .logo>img {
-    max-height: 100px;
+    max-width: 100%;
+    height: auto;
 }
 
 .container1 {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background: #0F759B;
     float: left;
     transition: all 0.3s;
@@ -66,23 +60,30 @@
 }
 
 .container2 {
-    position: relative;
     background: #0F759B;
     margin-left: 0px;
     width: 800px;
-    max-height: 700px;
+    max-height: 800px;
     text-align: center;
 }
 
+.login-picture {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
 .image {
-    height: auto;
+    height: 100%;
     max-width: 100%;
 }
 
 .form-group {
-    margin: 30px;
     justify-content: center;
     width: auto;
+    margin-left: 20px;
+    margin-right: 20px;
     transition: all 0.3s;
 }
 
@@ -95,7 +96,6 @@
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
-    line-height: 35px;
     letter-spacing: 0.08em;
     color: #D9D9D9;
 }
@@ -103,7 +103,6 @@
 .btn-container>.btn {
     width: 200px;
     height: 60px;
-    margin-top: 20px;
     background: linear-gradient(0deg, #2EA0E6, #2EA0E6), linear-gradient(270deg, #FFFFFF 0%, rgba(239, 239, 239, 0.5) 34.37%, #F5F4FB 100%);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
@@ -111,7 +110,6 @@
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
-    line-height: 35px;
     letter-spacing: 0.08em;
     color: #D9D9D9;
 }
@@ -127,6 +125,7 @@
 .checkbox {
     display: inline-flex;
     margin-left: 50px;
+    font-size: 5px;
 }
 
 .error-message {
@@ -135,38 +134,13 @@
     justify-content: center;
 }
 
-@media screen and(max-width:1280px) {
-    .containters {
-        max-width: 100px;
-        max-height: 100px;
-    }
-    .login-form-wrapper {
-        max-width: 600px;
-        max-height: 500px;
-    }
-    .checkbox {
-        margin-left: 15px;
-    }
-    .form-group {
-        justify-content: center;
-        width: 500px;
-    }
-    .linka {
-        margin-top: -50px;
-    }
-    .container2 {
-        display: none;
-    }
-}
-
 @media screen and(min-width:700px) {
     .containters {
         min-width: 100px;
         min-height: 100px;
     }
     .login-form-wrapper {
-        max-width: 300px;
-        max-height: 450px;
+        line-height: none;
     }
     .checkbox {
         margin-left: 15px;
@@ -179,9 +153,6 @@
     .linka {
         margin-top: -50px;
     }
-    .container2 {
-        display: none;
-    }
     .btn-container>button {
         max-width: 200px;
         max-height: 50px;
@@ -189,43 +160,61 @@
 }
 
 @media screen and (min-width:320px) and (max-width:700px) {
-    .container1 {
-        max-width: 100%;
-        height: auto;
-    }
     .login-form-wrapper {
-        height: auto;
-        width: 100%;
         transition: all 0.6s;
     }
     .checkbox {
         margin-left: 35px;
         transition: all 0.3s;
     }
+    .form-control {
+        height: 38px;
+    }
     .form-group {
+        margin-left: 20px;
+        margin-right: 20px;
         justify-content: center;
-        max-width: 100%;
+        width: auto;
+        height: 50px;
         transition: all 0.3s;
     }
-    label {
+    .form-group>input {
+        height: 28px;
+    }
+    .form-group>label {
         font-size: 15px;
+    }
+    label {
+        font-size: 20px;
     }
     .linka {
-        margin-top: -50px;
+        padding-top: -50px;
         font-size: 15px;
-    }
-    .checkbox {
-        size: 10px;
     }
     .linka {
         margin-top: 2px;
     }
+    .btn-container>.btn {
+        margin-top: 15px;
+        height: 40px;
+        font-size: 15px;
+        margin-bottom: -15px;
+    }
+    .logo {
+        width: 100px;
+        max-height: 300px;
+        text-align: center;
+    }
     .logo>img {
-        min-width: 150px;
-        transition: all 0.6s;
+        width: 100%;
+        height: auto;
     }
     .link {
-        font-size: 15px;
+        font-size: 13px;
+    }
+    .checkbox {
+        margin-left: 0px;
+        font-size: 5px;
     }
     button {
         font-size: 15px;
@@ -236,5 +225,10 @@
     .btn-container>button {
         max-width: 170px;
         max-height: 50px;
+        font-size: 15px;
+        margin-bottom: -10px;
+    }
+    .error-message {
+        font-size: 15px;
     }
 }
