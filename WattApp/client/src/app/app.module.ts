@@ -49,7 +49,8 @@ import { ConsumptionTodayWattmeterComponent } from './components/dso/meter/consu
 import { ConsumptionYearWattmeterComponent } from './components/dso/meter/consumption-year-wattmeter/consumption-year-wattmeter.component';
 import { CurrentPowerWattmeterComponent } from './components/dso/meter/current-power-wattmeter/current-power-wattmeter.component';
 import { NumberOfUsersMeterComponent } from './components/dso/meter/number-of-users-meter/number-of-users-meter.component';
-
+import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
+import { MapInputComponent } from './components/map-input/map-input.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { NumberOfUsersMeterComponent } from './components/dso/meter/number-of-us
     ProsumerTowerComponent,
     ProsumerHouseComponent,
     ProsumerSolarComponent,
-
+    ProsumersMapComponent,
+	MapInputComponentmape,
     AdminDsoComponent,
     AdminProsumerComponent,
     AdminProsumerAddComponent,

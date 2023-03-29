@@ -20,6 +20,9 @@ import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso/admin-
 import { AdminDsoUpdateComponent } from './components/admin/admin-dso/admin-dso-update/admin-dso-update.component';
 import { AdminDsoAddComponent } from './components/admin/admin-dso/admin-dso-add/admin-dso-add.component';
 import { MapsComponent } from './components/dso/maps/maps.component';
+import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
+import { DispatcherGuard } from './guards/dispatcher.guard';
+import { MapInputComponent } from './components/map-input/map-input.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'admindso',pathMatch:'full'},
@@ -37,9 +40,15 @@ const routes: Routes = [
 	{path:'dsoprosumer',component:DsoProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
+<<<<<<< HEAD
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'prosumer-home-page',component:ProsumerHomePageComponent},
 	{path:'today',component:TodayComponent},
+=======
+	{path:'reset-password',component:ResetPasswordPageComponent},
+	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
+	{path:"map-input",component:MapInputComponent},
+>>>>>>> 49-mape
 	{path:'**',redirectTo:"login"}
 ];
 

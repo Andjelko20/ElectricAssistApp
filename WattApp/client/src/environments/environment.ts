@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  serverUrl:"https://localhost:7146"
+  serverUrl:"https://localhost:7146",
+  mapSearchUrl:"https://nominatim.openstreetmap.org/"
 };
 
 /*
