@@ -150,5 +150,17 @@ namespace Server.Controllers
             var HistoryForPastDayConsumption = historyService.GetUserEnergyConsumptionForPastDay(userId);
             return Ok(HistoryForPastDayConsumption);
         }
+
+        [HttpGet]
+        [Route("Week/User/{userId:int}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetConsumptionByUserForPastWeek([FromRoute] int userId)
+        {
+            if (!_sqliteDb.Users.Any(u => u.Id == userId))
+                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
+
+            var HistoryForPastWeekConsumption = historyService.GetUserEnergyConsumptionForPastWeek(userId);
+            return Ok(HistoryForPastWeekConsumption);
+        }
     }
 }
