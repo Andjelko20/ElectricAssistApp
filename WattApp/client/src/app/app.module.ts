@@ -89,7 +89,7 @@ import { MapInputComponent } from './components/map-input/map-input.component';
     ProsumerHouseComponent,
     ProsumerSolarComponent,
     ProsumersMapComponent,
-	MapInputComponentmape,
+	  MapInputComponent,
     AdminDsoComponent,
     AdminProsumerComponent,
     AdminProsumerAddComponent,

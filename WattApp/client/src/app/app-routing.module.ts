@@ -40,15 +40,12 @@ const routes: Routes = [
 	{path:'dsoprosumer',component:DsoProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
-<<<<<<< HEAD
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'prosumer-home-page',component:ProsumerHomePageComponent},
 	{path:'today',component:TodayComponent},
-=======
 	{path:'reset-password',component:ResetPasswordPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	{path:"map-input",component:MapInputComponent},
->>>>>>> 49-mape
 	{path:'**',redirectTo:"login"}
 ];
 
