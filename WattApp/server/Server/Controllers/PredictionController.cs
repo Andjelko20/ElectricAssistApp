@@ -34,5 +34,23 @@ namespace Server.Controllers
             var PredictionForNextWeek = predictionService.ConsumptionPredictionForTheNextWeek(deviceId);
             return Ok(PredictionForNextWeek);
         }
+
+        /// <summary>
+        /// User prediction for next week (by day)
+        /// </summary>
+        [HttpGet]
+        [Route("WeekByDay/User/{userId:int}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetUserPredictionForNextWeekByDay([FromRoute] int userId)
+        {
+            if (!_sqliteDb.Users.Any(u => u.Id == userId))
+                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
+                return Ok(0.0); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+
+            var PredictionForNextWeek = predictionService.UserPredictionForTheNextWeek(userId);
+            return Ok(PredictionForNextWeek);
+        }
     }
 }
