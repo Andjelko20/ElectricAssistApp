@@ -1,20 +1,35 @@
-.login-container {
+/* .login-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+} */
 
+.containters {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    border: 1px solid black;
     background: #0F759B;
     display: flex;
     align-items: center;
+    flex-direction: row;
     justify-content: center;
 }
-.login-form-wrapper{
+
+.login-form-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
     font-family: 'Roboto Serif';
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
     line-height: 35px;
     letter-spacing: 0.08em;
-
     color: #D9D9D9;
     width: 500px;
     height: 500px;
@@ -32,41 +47,41 @@
     margin-left: 50px;
 }
 
-.container1{
+.container1 {
     background: #0F759B;
     float: left;
-    
 }
 
-.container2{
-    background: #0F759B;
+.container2 {
     float: right;
-    
+    border: 1px solid black;
+    background: #0F759B;
 }
-.login-picture{
+
+.login-picture {
     margin-left: 50px;
 }
-.form-group{
+
+.form-group {
     width: 400px;
     margin-bottom: 10px;
 }
 
-.btn-container{
+.btn-container {
     display: flex;
     align-items: center;
-    justify-content: center; 
-    flex-direction: column;  
+    justify-content: center;
+    flex-direction: column;
     font-family: 'Roboto Serif';
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
     line-height: 35px;
     letter-spacing: 0.08em;
-
     color: #D9D9D9;
-    }
+}
 
-.btn-container>.btn{
+.btn-container>.btn {
     width: 200px;
     height: 60px;
     margin-top: 20px;
@@ -79,22 +94,78 @@
     font-size: 20px;
     line-height: 35px;
     letter-spacing: 0.08em;
-
     color: #D9D9D9;
 }
 
-.btn-container>.link{
-    
+.btn-container>.link {
     color: #D9D9D9;
 }
 
-.checkbox{
+.btn-container>.linka {
+    color: #D9D9D9;
+}
+
+.checkbox {
     display: inline-flex;
     margin-right: 10px;
 }
 
-.error-message{
+.image {
+    height: 800px;
+    width: 900px;
+}
+
+.error-message {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media(max-width:1280px) {
+    .containters {
+        min-width: 100px;
+        min-height: 100px;
+    }
+    .login-form-wrapper {
+        width: 600px;
+        height: 500px;
+    }
+    .checkbox {
+        margin-left: 15px;
+    }
+    .form-group {
+        justify-content: center;
+        width: 500px;
+    }
+    .linka {
+        margin-top: -50px;
+    }
+    .container2 {
+        display: none;
+    }
+}
+
+@media (max-width:700px) {
+    .containters {
+        min-width: 100px;
+        min-height: 100px;
+    }
+    .login-form-wrapper {
+        width: 350px;
+        height: 450px;
+    }
+    .checkbox {
+        margin-left: 15px;
+    }
+    .form-group {
+        margin-left: 15px;
+        justify-content: center;
+        width: 250px;
+    }
+    .linka {
+        margin-top: -50px;
+    }
+    .container2 {
+        display: none;
+    }
 }

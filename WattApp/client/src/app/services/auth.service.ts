@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { Users } from '../models/users.model';
+import { JwtToken } from '../utilities/jwt-token';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +11,19 @@ export class AuthService {
 
   
   isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
-  private hasToken() : boolean {
-    return !!localStorage.getItem('token');
+  public hasToken() : boolean {
+    try{
+		let token=new JwtToken();
+		console.log(token.data)
+
+		console.log(token.expired)
+		if(token.expired)
+			throw new Error();
+		return true;
+	}
+	catch(error){
+		return false;
+	}
   }
   
   constructor(private http:HttpClient) { }
