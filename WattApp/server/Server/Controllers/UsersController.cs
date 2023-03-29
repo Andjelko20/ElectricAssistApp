@@ -292,10 +292,10 @@ namespace Server.Controllers
         public async Task<IActionResult> GenerateResetToken([FromBody] EmailRequestDTO requestBody)
         {
             var user = await userService.GetUserByEmail(requestBody.Email);
-            if (user.Role.Name == "superadmin")
-                return Forbid();
             if (user == null)
                 return BadRequest(new BadRequestStatusResponse("User not exist"));
+            if (user.Role.Name == "superadmin")
+                return Forbid();
             var resetPassword = await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r => r.UserId == user.Id);
             bool exists = true;
             if (resetPassword == null)
@@ -308,7 +308,6 @@ namespace Server.Controllers
             }
             else if (resetPassword.ExpireAt > DateTime.Now)
                 return BadRequest(new MessageResponseDTO("Reset key is already submited on your email"));
-            return BadRequest("Reset token is already sent. Check your email.");
             resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
             try

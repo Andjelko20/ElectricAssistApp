@@ -130,7 +130,6 @@ namespace Server.Controllers
                 };
             }else if (resetPassword.ExpireAt > DateTime.Now)
                 return BadRequest(new MessageResponseDTO("Reset key is already submited on your email"));
-                return BadRequest("Reset token is already sent. Check your email.");
             resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
             try
