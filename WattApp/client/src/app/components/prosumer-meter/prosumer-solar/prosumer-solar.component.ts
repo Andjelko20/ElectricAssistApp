@@ -12,7 +12,7 @@ export class ProsumerSolarComponent {
 enableThresholds: boolean = false;
 value: number = 5.96;
 thick: number = 15;
-size: number = 300;
+size: number =200;
 type: any = "full";
 cap: any = "round";
 label: string = "consumption now";
