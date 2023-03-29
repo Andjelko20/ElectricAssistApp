@@ -22,7 +22,7 @@ h2 {
 
 .prognosis {
     display: flex;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width: 17%;
     height: 15%;
     top: 2%;
