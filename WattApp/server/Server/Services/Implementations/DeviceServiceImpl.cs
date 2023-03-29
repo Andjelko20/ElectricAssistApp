@@ -105,6 +105,7 @@ namespace Server.Services.Implementations
             return device;
         }
 
+
         /*public List<Device> getAllDevices()
         {
                 return _context.Devices.Where(src => src.Visibility == true).ToList();
