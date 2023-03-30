@@ -34,7 +34,11 @@
                     <td>{{show.role}}</td>
                     <td><a [routerLink]='["/admindsoupdate",show.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
                     <td>
+<<<<<<< HEAD
                         <button style="width: 84px; height:30px" *ngIf="show.block===true" (click)="unblockUser(show.id)"> UNBLOCK</button>
+=======
+                        <button style="width: 84px; height:30px" *ngIf="show.block===true" (click)="unblockUser(show.id)" > UNBLOCK</button>
+>>>>>>> origin/#45-CRUD-nad-uređajima-front
                         <button style="width: 84px; height:30px" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button>
                     </td>
                     <!--<td><a [routerLink]='["/change-password"]'><button style="min-width: 84px; height:30px" > PASSWORD</button></a></td>-->

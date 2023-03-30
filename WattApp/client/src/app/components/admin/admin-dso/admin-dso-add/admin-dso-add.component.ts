@@ -1,5 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
+<<<<<<< HEAD
 import { Component, ElementRef, ViewChild } from '@angular/core';
+=======
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+>>>>>>> origin/#45-CRUD-nad-uređajima-front
 import { Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,7 +14,11 @@ import { environment } from 'src/environments/environment';
   templateUrl: './admin-dso-add.component.html',
   styleUrls: ['./admin-dso-add.component.css']
 })
+<<<<<<< HEAD
 export class AdminDsoAddComponent {
+=======
+export class AdminDsoAddComponent implements OnInit{
+>>>>>>> origin/#45-CRUD-nad-uređajima-front
 
   addUserRequest={
     name:'',

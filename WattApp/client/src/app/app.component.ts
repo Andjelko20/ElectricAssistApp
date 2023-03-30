@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   islogg!: Observable<boolean>;
   constructor(public authService: AuthService) {
     this.islogg=authService.isLoginSubject;
+    
   }
    
   ngOnInit(){

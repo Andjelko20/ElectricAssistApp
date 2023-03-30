@@ -10,7 +10,7 @@ import { TodayComponent } from './components/today/today.component';
 import { FutureComponent } from './components/future/future.component';
 import { DsoHomePageComponent } from './pages/dso/dso-home-page/dso-home-page.component';
 import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
-import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
+import { AdminProsumersPageComponent } from './pages/admin/admin-prosumers-page/admin-prosumers-page.component';
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { ProsumerHomePageComponent } from './pages/prosumer/prosumer-home-page/prosumer-home-page.component';
@@ -24,6 +24,10 @@ import { MapsComponent } from './components/dso/maps/maps.component';
 import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
 import { DispatcherGuard } from './guards/dispatcher.guard';
 import { MapInputComponent } from './components/map-input/map-input.component';
+import { AllDevicesComponent } from './components/prosumers/devices/all-devices/all-devices.component';
+import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
+import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
+
  
 const routes: Routes = [
 	{path:'',redirectTo:'admindso',pathMatch:'full'},
@@ -48,6 +52,9 @@ const routes: Routes = [
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	{path:"map-input",component:MapInputComponent},
 	{path:'future',component:FutureComponent},
+	{path:"devices",component:AllDevicesComponent},
+	{path:"devices-add",component:AddDeviceComponent},
+	{path:"devices-update/:id",component:UpdateDeviceComponent},
 	{path:'**',redirectTo:"login"}
 ];
 
