@@ -27,7 +27,6 @@ import { AllProsumersComponent } from './components/dso/all-prosumers/all-prosum
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { TodayComponent } from './components/today/today.component';
-
 import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso/admin-dso.component';
 import { AdminProsumerComponent } from './components/admin/admin-prosumer/admin-prosumer/admin-prosumer.component';
 import { AdminProsumerAddComponent } from './components/admin/admin-prosumer/admin-prosumer-add/admin-prosumer-add.component';
@@ -52,6 +51,7 @@ import { MapInputComponent } from './components/map-input/map-input.component';
 import { ProsumerTowerComponent } from './components/prosumers/prosumer-meter/prosumer-tower/prosumer-tower.component';
 import { ProsumerHouseComponent } from './components/prosumers/prosumer-meter/prosumer-house/prosumer-house.component';
 import { ProsumerSolarComponent } from './components/prosumers/prosumer-meter/prosumer-solar/prosumer-solar.component';
+import { FutureComponent } from './components/future/future.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +85,7 @@ import { ProsumerSolarComponent } from './components/prosumers/prosumer-meter/pr
     LineWeekChartComponent,
     ForgotPasswordPageComponent,
     ResetPasswordPageComponent,
+    FutureComponent,
     TodayComponent,
     ProsumerTowerComponent,
     ProsumerHouseComponent,
