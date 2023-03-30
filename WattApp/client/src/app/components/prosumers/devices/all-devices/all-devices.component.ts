@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Devices } from 'src/app/models/devices.model';
+import { Devices, ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
 
 @Component({
@@ -10,13 +10,12 @@ import { DevicesService } from 'src/app/services/devices.service';
 })
 export class AllDevicesComponent implements OnInit {
 
-  devices:Devices[] = [];
+  devices:ShowDevices[] = [];
   constructor(private router:Router,private deviceService:DevicesService,
     private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.deviceService.getAllDevices().subscribe(devices => {
-      console.log(devices);
      this.devices=devices
     });
     }
@@ -33,17 +32,36 @@ export class AllDevicesComponent implements OnInit {
       });
     }
   }
-//   turnOn(id: number) {
-//     this.deviceService.turnOn(id).subscribe(() => {
-//       const deviceIndex = this.devices.findIndex(device => device.id === id);
-//       this.devices[deviceIndex].turnOn = true;
-//     });
-// }
-// turnOff(id: number) {
-//   this.deviceService.turnOn(id).subscribe(() => {
-//     const deviceIndex = this.devices.findIndex(device => device.id === id);
-//     this.devices[deviceIndex].turnOn = false;
-//   });
-// }
+  
+  // turnOnOff(id: number) {
+  //   console.log(id);
+    
+  //     this.deviceService.turnOn(id).subscribe({
+  //       next:()=>{
+  //         this.router.navigate(['/devices']);
+          
+  //       }
+  //     });
+  // }
+  turnOn(id: number) {
+    console.log(id);
+    
+      this.deviceService.turnOn(id).subscribe({
+        next:()=>{
+          this.router.navigate(['/devices']);
+          location.reload()
+        }
+      });
+  }
+  turnOff(id: number) {
+    
+    this.deviceService.turnOff(id).subscribe({
+      next:()=>{
+        this.router.navigate(['/devices']);
+        location.reload()
+      }
+    });
+}
+  
 
 }

@@ -1,7 +1,6 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UpdateDevices } from 'src/app/models/devices.model';
 
 import { DevicesService } from 'src/app/services/devices.service';
 
@@ -28,7 +27,7 @@ export class AddDeviceComponent {
     turnOn: false
   }
   
-  roles:Array<any>=[];
+
   
   constructor(private devicesService:DevicesService,private router:Router) { }
 

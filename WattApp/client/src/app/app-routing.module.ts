@@ -21,6 +21,7 @@ import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.
 import { MapInputComponent } from './components/map-input/map-input.component';
 import { AllDevicesComponent } from './components/prosumers/devices/all-devices/all-devices.component';
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
+import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
 
  
 const routes: Routes = [
@@ -44,6 +45,7 @@ const routes: Routes = [
 	{path:"map-input",component:MapInputComponent},
 	{path:"devices",component:AllDevicesComponent},
 	{path:"devices-add",component:AddDeviceComponent},
+	{path:"devices-update/:id",component:UpdateDeviceComponent},
 	{path:'**',redirectTo:"login"}
 ];
 

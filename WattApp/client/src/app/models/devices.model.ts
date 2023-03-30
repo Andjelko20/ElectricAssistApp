@@ -1,4 +1,4 @@
-export interface Devices {
+export interface ShowDevices {
     id:number;
     userId: number;
     deviceCategory: string ;
@@ -12,7 +12,7 @@ export interface Devices {
     controlability: boolean;
     turnOn: boolean;
 };
-export interface UpdateDevices {
+export interface Devices {
     id:number;
     userId: number;
     deviceCategoryId: number ;
