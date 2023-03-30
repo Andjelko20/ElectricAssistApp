@@ -141,9 +141,9 @@ namespace Server.Controllers
         /// Consumption for all user`s devices
         /// </summary>
         [HttpGet]
-        [Route("TotalConsumption/User/{userId:int}")]
+        [Route("TotalConsumption/User/{userId:int}/{deviceCategoryId}")]
         [Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetTotalConsumptionByUser([FromRoute] int userId)
+        public async Task<IActionResult> GetTotalConsumptionByUser([FromRoute] int userId, [FromRoute] int deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
@@ -151,7 +151,7 @@ namespace Server.Controllers
             if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
 
-            var HistoryForTotalConsumption = historyService.GetTotalEnergyConsumptionForUser(userId);
+            var HistoryForTotalConsumption = historyService.GetTotalEnergyConsumptionForUser(userId, deviceCategoryId);
             return Ok(HistoryForTotalConsumption);
         }
 
@@ -159,9 +159,9 @@ namespace Server.Controllers
         /// Consumption for user, past day
         /// </summary>
         [HttpGet]
-        [Route("Day/User/{userId:int}")]
+        [Route("Day/User/{userId:int}/{deviceCategoryId}")]
         [Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetHistoryByUserForPastDay([FromRoute] int userId)
+        public async Task<IActionResult> GetHistoryByUserForPastDay([FromRoute] int userId, [FromRoute] int deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
@@ -169,7 +169,7 @@ namespace Server.Controllers
             if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
 
-            var HistoryForPastDay = historyService.GetUserEnergyConsumptionForPastDay(userId);
+            var HistoryForPastDay = historyService.GetUserEnergyConsumptionForPastDay(userId, deviceCategoryId);
             return Ok(HistoryForPastDay);
         }
 
@@ -177,9 +177,9 @@ namespace Server.Controllers
         /// Consumption for user in past week
         /// </summary>
         [HttpGet]
-        [Route("Week/User/{userId:int}")]
+        [Route("Week/User/{userId:int}/{deviceCategoryId}")]
         [Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetHistoryByUserForPastWeek([FromRoute] int userId)
+        public async Task<IActionResult> GetHistoryByUserForPastWeek([FromRoute] int userId, [FromRoute] int deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
@@ -187,7 +187,7 @@ namespace Server.Controllers
             if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
 
-            var HistoryForPastWeek = historyService.GetUserEnergyConsumptionForPastWeek(userId);
+            var HistoryForPastWeek = historyService.GetUserEnergyConsumptionForPastWeek(userId, deviceCategoryId);
             return Ok(HistoryForPastWeek);
         }
 
@@ -195,9 +195,9 @@ namespace Server.Controllers
         /// Consumption for user in past month
         /// </summary>
         [HttpGet]
-        [Route("Month/User/{userId:int}")]
+        [Route("Month/User/{userId:int}/{deviceCategoryId}")]
         [Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetHistoryByUserForPastMonth([FromRoute] int userId)
+        public async Task<IActionResult> GetHistoryByUserForPastMonth([FromRoute] int userId, [FromRoute] int deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
@@ -205,7 +205,7 @@ namespace Server.Controllers
             if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
 
-            var HistoryForPastMonth = historyService.GetUserEnergyConsumptionForPastMonth(userId);
+            var HistoryForPastMonth = historyService.GetUserEnergyConsumptionForPastMonth(userId, deviceCategoryId);
             return Ok(HistoryForPastMonth);
         }
 
@@ -213,9 +213,9 @@ namespace Server.Controllers
         /// Consumption for user in past year
         /// </summary>
         [HttpGet]
-        [Route("Year/User/{userId:int}")]
+        [Route("Year/User/{userId:int}/{deviceCategoryId}")]
         [Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetConsumptionByUserForYear([FromRoute] int userId)
+        public async Task<IActionResult> GetConsumptionByUserForYear([FromRoute] int userId, [FromRoute] int deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
@@ -223,7 +223,7 @@ namespace Server.Controllers
             if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
 
-            var HistoryForPastYearConsumption = historyService.GetUserEnergyConsumptionForPastYear(userId);
+            var HistoryForPastYearConsumption = historyService.GetUserEnergyConsumptionForPastYear(userId, deviceCategoryId);
             return Ok(HistoryForPastYearConsumption);
         }
 
@@ -231,9 +231,9 @@ namespace Server.Controllers
         /// Consumption for all user`s devices in past year (by month)
         /// </summary>
         [HttpGet]
-        [Route("YearByMonth/User/{userId:int}")]
+        [Route("YearByMonth/User/{userId:int}/{deviceCategoryId:int}")]
         [Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetConsumptionByUserForYearByMonth([FromRoute] int userId)
+        public async Task<IActionResult> GetConsumptionByUserForYearByMonth([FromRoute] int userId, [FromRoute] int deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
@@ -241,7 +241,7 @@ namespace Server.Controllers
             if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
 
-            var HistoryForPastYearByMonthConsumption = historyService.GetMonthlyEnergyUsageForPastYear(userId);
+            var HistoryForPastYearByMonthConsumption = historyService.GetMonthlyEnergyUsageForPastYear(userId, deviceCategoryId);
             return Ok(HistoryForPastYearByMonthConsumption);
         }
 
@@ -249,9 +249,9 @@ namespace Server.Controllers
         /// User history for last week (by day)
         /// </summary>
         [HttpGet]
-        [Route("WeekByDay/User/{userId:int}")]
+        [Route("WeekByDay/User/{userId:int}/{deviceCategoryId:int}")]
         [Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetUserHistoryForPastWeekByDay([FromRoute] int userId)
+        public async Task<IActionResult> GetUserHistoryForPastWeekByDay([FromRoute] int userId, [FromRoute] int deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
@@ -259,7 +259,7 @@ namespace Server.Controllers
             if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
 
-            var PredictionForNextWeek = historyService.UserHistoryForThePastWeek(userId);
+            var PredictionForNextWeek = historyService.UserHistoryForThePastWeek(userId, deviceCategoryId);
             return Ok(PredictionForNextWeek);
         }
     }

@@ -2,6 +2,7 @@
 using Server.Data;
 using Server.DTOs;
 using Server.Models;
+using Server.Models.DropDowns.Devices;
 using System.Runtime.Intrinsics.X86;
 
 namespace Server.Services.Implementations
@@ -184,39 +185,39 @@ namespace Server.Services.Implementations
 
 
         // ZA PROSLEDJEN ID KORISNIKA
-        public double GetTotalEnergyConsumptionForUser(int userId)
+        public double GetTotalEnergyConsumptionForUser(int userId, int deviceCategoryId)
         {
             int daysInPast = 0;
-            return SumEnergyConsumption(userId, daysInPast);
+            return SumEnergyConsumption(userId, daysInPast, deviceCategoryId);
         }
 
-        public double GetUserEnergyConsumptionForPastDay(int userId)
+        public double GetUserEnergyConsumptionForPastDay(int userId, int deviceCategoryId)
         {
             int daysInPast = -1;
-            return SumEnergyConsumption(userId, daysInPast);
+            return SumEnergyConsumption(userId, daysInPast, deviceCategoryId);
         }
 
-        public double GetUserEnergyConsumptionForPastWeek(int userId)
+        public double GetUserEnergyConsumptionForPastWeek(int userId, int deviceCategoryId)
         {
             int daysInPast = -6;
-            return SumEnergyConsumption(userId, daysInPast);
+            return SumEnergyConsumption(userId, daysInPast, deviceCategoryId);
         }
 
-        public double GetUserEnergyConsumptionForPastMonth(int userId)
+        public double GetUserEnergyConsumptionForPastMonth(int userId, int deviceCategoryId)
         {
             int daysInPast = -30;
-            return SumEnergyConsumption(userId, daysInPast);
+            return SumEnergyConsumption(userId, daysInPast, deviceCategoryId);
         }
 
-        public double GetUserEnergyConsumptionForPastYear(int userId)
+        public double GetUserEnergyConsumptionForPastYear(int userId, int deviceCategoryId)
         {
             int daysInPast = -365;
-            return SumEnergyConsumption(userId, daysInPast);
+            return SumEnergyConsumption(userId, daysInPast, deviceCategoryId);
         }
 
-        public double SumEnergyConsumption(int userId, int daysInPast)
+        public double SumEnergyConsumption(int userId, int daysInPast, int deviceCategoryId)
         {
-            var devicesForUser = _context.Devices.Where(d => d.UserId == userId).ToList();
+            var devicesForUser = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
 
             if (devicesForUser.Count == 0)
             {
@@ -258,9 +259,9 @@ namespace Server.Services.Implementations
         }
 
         // ZA PROSLEDJEN ID KORISNIKA POTROSNJA ZA GRAFIKE
-        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(int userId)
+        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(int userId, int deviceCategoryId)
         {
-            var userDevices = _context.Devices.Where(d => d.UserId == userId).ToList();
+            var userDevices = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
             var endDate = DateTime.Now.Date.AddDays(1).AddSeconds(-1);
             var startDate = endDate.AddYears(-1);
 
@@ -295,9 +296,9 @@ namespace Server.Services.Implementations
             return monthlyUsage;
         }
 
-        public List<DailyEnergyConsumptionPastMonth> UserHistoryForThePastWeek(int userId)
+        public List<DailyEnergyConsumptionPastMonth> UserHistoryForThePastWeek(int userId, int deviceCategoryId)
         {
-            var userDevices = _context.Devices.Where(d => d.UserId == userId).ToList();
+            var userDevices = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
             var EndDate = DateTime.Now.Date.AddDays(-1);
             var StartDate = EndDate.AddDays(-6);
 

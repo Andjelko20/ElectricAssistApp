@@ -1,5 +1,6 @@
 ﻿using Server.DTOs;
 using Server.Models;
+using Server.Models.DropDowns.Devices;
 
 namespace Server.Services
 {
@@ -16,14 +17,14 @@ namespace Server.Services
         public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsage(int deviceId);
         public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastMonth(int deviceId);
         public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastWeek(int deviceId);
-        public double GetTotalEnergyConsumptionForUser(int userId);
-        public double GetUserEnergyConsumptionForPastDay(int userId);
-        public double GetUserEnergyConsumptionForPastWeek(int userId);
-        public double GetUserEnergyConsumptionForPastMonth(int userId);
-        public double GetUserEnergyConsumptionForPastYear(int userId);
+        public double GetTotalEnergyConsumptionForUser(int userId, int deviceCategoryId);
+        public double GetUserEnergyConsumptionForPastDay(int userId, int deviceCategoryId);
+        public double GetUserEnergyConsumptionForPastWeek(int userId, int deviceCategoryId);
+        public double GetUserEnergyConsumptionForPastMonth(int userId, int deviceCategoryId);
+        public double GetUserEnergyConsumptionForPastYear(int userId, int deviceCategoryId);
 
         // ZA PROSLEDJEN ID KORISNIKA POTROSNJA ZA GRAFIKE
-        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(int userId);
-        public List<DailyEnergyConsumptionPastMonth> UserHistoryForThePastWeek(int userId);
+        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(int userId, int deviceCategoryId);
+        public List<DailyEnergyConsumptionPastMonth> UserHistoryForThePastWeek(int userId, int deviceCategoryId);
     }
 }
