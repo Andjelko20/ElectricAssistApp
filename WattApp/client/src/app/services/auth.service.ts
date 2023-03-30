@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { Users } from '../models/users.model';
+import { JwtToken } from '../utilities/jwt-token';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +11,16 @@ export class AuthService {
 
   
   isLoginSubject = new BehaviorSubject<boolean>(this.hasToken());
-  private hasToken() : boolean {
-    return !!localStorage.getItem('token');
+  public hasToken() : boolean {
+    try{
+		let token=new JwtToken();
+		if(token.expired)
+			throw new Error();
+		return true;
+	}
+	catch(error){
+		return false;
+	}
   }
   
   constructor(private http:HttpClient) { }
@@ -28,21 +37,15 @@ export class AuthService {
     return this.http.get(environment.serverUrl );
   }
 
-  sendEmail(email:string):Observable<any>{
-	return this.http.post(environment.serverUrl+'/api/authentication/generate_reset_token',{email:email});
-  }
-  resetPasswordWithResetCode(resetKey:string,newPassword:string):Observable<any>{
-	return this.http.post(environment.serverUrl+'/api/authentication/reset_password',{resetKey:resetKey,newPassword:newPassword});
-  }
   getAllUsers():Observable<any>
   {
     return this.http.get<any>(environment.serverUrl+'/api/users/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
-  addUsers(addUserRequest:Users):Observable<Users>
+  addUsers(addUserRequest:any):Observable<any>
   {
-    // addUserRequest.id='';
-    return this.http.post<Users>(environment.serverUrl + '/api/users' ,addUserRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    
+    return this.http.post<any>(environment.serverUrl + '/api/users' ,addUserRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
   getUser(id:number):Observable<any>
@@ -60,16 +63,24 @@ export class AuthService {
   }
 
   blockUser(id: number): Observable<any> {
-    const url = `${environment.serverUrl}/api/users/set_blocked_status/${id}`;
-    return this.http.put(url, { blocked: true },{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
+    
+    return this.http.put(environment.serverUrl+"/api/users/set_blocked_status/"+id,{Status: true },{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
   unblockUser(id: number): Observable<any> {
-    const url = `${environment.serverUrl}/api/users/set_blocked_status/${id}`;
-    return this.http.put(url, { blocked: false },{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
+    
+    return this.http.put(environment.serverUrl+"/api/users/set_blocked_status/"+id,{Status: false },{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
-
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
-    return this.http.post('/api/users/change_password', { oldPassword, newPassword },{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
+    return this.http.post<any>(environment.serverUrl +'/api/users/change_password', { oldPassword, newPassword },{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
+  }
+  adminChangePasswordEmail(email:string): Observable<any> {
+    return this.http.put<any>(environment.serverUrl +'/api/users/generate_reset_token_admin', {email:email},{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
+  }
+  sendEmail(email:string):Observable<any>{
+    return this.http.post(environment.serverUrl+'/api/authentication/generate_reset_token',{email:email});
+  }
+  resetPasswordWithResetCode(resetKey:string,newPassword:string):Observable<any>{   
+    return this.http.post(environment.serverUrl+'/api/authentication/reset_password',{resetKey:resetKey,newPassword:newPassword});
   }
   
 }

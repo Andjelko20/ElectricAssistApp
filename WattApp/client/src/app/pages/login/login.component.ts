@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 					let body = response.body as any;
 					localStorage.setItem("token",body.token);
 					this.authService.isLoginSubject.next(true)
-					this.router.navigate(["/home"]);
+					this.router.navigate(["/admindso"]);
 				},
 				error:response=>{
 					if(response.status==401)
@@ -57,10 +57,11 @@ export class LoginComponent implements OnInit {
 						this.errorMsg = "Pogresno korisnicko ime/lozinka!";
 						return;
 					}
-					let body = response.body as any;
-					localStorage.setItem("token",body.token);
-					this.authService.isLoginSubject.next(true)
-					this.router.navigate(["/home"]);
+
+					// let body = response.body as any;
+					// localStorage.setItem("token",body.token);
+					// this.authService.isLoginSubject.next(true)
+					// this.router.navigate(["/admindso"]);
 				}
 			}
 		  );
