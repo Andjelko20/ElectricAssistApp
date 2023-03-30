@@ -42,9 +42,9 @@ namespace Server.Services.Implementations
             return Results;
         }
 
-        public List<DailyEnergyConsumptionPastMonth> UserPredictionForTheNextWeek(int userId)
+        public List<DailyEnergyConsumptionPastMonth> UserPredictionForTheNextWeek(int userId, int deviceCategoryId)
         {
-            var userDevices = _context.Devices.Where(d => d.UserId == userId).ToList();
+            var userDevices = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
             var StartDate = DateTime.Now.Date.AddDays(1);
             var EndDate = StartDate.AddDays(7).AddSeconds(-1);
 

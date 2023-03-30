@@ -39,17 +39,23 @@ namespace Server.Controllers
         /// User prediction for next week (by day)
         /// </summary>
         [HttpGet]
-        [Route("WeekByDay/User/{userId:int}")]
+        [Route("WeekByDay/User/{userId:int}/{deviceCategoryId:int}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetUserPredictionForNextWeekByDay([FromRoute] int userId)
+        public async Task<IActionResult> GetUserPredictionForNextWeekByDay([FromRoute] int userId, [FromRoute] int deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
             if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
-                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
 
-            var PredictionForNextWeek = predictionService.UserPredictionForTheNextWeek(userId);
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.Devices.Any(u => u.DeviceCategoryId == deviceCategoryId))
+                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
+
+            var PredictionForNextWeek = predictionService.UserPredictionForTheNextWeek(userId, deviceCategoryId);
             return Ok(PredictionForNextWeek);
         }
     }
