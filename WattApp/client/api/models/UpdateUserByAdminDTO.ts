@@ -2,11 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type UserCreateDTO = {
-    Name: string;
-    Username: string;
-    Password: string;
+export type UpdateUserByAdminDTO = {
     Blocked?: boolean;
-    Email: string;
     RoleId?: number;
+    Email: string;
 };

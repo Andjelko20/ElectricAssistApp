@@ -17,8 +17,8 @@ import { ProsumerReportsPageComponent } from './pages/prosumer/prosumer-reports-
 import { DsoHomePageComponent } from './pages/dso/dso-home-page/dso-home-page.component';
 import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-prediction-page.component';
 import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
-import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
-import { AdminDsoPageComponent } from './pages/dso/admin/admin-dso-page/admin-dso-page.component';
+import { AdminProsumersPageComponent } from './pages/admin/admin-prosumers-page/admin-prosumers-page.component';
+import { AdminDsoPageComponent } from './pages/admin/admin-dso-page/admin-dso-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NgxGaugeModule } from 'ngx-gauge';
@@ -52,6 +52,13 @@ import { MapInputComponent } from './components/map-input/map-input.component';
 import { ProsumerTowerComponent } from './components/prosumers/prosumer-meter/prosumer-tower/prosumer-tower.component';
 import { ProsumerHouseComponent } from './components/prosumers/prosumer-meter/prosumer-house/prosumer-house.component';
 import { ProsumerSolarComponent } from './components/prosumers/prosumer-meter/prosumer-solar/prosumer-solar.component';
+import { ProsumerOneDevicePageComponent } from './pages/prosumer/prosumer-one-device-page/prosumer-one-device-page.component';
+import { DsoOneProsumerPageComponent } from './pages/dso/dso-one-prosumer-page/dso-one-prosumer-page.component';
+import { DsoOneProsumerDevicesPageComponent } from './pages/dso/dso-one-prosumer-devices-page/dso-one-prosumer-devices-page.component';
+import { AllDevicesComponent } from './components/prosumers/devices/all-devices/all-devices.component';
+import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
+import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
+import { ProsumerDevicesComponent } from './components/dso/prosumer-devices/prosumer-devices.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +103,14 @@ import { ProsumerSolarComponent } from './components/prosumers/prosumer-meter/pr
     AdminProsumerAddComponent,
     AdminProsumerUpdateComponent,
     AdminDsoUpdateComponent,
-    AdminDsoAddComponent
+    AdminDsoAddComponent,
+    ProsumerOneDevicePageComponent,
+    DsoOneProsumerPageComponent,
+    DsoOneProsumerDevicesPageComponent,
+    AllDevicesComponent,
+    AddDeviceComponent,
+    UpdateDeviceComponent,
+    ProsumerDevicesComponent
   ],
   imports: [
     BrowserModule,

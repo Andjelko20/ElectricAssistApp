@@ -3,6 +3,11 @@
 /* eslint-disable */
 import type { BlockedStatusDTO } from '../models/BlockedStatusDTO';
 import type { ChangePasswordDTO } from '../models/ChangePasswordDTO';
+import type { EmailRequestDTO } from '../models/EmailRequestDTO';
+import type { MessageResponseDTO } from '../models/MessageResponseDTO';
+import type { ObjectDataPage } from '../models/ObjectDataPage';
+import type { RoleModel } from '../models/RoleModel';
+import type { UpdateUserByAdminDTO } from '../models/UpdateUserByAdminDTO';
 import type { UserCreateDTO } from '../models/UserCreateDTO';
 import type { UserUpdateDTO } from '../models/UserUpdateDTO';
 
@@ -15,17 +20,21 @@ export class UsersService {
     /**
      * Get 20 users per page
      * @param page 
-     * @returns any Success
+     * @returns ObjectDataPage Success
      * @throws ApiError
      */
     public static getApiUsersPage(
 page: number,
-): CancelablePromise<any> {
+): CancelablePromise<ObjectDataPage> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/Users/page/{page}',
             path: {
                 'page': page,
+            },
+            errors: {
+                400: `Bad Request`,
+                500: `Server Error`,
             },
         });
     }
@@ -45,6 +54,10 @@ id: number,
             path: {
                 'id': id,
             },
+            errors: {
+                400: `Bad Request`,
+                500: `Server Error`,
+            },
         });
     }
 
@@ -52,13 +65,13 @@ id: number,
      * Update user by admin
      * @param id 
      * @param requestBody 
-     * @returns any Success
+     * @returns MessageResponseDTO Success
      * @throws ApiError
      */
     public static putApiUsers(
 id: number,
-requestBody?: UserUpdateDTO,
-): CancelablePromise<any> {
+requestBody?: UpdateUserByAdminDTO,
+): CancelablePromise<MessageResponseDTO> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/Users/{id}',
@@ -67,48 +80,60 @@ requestBody?: UserUpdateDTO,
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                500: `Server Error`,
+            },
         });
     }
 
     /**
      * Delete user
      * @param id 
-     * @returns any Success
+     * @returns MessageResponseDTO Success
      * @throws ApiError
      */
     public static deleteApiUsers(
 id: number,
-): CancelablePromise<any> {
+): CancelablePromise<MessageResponseDTO> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/api/Users/{id}',
             path: {
                 'id': id,
             },
+            errors: {
+                400: `Bad Request`,
+                500: `Server Error`,
+            },
         });
     }
 
     /**
      * Get all roles
-     * @returns any Success
+     * @returns RoleModel Success
      * @throws ApiError
      */
-    public static getApiUsersRoles(): CancelablePromise<any> {
+    public static getApiUsersRoles(): CancelablePromise<Array<RoleModel>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/Users/roles',
+            errors: {
+                400: `Bad Request`,
+                500: `Server Error`,
+            },
         });
     }
 
     /**
      * Create user
      * @param requestBody 
-     * @returns any Success
+     * @returns MessageResponseDTO Success
      * @throws ApiError
      */
     public static postApiUsers(
 requestBody?: UserCreateDTO,
-): CancelablePromise<any> {
+): CancelablePromise<MessageResponseDTO> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/Users',
@@ -116,6 +141,7 @@ requestBody?: UserCreateDTO,
             mediaType: 'application/json',
             errors: {
                 400: `Bad request`,
+                500: `Server Error`,
             },
         });
     }
@@ -123,17 +149,21 @@ requestBody?: UserCreateDTO,
     /**
      * Update logged in user data
      * @param requestBody 
-     * @returns any Success
+     * @returns MessageResponseDTO Success
      * @throws ApiError
      */
     public static putApiUsers1(
 requestBody?: UserUpdateDTO,
-): CancelablePromise<any> {
+): CancelablePromise<MessageResponseDTO> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/Users',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                500: `Server Error`,
+            },
         });
     }
 
@@ -141,13 +171,13 @@ requestBody?: UserUpdateDTO,
      * Block or unblock user
      * @param id 
      * @param requestBody 
-     * @returns any Success
+     * @returns MessageResponseDTO Success
      * @throws ApiError
      */
     public static putApiUsersSetBlockedStatus(
 id: number,
 requestBody?: BlockedStatusDTO,
-): CancelablePromise<any> {
+): CancelablePromise<MessageResponseDTO> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/Users/set_blocked_status/{id}',
@@ -156,21 +186,45 @@ requestBody?: BlockedStatusDTO,
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                500: `Server Error`,
+            },
         });
     }
 
     /**
      * Change password
      * @param requestBody 
-     * @returns any Success
+     * @returns MessageResponseDTO Success
      * @throws ApiError
      */
     public static putApiUsersChangePassword(
 requestBody?: ChangePasswordDTO,
-): CancelablePromise<any> {
+): CancelablePromise<MessageResponseDTO> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/Users/change_password',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                500: `Server Error`,
+            },
+        });
+    }
+
+    /**
+     * @param requestBody 
+     * @returns any Success
+     * @throws ApiError
+     */
+    public static putApiUsersGenerateResetTokenAdmin(
+requestBody?: EmailRequestDTO,
+): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/Users/generate_reset_token_admin',
             body: requestBody,
             mediaType: 'application/json',
         });

@@ -7,4 +7,5 @@ export type UserUpdateDTO = {
     Username: string;
     Blocked?: boolean;
     RoleId?: number;
+    Email: string;
 };

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ShowUsers, Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './admin-dso.component.html',
   styleUrls: ['./admin-dso.component.css']
 })
-export class AdminDsoComponent {
+export class AdminDsoComponent implements OnInit{
 
   
   showUsers:ShowUsers[]=[];

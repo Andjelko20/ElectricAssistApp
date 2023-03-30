@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './admin-dso-update.component.html',
   styleUrls: ['./admin-dso-update.component.css']
 })
-export class AdminDsoUpdateComponent {
+export class AdminDsoUpdateComponent implements OnInit {
 
   roles:Array<any>=[];
   updateUserDetail:Users={
