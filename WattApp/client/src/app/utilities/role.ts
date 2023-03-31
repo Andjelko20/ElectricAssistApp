@@ -8,9 +8,9 @@ export const Roles=Object.freeze({
 	PROSUMER_ID:3,
 	PROSUMER_NAME:"prosumer",
 	3:"prosumer",
-	GUEST_ID:4,
-	GUEST_NAME:"guest",
-	4:"guest",
+	// GUEST_ID:4,
+	// GUEST_NAME:"guest",
+	// 4:"guest",
 	SUPERADMIN_ID:5,
 	SUPERADMIN_NAME:"superadmin",
 	5:"superadmin"

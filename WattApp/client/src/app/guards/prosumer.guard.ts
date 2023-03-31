@@ -3,24 +3,27 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from 'rxjs';
 import { JwtToken } from '../utilities/jwt-token';
 import { Roles } from '../utilities/role';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProsumerGuard implements CanActivate {
-	constructor(private router:Router){}
+	constructor(private router:Router,private userservice: AuthService){}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 		let token=new JwtToken();
 		try{
 			let role=token.data.role as string;
-			if(token.expired || !(role==Roles.PROSUMER_NAME || role==Roles.GUEST_NAME))
+			if(token.expired || !(role==Roles.PROSUMER_NAME ))
 				throw new Error();
 			return true;
 		}
 		catch(error){
 			localStorage.removeItem("token")
+			localStorage.clear();
+    		this.userservice.isLoginSubject.next(false)
 			this.router.navigate(["login"]);
 			return false;
 		}

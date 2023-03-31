@@ -27,27 +27,25 @@ import { MapInputComponent } from './components/map-input/map-input.component';
 import { AllDevicesComponent } from './components/prosumers/devices/all-devices/all-devices.component';
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
 import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
+import { AdminGuard } from './guards/admin.guard';
+import { ProsumerGuard } from './guards/prosumer.guard';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
  
 const routes: Routes = [
-	{path:'',redirectTo:'admindso',pathMatch:'full'},
+	{path:'',redirectTo:'home',pathMatch:'full'},
 	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
-	{path:'admindso',component:AdminDsoComponent,canActivate:[AuthenticatedGuard]},
-	{path:'admindsoadd',component:AdminDsoAddComponent,canActivate:[AuthenticatedGuard]},
-	{path:'admindsoupdate/:id',component:AdminDsoUpdateComponent,canActivate:[AuthenticatedGuard]},
-	{path:'register',component:RegisterComponent},
-	{path:'maps',component:MapsComponent},
-	{path:'tower',component:ProsumerTowerComponent},
-	{path:'solar',component:ProsumerSolarComponent},
-	{path:'house',component:ProsumerHouseComponent},
-	{path:'change-password',component:ChangePasswordComponent},
-	{path:'dsohome',component:DsoHomePageComponent,canActivate:[AuthenticatedGuard]},
-	{path:'dsoprosumer',component:DsoProsumersPageComponent,canActivate:[AuthenticatedGuard]},
-	{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
-	{path:'prosumer-home-page',component:ProsumerHomePageComponent},
-	{path:'today',component:TodayComponent},
+	{path:'home',component:HomePageComponent,canActivate:[AuthenticatedGuard]},
+	{path:'admindso',component:AdminDsoComponent,canActivate:[AdminGuard]},
+	{path:'admindsoadd',component:AdminDsoAddComponent,canActivate:[AdminGuard]},
+	{path:'admindsoupdate/:id',component:AdminDsoUpdateComponent,canActivate:[AdminGuard]},
+	//{path:'register',component:RegisterComponent},
+	//{path:'change-password',component:ChangePasswordComponent},
+	{path:'dsohome',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
+	{path:'dsoprosumer',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard]},
+	{path:'prosumer-home-page',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
 	{path:'reset-password',component:ResetPasswordPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	{path:"map-input",component:MapInputComponent},

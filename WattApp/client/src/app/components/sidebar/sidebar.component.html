@@ -2,22 +2,22 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <ul class="list-unstyled components">
-            <li>
+            <li *ngIf="role==dso">
                 <a class="nav-link" [routerLink]='["/dsohome"]'>
                     <i class="fas fa-home"></i>DSO Home
                 </a>
             </li>
 
-            <li>
+            <li *ngIf="role==admin">
                 <a class="nav-link" [routerLink]='["/admindso"]'><i class="fas fa-copy"></i> Admin CRUD</a>
 
             </li>
-            <li>
-                <a class="nav-link" [routerLink]='["/dsoprosumer"]'><i class="fa fa-user"></i> Prosumers</a>
+            <li *ngIf="role==dso">
+                <a class="nav-link" [routerLink]='["/dsoprosumer"]'><i class="fa fa-user" ></i> Prosumers</a>
 
             </li>
-            <li>
-                <a class="nav-link" [routerLink]='["/prosumer-home-page"]'><i class="fa fa-user"></i>Prosumer Home</a>
+            <li *ngIf="role==prosumer">
+                <a class="nav-link" [routerLink]='["/prosumer-home-page"]'><i class="fa fa-user" ></i>Prosumer Home</a>
 
             </li>
             <li>

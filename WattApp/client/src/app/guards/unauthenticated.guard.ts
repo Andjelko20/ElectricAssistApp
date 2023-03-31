@@ -19,6 +19,7 @@ export class UnauthenticatedGuard implements CanActivate {
 		let tokenObj=new JwtToken(token);
 		if(tokenObj.expired){
 			localStorage.removeItem("token");
+      
 			return true;
 		}
 	  }

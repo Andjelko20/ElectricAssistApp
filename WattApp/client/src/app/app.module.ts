@@ -59,6 +59,7 @@ import { AllDevicesComponent } from './components/prosumers/devices/all-devices/
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
 import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
 import { ProsumerDevicesComponent } from './components/dso/prosumer-devices/prosumer-devices.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { ProsumerDevicesComponent } from './components/dso/prosumer-devices/pros
     AllDevicesComponent,
     AddDeviceComponent,
     UpdateDeviceComponent,
-    ProsumerDevicesComponent
+    ProsumerDevicesComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
