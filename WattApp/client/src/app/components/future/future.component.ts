@@ -14,10 +14,14 @@ export class FutureComponent implements OnInit{
   primaryDisplay = true
   secondaryDisplay = false
   selectedIndex!: number;
-  
+  location:any
   constructor(private forecastService: ForecastService) { }
 
   ngOnInit(): void {
+    this.forecastService.getWeatherForecast().subscribe(data=>{
+      this.getTodayForecast(data)
+    })
+    
     this.forecastService.getWeatherForecast().pipe(
       pluck('list')
     )
@@ -27,6 +31,9 @@ export class FutureComponent implements OnInit{
     });
   }
 
+  getTodayForecast(today:any) {
+    this.location = today.city;
+  }
   futureForecast(data: any){
     if(!data) return;
     for(let i = 0 ; i < data.length ; i += 8) {
