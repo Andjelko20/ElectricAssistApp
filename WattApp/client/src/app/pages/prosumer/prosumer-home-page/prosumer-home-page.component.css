@@ -1,4 +1,305 @@
-.homeimage>img {
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+header {
+    background-color: #1C315E;
+    box-shadow: 1px 1px 5px 0px grey;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+}
+
+.homeimage {
+    height: auto;
+    width: 100%;
+}
+
+#homeimg {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+}
+
+
+/* Logo */
+
+
+/* pravi problem kad se smanji na 320px */
+
+.logo {
+    display: inline-block;
+    color: var(--white);
+    font-size: 35px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+
+/* Nav menu */
+
+.nav {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: #1C315E;
+    overflow: hidden;
+}
+
+.menu a {
+    display: block;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: var(--white);
+}
+
+.menu a:hover {
+    background-color: #3E5483;
+}
+
+.nav {
+    max-height: 0;
+    transition: max-height .5s ease-out;
+}
+
+
+/* Menu Icon */
+
+.hamb {
+    cursor: pointer;
+    float: right;
+    padding: 20px 20px;
+}
+
+
+/* Style label tag */
+
+.hamb-line {
+    background: var(--white);
+    display: block;
+    height: 2px;
+    position: relative;
+    width: 24px;
+}
+
+
+/* Style span tag */
+
+.hamb-line::before,
+.hamb-line::after {
+    background: var(--white);
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+
+.hamb-line::before {
+    top: 5px;
+}
+
+.hamb-line::after {
+    top: -5px;
+}
+
+.side-menu {
+    display: none;
+}
+
+
+/* Hide checkbox */
+
+
+/* Toggle menu icon */
+
+.side-menu:checked~nav {
+    max-height: 100%;
+}
+
+.side-menu:checked~.hamb .hamb-line {
+    background: transparent;
+}
+
+.side-menu:checked~.hamb .hamb-line::before {
+    transform: rotate(-45deg);
+    top: 0;
+}
+
+.side-menu:checked~.hamb .hamb-line::after {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+
+/* Car and battery */
+
+.carbattery {
+    position: sticky;
+    background-color: white;
+    /* border-bottom: 1px solid rgb(116, 116, 116); */
+    flex-wrap: wrap;
+    display: block;
+    height: 100%;
+    position: absolute;
+    height: 100%;
+    transition: all 0.3s;
+    position: relative;
+    display: flex;
+    text-align: center;
+}
+
+.device-item {
+    width: 30%;
+    height: auto;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display: inline-block;
+    transition: all .2s ease-out;
+}
+
+.imgbattery {
+    position: sticky;
+    margin-top: 7px;
+    width: 30%;
+    float: left;
+}
+
+#carbatteryh3 {
+    font-size: 10px;
+}
+
+#carbatteryh2 {
+    font-size: 12px;
+}
+
+
+/* Slide device */
+
+#smarthomeh2 {
+    padding-top: 5px;
+    background-color: white;
+    padding-left: 5px;
+    font-size: 15px;
+}
+
+.alldevice {
+    position: sticky;
+    margin-top: -10px;
+    background-color: white;
+    width: 100%;
+}
+
+.devices {
+    position: sticky;
+    align-items: stretch;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    transition: all 0.3s;
+    display: flex;
+    overflow-x: auto;
+    position: relative;
+}
+
+.devices-item {
+    position: sticky;
+    background-size: cover;
+    box-shadow: 5px dodgerblue;
+    box-shadow: 2px 5px silver;
+    background-color: white;
+    width: 25%;
+    text-align: center;
+    display: inline-block;
+    flex-shrink: 0;
+    padding-top: 20px;
+}
+
+#deviceh3 {
+    padding-top: 10px;
+    font-size: 12px;
+}
+
+#imgdevice {
+    position: sticky;
+    display: inline-block;
+    /* max-width: 140px;
+    max-height: 120px; */
+    width: 65%;
+}
+
+.devices-device-item {
+    border: 3px solid rgb(42, 134, 99);
+    border-radius: 100px;
+    background-size: cover;
+    max-width: 60%;
+    height: auto;
+    display: inline-block;
+}
+
+
+/* Responsiveness */
+
+@media (min-width: 768px) {
+    .nav {
+        max-height: none;
+        top: 0;
+        position: relative;
+        float: right;
+        width: fit-content;
+        background-color: transparent;
+    }
+    .menu li {
+        float: left;
+    }
+    .menu a:hover {
+        background-color: transparent;
+        color: #3E5483;
+    }
+    .hamb {
+        display: none;
+    }
+    #smarthomeh2 {
+        padding-left: 55px;
+        font-size: 35px;
+    }
+    #deviceh3 {
+        padding-top: 10px;
+    }
+    #carbatteryh3 {
+        padding-top: 20px;
+        font-size: 30px;
+    }
+    #carbatteryh2 {
+        font-size: 25px;
+    }
+    .logo {
+        font-size: 60px;
+    }
+    #deviceh3 {
+        font-size: 30px;
+    }
+    .carbatterytree {
+        margin-left: 10%;
+    }
+}
+
+
+/* .homeimage>img {
     height: 600px;
     position: relative;
     width: 100%;
@@ -22,7 +323,7 @@ h2 {
 
 .prognosis {
     display: flex;
-    /* border: 1px solid black; */
+    border: 1px solid black;
     width: 17%;
     height: 15%;
     top: 2%;
@@ -280,4 +581,4 @@ h3 {
         height: 180px;
         display: inline-block;
     }
-}
+} */
