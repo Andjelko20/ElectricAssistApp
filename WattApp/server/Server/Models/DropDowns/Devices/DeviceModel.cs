@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Server.Data;
 
 namespace Server.Models.DropDowns.Devices
 {
@@ -7,5 +9,8 @@ namespace Server.Models.DropDowns.Devices
         [Key]
         public long Id { get; set; }
         public string Mark { get; set; }
+
+        [ForeignKey(nameof(SqliteDbContext.DeviceTypes))]
+        public long DeviceTypeId { get; set; }
     }
 }

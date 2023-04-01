@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Server.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Models.DropDowns.Devices
@@ -8,7 +9,7 @@ namespace Server.Models.DropDowns.Devices
         //Frizider, TV, Bojler, Ostalo
         [Key]
         public long Id { get; set; }
-        [ForeignKey(nameof(DeviceCategory.Id))]
+        [ForeignKey(nameof(SqliteDbContext.DeviceCategories))]
         public long CategoryId { get; set; }
         [Required]
         public string Name { get; set; }

@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Server.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Models
 {
     public class Bill
     {
-        [ForeignKey(nameof(UserModel.Id))]
+        [ForeignKey(nameof(SqliteDbContext.Users))]
         [Required]
         public long UserId { get; set; }
         [Required]

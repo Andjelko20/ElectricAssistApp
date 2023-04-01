@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Server.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Models.DropDowns.Location
@@ -7,7 +8,7 @@ namespace Server.Models.DropDowns.Location
     {
         [Key]
         public long Id { get; set; }
-        [ForeignKey(nameof(Country.Id))]
+        [ForeignKey(nameof(SqliteDbContext.Countries))]
         [Required]
         public long CountryId { get; set; }
         [Required]

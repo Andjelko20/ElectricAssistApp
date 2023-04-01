@@ -1,9 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Server.Models.DropDowns.Location;
+using Server.Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
 
 namespace Server.Models
 {
@@ -11,7 +9,7 @@ namespace Server.Models
     public class UserModel
     {
         [Key]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -38,9 +36,10 @@ namespace Server.Models
         */
         public string? Email { get; set; }
 
-        [ForeignKey(nameof(RoleModel.Id))]
-        public int RoleId { get; set; }
+        [ForeignKey(nameof(SqliteDbContext.Roles))]
+        public long RoleId { get; set; }
 
+        [NotMapped]
         public RoleModel? Role { get; set; }
     }
 }

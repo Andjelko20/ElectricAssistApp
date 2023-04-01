@@ -1,4 +1,5 @@
-﻿using Server.Models.DropDowns.Devices;
+﻿using Server.Data;
+using Server.Models.DropDowns.Devices;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,20 +11,20 @@ namespace Server.Models
         public long Id { get; set; }
        
         [Required]
-        [ForeignKey(nameof(UserModel.Id))]
+        [ForeignKey(nameof(SqliteDbContext.Users))]
         //Promeniti!!!
         public long UserId { get; set; }
+        //[Required]
+        //[ForeignKey(nameof(SqliteDbContext.DeviceCategories))]
+        //public long DeviceCategoryId { get; set; } //from dropdown -> consumption, production, stock
+        //[Required]
+        //[ForeignKey(nameof(DeviceBrand.Id))]
+        //public long DeviceBrandId { get; set; } //from dropdown -> fox, vivax, tesla...
+        //[Required]
+        //[ForeignKey(nameof(DeviceType.Id))] 
+        //public long DeviceTypeId { get; set; } //from dropdown -> tv, car, other...
         [Required]
-        [ForeignKey(nameof(DeviceCategory.Id))]
-        public long DeviceCategoryId { get; set; } //from dropdown -> consumption, production, stock
-        [Required]
-        [ForeignKey(nameof(DeviceBrand.Id))]
-        public long DeviceBrandId { get; set; } //from dropdown -> fox, vivax, tesla...
-        [Required]
-        [ForeignKey(nameof(DeviceType.Id))] 
-        public long DeviceTypeId { get; set; } //from dropdown -> tv, car, other...
-        [Required]
-        [ForeignKey(nameof(DeviceModel.Id))]
+        [ForeignKey(nameof(SqliteDbContext.DeviceModels))]
         public long DeviceModelId { get; set; }
         public string? Name { get; set; }
         public float EnergyInKwh { get; set; }
