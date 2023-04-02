@@ -30,11 +30,11 @@ namespace Server.Data
         public DbSet<InclusionScheduler> InclusionSchedulers { get; set; }
         public DbSet<UserEnergyUsage> UserEnergyUsages { get; set; }
         public DbSet<DeviceEnergyUsage> DeviceEnergyUsages { get; set; }
-        public DbSet<DeviceDefaultSettings> DeviceDefaultSettings { get; set; }
+        //public DbSet<DeviceDefaultSettings> DeviceDefaultSettings { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<DeviceModel> DeviceModels { get; set; }
-        public DbSet<TypeBrand> TypeBrands { get; set; }
-        public DbSet<TypeBrandModel> TypeBrandModels { get; set; }
+        //public DbSet<TypeBrand> TypeBrands { get; set; }
+        //public DbSet<TypeBrandModel> TypeBrandModels { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,10 +47,10 @@ namespace Server.Data
             modelBuilder.Entity<InclusionScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.TurnOn, x.TurnOff });
             modelBuilder.Entity<UserEnergyUsage>().HasKey(x => new { x.UserId, x.Date });
             modelBuilder.Entity<DeviceEnergyUsage>().HasKey(x => new { x.DeviceId, x.StartTime, x.EndTime });
-            modelBuilder.Entity<DeviceDefaultSettings>().HasKey(x => new { x.DeviceModelId, x.DeviceBrandId });
+            //modelBuilder.Entity<DeviceDefaultSettings>().HasKey(x => new { x.DeviceModelId, x.DeviceBrandId });
             modelBuilder.Entity<Bill>().HasKey(x => new { x.UserId, x.Month, x.Year });
-            modelBuilder.Entity<TypeBrand>().HasKey(x => new { x.TypeId, x.BrandId });
-            modelBuilder.Entity<TypeBrandModel>().HasKey(x => new { x.TypeId, x.BrandId, x.ModelId });
+            //modelBuilder.Entity<TypeBrand>().HasKey(x => new { x.TypeId, x.BrandId });
+            //modelBuilder.Entity<TypeBrandModel>().HasKey(x => new { x.TypeId, x.BrandId, x.ModelId });
         }
 
         public static void Seed(IApplicationBuilder applicationBuilder)
@@ -242,6 +242,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                /*
                 if (!context.DeviceDefaultSettings.Any())
                 {
                     context.DeviceDefaultSettings.AddRange(new[]
@@ -285,6 +286,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                */
                 if (!context.Countries.Any())
                 {
                     context.Countries.AddRange(new[]
@@ -363,9 +365,9 @@ namespace Server.Data
                         new Device()
                         {
                             UserId = 1, 
-                            DeviceCategoryId = 1, 
-                            DeviceTypeId = 1, 
-                            DeviceBrandId = 1, 
+                            //DeviceCategoryId = 1, 
+                            //DeviceTypeId = 1, 
+                            //DeviceBrandId = 1, 
                             DeviceModelId = 1, 
                             EnergyInKwh = 10, 
                             StandByKwh = 10, 
@@ -376,6 +378,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                /*
                 if (!context.TypeBrands.Any())
                 {
                     context.TypeBrands.AddRange(new[]
@@ -468,6 +471,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                */
 
             }
         }
