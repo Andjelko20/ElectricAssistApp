@@ -68,7 +68,7 @@ namespace Server.Services.Implementations
                 return null;
             }
         }
-        public Task<UserModel?> GetUserById(int id)
+        public Task<UserModel?> GetUserById(long id)
         {
             return context.Users.Include(user=>user.Role).FirstOrDefaultAsync(user => user.Id == id);
         }

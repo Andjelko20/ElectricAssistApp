@@ -20,7 +20,7 @@ namespace Server.DTOs
         public string Email { get; set; }
 
         [MinValue(1)]
-        public int RoleId { get; set; } = 4;
+        public long RoleId { get; set; } = 4;
 
         public UserCreateDTO()
         {

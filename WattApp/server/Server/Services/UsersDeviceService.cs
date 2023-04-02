@@ -10,7 +10,7 @@ namespace Server.Services
         private String SqlQuery = null;
 
         // servis za uredjaj za korisnika ciji je ID prosledjen
-        public async Task<List<Device>> GetUsersDevicesByUserId(int id)
+        public async Task<List<Device>> GetUsersDevicesByUserId(long id)
         {
             SqlQuery = $"SELECT * FROM Devices WHERE UserId={id}";
             List<Device> Devices = new List<Device>();
@@ -27,16 +27,14 @@ namespace Server.Services
                             while (await reader.ReadAsync())
                             {
                                 Device Device = new Device();
-                                Device.Id = reader.GetInt32(0);
-                                Device.DeviceTypeId = reader.GetInt32(1);
-                                Device.UserId = reader.GetInt32(2);
-                                Device.DeviceBrandId = reader.GetInt32(3);
-                                Device.DeviceModelId = reader.GetInt32(4);
-                                Device.Name = reader.GetString(5);
-                                Device.EnergyInKwh = reader.GetFloat(6);
-                                Device.Visibility = reader.GetBoolean(7);
-                                Device.Controlability = reader.GetBoolean(8);
-                                Device.TurnOn = reader.GetBoolean(9);
+                                Device.Id = reader.GetInt64(0);
+                                Device.UserId = reader.GetInt64(2);
+                                Device.DeviceModelId = reader.GetInt64(3);
+                                Device.Name = reader.GetString(4);
+                                Device.EnergyInKwh = reader.GetFloat(5);
+                                Device.Visibility = reader.GetBoolean(6);
+                                Device.Controlability = reader.GetBoolean(7);
+                                Device.TurnOn = reader.GetBoolean(8);
 
                                 Devices.Add(Device);
                             }

@@ -12,7 +12,7 @@ namespace Server.Services.Implementations
             _context = context;
         }
 
-        public List<DailyEnergyConsumptionPastMonth> ConsumptionPredictionForTheNextWeek(int deviceId)
+        public List<DailyEnergyConsumptionPastMonth> ConsumptionPredictionForTheNextWeek(long deviceId)
         {
             var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
             var StartDate = DateTime.Now.Date.AddDays(1);
@@ -42,9 +42,10 @@ namespace Server.Services.Implementations
             return Results;
         }
 
-        public List<DailyEnergyConsumptionPastMonth> UserPredictionForTheNextWeek(int userId, int deviceCategoryId)
+        public List<DailyEnergyConsumptionPastMonth> UserPredictionForTheNextWeek(long userId, long deviceCategoryId)
         {
-            var userDevices = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
+            //var userDevices = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
+			var userDevices = _context.Devices.Where(d => d.UserId == userId).ToList();
             var StartDate = DateTime.Now.Date.AddDays(1);
             var EndDate = StartDate.AddDays(7).AddSeconds(-1);
 

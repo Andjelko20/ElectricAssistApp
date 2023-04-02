@@ -75,9 +75,9 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpGet]
-        [Route("{id:int}")]
+        [Route("{id:long}")]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> GetUserById([FromRoute]int id)
+        public async Task<IActionResult> GetUserById([FromRoute]long id)
         {
             var user = await userService.GetUserById(id);
             if (user == null)
@@ -165,9 +165,9 @@ namespace Server.Controllers
 
 
         [HttpPut]
-        [Route("{id:int}")]
+        [Route("{id:long}")]
         [Authorize(Roles ="admin")]
-        public async Task<IActionResult> UpdateUserByAdmin([FromBody] UpdateUserByAdminDTO requestBody, [FromRoute]int id)
+        public async Task<IActionResult> UpdateUserByAdmin([FromBody] UpdateUserByAdminDTO requestBody, [FromRoute]long id)
         {
             try
             {
@@ -202,7 +202,7 @@ namespace Server.Controllers
             try
             {
                 var context = HttpContext.User.Identity as ClaimsIdentity;
-                int userId = int.Parse(context.FindFirst(ClaimTypes.Actor).Value);
+                long userId = long.Parse(context.FindFirst(ClaimTypes.Actor).Value);
                 var user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == userId);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
@@ -227,9 +227,9 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpPut]
-        [Route("set_blocked_status/{id:int}")]
+        [Route("set_blocked_status/{id:long}")]
         [Authorize(Roles ="admin")]
-        public async Task<IActionResult> BlockUser([FromBody] BlockedStatusDTO requestBody, [FromRoute] int id)
+        public async Task<IActionResult> BlockUser([FromBody] BlockedStatusDTO requestBody, [FromRoute] long id)
         {
             var user = await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
             if (user==null)
@@ -248,9 +248,9 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpDelete]
-        [Route("{id:int}")]
+        [Route("{id:long}")]
         [Authorize(Roles ="admin")]
-        public async Task<IActionResult> DeleteUser([FromRoute] int id)
+        public async Task<IActionResult> DeleteUser([FromRoute] long id)
         {
             var user=await userService.GetUserById(id);
             if (user != null)
@@ -275,7 +275,7 @@ namespace Server.Controllers
         [Authorize]
         public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordDTO requestBody)
         {
-            int userId = int.Parse(tokenService.GetClaim(HttpContext,"id"));
+            long userId = long.Parse(tokenService.GetClaim(HttpContext,"id"));
             UserModel user = await userService.GetUserById(userId);
             if (!HashGenerator.Verify(requestBody.OldPassword, user.Password))
             {
