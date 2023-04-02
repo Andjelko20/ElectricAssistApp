@@ -47,7 +47,7 @@ export class AdminDsoUpdateComponent implements OnInit {
               };
             },
 			error:(response)=>{
-				this.router.navigate(["/admindso"]);
+				this.router.navigate(["home"]);
 			}
           });
 		});
@@ -61,7 +61,7 @@ export class AdminDsoUpdateComponent implements OnInit {
     this.updateService.upDate(this.updateUserDetail.id,this.updateUserDetail)
     .subscribe({
       next:()=>{
-        this.router.navigate(['admindso']);
+        this.router.navigate(['home']);
       }
     });
   }

@@ -21,10 +21,11 @@ export class AdminGuard implements CanActivate {
 			return true;
 		}
 		catch(error){
-			localStorage.removeItem("token")
-			localStorage.clear();
-    		this.userservice.isLoginSubject.next(false)
-			this.router.navigate(["login"]);
+			// localStorage.removeItem("token")
+			// localStorage.clear();
+    		//this.userservice.isLoginSubject.next(false)
+			// this.router.navigate(["login"]);
+			this.router.navigate(["home"]);
 			return false;
 		}
   }

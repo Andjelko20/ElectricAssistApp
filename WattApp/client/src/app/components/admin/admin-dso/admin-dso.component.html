@@ -32,7 +32,7 @@
                     <td>{{show.username}}</td>
                     <td>{{show.block}} </td>
                     <td>{{show.role}}</td>
-                    <td><a [routerLink]='["/admindsoupdate",show.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
+                    <td><a [routerLink]='["update",show.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
                     <td>
                         <button style="width: 84px; height:30px" *ngIf="show.block===true" (click)="unblockUser(show.id)"> UNBLOCK</button>
                         <button style="width: 84px; height:30px" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button>
@@ -47,5 +47,5 @@
         <br>
 
     </div>
-    <button id="buttonAdd" [routerLink]='["/admindsoadd"]'>ADD</button>
+    <button id="buttonAdd" [routerLink]='["add"]'>ADD</button>
 </div>

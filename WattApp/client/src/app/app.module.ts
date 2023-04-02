@@ -27,12 +27,10 @@ import { AllProsumersComponent } from './components/dso/all-prosumers/all-prosum
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { TodayComponent } from './components/today/today.component';
-import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso/admin-dso.component';
-import { AdminProsumerComponent } from './components/admin/admin-prosumer/admin-prosumer/admin-prosumer.component';
-import { AdminProsumerAddComponent } from './components/admin/admin-prosumer/admin-prosumer-add/admin-prosumer-add.component';
-import { AdminProsumerUpdateComponent } from './components/admin/admin-prosumer/admin-prosumer-update/admin-prosumer-update.component';
-import { AdminDsoUpdateComponent } from './components/admin/admin-dso/admin-dso-update/admin-dso-update.component';
-import { AdminDsoAddComponent } from './components/admin/admin-dso/admin-dso-add/admin-dso-add.component';
+import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso.component';
+
+import { AdminDsoUpdateComponent } from './components/admin/admin-dso-update/admin-dso-update.component';
+import { AdminDsoAddComponent } from './components/admin/admin-dso-add/admin-dso-add.component';
 import { PieChartComponent } from './components/dso/charts/pie-chart/pie-chart.component';
 import { LineChartComponent } from './components/dso/charts/line-chart/line-chart.component';
 import { BarChartComponent } from './components/dso/charts/bar-chart/bar-chart.component';
@@ -101,9 +99,6 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     ProsumersMapComponent,
 	  MapInputComponent,
     AdminDsoComponent,
-    AdminProsumerComponent,
-    AdminProsumerAddComponent,
-    AdminProsumerUpdateComponent,
     AdminDsoUpdateComponent,
     AdminDsoAddComponent,
     ProsumerOneDevicePageComponent,

@@ -9,7 +9,7 @@
             </li>
 
             <li *ngIf="role==admin">
-                <a class="nav-link" [routerLink]='["/admindso"]'><i class="fas fa-copy"></i> Admin CRUD</a>
+                <a class="nav-link" [routerLink]='["home/admin"]'><i class="fas fa-copy"></i> Admin CRUD</a>
 
             </li>
             <li *ngIf="role==dso">
@@ -17,7 +17,7 @@
 
             </li>
             <li *ngIf="role==prosumer">
-                <a class="nav-link" [routerLink]='["/prosumer-home-page"]'><i class="fa fa-user" ></i>Prosumer Home</a>
+                <a class="nav-link" [routerLink]='["/prosumer"]'><i class="fa fa-user" ></i>Prosumer Home</a>
 
             </li>
             <li>
