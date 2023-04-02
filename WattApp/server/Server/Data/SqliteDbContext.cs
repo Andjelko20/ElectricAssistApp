@@ -93,7 +93,77 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                if (!context.Countries.Any())
+                {
+                    context.Countries.AddRange(new[]
+                    {
+                        new Country
+                        {
+                            Name = "Serbia"
+                        }
+                    });
+                    context.SaveChanges();
+                }
+                if (!context.Cities.Any())
+                {
+                    context.Cities.AddRange(new[]
+                    {
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Kragujevac"
+                        },
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Beograd"
+                        },
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Novi Sad"
+                        }
+                    });
+                    context.SaveChanges();
+                }
+                if (!context.Settlements.Any())
+                {
+                    context.Settlements.AddRange(new[]
+                    {
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Bubanj"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Aerodrom"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Bresnica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Karaburma"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Stari grad"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Petrovoradin"
 
+                        }
+                    });
+                    context.SaveChanges();
+                }
                 if (!context.Users.Any())
                 {
                     context.Users.AddRange(new[]
@@ -299,77 +369,6 @@ namespace Server.Data
                     context.SaveChanges();
                 }
                 */
-                if (!context.Countries.Any())
-                {
-                    context.Countries.AddRange(new[]
-                    {
-                        new Country
-                        {
-                            Name = "Serbia"
-                        }
-                    });
-                    context.SaveChanges();
-                }
-                if (!context.Cities.Any())
-                {
-                    context.Cities.AddRange(new[]
-                    {
-                        new City
-                        {
-                            CountryId = 1,
-                            Name = "Kragujevac"
-                        },
-                        new City
-                        {
-                            CountryId = 1,
-                            Name = "Beograd"
-                        },
-                        new City
-                        {
-                            CountryId = 1,
-                            Name = "Novi Sad"
-                        }
-                    });
-                    context.SaveChanges();
-                }
-                if (!context.Settlements.Any())
-                {
-                    context.Settlements.AddRange(new[]
-                    {
-                        new Settlement
-                        {
-                            CityId = 1, 
-                            Name = "Bubanj"
-                        },
-                        new Settlement
-                        {
-                            CityId = 1,
-                            Name = "Aerodrom"
-                        },
-                        new Settlement
-                        {
-                            CityId = 1,
-                            Name = "Bresnica"
-                        },
-                        new Settlement
-                        {
-                            CityId = 2,
-                            Name = "Karaburma"
-                        },
-                        new Settlement
-                        {
-                            CityId = 3,
-                            Name = "Stari grad"
-                        },
-                        new Settlement
-                        {
-                            CityId = 3,
-                            Name = "Petrovoradin"
-
-                        }
-                    });
-                    context.SaveChanges();
-                }
                 if (!context.Devices.Any())
                 {
                     context.Devices.AddRange(new[]
