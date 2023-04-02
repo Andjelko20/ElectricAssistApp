@@ -7,8 +7,9 @@ namespace Server.Models
     public class ResetPasswordModel
     {
         [Key]
-        [ForeignKey(nameof(SqliteDbContext.Users))]
         public long UserId { get; set; }
+        [ForeignKey("UserId")]
+        public UserModel User { get; set; }
 
         [Required]
         public string ResetKey { get; set; }

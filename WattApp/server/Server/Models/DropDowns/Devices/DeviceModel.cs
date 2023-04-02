@@ -9,12 +9,12 @@ namespace Server.Models.DropDowns.Devices
         [Key]
         public long Id { get; set; }
         public string Mark { get; set; }
-
-        [ForeignKey(nameof(SqliteDbContext.DeviceTypes))]
         public long DeviceTypeId { get; set; }
-
-        [ForeignKey(nameof(SqliteDbContext.DeviceBrands))]
+        [ForeignKey("DeviceTypeId")]
+        public DeviceType DeviceType { get; set; }
         public long DeviceBrandId { get; set; }
+        [ForeignKey("DeviceBrandId")]
+        public DeviceBrand DeviceBrand { get; set; }
         public float EnergyKwh { get; set; }
         public float StandByKwh { get; set; }
     }

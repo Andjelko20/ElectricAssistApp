@@ -11,6 +11,8 @@ namespace Server.Models.DropDowns.Location
         [ForeignKey(nameof(SqliteDbContext.Countries))]
         [Required]
         public long CountryId { get; set; }
+        [ForeignKey("CountryId")]
+        public Country Country { get; set; }
         [Required]
         public string Name { get; set; }
     }

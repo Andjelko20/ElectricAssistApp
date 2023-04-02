@@ -25,7 +25,7 @@ namespace Server.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<Settlement> Settlements { get; set; }
         public DbSet<DeviceBrand> DeviceBrands { get; set; }
-        public DbSet<Price> Price { get; set; }
+        //public DbSet<Price> Price { get; set; }
         public DbSet<ChargingScheduler> ChargingSchedulers { get; set; }
         public DbSet<InclusionScheduler> InclusionSchedulers { get; set; }
         public DbSet<UserEnergyUsage> UserEnergyUsages { get; set; }
@@ -39,10 +39,11 @@ namespace Server.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /*
             modelBuilder.Entity<UserModel>()
            .HasOne(u => u.Role)
            .WithMany()
-           .HasForeignKey(u => u.RoleId);
+           .HasForeignKey(u => u.RoleId);*/
             modelBuilder.Entity<ChargingScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.Time });
             modelBuilder.Entity<InclusionScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.TurnOn, x.TurnOff });
             modelBuilder.Entity<UserEnergyUsage>().HasKey(x => new { x.UserId, x.Date });

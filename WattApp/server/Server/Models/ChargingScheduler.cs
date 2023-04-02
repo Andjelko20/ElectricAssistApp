@@ -6,8 +6,9 @@ namespace Server.Models
 {
     public class ChargingScheduler
     {
-        [ForeignKey(nameof(SqliteDbContext.Devices))]
         public long DeviceId { get; set; }
+        [ForeignKey("DeviceId")]
+        public Device Device{get;set;}
         public String Day { get; set; }
         public String Time { get; set; }
         public String? Comment { get; set; }

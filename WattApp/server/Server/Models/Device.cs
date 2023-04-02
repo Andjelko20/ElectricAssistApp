@@ -11,9 +11,9 @@ namespace Server.Models
         public long Id { get; set; }
        
         [Required]
-        [ForeignKey(nameof(SqliteDbContext.Users))]
-        //Promeniti!!!
         public long UserId { get; set; }
+        [ForeignKey("UserId")]
+        public UserModel User { get; set; }
         //[Required]
         //[ForeignKey(nameof(SqliteDbContext.DeviceCategories))]
         //public long DeviceCategoryId { get; set; } //from dropdown -> consumption, production, stock
@@ -24,8 +24,9 @@ namespace Server.Models
         //[ForeignKey(nameof(DeviceType.Id))] 
         //public long DeviceTypeId { get; set; } //from dropdown -> tv, car, other...
         [Required]
-        [ForeignKey(nameof(SqliteDbContext.DeviceModels))]
         public long DeviceModelId { get; set; }
+        [ForeignKey("DeviceModelId")]
+        public DeviceModel DeviceModel { get; set; }
         public string? Name { get; set; }
         public float EnergyInKwh { get; set; }
         public float StandByKwh { get; set; }

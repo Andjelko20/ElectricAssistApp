@@ -6,8 +6,9 @@ namespace Server.Models
 {
     public class UserEnergyUsage
     {
-        [ForeignKey(nameof(SqliteDbContext.Users))]
         public long UserId { get; set; }
+        [ForeignKey("UserId")]
+        public UserModel User { get; set; }
         public DateOnly Date { get; set; }
         [Range(0, float.MaxValue)]
         public float? Consumption { get; set; }

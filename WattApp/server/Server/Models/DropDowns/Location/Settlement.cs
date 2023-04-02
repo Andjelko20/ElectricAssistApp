@@ -8,9 +8,10 @@ namespace Server.Models.DropDowns.Location
     {
         [Key]
         public long Id { get; set; }
-        [ForeignKey(nameof(SqliteDbContext.Cities))]
         [Required]
         public long CityId { get; set; }
+        [ForeignKey("CityId")]
+        public City City { get; set; }
         [Required]
         public string Name { get; set; }
     }

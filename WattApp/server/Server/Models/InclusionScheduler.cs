@@ -6,8 +6,9 @@ namespace Server.Models
 {
     public class InclusionScheduler
     {
-        [ForeignKey(nameof(SqliteDbContext.Devices))]
         public long DeviceId { get; set; }
+        [ForeignKey("DeviceId")]
+        public Device Device { get; set; }
         [Required]
         public string Day { get; set; }
         [Required]

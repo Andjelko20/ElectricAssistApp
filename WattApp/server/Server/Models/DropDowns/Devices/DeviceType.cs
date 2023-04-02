@@ -9,8 +9,9 @@ namespace Server.Models.DropDowns.Devices
         //Frizider, TV, Bojler, Ostalo
         [Key]
         public long Id { get; set; }
-        [ForeignKey(nameof(SqliteDbContext.DeviceCategories))]
         public long CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public DeviceCategory DeviceCategory { get; set; }
         [Required]
         public string Name { get; set; }
     }

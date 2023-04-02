@@ -6,9 +6,10 @@ namespace Server.Models
 {
     public class Bill
     {
-        [ForeignKey(nameof(SqliteDbContext.Users))]
         [Required]
         public long UserId { get; set; }
+        [ForeignKey("UserId")]
+        public UserModel User { get; set; }
         [Required]
         public float Month { get; set; }
         [Required]

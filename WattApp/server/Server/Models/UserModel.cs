@@ -36,10 +36,10 @@ namespace Server.Models
         */
         public string? Email { get; set; }
 
-        [ForeignKey(nameof(SqliteDbContext.Roles))]
+        
         public long RoleId { get; set; }
 
-        [NotMapped]
-        public RoleModel? Role { get; set; }
+        [ForeignKey("RoleId")]
+        public RoleModel Role { get; set; }
     }
 }
