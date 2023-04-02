@@ -26,7 +26,7 @@ namespace Server.Data
         public DbSet<Settlement> Settlements { get; set; }
         public DbSet<DeviceBrand> DeviceBrands { get; set; }
         //public DbSet<Price> Price { get; set; }
-        public DbSet<ChargingScheduler> ChargingSchedulers { get; set; }
+        //public DbSet<ChargingScheduler> ChargingSchedulers { get; set; }
         public DbSet<InclusionScheduler> InclusionSchedulers { get; set; }
         public DbSet<UserEnergyUsage> UserEnergyUsages { get; set; }
         public DbSet<DeviceEnergyUsage> DeviceEnergyUsages { get; set; }
@@ -44,7 +44,7 @@ namespace Server.Data
            .HasOne(u => u.Role)
            .WithMany()
            .HasForeignKey(u => u.RoleId);*/
-            modelBuilder.Entity<ChargingScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.Time });
+            //modelBuilder.Entity<ChargingScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.Time });
             modelBuilder.Entity<InclusionScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.TurnOn, x.TurnOff });
             modelBuilder.Entity<UserEnergyUsage>().HasKey(x => new { x.UserId, x.Date });
             modelBuilder.Entity<DeviceEnergyUsage>().HasKey(x => new { x.DeviceId, x.StartTime, x.EndTime });
@@ -135,26 +135,6 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
-                if (!context.DeviceModels.Any())
-                {
-                    context.DeviceModels.AddRange(new[]
-                    {
-                        new DeviceModel()
-                        {
-                            Mark = "oznaka1"
-                        },
-                        new DeviceModel()
-                        {
-                            Mark = "oznaka2"
-                        },
-                        new DeviceModel()
-                        {
-                            Mark = "oznaka3"
-                        }
-                    }) ;
-                    context.SaveChanges();
-                }
-                
                 if (!context.DeviceCategories.Any())
                 {
                     context.DeviceCategories.AddRange(new[]
@@ -239,6 +219,37 @@ namespace Server.Data
                         new DeviceBrand()
                         {
                             Name = "Other"
+                        }
+                    });
+                    context.SaveChanges();
+                }
+                if (!context.DeviceModels.Any())
+                {
+                    context.DeviceModels.AddRange(new[]
+                    {
+                        new DeviceModel()
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 1,
+                            EnergyKwh = 100,
+                            StandByKwh = 0,
+                            Mark = "oznaka1"
+                        },
+                        new DeviceModel()
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 1,
+                            EnergyKwh = 100,
+                            StandByKwh = 0,
+                            Mark = "oznaka2"
+                        },
+                        new DeviceModel()
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 1,
+                            EnergyKwh = 100,
+                            StandByKwh = 0,
+                            Mark = "oznaka3"
                         }
                     });
                     context.SaveChanges();
