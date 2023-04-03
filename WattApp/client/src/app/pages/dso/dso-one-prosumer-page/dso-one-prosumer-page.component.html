@@ -1,1 +1,13 @@
-<p>dso-one-prosumer-page works!</p>
+<div class="toggle-container">
+    <div class="toggle-buttons">
+      <input type="radio" name="toggle" id="dashboard-btn" checked>
+      <label for="dashboard-btn">Dashboard</label>
+      <span class="divider"></span>
+      <input type="radio" name="toggle" id="devices-btn">
+      <label for="devices-btn">Devices</label>
+    </div>
+    <div class="date-time">
+      <p>{{ currentTime | date:'medium' }}</p>
+    </div>
+  </div>
+  

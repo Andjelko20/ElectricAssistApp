@@ -27,6 +27,7 @@ import { MapInputComponent } from './components/map-input/map-input.component';
 import { AllDevicesComponent } from './components/prosumers/devices/all-devices/all-devices.component';
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
 import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
+import { DsoOneProsumerPageComponent } from './pages/dso/dso-one-prosumer-page/dso-one-prosumer-page.component';
 
  
 const routes: Routes = [
@@ -55,6 +56,8 @@ const routes: Routes = [
 	{path:"devices",component:AllDevicesComponent},
 	{path:"devices-add",component:AddDeviceComponent},
 	{path:"devices-update/:id",component:UpdateDeviceComponent},
+	{path:"oneprosumer",component:DsoOneProsumerPageComponent},
+
 	{path:'**',redirectTo:"login"}
 ];
 
