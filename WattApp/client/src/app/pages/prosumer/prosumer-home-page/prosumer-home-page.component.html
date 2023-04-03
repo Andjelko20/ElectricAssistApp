@@ -1,14 +1,14 @@
 <header class="header">
     <!-- Logo -->
-    <a href="#" class="logo">WattApp</a>
+    <a href="prosumer-home-page" class="logo">WattApp</a>
     <!-- Hamburger icon -->
     <input class="side-menu" type="checkbox" id="side-menu" />
     <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
     <!-- Menu -->
     <nav class="nav">
         <ul class="menu">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Prediction</a> </li>
+            <li><a href="prosumer-home-page">Dashboard</a></li>
+            <li><a href="#">Devices</a> </li>
             <li><a href="#">Setting</a></li>
             <li><a href="#">Logout</a></li>
         </ul>
@@ -19,6 +19,25 @@
     <article>
         <div class="homeimage">
             <img id="homeimg" src="assets/img/prosumerHome.png" alt="">
+            <div class="tower">
+                <img class="imgtower" src="assets/img/transmission-tower.png" alt="">
+            </div>
+            <div class="powerTransmissiontower">
+                <app-prosumer-tower></app-prosumer-tower>
+            </div>
+            <div class="consumptionNow">
+                <app-prosumer-solar></app-prosumer-solar>
+            </div>
+
+            <div class="solarPowerNow">
+                <app-prosumer-house></app-prosumer-house>
+            </div>
+
+            <div class="prognosis"></div>
+            <div class="prodactionToday">
+                <h2>Production today</h2>
+                <h1><strong>24.56 kWh</strong></h1>
+            </div>
         </div>
         <div class="carbattery">
             <div class="carbatterytree">
