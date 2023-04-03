@@ -13,6 +13,8 @@ interface ForecastTimeline{
 })
 export class TodayComponent implements OnInit{
 
+  cels:boolean = true
+  fer:boolean = false
   timeline : ForecastTimeline[] = []
   weatherNow:any
   currentTime = new Date();
@@ -39,6 +41,37 @@ export class TodayComponent implements OnInit{
   }
 
   getTodayForecast(today:any) {
+    this.location = today.city;
+    
+    for(const forecast of today.list.slice(0,8)){
+      this.timeline.push({
+        time: forecast.dt_txt,
+        temp : forecast.main.temp
+      });
+      const apiDate = new Date(forecast.dt_txt).getTime();
+      if(this.dateRange().start.getTime() <= apiDate && this.dateRange().to.getTime() >= apiDate){
+        this.weatherNow = forecast;
+        console.log(this.weatherNow)
+      }
+    }
+  }
+  showF(){
+      this.cels = !this.cels;
+      this.fer = !this.fer;
+      if(this.fer){
+        this.forecastService.getWeatherForecastF().subscribe(data=>{
+          this.getTodayForecastF(data)
+      })
+      }
+      else{
+        this.forecastService.getWeatherForecast().subscribe(data=>{
+          this.getTodayForecast(data)
+      })
+      }
+      
+  }
+
+  getTodayForecastF(today:any) {
     this.location = today.city;
     
     for(const forecast of today.list.slice(0,8)){
