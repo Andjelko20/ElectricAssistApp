@@ -63,7 +63,7 @@ namespace Server.Services.Implementations
         public double GetConsumptionForForwardedList(long deviceId, List<DeviceEnergyUsage> deviceEnergyUsageLista)
         {
             var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
-            float EnergyInKwh = Device.EnergyInKwh; // da li je null proverava se u kontroleru i vraca NotFound
+            float EnergyInKwh = 10;//Device.EnergyInKwh; // da li je null proverava se u kontroleru i vraca NotFound
 
             double Consumption = 0.0;
             double Hours = -1;
@@ -107,7 +107,7 @@ namespace Server.Services.Implementations
                     foreach (var item in UsageList)
                     {
                         UsageInHours = (item.EndTime - item.StartTime).TotalHours;
-                        UsageInKwh += UsageInHours * Device.EnergyInKwh;
+                        UsageInKwh += UsageInHours * 10;//Device.EnergyInKwh;
                     }
 
                     Results.Insert(0, new MonthlyEnergyConsumptionLastYear
@@ -138,7 +138,7 @@ namespace Server.Services.Implementations
 
                 double EnergyUsage = 0.0;
                 foreach (var usage in UsageForDate)
-                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * Device.EnergyInKwh;
+                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * 10;// Device.EnergyInKwh;
 
                 Results.Add(new DailyEnergyConsumptionPastMonth
                 {
@@ -168,7 +168,7 @@ namespace Server.Services.Implementations
 
                 double EnergyUsage = 0.0;
                 foreach (var usage in UsageForDate)
-                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * Device.EnergyInKwh;
+                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * 10;// Device.EnergyInKwh;
 
                 Results.Add(new DailyEnergyConsumptionPastMonth
                 {
@@ -248,7 +248,7 @@ namespace Server.Services.Implementations
 
                 foreach (var usage in deviceUsageList)
                 {
-                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * device.EnergyInKwh;
+                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * 10;// device.EnergyInKwh;
                 }
             }
 
@@ -280,7 +280,7 @@ namespace Server.Services.Implementations
 
                     foreach (var usage in deviceUsages)
                     {
-                        monthlyEnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * device.EnergyInKwh;
+                        monthlyEnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * 10;// device.EnergyInKwh;
                     }
                 }
 
@@ -316,7 +316,7 @@ namespace Server.Services.Implementations
 
                     double EnergyUsage = 0.0;
                     foreach (var usage in UsageForDate) // za taj dan
-                        EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * userDevice.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
+                        EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * 10;// userDevice.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
 
                     Results.Add(new DailyEnergyConsumptionPastMonth // klasa moze i za week
                     {

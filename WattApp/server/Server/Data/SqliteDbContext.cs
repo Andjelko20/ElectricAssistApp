@@ -396,10 +396,9 @@ namespace Server.Data
                             UserId = 1, 
                             //DeviceCategoryId = 1, 
                             //DeviceTypeId = 1, 
-                            //DeviceBrandId = 1, 
+                            //DeviceBrandId = 1,
+                            Name="Uredjaj",
                             DeviceModelId = 1, 
-                            EnergyInKwh = 10, 
-                            StandByKwh = 10, 
                             Visibility = true, 
                             Controlability = true, 
                             TurnOn = false

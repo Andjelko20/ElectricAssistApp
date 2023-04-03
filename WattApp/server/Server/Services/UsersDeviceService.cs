@@ -31,7 +31,7 @@ namespace Server.Services
                                 Device.UserId = reader.GetInt64(2);
                                 Device.DeviceModelId = reader.GetInt64(3);
                                 Device.Name = reader.GetString(4);
-                                Device.EnergyInKwh = reader.GetFloat(5);
+                                //Device.EnergyInKwh = reader.GetFloat(5);
                                 Device.Visibility = reader.GetBoolean(6);
                                 Device.Controlability = reader.GetBoolean(7);
                                 Device.TurnOn = reader.GetBoolean(8);

@@ -30,7 +30,7 @@ namespace Server.Services.Implementations
 
                 double EnergyUsage = 0.0;
                 foreach (var usage in UsageForDate) // za taj dan
-                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * Device.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
+                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * 10;// Device.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
 
                 Results.Add(new DailyEnergyConsumptionPastMonth // klasa moze i za week
                 {
@@ -65,7 +65,7 @@ namespace Server.Services.Implementations
 
                     double EnergyUsage = 0.0;
                     foreach (var usage in UsageForDate) // za taj dan
-                        EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * userDevice.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
+                        EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * 10;// userDevice.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
 
                     Results.Add(new DailyEnergyConsumptionPastMonth // klasa moze i za week
                     {
