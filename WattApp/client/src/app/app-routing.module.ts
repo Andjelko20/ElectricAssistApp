@@ -42,13 +42,13 @@ const routes: Routes = [
 	{path:'dashboard',component:HomePageComponent,canActivate:[AuthenticatedGuard]},
 	//ADMIN
 	{path:'',component:AdminDsoPageComponent,canActivate:[AdminGuard]},
-	{path:'add',component:AdminDsoAddComponent,canActivate:[AdminGuard]},
-	{path:'update/:id',component:AdminDsoUpdateComponent,canActivate:[AdminGuard]},
+	{path:'add-user',component:AdminDsoAddComponent,canActivate:[AdminGuard]},
+	{path:'update-user/:id',component:AdminDsoUpdateComponent,canActivate:[AdminGuard]},
 	//DSO
 	{path:'',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard]},
-	{path:'one-prosumer',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
-	{path:'one-prosumer-devices',component:DsoOneProsumerDevicesPageComponent,canActivate:[DispatcherGuard]},
+	{path:'prosumer',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
+	{path:'prosumer-devices',component:DsoOneProsumerDevicesPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prediction',component:DsoPredictionPageComponent,canActivate:[DispatcherGuard]},
 	//PROSUMER
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
