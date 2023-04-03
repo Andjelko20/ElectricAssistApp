@@ -1,13 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Server.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Models
 {
     public class Bill
     {
-        [ForeignKey(nameof(UserModel.Id))]
         [Required]
         public long UserId { get; set; }
+        [ForeignKey("UserId")]
+        public UserModel User { get; set; }
         [Required]
         public float Month { get; set; }
         [Required]

@@ -42,14 +42,14 @@ namespace Server.Controllers
         /// Get 20 users per page
         /// </summary>
         [Produces("application/json")]
-        [ProducesResponseType(typeof(DataPage<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DataPage<UserDetailsDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
 
         [HttpGet]
         [Route("page/{page:int}")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles = Roles.AdminPermission)]
         public async Task<IActionResult> GetPage([FromRoute]int page)
         {
             try
@@ -70,28 +70,21 @@ namespace Server.Controllers
         /// Get single user
         /// </summary>
         [Produces("application/json")]
-        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserDetailsDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpGet]
-        [Route("{id:int}")]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> GetUserById([FromRoute]int id)
+        [Route("{id:long}")]
+        [Authorize(Roles = Roles.AdminPermission)]
+        public async Task<IActionResult> GetUserById([FromRoute]long id)
         {
             var user = await userService.GetUserById(id);
             if (user == null)
             {
                 return NotFound(new { message="User with id "+id.ToString()+" doesn\'t exist" });
             }
-            return Ok(new
-            {
-                Name=user.Name,
-                Username=user.Username,
-                Role=user.Role.Name,
-                Blocked=user.Blocked,
-                Email=user.Email
-            });
+            return Ok(new UserDetailsDTO(user));
         }
         /// <summary>
         /// Get all roles
@@ -104,7 +97,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("roles")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = Roles.AdminPermission)]
         public async Task<IActionResult> GetRoles()
         {
             try
@@ -129,7 +122,7 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpPost]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles =Roles.AdminPermission)]
         public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO requestBody)
         {
             try
@@ -165,9 +158,9 @@ namespace Server.Controllers
 
 
         [HttpPut]
-        [Route("{id:int}")]
-        [Authorize(Roles ="admin")]
-        public async Task<IActionResult> UpdateUserByAdmin([FromBody] UpdateUserByAdminDTO requestBody, [FromRoute]int id)
+        [Route("{id:long}")]
+        [Authorize(Roles =Roles.AdminPermission)]
+        public async Task<IActionResult> UpdateUserByAdmin([FromBody] UpdateUserByAdminDTO requestBody, [FromRoute]long id)
         {
             try
             {
@@ -202,7 +195,7 @@ namespace Server.Controllers
             try
             {
                 var context = HttpContext.User.Identity as ClaimsIdentity;
-                int userId = int.Parse(context.FindFirst(ClaimTypes.Actor).Value);
+                long userId = long.Parse(context.FindFirst(ClaimTypes.Actor).Value);
                 var user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == userId);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
@@ -227,9 +220,9 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpPut]
-        [Route("set_blocked_status/{id:int}")]
-        [Authorize(Roles ="admin")]
-        public async Task<IActionResult> BlockUser([FromBody] BlockedStatusDTO requestBody, [FromRoute] int id)
+        [Route("set_blocked_status/{id:long}")]
+        [Authorize(Roles =Roles.AdminPermission)]
+        public async Task<IActionResult> BlockUser([FromBody] BlockedStatusDTO requestBody, [FromRoute] long id)
         {
             var user = await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
             if (user==null)
@@ -248,9 +241,9 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpDelete]
-        [Route("{id:int}")]
-        [Authorize(Roles ="admin")]
-        public async Task<IActionResult> DeleteUser([FromRoute] int id)
+        [Route("{id:long}")]
+        [Authorize(Roles =Roles.AdminPermission)]
+        public async Task<IActionResult> DeleteUser([FromRoute] long id)
         {
             var user=await userService.GetUserById(id);
             if (user != null)
@@ -275,7 +268,7 @@ namespace Server.Controllers
         [Authorize]
         public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordDTO requestBody)
         {
-            int userId = int.Parse(tokenService.GetClaim(HttpContext,"id"));
+            long userId = long.Parse(tokenService.GetClaim(HttpContext,"id"));
             UserModel user = await userService.GetUserById(userId);
             if (!HashGenerator.Verify(requestBody.OldPassword, user.Password))
             {
@@ -288,7 +281,7 @@ namespace Server.Controllers
 
         [HttpPut]
         [Route("generate_reset_token_admin")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles =Roles.AdminPermission)]
         public async Task<IActionResult> GenerateResetToken([FromBody] EmailRequestDTO requestBody)
         {
             var user = await userService.GetUserByEmail(requestBody.Email);

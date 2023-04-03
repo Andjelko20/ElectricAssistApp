@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Server.Data;
 
@@ -10,9 +11,10 @@ using Server.Data;
 namespace Server.Migrations
 {
     [DbContext(typeof(SqliteDbContext))]
-    partial class SqliteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230402205544_UserUpdated")]
+    partial class UserUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
@@ -51,8 +53,14 @@ namespace Server.Migrations
                     b.Property<long>("DeviceModelId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<float>("EnergyInKwh")
+                        .HasColumnType("REAL");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<float>("StandByKwh")
+                        .HasColumnType("REAL");
 
                     b.Property<bool>("TurnOn")
                         .HasColumnType("INTEGER");

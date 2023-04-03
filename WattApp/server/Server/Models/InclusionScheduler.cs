@@ -1,12 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Server.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Models
 {
     public class InclusionScheduler
     {
-        [ForeignKey(nameof(Device.Id))]
         public long DeviceId { get; set; }
+        [ForeignKey("DeviceId")]
+        public Device Device { get; set; }
         [Required]
         public string Day { get; set; }
         [Required]
