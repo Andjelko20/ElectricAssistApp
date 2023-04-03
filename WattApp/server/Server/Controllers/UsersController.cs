@@ -42,14 +42,14 @@ namespace Server.Controllers
         /// Get 20 users per page
         /// </summary>
         [Produces("application/json")]
-        [ProducesResponseType(typeof(DataPage<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DataPage<UserDetailsDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
 
         [HttpGet]
         [Route("page/{page:int}")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles = Roles.AdminPermission)]
         public async Task<IActionResult> GetPage([FromRoute]int page)
         {
             try
@@ -70,13 +70,13 @@ namespace Server.Controllers
         /// Get single user
         /// </summary>
         [Produces("application/json")]
-        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserDetailsDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpGet]
         [Route("{id:long}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = Roles.AdminPermission)]
         public async Task<IActionResult> GetUserById([FromRoute]long id)
         {
             var user = await userService.GetUserById(id);
@@ -84,14 +84,7 @@ namespace Server.Controllers
             {
                 return NotFound(new { message="User with id "+id.ToString()+" doesn\'t exist" });
             }
-            return Ok(new
-            {
-                Name=user.Name,
-                Username=user.Username,
-                Role=user.Role.Name,
-                Blocked=user.Blocked,
-                Email=user.Email
-            });
+            return Ok(new UserDetailsDTO(user));
         }
         /// <summary>
         /// Get all roles
@@ -104,7 +97,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("roles")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = Roles.AdminPermission)]
         public async Task<IActionResult> GetRoles()
         {
             try
@@ -129,7 +122,7 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpPost]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles =Roles.AdminPermission)]
         public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO requestBody)
         {
             try
@@ -166,7 +159,7 @@ namespace Server.Controllers
 
         [HttpPut]
         [Route("{id:long}")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles =Roles.AdminPermission)]
         public async Task<IActionResult> UpdateUserByAdmin([FromBody] UpdateUserByAdminDTO requestBody, [FromRoute]long id)
         {
             try
@@ -228,7 +221,7 @@ namespace Server.Controllers
 
         [HttpPut]
         [Route("set_blocked_status/{id:long}")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles =Roles.AdminPermission)]
         public async Task<IActionResult> BlockUser([FromBody] BlockedStatusDTO requestBody, [FromRoute] long id)
         {
             var user = await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
@@ -249,7 +242,7 @@ namespace Server.Controllers
 
         [HttpDelete]
         [Route("{id:long}")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles =Roles.AdminPermission)]
         public async Task<IActionResult> DeleteUser([FromRoute] long id)
         {
             var user=await userService.GetUserById(id);
@@ -288,7 +281,7 @@ namespace Server.Controllers
 
         [HttpPut]
         [Route("generate_reset_token_admin")]
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles =Roles.AdminPermission)]
         public async Task<IActionResult> GenerateResetToken([FromBody] EmailRequestDTO requestBody)
         {
             var user = await userService.GetUserByEmail(requestBody.Email);

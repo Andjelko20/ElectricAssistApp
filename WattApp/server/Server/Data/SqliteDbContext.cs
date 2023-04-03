@@ -175,7 +175,11 @@ namespace Server.Data
                             RoleId=1,
                             Blocked=false,
                             Username="admin",
-                            Password=HashGenerator.Hash("admin")
+                            Password=HashGenerator.Hash("admin"),
+                            SettlementId=1,
+                            Address="Jovanovac bb",
+                            Latitude=44.1234567f,
+                            Longitude=36.789003f
                         },
                         new UserModel()
                         {
@@ -184,23 +188,37 @@ namespace Server.Data
                             RoleId=3,
                             Blocked=true,
                             Username="user",
-                            Password=HashGenerator.Hash("user")
+                            Password=HashGenerator.Hash("user"),
+                            SettlementId=2,
+                            Address="Adresa",
+                            Latitude=44.1234547f,
+                            Longitude=36.789023f
                         }, 
                         new UserModel()
                         {
-                            Name="DSO DSO", 
+                            Name="DSO DSO",
+                            Email="48-2020@pmf.kg.ac.rs",
                             RoleId = 2, 
                             Blocked=false,
                             Username="dsodso", 
-                            Password=HashGenerator.Hash("dsodso")
+                            Password=HashGenerator.Hash("dsodso"),
+                            SettlementId=2,
+                            Address="Adresa",
+                            Latitude=44.1234547f,
+                            Longitude=36.789023f
                         },
                         new UserModel()
                         {
                             Name="Prosumer",
+                            Email="38-2020@pmf.kg.ac.rs",
                             RoleId=3,
                             Blocked=false,
                             Username="prosumer",
-                            Password=HashGenerator.Hash("prosumer")
+                            Password=HashGenerator.Hash("prosumer"),
+                            SettlementId=2,
+                            Address="Adresa",
+                            Latitude=44.1234547f,
+                            Longitude=36.789023f
                         }
                     });
                     context.SaveChanges();
