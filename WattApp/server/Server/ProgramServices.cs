@@ -41,6 +41,7 @@ namespace Server
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddScoped<IHistoryService, HistoryServiceImpl>();
             builder.Services.AddScoped<IPredictionService, PredictionServiceImpl>();
+            builder.Services.AddScoped<IProsumerService, ProsumerServiceImpl>();
 
             builder.Services.Configure<ApiBehaviorOptions>(options
                 => options.SuppressModelStateInvalidFilter = true);
