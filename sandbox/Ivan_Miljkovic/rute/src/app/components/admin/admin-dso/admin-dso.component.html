@@ -1,0 +1,51 @@
+<!-- <div>
+     <ul>
+        <li><a (click)="logout()"> LOGOUT</a></li>
+    </ul> 
+
+</div> -->
+
+<div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-12">
+    <div class="first">
+        <br>
+        <!--
+    <br>
+    <h2>List </h2>
+    <br> -->
+
+        <table *ngIf="showUsers">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>User name</th>
+                    <th>Block</th>
+                    <th>Role</th>
+                    <th></th>
+                    <!--<th></th>-->
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let show of showUsers index as i">
+                    <td>{{show.name}}</td>
+                    <td>{{show.username}}</td>
+                    <td>{{show.block}} </td>
+                    <td>{{show.role}}</td>
+                    <td><a [routerLink]='["update",show.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
+                    <td>
+                        <button style="width: 84px; height:30px" *ngIf="show.block===true" (click)="unblockUser(show.id)"> UNBLOCK</button>
+                        <button style="width: 84px; height:30px" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button>
+                    </td>
+                    <!--<td><a [routerLink]='["/change-password"]'><button style="min-width: 84px; height:30px" > PASSWORD</button></a></td>-->
+
+                    <td><button style="width: 84px; height:30px" (click)="delete(show.id)">DELETE</button></td>
+
+                </tr>
+            </tbody>
+        </table>
+        <br>
+
+    </div>
+    <button id="buttonAdd" [routerLink]='["add"]'>ADD</button>
+</div>

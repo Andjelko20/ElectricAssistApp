@@ -20,7 +20,6 @@ export class AuthenticatedGuard implements CanActivate {
 	}
 	catch(error){
 		localStorage.removeItem("token")
-		localStorage.clear();
     	this.userservice.isLoginSubject.next(false)
 		this.router.navigate(["login"]);
         return false;

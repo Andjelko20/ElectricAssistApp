@@ -24,18 +24,7 @@ export class HomePageComponent implements OnInit{
     
     let token=new JwtToken();
     this.role=token.data.role as string;
-    if(this.role==this.admin)
-    {
-      this.router.navigate(['home','admin']);
-    }
-    else if(this.role==this.dso)
-    {
-      this.router.navigate(['home','dso']);
-    }
-    else if(this.role==this.prosumer)
-    {
-      this.router.navigate(['home','prosumer']);
-    }
+   
   }
 
 }

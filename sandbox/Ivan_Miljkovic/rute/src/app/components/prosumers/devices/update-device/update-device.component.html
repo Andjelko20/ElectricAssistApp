@@ -1,0 +1,44 @@
+<div class="global">
+    <div class="global1">
+        <h1>Update</h1>
+        <form #form="ngForm" (ngSubmit)="upDate()">
+            <div class="form-row">
+                <div class="form-group col-md-6 ">
+                
+                    <br>
+                    <label for="deviceCategoryId " class="form-label ">deviceCategoryId</label>
+                    <input type="number " class="form-control " id="id " name="deviceCategoryId " [(ngModel)]="updateDevice.deviceCategoryId ">
+                    <br>
+                    <label for="deviceTypeId " class="form-label ">DeviceTypeId</label>
+                    <input type="number " class="form-control " id="id " name="deviceTypeId " [(ngModel)]="updateDevice.deviceTypeId ">
+                    <br>
+                    <label for="deviceBrandId " class="form-label ">deviceBrandId</label>
+                    <input type="number " class="form-control " id="id " name="deviceBrandId " [(ngModel)]="updateDevice.deviceBrandId ">
+                    <br>
+                    <label for="deviceModelId " class="form-label ">deviceModelId</label>
+                    <input type="number " class="form-control " id="id " name="deviceModelId " [(ngModel)]="updateDevice.deviceModelId ">
+                    <br>
+                    <label for="name " class="form-label ">name</label>
+                    <input type="text " class="form-control " id="id " name="name " [(ngModel)]="updateDevice.name ">
+                    <br>
+                    <label for="energyInKwh " class="form-label ">energyInKwh</label>
+                    <input type="number " class="form-control " id="id " name="energyInKwh " [(ngModel)]="updateDevice.energyInKwh ">
+                    <br>
+                    <label for="standByKwh " class="form-label ">standByKwh</label>
+                    <input type="number " class="form-control " id="id " name="standByKwh " [(ngModel)]="updateDevice.standByKwh ">
+                    <br>
+                    <label for="visibility " class="form-label ">visibility</label>
+                    <input type="text " class="form-control " id="id " name="visibility " [(ngModel)]="updateDevice.visibility ">
+                    <br>
+                    <label for="controlability " class="form-label ">controlability</label>
+                    <input type="text " class="form-control " id="id " name="controlability " [(ngModel)]="updateDevice.controlability ">
+
+                    <br>
+                    <br>
+                    
+                </div>
+            </div>
+            <button type=" submit " class="btn btn-primary mr-5 ">Save</button>
+        </form>
+    </div>
+</div>

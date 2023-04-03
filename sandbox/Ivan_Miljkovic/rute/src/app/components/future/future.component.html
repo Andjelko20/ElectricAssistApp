@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="primary" *ngIf="primaryDisplay">
+    <h3>5-day Forecast</h3>
+    <ul *ngFor="let forecast of weatherData; let i = index">
+        <li class="main" (click)="toggle(weatherData[i],i)">
+            {{ forecast.dt_txt | date:'EEE, MMM dd' }}
+            <img class="image" src="assets/img/{{forecast.weather[0].icon}}.png" alt="">
+            <span>
+                {{ forecast.main.temp_min | number:'1.0-0'}} °C \ {{ forecast.main.temp_max | number:'1.0-0'}} °C
+                
+            </span>
+            <span>
+                {{ forecast.weather[0].main }}
+            </span>
+            <i class="fa fa-caret-down" aria-hidden="true">
+
+            </i>
+        </li>
+    </ul>
+</div>
+
+<div *ngIf="secondaryDisplay">
+    <h3 (click)="toggles()">5-day Forecast</h3>
+    <ul class="sub">
+        <li *ngFor="let forecast of weatherData; let i = index" [ngClass]="{'selected': selectedIndex == i}">
+            <span (click)="showDetails(weatherData[i],i)">{{ forecast.dt_txt | date:'EEE'}}</span>
+        </li>
+        <i class="fa fa-caret-down" aria-hidden="true"></i> 
+    </ul>
+    <div *ngIf="forecastDetails">
+        {{ forecastDetails.main.temp | number:'1.0-0' }} °C
+    </div>
+</div>
