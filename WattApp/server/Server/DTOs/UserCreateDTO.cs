@@ -22,6 +22,11 @@ namespace Server.DTOs
         [MinValue(1)]
         public long RoleId { get; set; } = 4;
 
+        public long SettlementId { get; set; }
+        public string Address { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
+
         public UserCreateDTO()
         {
 

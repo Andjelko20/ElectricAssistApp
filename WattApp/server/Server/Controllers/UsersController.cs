@@ -134,7 +134,11 @@ namespace Server.Controllers
                     Password = HashGenerator.Hash(requestBody.Password),
                     Blocked = requestBody.Blocked,
                     RoleId = requestBody.RoleId,
-                    Email=requestBody.Email
+                    Email=requestBody.Email,
+                    Address=requestBody.Address,
+                    Latitude=requestBody.Latitude,
+                    Longitude=requestBody.Longitude,
+                    SettlementId=requestBody.SettlementId
                 };
 
                 _sqliteDb.Users.Add(user);
@@ -167,7 +171,8 @@ namespace Server.Controllers
                 var user = await userService.GetUserById(id);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
-                user.RoleId = requestBody.RoleId;
+                if((requestBody.RoleId==Roles.AdminId && user.RoleId==Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId&& user.RoleId == Roles.AdminId))
+                    user.RoleId = requestBody.RoleId;
                 user.Blocked = requestBody.Blocked;
                 user.Email = requestBody.Email;
                 _sqliteDb.Users.Update(user);   
