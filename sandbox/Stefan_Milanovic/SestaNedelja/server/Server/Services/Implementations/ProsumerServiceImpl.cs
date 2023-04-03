@@ -38,11 +38,24 @@ namespace Server.Services.Implementations
 
         public double GetTotalNumberOfDevicesInTheCity(long deviceCategoryId, long cityId)
         {
+            // dodaj za grad kad se promene modeli
             double NumberOfDevices = 0.0;
             var Devices = _context.Devices.Where(d => d.DeviceCategoryId == deviceCategoryId).ToList();
             NumberOfDevices = Devices.Count;
 
             return NumberOfDevices;
+        }
+
+        public double GetTotalNumberOfDevicesInTheSettlement(long deviceCategoryId, long cityId, long settlementId)
+        {
+            // dodaj za naselje kad se promene modeli
+            double NumberOfDevices = 0.0;
+            var Devices = _context.Devices.Where(d => d.DeviceCategoryId == deviceCategoryId).ToList();
+            NumberOfDevices = Devices.Count;
+
+            return NumberOfDevices;
+
+            return 0.0;
         }
     }
 }

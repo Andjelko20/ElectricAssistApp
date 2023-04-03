@@ -39,18 +39,23 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Total number of consumption/production devices from all prosumers in the city
+        /// Total number of consumption/production devices from all prosumers in the city or settlement
         /// </summary>
         [HttpGet]
-        [Route("{CityOrSettlement:regex(city|settlement)}/{CityOrSettlementId:long}/{DeviceCategoryId:long}")]
+        [Route("{CityOrSettlement:regex(city|settlement)}/{CityId:long}/{SettlementId:long}/{DeviceCategoryId:long}")]
         //[Authorize(Roles = "dispecer")]
-        public async Task<IActionResult> GetTotalNumberOfDevicesInTheCityOrSettlement([FromRoute] string CityOrSettlement, [FromRoute] long CityOrSettlementId, [FromRoute] long DeviceCategoryId)
+        public async Task<IActionResult> GetTotalNumberOfDevicesInTheCityOrSettlement([FromRoute] string CityOrSettlement, [FromRoute] long CityId, [FromRoute] long SettlementId, [FromRoute] long DeviceCategoryId)
         {
             double TotalResult = -1;
 
             if (CityOrSettlement.ToLower() == "city")
             {
-                TotalResult = prosumerService.GetTotalNumberOfDevicesInTheCity(DeviceCategoryId, CityOrSettlementId);
+                TotalResult = prosumerService.GetTotalNumberOfDevicesInTheCity(DeviceCategoryId, CityId);
+                return Ok(TotalResult);
+            }
+            else if(CityOrSettlement.ToLower() == "settlement")
+            {
+                TotalResult = prosumerService.GetTotalNumberOfDevicesInTheSettlement(DeviceCategoryId, CityId, SettlementId);
                 return Ok(TotalResult);
             }
             return BadRequest("Invalid parameter. Please use 'city' or 'settlement'.");
