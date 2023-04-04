@@ -3,11 +3,11 @@
     public class DeviceUpdateDTO
     {
         public long Id { get; set; }
-        public long UserId { get; set; }
+        /*public long UserId { get; set; }
         public long DeviceCategoryId { get; set; }
         public long DeviceTypeId { get; set; }
         public long DeviceBrandId { get; set; }
-        public long DeviceModelId { get; set; }
+        public long DeviceModelId { get; set; }*/
         public string Name { get; set; }
         public float EnergyInKwh { get; set; }
         public float StandByKwh { get; set; }
