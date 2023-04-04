@@ -24,6 +24,7 @@ import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.
 import { DispatcherGuard } from './guards/dispatcher.guard';
 import { MapInputComponent } from './components/map-input/map-input.component';
 import { ProsumerDevicesPageComponent } from './pages/prosumer/prosumer-devices-page/prosumer-devices-page.component';
+import { ProsumerDevicePageComponent } from './pages/prosumer/prosumer-device-page/prosumer-device-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'admindso',pathMatch:'full'},
@@ -44,7 +45,7 @@ const routes: Routes = [
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'prosumer-home-page',component:ProsumerHomePageComponent},
 	{path:'prosumer-devices-page',component:ProsumerDevicesPageComponent},
-	
+	{path:'prosumer-device-page',component:ProsumerDevicePageComponent},
 	{path:'today',component:TodayComponent},
 	{path:'reset-password',component:ResetPasswordPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},

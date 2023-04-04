@@ -53,6 +53,7 @@ import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.
 import { MapInputComponent } from './components/map-input/map-input.component';
 import { ProsumerNavbarComponent } from './pages/prosumer/prosumer-navbar/prosumer-navbar.component';
 import { ProsumerFooterComponent } from './pages/prosumer/prosumer-footer/prosumer-footer.component';
+import { ProsumerDevicePageComponent } from './pages/prosumer/prosumer-device-page/prosumer-device-page.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { ProsumerFooterComponent } from './pages/prosumer/prosumer-footer/prosum
     AdminDsoUpdateComponent,
     AdminDsoAddComponent,
     ProsumerNavbarComponent,
-    ProsumerFooterComponent
+    ProsumerFooterComponent,
+    ProsumerDevicePageComponent
   ],
   imports: [
     BrowserModule,
