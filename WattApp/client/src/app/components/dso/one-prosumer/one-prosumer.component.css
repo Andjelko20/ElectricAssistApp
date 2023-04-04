@@ -1,0 +1,30 @@
+.prosumer-info {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  max-width: 80%;
+}
+
+.prosumer-info > .info-cell:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.info-cell {
+  display: flex;
+  align-items: center;
+}
+
+.cell-label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.cell-value {
+  flex: 1;
+}

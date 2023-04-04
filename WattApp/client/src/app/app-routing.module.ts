@@ -28,6 +28,8 @@ import { AllDevicesComponent } from './components/prosumers/devices/all-devices/
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
 import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
 import { DsoOneProsumerPageComponent } from './pages/dso/dso-one-prosumer-page/dso-one-prosumer-page.component';
+import { OneProsumerComponent } from './components/dso/one-prosumer/one-prosumer.component';
+
 
  
 const routes: Routes = [
@@ -57,7 +59,7 @@ const routes: Routes = [
 	{path:"devices-add",component:AddDeviceComponent},
 	{path:"devices-update/:id",component:UpdateDeviceComponent},
 	{path:"oneprosumer",component:DsoOneProsumerPageComponent},
-
+	{path:"oneprosumertest",component:OneProsumerComponent},
 	{path:'**',redirectTo:"login"}
 ];
 
