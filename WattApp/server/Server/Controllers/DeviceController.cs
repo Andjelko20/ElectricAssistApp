@@ -199,7 +199,7 @@ namespace Server.Controllers
 
         [HttpPost]
         [Authorize(Roles = "prosumer, guest")]
-        public IActionResult addNewDevice([FromBody]DeviceRequestDTO deviceRequestDTO)
+        public IActionResult addNewDevice([FromBody]DeviceCreateDTO deviceRequestDTO)
         {
             try
             {
@@ -294,7 +294,7 @@ namespace Server.Controllers
 
         [HttpPut]
         [Authorize(Roles = "prosumer")]
-        public IActionResult editDevice([FromBody]DeviceRequestDTO deviceRequestDTO)
+        public IActionResult editDevice([FromBody]DeviceCreateDTO deviceRequestDTO)
         {
             try
             {

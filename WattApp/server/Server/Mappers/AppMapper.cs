@@ -28,7 +28,7 @@ namespace Server.Mappers
                         //.ForMember(dest => dest.DeviceType, opt => opt.MapFrom(src => src.DeviceTypeId))
                         //.ForMember(dest => dest.DeviceBrand, opt => opt.MapFrom(src => src.DeviceBrandId))
                         .ForMember(dest => dest.DeviceModel, opt => opt.MapFrom(src => src.DeviceModelId));
-            CreateMap<DeviceRequestDTO, Device>().ReverseMap();
+            CreateMap<DeviceCreateDTO, Device>().ReverseMap();
             CreateMap<DeviceCategory, DeviceCategoryDTO>().ReverseMap();
 
             /*CreateMap<Device, DeviceResponseDTO>()

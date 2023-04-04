@@ -1,6 +1,6 @@
 ﻿namespace Server.DTOs
 {
-    public class DeviceRequestDTO
+    public class DeviceUpdateDTO
     {
         public long Id { get; set; }
         public long UserId { get; set; }
@@ -13,6 +13,6 @@
         public float StandByKwh { get; set; }
         public bool Visibility { get; set; }
         public bool Controlability { get; set; }
-        public bool TurnOn { get;  set; }
+        public bool TurnOn { get; set; }
     }
 }
