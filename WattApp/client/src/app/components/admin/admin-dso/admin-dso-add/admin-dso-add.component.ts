@@ -5,6 +5,7 @@ import { Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Roles } from 'src/app/utilities/role';
 import { environment } from 'src/environments/environment';
+import { LatLng } from 'leaflet';
 
 @Component({
   selector: 'app-admin-dso-add',
@@ -21,7 +22,9 @@ export class AdminDsoAddComponent implements OnInit{
     block:false,
     roleId: 1,
 	settlementId:0,
-	address:''
+	address:'',
+	latitude:0,
+	longitude:0
   }
   public emailErrorMessage:string="";
 	public errorMessage:string="";
@@ -87,7 +90,10 @@ export class AdminDsoAddComponent implements OnInit{
       }
     });
   }
-
+  locationChanged(latLng:LatLng){
+	this.addUserRequest.latitude=latLng.lat;
+	this.addUserRequest.longitude=latLng.lng;
+  }
   sendEmail(){
 		this.emailUp=this.addUserRequest.email;
 		this.usersService.adminChangePasswordEmail(this.emailUp).subscribe({
