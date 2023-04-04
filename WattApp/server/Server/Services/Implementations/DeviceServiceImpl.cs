@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
+using MimeKit.Encodings;
 using Server.Data;
 using Server.DTOs;
+using Server.Exceptions;
 using Server.Models;
 
 namespace Server.Services.Implementations
@@ -18,7 +20,7 @@ namespace Server.Services.Implementations
         /// <inheritdoc/>
         public Device addNewDevice(Device device)
         {
-			/*
+            /*
             if (device.EnergyInKwh == null || device.EnergyInKwh == 0)
             {
                 device.EnergyInKwh = _context.TypeBrandModels.FirstOrDefault(x => x.TypeId == device.DeviceTypeId && x.ModelId == device.DeviceModelId && x.BrandId == x.BrandId).EnergyKwh;
@@ -28,6 +30,27 @@ namespace Server.Services.Implementations
                 device.StandByKwh = _context.TypeBrandModels.FirstOrDefault(x => x.TypeId == device.DeviceTypeId && x.ModelId == device.DeviceModelId && x.BrandId == x.BrandId).StandByKwh;
             }
 			*/
+            long deviceModelId = device.DeviceModelId;
+
+            if (device.EnergyInKwh == null || device.EnergyInKwh == 0)
+            {
+                var result = _context.DeviceModels.Find(deviceModelId);
+                if (result == null)
+                {
+                    throw new ItemNotFoundException("Wrong device model id!");
+                }
+                device.EnergyInKwh = result.EnergyKwh;
+            }
+            if (device.StandByKwh == null || device.StandByKwh == 0)
+            {
+                var result = _context.DeviceModels.Find(deviceModelId);
+                if(result == null)
+                {
+                    throw new ItemNotFoundException("Wrong device model id!");
+                }
+                device.StandByKwh = (float)result.StandByKwh;
+            }
+
             _context.Devices.Add(device);
             _context.SaveChanges();
             return device;

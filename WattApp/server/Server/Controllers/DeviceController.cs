@@ -206,61 +206,71 @@ namespace Server.Controllers
         [Authorize(Roles = "prosumer, guest")]
         public IActionResult addNewDevice([FromBody]DeviceCreateDTO deviceCreateDTO)
         {
+            Device device = _mapper.Map<Device>(deviceCreateDTO);
             try
             {
-                Device device = _deviceService.addNewDevice(_mapper.Map<Device>(deviceCreateDTO));
-                //DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(device);
-                DeviceResponseDTO deviceDTO = new DeviceResponseDTO();
-                deviceDTO.Id = device.Id;
-                deviceDTO.UserId = device.UserId;
-                deviceDTO.Controlability = device.Controlability;
-                deviceDTO.Visibility = device.Visibility;
-                deviceDTO.TurnOn = device.TurnOn;
-
-                if (device == null)
+                Device response = _deviceService.addNewDevice(device);
+                if(response == null)
                 {
                     throw new DbUpdateException("An error occurred while adding device! Please try again.");
                 }
+                var id = response.DeviceModelId;
+                DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(response);
 
-                long id = device.DeviceModelId;
+                var _connection = context.Database.GetDbConnection();
+                if(_connection != null)
+                {
+                    _connection.Open();
 
-                var _con = context.Database.GetDbConnection();
-                _con.Open();
-                var command = _con.CreateCommand();
+                    var command = _connection.CreateCommand();
 
-                command.CommandText = "select Name from DeviceCategories where Id in (select CategoryId from DeviceTypes where Id in (select DeviceTypeId from DeviceModels where Id = @id))";
-                command.Parameters.Add(new SqliteParameter("@id", id));
-                var reader = command.ExecuteReader();
-                var deviceCategory = reader.GetString(0);
+                    //DeviceCategory
+                    command.CommandText = @" select Name 
+                                             from DeviceCategories 
+                                             where Id in (
+                                                          select CategoryId
+                                                          from DeviceTypes
+                                                          where Id in (
+                                                                        select DeviceTypeId 
+                                                                        from DeviceModels 
+                                                                        where Id = @id))";
+                    command.Parameters.Add(new SqliteParameter("@id", id));
+                    var deviceCategory = command.ExecuteScalar().ToString();
+                    responseDTO.DeviceCategory = deviceCategory;
 
-                command.CommandText = "select Name from DeviceTypes where Id in (select DeviceTypeId from DeviceModels where Id = @id)";
-                command.Parameters.Add(new SqliteParameter("@id", id));
-                reader = command.ExecuteReader();
-                var deviceType = reader.GetString(0);
+                    //DeviceType
+                    command.CommandText = @"select Name 
+                                            from DeviceTypes 
+                                            where Id in (
+                                                         select DeviceTypeId 
+                                                         from DeviceModels 
+                                                         where Id = @id)";
+                    //command.Parameters.Add(new SqliteParameter("@id", id));
+                    var deviceType = command.ExecuteScalar().ToString();
+                    responseDTO.DeviceType = deviceType;
+                    
+                    //DeviceBrand
+                    command.CommandText = @"select Name 
+                                            from DeviceTypes 
+                                            where Id in (
+                                                         select DeviceTypeId 
+                                                         from DeviceModels 
+                                                         where Id = @id)";
+                    //command.Parameters.Add(new SqliteParameter("@id", id));
+                    var deviceBrand = command.ExecuteScalar().ToString();
+                    responseDTO.DeviceBrand = deviceBrand;
 
-                command.CommandText = "select Name from DeviceTypes where Id in (select DeviceTypeId from DeviceModels where Id = @id)";
-                command.Parameters.Add(new SqliteParameter("@id", id));
-                reader = command.ExecuteReader();
-                var deviceBrand = reader.GetString(0);
+                    _connection.Close();
+                }
 
-                deviceDTO.DeviceCategory = deviceCategory;
-                deviceDTO.DeviceType = deviceType;
-                deviceDTO.DeviceBrand = deviceBrand;
+                responseDTO.DeviceModel = _deviceModelService.getModelNameById(id);
 
+                return Ok(responseDTO);
 
-                _con.Close();
-
-                /*deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(device.DeviceModel.DeviceType.DeviceCategory.Id);
-                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(device.DeviceModel.DeviceTypeId);
-                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(device.DeviceModel.DeviceBrandId);*/
-
-                deviceDTO.DeviceCategory = deviceCategory;
-                deviceDTO.DeviceType = deviceType;
-                deviceDTO.DeviceBrand = deviceBrand;
-                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(device.Id);
-
-                return Ok(deviceDTO);
+                //return Ok(_mapper.Map<DeviceResponseDTO>(response));
             }
+
+
             catch(DbUpdateException ex)
             {
                 return BadRequest(new
