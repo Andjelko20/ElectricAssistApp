@@ -39,6 +39,62 @@ namespace Server.Controllers
             _mapper = mapper;
         }
         /// <summary>
+        /// Format deviceResponseDTO -> get category, type, brand and model name 
+        /// </summary>
+        /// <param name="responseDTO">responseDTO that you want to format</param>
+        /// <param name="id">model id</param>
+        private void formatDeviceResponseDTO(ref DeviceResponseDTO responseDTO, long id)
+        {
+            var _connection = context.Database.GetDbConnection();
+            if (_connection != null)
+            {
+                _connection.Open();
+
+                var command = _connection.CreateCommand();
+
+                //DeviceCategory
+                command.CommandText = @" select Name 
+                                             from DeviceCategories 
+                                             where Id in (
+                                                          select CategoryId
+                                                          from DeviceTypes
+                                                          where Id in (
+                                                                        select DeviceTypeId 
+                                                                        from DeviceModels 
+                                                                        where Id = @id))";
+                command.Parameters.Add(new SqliteParameter("@id", id));
+                var deviceCategory = command.ExecuteScalar().ToString();
+                responseDTO.DeviceCategory = deviceCategory;
+
+                //DeviceType
+                command.CommandText = @"select Name 
+                                            from DeviceTypes 
+                                            where Id in (
+                                                         select DeviceTypeId 
+                                                         from DeviceModels 
+                                                         where Id = @id)";
+                //command.Parameters.Add(new SqliteParameter("@id", id));
+                var deviceType = command.ExecuteScalar().ToString();
+                responseDTO.DeviceType = deviceType;
+
+                //DeviceBrand
+                command.CommandText = @"select Name 
+                                            from DeviceTypes 
+                                            where Id in (
+                                                         select DeviceTypeId 
+                                                         from DeviceModels 
+                                                         where Id = @id)";
+                //command.Parameters.Add(new SqliteParameter("@id", id));
+                var deviceBrand = command.ExecuteScalar().ToString();
+                responseDTO.DeviceBrand = deviceBrand;
+
+                _connection.Close();
+            }
+
+            responseDTO.DeviceModel = _deviceModelService.getModelNameById(id);
+        }
+
+        /// <summary>
         /// Get device by device id (DSO if he has permissions, for PROSUMER if its his device)
         /// </summary>
         /// 
@@ -198,6 +254,8 @@ namespace Server.Controllers
 
         }
 
+       
+
         /// <summary>
         /// Add new device if you are PROSUMER or GUEST
         /// </summary>
@@ -216,61 +274,10 @@ namespace Server.Controllers
                 }
                 var id = response.DeviceModelId;
                 DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(response);
-
-                var _connection = context.Database.GetDbConnection();
-                if(_connection != null)
-                {
-                    _connection.Open();
-
-                    var command = _connection.CreateCommand();
-
-                    //DeviceCategory
-                    command.CommandText = @" select Name 
-                                             from DeviceCategories 
-                                             where Id in (
-                                                          select CategoryId
-                                                          from DeviceTypes
-                                                          where Id in (
-                                                                        select DeviceTypeId 
-                                                                        from DeviceModels 
-                                                                        where Id = @id))";
-                    command.Parameters.Add(new SqliteParameter("@id", id));
-                    var deviceCategory = command.ExecuteScalar().ToString();
-                    responseDTO.DeviceCategory = deviceCategory;
-
-                    //DeviceType
-                    command.CommandText = @"select Name 
-                                            from DeviceTypes 
-                                            where Id in (
-                                                         select DeviceTypeId 
-                                                         from DeviceModels 
-                                                         where Id = @id)";
-                    //command.Parameters.Add(new SqliteParameter("@id", id));
-                    var deviceType = command.ExecuteScalar().ToString();
-                    responseDTO.DeviceType = deviceType;
-                    
-                    //DeviceBrand
-                    command.CommandText = @"select Name 
-                                            from DeviceTypes 
-                                            where Id in (
-                                                         select DeviceTypeId 
-                                                         from DeviceModels 
-                                                         where Id = @id)";
-                    //command.Parameters.Add(new SqliteParameter("@id", id));
-                    var deviceBrand = command.ExecuteScalar().ToString();
-                    responseDTO.DeviceBrand = deviceBrand;
-
-                    _connection.Close();
-                }
-
-                responseDTO.DeviceModel = _deviceModelService.getModelNameById(id);
+                formatDeviceResponseDTO(ref responseDTO, id);
 
                 return Ok(responseDTO);
-
-                //return Ok(_mapper.Map<DeviceResponseDTO>(response));
             }
-
-
             catch(DbUpdateException ex)
             {
                 return BadRequest(new
