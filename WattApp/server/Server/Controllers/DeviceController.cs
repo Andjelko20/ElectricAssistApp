@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using MimeKit.Encodings;
+using Server.Data;
 using Server.DTOs;
 using Server.Exceptions;
 using Server.Models;
@@ -17,6 +19,8 @@ namespace Server.Controllers
     [ApiController]
     public class DeviceController : ControllerBase
     {
+        private readonly SqliteDbContext context;
+
         DeviceService _deviceService;
         DeviceCategoryService _deviceCategoryService;
         DeviceTypeService _deviceTypeService;
@@ -24,8 +28,9 @@ namespace Server.Controllers
         DeviceModelService _deviceModelService;
         IMapper _mapper;
 
-        public DeviceController(DeviceService deviceService, DeviceCategoryService deviceCategoryService, DeviceTypeService deviceTypeService, DeviceBrandService deviceBrandService, DeviceModelService deviceModelService, IMapper mapper)
+        public DeviceController(SqliteDbContext context, DeviceService deviceService, DeviceCategoryService deviceCategoryService, DeviceTypeService deviceTypeService, DeviceBrandService deviceBrandService, DeviceModelService deviceModelService, IMapper mapper)
         {
+            this.context = context;
             _deviceService = deviceService;
             _deviceCategoryService = deviceCategoryService;
             _deviceTypeService = deviceTypeService;
@@ -59,7 +64,7 @@ namespace Server.Controllers
 
                 if (deviceDTO == null)
                 {
-                    throw new ItemNotFoundException("Device for not found!");
+                    throw new ItemNotFoundException("Device not found!");
                 }
 
                 deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
@@ -199,20 +204,60 @@ namespace Server.Controllers
 
         [HttpPost]
         [Authorize(Roles = "prosumer, guest")]
-        public IActionResult addNewDevice([FromBody]DeviceCreateDTO deviceRequestDTO)
+        public IActionResult addNewDevice([FromBody]DeviceCreateDTO deviceCreateDTO)
         {
             try
             {
-                DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.addNewDevice(_mapper.Map<Device>(deviceRequestDTO)));
-                if (deviceDTO == null)
+                Device device = _deviceService.addNewDevice(_mapper.Map<Device>(deviceCreateDTO));
+                //DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(device);
+                DeviceResponseDTO deviceDTO = new DeviceResponseDTO();
+                deviceDTO.Id = device.Id;
+                deviceDTO.UserId = device.UserId;
+                deviceDTO.Controlability = device.Controlability;
+                deviceDTO.Visibility = device.Visibility;
+                deviceDTO.TurnOn = device.TurnOn;
+
+                if (device == null)
                 {
                     throw new DbUpdateException("An error occurred while adding device! Please try again.");
                 }
 
-                deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
-                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
-                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
-                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
+                long id = device.DeviceModelId;
+
+                var _con = context.Database.GetDbConnection();
+                _con.Open();
+                var command = _con.CreateCommand();
+
+                command.CommandText = "select Name from DeviceCategories where Id in (select CategoryId from DeviceTypes where Id in (select DeviceTypeId from DeviceModels where Id = @id))";
+                command.Parameters.Add(new SqliteParameter("@id", id));
+                var reader = command.ExecuteReader();
+                var deviceCategory = reader.GetString(0);
+
+                command.CommandText = "select Name from DeviceTypes where Id in (select DeviceTypeId from DeviceModels where Id = @id)";
+                command.Parameters.Add(new SqliteParameter("@id", id));
+                reader = command.ExecuteReader();
+                var deviceType = reader.GetString(0);
+
+                command.CommandText = "select Name from DeviceTypes where Id in (select DeviceTypeId from DeviceModels where Id = @id)";
+                command.Parameters.Add(new SqliteParameter("@id", id));
+                reader = command.ExecuteReader();
+                var deviceBrand = reader.GetString(0);
+
+                deviceDTO.DeviceCategory = deviceCategory;
+                deviceDTO.DeviceType = deviceType;
+                deviceDTO.DeviceBrand = deviceBrand;
+
+
+                _con.Close();
+
+                /*deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(device.DeviceModel.DeviceType.DeviceCategory.Id);
+                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(device.DeviceModel.DeviceTypeId);
+                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(device.DeviceModel.DeviceBrandId);*/
+
+                deviceDTO.DeviceCategory = deviceCategory;
+                deviceDTO.DeviceType = deviceType;
+                deviceDTO.DeviceBrand = deviceBrand;
+                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(device.Id);
 
                 return Ok(deviceDTO);
             }
@@ -292,9 +337,9 @@ namespace Server.Controllers
 
 
 
-        [HttpPut]
+        /*[HttpPut]
         [Authorize(Roles = "prosumer")]
-        public IActionResult editDevice([FromBody]DeviceCreateDTO deviceRequestDTO)
+        public IActionResult editDevice([FromBody]DeviceRequestDTO deviceRequestDTO)
         {
             try
             {
@@ -330,7 +375,7 @@ namespace Server.Controllers
                 });
             }
 
-        }
+        }*/
 
         [HttpDelete("{id:long}")]
         public IActionResult deleteDeviceById([FromRoute]long id)
