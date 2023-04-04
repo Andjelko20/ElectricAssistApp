@@ -1,7 +1,0 @@
-.main {
-    display: grid;
-    grid-template-columns: repeat(5, 6rem);
-}
-.image{
-    height: 4rem;
-}

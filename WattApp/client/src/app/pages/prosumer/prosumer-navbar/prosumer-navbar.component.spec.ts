@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllDevicesComponent } from './all-devices.component';
+import { ProsumerNavbarComponent } from './prosumer-navbar.component';
 
-describe('AllDevicesComponent', () => {
-  let component: AllDevicesComponent;
-  let fixture: ComponentFixture<AllDevicesComponent>;
+describe('ProsumerNavbarComponent', () => {
+  let component: ProsumerNavbarComponent;
+  let fixture: ComponentFixture<ProsumerNavbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AllDevicesComponent ]
+      declarations: [ ProsumerNavbarComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AllDevicesComponent);
+    fixture = TestBed.createComponent(ProsumerNavbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
