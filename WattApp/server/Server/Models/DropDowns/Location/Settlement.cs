@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.Eventing.Reader;
+using Server.Data;
 
 namespace Server.Models.DropDowns.Location
 {
@@ -8,9 +8,10 @@ namespace Server.Models.DropDowns.Location
     {
         [Key]
         public long Id { get; set; }
-        [ForeignKey(nameof(City.Id))]
         [Required]
         public long CityId { get; set; }
+        [ForeignKey("CityId")]
+        public City City { get; set; }
         [Required]
         public string Name { get; set; }
     }

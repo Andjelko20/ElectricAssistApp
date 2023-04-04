@@ -3,7 +3,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { Roles } from 'src/app/utilities/role';
 import { environment } from 'src/environments/environment';
+import { LatLng } from 'leaflet';
 
 @Component({
   selector: 'app-admin-dso-add',
@@ -18,23 +20,38 @@ export class AdminDsoAddComponent implements OnInit{
     password:'',
     email:'',
     block:false,
-    roleId: 0
+    roleId: 1,
+	settlementId:0,
+	address:'',
+	latitude:0,
+	longitude:0
   }
   public emailErrorMessage:string="";
 	public errorMessage:string="";
 	public success:boolean=false;
   public passwordGen='';
   public emailUp='';
-  roles:Array<any>=[];
+  public roles=Roles;
+
+  public cities:any;
+  public settlements:any;
   
   constructor(private usersService:AuthService,private router:Router) { }
 
   ngOnInit(): void {
+	/** 
 	fetch(environment.serverUrl+"/api/users/roles",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 	.then(res=>res.json())
 	.then(res=>{
 		this.roles=res;
 		this.addUserRequest.roleId=this.roles[0]?.id;
+  	});
+	*/
+	fetch(environment.serverUrl+"/cities?countryId=1",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+	.then(res=>res.json())
+	.then(res=>{
+		this.cities=res.map((r:any)=>({id:r.id,name:r.name}));
+		this.onSelectedCity({target:{value:this.cities[0].id}});
   	});
   }
   @ViewChild('teams') teams!: ElementRef;
@@ -45,7 +62,16 @@ export class AdminDsoAddComponent implements OnInit{
   onSelectedRole(event:any)
   {
     this.addUserRequest.roleId = event.target.value; 
-   
+  }
+  onSelectedCity(event:any){
+	console.log(event)
+	let id=event.target.value;
+	fetch(environment.serverUrl+"/settlements?cityId="+id,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+	.then(res=>res.json())
+	.then(res=>{
+			this.settlements=res.map((r:any)=>({id:r.id,name:r.name}));
+			this.addUserRequest.settlementId=this.settlements[0].id;
+		})
   }
   generatePassword() {
     this.passwordGen=Array(10).
@@ -54,6 +80,7 @@ export class AdminDsoAddComponent implements OnInit{
   }
   addUsers()
   {
+	this.generatePassword();
     this.addUserRequest.password=this.passwordGen;
     this.usersService.addUsers(this.addUserRequest)
     .subscribe({
@@ -63,7 +90,10 @@ export class AdminDsoAddComponent implements OnInit{
       }
     });
   }
-
+  locationChanged(latLng:LatLng){
+	this.addUserRequest.latitude=latLng.lat;
+	this.addUserRequest.longitude=latLng.lng;
+  }
   sendEmail(){
 		this.emailUp=this.addUserRequest.email;
 		this.usersService.adminChangePasswordEmail(this.emailUp).subscribe({

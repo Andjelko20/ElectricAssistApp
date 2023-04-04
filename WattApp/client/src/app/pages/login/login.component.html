@@ -17,10 +17,11 @@
                     </div>
 
                     <div class="btn-container">
-                        <a class="link" [routerLink]='["/forgot-password"]'>Forgot password?</a>
+                        
 
                         <button class="btn btn-dark" (click)="login()">Login</button><br>
-                        <a class="linka" [routerLink]='["/register"]'>Register</a>
+                        <!--<a class="linka" [routerLink]='["/register"]'>Register</a>-->
+						<a class="link" [routerLink]='["/forgot-password"]'>Forgot password?</a>
                     </div>
                     <div class="error-message">
                         {{errorMsg}}
