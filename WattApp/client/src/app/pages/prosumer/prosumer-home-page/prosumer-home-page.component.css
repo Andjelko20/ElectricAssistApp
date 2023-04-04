@@ -6,30 +6,26 @@ ul {
     list-style: none;
 }
 
-header {
-    background-color: #1C315E;
-    box-shadow: 1px 1px 5px 0px grey;
-    position: sticky;
+.main {
+    border: 1px solid black;
     top: 0;
     width: 100%;
-    z-index: 1;
-}
-
-main {
-    width: 100%;
-    min-height: 480px;
+    min-height: 100vh;
+    position: absolute;
 }
 
 .homeimage {
+    position: relative;
     height: auto;
     width: 100%;
     z-index: -1;
 }
 
 #homeimg {
+    padding-top: 45px;
     position: relative;
     width: 100%;
-    min-height: 200px;
+    min-height: 280px;
 }
 
 
@@ -38,123 +34,13 @@ main {
 
 /* pravi problem kad se smanji na 320px */
 
-.logo {
-    display: inline-block;
-    color: white;
-    font-size: 35px;
-    margin-left: 10px;
-    text-align: center;
-}
-
-
-/* Nav menu */
-
-.nav {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    background-color: #1C315E;
-    overflow: hidden;
-}
-
-.menu a {
-    display: block;
-    margin-top: 30px;
-    padding-left: 30px;
-    padding-right: 30px;
-    color: white;
-}
-
-.menu a:hover {
-    color: #95aad7;
-}
-
-.nav {
-    max-height: 0;
-    transition: max-height .5s ease-out;
-}
-
-
-/* Menu Icon */
-
-.hamb {
-    cursor: pointer;
-    float: right;
-    padding: 20px 20px;
-}
-
-
-/* Style label tag */
-
-.hamb-line {
-    background: white;
-    display: block;
-    height: 2px;
-    position: relative;
-    width: 24px;
-}
-
-
-/* Style span tag */
-
-.hamb-line::before,
-.hamb-line::after {
-    background: white;
-    content: '';
-    display: block;
-    height: 100%;
-    position: absolute;
-    transition: all .2s ease-out;
-    width: 100%;
-}
-
-.hamb-line::before {
-    top: 5px;
-}
-
-.hamb-line::after {
-    top: -5px;
-}
-
-.side-menu {
-    display: none;
-}
-
-
-/* Hide checkbox */
-
-
-/* Toggle menu icon */
-
-.side-menu:checked~nav {
-    max-height: 100%;
-}
-
-.side-menu:checked~.hamb .hamb-line {
-    background: transparent;
-}
-
-.side-menu:checked~.hamb .hamb-line::before {
-    transform: rotate(-45deg);
-    top: 0;
-}
-
-.side-menu:checked~.hamb .hamb-line::after {
-    transform: rotate(45deg);
-    top: 0;
-}
-
 
 /* Car and battery */
 
 .carbattery {
     position: sticky;
     background-color: white;
-    /* border-bottom: 1px solid rgb(116, 116, 116); */
-    flex-wrap: wrap;
-    display: block;
-    height: 100%;
-    position: absolute;
+    border-bottom: 1px solid rgb(116, 116, 116);
     height: 100%;
     transition: all 0.3s;
     position: relative;
@@ -195,7 +81,7 @@ main {
     padding-top: 5px;
     background-color: white;
     padding-left: 5px;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .alldevice {
@@ -270,7 +156,7 @@ main {
     width: 25%;
     height: 7%;
     top: 12%;
-    right: 1%;
+    right: 2%;
     position: absolute;
     transition: all 0.3s;
 }
@@ -289,12 +175,10 @@ main {
 }
 
 .prodactionToday {
-    display: flexbox;
     width: 70px;
     height: 3%;
     position: absolute;
-    top: 20%;
-    right: 2px;
+    top: 12%;
     transition: all 0.3s;
 }
 
@@ -330,24 +214,6 @@ h1 {
 /* Responsiveness */
 
 @media (min-width: 768px) {
-    .nav {
-        max-height: none;
-        top: 0;
-        position: relative;
-        float: right;
-        width: fit-content;
-        background-color: transparent;
-    }
-    .menu li {
-        float: left;
-    }
-    .menu a:hover {
-        background-color: transparent;
-        color: #3E5483;
-    }
-    .hamb {
-        display: none;
-    }
     #smarthomeh2 {
         padding-left: 55px;
         font-size: 35px;
@@ -370,13 +236,15 @@ h1 {
     }
     .carbatterytree {
         margin-left: 10%;
+        margin-top: 1%;
+        margin-bottom: 2%;
     }
     .prodactionToday {
         display: flexbox;
         width: 300px;
         height: 100px;
         position: absolute;
-        top: 30%;
+        top: 19%;
         right: 5px;
         transition: all 0.3s;
     }
@@ -399,7 +267,7 @@ h1 {
         display: flexbox;
         width: 15%;
         max-height: 20%;
-        top: 50%;
+        top: 30%;
         display: inline-block;
         left: 32%;
         position: absolute;
@@ -408,8 +276,8 @@ h1 {
     .prognosis {
         display: flex;
         width: 17%;
-        height: 15%;
-        top: 12%;
+        height: 10%;
+        top: 8%;
         right: 1%;
         position: absolute;
         transition: all 0.3s;
@@ -418,15 +286,15 @@ h1 {
         display: flexbox;
         width: 10%;
         max-height: 20%;
-        top: 35%;
+        top: 21%;
         right: 30%;
         position: absolute;
         transition: all 0.3s;
         display: flex;
     }
     .powerTransmissiontower {
-        top: 20%;
-        left: 2%;
+        top: 10%;
+        left: 3%;
         width: 10%;
         max-height: 20%;
         text-align: center;

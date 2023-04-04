@@ -51,6 +51,8 @@ import { CurrentPowerWattmeterComponent } from './components/dso/meter/current-p
 import { NumberOfUsersMeterComponent } from './components/dso/meter/number-of-users-meter/number-of-users-meter.component';
 import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
 import { MapInputComponent } from './components/map-input/map-input.component';
+import { ProsumerNavbarComponent } from './pages/prosumer/prosumer-navbar/prosumer-navbar.component';
+import { ProsumerFooterComponent } from './pages/prosumer/prosumer-footer/prosumer-footer.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,9 @@ import { MapInputComponent } from './components/map-input/map-input.component';
     AdminProsumerAddComponent,
     AdminProsumerUpdateComponent,
     AdminDsoUpdateComponent,
-    AdminDsoAddComponent
+    AdminDsoAddComponent,
+    ProsumerNavbarComponent,
+    ProsumerFooterComponent
   ],
   imports: [
     BrowserModule,

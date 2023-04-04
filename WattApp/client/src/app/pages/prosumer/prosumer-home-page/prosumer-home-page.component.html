@@ -1,44 +1,30 @@
-<header class="header">
-    <!-- Logo -->
-    <a href="prosumer-home-page" class="logo">WattApp</a>
-    <!-- Hamburger icon -->
-    <input class="side-menu" type="checkbox" id="side-menu" />
-    <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
-    <!-- Menu -->
-    <nav class="nav">
-        <ul class="menu">
-            <li><a href="prosumer-home-page">Dashboard</a></li>
-            <li><a href="#">Devices</a> </li>
-            <li><a href="#">Setting</a></li>
-            <li><a href="#">Logout</a></li>
-        </ul>
-    </nav>
-</header>
+<app-prosumer-navbar>
+</app-prosumer-navbar>
+
 <!-- Main content -->
-<main>
-    <article>
-        <div class="homeimage">
-            <img id="homeimg" src="assets/img/prosumerHome.png" alt="">
-            <div class="tower">
-                <img class="imgtower" src="assets/img/transmission-tower.png" alt="">
-            </div>
-            <div class="powerTransmissiontower">
-                <app-prosumer-tower></app-prosumer-tower>
-            </div>
-            <div class="consumptionNow">
-                <app-prosumer-solar></app-prosumer-solar>
-            </div>
-
-            <div class="solarPowerNow">
-                <app-prosumer-house></app-prosumer-house>
-            </div>
-
-            <div class="prognosis"></div>
-            <div class="prodactionToday">
-                <h2>Production today</h2>
-                <h1><strong>24.56 kWh</strong></h1>
-            </div>
+<div class="main">
+    <div class="content-wrap">
+        <img id="homeimg" src="assets/img/prosumerHome.png" alt="">
+        <div class="tower">
+            <img class="imgtower" src="assets/img/transmission-tower.png" alt="">
         </div>
+        <div class="powerTransmissiontower">
+            <app-prosumer-tower></app-prosumer-tower>
+        </div>
+        <div class="consumptionNow">
+            <app-prosumer-solar></app-prosumer-solar>
+        </div>
+
+        <div class="solarPowerNow">
+            <app-prosumer-house></app-prosumer-house>
+        </div>
+
+        <div class="prognosis"></div>
+        <div class="prodactionToday">
+            <h2>Production today</h2>
+            <h1><strong>24.56 kWh</strong></h1>
+        </div>
+
         <div class="carbattery">
             <div class="carbatterytree">
                 <div class="device-item">
@@ -61,62 +47,44 @@
             </div>
         </div>
         <h2 id="smarthomeh2">Smart Home Devices</h2>
-        <div class="alldevice">
-            <div class="devices">
-                <div class="devices-item" id="slide-1">
-                    <a href="#" class="devices-device-item">
-                        <img id="imgdevice" src="assets/img/water-heater.png" alt="">
 
-                    </a>
-                    <h3 id="deviceh3">Boiler</h3>
-                </div>
-                <div class="devices-item" id="slide-2">
-                    <a href="#" class="devices-device-item">
-                        <img id="imgdevice" src="assets/img/gas.png" alt="">
-                    </a>
-                    <h3 id="deviceh3">Gas stove</h3>
-                </div>
-                <div class="devices-item" id="slide-3">
-                    <a href="#" class="devices-device-item">
-                        <img id="imgdevice" src="assets/img/water-heater.png" alt="">
-                    </a>
-                    <h3 id="deviceh3">Boiler</h3>
-                </div>
-                <div class="devices-item" id="slide-4">
-                    <a href="#" class="devices-device-item">
-                        <img id="imgdevice" src="assets/img/solar-panel.png" alt="">
-                    </a>
-                    <h3 id="deviceh3">Solar panel</h3>
-                </div>
-                <div class="devices-item" id="slide-5">
-                    <a href="#" class="devices-device-item">
-                        <img id="imgdevice" src="assets/img/water-heater.png" alt="">
-                    </a>
-                    <h3 id="deviceh3">Boiler</h3>
-                </div>
-                <div class="devices-item" id="slide-6">
-                    <a href="#" class="devices-device-item">
-                        <img id="imgdevice" src="assets/img/water-heater.png" alt="">
-                    </a>
-                    <h3 id="deviceh3">Boiler</h3>
-                </div>
-                <div class="devices-item" id="slide-7">
-                    <a href="#" class="devices-device-item">
-                        <img id="imgdevice" src="assets/img/water-heater.png" alt="">
-                    </a>
-                    <h3 id="deviceh3">Boiler</h3>
-                </div>
+        <div class="devices">
+            <div class="devices-item" id="slide-1">
+                <a href="#" class="devices-device-item">
+                    <img id="imgdevice" src="assets/img/water-heater.png" alt="">
 
-                <div class="devices-item" id="slide-8">
-                    <a href="#" class="devices-device-item">
-                        <img id="imgdevice" src="assets/img/water-heater.png" alt="">
-                    </a>
-                    <h3 id="deviceh3">Boiler</h3>
-                </div>
+                </a>
+                <h3 id="deviceh3">Boiler</h3>
+            </div>
+            <div class="devices-item" id="slide-2">
+                <a href="#" class="devices-device-item">
+                    <img id="imgdevice" src="assets/img/gas.png" alt="">
+                </a>
+                <h3 id="deviceh3">Gas stove</h3>
+            </div>
+            <div class="devices-item" id="slide-3">
+                <a href="#" class="devices-device-item">
+                    <img id="imgdevice" src="assets/img/water-heater.png" alt="">
+                </a>
+                <h3 id="deviceh3">Boiler</h3>
+            </div>
+            <div class="devices-item" id="slide-4">
+                <a href="#" class="devices-device-item">
+                    <img id="imgdevice" src="assets/img/solar-panel.png" alt="">
+                </a>
+                <h3 id="deviceh3">Solar panel</h3>
+            </div>
+            <div class="devices-item" id="slide-5">
+                <a href="#" class="devices-device-item">
+                    <img id="imgdevice" src="assets/img/water-heater.png" alt="">
+                </a>
+                <h3 id="deviceh3">Boiler</h3>
             </div>
         </div>
-    </article>
-</main>
+        <app-prosumer-footer></app-prosumer-footer>
+    </div>
+</div>
+
 <!-- <div class="wrapper">
     <div class="homeimage">
         <img id="homeimg" src="assets/img/prosumerHome.png" alt="">
