@@ -4,6 +4,7 @@ using Server.DTOs;
 using Server.DTOs.Responses;
 using Server.Models;
 using Server.Models.DropDowns.Location;
+using Server.Utilities;
 using System.Linq;
 using System.Net;
 
@@ -91,6 +92,21 @@ namespace Server.Services.Implementations
         public Task<UserModel?>? Login(string username)
         {
             return context.Users.Include(user => user.Role).FirstOrDefaultAsync(user => user.Username==username || user.Email==username);
+        }
+
+        public Task<List<object>> GetAllProsumers()
+        {
+            return context
+                .Users
+                .Where(user => user.RoleId == Roles.ProsumerId)
+                .Select(user =>(object)(new
+                {
+                    Id=user.Id,
+                    Name=user.Name,
+                    Latitude=user.Latitude,
+                    Longitude=user.Longitude
+                }))
+                .ToListAsync();
         }
     }
 }

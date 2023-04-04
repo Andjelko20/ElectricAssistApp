@@ -142,13 +142,21 @@ namespace Server.Controllers
                 };
 
                 _sqliteDb.Users.Add(user);
+                try
+                {
+                    emailService.SendEmail(requestBody.Email,"Account created","Your account is created successfully. Your password is <b>"+requestBody.Password+"</b>",true);
+                }
+                catch
+                {
+                    return StatusCode(500, new MessageResponseDTO("Email is not sent. Check if your email exists."));
+                }
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message="Creted" });
             }
             catch(Exception ex)
             {
                 //return StatusCode(400, new { message = "Already exists user with that username" });
-                return StatusCode(400, new MessageResponseDTO("Already exists user with that username"));
+                return StatusCode(400, new MessageResponseDTO("Already exists user with that username or email"));
             }
 
         }
