@@ -19,7 +19,9 @@ export class AdminDsoAddComponent implements OnInit{
     password:'',
     email:'',
     block:false,
-    roleId: 1
+    roleId: 1,
+	settlementId:0,
+	address:''
   }
   public emailErrorMessage:string="";
 	public errorMessage:string="";
@@ -46,6 +48,7 @@ export class AdminDsoAddComponent implements OnInit{
 	.then(res=>res.json())
 	.then(res=>{
 		this.cities=res.map((r:any)=>({id:r.id,name:r.name}));
+		this.onSelectedCity({target:{value:this.cities[0].id}});
   	});
   }
   @ViewChild('teams') teams!: ElementRef;
@@ -56,7 +59,16 @@ export class AdminDsoAddComponent implements OnInit{
   onSelectedRole(event:any)
   {
     this.addUserRequest.roleId = event.target.value; 
-   
+  }
+  onSelectedCity(event:any){
+	console.log(event)
+	let id=event.target.value;
+	fetch(environment.serverUrl+"/settlements?cityId="+id,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+	.then(res=>res.json())
+	.then(res=>{
+			this.settlements=res.map((r:any)=>({id:r.id,name:r.name}));
+			this.addUserRequest.settlementId=this.settlements[0].id;
+		})
   }
   generatePassword() {
     this.passwordGen=Array(10).

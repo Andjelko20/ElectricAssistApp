@@ -32,14 +32,30 @@
 						<option [value]="roles.PROSUMER_ID">{{roles.PROSUMER_NAME}}</option>
                     </select>
                     <br>
+					<label for="country">Country</label>
+
+                    <select id="country" class="form-control" name="country">     
+                        <option value="1" >Serbia</option>
+                    </select>
+                    <br>
 					<label for="city">City</label>
 
-                    <select id="city" class="form-control" name="city">     
-                        <option *ngFor="let city of cities" [value]="city.id" (change)="onSelectedRole($event)" >{{city.name}}</option>
+                    <select id="city" class="form-control" name="city" (change)="onSelectedCity($event)">     
+                        <option *ngFor="let city of cities" [value]="city.id" >{{city.name}}</option>
 
                     </select>
                     <br>
-                    
+                    <label for="settlement">Settlement</label>
+
+                    <select id="settlement" class="form-control" name="settlement" [(ngModel)]="addUserRequest.settlementId">     
+                        <option *ngFor="let settlement of settlements" [value]="settlement.id"  >{{settlement.name}}</option>
+
+                    </select>
+                    <br>
+					<label for="Address">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" [(ngModel)]="addUserRequest.address">
+                    <br>
+
                 </div>
             </div>
             <button (click)="sendEmail()" class="btn btn-primary">ADD</button>
