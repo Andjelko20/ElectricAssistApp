@@ -7,7 +7,7 @@ namespace Server.Utilities
         public const string Admin = "admin";
         public const long AdminId = 1;
         public const string Dispatcher = "dispatcher";
-        public const long DispatherId = 2;
+        public const long DispatcherId = 2;
         public const string Prosumer = "prosumer";
         public const long ProsumerId = 3;
         public const string Guest = "guest";
