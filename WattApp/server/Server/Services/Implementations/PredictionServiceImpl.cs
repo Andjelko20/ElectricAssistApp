@@ -91,8 +91,6 @@ namespace Server.Services.Implementations
                 }
             }
 
-            //return Results;
-
             var sumByDay = Results.GroupBy(r => r.Day)
                                 .Select(g => new DailyEnergyConsumptionPastMonth
                                 {
