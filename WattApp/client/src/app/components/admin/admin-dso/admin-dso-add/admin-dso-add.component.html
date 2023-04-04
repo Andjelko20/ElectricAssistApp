@@ -17,16 +17,26 @@
                     <!-- <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" [(ngModel)]="addUserRequest.password"> -->
 
-                    <label for="password" class="form-label">Password</label>
+                    <!--<label for="password" class="form-label">Password</label>
                     <input type="text" class="form-control" id="password" name="password" value="{{passwordGen}}" disabled >
                     <form style="margin: 0; padding: 0;">
                         <button class="btn btn-primary" type="submit" (click)="generatePassword()">Generate password</button>
-                    </form>
+                    </form>-->
                     <br>
                     <label for="role">Role</label>
 
                     <select id="role" class="form-control" name="role" [(ngModel)]="addUserRequest.roleId">     
-                        <option *ngFor="let role of roles" [value]="role.id" (change)="onSelectedRole($event)" >{{role.name}}</option>
+                        <!--<option *ngFor="let role of roles" [value]="role.id" (change)="onSelectedRole($event)" >{{role.name}}</option>-->
+						<option [value]="roles.ADMIN_ID">{{roles.ADMIN_NAME}}</option>
+						<option [value]="roles.DISPATCHER_ID">{{roles.DISPATCHER_NAME}}</option>
+						<option [value]="roles.PROSUMER_ID">{{roles.PROSUMER_NAME}}</option>
+                    </select>
+                    <br>
+					<label for="city">City</label>
+
+                    <select id="city" class="form-control" name="city">     
+                        <option *ngFor="let city of cities" [value]="city.id" (change)="onSelectedRole($event)" >{{city.name}}</option>
+
                     </select>
                     <br>
                     

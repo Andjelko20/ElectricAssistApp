@@ -35,7 +35,7 @@ const routes: Routes = [
 	{path:'admindso',component:AdminDsoComponent,canActivate:[AuthenticatedGuard]},
 	{path:'admindsoadd',component:AdminDsoAddComponent,canActivate:[AuthenticatedGuard]},
 	{path:'admindsoupdate/:id',component:AdminDsoUpdateComponent,canActivate:[AuthenticatedGuard]},
-	{path:'register',component:RegisterComponent},
+	//{path:'register',component:RegisterComponent},
 	{path:'maps',component:MapsComponent},
 	{path:'tower',component:ProsumerTowerComponent},
 	{path:'solar',component:ProsumerSolarComponent},
