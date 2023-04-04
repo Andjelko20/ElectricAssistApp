@@ -60,6 +60,11 @@ import { AddDeviceComponent } from './components/prosumers/devices/add-device/ad
 import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
 import { ProsumerDevicesComponent } from './components/dso/prosumer-devices/prosumer-devices.component';
 import { OneProsumerComponent } from './components/dso/one-prosumer/one-prosumer.component';
+import { TodayConsumptionComponent } from './components/dso/meter-prosumer/today-consumption/today-consumption.component';
+import { TodayProductionComponent } from './components/dso/meter-prosumer/today-production/today-production.component';
+import { MonthConsumptionComponent } from './components/dso/meter-prosumer/month-consumption/month-consumption.component';
+import { MonthProductionComponent } from './components/dso/meter-prosumer/month-production/month-production.component';
+import { ProducingConsumingComponent } from './components/dso/producing-consuming/producing-consuming.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +118,12 @@ import { OneProsumerComponent } from './components/dso/one-prosumer/one-prosumer
     AddDeviceComponent,
     UpdateDeviceComponent,
     ProsumerDevicesComponent,
-    OneProsumerComponent
+    OneProsumerComponent,
+    TodayConsumptionComponent,
+    TodayProductionComponent,
+    MonthConsumptionComponent,
+    MonthProductionComponent,
+    ProducingConsumingComponent
   ],
   imports: [
     BrowserModule,

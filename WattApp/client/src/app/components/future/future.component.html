@@ -1,10 +1,4 @@
-  <section class="vh-100" style="background-color: #ffffff;">
-    <div class="container py-5 h-100">
-          <div class="card" style="border-radius: 25px;">
-            <div class="card-body p-4" style="background-color: #ffffff;">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <div class="d-flex justify-content-around text-center mb-4 pb-3 pt-2">
+                    <div class="weather-container">
                       <div class="flex-column" *ngFor="let forecast of weatherData; let i = index">
                         <p class="small"><strong>{{ forecast.main.temp | number:'1.0-0' }} °C</strong></p>
                         <i><img class="image" src="assets/img/{{forecast.weather[0].icon}}.png" alt=""></i>
@@ -12,9 +6,3 @@
                         <p class="mb-0">{{ forecast.weather[0].main}}</p>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-  </section>

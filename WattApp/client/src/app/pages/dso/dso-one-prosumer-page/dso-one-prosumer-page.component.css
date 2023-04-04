@@ -94,3 +94,19 @@
   padding: 15px;
   margin: 0 15px;
 }
+
+.producing-consuming{
+  min-width: 30%;
+  max-width: 100%;
+  left: 0;
+  padding: 15px;
+  margin: 0 15px;
+}
+
+.today-future{
+  min-width: 30%;
+  max-width: 100%;
+  left: 0;
+  padding: 15px;
+  margin: 0 15px;
+}
