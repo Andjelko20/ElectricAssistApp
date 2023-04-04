@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Server.Data;
 
@@ -10,9 +11,10 @@ using Server.Data;
 namespace Server.Migrations
 {
     [DbContext(typeof(SqliteDbContext))]
-    partial class SqliteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230402204511_DeviceEnergyChanged")]
+    partial class DeviceEnergyChanged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
@@ -51,8 +53,14 @@ namespace Server.Migrations
                     b.Property<long>("DeviceModelId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<float>("EnergyInKwh")
+                        .HasColumnType("REAL");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<float>("StandByKwh")
+                        .HasColumnType("REAL");
 
                     b.Property<bool>("TurnOn")
                         .HasColumnType("INTEGER");
@@ -306,22 +314,11 @@ namespace Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("Blocked")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<float>("Latitude")
-                        .HasColumnType("REAL");
-
-                    b.Property<float>("Longitude")
-                        .HasColumnType("REAL");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -334,21 +331,13 @@ namespace Server.Migrations
                     b.Property<long>("RoleId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("SettlementId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("SettlementId");
 
                     b.HasIndex("Username")
                         .IsUnique();
@@ -490,15 +479,7 @@ namespace Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Server.Models.DropDowns.Location.Settlement", "Settlement")
-                        .WithMany()
-                        .HasForeignKey("SettlementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Role");
-
-                    b.Navigation("Settlement");
                 });
 #pragma warning restore 612, 618
         }
