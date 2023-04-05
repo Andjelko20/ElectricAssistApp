@@ -58,7 +58,7 @@ export class AdminDsoAddComponent implements OnInit{
     this.usersService.addUsers(this.addUserRequest)
     .subscribe({
       next:()=>{
-         this.router.navigate(['/admin']);
+         this.router.navigate(['dashboard']);
       
       }
     });

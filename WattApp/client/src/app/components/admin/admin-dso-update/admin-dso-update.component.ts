@@ -61,7 +61,7 @@ export class AdminDsoUpdateComponent implements OnInit {
     this.updateService.upDate(this.updateUserDetail.id,this.updateUserDetail)
     .subscribe({
       next:()=>{
-        this.router.navigate(['home']);
+        this.router.navigate(['dashboard']);
       }
     });
   }

@@ -55,7 +55,7 @@ export class AdminDsoComponent implements OnInit{
       this.usersService.delete(id)
       .subscribe({
         next:(response)=>{
-          this.router.navigate(['/admindso']);
+          this.router.navigate(['dashboard']);
           location.reload();
         }
       });
