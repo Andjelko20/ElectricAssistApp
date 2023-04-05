@@ -325,14 +325,14 @@ namespace Server.Data
                         new DeviceModel()
                         {
                             DeviceBrandId = 1,
-                            DeviceTypeId = 1,
+                            DeviceTypeId = 2,
                             EnergyKwh = 100,
                             StandByKwh = 0,
                             Mark = "oznaka2"
                         },
                         new DeviceModel()
                         {
-                            DeviceBrandId = 1,
+                            DeviceBrandId = 2,
                             DeviceTypeId = 1,
                             EnergyKwh = 100,
                             StandByKwh = 0,
