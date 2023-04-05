@@ -39,6 +39,18 @@ namespace Server.Controllers
         }*/
 
         /// <summary>
+        /// blabla
+        /// </summary>
+        [HttpGet]
+        [Route("{deviceCategoryName}")]
+        //[Authorize(Roles = "dispecer")]
+        public async Task<IActionResult> GetTotalConsumptionInTheMomentForCategory([FromRoute] string deviceCategoryName)
+        {
+            Console.WriteLine("*********** " + deviceCategoryName);
+            return Ok(prosumerService.GetTotalConsumptionInTheMoment(deviceCategoryName));
+        }
+
+        /// <summary>
         /// Total number of consumption/production devices from all prosumers in the city or settlement
         /// </summary>
         [HttpGet]
