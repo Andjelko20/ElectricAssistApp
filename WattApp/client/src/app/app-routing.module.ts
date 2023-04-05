@@ -26,11 +26,6 @@ import { ProducingConsumingComponent } from './components/dso/producing-consumin
 
 
 import { TodayComponent } from './components/today/today.component';
-import { AdminProsumersPageComponent } from './pages/admin/admin-prosumers-page/admin-prosumers-page.component';
-import { ProsumerTowerComponent } from './components/prosumer-meter/prosumer-tower/prosumer-tower.component';
-import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
-import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
-import { MapsComponent } from './components/dso/maps/maps.component';
 import { ProsumerDevicePageComponent } from './pages/prosumer/prosumer-device-page/prosumer-device-page.component';
  
 const routes: Routes = [
@@ -48,6 +43,7 @@ const routes: Routes = [
 	//home
 	{path:'dashboard',component:HomePageComponent,canActivate:[AuthenticatedGuard]},
 	//ADMIN
+	{path:'',component:AdminDsoComponent,canActivate:[AdminGuard]},
 	{path:'add-user',component:AdminDsoAddComponent,canActivate:[AdminGuard]},
 	{path:'update-user/:id',component:AdminDsoUpdateComponent,canActivate:[AdminGuard]},
 	//DSO
