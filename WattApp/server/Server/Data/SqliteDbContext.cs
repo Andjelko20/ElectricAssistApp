@@ -216,8 +216,8 @@ namespace Server.Data
                             Password=HashGenerator.Hash("prosumer"),
                             SettlementId=2,
                             Address="Adresa",
-                            Latitude=44.1234547f,
-                            Longitude=36.789023f
+                            Latitude=44.038430467535186f,
+                            Longitude=20.895158806406904f
                         }
                     });
                     context.SaveChanges();

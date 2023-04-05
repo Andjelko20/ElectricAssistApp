@@ -15,7 +15,8 @@ export class ProsumersMapComponent {
 	  private searchUrl!:URL;
 	  public searchInput!:string;
 	  public locations:any[]=[];
-	  private prosumers=[
+	  private prosumers!:any[];
+	  /*[
 		{
 			latitude:44.048325,
 			longitude:20.954041,
@@ -34,7 +35,7 @@ export class ProsumersMapComponent {
 			name:"Laza Lazic",
 			consumption:100
 	  	}
-	];
+	];*/
 	
 	  ngOnInit(): void {
 		this.searchUrl=new URL(environment.mapSearchUrl);
@@ -61,12 +62,17 @@ export class ProsumersMapComponent {
 		  attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
 		  maxZoom: 19,
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
-	
-		for(let prosumer of this.prosumers){
-			let marker=Leaflet.marker([prosumer.latitude,prosumer.longitude]).addTo(this.map);
-			marker.bindPopup(`<b>${prosumer.name}</b>${prosumer.consumption}`);
-			marker.bindTooltip(prosumer.name,{permanent:true});
-		}
+		
+		fetch(environment.serverUrl+"/api/prosumers",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+		.then(res=>res.json())
+		.then(res=>{
+			this.prosumers=res;
+			for(let prosumer of this.prosumers){
+				let marker=Leaflet.marker([prosumer.latitude,prosumer.longitude]).addTo(this.map);
+				marker.bindPopup(`<b>${prosumer.name}</b><br><a href="prosumer/${prosumer.id}">Details</a>`);
+			}
+		});
+		
 	  }
 
 	  onSubmit(){
