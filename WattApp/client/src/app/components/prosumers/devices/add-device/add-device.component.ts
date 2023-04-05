@@ -102,7 +102,6 @@ export class AddDeviceComponent implements OnInit{
     
     this.addDeviceRequest.deviceBrandId = event.target.value;
     console.log( this.addDeviceRequest.deviceBrandId);
-    
     fetch(environment.serverUrl+"/models?typeId="+typeID+"&brandId="+this.addDeviceRequest.deviceBrandId,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
     .then(res=>res.json())
     .then(res=>{

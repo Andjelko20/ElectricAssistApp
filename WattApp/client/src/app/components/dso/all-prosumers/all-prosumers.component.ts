@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Users } from 'src/app/models/users.model';
+import { Prosumers, Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,16 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AllProsumersComponent implements OnInit{
 
-  users:Users[] = [{
-    id: 1,
-    name: '',
-    username: '',
-    password:'',
-    email:'',
-    block: false,
-    roleId:0
-  }];
-  filteredDrivers: Users[] = [];
+  prosumers:Prosumers[] = [];
+  filteredProsumers: Prosumers[] = [];
   _listFilter = '';
   constructor(private userService:AuthService)
   {
@@ -28,37 +20,44 @@ export class AllProsumersComponent implements OnInit{
   get listFilter(): string {
     return this._listFilter;
   }
-  performFilter(filterBy: string): Users[] {
+  performFilter(filterBy: string): Prosumers[] {
     filterBy = filterBy.toLocaleLowerCase();
-    return this.users.filter((users: Users) =>
-    users.name.toLocaleLowerCase().indexOf(filterBy) !== -1);
+    return this.prosumers.filter((prosumers: Prosumers) =>
+    prosumers.name.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
   set listFilter(value: string) {
     this._listFilter = value;
-    this.filteredDrivers = this.listFilter ? this.performFilter(this.listFilter) : this.users;
+    this.filteredProsumers = this.listFilter ? this.performFilter(this.listFilter) : this.prosumers;
   }
   ngOnInit(): void {
     this.getUsers();
   }
   getUsers(): void {
-    this.userService.getAllUsers().subscribe(users => {
-      this.users=users.data.map((u:any)=>({
-     id:u.id,
-     name:u.name,
-     username:u.username,
-     password:u.password,
-     block:u.blocked,
-     roleId:u.roleId
-    }as Users));
-    this.filteredDrivers=users.data.map((u:any)=>({
-      id:u.id,
-      name:u.name,
-      username:u.username,
-      password:u.password,
-      block:u.blocked,
-      roleId:u.roleId
-     }as Users));
+    this.userService.getAllProsumers().subscribe(prosumers => {
+      this.prosumers=prosumers.data.map((u:any)=>({
+        id: u.id,
+        name: u.name,
+        username: u.username,
+        email: u.email,
+        role: u.role,
+        blocked: u.blocked,
+        settlement:u.settlement,
+        city:u.city,
+        country: u.country
+    }as Prosumers));
+    this.filteredProsumers=prosumers.data.map((u:any)=>({
+      id: u.id,
+      name: u.name,
+      username: u.username,
+      email: u.email,
+      role: u.role,
+      blocked: u.blocked,
+      settlement:u.settlement,
+      city:u.city,
+      country: u.country
+     }as Prosumers));
     
      });
   }
+
 }

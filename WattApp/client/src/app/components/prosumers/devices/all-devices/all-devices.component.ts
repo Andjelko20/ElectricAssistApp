@@ -35,35 +35,23 @@ export class AllDevicesComponent implements OnInit {
     }
   }
   
-  // turnOnOff(id: number) {
-  //   console.log(id);
-    
-  //     this.deviceService.turnOn(id).subscribe({
-  //       next:()=>{
-  //         this.router.navigate(['/devices']);
-          
-  //       }
-  //     });
-  // }
-  turnOn(id: number) {
+  turnOnOff(id: number) {
     console.log(id);
     
-      this.deviceService.turnOn(id).subscribe({
+      this.deviceService.turnOnOff(id).subscribe({
         next:()=>{
-          this.router.navigate(['/devices']);
-          location.reload()
+          const userIndex = this.devices.findIndex(device => device.id === id);
+          if(this.devices[userIndex].turnOn==false)
+          {
+            this.devices[userIndex].turnOn = true;
+          }   
+          else if(this.devices[userIndex].turnOn==true)
+          {
+            this.devices[userIndex].turnOn = false;
+          }
         }
       });
   }
-  turnOff(id: number) {
-    
-    this.deviceService.turnOff(id).subscribe({
-      next:()=>{
-        this.router.navigate(['/devices']);
-        location.reload()
-      }
-    });
-}
   
-
+  
 }

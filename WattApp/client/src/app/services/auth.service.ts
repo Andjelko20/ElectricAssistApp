@@ -41,6 +41,10 @@ export class AuthService {
   {
     return this.http.get<any>(environment.serverUrl+'/api/users/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
+  getAllProsumers():Observable<any>
+  {
+    return this.http.get<any>(environment.serverUrl+'/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
 
   addUsers(addUserRequest:any):Observable<any>
   {

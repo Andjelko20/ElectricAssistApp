@@ -15,10 +15,6 @@ export interface ShowDevices {
 export interface updateDevices {
     id:number;
     userId: number;
-    deviceCategoryId: number ;
-    deviceTypeId: number ;
-    deviceBrandId: number ;
-    deviceModelId: number ;
     name: string ;
     energyInKwh: number;
     standByKwh: number;

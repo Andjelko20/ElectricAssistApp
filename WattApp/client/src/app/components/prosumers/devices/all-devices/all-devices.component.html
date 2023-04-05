@@ -37,8 +37,8 @@
                     <td>{{device.standByKwh}} </td>
                     <td>{{device.turnOn}}</td>
                     <td>
-                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOn(device.id)"> on</button>
-                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOff(device.id)"> off</button>
+                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)"> on</button>
+                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)"> off</button>
                       <!-- <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)"> on</button>
                       <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)"> off</button> -->
                     </td>

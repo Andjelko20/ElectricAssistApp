@@ -33,28 +33,22 @@ export class DevicesService {
     return this.http.delete<updateDevices>(environment.serverUrl+"/api/device/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
   //samo id saljem
-  // turnOnOff(id: number): Observable<any> {
-      
-  //   return this.http.put(environment.serverUrl+"/api/device/turnOn"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
-  // }
-  turnOn(id: number): Observable<any> {
+  turnOnOff(id: number): Observable<any> {
       
     return this.http.put(environment.serverUrl+"/api/device/turnOn"+id,{turnOn:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
-  turnOff(id: number): Observable<any> {
-      return this.http.put(environment.serverUrl+"/api/device/turnOn"+id,{turnOn:false},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+  visibility(id: number): Observable<any> {
+      
+    return this.http.put(environment.serverUrl+"/api/device/visibility"+id,{visibility:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
+  
+  controlability(id: number): Observable<any> {
+      
+    return this.http.put(environment.serverUrl+"/api/device/controlability"+id,{controlability:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+  }
+  
 
-  //dropdown
-  // allCategories()
-  // {
-  //   return this.http.get(environment.serverUrl+"/categories",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
-  // }
-
-  // allTypes(id:number)
-  // {
-  //   return this.http.get(environment.serverUrl+"/types?categoryId="+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
-  // }
+  
   
   
  

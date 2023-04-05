@@ -19,6 +19,18 @@ export interface ShowUsers {
 
 
 }
+export interface Prosumers{
+    id: number;
+    name: string;
+    username: string ;
+    email: string;
+    role: string;
+    blocked: boolean;
+    settlement:string;
+    city:string;
+    country: string;
+}
+
 export interface Register{
     name: string;
     username: string;
