@@ -7,6 +7,7 @@ using MimeKit.Encodings;
 using Server.Data;
 using Server.DTOs;
 using Server.Exceptions;
+using Server.Filters;
 using Server.Models;
 using Server.Services;
 using System.Net;
@@ -200,7 +201,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Authorize(Roles = "prosumer")]
-        public IActionResult getAllDevices()
+        public IActionResult getAllDevices([FromQuery] DeviceFilterModel filter)
         {
             try
             {
@@ -210,7 +211,7 @@ namespace Server.Controllers
                 var credentials = HttpContext.User.Identity as ClaimsIdentity;
                 long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
-                devices = _deviceService.getMyDevices(userId);
+                devices = _deviceService.getMyDevices(userId, filter);
                 if (devices == null || devices.Count == 0)
                 {
                     throw new ItemNotFoundException("Devices not found!");

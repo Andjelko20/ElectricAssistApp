@@ -4,6 +4,7 @@ using MimeKit.Encodings;
 using Server.Data;
 using Server.DTOs;
 using Server.Exceptions;
+using Server.Filters;
 using Server.Models;
 using Server.Models.DropDowns.Devices;
 using System.Reflection;
@@ -182,9 +183,17 @@ namespace Server.Services.Implementations
             return _context.Devices.FirstOrDefault(src => src.Id == deviceId && src.Visibility == true);
         }
         /// <inheritdoc/>
-        public List<Device> getMyDevices(long userId)
+        public List<Device> getMyDevices(long userId, DeviceFilterModel deviceFilter)
         {
-            return _context.Devices.Where(src => src.UserId == userId).ToList();
+            //return _context.Devices.Where(src => src.UserId == userId).ToList();
+
+            IQueryable<Device> query = _context.Devices.Where(src => src.UserId == userId);
+            if(deviceFilter != null)
+            {
+                query = DeviceFilter.ApplyFilter(query, deviceFilter);
+            }
+            List<Device> devices = query.ToList();
+            return devices;
         }
         /// <inheritdoc/>
         public Device getYourDeviceById(long deviceId, long userId)

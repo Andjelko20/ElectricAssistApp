@@ -1,4 +1,5 @@
 ﻿using Server.DTOs;
+using Server.Filters;
 using Server.Models;
 
 namespace Server.Services
@@ -28,7 +29,7 @@ namespace Server.Services
         /// </summary>
         /// <param name="userId">Unique user id</param>
         /// <returns>List of devices</returns>
-        public List<Device> getMyDevices(long userId);
+        public List<Device> getMyDevices(long userId, DeviceFilterModel filter);
         /// <summary>
         /// Add new device (for PROSUMER)
         /// </summary>
