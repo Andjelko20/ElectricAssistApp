@@ -324,9 +324,10 @@ namespace Server.Controllers
                 {
                     throw new DbUpdateException("An error occurred while processing your request.");
                 }
+                DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(device);
+                formatDeviceResponseDTO(ref responseDTO, device.DeviceModelId);
 
-
-                return Ok(_mapper.Map<DeviceResponseDTO>(device));
+                return Ok(responseDTO);
             }
             catch (DbUpdateException ex)
             {
@@ -393,15 +394,21 @@ namespace Server.Controllers
         }*/
 
         [HttpDelete("{id:long}")]
+        [Authorize(Roles = "prosumer")]
         public IActionResult deleteDeviceById([FromRoute]long id)
         {
             try
             {
-                DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.deleteDeviceById(id));
+                var credentials = HttpContext.User.Identity as ClaimsIdentity;
+                long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+
+                Device device = _deviceService.deleteDeviceById(id, userId);
+                DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(device);
                 if (responseDTO == null)
                 {
                     throw new DbUpdateException("An error occurred while processing your request.");
                 }
+                formatDeviceResponseDTO(ref responseDTO, device.DeviceModelId);
                 return Ok(responseDTO);
             }
             catch (DbUpdateException ex)

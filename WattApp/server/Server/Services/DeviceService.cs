@@ -56,7 +56,7 @@ namespace Server.Services
         /// </summary>
         /// <param name="id">Device id</param>
         /// <returns>Deleted device</returns>
-        public Device deleteDeviceById(long id);
+        public Device deleteDeviceById(long id, long userId);
         //public List<Device> getUsersDevices(long userId);
         /// <summary>
         /// Change the visibility status for the device by its unique id (for PROSUMER)

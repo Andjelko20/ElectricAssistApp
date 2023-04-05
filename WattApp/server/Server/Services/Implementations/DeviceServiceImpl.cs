@@ -115,9 +115,9 @@ namespace Server.Services.Implementations
             return null;
         }
         /// <inheritdoc/>
-        public Device deleteDeviceById(long id)
+        public Device deleteDeviceById(long id, long userId)
         {
-            Device device = _context.Devices.Find(id);
+            Device device = _context.Devices.FirstOrDefault(src => src.Id == id && src.UserId == userId);
             var result = _context.Devices.Remove(device);
             _context.SaveChanges();
             return device;
