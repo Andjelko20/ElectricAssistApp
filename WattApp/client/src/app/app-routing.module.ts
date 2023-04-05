@@ -53,11 +53,9 @@ const routes: Routes = [
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
 	{path:'devices',component:ProsumerDevicesPageComponent,canActivate:[ProsumerGuard]},
 	{path:'reports',component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
-	
 	//TEST
 	// {path:'register',component:RegisterComponent},
 	// {path:'change-password',component:ChangePasswordComponent},
-	
 	//{path:'reset-password',component:ResetPasswordPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	{path:"map-input",component:MapInputComponent},
