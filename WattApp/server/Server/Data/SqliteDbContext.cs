@@ -25,32 +25,33 @@ namespace Server.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<Settlement> Settlements { get; set; }
         public DbSet<DeviceBrand> DeviceBrands { get; set; }
-        public DbSet<Price> Price { get; set; }
-        public DbSet<ChargingScheduler> ChargingSchedulers { get; set; }
+        //public DbSet<Price> Price { get; set; }
+        //public DbSet<ChargingScheduler> ChargingSchedulers { get; set; }
         public DbSet<InclusionScheduler> InclusionSchedulers { get; set; }
         public DbSet<UserEnergyUsage> UserEnergyUsages { get; set; }
         public DbSet<DeviceEnergyUsage> DeviceEnergyUsages { get; set; }
-        public DbSet<DeviceDefaultSettings> DeviceDefaultSettings { get; set; }
+        //public DbSet<DeviceDefaultSettings> DeviceDefaultSettings { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<DeviceModel> DeviceModels { get; set; }
-        public DbSet<TypeBrand> TypeBrands { get; set; }
-        public DbSet<TypeBrandModel> TypeBrandModels { get; set; }
+        //public DbSet<TypeBrand> TypeBrands { get; set; }
+        //public DbSet<TypeBrandModel> TypeBrandModels { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /*
             modelBuilder.Entity<UserModel>()
            .HasOne(u => u.Role)
            .WithMany()
-           .HasForeignKey(u => u.RoleId);
-            modelBuilder.Entity<ChargingScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.Time });
+           .HasForeignKey(u => u.RoleId);*/
+            //modelBuilder.Entity<ChargingScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.Time });
             modelBuilder.Entity<InclusionScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.TurnOn, x.TurnOff });
             modelBuilder.Entity<UserEnergyUsage>().HasKey(x => new { x.UserId, x.Date });
             modelBuilder.Entity<DeviceEnergyUsage>().HasKey(x => new { x.DeviceId, x.StartTime, x.EndTime });
-            modelBuilder.Entity<DeviceDefaultSettings>().HasKey(x => new { x.DeviceModelId, x.DeviceBrandId });
+            //modelBuilder.Entity<DeviceDefaultSettings>().HasKey(x => new { x.DeviceModelId, x.DeviceBrandId });
             modelBuilder.Entity<Bill>().HasKey(x => new { x.UserId, x.Month, x.Year });
-            modelBuilder.Entity<TypeBrand>().HasKey(x => new { x.TypeId, x.BrandId });
-            modelBuilder.Entity<TypeBrandModel>().HasKey(x => new { x.TypeId, x.BrandId, x.ModelId });
+            //modelBuilder.Entity<TypeBrand>().HasKey(x => new { x.TypeId, x.BrandId });
+            //modelBuilder.Entity<TypeBrandModel>().HasKey(x => new { x.TypeId, x.BrandId, x.ModelId });
         }
 
         public static void Seed(IApplicationBuilder applicationBuilder)
@@ -92,7 +93,77 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                if (!context.Countries.Any())
+                {
+                    context.Countries.AddRange(new[]
+                    {
+                        new Country
+                        {
+                            Name = "Serbia"
+                        }
+                    });
+                    context.SaveChanges();
+                }
+                if (!context.Cities.Any())
+                {
+                    context.Cities.AddRange(new[]
+                    {
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Kragujevac"
+                        },
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Beograd"
+                        },
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Novi Sad"
+                        }
+                    });
+                    context.SaveChanges();
+                }
+                if (!context.Settlements.Any())
+                {
+                    context.Settlements.AddRange(new[]
+                    {
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Bubanj"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Aerodrom"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Bresnica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Karaburma"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Stari grad"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Petrovoradin"
 
+                        }
+                    });
+                    context.SaveChanges();
+                }
                 if (!context.Users.Any())
                 {
                     context.Users.AddRange(new[]
@@ -104,7 +175,11 @@ namespace Server.Data
                             RoleId=1,
                             Blocked=false,
                             Username="admin",
-                            Password=HashGenerator.Hash("admin")
+                            Password=HashGenerator.Hash("admin"),
+                            SettlementId=1,
+                            Address="Jovanovac bb",
+                            Latitude=44.1234567f,
+                            Longitude=36.789003f
                         },
                         new UserModel()
                         {
@@ -113,47 +188,41 @@ namespace Server.Data
                             RoleId=3,
                             Blocked=true,
                             Username="user",
-                            Password=HashGenerator.Hash("user")
+                            Password=HashGenerator.Hash("user"),
+                            SettlementId=2,
+                            Address="Adresa",
+                            Latitude=44.1234547f,
+                            Longitude=36.789023f
                         }, 
                         new UserModel()
                         {
-                            Name="DSO DSO", 
+                            Name="DSO DSO",
+                            Email="48-2020@pmf.kg.ac.rs",
                             RoleId = 2, 
                             Blocked=false,
                             Username="dsodso", 
-                            Password=HashGenerator.Hash("dsodso")
+                            Password=HashGenerator.Hash("dsodso"),
+                            SettlementId=2,
+                            Address="Adresa",
+                            Latitude=44.1234547f,
+                            Longitude=36.789023f
                         },
                         new UserModel()
                         {
                             Name="Prosumer",
+                            Email="38-2020@pmf.kg.ac.rs",
                             RoleId=3,
                             Blocked=false,
                             Username="prosumer",
-                            Password=HashGenerator.Hash("prosumer")
+                            Password=HashGenerator.Hash("prosumer"),
+                            SettlementId=2,
+                            Address="Adresa",
+                            Latitude=44.1234547f,
+                            Longitude=36.789023f
                         }
                     });
                     context.SaveChanges();
                 }
-                if (!context.DeviceModels.Any())
-                {
-                    context.DeviceModels.AddRange(new[]
-                    {
-                        new DeviceModel()
-                        {
-                            Mark = "oznaka1"
-                        },
-                        new DeviceModel()
-                        {
-                            Mark = "oznaka2"
-                        },
-                        new DeviceModel()
-                        {
-                            Mark = "oznaka3"
-                        }
-                    }) ;
-                    context.SaveChanges();
-                }
-                
                 if (!context.DeviceCategories.Any())
                 {
                     context.DeviceCategories.AddRange(new[]
@@ -242,6 +311,38 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                if (!context.DeviceModels.Any())
+                {
+                    context.DeviceModels.AddRange(new[]
+                    {
+                        new DeviceModel()
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 1,
+                            EnergyKwh = 100,
+                            StandByKwh = 0,
+                            Mark = "oznaka1"
+                        },
+                        new DeviceModel()
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 1,
+                            EnergyKwh = 100,
+                            StandByKwh = 0,
+                            Mark = "oznaka2"
+                        },
+                        new DeviceModel()
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 1,
+                            EnergyKwh = 100,
+                            StandByKwh = 0,
+                            Mark = "oznaka3"
+                        }
+                    });
+                    context.SaveChanges();
+                }
+                /*
                 if (!context.DeviceDefaultSettings.Any())
                 {
                     context.DeviceDefaultSettings.AddRange(new[]
@@ -285,77 +386,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
-                if (!context.Countries.Any())
-                {
-                    context.Countries.AddRange(new[]
-                    {
-                        new Country
-                        {
-                            Name = "Serbia"
-                        }
-                    });
-                    context.SaveChanges();
-                }
-                if (!context.Cities.Any())
-                {
-                    context.Cities.AddRange(new[]
-                    {
-                        new City
-                        {
-                            CountryId = 1,
-                            Name = "Kragujevac"
-                        },
-                        new City
-                        {
-                            CountryId = 1,
-                            Name = "Beograd"
-                        },
-                        new City
-                        {
-                            CountryId = 1,
-                            Name = "Novi Sad"
-                        }
-                    });
-                    context.SaveChanges();
-                }
-                if (!context.Settlements.Any())
-                {
-                    context.Settlements.AddRange(new[]
-                    {
-                        new Settlement
-                        {
-                            CityId = 1, 
-                            Name = "Bubanj"
-                        },
-                        new Settlement
-                        {
-                            CityId = 1,
-                            Name = "Aerodrom"
-                        },
-                        new Settlement
-                        {
-                            CityId = 1,
-                            Name = "Bresnica"
-                        },
-                        new Settlement
-                        {
-                            CityId = 2,
-                            Name = "Karaburma"
-                        },
-                        new Settlement
-                        {
-                            CityId = 3,
-                            Name = "Stari grad"
-                        },
-                        new Settlement
-                        {
-                            CityId = 3,
-                            Name = "Petrovoradin"
-
-                        }
-                    });
-                    context.SaveChanges();
-                }
+                */
                 if (!context.Devices.Any())
                 {
                     context.Devices.AddRange(new[]
@@ -363,12 +394,11 @@ namespace Server.Data
                         new Device()
                         {
                             UserId = 1, 
-                            DeviceCategoryId = 1, 
-                            DeviceTypeId = 1, 
-                            DeviceBrandId = 1, 
+                            //DeviceCategoryId = 1, 
+                            //DeviceTypeId = 1, 
+                            //DeviceBrandId = 1,
+                            Name="Uredjaj",
                             DeviceModelId = 1, 
-                            EnergyInKwh = 10, 
-                            StandByKwh = 10, 
                             Visibility = true, 
                             Controlability = true, 
                             TurnOn = false
@@ -376,6 +406,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                /*
                 if (!context.TypeBrands.Any())
                 {
                     context.TypeBrands.AddRange(new[]
@@ -468,6 +499,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
+                */
 
             }
         }

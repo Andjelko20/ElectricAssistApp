@@ -10,21 +10,21 @@ namespace Server.Services
         //List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastYear(int deviceId);
         //List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastMonth(int deviceId);
         //List<DeviceEnergyUsage> GetUsageHistoryForDeviceInLastDay(int deviceId);
-        public double GetUsageHistoryForDeviceInLastDay(int deviceId);
-        public double GetUsageHistoryForDeviceInLastMonth(int deviceId);
-        public double GetUsageHistoryForDeviceInLastYear(int deviceId);
-        public double GetUsageHistoryForDeviceInPastWeek(int deviceId);
-        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsage(int deviceId);
-        public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastMonth(int deviceId);
-        public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastWeek(int deviceId);
-        public double GetTotalEnergyConsumptionForUser(int userId, int deviceCategoryId);
-        public double GetUserEnergyConsumptionForPastDay(int userId, int deviceCategoryId);
-        public double GetUserEnergyConsumptionForPastWeek(int userId, int deviceCategoryId);
-        public double GetUserEnergyConsumptionForPastMonth(int userId, int deviceCategoryId);
-        public double GetUserEnergyConsumptionForPastYear(int userId, int deviceCategoryId);
+        public double GetUsageHistoryForDeviceInLastDay(long deviceId);
+        public double GetUsageHistoryForDeviceInLastMonth(long deviceId);
+        public double GetUsageHistoryForDeviceInLastYear(long deviceId);
+        public double GetUsageHistoryForDeviceInPastWeek(long deviceId);
+        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsage(long deviceId);
+        public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastMonth(long deviceId);
+        public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastWeek(long deviceId);
+        public double GetTotalEnergyConsumptionForUser(long userId, long deviceCategoryId);
+        public double GetUserEnergyConsumptionForPastDay(long userId, long deviceCategoryId);
+        public double GetUserEnergyConsumptionForPastWeek(long userId, long deviceCategoryId);
+        public double GetUserEnergyConsumptionForPastMonth(long userId, long deviceCategoryId);
+        public double GetUserEnergyConsumptionForPastYear(long userId, long deviceCategoryId);
 
         // ZA PROSLEDJEN ID KORISNIKA POTROSNJA ZA GRAFIKE
-        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(int userId, int deviceCategoryId);
-        public List<DailyEnergyConsumptionPastMonth> UserHistoryForThePastWeek(int userId, int deviceCategoryId);
+        public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(long userId, long deviceCategoryId);
+        public List<DailyEnergyConsumptionPastMonth> UserHistoryForThePastWeek(long userId, long deviceCategoryId);
     }
 }
