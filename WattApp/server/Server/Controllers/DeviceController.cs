@@ -100,7 +100,7 @@ namespace Server.Controllers
         /// 
         [ProducesResponseType(typeof(DeviceResponseDTO), 200)]
         [HttpGet("{id:long}")]
-        [Authorize(Roles = "dispecer, prosumer")]
+        [Authorize(Roles = "dispatcher, prosumer")]
         public IActionResult getDeviceById([FromRoute]long id)
         {
             try
@@ -154,7 +154,7 @@ namespace Server.Controllers
         /// Get all devices from user (for DSO)
         /// </summary>
         [HttpGet("devices{userId:long}")]
-        [Authorize(Roles = "dispecer")]
+        [Authorize(Roles = "dispatcher")]
         public IActionResult getUserDevices([FromRoute]long userId)
         {
             try
@@ -167,10 +167,7 @@ namespace Server.Controllers
                 {
                     DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(device);
 
-                    responseDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(responseDTO.DeviceCategory));
-                    responseDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(responseDTO.DeviceType));
-                    responseDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(responseDTO.DeviceBrand));
-                    responseDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(responseDTO.DeviceModel));
+                    formatDeviceResponseDTO(ref responseDTO, device.DeviceModelId);
 
                     deviceResponseDTOs.Add(responseDTO);
                 }
@@ -264,6 +261,10 @@ namespace Server.Controllers
         [Authorize(Roles = "prosumer, guest")]
         public IActionResult addNewDevice([FromBody]DeviceCreateDTO deviceCreateDTO)
         {
+            if(deviceCreateDTO == null)
+            {
+                throw new ArgumentNullException(nameof(deviceCreateDTO));
+            }
             Device device = _mapper.Map<Device>(deviceCreateDTO);
             try
             {
@@ -304,7 +305,7 @@ namespace Server.Controllers
         /// Change turn on/off status of device (DSO + PROSUMER)
         /// </summary>
         [HttpPut("turnOn{deviceId:long}")]
-        [Authorize(Roles = "dispecer, prosumer")]
+        [Authorize(Roles = "dispatcher, prosumer")]
         public IActionResult changeTurnOnStatus([FromRoute]long deviceId)
         {
             Device device = new Device();
