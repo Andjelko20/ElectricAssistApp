@@ -5,6 +5,7 @@ using Server.Data;
 using Server.DTOs;
 using Server.Exceptions;
 using Server.Models;
+using System.Reflection;
 
 namespace Server.Services.Implementations
 {
@@ -123,11 +124,28 @@ namespace Server.Services.Implementations
             return device;
         }
         /// <inheritdoc/>
-        public Device editDevice(Device device)
+        public Device editDevice(Device device, long userId)
         {
-            _context.Devices.Update(device);
+            Device response = _context.Devices.FirstOrDefault(src => src.Id == device.Id && src.UserId == userId);
+
+            response.Name = device.Name;
+            response.EnergyInKwh = device.EnergyInKwh;
+            response.StandByKwh = device.StandByKwh;
+            response.Visibility = device.Visibility;
+            if(response.Visibility == false)
+            {
+                response.Controlability = false;
+            }
+            else
+            {
+                response.Controlability = device.Controlability;
+            }
+            //response.Controlability = device.Controlability;
+            response.TurnOn = device.TurnOn;
+
+            _context.Devices.Update(response);
             _context.SaveChanges();
-            return device;
+            return response;
         }
 
 

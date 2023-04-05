@@ -353,24 +353,25 @@ namespace Server.Controllers
 
 
 
-        /*[HttpPut]
+        [HttpPut]
         [Authorize(Roles = "prosumer")]
-        public IActionResult editDevice([FromBody]DeviceRequestDTO deviceRequestDTO)
+        public IActionResult editDevice([FromBody]DeviceUpdateDTO deviceUpdateDTO)
         {
             try
             {
-                DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.editDevice(_mapper.Map<Device>(deviceRequestDTO)));
-                if(deviceDTO == null)
+                var credentials = HttpContext.User.Identity as ClaimsIdentity;
+                long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+
+                Device device = _deviceService.editDevice(_mapper.Map<Device>(deviceUpdateDTO), userId);
+                if(device == null)
                 {
                     throw new DbUpdateException("An error occurred while processing your request.");
                 }
 
-                deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
-                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
-                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
-                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
-
-                return Ok(deviceDTO);
+                long id = device.DeviceModelId;
+                DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(device);
+                formatDeviceResponseDTO(ref responseDTO, id);
+                return Ok(responseDTO);
             }
             catch (DbUpdateException ex)
             {
@@ -391,7 +392,7 @@ namespace Server.Controllers
                 });
             }
 
-        }*/
+        }
 
         [HttpDelete("{id:long}")]
         [Authorize(Roles = "prosumer")]

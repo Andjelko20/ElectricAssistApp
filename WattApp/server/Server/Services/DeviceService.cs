@@ -50,7 +50,7 @@ namespace Server.Services
         /// <returns>Device which status was changed</returns>
         public Device changeTurnOnStatus(long deviceId);
 
-        public Device editDevice(Device device);
+        public Device editDevice(Device device, long userId);
         /// <summary>
         /// Delete device by its unique id (for PROSUMER)
         /// </summary>
