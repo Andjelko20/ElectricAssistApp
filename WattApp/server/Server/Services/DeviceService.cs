@@ -50,13 +50,13 @@ namespace Server.Services
         /// <returns>Device which status was changed</returns>
         public Device changeTurnOnStatus(long deviceId);
 
-        public Device editDevice(Device device);
+        public Device editDevice(Device device, long userId);
         /// <summary>
         /// Delete device by its unique id (for PROSUMER)
         /// </summary>
         /// <param name="id">Device id</param>
         /// <returns>Deleted device</returns>
-        public Device deleteDeviceById(long id);
+        public Device deleteDeviceById(long id, long userId);
         //public List<Device> getUsersDevices(long userId);
         /// <summary>
         /// Change the visibility status for the device by its unique id (for PROSUMER)

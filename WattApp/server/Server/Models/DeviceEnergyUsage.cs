@@ -12,5 +12,7 @@ namespace Server.Models
         public Device Device { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        [Range(0, float.MaxValue)]
+        public float EnergyInKwh { get; set; }
     }
 }

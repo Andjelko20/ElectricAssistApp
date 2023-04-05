@@ -12,9 +12,9 @@ namespace Server.Models
         [Required]
         public string Day { get; set; }
         [Required]
-        public TimeOnly TurnOn { get; set; }
+        public DateTime TurnOn { get; set; }
         [Required]
-        public TimeOnly TurnOff { get; set; }
+        public DateTime TurnOff { get; set; }
         public string? Comment { get; set; }
     }
 }

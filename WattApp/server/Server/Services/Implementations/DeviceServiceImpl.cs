@@ -1,8 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
+using MimeKit.Encodings;
 using Server.Data;
 using Server.DTOs;
+using Server.Exceptions;
 using Server.Models;
+using Server.Models.DropDowns.Devices;
+using System.Reflection;
 
 namespace Server.Services.Implementations
 {
@@ -18,7 +22,7 @@ namespace Server.Services.Implementations
         /// <inheritdoc/>
         public Device addNewDevice(Device device)
         {
-			/*
+            /*
             if (device.EnergyInKwh == null || device.EnergyInKwh == 0)
             {
                 device.EnergyInKwh = _context.TypeBrandModels.FirstOrDefault(x => x.TypeId == device.DeviceTypeId && x.ModelId == device.DeviceModelId && x.BrandId == x.BrandId).EnergyKwh;
@@ -28,6 +32,27 @@ namespace Server.Services.Implementations
                 device.StandByKwh = _context.TypeBrandModels.FirstOrDefault(x => x.TypeId == device.DeviceTypeId && x.ModelId == device.DeviceModelId && x.BrandId == x.BrandId).StandByKwh;
             }
 			*/
+            long deviceModelId = device.DeviceModelId;
+
+            if (device.EnergyInKwh == null || device.EnergyInKwh == 0)
+            {
+                var result = _context.DeviceModels.Find(deviceModelId);
+                if (result == null)
+                {
+                    throw new ItemNotFoundException("Wrong device model id!");
+                }
+                device.EnergyInKwh = result.EnergyKwh;
+            }
+            if (device.StandByKwh == null || device.StandByKwh == 0)
+            {
+                var result = _context.DeviceModels.Find(deviceModelId);
+                if(result == null)
+                {
+                    throw new ItemNotFoundException("Wrong device model id!");
+                }
+                device.StandByKwh = (float)result.StandByKwh;
+            }
+
             _context.Devices.Add(device);
             _context.SaveChanges();
             return device;
@@ -92,19 +117,57 @@ namespace Server.Services.Implementations
             return null;
         }
         /// <inheritdoc/>
-        public Device deleteDeviceById(long id)
+        public Device deleteDeviceById(long id, long userId)
         {
-            Device device = _context.Devices.Find(id);
+            Device device = _context.Devices.FirstOrDefault(src => src.Id == id && src.UserId == userId);
             var result = _context.Devices.Remove(device);
             _context.SaveChanges();
             return device;
         }
         /// <inheritdoc/>
-        public Device editDevice(Device device)
+        public Device editDevice(Device device, long userId)
         {
-            _context.Devices.Update(device);
+            Device response = _context.Devices.FirstOrDefault(src => src.Id == device.Id && src.UserId == userId);
+
+            response.Name = device.Name;
+
+            response.EnergyInKwh = device.EnergyInKwh;
+            if (response.EnergyInKwh == null || response.EnergyInKwh == 0)
+            {
+                var result = _context.DeviceModels.Find(response.DeviceModelId);
+                if (result == null)
+                {
+                    throw new ItemNotFoundException("Wrong device model id!");
+                }
+                response.EnergyInKwh = (float)result.EnergyKwh;
+            }
+
+            response.StandByKwh = device.StandByKwh;
+            if (response.StandByKwh == null || response.StandByKwh == 0)
+            {
+                var result = _context.DeviceModels.Find(response.DeviceModelId);
+                if (result == null)
+                {
+                    throw new ItemNotFoundException("Wrong device model id!");
+                }
+                response.StandByKwh = (float)result.StandByKwh;
+            }
+
+            response.Visibility = device.Visibility;
+            if(response.Visibility == false)
+            {
+                response.Controlability = false;
+            }
+            else
+            {
+                response.Controlability = device.Controlability;
+            }
+            //response.Controlability = device.Controlability;
+            response.TurnOn = device.TurnOn;
+
+            _context.Devices.Update(response);
             _context.SaveChanges();
-            return device;
+            return response;
         }
 
 

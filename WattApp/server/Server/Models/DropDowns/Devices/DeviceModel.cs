@@ -16,6 +16,6 @@ namespace Server.Models.DropDowns.Devices
         [ForeignKey("DeviceBrandId")]
         public DeviceBrand DeviceBrand { get; set; }
         public float EnergyKwh { get; set; }
-        public float StandByKwh { get; set; }
+        public float? StandByKwh { get; set; }
     }
 }
