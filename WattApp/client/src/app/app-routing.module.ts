@@ -21,6 +21,9 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-prediction-page.component';
 import { ProsumerDevicesPageComponent } from './pages/prosumer/prosumer-devices-page/prosumer-devices-page.component';
 import { ProsumerReportsPageComponent } from './pages/prosumer/prosumer-reports-page/prosumer-reports-page.component';
+import { OneProsumerComponent } from './components/dso/one-prosumer/one-prosumer.component';
+import { ProducingConsumingComponent } from './components/dso/producing-consuming/producing-consuming.component';
+
 
 import { TodayComponent } from './components/today/today.component';
 import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
@@ -70,6 +73,8 @@ const routes: Routes = [
 	{path:'reset-password',component:ResetPasswordPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	{path:"map-input",component:MapInputComponent},
+	{path:"oneprosumertest",component:OneProsumerComponent},
+	{path:"producing",component:ProducingConsumingComponent},
 	{path:'**',redirectTo:"login"}
 ];
 
