@@ -25,8 +25,8 @@ import { OneProsumerComponent } from './components/dso/one-prosumer/one-prosumer
 import { ProducingConsumingComponent } from './components/dso/producing-consuming/producing-consuming.component';
 
 
+
 import { TodayComponent } from './components/today/today.component';
-import { AdminProsumersPageComponent } from './pages/admin/admin-prosumers-page/admin-prosumers-page.component';
 import { ProsumerTowerComponent } from './components/prosumer-meter/prosumer-tower/prosumer-tower.component';
 import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
 import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
@@ -37,12 +37,6 @@ const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
 	//login
 	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
-	{path:'admindso',component:AdminDsoComponent,canActivate:[AuthenticatedGuard]},
-	{path:'admindsoadd',component:AdminDsoAddComponent,canActivate:[AuthenticatedGuard]},
-	{path:'admindsoupdate/:id',component:AdminDsoUpdateComponent,canActivate:[AuthenticatedGuard]},
-	//{path:'register',component:RegisterComponent},
-	{path:'dsohome',component:DsoHomePageComponent,canActivate:[AuthenticatedGuard]},
-	{path:'dsoprosumer',component:DsoProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	//home

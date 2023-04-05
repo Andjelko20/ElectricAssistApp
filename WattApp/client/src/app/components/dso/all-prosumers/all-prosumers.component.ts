@@ -59,4 +59,5 @@ export class AllProsumersComponent implements OnInit{
     
      });
   }
+
 }

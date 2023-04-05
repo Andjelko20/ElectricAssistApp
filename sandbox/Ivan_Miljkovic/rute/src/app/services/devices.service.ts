@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Devices } from '../models/devices.model';
+import { updateDevices } from '../models/devices.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,25 +24,32 @@ export class DevicesService {
     
     return this.http.post<any>(environment.serverUrl + '/api/device' ,addDeviceRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
-  upDateDevice(updateRequest:Devices):Observable<Devices>
+  upDateDevice(updateRequest:updateDevices):Observable<updateDevices>
   {
-    return this.http.put<Devices>(environment.serverUrl+'/api/device',updateRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.put<updateDevices>(environment.serverUrl+'/api/device',updateRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
-  delete(id:number):Observable<Devices>
+  delete(id:number):Observable<updateDevices>
   {
-    return this.http.delete<Devices>(environment.serverUrl+"/api/device/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+    return this.http.delete<updateDevices>(environment.serverUrl+"/api/device/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
   //samo id saljem
-  // turnOnOff(id: number): Observable<any> {
+  turnOnOff(id: number): Observable<any> {
       
-  //   return this.http.put(environment.serverUrl+"/api/device/turnOn"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
-  // }
-    turnOn(id: number): Observable<any> {
+    return this.http.put(environment.serverUrl+"/api/device/turnOn"+id,{turnOn:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+  }
+  visibility(id: number): Observable<any> {
       
-      return this.http.put(environment.serverUrl+"/api/device/turnOn"+id,{turnOn:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
-    }
-    turnOff(id: number): Observable<any> {
-      return this.http.put(environment.serverUrl+"/api/device/turnOn"+id,{turnOn:false},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
-    }
+    return this.http.put(environment.serverUrl+"/api/device/visibility"+id,{visibility:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+  }
+  
+  controlability(id: number): Observable<any> {
+      
+    return this.http.put(environment.serverUrl+"/api/device/controlability"+id,{controlability:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+  }
+  
+
+  
+  
+  
  
 }
