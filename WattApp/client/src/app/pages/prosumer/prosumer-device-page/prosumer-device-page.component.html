@@ -3,33 +3,39 @@
 
 
 <div class="main">
-    <div class="back">
-        <a href="prosumer-devices-page"><img id="turnback" src="assets/img/turn-back.png" alt=""></a>
-    </div>
-    <div class="glavni">
-        <div class="updatedelete">
-            <button type="submit">Delete</button>
-            <button type="submit">Update</button>
+    <div class="device">
+        <div class="back">
+            <a href="prosumer-devices-page"><img id="turnback" src="assets/img/turn-back.png" alt=""></a>
         </div>
-        <div class="deviceimg">
-            <img id="imgdevice" src="assets/img/water-heater.png" alt="">
-            <div class="infoimg">
-                <h2>Water heater</h2>
-                <button type="submit" class="button1">Start</button>
+        <div class="glavni">
+            <div class="updatedelete">
+                <a class="btn btn-primary" href="#" role="button">Delete</a>
+                <a class="btn btn-primary" href="#" role="button">Update</a>
+            </div>
+            <div class="deviceimg">
+                <div class="infoimg">
+                    <h2>Water heater</h2>
+                    <a class="btn" href="#" role="button" id="startbutton">Start</a>
+                </div>
+                <img id="imgdevice" src="assets/img/water-heater.png" alt="">
+
+                <div class="info">
+                    <p>Session Started</p>
+                    <p>Duration</p>
+                    <p>Energy consumtion</p>
+                </div>
+            </div>
+
+            <div class="schcons">
+                <div class="schedular">
+                    <p id="pschedular">Schedular</p>
+                </div>
+                <div class="history">
+                    <p id="phistiry">Consumtion and Production Hostory</p>
+                </div>
+
             </div>
         </div>
-        <div class="info">
-            <p>Session Started</p>
-            <p>Duration</p>
-            <p>Energy consumtion</p>
-        </div>
-        <div class="schedular">
-            <p id="pschedular">Schedular</p>
-        </div>
-        <div class="history">
-            <p id="phistiry">Consumtion and Production Hostory</p>
-        </div>
         <app-prosumer-footer></app-prosumer-footer>
-
     </div>
 </div>
