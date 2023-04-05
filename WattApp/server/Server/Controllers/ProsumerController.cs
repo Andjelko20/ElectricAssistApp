@@ -39,15 +39,16 @@ namespace Server.Controllers
         }*/
 
         /// <summary>
-        /// blabla
+        /// Total Consumption/Production in The Moment
         /// </summary>
         [HttpGet]
-        [Route("{deviceCategoryName}")]
+        [Route("{deviceCategoryName:regex(Electricity Producer|Electricity Consumer|Electricity Stock)}")]
         //[Authorize(Roles = "dispecer")]
         public async Task<IActionResult> GetTotalConsumptionInTheMomentForCategory([FromRoute] string deviceCategoryName)
         {
-            Console.WriteLine("*********** " + deviceCategoryName);
-            return Ok(prosumerService.GetTotalConsumptionInTheMoment(deviceCategoryName));
+            if (deviceCategoryName.ToLower().Equals("electricity producer") || deviceCategoryName.ToLower().Equals("electricity consumer") | deviceCategoryName.ToLower().Equals("electricity stock"))
+                return Ok(prosumerService.GetTotalConsumptionInTheMoment(deviceCategoryName));
+            return BadRequest("Invalid parameter. Please use 'Electricity Producer', 'Electricity Consumer' or 'Electricity Stock'.");
         }
 
         /// <summary>
