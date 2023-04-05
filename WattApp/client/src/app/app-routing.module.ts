@@ -40,16 +40,18 @@ const routes: Routes = [
 	{path:'admindsoadd',component:AdminDsoAddComponent,canActivate:[AuthenticatedGuard]},
 	{path:'admindsoupdate/:id',component:AdminDsoUpdateComponent,canActivate:[AuthenticatedGuard]},
 	//{path:'register',component:RegisterComponent},
-	{path:'maps',component:MapsComponent},
-	{path:'tower',component:ProsumerTowerComponent},
-	{path:'solar',component:ProsumerSolarComponent},
-	{path:'house',component:ProsumerHouseComponent},
-	{path:'change-password',component:ChangePasswordComponent},
+
+	//{path:'maps',component:MapsComponent},
+	//{path:'tower',component:ProsumerTowerComponent},
+	//{path:'solar',component:ProsumerSolarComponent},
+	//{path:'house',component:ProsumerHouseComponent},
+	//{path:'change-password',component:ChangePasswordComponent},
 	{path:'dsohome',component:DsoHomePageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'dsoprosumer',component:DsoProsumersPageComponent,canActivate:[AuthenticatedGuard]},
-	{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
+	//{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
+	
 	//home
 	{path:'dashboard',component:HomePageComponent,canActivate:[AuthenticatedGuard]},
 	//ADMIN
