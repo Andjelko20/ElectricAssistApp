@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DsoOneProsumerPageComponent implements OnInit{
   currentTime!: Date;
+  dashboard:boolean = true;
+  devices:boolean = false;
 
   constructor() { }
 
@@ -15,6 +17,16 @@ export class DsoOneProsumerPageComponent implements OnInit{
     setInterval(() => {
       this.updateTime();
     }, 1000);
+  }
+
+  toggleD()
+  {
+    this.dashboard = false;
+    this.devices = true;
+  }
+  toggleDa(){
+    this.dashboard = true;
+    this.devices = false;
   }
 
   updateTime() {

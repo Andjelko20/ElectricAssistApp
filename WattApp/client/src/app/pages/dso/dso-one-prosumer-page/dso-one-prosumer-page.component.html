@@ -1,16 +1,16 @@
 <div class="toggle-container">
   <div class="toggle-buttons">
-    <input type="radio" name="toggle" id="dashboard-btn" checked>
+    <input type="radio" (click)="toggleDa()" name="toggle" id="dashboard-btn" checked >
     <label for="dashboard-btn">Dashboard</label>
     <span class="divider"></span>
-    <input type="radio" name="toggle" id="devices-btn">
+    <input type="radio" (click)="toggleD()" name="toggle" id="devices-btn">
     <label for="devices-btn">Devices</label>
   </div>
   <div class="date-time">
     <p>{{ currentTime | date: 'dd.MM.yyyy HH:mm' }}</p>
   </div>
 </div>
-<div class="container">
+<div class="container" *ngIf="dashboard">
   <div class="card-group">
     <div class="consumption">
       <div class="consumption-body">
@@ -37,10 +37,107 @@
     <app-one-prosumer></app-one-prosumer>
   </div>
 </div>
-<div class="producing-consuming">
+<div class="containers" *ngIf="devices">
+  <div class="search">
+    <input type="text" placeholder="Search...">
+  </div>
+  <div class="sort-by">
+    <!-- <span>Sort by:</span> -->
+    <select>
+      <option value="device-category">Device Category</option>
+      <option value="device-type">Device Type</option>
+      <option value="device-brand">Device Brand</option>
+      <option value="device-model">Device Model</option>
+      <option value="device-name">Device Name</option>
+      <option value="peak-power">Peak Power</option>
+      <option value="on-off">On/Off</option>
+    </select>
+    <select>
+      <option value="asc">Ascending</option>
+      <option value="desc">Descending</option>
+    </select>
+    <select>
+      <option value="10">10 per page</option>
+      <option value="20">20 per page</option>
+      <option value="50">50 per page</option>
+    </select>
+  </div>
+  <div class="table">
+    <table>
+      <thead>
+        <tr>
+          <th>Device Category</th>
+          <th>Device Type</th>
+          <th>Device Brand</th>
+          <th>Device Model</th>
+          <th>Device Name</th>
+          <th>Peak Power</th>
+          <th>On/Off</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr>
+              <td>Smartphone</td>
+              <td>Android</td>
+              <td>Samsung</td>
+              <td>Galaxy S21</td>
+              <td>Samsung Galaxy S21</td>
+              <td>5W</td>
+              <td class="on-off"><span class="on">On</span></td>
+            </tr>
+            <tr>
+              <td>Laptop</td>
+              <td>Windows</td>
+              <td>HP</td>
+              <td>ENVY x360</td>
+              <td>HP ENVY x360</td>
+              <td>45W</td>
+              <td class="on-off"><span class="off">Off</span></td>
+            </tr>
+            <tr>
+              <td>Tablet</td>
+              <td>iOS</td>
+              <td>Apple</td>
+              <td>iPad Air</td>
+              <td>Apple iPad Air</td>
+              <td>20W</td>
+              <td class="on-off"><span class="on">On</span></td>
+            </tr>
+            <tr>
+              <td>Smart TV</td>
+              <td>LED</td>
+              <td>Sony</td>
+              <td>BRAVIA X8000H</td>
+              <td>Sony BRAVIA X8000H</td>
+              <td>90W</td>
+              <td class="on-off"><span class="off">Off</span></td>
+            </tr>
+            <tr>
+              <td>Game Console</td>
+              <td>PlayStation</td>
+              <td>Sony</td>
+              <td>PS5</td>
+              <td>Sony PlayStation 5</td>
+              <td>350W</td>
+              <td class="on-off"><span class="on">On</span></td>
+            </tr>
+            <tr>
+              <td>Wireless Router</td>
+              <td>Wi-Fi</td>
+              <td>TP-Link</td>
+              <td>Archer C7</td>
+              <td>TP-Link Archer C7</td>
+              <td>12W</td>
+              <td class="on-off"><span class="on">On</span></td>
+            </tr>
+          </tbody>
+          </table>
+          </div>
+          </div>
+<div class="producing-consuming" *ngIf="dashboard">
   <app-producing-consuming></app-producing-consuming>
 </div>
-<div class="container2">
+<div class="container2" *ngIf="dashboard">
   <div class="today-future">
     <app-today></app-today>
     <app-future></app-future>
