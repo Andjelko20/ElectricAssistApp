@@ -17,9 +17,6 @@ import { ProsumerHomePageComponent } from './pages/prosumer/prosumer-home-page/p
 import { ProsumerTowerComponent } from './components/prosumers/prosumer-meter/prosumer-tower/prosumer-tower.component';
 import { ProsumerSolarComponent } from './components/prosumers/prosumer-meter/prosumer-solar/prosumer-solar.component';
 import { ProsumerHouseComponent } from './components/prosumers/prosumer-meter/prosumer-house/prosumer-house.component';
-import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso/admin-dso.component';
-import { AdminDsoUpdateComponent } from './components/admin/admin-dso/admin-dso-update/admin-dso-update.component';
-import { AdminDsoAddComponent } from './components/admin/admin-dso/admin-dso-add/admin-dso-add.component';
 import { MapsComponent } from './components/dso/maps/maps.component';
 import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
 import { DispatcherGuard } from './guards/dispatcher.guard';
@@ -27,6 +24,9 @@ import { MapInputComponent } from './components/map-input/map-input.component';
 import { AllDevicesComponent } from './components/prosumers/devices/all-devices/all-devices.component';
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
 import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
+import { AdminDsoAddComponent } from './components/admin/admin-dso-add/admin-dso-add.component';
+import { AdminDsoUpdateComponent } from './components/admin/admin-dso-update/admin-dso-update.component';
+import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso.component';
 
  
 const routes: Routes = [

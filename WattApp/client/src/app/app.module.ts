@@ -27,9 +27,6 @@ import { AllProsumersComponent } from './components/dso/all-prosumers/all-prosum
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { TodayComponent } from './components/today/today.component';
-import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso/admin-dso.component';
-import { AdminDsoUpdateComponent } from './components/admin/admin-dso/admin-dso-update/admin-dso-update.component';
-import { AdminDsoAddComponent } from './components/admin/admin-dso/admin-dso-add/admin-dso-add.component';
 import { PieChartComponent } from './components/dso/charts/pie-chart/pie-chart.component';
 import { LineChartComponent } from './components/dso/charts/line-chart/line-chart.component';
 import { BarChartComponent } from './components/dso/charts/bar-chart/bar-chart.component';
@@ -56,6 +53,9 @@ import { AllDevicesComponent } from './components/prosumers/devices/all-devices/
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
 import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
 import { ProsumerDevicesComponent } from './components/dso/prosumer-devices/prosumer-devices.component';
+import { AdminDsoAddComponent } from './components/admin/admin-dso-add/admin-dso-add.component';
+import { AdminDsoUpdateComponent } from './components/admin/admin-dso-update/admin-dso-update.component';
+import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso.component';
 
 @NgModule({
   declarations: [
