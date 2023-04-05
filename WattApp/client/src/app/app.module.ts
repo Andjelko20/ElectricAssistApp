@@ -28,9 +28,6 @@ import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-pass
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { TodayComponent } from './components/today/today.component';
 import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso/admin-dso.component';
-import { AdminProsumerComponent } from './components/admin/admin-prosumer/admin-prosumer/admin-prosumer.component';
-import { AdminProsumerAddComponent } from './components/admin/admin-prosumer/admin-prosumer-add/admin-prosumer-add.component';
-import { AdminProsumerUpdateComponent } from './components/admin/admin-prosumer/admin-prosumer-update/admin-prosumer-update.component';
 import { AdminDsoUpdateComponent } from './components/admin/admin-dso/admin-dso-update/admin-dso-update.component';
 import { AdminDsoAddComponent } from './components/admin/admin-dso/admin-dso-add/admin-dso-add.component';
 import { PieChartComponent } from './components/dso/charts/pie-chart/pie-chart.component';
@@ -100,9 +97,6 @@ import { ProsumerDevicesComponent } from './components/dso/prosumer-devices/pros
     ProsumersMapComponent,
 	  MapInputComponent,
     AdminDsoComponent,
-    AdminProsumerComponent,
-    AdminProsumerAddComponent,
-    AdminProsumerUpdateComponent,
     AdminDsoUpdateComponent,
     AdminDsoAddComponent,
     ProsumerOneDevicePageComponent,

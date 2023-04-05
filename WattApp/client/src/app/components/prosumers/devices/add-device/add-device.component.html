@@ -2,59 +2,52 @@
     <div class="global1">
         <h1>Add</h1>
 
-        <form  (ngSubmit)="addDevices()">
+        <form form #myForm="ngForm" (ngSubmit)="addDevices()">
             <div class="form-row">
                 <div class="form-group col-md-6 ">
-                    <label for="userId">userId</label>
-                    <input type="number" class="form-control" id="userId" name="userId" [(ngModel)]="addDeviceRequest.userId">
+                    
+                
+                    <label for="deviceCategoryId " >deviceCategoryId</label>
+                    <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)"    required>     
+                        <option >Select Category</option>
+                        <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
+                    </select>
+                   
                     <br>
-                    <label for="deviceCategory">deviceCategory</label>
-                    <input type="number" class="form-control" id="deviceCategory" name="deviceCategory" [(ngModel)]="addDeviceRequest.deviceCategoryId">
+                    <label for="deviceTypeId " >deviceType</label>
+                    <select id="deviceTypeId" class="form-control" name="deviceTypeId" (change)="onSelectType($event)"   required>     
+                        <option >Select Type</option>
+                        <option *ngFor="let type of types" [value]="type.id"  >{{type.name}}</option>
+                    </select>
+                    
                     <br>
-                    <label for="deviceType">deviceType</label>
-                    <input type="number" class="form-control" id="deviceType" name="deviceType" [(ngModel)]="addDeviceRequest.deviceTypeId">
+                    <label for="deviceBrandId " >deviceBrandId</label>
+                    <select id="deviceBrandId" class="form-control" name="deviceBrandId" (change)="onSelectBrand($event)"    required>     
+                        <option >Select Brand</option>
+                        <option *ngFor="let brand of brands" [value]="brand.id"  >{{brand.name}}</option>
+                    </select>
+                    
                     <br>
-                    <label for="deviceBrand">deviceBrand</label>
-                    <input type="number" class="form-control" id="deviceBrand" name="deviceBrand" [(ngModel)]="addDeviceRequest.deviceBrandId">
-                    <br>
-                    <label for="deviceModel">deviceModel</label>
-                    <input type="number" class="form-control" id="deviceModel" name="deviceModel" [(ngModel)]="addDeviceRequest.deviceModelId">
+                    <label for="deviceModelId " >deviceModelId</label>
+                    <select id="deviceModelId" class="form-control" name="deviceModelId" (change)="onSelectModel($event)" required>     
+                        <option >Select Model</option>
+                        <option *ngFor="let model of models" [value]="model.id"  >{{model.mark}}</option>
+                    </select>
+                    
                     <br>
                     <label for="name">name</label>
-                    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addDeviceRequest.name">
+                    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addDeviceRequest.name" required>
                     <br>
                     <label for="energyInKwh">energyInKwh</label>
-                    <input type="number" class="form-control" id="energyInKwh" name="energyInKwh" [(ngModel)]="addDeviceRequest.energyInKwh">
+                    <input type="number" class="form-control" id="energyInKwh" name="energyInKwh" [(ngModel)]="addDeviceRequest.energyInKwh" required>
                     <br>
                     <label for="standByKwh">standByKwh</label>
-                    <input type="number" class="form-control" id="standByKwh" name="standByKwh" [(ngModel)]="addDeviceRequest.standByKwh">
+                    <input type="number" class="form-control" id="standByKwh" name="standByKwh" [(ngModel)]="addDeviceRequest.standByKwh" required>
                     <br>
-                    <!-- <label for="username">visibility</label>
-                    <input type="text" class="form-control" id="userName" name="username" [(ngModel)]="addDeviceRequest.visibility">
-                    <br>
-                    <label for="email">controlability</label>
-                    <input type="text" class="form-control" id="email" name="email" [(ngModel)]="addDeviceRequest.controlability">
-                    <br>
-                    <label for="username">turnOn</label>
-                    <input type="text" class="form-control" id="userName" name="username" [(ngModel)]="addDeviceRequest.turnOn">
-                    <br> -->
-
-                    <!-- <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" [(ngModel)]="addUserRequest.password"> -->
-<!-- 
-                    <label for="password" class="form-label">Password</label>
-                    <input type="text" class="form-control" id="password" name="password" value="{{passwordGen}}" disabled >
-                   -->
-                    <!-- <label for="role">Role</label>
-
-                    <select id="role" class="form-control" name="role" [(ngModel)]="addUserRequest.roleId">     
-                        <option *ngFor="let role of roles" [value]="role.id" (change)="onSelectedRole($event)" >{{role.name}}</option>
-                    </select>
-                    <br> -->
                     
                 </div>
             </div>
-            <button  class="btn btn-primary">ADD</button>
+            <button  class="btn btn-primary" style="cursor: pointer;"  [disabled]="!myForm.valid">ADD</button>
         </form>
         
     </div>

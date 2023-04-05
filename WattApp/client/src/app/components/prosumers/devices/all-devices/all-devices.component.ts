@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Devices, ShowDevices } from 'src/app/models/devices.model';
+import { ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
   selector: 'app-all-devices',
@@ -18,6 +19,7 @@ export class AllDevicesComponent implements OnInit {
     this.deviceService.getAllDevices().subscribe(devices => {
      this.devices=devices
     });
+
     }
   delete(id:number)
   {

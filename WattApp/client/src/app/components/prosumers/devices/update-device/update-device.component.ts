@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Devices } from 'src/app/models/devices.model';
+import {  updateDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,7 +13,7 @@ import { environment } from 'src/environments/environment';
 export class UpdateDeviceComponent implements OnInit{
 
 
-  updateDevice:Devices={
+  updateDevice:updateDevices={
     id: 0,
     userId: 0,
     deviceCategoryId: 0,
@@ -27,11 +28,17 @@ export class UpdateDeviceComponent implements OnInit{
     turnOn: false,
     
   }
+
+  idProsumer?:number
   constructor(private devicesService:DevicesService,private router:Router,private route:ActivatedRoute) { }
   ngOnInit(): void {
     
-		
-        this.devicesService.getDevice( Number(this.route.snapshot.paramMap.get('id')) )
+    let token=new JwtToken();
+    this.idProsumer=token.data.id as number;
+
+    
+
+  this.devicesService.getDevice( Number(this.route.snapshot.paramMap.get('id')) )
         .subscribe({
           next:(response)=>{
             this.updateDevice={
@@ -53,7 +60,8 @@ export class UpdateDeviceComponent implements OnInit{
 				this.router.navigate(["/devices"]);
 			}
           });
-		
+
+   
   }
   
   upDate()
@@ -66,6 +74,8 @@ export class UpdateDeviceComponent implements OnInit{
       }
     });
   }
+
+
 
 
 
