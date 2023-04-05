@@ -5,6 +5,7 @@ using Server.Data;
 using Server.DTOs;
 using Server.Exceptions;
 using Server.Models;
+using Server.Models.DropDowns.Devices;
 using System.Reflection;
 
 namespace Server.Services.Implementations
@@ -129,8 +130,29 @@ namespace Server.Services.Implementations
             Device response = _context.Devices.FirstOrDefault(src => src.Id == device.Id && src.UserId == userId);
 
             response.Name = device.Name;
+
             response.EnergyInKwh = device.EnergyInKwh;
+            if (response.EnergyInKwh == null || response.EnergyInKwh == 0)
+            {
+                var result = _context.DeviceModels.Find(response.DeviceModelId);
+                if (result == null)
+                {
+                    throw new ItemNotFoundException("Wrong device model id!");
+                }
+                response.EnergyInKwh = (float)result.EnergyKwh;
+            }
+
             response.StandByKwh = device.StandByKwh;
+            if (response.StandByKwh == null || response.StandByKwh == 0)
+            {
+                var result = _context.DeviceModels.Find(response.DeviceModelId);
+                if (result == null)
+                {
+                    throw new ItemNotFoundException("Wrong device model id!");
+                }
+                response.StandByKwh = (float)result.StandByKwh;
+            }
+
             response.Visibility = device.Visibility;
             if(response.Visibility == false)
             {

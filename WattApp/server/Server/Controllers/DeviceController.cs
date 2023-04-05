@@ -357,6 +357,11 @@ namespace Server.Controllers
         [Authorize(Roles = "prosumer")]
         public IActionResult editDevice([FromBody]DeviceUpdateDTO deviceUpdateDTO)
         {
+            if (deviceUpdateDTO == null)
+            {
+                throw new ArgumentNullException(nameof(deviceUpdateDTO));
+            }
+
             try
             {
                 var credentials = HttpContext.User.Identity as ClaimsIdentity;
