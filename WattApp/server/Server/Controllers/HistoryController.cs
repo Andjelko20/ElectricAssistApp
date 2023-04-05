@@ -22,7 +22,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Total device Consumption in last year
+        /// Total device Consumption/Production in last year
         /// </summary>
         [HttpGet]
         [Route("Year/Device/{deviceId:long}")]
@@ -40,7 +40,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Total device Consumption in last month
+        /// Total device Consumption/Production in last month
         /// </summary>
         [HttpGet]
         [Route("Month/Device/{deviceId:long}")]
@@ -57,7 +57,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Total device Consumption in last day
+        /// Total device Consumption/Production in last day
         /// </summary>
         [HttpGet]
         [Route("Day/Device/{deviceId:long}")]
@@ -75,7 +75,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Total device Consumption in last week
+        /// Total device Consumption/Production in last week
         /// </summary>
         [HttpGet]
         [Route("Week/Device/{deviceId:long}")]
@@ -93,7 +93,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption history for device in past year by month
+        /// Consumption/Production history for device in past year by month
         /// </summary>
         [HttpGet]
         [Route("YearByMonth/Device/{deviceId:long}")]
@@ -108,7 +108,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption history for device in past month by day
+        /// Consumption/Production history for device in past month by day
         /// </summary>
         [HttpGet]
         [Route("MonthByDay/Device/{deviceId:long}")]
@@ -123,7 +123,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption history for device in past week by day
+        /// Consumption/Production history for device in past week by day
         /// </summary>
         [HttpGet]
         [Route("WeekByDay/Device/{deviceId:long}")]
@@ -138,7 +138,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption for all user`s devices
+        /// Consumption/Production for all user`s devices
         /// </summary>
         [HttpGet]
         [Route("TotalConsumption/User/{userId:long}/{deviceCategoryId}")]
@@ -168,7 +168,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption for user, past day
+        /// Consumption/Production for user, past day
         /// </summary>
         [HttpGet]
         [Route("Day/User/{userId:long}/{deviceCategoryId}")]
@@ -198,7 +198,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption for user in past week
+        /// Consumption/Production for user in past week
         /// </summary>
         [HttpGet]
         [Route("Week/User/{userId:long}/{deviceCategoryId}")]
@@ -228,7 +228,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption for user in past month
+        /// Consumption/Production for user in past month
         /// </summary>
         [HttpGet]
         [Route("Month/User/{userId:long}/{deviceCategoryId}")]
@@ -258,7 +258,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption for user in past year
+        /// Consumption/Production for user in past year
         /// </summary>
         [HttpGet]
         [Route("Year/User/{userId:long}/{deviceCategoryId}")]
@@ -288,7 +288,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption for all user`s devices in past year (by month)
+        /// Consumption/Production for all user`s devices in past year (by month)
         /// </summary>
         [HttpGet]
         [Route("YearByMonth/User/{userId:long}/{deviceCategoryId:long}")]
@@ -318,7 +318,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// User history for last week (by day)
+        /// Consumption/Production for all user`s devices for last week (by day)
         /// </summary>
         [HttpGet]
         [Route("WeekByDay/User/{userId:long}/{deviceCategoryId:long}")]
