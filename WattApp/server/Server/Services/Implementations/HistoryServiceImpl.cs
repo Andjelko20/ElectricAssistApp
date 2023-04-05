@@ -74,7 +74,6 @@ namespace Server.Services.Implementations
             double Hours = -1;
             foreach (var item in deviceEnergyUsageLista)
             {
-                Console.WriteLine("******** " + item.DeviceId + " - " + item.StartTime + " - " + item.EndTime);
                 Hours = (item.EndTime - item.StartTime).TotalHours;
                 Consumption += (double)Math.Round(EnergyInKwh * Hours, 2);
             }
@@ -90,13 +89,14 @@ namespace Server.Services.Implementations
             var Results = new List<MonthlyEnergyConsumptionLastYear>();
             for (int i = 0; i < 12; i++)
             {
-                var StartDate = DateTime.Now.AddMonths(-i).Date;
-                var EndDate = StartDate.AddMonths(1).AddDays(-1).Date.AddDays(1).AddSeconds(-1);
+                 var StartDate = DateTime.Now.AddMonths(-i).Date;
+                 var EndDate = StartDate.AddMonths(1).AddDays(-1).Date.AddDays(1).AddSeconds(-1);
+                 DateTime TheTime = DateTime.Now;
 
-                var UsageList = _context.DeviceEnergyUsages
-                                .Where(u => u.DeviceId == deviceId && u.StartTime >= StartDate && u.EndTime <= EndDate)
-                                .OrderBy(u => u.StartTime)
-                                .ToList();
+                 var UsageList = _context.DeviceEnergyUsages
+                                 .Where(u => u.DeviceId == deviceId && u.StartTime >= StartDate && u.EndTime <= EndDate && u.EndTime <= TheTime)
+                                 .OrderBy(u => u.StartTime)
+                                 .ToList();
 
                 double UsageInHours = 0.0;
                 double UsageInKwh = 0.0;
@@ -112,10 +112,13 @@ namespace Server.Services.Implementations
                 {
                     foreach (var item in UsageList)
                     {
-                        UsageInHours = (item.EndTime - item.StartTime).TotalHours;
-                        UsageInKwh += UsageInHours * 10;//Device.EnergyInKwh;
-                    }
+                        var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
+                        float EnergyInKwh = DeviceModel.EnergyKwh;
 
+                        UsageInHours = (item.EndTime - item.StartTime).TotalHours;
+                        UsageInKwh += UsageInHours * EnergyInKwh; //Device.EnergyInKwh;
+                    }
+                    //Console.WriteLine("****** " + StartDate + " - " + UsageInKwh);
                     Results.Insert(0, new MonthlyEnergyConsumptionLastYear
                     {
                         Month = StartDate.ToString("MMMM yyyy"),
