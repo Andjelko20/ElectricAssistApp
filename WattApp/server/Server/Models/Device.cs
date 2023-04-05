@@ -28,8 +28,10 @@ namespace Server.Models
         [ForeignKey("DeviceModelId")]
         public DeviceModel DeviceModel { get; set; }
         public string? Name { get; set; }
-        //public float EnergyInKwh { get; set; }
-        //public float StandByKwh { get; set; }
+        [Range(0, float.MaxValue)]
+        public float EnergyInKwh { get; set; }
+        [Range(0, float.MaxValue)]
+        public float StandByKwh { get; set; }
         public bool Visibility { get; set; } = false;
         public bool Controlability { get; set; } = false;
         public bool TurnOn { get; set; } = false;

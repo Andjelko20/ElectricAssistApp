@@ -6,7 +6,6 @@ using Server.Utilities;
 using Server.Models;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
-using Server.Models.DropDowns.Devices.Agregations;
 
 namespace Server.Data
 {

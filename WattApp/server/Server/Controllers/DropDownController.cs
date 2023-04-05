@@ -14,7 +14,7 @@ namespace Server.Controllers
             _service = service;
         }
 
-        [HttpGet("categories")]
+        /*[HttpGet("categories")]
         public List<DeviceCategory> getCategories()
         {
             return _service.getDeviceCategories();
@@ -36,7 +36,7 @@ namespace Server.Controllers
         public List<DeviceModel> getDeviceModels(long typeId, long brandId)
         {
             return _service.getDeviceModel(typeId, brandId);
-        }
+        }*/
 
         [HttpGet("settlements")]
         public List<Settlement> getSettlements(long cityId)
