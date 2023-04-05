@@ -105,30 +105,30 @@ namespace Server.Controllers
         {
             try
             {
-                DeviceResponseDTO deviceDTO = new DeviceResponseDTO();
+                DeviceResponseDTO responseDTO;
+                Device device;
+                long modelId;
                 if (User.IsInRole("prosumer"))
                 {
                     var credentials = HttpContext.User.Identity as ClaimsIdentity;
                     long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
-                    deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.getYourDeviceById(id, userId));
+                    device = _deviceService.getYourDeviceById(id, userId);
+                    responseDTO = _mapper.Map<DeviceResponseDTO>(device);
                 }
                 else
                 {
-                    deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.getDeviceById(id));
+                    device = _deviceService.getDeviceById(id);
+                    modelId = device.DeviceModelId;
+                    responseDTO = _mapper.Map<DeviceResponseDTO>(device);
                 }
 
-                if (deviceDTO == null)
+                if (responseDTO == null)
                 {
                     throw new ItemNotFoundException("Device not found!");
                 }
-
-                deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
-                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
-                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
-                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
-
-                return Ok(deviceDTO);
+                formatDeviceResponseDTO(ref responseDTO, device.DeviceModelId);
+                return Ok(responseDTO);
             }
             catch (ItemNotFoundException ex)
             {
