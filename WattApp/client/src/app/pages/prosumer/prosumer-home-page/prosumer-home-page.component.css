@@ -8,10 +8,11 @@ ul {
 
 .main {
     border: 1px solid black;
-    top: 0;
+    top: 0px;
     width: 100%;
     min-height: 100vh;
     position: absolute;
+    justify-content: center;
 }
 
 .homeimage {
@@ -214,6 +215,9 @@ h1 {
 /* Responsiveness */
 
 @media (min-width: 768px) {
+    .maindevice {
+        top: 83px;
+    }
     #smarthomeh2 {
         padding-left: 55px;
         font-size: 35px;
