@@ -5,9 +5,12 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
+    text-align: center;
+    left: 0;
 }
 
 .footer-app {
+    position: relative;
     margin: 0px 20px 0px 20px;
 }
 
@@ -18,6 +21,7 @@ footer {
 
 @media (min-width: 768px) {
     footer {
+        display: flex;
         display: none;
     }
 }

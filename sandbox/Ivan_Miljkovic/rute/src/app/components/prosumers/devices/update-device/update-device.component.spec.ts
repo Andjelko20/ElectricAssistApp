@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UpdateDeviceComponent } from './update-device.component';
+import { ProsumerNavbarComponent } from './prosumer-navbar.component';
 
-describe('UpdateDeviceComponent', () => {
-  let component: UpdateDeviceComponent;
-  let fixture: ComponentFixture<UpdateDeviceComponent>;
+describe('ProsumerNavbarComponent', () => {
+  let component: ProsumerNavbarComponent;
+  let fixture: ComponentFixture<ProsumerNavbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UpdateDeviceComponent ]
+      declarations: [ ProsumerNavbarComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UpdateDeviceComponent);
+    fixture = TestBed.createComponent(ProsumerNavbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

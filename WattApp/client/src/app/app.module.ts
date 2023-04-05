@@ -30,6 +30,9 @@ import { TodayComponent } from './components/today/today.component';
 
 import { AdminDsoUpdateComponent } from './components/admin/admin-dso-update/admin-dso-update.component';
 import { AdminDsoAddComponent } from './components/admin/admin-dso-add/admin-dso-add.component';
+import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
+import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
+import { ProsumerTowerComponent } from './components/prosumer-meter/prosumer-tower/prosumer-tower.component';
 import { PieChartComponent } from './components/dso/charts/pie-chart/pie-chart.component';
 import { LineChartComponent } from './components/dso/charts/line-chart/line-chart.component';
 import { BarChartComponent } from './components/dso/charts/bar-chart/bar-chart.component';
@@ -45,10 +48,11 @@ import { CurrentPowerWattmeterComponent } from './components/dso/meter/current-p
 import { NumberOfUsersMeterComponent } from './components/dso/meter/number-of-users-meter/number-of-users-meter.component';
 import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
 import { MapInputComponent } from './components/map-input/map-input.component';
-import { FutureComponent } from './components/future/future.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { ProsumerDevicePageComponent } from './pages/prosumer/prosumer-device-page/prosumer-device-page.component';
 import { ProsumerNavbarComponent } from './pages/prosumer/prosumer-navbar/prosumer-navbar.component';
 import { ProsumerFooterComponent } from './pages/prosumer/prosumer-footer/prosumer-footer.component';
+import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso.component';
 
 @NgModule({
   declarations: [
@@ -85,11 +89,16 @@ import { ProsumerFooterComponent } from './pages/prosumer/prosumer-footer/prosum
     TodayComponent,
     ProsumersMapComponent,
 	  MapInputComponent,
+	  AdminDsoComponent,
     AdminDsoUpdateComponent,
     AdminDsoAddComponent,
     HomePageComponent,
-    ProsumerNavbarComponent,
-    ProsumerFooterComponent
+    ProsumerDevicePageComponent,
+	ProsumerNavbarComponent,
+	ProsumerFooterComponent,
+	ProsumerTowerComponent,
+	ProsumerSolarComponent,
+	ProsumerHouseComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,180 @@
+.main {
+    top: 0px;
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    justify-content: center;
+}
+
+.device {
+    top: 43px;
+    left: 0;
+    right: 0;
+    height: auto;
+    max-width: 100%;
+    position: relative;
+}
+
+#turnback {
+    margin-top: 5px;
+    width: 7%;
+    margin-left: 5px;
+}
+
+.glavni {
+    top: 10%;
+    margin: 2%;
+}
+
+.updatedelete {
+    height: 40px;
+    background-color: #1C315E;
+    border-radius: 5px;
+    position: relative;
+    justify-content: center;
+}
+
+.btn {
+    background-color: #3E5483;
+    border-color: #3E5483;
+    float: right;
+    font-size: 10px;
+    margin: 5px;
+    box-shadow: none;
+    color: white;
+    width: 60px;
+    border-radius: 10px;
+}
+
+.deviceimg {
+    margin-top: 5px;
+    text-align: center;
+}
+
+#imgdevice {
+    margin-left: 15px;
+    width: 30%;
+}
+
+.infoimg {
+    width: 55%;
+    float: right;
+    height: auto;
+    text-align: center;
+}
+
+#startbutton {
+    left: -20% !important;
+    position: relative;
+    font-size: 12px;
+    width: 100px !important;
+}
+
+h2 {
+    padding-top: 5px;
+    font-size: 14px;
+    position: relative;
+}
+
+.button1 {
+    left: 49%;
+    width: 100px;
+    position: absolute;
+}
+
+.info {
+    height: auto;
+    margin-top: 2%;
+    text-align: left;
+    background-color: rgb(222, 222, 222);
+}
+
+p {
+    padding-left: 5px;
+    font-size: 10px;
+    margin: 0;
+    position: relative;
+}
+
+.schedular {
+    height: auto;
+    margin-top: 5px;
+}
+
+#pschedular {
+    border-radius: 5px;
+    padding-left: 5px;
+    background-color: #1C315E;
+    color: white;
+}
+
+.history {
+    height: auto;
+    margin-top: 5px;
+}
+
+#phistiry {
+    padding-left: 5px;
+    border-radius: 5px;
+    background-color: #1C315E;
+    color: white;
+}
+
+@media (min-width: 768px) {
+    .device {
+        top: 83px;
+    }
+    #turnback {
+        width: 3%;
+        margin-left: 2%;
+    }
+    .btn {
+        width: 12% !important;
+        font-size: 20px;
+        margin: 9px;
+    }
+    .updatedelete {
+        height: 60px;
+    }
+    .deviceimg {
+        width: 100%;
+        text-align: left;
+        /* min-height: auto; */
+        /* box-sizing: border-box; */
+    }
+    #imgdevice {
+        box-sizing: border-box;
+        width: 13%;
+        /* float: left; */
+        margin: 10px;
+        /* position: relative; */
+    }
+    .info {
+        float: right;
+        width: 57%;
+        margin-right: 15px;
+    }
+    .infoimg {
+        float: left;
+        /* margin-top: 15px; */
+        /* float: left; */
+        left: 15%;
+        padding-top: 15px;
+        position: absolute;
+        width: 20%;
+    }
+    h2 {
+        font-size: 25px;
+    }
+    p {
+        font-size: 22px;
+    }
+    #startbutton {
+        font-size: 20px;
+        width: 50% !important;
+    }
+    .schcons {
+        position: absolute;
+        width: 96%;
+    }
+}

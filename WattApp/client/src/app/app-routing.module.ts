@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { UnauthenticatedGuard } from './guards/unauthenticated.guard';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
-
-import { FutureComponent } from './components/future/future.component';
 import { DsoHomePageComponent } from './pages/dso/dso-home-page/dso-home-page.component';
 import { DsoProsumersPageComponent } from './pages/dso/dso-prosumers-page/dso-prosumers-page.component';
 import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password.component';
@@ -24,6 +22,13 @@ import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-
 import { ProsumerDevicesPageComponent } from './pages/prosumer/prosumer-devices-page/prosumer-devices-page.component';
 import { ProsumerReportsPageComponent } from './pages/prosumer/prosumer-reports-page/prosumer-reports-page.component';
 
+import { TodayComponent } from './components/today/today.component';
+import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
+import { ProsumerTowerComponent } from './components/prosumer-meter/prosumer-tower/prosumer-tower.component';
+import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
+import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
+import { MapsComponent } from './components/dso/maps/maps.component';
+import { ProsumerDevicePageComponent } from './pages/prosumer/prosumer-device-page/prosumer-device-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -58,7 +63,13 @@ const routes: Routes = [
 	//{path:'reset-password',component:ResetPasswordPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	{path:"map-input",component:MapInputComponent},
-	{path:'future',component:FutureComponent},
+	{path:'prosumer-home-page',component:ProsumerHomePageComponent},
+	{path:'prosumer-devices-page',component:ProsumerDevicesPageComponent},
+	{path:'prosumer-device-page',component:ProsumerDevicePageComponent},
+	{path:'today',component:TodayComponent},
+	{path:'reset-password',component:ResetPasswordPageComponent},
+	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
+	{path:"map-input",component:MapInputComponent},
 	{path:'**',redirectTo:"login"}
 ];
 

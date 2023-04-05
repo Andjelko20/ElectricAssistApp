@@ -7,6 +7,16 @@ header {
     z-index: 1;
 }
 
+.logoimi {
+    float: right;
+    width: 20%;
+    text-align: center;
+}
+
+#logoimi {
+    width: 90%;
+}
+
 a {
     text-decoration: none;
 }
@@ -143,5 +153,8 @@ ul {
     }
     .logo {
         font-size: 60px;
+    }
+    .logoimi {
+        display: none;
     }
 }

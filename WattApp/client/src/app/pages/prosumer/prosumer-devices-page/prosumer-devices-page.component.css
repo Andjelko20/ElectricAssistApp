@@ -1,25 +1,40 @@
 .main {
-    top: 43px;
+    top: 0px;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     position: absolute;
     justify-content: center;
 }
 
-h1 {
-    border-bottom: 1px solid rgb(197, 233, 230);
-    padding-left: 15px;
-    padding-top: 15px;
-    font-size: 15px;
-}
-
 .alldevices {
-    top: 0;
+    top: 43px;
     left: 0;
     right: 0;
     height: auto;
     max-width: 100%;
     position: relative;
+}
+
+.adddevices {
+    border-bottom: 1px solid rgb(197, 233, 230);
+    position: relative;
+    height: auto;
+}
+
+#allh1 {
+    padding-left: 15px;
+    padding-top: 15px;
+    font-size: 15px;
+}
+
+.btn {
+    background-color: #1C315E;
+    border-color: #1C315E;
+    margin-top: -35px;
+    position: relative;
+    float: right;
+    font-size: 12px;
+    margin-right: 5px;
 }
 
 .devices {
@@ -41,7 +56,7 @@ h1 {
     box-shadow: 5px dodgerblue;
     background-color: white;
     padding: 5px;
-    width: 25%;
+    width: 30%;
     text-align: center;
     display: inline-block;
     padding-top: 20px;
@@ -70,8 +85,11 @@ h1 {
 }
 
 @media (min-width: 768px) {
-    h1 {
-        padding-top: 60px;
+    .alldevices {
+        top: 10%;
+        position: absolute;
+    }
+    #allh1 {
         font-size: 30px;
         padding-left: 45px;
         padding-bottom: 15px;
@@ -87,5 +105,16 @@ h1 {
     } */
     #deviceh3 {
         font-size: 30px;
+    }
+    .devices-item {
+        /* position: sticky; */
+        width: 25%;
+    }
+    .btn {
+        background-color: #1C315E;
+        border-color: #1C315E;
+        margin-top: -65px;
+        font-size: 20px;
+        width: 200px;
     }
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllDevicesComponent } from './all-devices.component';
+import { ProsumerFooterComponent } from './prosumer-footer.component';
 
-describe('AllDevicesComponent', () => {
-  let component: AllDevicesComponent;
-  let fixture: ComponentFixture<AllDevicesComponent>;
+describe('ProsumerFooterComponent', () => {
+  let component: ProsumerFooterComponent;
+  let fixture: ComponentFixture<ProsumerFooterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AllDevicesComponent ]
+      declarations: [ ProsumerFooterComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AllDevicesComponent);
+    fixture = TestBed.createComponent(ProsumerFooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
