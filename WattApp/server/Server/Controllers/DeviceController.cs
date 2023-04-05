@@ -445,18 +445,16 @@ namespace Server.Controllers
                 var credentials = HttpContext.User.Identity as ClaimsIdentity;
                 long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
-                DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.changeDeviceControlability(deviceId, userId));
-                if (deviceDTO == null)
+                Device device = _deviceService.changeDeviceControlability(deviceId, userId);
+                DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(device);
+                if (responseDTO == null)
                 {
                     throw new DbUpdateException("An error occurred while processing your request.");
                 }
-               
-                deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
-                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
-                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
-                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
 
-                return Ok(deviceDTO);
+                formatDeviceResponseDTO(ref responseDTO, device.DeviceModelId);
+
+                return Ok(responseDTO);
             }
             catch (DbUpdateException ex)
             {
@@ -490,18 +488,16 @@ namespace Server.Controllers
                 var credentials = HttpContext.User.Identity as ClaimsIdentity;
                 long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
-                DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.changeDeviceVisibility(deviceId, userId));
-                if (deviceDTO == null)
+                Device device = _deviceService.changeDeviceVisibility(deviceId, userId);
+                DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(device);
+                if (responseDTO == null)
                 {
                     throw new DbUpdateException("An error occurred while processing your request.");
                 }
 
-                deviceDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(deviceDTO.DeviceCategory));
-                deviceDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(deviceDTO.DeviceType));
-                deviceDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(deviceDTO.DeviceBrand));
-                deviceDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(deviceDTO.DeviceModel));
+                formatDeviceResponseDTO(ref responseDTO, device.DeviceModelId);
 
-                return  Ok(deviceDTO);
+                return  Ok(responseDTO);
             }
             catch (DbUpdateException ex)
             {
