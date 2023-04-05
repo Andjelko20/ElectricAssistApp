@@ -56,9 +56,8 @@ import { ProsumerFooterComponent } from './pages/prosumer/prosumer-footer/prosum
 import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
 import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { AdminDsoPageComponent } from './pages/dso/admin/admin-dso-page/admin-dso-page.component';
 import { AdminDsoUpdateComponent } from './components/admin/admin-dso-update/admin-dso-update.component';
-import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
+import { AdminDsoPageComponent } from './pages/admin/admin-dso-page/admin-dso-page.component';
 
 @NgModule({
   declarations: [
@@ -110,10 +109,8 @@ import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-p
 	ProsumerSolarComponent,
 	ProsumerHomePageComponent,
 	HomePageComponent,
-	AdminDsoPageComponent,
 	AdminDsoUpdateComponent,
-	AdminProsumersPageComponent
-
+	AdminDsoPageComponent
   ],
   imports: [
     BrowserModule,

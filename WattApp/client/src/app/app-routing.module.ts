@@ -26,7 +26,7 @@ import { ProducingConsumingComponent } from './components/dso/producing-consumin
 
 
 import { TodayComponent } from './components/today/today.component';
-import { AdminProsumersPageComponent } from './pages/dso/admin/admin-prosumers-page/admin-prosumers-page.component';
+import { AdminProsumersPageComponent } from './pages/admin/admin-prosumers-page/admin-prosumers-page.component';
 import { ProsumerTowerComponent } from './components/prosumer-meter/prosumer-tower/prosumer-tower.component';
 import { ProsumerSolarComponent } from './components/prosumer-meter/prosumer-solar/prosumer-solar.component';
 import { ProsumerHouseComponent } from './components/prosumer-meter/prosumer-house/prosumer-house.component';
