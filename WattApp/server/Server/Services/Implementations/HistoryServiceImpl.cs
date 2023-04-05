@@ -266,10 +266,11 @@ namespace Server.Services.Implementations
             {
                 var deviceUsageList = usageList.Where(u => u.DeviceId == device.Id).ToList();
 
+                var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == device.DeviceModelId);
+                float EnergyInKwh = DeviceModel.EnergyKwh;
+
                 foreach (var usage in deviceUsageList)
                 {
-                    var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == device.DeviceModelId);
-                    float EnergyInKwh = DeviceModel.EnergyKwh;
                     totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// device.EnergyInKwh;
                 }
             }
@@ -281,7 +282,13 @@ namespace Server.Services.Implementations
         public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(long userId, long deviceCategoryId)
         {
             //var userDevices = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
-			var userDevices = _context.Devices.Where(d => d.UserId == userId).ToList();
+            //var userDevices = _context.Devices.Where(d => d.UserId == userId).ToList();
+            var userDevices = _context.Devices
+                                .Include(d => d.DeviceModel)
+                                .ThenInclude(dm => dm.DeviceType)
+                                .ThenInclude(dt => dt.DeviceCategory)
+                                .Where(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId).ToList();
+
             var endDate = DateTime.Now.Date.AddDays(1).AddSeconds(-1);
             var startDate = endDate.AddYears(-1);
 
@@ -290,7 +297,7 @@ namespace Server.Services.Implementations
             for (var i = 0; i < 12; i++)
             {
                 var monthStartDate = startDate.AddMonths(i);
-                Console.WriteLine("***** monthStartDate: " + monthStartDate);
+                //Console.WriteLine("***** monthStartDate: " + monthStartDate);
                 var monthEndDate = monthStartDate.AddMonths(1).AddDays(-1).AddSeconds(1);
                 var monthlyEnergyUsage = 0.0;
 
@@ -300,9 +307,12 @@ namespace Server.Services.Implementations
                         .Where(u => u.DeviceId == device.Id && u.StartTime >= monthStartDate && u.EndTime <= monthEndDate)
                         .ToList();
 
+                    var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == device.DeviceModelId);
+                    float EnergyInKwh = DeviceModel.EnergyKwh;
+
                     foreach (var usage in deviceUsages)
                     {
-                        monthlyEnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * 10;// device.EnergyInKwh;
+                        monthlyEnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// device.EnergyInKwh;
                     }
                 }
 
@@ -319,18 +329,27 @@ namespace Server.Services.Implementations
         public List<DailyEnergyConsumptionPastMonth> UserHistoryForThePastWeek(long userId, long deviceCategoryId)
         {
             //var userDevices = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
-			var userDevices = _context.Devices.Where(d => d.UserId == userId).ToList();
-            var EndDate = DateTime.Now.Date.AddDays(-1);
+            //var userDevices = _context.Devices.Where(d => d.UserId == userId).ToList();
+            var userDevices = _context.Devices
+                                .Include(d => d.DeviceModel)
+                                .ThenInclude(dm => dm.DeviceType)
+                                .ThenInclude(dt => dt.DeviceCategory)
+                                .Where(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId).ToList();
+
+            var EndDate = DateTime.Now.Date;//.AddDays(-1);
             var StartDate = EndDate.AddDays(-6);
 
             List<DeviceEnergyUsage> UsageList = new List<DeviceEnergyUsage>();
             var Results = new List<DailyEnergyConsumptionPastMonth>();
 
-            foreach (var userDevice in userDevices)
+            foreach (var device in userDevices)
             {
                 UsageList = _context.DeviceEnergyUsages
-                            .Where(u => u.DeviceId == userDevice.Id && u.StartTime >= StartDate && u.EndTime <= EndDate)
+                            .Where(u => u.DeviceId == device.Id && u.StartTime >= StartDate && u.EndTime <= EndDate)
                             .ToList();
+
+                var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == device.DeviceModelId);
+                float EnergyInKwh = DeviceModel.EnergyKwh;
 
                 for (var date = StartDate; date <= EndDate; date = date.AddDays(1))
                 {
@@ -338,7 +357,7 @@ namespace Server.Services.Implementations
 
                     double EnergyUsage = 0.0;
                     foreach (var usage in UsageForDate) // za taj dan
-                        EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * 10;// userDevice.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
+                        EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// userDevice.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
 
                     Results.Add(new DailyEnergyConsumptionPastMonth // klasa moze i za week
                     {
