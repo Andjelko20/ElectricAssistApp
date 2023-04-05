@@ -1,4 +1,5 @@
-﻿using Server.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Server.Data;
 using Server.DTOs;
 using Server.Models;
 
@@ -228,7 +229,13 @@ namespace Server.Services.Implementations
         public double SumEnergyConsumption(long userId, long daysInPast, long deviceCategoryId)
         {
             //var devicesForUser = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
-			var devicesForUser = _context.Devices.Where(d => d.UserId == userId).ToList();
+            //var devicesForUser = _context.Devices.Where(d => d.UserId == userId).ToList();
+            var devicesForUser = _context.Devices
+                                .Include(d => d.DeviceModel)
+                                .ThenInclude(dm => dm.DeviceType)
+                                .ThenInclude(dt => dt.DeviceCategory)
+                                .Where(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId).ToList();
+            
             if (devicesForUser.Count == 0)
             {
                 return 0;
@@ -261,7 +268,9 @@ namespace Server.Services.Implementations
 
                 foreach (var usage in deviceUsageList)
                 {
-                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * 10;// device.EnergyInKwh;
+                    var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == device.DeviceModelId);
+                    float EnergyInKwh = DeviceModel.EnergyKwh;
+                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// device.EnergyInKwh;
                 }
             }
 
