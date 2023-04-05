@@ -17,19 +17,12 @@ import { AdminDsoAddComponent } from './components/admin/admin-dso-add/admin-dso
 import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
 import { DispatcherGuard } from './guards/dispatcher.guard';
 import { MapInputComponent } from './components/map-input/map-input.component';
-import { AllDevicesComponent } from './components/prosumers/devices/all-devices/all-devices.component';
-import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
-import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
 import { AdminGuard } from './guards/admin.guard';
 import { ProsumerGuard } from './guards/prosumer.guard';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { AdminDsoPageComponent } from './pages/admin/admin-dso-page/admin-dso-page.component';
-import { DsoOneProsumerDevicesPageComponent } from './pages/dso/dso-one-prosumer-devices-page/dso-one-prosumer-devices-page.component';
-import { DsoOneProsumerPageComponent } from './pages/dso/dso-one-prosumer-page/dso-one-prosumer-page.component';
 import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-prediction-page.component';
 import { ProsumerDevicesPageComponent } from './pages/prosumer/prosumer-devices-page/prosumer-devices-page.component';
 import { ProsumerReportsPageComponent } from './pages/prosumer/prosumer-reports-page/prosumer-reports-page.component';
-import { ProsumerOneDevicePageComponent } from './pages/prosumer/prosumer-one-device-page/prosumer-one-device-page.component';
 
  
 const routes: Routes = [
@@ -40,33 +33,23 @@ const routes: Routes = [
 	{path:'admindsoadd',component:AdminDsoAddComponent,canActivate:[AuthenticatedGuard]},
 	{path:'admindsoupdate/:id',component:AdminDsoUpdateComponent,canActivate:[AuthenticatedGuard]},
 	//{path:'register',component:RegisterComponent},
-	{path:'maps',component:MapsComponent},
-	{path:'tower',component:ProsumerTowerComponent},
-	{path:'solar',component:ProsumerSolarComponent},
-	{path:'house',component:ProsumerHouseComponent},
-	{path:'change-password',component:ChangePasswordComponent},
 	{path:'dsohome',component:DsoHomePageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'dsoprosumer',component:DsoProsumersPageComponent,canActivate:[AuthenticatedGuard]},
-	{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	//home
 	{path:'dashboard',component:HomePageComponent,canActivate:[AuthenticatedGuard]},
 	//ADMIN
-	{path:'',component:AdminDsoPageComponent,canActivate:[AdminGuard]},
 	{path:'add-user',component:AdminDsoAddComponent,canActivate:[AdminGuard]},
 	{path:'update-user/:id',component:AdminDsoUpdateComponent,canActivate:[AdminGuard]},
 	//DSO
 	{path:'',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard]},
-	{path:'prosumer',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
-	{path:'prosumer-devices',component:DsoOneProsumerDevicesPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prediction',component:DsoPredictionPageComponent,canActivate:[DispatcherGuard]},
 	//PROSUMER
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
 	{path:'devices',component:ProsumerDevicesPageComponent,canActivate:[ProsumerGuard]},
 	{path:'reports',component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
-	{path:'one-device',component:ProsumerOneDevicePageComponent,canActivate:[ProsumerGuard]},
 	
 	//TEST
 	// {path:'register',component:RegisterComponent},
@@ -76,9 +59,6 @@ const routes: Routes = [
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	{path:"map-input",component:MapInputComponent},
 	{path:'future',component:FutureComponent},
-	{path:"devices",component:AllDevicesComponent},
-	{path:"devices-add",component:AddDeviceComponent},
-	{path:"devices-update/:id",component:UpdateDeviceComponent},
 	{path:'**',redirectTo:"login"}
 ];
 
