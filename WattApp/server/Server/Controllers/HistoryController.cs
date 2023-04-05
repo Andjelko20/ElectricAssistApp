@@ -26,7 +26,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("Year/Device/{deviceId:long}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInLastYear([FromRoute] long deviceId)
         {
             if (!_sqliteDb.Devices.Any(u => u.Id == deviceId)) // Any - da li postoji stavka tog id-a u bazi
@@ -44,7 +44,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("Month/Device/{deviceId:long}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInLastMonth([FromRoute] long deviceId)
         {
             if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
@@ -61,7 +61,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("Day/Device/{deviceId:long}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInLastDay([FromRoute] long deviceId)
         {
             if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
@@ -79,7 +79,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("Week/Device/{deviceId:long}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInPastWeek([FromRoute] long deviceId)
         {
             if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
@@ -97,7 +97,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("YearByMonth/Device/{deviceId:long}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInPastYearByMonth([FromRoute] long deviceId)
         {
             if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
@@ -112,7 +112,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("MonthByDay/Device/{deviceId:long}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInPastMonthByDay([FromRoute] long deviceId)
         {
             if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
@@ -127,7 +127,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("WeekByDay/Device/{deviceId:long}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInPastWeekByDay([FromRoute] long deviceId)
         {
             if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
@@ -142,7 +142,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("TotalConsumption/User/{userId:long}/{deviceCategoryId}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetTotalConsumptionByUser([FromRoute] long userId, [FromRoute] long deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
@@ -166,7 +166,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("Day/User/{userId:long}/{deviceCategoryId}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryByUserForPastDay([FromRoute] long userId, [FromRoute] long deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
@@ -190,7 +190,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("Week/User/{userId:long}/{deviceCategoryId}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryByUserForPastWeek([FromRoute] long userId, [FromRoute] long deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
@@ -214,7 +214,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("Month/User/{userId:long}/{deviceCategoryId}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryByUserForPastMonth([FromRoute] long userId, [FromRoute] long deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
@@ -238,7 +238,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("Year/User/{userId:long}/{deviceCategoryId}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetConsumptionByUserForYear([FromRoute] long userId, [FromRoute] long deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
@@ -262,7 +262,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("YearByMonth/User/{userId:long}/{deviceCategoryId:long}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetConsumptionByUserForYearByMonth([FromRoute] long userId, [FromRoute] long deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
@@ -286,7 +286,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("WeekByDay/User/{userId:long}/{deviceCategoryId:long}")]
-        [Authorize(Roles = "dispecer, prosumer, guest")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetUserHistoryForPastWeekByDay([FromRoute] long userId, [FromRoute] long deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))

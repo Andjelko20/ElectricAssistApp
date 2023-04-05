@@ -15,9 +15,10 @@ namespace Server.Services.Implementations
         public double GetUsageHistoryForDeviceInLastYear(long deviceId)
         {
             DateTime OneYearAgo = DateTime.Now.AddYears(-1); // tip DATETIME, trenutna godina 2023. -1 = 2022.
+            DateTime TheTime = DateTime.Now;
 
             List<DeviceEnergyUsage> deviceEnergyUsageLista = _context.DeviceEnergyUsages
-                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= OneYearAgo)
+                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= OneYearAgo && u.EndTime <= TheTime)
                                                             .OrderBy(u => u.StartTime)
                                                             .ToList();
 
@@ -27,9 +28,10 @@ namespace Server.Services.Implementations
         public double GetUsageHistoryForDeviceInLastMonth(long deviceId)
         {
             DateTime OneMonthAgo = DateTime.Now.AddMonths(-1);
+            DateTime TheTime = DateTime.Now;
 
             List<DeviceEnergyUsage> deviceEnergyUsageLista = _context.DeviceEnergyUsages
-                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= OneMonthAgo)
+                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= OneMonthAgo && u.EndTime <= TheTime)
                                                             .OrderBy(u => u.StartTime)
                                                             .ToList();
 
@@ -39,9 +41,10 @@ namespace Server.Services.Implementations
         public double GetUsageHistoryForDeviceInLastDay(long deviceId)
         {
             DateTime ADayAgo = DateTime.Now.AddDays(-1);
+            DateTime TheTime = DateTime.Now;
 
             List<DeviceEnergyUsage> deviceEnergyUsageLista = _context.DeviceEnergyUsages
-                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= ADayAgo)
+                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= ADayAgo && u.EndTime <= TheTime)
                                                             .OrderBy(u => u.StartTime)
                                                             .ToList();
 
@@ -51,9 +54,10 @@ namespace Server.Services.Implementations
         public double GetUsageHistoryForDeviceInPastWeek(long deviceId)
         {
             DateTime AWeekAgo = DateTime.Now.AddDays(-7);
+            DateTime TheTime = DateTime.Now;
 
             List<DeviceEnergyUsage> deviceEnergyUsageLista = _context.DeviceEnergyUsages
-                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= AWeekAgo)
+                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= AWeekAgo && u.EndTime <= TheTime)
                                                             .OrderBy(u => u.StartTime)
                                                             .ToList();
 
@@ -63,12 +67,14 @@ namespace Server.Services.Implementations
         public double GetConsumptionForForwardedList(long deviceId, List<DeviceEnergyUsage> deviceEnergyUsageLista)
         {
             var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
-            float EnergyInKwh = 10;//Device.EnergyInKwh; // da li je null proverava se u kontroleru i vraca NotFound
+            var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
+            float EnergyInKwh = DeviceModel.EnergyKwh; // da li je null proverava se u kontroleru i vraca NotFound
 
             double Consumption = 0.0;
             double Hours = -1;
             foreach (var item in deviceEnergyUsageLista)
             {
+                Console.WriteLine("******** " + item.DeviceId + " - " + item.StartTime + " - " + item.EndTime);
                 Hours = (item.EndTime - item.StartTime).TotalHours;
                 Consumption += (double)Math.Round(EnergyInKwh * Hours, 2);
             }
