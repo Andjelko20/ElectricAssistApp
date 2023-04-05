@@ -3,20 +3,25 @@
     <nav id="sidebar">
         <ul class="list-unstyled components">
             <li *ngIf="role==dso">
-                <a class="nav-link" [routerLink]='["/dsohome"]'>
+                <a class="nav-link" [routerLink]='["/dashboard"]'>
                     <i class="fas fa-home"></i> Home
                 </a>
             </li>
 
-            <li>
-                <a class="nav-link" [routerLink]='["/admindso"]'><i class="fas fa-copy"></i> Reports</a>
-
+            <li *ngIf="role==admin">
+                <a class="nav-link" [routerLink]='["/dashboard"]'>
+                    <i class="fas fa-home"></i> Home
+                </a>
             </li>
+            <!-- <li *ngIf="role==admin">
+                <a class="nav-link" [routerLink]='["/dashboard"]'><i class="fas fa-copy"></i> Reports</a>
+
+            </li> -->
             <li *ngIf="role==dso">
                 <a class="nav-link" [routerLink]='["/prosumers"]'><i class="fa fa-user" ></i> Prosumers</a>
 
             </li>
-            <li>
+            <li *ngIf="role==prosumer">
                 <a class="nav-link" [routerLink]='["/prosumer-home-page"]'><i class="fa fa-user"></i> Prosumer home</a>
 
             </li>
