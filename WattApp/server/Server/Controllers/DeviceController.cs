@@ -220,10 +220,7 @@ namespace Server.Controllers
                 {
                     DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(device);
 
-                    responseDTO.DeviceCategory = _deviceCategoryService.getCategoryNameById(long.Parse(responseDTO.DeviceCategory));
-                    responseDTO.DeviceType = _deviceTypeService.getTypeNameById(long.Parse(responseDTO.DeviceType));
-                    responseDTO.DeviceBrand = _deviceBrandService.getBrandNameById(long.Parse(responseDTO.DeviceBrand));
-                    responseDTO.DeviceModel = _deviceModelService.getModelNameById(long.Parse(responseDTO.DeviceModel));
+                    formatDeviceResponseDTO(ref responseDTO, device.DeviceModelId);
 
                     responseDTOs.Add(responseDTO);
                 }
