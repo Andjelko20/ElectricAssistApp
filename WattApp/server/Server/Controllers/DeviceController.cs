@@ -48,7 +48,7 @@ namespace Server.Controllers
                 if (User.IsInRole("prosumer"))
                 {
                     var credentials = HttpContext.User.Identity as ClaimsIdentity;
-                    int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+                    long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
                     deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.getYourDeviceById(id, userId));
                 }
@@ -150,7 +150,7 @@ namespace Server.Controllers
                 List<DeviceResponseDTO> responseDTOs = new List<DeviceResponseDTO>();
 
                 var credentials = HttpContext.User.Identity as ClaimsIdentity;
-                int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+                long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
                 devices = _deviceService.getMyDevices(userId);
                 if (devices == null || devices.Count == 0)
@@ -251,7 +251,7 @@ namespace Server.Controllers
                 if (User.IsInRole("prosumer"))
                 {
                     var credentials = HttpContext.User.Identity as ClaimsIdentity;
-                    int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+                    long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
                     device = _deviceService.changeTurnOnStatus(deviceId, userId);
                 }
@@ -376,7 +376,7 @@ namespace Server.Controllers
             try
             {
                 var credentials = HttpContext.User.Identity as ClaimsIdentity;
-                int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+                long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
                 DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.changeDeviceControlability(deviceId, userId));
                 if (deviceDTO == null)
@@ -421,7 +421,7 @@ namespace Server.Controllers
             try
             {
                 var credentials = HttpContext.User.Identity as ClaimsIdentity;
-                int userId = int.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+                long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
                 DeviceResponseDTO deviceDTO = _mapper.Map<DeviceResponseDTO>(_deviceService.changeDeviceVisibility(deviceId, userId));
                 if (deviceDTO == null)
