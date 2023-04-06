@@ -151,7 +151,7 @@ ul {
 
 .prognosis {
     display: flex;
-    border: 1px solid black;
+   /* border: 1px solid black; */
     width: 25%;
     height: 7%;
     top: 12%;

@@ -34,4 +34,27 @@ export class ForecastService {
     )
   }
 
+  getWeatherForecastF(){
+    return new Observable((observer)=>{
+      navigator.geolocation.getCurrentPosition((position)=>{
+        observer.next(position)
+      },
+      (error)=>{
+        observer.next(error)
+      }
+      )
+    }).pipe(
+      map((value:any)=>{
+        return new HttpParams()
+          .set('lon', value.coords.longitude)
+          .set('lat', value.coords.latitude)
+          .set('units',"imperial")
+          .set('appid', '7dd14e5b21a93d6be27ec87a0694756b')
+      }),
+      switchMap((values)=>{
+        return this.http.get('https://api.openweathermap.org/data/2.5/forecast', { params : values })
+      })
+    )
+  }
+
 }

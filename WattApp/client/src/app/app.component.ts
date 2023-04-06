@@ -28,11 +28,15 @@ export class AppComponent implements OnInit {
     this.superadmin=Roles.SUPERADMIN_NAME;
   }
    
-  ngOnInit(){
+  ngOnInit():void{
     document.title=this.title;
-	this.authService.isLoginSubject.next(this.authService.hasToken());
-  let token=new JwtToken();
-    this.role=token.data.role as string;
+	  this.authService.isLoginSubject.next(this.authService.hasToken());
+    if(this.authService.hasToken())
+    {
+      let token=new JwtToken();
+      this.role=token.data.role as string;
+    }
+   
   }
   
 

@@ -1,6 +1,6 @@
-<div class="wrapper1">
+<div class="wrapper1" >
     <!-- Sidebar  -->
-    <nav id="sidebar">
+    <nav id="sidebar" >
         <ul class="list-unstyled components">
             <li *ngIf="role==dso">
                 <a class="nav-link" [routerLink]='["/dashboard"]'>
@@ -8,7 +8,7 @@
                 </a>
             </li>
 
-            <li *ngIf="role==admin">
+            <li *ngIf="role==admin || role==superadmin">
                 <a class="nav-link" [routerLink]='["/dashboard"]'>
                     <i class="fas fa-home"></i> Home
                 </a>
@@ -19,6 +19,10 @@
             </li> -->
             <li *ngIf="role==dso">
                 <a class="nav-link" [routerLink]='["/prosumers"]'><i class="fa fa-user" ></i> Prosumers</a>
+
+            </li>
+            <li *ngIf="role==dso">
+                <a class="nav-link" [routerLink]='["/prosumer"]'><i class="fa fa-user" ></i> One Prosumer</a>
 
             </li>
             <li *ngIf="role==prosumer">

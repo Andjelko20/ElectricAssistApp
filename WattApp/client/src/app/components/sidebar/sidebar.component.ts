@@ -11,6 +11,7 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
 export class SidebarComponent implements OnInit{
   role?:string;
   admin?:string;
+  superadmin?:string;
   dso?:string;
   prosumer?:string;
   constructor(private router:Router,private usersService:AuthService,
@@ -19,15 +20,14 @@ export class SidebarComponent implements OnInit{
       this.admin=Roles.ADMIN_NAME;
       this.dso=Roles.DISPATCHER_NAME;
       this.prosumer=Roles.PROSUMER_NAME;
+      this.superadmin=Roles.SUPERADMIN_NAME;
     }
   ngOnInit(): void {
-    let token=new JwtToken();
-    this.role=token.data.role as string;
+
   }
   logout()
   {
     localStorage.removeItem('token');
-    localStorage.clear();
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }
