@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using MimeKit.Encodings;
 using Server.Data;
 using Server.DTOs;
 using Server.Exceptions;
+using Server.Filters;
 using Server.Models;
 using Server.Services;
-using System.Net;
-using System.Reflection;
 using System.Security.Claims;
 
 namespace Server.Controllers
@@ -155,12 +153,12 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet("devices{userId:long}")]
         [Authorize(Roles = "dispatcher")]
-        public IActionResult getUserDevices([FromRoute]long userId)
+        public IActionResult getUserDevices([FromRoute]long userId, int pageNumber, int pageSize, [FromQuery] DeviceFilterModel filter)
         {
             try
             {
-                List<Device> devices = _deviceService.getUserDevices(userId);
-                if (devices == null) throw new ItemNotFoundException("Devices not found!");
+                return Ok(_deviceService.getUserDevices(userId, filter, pageNumber, pageSize));
+                /*if (devices == null) throw new ItemNotFoundException("Devices not found!");
 
                 List<DeviceResponseDTO> deviceResponseDTOs = new List<DeviceResponseDTO>();
                 foreach(Device device in devices)
@@ -171,7 +169,11 @@ namespace Server.Controllers
 
                     deviceResponseDTOs.Add(responseDTO);
                 }
-                return Ok(deviceResponseDTOs);
+                return Ok(deviceResponseDTOs);*/
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode((int)ex.StatusCode.Value, ex.Message);
             }
             catch(ItemNotFoundException ex)
             {
@@ -200,18 +202,20 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Authorize(Roles = "prosumer")]
-        public IActionResult getAllDevices()
+        public IActionResult getAllDevices(int pageNumber, int pageSize, [FromQuery] DeviceFilterModel filter)
         {
             try
             {
-                List<Device> devices = new List<Device>();
-                List<DeviceResponseDTO> responseDTOs = new List<DeviceResponseDTO>();
+                /*List<Device> devices = new List<Device>();
+                List<DeviceResponseDTO> responseDTOs = new List<DeviceResponseDTO>();*/
 
                 var credentials = HttpContext.User.Identity as ClaimsIdentity;
                 long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+                /*if (pageNumber == null) pageNumber = 1;
+                if (pageSize == null) pageSize = 10;*/
 
-                devices = _deviceService.getMyDevices(userId);
-                if (devices == null || devices.Count == 0)
+                return Ok(_deviceService.getMyDevices(userId, filter, pageNumber, pageSize));
+                /*if (devices == null || devices.Count == 0)
                 {
                     throw new ItemNotFoundException("Devices not found!");
                 }
@@ -225,7 +229,11 @@ namespace Server.Controllers
                     responseDTOs.Add(responseDTO);
                 }
 
-                return Ok(responseDTOs);
+                return Ok(responseDTOs);*/
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode((int)ex.StatusCode.Value, ex.Message);
             }
             catch (ItemNotFoundException ex)
             {
