@@ -54,8 +54,8 @@ namespace Server.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]LoginDTO requestBody)
         {
-            logger.LogInformation(requestBody.Username);
-            var user = await userService.GetUserByUsername(requestBody.Username);
+            //logger.LogInformation(requestBody.Username);
+            var user = await userService.Login(requestBody.Username);
             if (user is null)
             {
                 return Unauthorized(new MessageResponseDTO("Bad credentials"));
@@ -80,7 +80,8 @@ namespace Server.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody]UserCreateDTO requestBody)
         {
-            RoleModel? role = await _sqliteDb.Roles.FirstOrDefaultAsync(r => r.Name == "guest");
+            return NotFound();
+            /*RoleModel? role = await _sqliteDb.Roles.FirstOrDefaultAsync(r => r.Name == "guest");
             if (role == null)
             {
                 return BadRequest(new BadRequestStatusResponse("You send role which doesn\'t exist"));
@@ -99,7 +100,7 @@ namespace Server.Controllers
             };
             await _sqliteDb.Users.AddAsync(user);
             await _sqliteDb.SaveChangesAsync();
-            return Ok(new MessageResponseDTO( "Registered successfully" ));
+            return Ok(new MessageResponseDTO( "Registered successfully" ));*/
         }
 
         /// <summary>
