@@ -1,7 +1,6 @@
 ﻿using Server.Data;
 using Server.DTOs;
 using Server.Models;
-using Server.Models.DropDowns.Devices;
 
 namespace Server.Services.Implementations
 {
@@ -13,7 +12,7 @@ namespace Server.Services.Implementations
             _context = context;
         }
 
-        public List<DailyEnergyConsumptionPastMonth> ConsumptionPredictionForTheNextWeek(long deviceId)
+        public List<DailyEnergyConsumptionPastMonth> ConsumptionPredictionForTheNextWeek(int deviceId)
         {
             var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
             var StartDate = DateTime.Now.Date.AddDays(1);
@@ -31,11 +30,7 @@ namespace Server.Services.Implementations
 
                 double EnergyUsage = 0.0;
                 foreach (var usage in UsageForDate) // za taj dan
-                {
-                    var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
-                    var EnergyKwh = DeviceModel.EnergyKwh;
-                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyKwh;// Device.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
-                }
+                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * Device.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
 
                 Results.Add(new DailyEnergyConsumptionPastMonth // klasa moze i za week
                 {
@@ -47,18 +42,9 @@ namespace Server.Services.Implementations
             return Results;
         }
 
-        public List<DailyEnergyConsumptionPastMonth> UserPredictionForTheNextWeek(long userId, long deviceCategoryId)
+        public List<DailyEnergyConsumptionPastMonth> UserPredictionForTheNextWeek(int userId, int deviceCategoryId)
         {
-            //var userDevices = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
-			//var userDevices = _context.Devices.Where(d => d.UserId == userId).ToList();
-
-            var userDevices = _context.Devices.Where(d => d.UserId == userId && _context.DeviceModels
-                                                                                .Where(dm => dm.Id == d.DeviceModelId && _context.DeviceTypes
-                                                                                                                         .Where(dt => dt.Id == dm.DeviceTypeId && dt.CategoryId == deviceCategoryId)
-                                                                                                                         .Any())
-                                                                                .Any())
-                              .ToList();
-
+            var userDevices = _context.Devices.Where(d => d.UserId == userId && d.DeviceCategoryId == deviceCategoryId).ToList();
             var StartDate = DateTime.Now.Date.AddDays(1);
             var EndDate = StartDate.AddDays(7).AddSeconds(-1);
 
@@ -78,11 +64,8 @@ namespace Server.Services.Implementations
 
                     double EnergyUsage = 0.0;
                     foreach (var usage in UsageForDate) // za taj dan
-                    {
-                        var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == userDevice.DeviceModelId);
-                        var EnergyKwh = DeviceModel.EnergyKwh;
-                        EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyKwh;// userDevice.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
-                    }
+                        EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * userDevice.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
+
                     Results.Add(new DailyEnergyConsumptionPastMonth // klasa moze i za week
                     {
                         Day = date.ToString("dd.MM.yyyy"),
@@ -90,6 +73,8 @@ namespace Server.Services.Implementations
                     });
                 }
             }
+
+            //return Results;
 
             var sumByDay = Results.GroupBy(r => r.Day)
                                 .Select(g => new DailyEnergyConsumptionPastMonth
