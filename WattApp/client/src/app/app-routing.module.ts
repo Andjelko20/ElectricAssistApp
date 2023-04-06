@@ -85,7 +85,7 @@ const routes: Routes = [
 	{path:'reset-password',component:ResetPasswordPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	{path:"map-input",component:MapInputComponent},
-	
+	{path:"future",component:TodayComponent},
 	{path:"future",component:FutureComponent},
 	{path:'**',redirectTo:"login"}
 ];
