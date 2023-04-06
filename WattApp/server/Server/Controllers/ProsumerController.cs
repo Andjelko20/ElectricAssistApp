@@ -48,7 +48,7 @@ namespace Server.Controllers
         /// Total Consumption/Production in The Moment (Settlement)
         /// </summary>
         [HttpGet]
-        [Route("{deviceCategoryName:regex(Electricity Producer|Electricity Consumer|Electricity Stock)}/{settlementName}")]
+        [Route("{deviceCategoryName}/{settlementName}")]
         //[Authorize(Roles = "dispecer")]
         public async Task<IActionResult> GetTotalConsumptionInTheMomentForCategoryInSettlement([FromRoute] string deviceCategoryName, [FromRoute] string settlementName)
         {
@@ -66,7 +66,7 @@ namespace Server.Controllers
         /// Total Consumption/Production in The Moment (City)
         /// </summary>
         [HttpGet]
-        [Route("{deviceCategoryName:regex(Electricity Producer|Electricity Consumer|Electricity Stock)}/city/{cityName}")]
+        [Route("{deviceCategoryName}/city/{cityName}")]
         //[Authorize(Roles = "dispecer")]
         public async Task<IActionResult> GetTotalConsumptionInTheMomentForCategoryInCity([FromRoute] string deviceCategoryName, [FromRoute] string cityName)
         {
