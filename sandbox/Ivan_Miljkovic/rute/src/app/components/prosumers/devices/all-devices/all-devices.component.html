@@ -1,0 +1,56 @@
+<div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-12">
+    <div class="first">
+        <br>
+        <!--
+    <br>
+    <h2>List </h2>
+    <br> -->
+  
+        <table *ngIf="devices">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>userId</th>
+                    <th>deviceCategory</th>
+                    <th>deviceType</th>
+                    <th>deviceBrand</th>
+                    <th>deviceModel</th>
+                    <th>name</th>
+                    <th>energyInKwh</th>
+                    <th>standByKwh</th>
+                    <th>turnOn</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let device of devices ">
+                    <td>{{device.id}}</td>
+                    <td>{{device.userId}}</td>
+                    <td>{{device.deviceCategory}}</td>
+                    <td>{{device.deviceType}} </td>
+                    <td>{{device.deviceBrand}}</td>
+                    <td>{{device.deviceModel}} </td>
+                    <td>{{device.name}} </td>
+                    <td>{{device.energyInKwh}}</td>
+                    <td>{{device.standByKwh}} </td>
+                    <td>{{device.turnOn}}</td>
+                    <td>
+                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)"> on</button>
+                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)"> off</button>
+                      <!-- <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)"> on</button>
+                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)"> off</button> -->
+                    </td>
+                    <td><a [routerLink]='["/devices-update",device.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
+                    <td><button style="width: 84px; height:30px" (click)="delete(device.id)">DELETE</button></td>
+  
+                </tr>
+            </tbody>
+        </table>
+        <br>
+  
+    </div>
+    <button id="buttonAdd" [routerLink]='["/devices-add"]'>ADD</button>
+  </div>
+  

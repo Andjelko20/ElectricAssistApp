@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Devices, ShowDevices } from 'src/app/models/devices.model';
+import { ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
   selector: 'app-all-devices',
@@ -18,6 +19,7 @@ export class AllDevicesComponent implements OnInit {
     this.deviceService.getAllDevices().subscribe(devices => {
      this.devices=devices
     });
+
     }
   delete(id:number)
   {
@@ -26,42 +28,30 @@ export class AllDevicesComponent implements OnInit {
       this.deviceService.delete(id)
       .subscribe({
         next:()=>{
-          this.router.navigate(['/admindso']);
+          this.router.navigate(['devices-crud']);
           location.reload();
         }
       });
     }
   }
   
-  // turnOnOff(id: number) {
-  //   console.log(id);
-    
-  //     this.deviceService.turnOn(id).subscribe({
-  //       next:()=>{
-  //         this.router.navigate(['/devices']);
-          
-  //       }
-  //     });
-  // }
-  turnOn(id: number) {
+  turnOnOff(id: number) {
     console.log(id);
     
-      this.deviceService.turnOn(id).subscribe({
+      this.deviceService.turnOnOff(id).subscribe({
         next:()=>{
-          this.router.navigate(['/devices']);
-          location.reload()
+          const userIndex = this.devices.findIndex(device => device.id === id);
+          if(this.devices[userIndex].turnOn==false)
+          {
+            this.devices[userIndex].turnOn = true;
+          }   
+          else if(this.devices[userIndex].turnOn==true)
+          {
+            this.devices[userIndex].turnOn = false;
+          }
         }
       });
   }
-  turnOff(id: number) {
-    
-    this.deviceService.turnOff(id).subscribe({
-      next:()=>{
-        this.router.navigate(['/devices']);
-        location.reload()
-      }
-    });
-}
   
-
+  
 }

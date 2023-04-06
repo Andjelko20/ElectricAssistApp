@@ -1,4 +1,4 @@
-<div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-12">
+<div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-12" style="margin-top: 150px;">
     <div class="first">
         <br>
         <!--
@@ -37,13 +37,13 @@
                     <td>{{device.standByKwh}} </td>
                     <td>{{device.turnOn}}</td>
                     <td>
-                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOn(device.id)"> on</button>
-                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOff(device.id)"> off</button>
+                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)"> on</button>
+                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)"> off</button>
                       <!-- <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)"> on</button>
                       <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)"> off</button> -->
                     </td>
-                    <td><a [routerLink]='["/devices-update",device.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
-                    <td><button style="width: 84px; height:30px" (click)="delete(device.id)">DELETE</button></td>
+                    <td><a [routerLink]='["/device-update/"+device.id]'><button style="width: 84px; height:30px; " > UPDATE</button></a></td>
+                    <td><button style="width: 84px; height:30px; " (click)="delete(device.id)">DELETE</button></td>
   
                 </tr>
             </tbody>
@@ -51,6 +51,6 @@
         <br>
   
     </div>
-    <button id="buttonAdd" [routerLink]='["/devices-add"]'>ADD</button>
+    <button id="buttonAdd" [routerLink]='["/device-add"]'>ADD</button>
   </div>
   

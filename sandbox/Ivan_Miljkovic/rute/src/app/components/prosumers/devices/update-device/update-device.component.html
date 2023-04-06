@@ -1,0 +1,39 @@
+<div class="global">
+    <div class="global1">
+        <h1>Update</h1>
+        <form #form="ngForm" (ngSubmit)="upDate()">
+            <div class="form-row">
+                <div class="form-group col-md-6 ">
+                
+                    <br>
+                    
+                    <input type="number " class="form-control " id="id " name="userId " [(ngModel)]="idProsumer " disabled>
+                    <br>
+                    <label for="name " class="form-label ">name</label>
+                    <input type="text " class="form-control " id="id " name="name " [(ngModel)]="updateDevice.name "  required>
+                    <br>
+                    <label for="energyInKwh " class="form-label ">energyInKwh</label>
+                    <input type="number " class="form-control " id="id " name="energyInKwh " [(ngModel)]="updateDevice.energyInKwh "  required>
+                    <br>
+                    <label for="standByKwh " class="form-label ">standByKwh</label>
+                    <input type="number " class="form-control " id="id " name="standByKwh " [(ngModel)]="updateDevice.standByKwh "  required>
+                    <br>
+                    <form >
+                        <label for="visibilityOnOff" class="form-label ">visibility</label>
+                        <button style="width: 84px; height:30px"  (click)="visibilityOnOff()" > {{ updateDevice.visibility ? 'On' : 'Off' }}</button>
+                    </form>
+                    <br>
+                   
+                    <form >
+                        <label for="controlabilityOnOff" class="form-label ">control</label>
+                        <button style="width: 84px; height:30px"  (click)="controlabilityOnOff()" > {{ updateDevice.controlability ? 'On' : 'Off' }}</button>
+                    </form>
+                    <br>
+                    <br>
+                    
+                </div>
+            </div>
+            <button type=" submit " class="btn btn-primary mr-5 ">Save</button>
+        </form>
+    </div>
+</div>

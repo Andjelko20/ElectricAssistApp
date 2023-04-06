@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.Services;
 
@@ -21,9 +22,9 @@ namespace Server.Controllers
         /// Device prediction for next week (by day)
         /// </summary>
         [HttpGet]
-        [Route("WeekByDay/Device/{deviceId:int}")]
+        [Route("WeekByDay/Device/{deviceId:long}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetDevicePredictionForNextWeekByDay([FromRoute] int deviceId)
+        public async Task<IActionResult> GetDevicePredictionForNextWeekByDay([FromRoute] long deviceId)
         {
             if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
                 return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
@@ -39,9 +40,9 @@ namespace Server.Controllers
         /// User prediction for next week (by day)
         /// </summary>
         [HttpGet]
-        [Route("WeekByDay/User/{userId:int}/{deviceCategoryId:int}")]
+        [Route("WeekByDay/User/{userId:long}/{deviceCategoryId:long}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetUserPredictionForNextWeekByDay([FromRoute] int userId, [FromRoute] int deviceCategoryId)
+        public async Task<IActionResult> GetUserPredictionForNextWeekByDay([FromRoute] long userId, [FromRoute] long deviceCategoryId)
         {
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
@@ -51,9 +52,15 @@ namespace Server.Controllers
 
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
-
+			/*
             if (!_sqliteDb.Devices.Any(u => u.DeviceCategoryId == deviceCategoryId))
                 return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
+			*/
+
+            if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
+            {
+                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
+            }
 
             var PredictionForNextWeek = predictionService.UserPredictionForTheNextWeek(userId, deviceCategoryId);
             return Ok(PredictionForNextWeek);

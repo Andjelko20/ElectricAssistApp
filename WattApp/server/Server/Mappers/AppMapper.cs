@@ -23,13 +23,16 @@ namespace Server.Mappers
 
         public AppMapper()
         {
-            CreateMap<Device, DeviceResponseDTO>()
-                        .ForMember(dest => dest.DeviceCategory, opt => opt.MapFrom(src => src.DeviceCategoryId))
-                        .ForMember(dest => dest.DeviceType, opt => opt.MapFrom(src => src.DeviceTypeId))
-                        .ForMember(dest => dest.DeviceBrand, opt => opt.MapFrom(src => src.DeviceBrandId))
-                        .ForMember(dest => dest.DeviceModel, opt => opt.MapFrom(src => src.DeviceModelId));
-            CreateMap<DeviceRequestDTO, Device>().ReverseMap();
+            /*CreateMap<Device, DeviceResponseDTO>()
+                        //.ForMember(dest => dest.DeviceCategory, opt => opt.MapFrom(src => src.DeviceCategoryId))
+                        //.ForMember(dest => dest.DeviceType, opt => opt.MapFrom(src => src.DeviceTypeId))
+                        //.ForMember(dest => dest.DeviceBrand, opt => opt.MapFrom(src => src.DeviceBrandId))
+                        .ForMember(dest => dest.DeviceModel, opt => opt.MapFrom(src => src.DeviceModelId));*/
+            //CreateMap<DeviceCreateDTO, Device>().ReverseMap();
             CreateMap<DeviceCategory, DeviceCategoryDTO>().ReverseMap();
+            CreateMap<Device, DeviceUpdateDTO>().ReverseMap();
+            CreateMap<Device, DeviceCreateDTO>().ReverseMap();
+            CreateMap<Device, DeviceResponseDTO>();
 
             /*CreateMap<Device, DeviceResponseDTO>()
                 .ForMember(dest => dest.DeviceCategory, opt => opt.MapFrom(src => deviceCategoryService.getCategoryNameById(src.DeviceCategoryId)))

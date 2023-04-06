@@ -1,8 +1,8 @@
 #container{
 	display: flex;
+	flex-direction: column;
 }
 #map-wrapper{
-	width: 50vw;
 	height: 100vh;
 }
 #prosumers-map{
@@ -13,11 +13,11 @@
 	flex-grow: 1;
 }
 .search-result{
-	height: 70vh;
 	overflow-y: auto;
 	display: flex;
 	flex-direction: column;
 	gap:10px;
+	max-height: 100px;
 }
 .location{
 	background-color: white;

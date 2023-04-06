@@ -39,25 +39,6 @@ namespace Server.Migrations
                     b.ToTable("Bills");
                 });
 
-            modelBuilder.Entity("Server.Models.ChargingScheduler", b =>
-                {
-                    b.Property<long>("DeviceId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Day")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Time")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("DeviceId", "Day", "Time");
-
-                    b.ToTable("ChargingSchedulers");
-                });
-
             modelBuilder.Entity("Server.Models.Device", b =>
                 {
                     b.Property<long>("Id")
@@ -67,16 +48,7 @@ namespace Server.Migrations
                     b.Property<bool>("Controlability")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("DeviceBrandId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("DeviceCategoryId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<long>("DeviceModelId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("DeviceTypeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<float>("EnergyInKwh")
@@ -99,23 +71,11 @@ namespace Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DeviceModelId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("Devices");
-                });
-
-            modelBuilder.Entity("Server.Models.DeviceDefaultSettings", b =>
-                {
-                    b.Property<long>("DeviceModelId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("DeviceBrandId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float?>("DefaultKwh")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("DeviceModelId", "DeviceBrandId");
-
-                    b.ToTable("DeviceDefaultSettings");
                 });
 
             modelBuilder.Entity("Server.Models.DeviceEnergyUsage", b =>
@@ -129,47 +89,12 @@ namespace Server.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("EnergyInKWh")
+                    b.Property<float>("EnergyInKwh")
                         .HasColumnType("REAL");
 
                     b.HasKey("DeviceId", "StartTime", "EndTime");
 
                     b.ToTable("DeviceEnergyUsages");
-                });
-
-            modelBuilder.Entity("Server.Models.DropDowns.Devices.Agregations.TypeBrand", b =>
-                {
-                    b.Property<long>("TypeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("BrandId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("TypeId", "BrandId");
-
-                    b.ToTable("TypeBrands");
-                });
-
-            modelBuilder.Entity("Server.Models.DropDowns.Devices.Agregations.TypeBrandModel", b =>
-                {
-                    b.Property<long>("TypeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("BrandId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("ModelId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<float>("EnergyKwh")
-                        .HasColumnType("REAL");
-
-                    b.Property<float>("StandByKwh")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("TypeId", "BrandId", "ModelId");
-
-                    b.ToTable("TypeBrandModels");
                 });
 
             modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceBrand", b =>
@@ -208,11 +133,27 @@ namespace Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<long>("DeviceBrandId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("DeviceTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("EnergyKwh")
+                        .HasColumnType("REAL");
+
                     b.Property<string>("Mark")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<float?>("StandByKwh")
+                        .HasColumnType("REAL");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("DeviceBrandId");
+
+                    b.HasIndex("DeviceTypeId");
 
                     b.ToTable("DeviceModels");
                 });
@@ -232,6 +173,8 @@ namespace Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("DeviceTypes");
                 });
 
@@ -249,6 +192,8 @@ namespace Server.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("Cities");
                 });
@@ -283,6 +228,8 @@ namespace Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
                     b.ToTable("Settlements");
                 });
 
@@ -294,10 +241,10 @@ namespace Server.Migrations
                     b.Property<string>("Day")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeOnly>("TurnOn")
+                    b.Property<DateTime>("TurnOn")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeOnly>("TurnOff")
+                    b.Property<DateTime>("TurnOff")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Comment")
@@ -308,20 +255,9 @@ namespace Server.Migrations
                     b.ToTable("InclusionSchedulers");
                 });
 
-            modelBuilder.Entity("Server.Models.Price", b =>
-                {
-                    b.Property<float>("PriceGreenZoneCheapPower")
-                        .HasColumnType("REAL");
-
-                    b.HasKey("PriceGreenZoneCheapPower");
-
-                    b.ToTable("Price");
-                });
-
             modelBuilder.Entity("Server.Models.ResetPasswordModel", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<long>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("ExpireAt")
@@ -338,7 +274,7 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.RoleModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -375,15 +311,26 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.Models.UserModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("Blocked")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<float>("Latitude")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("Longitude")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -393,7 +340,10 @@ namespace Server.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RoleId")
+                    b.Property<long>("RoleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("SettlementId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Username")
@@ -402,12 +352,143 @@ namespace Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("SettlementId");
 
                     b.HasIndex("Username")
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Server.Models.Bill", b =>
+                {
+                    b.HasOne("Server.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Server.Models.Device", b =>
+                {
+                    b.HasOne("Server.Models.DropDowns.Devices.DeviceModel", "DeviceModel")
+                        .WithMany()
+                        .HasForeignKey("DeviceModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DeviceModel");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Server.Models.DeviceEnergyUsage", b =>
+                {
+                    b.HasOne("Server.Models.Device", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Device");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceModel", b =>
+                {
+                    b.HasOne("Server.Models.DropDowns.Devices.DeviceBrand", "DeviceBrand")
+                        .WithMany()
+                        .HasForeignKey("DeviceBrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.DropDowns.Devices.DeviceType", "DeviceType")
+                        .WithMany()
+                        .HasForeignKey("DeviceTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DeviceBrand");
+
+                    b.Navigation("DeviceType");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Devices.DeviceType", b =>
+                {
+                    b.HasOne("Server.Models.DropDowns.Devices.DeviceCategory", "DeviceCategory")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DeviceCategory");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Location.City", b =>
+                {
+                    b.HasOne("Server.Models.DropDowns.Location.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("Server.Models.DropDowns.Location.Settlement", b =>
+                {
+                    b.HasOne("Server.Models.DropDowns.Location.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
+            modelBuilder.Entity("Server.Models.InclusionScheduler", b =>
+                {
+                    b.HasOne("Server.Models.Device", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Device");
+                });
+
+            modelBuilder.Entity("Server.Models.ResetPasswordModel", b =>
+                {
+                    b.HasOne("Server.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Server.Models.UserEnergyUsage", b =>
+                {
+                    b.HasOne("Server.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Server.Models.UserModel", b =>
@@ -418,7 +499,15 @@ namespace Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Server.Models.DropDowns.Location.Settlement", "Settlement")
+                        .WithMany()
+                        .HasForeignKey("SettlementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Role");
+
+                    b.Navigation("Settlement");
                 });
 #pragma warning restore 612, 618
         }

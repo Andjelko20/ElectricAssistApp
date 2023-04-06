@@ -1,0 +1,8 @@
+                    <div class="weather-container">
+                      <div class="flex-column" *ngFor="let forecast of weatherData; let i = index">
+                        <p class="small"><strong>{{ forecast.main.temp | number:'1.0-0' }} °C</strong></p>
+                        <i><img class="image" src="assets/img/{{forecast.weather[0].icon}}.png" alt=""></i>
+                        <p class="mb-0"><strong>{{ forecast.dt_txt | date:'EEE' }}</strong></p>
+                        <p class="mb-0">{{ forecast.weather[0].main}}</p>
+                      </div>
+                    </div>

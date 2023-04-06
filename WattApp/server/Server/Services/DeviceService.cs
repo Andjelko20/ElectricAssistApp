@@ -1,4 +1,5 @@
 ﻿using Server.DTOs;
+using Server.Filters;
 using Server.Models;
 
 namespace Server.Services
@@ -22,13 +23,13 @@ namespace Server.Services
         /// </summary>
         /// <param name="userId">Unique user id</param>
         /// <returns>List of devices</returns>
-        public List<Device> getUserDevices(long userId);
+        public DataPage<DeviceResponseDTO> getUserDevices(long userId, DeviceFilterModel deviceFilter, int pageNumber, int pageSize);
         /// <summary>
         /// Get your devices (for PROSUMER)
         /// </summary>
         /// <param name="userId">Unique user id</param>
         /// <returns>List of devices</returns>
-        public List<Device> getMyDevices(long userId);
+        public DataPage<DeviceResponseDTO> getMyDevices(long userId, DeviceFilterModel filter, int pageNumber, int pageSize);
         /// <summary>
         /// Add new device (for PROSUMER)
         /// </summary>
@@ -50,13 +51,13 @@ namespace Server.Services
         /// <returns>Device which status was changed</returns>
         public Device changeTurnOnStatus(long deviceId);
 
-        public Device editDevice(Device device);
+        public Device editDevice(Device device, long userId);
         /// <summary>
         /// Delete device by its unique id (for PROSUMER)
         /// </summary>
         /// <param name="id">Device id</param>
         /// <returns>Deleted device</returns>
-        public Device deleteDeviceById(long id);
+        public Device deleteDeviceById(long id, long userId);
         //public List<Device> getUsersDevices(long userId);
         /// <summary>
         /// Change the visibility status for the device by its unique id (for PROSUMER)

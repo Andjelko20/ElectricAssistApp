@@ -65,7 +65,7 @@ namespace Server.Middlewares
                         throw new Exception();
                     }
 
-                    var userId = int.Parse(userIdClaim.Value);
+                    var userId = long.Parse(userIdClaim.Value);
                     var userRole = userRoleClaim.Value;
 
                     // Check if user with the given ID has the required role
@@ -86,12 +86,12 @@ namespace Server.Middlewares
             await _next(context);
         }
 
-        private static bool HasUserRole(SqliteDbContext _sqliteDb,int userId, string userRole)
+        private static bool HasUserRole(SqliteDbContext _sqliteDb,long userId, string userRole)
         {
             RoleModel role = _sqliteDb.Roles.FirstOrDefault(role => role.Name == userRole);
             if (role == null)
                 return false;
-            int roleId = role.Id;
+            long roleId = role.Id;
             return _sqliteDb.Users.Any(user=>user.Id==userId && user.RoleId==roleId);
         }
     }

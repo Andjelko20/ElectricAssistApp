@@ -1,16 +1,12 @@
-<app-navbar *ngIf="(islogg |async)">
-</app-navbar>
-<div *ngIf="(islogg |async)" class="container-fluid">
-    <div class="row" id="mainContent">
+<div *ngIf="(islogg |async)">
 
-        <app-sidebar>
+    
+    <app-navbar *ngIf="this.role==this.admin || this.role==this.dso ||  this.role==this.superadmin"></app-navbar>
+    <app-sidebar *ngIf="this.role==this.admin || this.role==this.dso ||  this.role==this.superadmin"></app-sidebar>
+    <app-prosumer-navbar *ngIf="this.role==this.prosumer" ></app-prosumer-navbar>
+    <router-outlet></router-outlet>
 
-        </app-sidebar>
-
-        <!-- <div class="col-sm-9 ml-sm-auto col-md-11 pt-3" id="dashboard">
-            <router-outlet></router-outlet>
-        </div> -->
-    </div>
+        
 </div>
 <div *ngIf="!(islogg |async)">
     <router-outlet></router-outlet>

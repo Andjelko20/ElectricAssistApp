@@ -23,10 +23,10 @@
     <PackageReference Include="Polly" Version="7.2.3" />
     <PackageReference Include="SQLite" Version="3.13.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="DTOs\Requests\" />
   </ItemGroup>
 

@@ -1,16 +1,16 @@
-import { Component,OnInit, ViewChild } from '@angular/core';
+import { Component,OnInit, ViewChild,Output,EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import { environment } from 'src/environments/environment';
 import { NgModel } from '@angular/forms';
 
 @Component({
-  selector: 'app-prosumers-map',
+  selector: 'map-input',
   templateUrl: './map-input.component.html',
   styleUrls: ['./map-input.component.css']
 })
 export class MapInputComponent {
-	
+	@Output() locationChanged:EventEmitter<any>=new EventEmitter<any>();
 	  private map!: Leaflet.Map;
 	  private searchUrl!:URL;
 	  public searchInput!:string;
@@ -36,8 +36,12 @@ export class MapInputComponent {
 	
 		Leaflet.Marker.prototype.options.icon = icon;
 	  
-		this.map = Leaflet.map('prosumers-map').setView([44.01721187973962, 20.90732574462891], 13); // postavljanje mape i početni prikaz
-	
+		this.map = Leaflet.map('prosumers-map').setView([44.01721187973962, 20.90732574462891], 13);// postavljanje mape i početni prikaz
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(position=>{
+				this.changeFocus({lat:position.coords.latitude,lon:position.coords.longitude});
+			});
+		  }
 		Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		  attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
 		  maxZoom: 18,
@@ -51,19 +55,21 @@ export class MapInputComponent {
 			this.marker.setLatLng(event.latlng);
 			latLng = this.marker.getLatLng();
 			this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
+			this.locationChanged.emit(latLng);
 		});
 		this.marker.on("dragend",(event:L.DragEndEvent)=>{
 			this.marker.setLatLng(event.target.getLatLng());
 			latLng = this.marker.getLatLng();
 			this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
+			this.locationChanged.emit(latLng);
 		});
 	  }
 
 	  onSubmit(){
-		if(this.searchInput=="")
+		if(this.searchInput.trim()=="" || this.searchInput==undefined)
 			return;
 		this.searchUrl.searchParams.set("q",this.searchInput);
-		fetch(this.searchUrl.toString())//,{headers:{"Accept-Language":"en-US"}})
+		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
 		.then(res=>res.json())
 		.then(res=>{
 			this.locations=res;

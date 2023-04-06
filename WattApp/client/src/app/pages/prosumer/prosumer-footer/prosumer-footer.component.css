@@ -1,0 +1,27 @@
+/* Footer */
+
+footer {
+    background-color: #1C315E;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    left: 0;
+}
+
+.footer-app {
+    position: relative;
+    margin: 0px 20px 0px 20px;
+}
+
+#footerimg {
+    width: 30px;
+    margin: 5px;
+}
+
+@media (min-width: 768px) {
+    footer {
+        display: flex;
+        display: none;
+    }
+}

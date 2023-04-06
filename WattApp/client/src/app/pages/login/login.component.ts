@@ -16,17 +16,18 @@ export class LoginComponent implements OnInit {
 	password='';
 	errorMsg='';
 	
+
 	constructor(private authService: AuthService,private router:Router) { }
 
 	ngOnInit(): void {
-		// this.router.events.subscribe(event => {
-		// 	if (event instanceof NavigationEnd) {
-		// 	  // pozovite funkciju za proveru tokena ovde
-		// 	  this.checkToken();
-		// 	}
-		//   });
+		
+		this.router.events.subscribe(event => {
+			if (event instanceof NavigationEnd) {
+			  window.location.reload();
+			}
+		  });
 	}
-
+	
 	login(){
 		
 		if(this.username.trim().length===0){
@@ -49,7 +50,7 @@ export class LoginComponent implements OnInit {
 					let body = response.body as any;
 					localStorage.setItem("token",body.token);
 					this.authService.isLoginSubject.next(true)
-					this.router.navigate(["/admindso"]);
+					this.router.navigate([""]);
 				},
 				error:response=>{
 					if(response.status==401)

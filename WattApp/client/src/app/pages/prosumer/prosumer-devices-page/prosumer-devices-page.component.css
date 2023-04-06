@@ -1,0 +1,120 @@
+.main {
+    top: 0px;
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    justify-content: center;
+}
+
+.alldevices {
+    top: 43px;
+    left: 0;
+    right: 0;
+    height: auto;
+    max-width: 100%;
+    position: relative;
+}
+
+.adddevices {
+    border-bottom: 1px solid rgb(197, 233, 230);
+    position: relative;
+    height: auto;
+}
+
+#allh1 {
+    padding-left: 15px;
+    padding-top: 15px;
+    font-size: 15px;
+}
+
+.btn {
+    background-color: #1C315E;
+    border-color: #1C315E;
+    margin-top: -35px;
+    position: relative;
+    float: right;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.devices {
+    /* position: sticky;
+    align-items: stretch; */
+    width: 100%;
+    height: auto;
+    padding-bottom: 35px;
+    text-align: center;
+    transition: all 0.3s;
+    /* display: flex;
+    overflow-x: auto; */
+    position: relative;
+}
+
+.devices-item {
+    /* position: sticky; */
+    background-size: cover;
+    box-shadow: 5px dodgerblue;
+    background-color: white;
+    padding: 5px;
+    width: 30%;
+    text-align: center;
+    display: inline-block;
+    padding-top: 20px;
+    position: relative;
+}
+
+#deviceh3 {
+    padding-top: 10px;
+    font-size: 12px;
+}
+
+#imgdevice {
+    position: relative;
+    display: inline-block;
+    /* max-width: 140px;
+    max-height: 120px; */
+    width: 65%;
+}
+
+.devices-device-item {
+    border: 3px solid rgb(42, 134, 99);
+    border-radius: 100px;
+    max-width: 100%;
+    display: inline-block;
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .alldevices {
+        top: 10%;
+        position: absolute;
+    }
+    #allh1 {
+        font-size: 30px;
+        padding-left: 45px;
+        padding-bottom: 15px;
+    }
+    #imgdevice {
+        width: 35%;
+    }
+    .devices-device-item {
+        margin: 15px;
+    }
+    /* .devices-item {
+        border: 1px solid red;
+    } */
+    #deviceh3 {
+        font-size: 30px;
+    }
+    .devices-item {
+        /* position: sticky; */
+        width: 25%;
+    }
+    .btn {
+        background-color: #1C315E;
+        border-color: #1C315E;
+        margin-top: -65px;
+        font-size: 20px;
+        width: 200px;
+    }
+}
