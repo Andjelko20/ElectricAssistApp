@@ -23,7 +23,8 @@ export class SidebarComponent implements OnInit{
       this.superadmin=Roles.SUPERADMIN_NAME;
     }
   ngOnInit(): void {
-
+    let token=new JwtToken();
+    this.role=token.data.role as string;
   }
   logout()
   {
