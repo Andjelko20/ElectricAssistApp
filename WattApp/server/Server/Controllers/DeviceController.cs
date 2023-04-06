@@ -201,18 +201,20 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Authorize(Roles = "prosumer")]
-        public IActionResult getAllDevices([FromQuery] DeviceFilterModel filter)
+        public IActionResult getAllDevices(int pageNumber, int pageSize, [FromQuery] DeviceFilterModel filter)
         {
             try
             {
-                List<Device> devices = new List<Device>();
-                List<DeviceResponseDTO> responseDTOs = new List<DeviceResponseDTO>();
+                /*List<Device> devices = new List<Device>();
+                List<DeviceResponseDTO> responseDTOs = new List<DeviceResponseDTO>();*/
 
                 var credentials = HttpContext.User.Identity as ClaimsIdentity;
                 long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
+                /*if (pageNumber == null) pageNumber = 1;
+                if (pageSize == null) pageSize = 10;*/
 
-                devices = _deviceService.getMyDevices(userId, filter);
-                if (devices == null || devices.Count == 0)
+                return Ok(_deviceService.getMyDevices(userId, filter, pageNumber, pageSize));
+                /*if (devices == null || devices.Count == 0)
                 {
                     throw new ItemNotFoundException("Devices not found!");
                 }
@@ -226,7 +228,11 @@ namespace Server.Controllers
                     responseDTOs.Add(responseDTO);
                 }
 
-                return Ok(responseDTOs);
+                return Ok(responseDTOs);*/
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode((int)ex.StatusCode.Value, ex.Message);
             }
             catch (ItemNotFoundException ex)
             {

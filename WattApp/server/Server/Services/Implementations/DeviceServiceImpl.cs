@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
 using MimeKit.Encodings;
+using Polly;
 using Server.Data;
 using Server.DTOs;
 using Server.Exceptions;
@@ -16,10 +19,66 @@ namespace Server.Services.Implementations
     public class DeviceServiceImpl : DeviceService
     {
         SqliteDbContext _context;
-        public DeviceServiceImpl(SqliteDbContext context)
+        DeviceModelService _deviceModelService;
+        IMapper _mapper;
+        public DeviceServiceImpl(SqliteDbContext context, DeviceModelService deviceModelService, IMapper mapper)
         {
             _context = context;
+            _deviceModelService = deviceModelService;   
+            _mapper = mapper;
         }
+
+        private void formatDeviceResponseDTO(ref DeviceResponseDTO responseDTO, long id)
+        {
+            var _connection = _context.Database.GetDbConnection();
+            if (_connection != null)
+            {
+                _connection.Open();
+
+                var command = _connection.CreateCommand();
+
+                //DeviceCategory
+                command.CommandText = @" select Name 
+                                             from DeviceCategories 
+                                             where Id in (
+                                                          select CategoryId
+                                                          from DeviceTypes
+                                                          where Id in (
+                                                                        select DeviceTypeId 
+                                                                        from DeviceModels 
+                                                                        where Id = @id))";
+                command.Parameters.Add(new SqliteParameter("@id", id));
+                var deviceCategory = command.ExecuteScalar().ToString();
+                responseDTO.DeviceCategory = deviceCategory;
+
+                //DeviceType
+                command.CommandText = @"select Name 
+                                            from DeviceTypes 
+                                            where Id in (
+                                                         select DeviceTypeId 
+                                                         from DeviceModels 
+                                                         where Id = @id)";
+                //command.Parameters.Add(new SqliteParameter("@id", id));
+                var deviceType = command.ExecuteScalar().ToString();
+                responseDTO.DeviceType = deviceType;
+
+                //DeviceBrand
+                command.CommandText = @"select Name 
+                                            from DeviceTypes 
+                                            where Id in (
+                                                         select DeviceTypeId 
+                                                         from DeviceModels 
+                                                         where Id = @id)";
+                //command.Parameters.Add(new SqliteParameter("@id", id));
+                var deviceBrand = command.ExecuteScalar().ToString();
+                responseDTO.DeviceBrand = deviceBrand;
+
+                _connection.Close();
+            }
+
+            responseDTO.DeviceModel = _deviceModelService.getModelNameById(id);
+        }
+
         /// <inheritdoc/>
         public Device addNewDevice(Device device)
         {
@@ -183,17 +242,44 @@ namespace Server.Services.Implementations
             return _context.Devices.FirstOrDefault(src => src.Id == deviceId && src.Visibility == true);
         }
         /// <inheritdoc/>
-        public List<Device> getMyDevices(long userId, DeviceFilterModel deviceFilter)
+        public DataPage<DeviceResponseDTO> getMyDevices(long userId, DeviceFilterModel deviceFilter, int pageNumber, int pageSize)
         {
             //return _context.Devices.Where(src => src.UserId == userId).ToList();
 
             IQueryable<Device> query = _context.Devices.Where(src => src.UserId == userId);
+            if(query.Count() == 0) throw new HttpRequestException("There is no devices!", null, System.Net.HttpStatusCode.NotFound);
+
             if(deviceFilter != null)
             {
                 query = DeviceFilter.ApplyFilter(query, deviceFilter);
             }
+
+            int maxPageNumber;
+            if (query.Count() % pageSize == 0) maxPageNumber = query.Count() / pageSize;
+            else maxPageNumber = query.Count() / pageSize + 1;
+
+            if (pageNumber < 1 || pageNumber > maxPageNumber) throw new HttpRequestException("Invalid page number!", null, System.Net.HttpStatusCode.BadRequest);
+            if (pageSize < 1) throw new HttpRequestException("Invalid page size number!", null, System.Net.HttpStatusCode.BadRequest);
+
+            query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
             List<Device> devices = query.ToList();
-            return devices;
+            List<DeviceResponseDTO> deviceResponseDTOs = new List<DeviceResponseDTO>();
+
+            foreach(Device device in devices)
+            {
+                DeviceResponseDTO deviceResponseDTO = _mapper.Map<DeviceResponseDTO>(device);
+                formatDeviceResponseDTO(ref deviceResponseDTO, device.DeviceModelId);
+                deviceResponseDTOs.Add(deviceResponseDTO);
+            }
+
+            DataPage <DeviceResponseDTO> page = new();
+            page.Data = deviceResponseDTOs;
+            page.NumberOfPages = maxPageNumber;
+            page.PreviousPage = (pageNumber - 1 == 0) ? null : pageNumber - 1;
+            page.NextPage = (pageNumber == maxPageNumber) ? null : pageNumber + 1;
+
+            return page;
         }
         /// <inheritdoc/>
         public Device getYourDeviceById(long deviceId, long userId)
