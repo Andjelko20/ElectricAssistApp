@@ -9,6 +9,7 @@ using Server.Utilities;
 namespace Server.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
     public class ProsumersController : Controller
     {
         public readonly IUserService userService;
@@ -25,7 +26,6 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpGet]
-        [Route("")]
         [Authorize(Roles = Roles.Dispatcher)]
         public async Task<IActionResult> GetAllProsumers()
         {
