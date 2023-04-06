@@ -156,12 +156,12 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet("devices{userId:long}")]
         [Authorize(Roles = "dispatcher")]
-        public IActionResult getUserDevices([FromRoute]long userId)
+        public IActionResult getUserDevices([FromRoute]long userId, int pageNumber, int pageSize, [FromQuery] DeviceFilterModel filter)
         {
             try
             {
-                List<Device> devices = _deviceService.getUserDevices(userId);
-                if (devices == null) throw new ItemNotFoundException("Devices not found!");
+                return Ok(_deviceService.getUserDevices(userId, filter, pageNumber, pageSize));
+                /*if (devices == null) throw new ItemNotFoundException("Devices not found!");
 
                 List<DeviceResponseDTO> deviceResponseDTOs = new List<DeviceResponseDTO>();
                 foreach(Device device in devices)
@@ -172,7 +172,11 @@ namespace Server.Controllers
 
                     deviceResponseDTOs.Add(responseDTO);
                 }
-                return Ok(deviceResponseDTOs);
+                return Ok(deviceResponseDTOs);*/
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode((int)ex.StatusCode.Value, ex.Message);
             }
             catch(ItemNotFoundException ex)
             {

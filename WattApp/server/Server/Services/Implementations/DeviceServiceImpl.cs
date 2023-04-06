@@ -247,12 +247,13 @@ namespace Server.Services.Implementations
             //return _context.Devices.Where(src => src.UserId == userId).ToList();
 
             IQueryable<Device> query = _context.Devices.Where(src => src.UserId == userId);
-            if(query.Count() == 0) throw new HttpRequestException("There is no devices!", null, System.Net.HttpStatusCode.NotFound);
 
             if(deviceFilter != null)
             {
                 query = DeviceFilter.ApplyFilter(query, deviceFilter);
             }
+
+            if (query.Count() == 0) throw new HttpRequestException("There is no devices!", null, System.Net.HttpStatusCode.NotFound);
 
             int maxPageNumber;
             if (query.Count() % pageSize == 0) maxPageNumber = query.Count() / pageSize;
@@ -287,9 +288,45 @@ namespace Server.Services.Implementations
             return _context.Devices.FirstOrDefaultAsync(src => src.Id == deviceId && src.UserId == userId).Result;
         }
         /// <inheritdoc/>
-        public List<Device> getUserDevices(long userId)
+        public DataPage<DeviceResponseDTO> getUserDevices(long userId, DeviceFilterModel deviceFilter, int pageNumber, int pageSize)
         {
-            return _context.Devices.Where(src => src.UserId == userId && src.Visibility == true).ToList();
+
+            //return _context.Devices.Where(src => src.UserId == userId && src.Visibility == true).ToList();
+            IQueryable<Device> query = _context.Devices.Where(src => src.UserId == userId && src.Visibility == true);
+
+            if (deviceFilter != null)
+            {
+                query = DeviceFilter.ApplyFilter(query, deviceFilter);
+            }
+
+            if (query.Count() == 0) throw new HttpRequestException("There is no devices!", null, System.Net.HttpStatusCode.NotFound);
+
+            int maxPageNumber;
+            if (query.Count() % pageSize == 0) maxPageNumber = query.Count() / pageSize;
+            else maxPageNumber = query.Count() / pageSize + 1;
+
+            if (pageNumber < 1 || pageNumber > maxPageNumber) throw new HttpRequestException("Invalid page number!", null, System.Net.HttpStatusCode.BadRequest);
+            if (pageSize < 1) throw new HttpRequestException("Invalid page size number!", null, System.Net.HttpStatusCode.BadRequest);
+
+            query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+            List<Device> devices = query.ToList();
+            List<DeviceResponseDTO> deviceResponseDTOs = new List<DeviceResponseDTO>();
+
+            foreach (Device device in devices)
+            {
+                DeviceResponseDTO deviceResponseDTO = _mapper.Map<DeviceResponseDTO>(device);
+                formatDeviceResponseDTO(ref deviceResponseDTO, device.DeviceModelId);
+                deviceResponseDTOs.Add(deviceResponseDTO);
+            }
+
+            DataPage<DeviceResponseDTO> page = new();
+            page.Data = deviceResponseDTOs;
+            page.NumberOfPages = maxPageNumber;
+            page.PreviousPage = (pageNumber - 1 == 0) ? null : pageNumber - 1;
+            page.NextPage = (pageNumber == maxPageNumber) ? null : pageNumber + 1;
+
+            return page;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Server.Services
         /// </summary>
         /// <param name="userId">Unique user id</param>
         /// <returns>List of devices</returns>
-        public List<Device> getUserDevices(long userId);
+        public DataPage<DeviceResponseDTO> getUserDevices(long userId, DeviceFilterModel deviceFilter, int pageNumber, int pageSize);
         /// <summary>
         /// Get your devices (for PROSUMER)
         /// </summary>
