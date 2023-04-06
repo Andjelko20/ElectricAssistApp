@@ -110,6 +110,50 @@ namespace Server.Controllers
         }
 
         /// <summary>
+        /// Average Consumption/Production in The Moment (settlement)
+        /// </summary>
+        [HttpGet]
+        [Route("{deviceCategoryName}/avg/{settlementName}")]
+        //[Authorize(Roles = "dispecer")]
+        public async Task<IActionResult> GetAvgConsumptionInTheMomentForSettlement([FromRoute] string deviceCategoryName, [FromRoute] string settlementName)
+        {
+            if (!_sqliteDb.DeviceCategories.Any(dc => EF.Functions.Like(dc.Name, $"%{deviceCategoryName}%")))
+                return NotFound(new { message = "Device category: " + deviceCategoryName.ToString() + " does not exist." });
+
+
+            if (deviceCategoryName.ToLower().Equals("electricity producer") || deviceCategoryName.ToLower().Equals("electricity consumer") | deviceCategoryName.ToLower().Equals("electricity stock"))
+            {
+                var energy = prosumerService.GetTotalConsumptionInTheMomentForSettlement(deviceCategoryName, settlementName);
+                var averageEnergy = prosumerService.GetAverageConsumptionInTheMomentForSettlement(settlementName, energy);
+                return Ok(averageEnergy);
+            }
+            else
+                return BadRequest("Invalid parameter. Please use 'Electricity Producer', 'Electricity Consumer' or 'Electricity Stock'.");
+        }
+
+        /// <summary>
+        /// Average Consumption/Production in The Moment (city)
+        /// </summary>
+        [HttpGet]
+        [Route("{deviceCategoryName}/average/{cityName}")]
+        //[Authorize(Roles = "dispecer")]
+        public async Task<IActionResult> GetAvgConsumptionInTheMomentForCity([FromRoute] string deviceCategoryName, [FromRoute] string cityName)
+        {
+            if (!_sqliteDb.DeviceCategories.Any(dc => EF.Functions.Like(dc.Name, $"%{deviceCategoryName}%")))
+                return NotFound(new { message = "Device category: " + deviceCategoryName.ToString() + " does not exist." });
+
+
+            if (deviceCategoryName.ToLower().Equals("electricity producer") || deviceCategoryName.ToLower().Equals("electricity consumer") | deviceCategoryName.ToLower().Equals("electricity stock"))
+            {
+                var energy = prosumerService.GetTotalConsumptionInTheMomentForCity(deviceCategoryName, cityName);
+                var averageEnergy = prosumerService.GetAverageConsumptionInTheMomentForCity(cityName, energy);
+                return Ok(averageEnergy);
+            }
+            else
+                return BadRequest("Invalid parameter. Please use 'Electricity Producer', 'Electricity Consumer' or 'Electricity Stock'.");
+        }
+
+        /// <summary>
         /// Total number of consumption/production devices from all prosumers in the city or settlement
         /// </summary>
         [HttpGet]

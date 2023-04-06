@@ -309,12 +309,16 @@ namespace Server.Services.Implementations
         public double GetAverageConsumptionInTheMomentForSettlement(string settlementName, double totalEnergyUsage)
         {
             var totalPopulation = GetNumberOfProsumersFromSettlement(settlementName);
+            if (totalPopulation == 0)
+                return 0;
             return totalEnergyUsage / totalPopulation;
         }
 
         public double GetAverageConsumptionInTheMomentForCity(string settlementName, double totalEnergyUsage)
         {
             var totalPopulation = GetNumberOfProsumersFromCity(settlementName);
+            if (totalPopulation == 0)
+                return 0;
             return totalEnergyUsage / totalPopulation;
         }
 
