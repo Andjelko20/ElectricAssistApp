@@ -170,6 +170,66 @@ namespace Server.Services.Implementations
             return totalUsage;
         }
 
+        public double GetTotalConsumptionInTheMomentForCity(string deviceCategoryName, string cityName)
+        {
+            var now = DateTime.Now;
+            var totalUsage = 0.0;
+
+            // pronalazimo kategoriju uredjaja
+            var deviceCategory = _context.DeviceCategories
+                                .FirstOrDefault(dc => EF.Functions.Like(dc.Name, $"%{deviceCategoryName}%"));
+
+            // pronalazimo sve tipove uredjaja koji pripadaju toj kategoriji
+            var deviceTypeIds = _context.DeviceTypes
+                .Where(dt => dt.CategoryId == deviceCategory.Id)
+                .Select(dt => dt.Id)
+                .ToList();
+
+            // pronalazimo sve modele uredjaja koji pripadaju tim tipovima uredjaja
+            var deviceModelIds = _context.DeviceModels
+                .Where(dm => deviceTypeIds.Contains(dm.DeviceTypeId))
+                .Select(dm => dm.Id)
+                .ToList();
+
+            // pronalazimo sve uredjaje koji koriste te modele uredjaja
+            var devices = _context.Devices
+                .Where(d => deviceModelIds.Contains(d.DeviceModelId))
+                .Select(d => d.Id)
+                .ToList();
+
+            // pronalazimo ID grada iz tabele Cities, preko imena grada
+            var cityId = _context.Cities
+                .Where(c => EF.Functions.Like(c.Name, $"%{cityName}%"))
+                .Select(c => c.Id)
+                .FirstOrDefault();
+
+            // pronalazimo uredjaje te kategorije u tabeli DeviceEnergyUsages i to ako trenutno rade
+            var usages = _context.DeviceEnergyUsages
+                .Where(u => devices.Contains(u.DeviceId) && u.StartTime <= now && (u.EndTime >= now || u.EndTime == null) && _context.Devices.Any(d => d.Id == u.DeviceId && _context.Users.Any(u => u.Id == d.UserId && _context.Settlements.Any(s => s.Id == u.SettlementId && s.CityId == cityId && _context.Cities.Any(c => c.Id == s.CityId))))).ToList();
+
+            foreach (var usage in usages)
+            {
+                var usageStart = usage.StartTime;
+
+                var usageEnd = usage.EndTime;
+                if (usageEnd == null || usageEnd > now)
+                {
+                    usageEnd = now;
+                }
+
+                var usageTime = (usageEnd - usageStart).TotalHours;
+                var deviceEnergyUsage = _context.Devices
+                    .Include(d => d.DeviceModel)
+                    .Where(d => d.Id == usage.DeviceId)
+                    .Select(d => d.DeviceModel.EnergyKwh)
+                    .FirstOrDefault();
+
+                totalUsage += deviceEnergyUsage * usageTime;
+            }
+
+            return totalUsage;
+        }
+
         public double GetTotalNumberOfDevicesInTheCity(long deviceCategoryId, long cityId)
         {
             // dodaj za grad kad se promene modeli

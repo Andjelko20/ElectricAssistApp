@@ -9,5 +9,6 @@ namespace Server.Services
         public double GetTotalNumberOfDevicesInTheCity(long deviceCategoryId, long cityId);
         public double GetTotalNumberOfDevicesInTheSettlement(long deviceCategoryId, long cityId, long settlementId);
         public double GetTotalConsumptionInTheMomentForSettlement(string deviceCategoryName, string settlementName);
+        public double GetTotalConsumptionInTheMomentForCity(string deviceCategoryName, string cityName);
     }
 }

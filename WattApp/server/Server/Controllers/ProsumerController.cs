@@ -7,6 +7,7 @@ using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
 using Server.Services;
 using System.Data;
+using System.Linq;
 
 namespace Server.Controllers
 {
@@ -44,7 +45,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Total Consumption/Production in The Moment
+        /// Total Consumption/Production in The Moment (Settlement)
         /// </summary>
         [HttpGet]
         [Route("{deviceCategoryName:regex(Electricity Producer|Electricity Consumer|Electricity Stock)}/{settlementName}")]
@@ -58,6 +59,24 @@ namespace Server.Controllers
 
             if (deviceCategoryName.ToLower().Equals("electricity producer") || deviceCategoryName.ToLower().Equals("electricity consumer") | deviceCategoryName.ToLower().Equals("electricity stock"))
                 return Ok(prosumerService.GetTotalConsumptionInTheMomentForSettlement(deviceCategoryName, settlementName));
+            return BadRequest("Invalid parameter. Please use 'Electricity Producer', 'Electricity Consumer' or 'Electricity Stock'.");
+        }
+
+        /// <summary>
+        /// Total Consumption/Production in The Moment (City)
+        /// </summary>
+        [HttpGet]
+        [Route("{deviceCategoryName:regex(Electricity Producer|Electricity Consumer|Electricity Stock)}/city/{cityName}")]
+        //[Authorize(Roles = "dispecer")]
+        public async Task<IActionResult> GetTotalConsumptionInTheMomentForCategoryInCity([FromRoute] string deviceCategoryName, [FromRoute] string cityName)
+        {
+            if (!_sqliteDb.Cities.Any(s => EF.Functions.Like(s.Name, $"%{cityName}%")))
+            {
+                return NotFound(new { message = "City with the name: " + cityName.ToString() + " does not exist." });
+            }
+
+            if (deviceCategoryName.ToLower().Equals("electricity producer") || deviceCategoryName.ToLower().Equals("electricity consumer") | deviceCategoryName.ToLower().Equals("electricity stock"))
+                return Ok(prosumerService.GetTotalConsumptionInTheMomentForCity(deviceCategoryName, cityName));
             else
                 return BadRequest("Invalid parameter. Please use 'Electricity Producer', 'Electricity Consumer' or 'Electricity Stock'.");
         }
