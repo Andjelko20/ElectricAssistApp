@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
-using MimeKit.Encodings;
-using Polly;
 using Server.Data;
 using Server.DTOs;
 using Server.Exceptions;
 using Server.Filters;
 using Server.Models;
-using Server.Models.DropDowns.Devices;
-using System.Reflection;
 
 namespace Server.Services.Implementations
 {

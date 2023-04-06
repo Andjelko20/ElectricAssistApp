@@ -3,15 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using MimeKit.Encodings;
 using Server.Data;
 using Server.DTOs;
 using Server.Exceptions;
 using Server.Filters;
 using Server.Models;
 using Server.Services;
-using System.Net;
-using System.Reflection;
 using System.Security.Claims;
 
 namespace Server.Controllers
