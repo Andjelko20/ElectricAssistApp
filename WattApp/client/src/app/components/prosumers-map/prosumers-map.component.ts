@@ -36,7 +36,17 @@ export class ProsumersMapComponent {
 			consumption:100
 	  	}
 	];*/
-	
+	private createMarker(url:string):Leaflet.Icon<Leaflet.IconOptions>{
+		return Leaflet.icon({
+			iconUrl: url,
+			shadowUrl: 'assets/marker-shadow.png',
+			iconSize: [30, 45],
+			iconAnchor: [12, 41],
+			popupAnchor: [1, -34],
+			tooltipAnchor: [16, -28],
+			shadowSize: [45, 45]
+		});
+	}
 	  ngOnInit(): void {
 		this.searchUrl=new URL(environment.mapSearchUrl);
 		this.searchUrl.searchParams.set("format","json");
@@ -53,6 +63,10 @@ export class ProsumersMapComponent {
 		  tooltipAnchor: [16, -28],
 		  shadowSize: [41, 41]
 		});
+
+		const greenIcon = this.createMarker('assets/marker-green.png');
+
+		const redIcon = this.createMarker('assets/marker-red.png');
 	
 		Leaflet.Marker.prototype.options.icon = icon;
 	  
@@ -67,8 +81,14 @@ export class ProsumersMapComponent {
 		.then(res=>res.json())
 		.then(res=>{
 			this.prosumers=res;
+			let i=0;
 			for(let prosumer of this.prosumers){
-				let marker=Leaflet.marker([prosumer.latitude,prosumer.longitude]).addTo(this.map);
+				i++;
+				let icon;
+				if(i%2==0)
+					icon=redIcon;
+				else icon=greenIcon;
+				let marker=Leaflet.marker([prosumer.latitude,prosumer.longitude],{icon}).addTo(this.map);
 				marker.bindPopup(`<b>${prosumer.name}</b><br><a href="prosumer/${prosumer.id}">Details</a>`);
 			}
 		});

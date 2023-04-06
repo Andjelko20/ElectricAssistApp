@@ -5,7 +5,7 @@
 			<button>Search</button>
 		</form>
 		<div class="search-result">
-			<div *ngFor="let location of locations" (click)="changeFocus(location)">
+			<div *ngFor="let location of locations" (click)="changeFocus(location)" class="location">
 				{{location.display_name}}
 			</div>
 		</div>

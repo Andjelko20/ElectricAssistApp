@@ -178,7 +178,7 @@ namespace Server.Data
                             SettlementId=1,
                             Address="Jovanovac bb",
                             Latitude=44.1234567f,
-                            Longitude=36.789003f
+                            Longitude=36.7890f
                         },
                         new UserModel()
                         {
@@ -190,8 +190,8 @@ namespace Server.Data
                             Password=HashGenerator.Hash("user"),
                             SettlementId=2,
                             Address="Adresa",
-                            Latitude=44.1234547f,
-                            Longitude=36.789023f
+                            Latitude=44.003966f,
+                            Longitude=20.879002f
                         }, 
                         new UserModel()
                         {
