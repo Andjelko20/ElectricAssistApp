@@ -154,6 +154,28 @@ namespace Server.Controllers
         }
 
         /// <summary>
+        /// Average Consumption/Production in The Moment (country)
+        /// </summary>
+        [HttpGet]
+        [Route("{deviceCategoryName}/average/")]
+        //[Authorize(Roles = "dispecer")]
+        public async Task<IActionResult> GetAvgConsumptionInTheMomentForCountry([FromRoute] string deviceCategoryName)
+        {
+            if (!_sqliteDb.DeviceCategories.Any(dc => EF.Functions.Like(dc.Name, $"%{deviceCategoryName}%")))
+                return NotFound(new { message = "Device category: " + deviceCategoryName.ToString() + " does not exist." });
+
+
+            if (deviceCategoryName.ToLower().Equals("electricity producer") || deviceCategoryName.ToLower().Equals("electricity consumer") | deviceCategoryName.ToLower().Equals("electricity stock"))
+            {
+                var energy = prosumerService.GetTotalConsumptionInTheMoment(deviceCategoryName);
+                var averageEnergy = prosumerService.GetAverageConsumptionProductionInTheMomentForAllProsumers(energy);
+                return Ok(averageEnergy);
+            }
+            else
+                return BadRequest("Invalid parameter. Please use 'Electricity Producer', 'Electricity Consumer' or 'Electricity Stock'.");
+        }
+
+        /// <summary>
         /// Total number of consumption/production devices from all prosumers in the city or settlement
         /// </summary>
         [HttpGet]

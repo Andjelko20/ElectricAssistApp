@@ -322,6 +322,18 @@ namespace Server.Services.Implementations
             return totalEnergyUsage / totalPopulation;
         }
 
+        public double GetAverageConsumptionProductionInTheMomentForAllProsumers(double totalEnergyUsage)
+        {
+            var totalPopulation = _context.Users.Count();
+
+            Console.WriteLine("++++++++++++++++Broj usera country: " + totalPopulation);
+
+            if (totalPopulation == 0)
+                return 0;
+
+            return totalEnergyUsage / totalPopulation;
+        }
+
         public double GetTotalNumberOfDevicesInTheCity(long deviceCategoryId, long cityId)
         {
             // dodaj za grad kad se promene modeli
