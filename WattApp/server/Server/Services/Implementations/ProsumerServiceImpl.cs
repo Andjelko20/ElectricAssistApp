@@ -284,6 +284,40 @@ namespace Server.Services.Implementations
             return totalUsage;
         }
 
+        public double GetNumberOfProsumersFromSettlement(string settlementName)
+        {
+            var totalPopulation = _context.Users
+                                    .Where(u => u.Settlement.Name.Contains(settlementName))
+                                    .Count();
+
+            Console.WriteLine("++++++++++++++++Broj usera: " + totalPopulation);
+
+            return totalPopulation;
+        }
+
+        public double GetNumberOfProsumersFromCity(string cityName)
+        {
+            var totalPopulation = _context.Users
+                                        .Where(u => u.Settlement.City.Name.Contains(cityName))
+                                        .Count();
+
+            Console.WriteLine("++++++++++++++++Broj usera city: " + totalPopulation);
+
+            return totalPopulation;
+        }
+
+        public double GetAverageConsumptionInTheMomentForSettlement(string settlementName, double totalEnergyUsage)
+        {
+            var totalPopulation = GetNumberOfProsumersFromSettlement(settlementName);
+            return totalEnergyUsage / totalPopulation;
+        }
+
+        public double GetAverageConsumptionInTheMomentForCity(string settlementName, double totalEnergyUsage)
+        {
+            var totalPopulation = GetNumberOfProsumersFromCity(settlementName);
+            return totalEnergyUsage / totalPopulation;
+        }
+
         public double GetTotalNumberOfDevicesInTheCity(long deviceCategoryId, long cityId)
         {
             // dodaj za grad kad se promene modeli
