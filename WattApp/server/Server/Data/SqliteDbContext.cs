@@ -218,6 +218,266 @@ namespace Server.Data
                             Address="Adresa",
                             Latitude=44.038430467535186f,
                             Longitude=20.895158806406904f
+                        },
+                        new UserModel()
+                        {
+                            Name="Ivan Ivanovic",
+                            Email="ivanivanovic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="ivanivanovic",
+                            Password=HashGenerator.Hash("ivan"),
+                            SettlementId=2,
+                            Address="Atinska 17",
+                            Latitude=44.02913248753142f, 
+                            Longitude=20.907281392946715f
+                        },
+                        new UserModel()
+                        {
+                            Name="Marko Markovic",
+                            Email="markomarkovic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="markomarkovic",
+                            Password=HashGenerator.Hash("marko"),
+                            SettlementId=3,
+                            Address="Zelengorska 23",
+                            Latitude=44.000469475005666f,
+                            Longitude=20.925654282072284f
+                        },
+                        new UserModel()
+                        {
+                            Name="Lazar Lazarevic",
+                            Email="lazarlazarevic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="lazarlazarevic",
+                            Password=HashGenerator.Hash("lazar"),
+                            SettlementId=4,
+                            Address="Levskoga 35",
+                            Latitude=44.81594385968978f,
+                            Longitude=20.5029094730813f
+                        },
+                        new UserModel()
+                        {
+                            Name="Ignjat Ignjatovic",
+                            Email="ignjatignjatovic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="ignjatignjatovic",
+                            Password=HashGenerator.Hash("ignjat"),
+                            SettlementId=5,
+                            Address="Nusiceva 11",
+                            Latitude=44.81424619608362f,
+                            Longitude=20.462617995056533f
+                        },
+                        new UserModel()
+                        {
+                            Name="Andjela Andjelkovic",
+                            Email="andjelaandjelkovic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="andjelaandjelkovic",
+                            Password=HashGenerator.Hash("andjela"),
+                            SettlementId=6,
+                            Address="Preradoviceva 97",
+                            Latitude=45.24334974630657f, 
+                            Longitude=19.881933924749635f
+                        },
+                        new UserModel()
+                        {
+                            Name="Ana Antonijevic",
+                            Email="anaantonijevic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="anaantonijevic",
+                            Password=HashGenerator.Hash("ana"),
+                            SettlementId=6,
+                            Address="Cajkovskog 1b",
+                            Latitude=45.25361693169549f, 
+                            Longitude=19.87324715206012f
+                        },
+                        new UserModel()
+                        {
+                            Name="Jovana Jovanovic",
+                            Email="jovanajovanovic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="jovanajovanovic",
+                            Password=HashGenerator.Hash("jovana"),
+                            SettlementId=1,
+                            Address="Svetozara Markovica 89/1",
+                            Latitude=44.01722335983623f, 
+                            Longitude=20.919819272342394f
+                        },
+                        new UserModel()
+                        {
+                            Name="Mira Mirovic",
+                            Email="miramirovic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="miramirovic",
+                            Password=HashGenerator.Hash("mira"),
+                            SettlementId=1,
+                            Address="Svetozara Markovica 89/1",
+                            Latitude=44.01722335983623f,
+                            Longitude=20.919819272342394f
+                        },
+                        new UserModel()
+                        {
+                            Name="Jelena Jelenovic",
+                            Email="jelenajelenovic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="jelenajelenovic",
+                            Password=HashGenerator.Hash("jelena"),
+                            SettlementId=1,
+                            Address="Svetozara Markovica 69",
+                            Latitude=44.016616524325016f, 
+                            Longitude=20.917608043704707f
+                        },
+                        new UserModel()
+                        {
+                            Name="Helena Helenic",
+                            Email="helenahelenic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="helenahelenic",
+                            Password=HashGenerator.Hash("helena"),
+                            SettlementId=2,
+                            Address="Milorada Draskovica 29",
+                            Latitude=44.03132386741314f, 
+                            Longitude=20.900707469745335f
+                        },
+                        new UserModel()
+                        {
+                            Name="Aleksa Aleksic",
+                            Email="aleksaaleksic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="aleksaaleksic",
+                            Password=HashGenerator.Hash("aleksa"),
+                            SettlementId=2,
+                            Address="Vladimira Rolovica 3",
+                            Latitude=44.03012065118563f,
+                            Longitude=20.913396772599704f
+                        },
+                        new UserModel()
+                        {
+                            Name="Dragan Draganovic",
+                            Email="dragandraganovic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="dragandraganovic",
+                            Password=HashGenerator.Hash("dragan"),
+                            SettlementId=2,
+                            Address="Svetogorska bb",
+                            Latitude=44.02854729913197f,
+                            Longitude=20.91172964625904f
+                        },
+                        new UserModel()
+                        {
+                            Name="Djordje Djordjevic",
+                            Email="djordjedjordjevic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="djordjedjordjevic",
+                            Password=HashGenerator.Hash("djordje"),
+                            SettlementId=3,
+                            Address="Uzicke republike 19",
+                            Latitude=43.997398258090335f, 
+                            Longitude=20.94019882694245f
+                        },
+                        new UserModel()
+                        {
+                            Name="Davic Davidovic",
+                            Email="daviddavidovic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="daviddavidovic",
+                            Password=HashGenerator.Hash("david"),
+                            SettlementId=3,
+                            Address="Jovana Ristica 160",
+                            Latitude=44.002200996713455f,
+                            Longitude=20.9318937689748f
+                        },
+                        new UserModel()
+                        {
+                            Name="Tamara Tamaric",
+                            Email="tamaratamaric@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="tamaratamaric",
+                            Password=HashGenerator.Hash("tamara"),
+                            SettlementId=4,
+                            Address="Mirijevski Bulevar 18b",
+                            Latitude=44.81145073153164f,
+                            Longitude=20.52185211109023f
+                        },
+                        new UserModel()
+                        {
+                            Name="Tijana Tijanic",
+                            Email="tijanatijanic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="tijanatijanic",
+                            Password=HashGenerator.Hash("tijana"),
+                            SettlementId=4,
+                            Address="Hoze Martija 2b",
+                            Latitude=44.809293624537624f,
+                            Longitude=20.52066439095038f
+                        },
+                        new UserModel()
+                        {
+                            Name="Marta Martic",
+                            Email="martamartic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="martamartic",
+                            Password=HashGenerator.Hash("marta"),
+                            SettlementId=5,
+                            Address="Brace Baruh 24",
+                            Latitude=44.82818147708655f,
+                            Longitude=20.45872611349181f
+                        },
+                        new UserModel()
+                        {
+                            Name="Nikola Nikolic",
+                            Email="nikolanikolic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="nikolanikolic",
+                            Password=HashGenerator.Hash("nikola"),
+                            SettlementId=5,
+                            Address="Despota Djurdja 7",
+                            Latitude=44.82656831500527f,
+                            Longitude=20.459219639950664f
+                        },
+                        new UserModel()
+                        {
+                            Name="Goran Goranovic",
+                            Email="gorangoranovic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="gorangoranovic",
+                            Password=HashGenerator.Hash("goran"),
+                            SettlementId=6,
+                            Address="Miseluk 92",
+                            Latitude=45.23112665659611f,
+                            Longitude=19.862177949005275f
+                        },
+                        new UserModel()
+                        {
+                            Name="Jagoda Jagodic",
+                            Email="jagodajagodic@gmail.com",
+                            RoleId=3,
+                            Blocked=false,
+                            Username="jagodajagodic",
+                            Password=HashGenerator.Hash("jagoda"),
+                            SettlementId=6,
+                            Address="Ribnjak donji put 89",
+                            Latitude=45.23619484032214f,
+                            Longitude=19.856997759771957f
                         }
                     });
                     context.SaveChanges();
