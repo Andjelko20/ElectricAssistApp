@@ -11,13 +11,41 @@ import { NgModel } from '@angular/forms';
 })
 export class MapInputComponent {
 	@Output() locationChanged:EventEmitter<any>=new EventEmitter<any>();
+	@Output() settlementChanged:EventEmitter<any>=new EventEmitter<any>();
 	  private map!: Leaflet.Map;
 	  private searchUrl!:URL;
 	  public searchInput!:string;
 	  public locations:any[]=[];
 	  public marker!:Leaflet.Marker;
-	
+	  public cities:any;
+	  public settlements:any;
+
+	  public settlementId!:number;
+	  public address!:string;
+
+	  public cityElement!:HTMLSelectElement;
+	  public settlementElement!:HTMLSelectElement;
+	  public countryElement!:HTMLSelectElement;
+	  constructor(){
+		this.countryElement=document.getElementById("country") as HTMLSelectElement
+		this.cityElement=document.getElementById("city") as HTMLSelectElement;
+		this.settlementElement=document.getElementById("settlement") as HTMLSelectElement;
+	  }
+	  
 	  ngOnInit(): void {
+		fetch(environment.serverUrl+"/cities?countryId=1",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+	.then(res=>res.json())
+	.then(res=>{
+		this.cities=res.map((r:any)=>({id:r.id,name:r.name}));
+		this.onSelectedCity(
+			{
+			target:{
+				value:JSON.stringify({id:this.cities[0].id})
+			}
+		}
+		);
+  	});
+
 		this.searchUrl=new URL(environment.mapSearchUrl);
 		this.searchUrl.searchParams.set("format","json");
 		this.searchUrl.searchParams.set("addressdetails","addressdetails");
@@ -66,9 +94,12 @@ export class MapInputComponent {
 	  }
 
 	  onSubmit(){
-		if(this.searchInput.trim()=="" || this.searchInput==undefined)
+		let trimmedAddress=this.address.trim();
+		if(trimmedAddress=="" && trimmedAddress.length<2)
 			return;
-		this.searchUrl.searchParams.set("q",this.searchInput);
+		this.searchUrl.searchParams.set("country",this.countryElement.value);
+		this.searchUrl.searchParams.set("city",this.cityElement.value);
+		this.searchUrl.searchParams.set("street",this.searchInput);
 		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
 		.then(res=>res.json())
 		.then(res=>{
@@ -83,5 +114,20 @@ export class MapInputComponent {
 		this.marker.setLatLng([location.lat,location.lon]);
 		let latLng=this.marker.getLatLng();
 		this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
+	  }
+	  onSelectedCity(event:any){
+		let id=JSON.parse(event.target.value).id;
+		fetch(environment.serverUrl+"/settlements?cityId="+id,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+		.then(res=>res.json())
+		.then(res=>{
+				this.settlements=res.map((r:any)=>({id:r.id,name:r.name}));
+				this.settlementChanged=this.settlements[0].id;
+			})
+	  }
+	  stringify(obj:any){
+		return JSON.stringify(obj);
+	  }
+	  sendSettlement(){
+		this.settlementChanged.emit(this.settlementId);
 	  }
 }
