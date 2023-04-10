@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
+import { Prosumers } from 'src/app/models/users.model'
 
 @Component({
   selector: 'app-dso-one-prosumer-page',
@@ -9,8 +12,7 @@ export class DsoOneProsumerPageComponent implements OnInit{
   currentTime!: Date;
   dashboard:boolean = true;
   devices:boolean = false;
-
-  constructor() { }
+  constructor(private authService:AuthService) {  }
 
   ngOnInit(): void {
     this.updateTime();
@@ -32,4 +34,5 @@ export class DsoOneProsumerPageComponent implements OnInit{
   updateTime() {
     this.currentTime = new Date();
   }
+
 }

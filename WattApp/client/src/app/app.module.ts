@@ -28,7 +28,6 @@ import { ConsumptionYearWattmeterComponent } from "./components/dso/meter/consum
 import { CurrentPowerWattmeterComponent } from "./components/dso/meter/current-power-wattmeter/current-power-wattmeter.component";
 import { NumberOfUsersMeterComponent } from "./components/dso/meter/number-of-users-meter/number-of-users-meter.component";
 import { OneProsumerComponent } from "./components/dso/one-prosumer/one-prosumer.component";
-import { ProducingConsumingComponent } from "./components/dso/producing-consuming/producing-consuming.component";
 import { MapInputComponent } from "./components/map-input/map-input.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { ProsumerHouseComponent } from "./components/prosumers/prosumer-meter/prosumer-house/prosumer-house.component";
@@ -99,7 +98,6 @@ import { TodayProductionComponent } from "./components/dso/meter-prosumer/today-
     TodayConsumptionComponent,
     MonthConsumptionComponent,
     MonthProductionComponent,
-    ProducingConsumingComponent,
 	AdminDsoComponent,
 	ProsumerTowerComponent,
 	ProsumerNavbarComponent,

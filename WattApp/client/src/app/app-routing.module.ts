@@ -22,7 +22,6 @@ import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-
 import { ProsumerDevicesPageComponent } from './pages/prosumer/prosumer-devices-page/prosumer-devices-page.component';
 import { ProsumerReportsPageComponent } from './pages/prosumer/prosumer-reports-page/prosumer-reports-page.component';
 import { OneProsumerComponent } from './components/dso/one-prosumer/one-prosumer.component';
-import { ProducingConsumingComponent } from './components/dso/producing-consuming/producing-consuming.component';
 import { TodayComponent } from './components/weather/today/today.component';
 import { ProsumerDevicePageComponent } from './pages/prosumer/prosumer-device-page/prosumer-device-page.component';
 import { AllDevicesComponent } from './components/prosumers/devices/all-devices/all-devices.component';
@@ -62,7 +61,7 @@ const routes: Routes = [
 	//DSO
 	{path:'',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard]},
-	{path:'prosumer',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
+	{path:'prosumer',component:DsoOneProsumerPageComponent},
 	{path:'prediction',component:DsoPredictionPageComponent,canActivate:[DispatcherGuard]},
 	//PROSUMER
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
