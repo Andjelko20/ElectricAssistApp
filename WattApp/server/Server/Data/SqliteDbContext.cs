@@ -841,6 +841,78 @@ namespace Server.Data
                             Visibility = true,
                             Controlability = true,
                             TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 10,
+                            Name="Elektricni sporet",
+                            DeviceModelId = 9,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 11,
+                            Name="El. sporet",
+                            DeviceModelId = 9,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 12,
+                            Name="Sporet",
+                            DeviceModelId = 10,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 13,
+                            Name="Elektr. sporet",
+                            DeviceModelId = 11,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 14,
+                            Name="Elektricni sporet",
+                            DeviceModelId = 12,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 15,
+                            Name="Elektricni donja kuhinja",
+                            DeviceModelId = 13,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 16,
+                            Name="elektricni",
+                            DeviceModelId = 14,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 17,
+                            Name="elektricni sporet",
+                            DeviceModelId = 15,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
                         }
                     });
                     context.SaveChanges();
