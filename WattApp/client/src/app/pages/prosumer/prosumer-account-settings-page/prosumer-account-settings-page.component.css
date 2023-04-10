@@ -70,4 +70,12 @@ label {
     button {
         width: 105px;
     }
+    .card {
+        border-radius: 15px;
+        background-color: rgb(166, 203, 235);
+        top: 10%;
+        left: 8%;
+        position: absolute;
+        width: 80%;
+    }
 }
