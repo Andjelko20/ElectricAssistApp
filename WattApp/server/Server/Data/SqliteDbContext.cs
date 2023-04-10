@@ -167,7 +167,7 @@ namespace Server.Data
                 {
                     context.Users.AddRange(new[]
                     {
-                        new UserModel()
+                        new UserModel() // 1
                         {
                             Name="Admin admin",
                             Email="matovicljubomir2002@gmail.com",
@@ -180,7 +180,7 @@ namespace Server.Data
                             Latitude=44.1234567f,
                             Longitude=36.7890f
                         },
-                        new UserModel()
+                        new UserModel() // 2
                         {
                             Name="User User",
                             Email="58-2020@pmf.kg.ac.rs",
@@ -193,7 +193,7 @@ namespace Server.Data
                             Latitude=44.003966f,
                             Longitude=20.879002f
                         }, 
-                        new UserModel()
+                        new UserModel() // 3
                         {
                             Name="DSO DSO",
                             Email="48-2020@pmf.kg.ac.rs",
@@ -206,7 +206,7 @@ namespace Server.Data
                             Latitude=44.1234547f,
                             Longitude=36.789023f
                         },
-                        new UserModel()
+                        new UserModel() // 4
                         {
                             Name="Prosumer",
                             Email="38-2020@pmf.kg.ac.rs",
@@ -219,7 +219,7 @@ namespace Server.Data
                             Latitude=44.038430467535186f,
                             Longitude=20.895158806406904f
                         },
-                        new UserModel()
+                        new UserModel() // 5
                         {
                             Name="Ivan Ivanovic",
                             Email="ivanivanovic@gmail.com",
@@ -232,7 +232,7 @@ namespace Server.Data
                             Latitude=44.02913248753142f, 
                             Longitude=20.907281392946715f
                         },
-                        new UserModel()
+                        new UserModel() // 6
                         {
                             Name="Marko Markovic",
                             Email="markomarkovic@gmail.com",
@@ -245,7 +245,7 @@ namespace Server.Data
                             Latitude=44.000469475005666f,
                             Longitude=20.925654282072284f
                         },
-                        new UserModel()
+                        new UserModel() // 7
                         {
                             Name="Lazar Lazarevic",
                             Email="lazarlazarevic@gmail.com",
@@ -258,7 +258,7 @@ namespace Server.Data
                             Latitude=44.81594385968978f,
                             Longitude=20.5029094730813f
                         },
-                        new UserModel()
+                        new UserModel() // 8
                         {
                             Name="Ignjat Ignjatovic",
                             Email="ignjatignjatovic@gmail.com",
@@ -271,7 +271,7 @@ namespace Server.Data
                             Latitude=44.81424619608362f,
                             Longitude=20.462617995056533f
                         },
-                        new UserModel()
+                        new UserModel() // 9
                         {
                             Name="Andjela Andjelkovic",
                             Email="andjelaandjelkovic@gmail.com",
@@ -284,7 +284,7 @@ namespace Server.Data
                             Latitude=45.24334974630657f, 
                             Longitude=19.881933924749635f
                         },
-                        new UserModel()
+                        new UserModel() // 10
                         {
                             Name="Ana Antonijevic",
                             Email="anaantonijevic@gmail.com",
@@ -297,7 +297,7 @@ namespace Server.Data
                             Latitude=45.25361693169549f, 
                             Longitude=19.87324715206012f
                         },
-                        new UserModel()
+                        new UserModel() // 11
                         {
                             Name="Jovana Jovanovic",
                             Email="jovanajovanovic@gmail.com",
@@ -310,7 +310,7 @@ namespace Server.Data
                             Latitude=44.01722335983623f, 
                             Longitude=20.919819272342394f
                         },
-                        new UserModel()
+                        new UserModel() // 12
                         {
                             Name="Mira Mirovic",
                             Email="miramirovic@gmail.com",
@@ -323,7 +323,7 @@ namespace Server.Data
                             Latitude=44.01722335983623f,
                             Longitude=20.919819272342394f
                         },
-                        new UserModel()
+                        new UserModel() // 13
                         {
                             Name="Jelena Jelenovic",
                             Email="jelenajelenovic@gmail.com",
@@ -336,7 +336,7 @@ namespace Server.Data
                             Latitude=44.016616524325016f, 
                             Longitude=20.917608043704707f
                         },
-                        new UserModel()
+                        new UserModel() // 14
                         {
                             Name="Helena Helenic",
                             Email="helenahelenic@gmail.com",
@@ -349,7 +349,7 @@ namespace Server.Data
                             Latitude=44.03132386741314f, 
                             Longitude=20.900707469745335f
                         },
-                        new UserModel()
+                        new UserModel() // 15
                         {
                             Name="Aleksa Aleksic",
                             Email="aleksaaleksic@gmail.com",
@@ -362,7 +362,7 @@ namespace Server.Data
                             Latitude=44.03012065118563f,
                             Longitude=20.913396772599704f
                         },
-                        new UserModel()
+                        new UserModel() // 16
                         {
                             Name="Dragan Draganovic",
                             Email="dragandraganovic@gmail.com",
@@ -375,7 +375,7 @@ namespace Server.Data
                             Latitude=44.02854729913197f,
                             Longitude=20.91172964625904f
                         },
-                        new UserModel()
+                        new UserModel() // 17
                         {
                             Name="Djordje Djordjevic",
                             Email="djordjedjordjevic@gmail.com",
@@ -388,7 +388,7 @@ namespace Server.Data
                             Latitude=43.997398258090335f, 
                             Longitude=20.94019882694245f
                         },
-                        new UserModel()
+                        new UserModel() // 18
                         {
                             Name="Davic Davidovic",
                             Email="daviddavidovic@gmail.com",
@@ -401,7 +401,7 @@ namespace Server.Data
                             Latitude=44.002200996713455f,
                             Longitude=20.9318937689748f
                         },
-                        new UserModel()
+                        new UserModel() // 19
                         {
                             Name="Tamara Tamaric",
                             Email="tamaratamaric@gmail.com",
@@ -414,7 +414,7 @@ namespace Server.Data
                             Latitude=44.81145073153164f,
                             Longitude=20.52185211109023f
                         },
-                        new UserModel()
+                        new UserModel() // 20
                         {
                             Name="Tijana Tijanic",
                             Email="tijanatijanic@gmail.com",
@@ -427,7 +427,7 @@ namespace Server.Data
                             Latitude=44.809293624537624f,
                             Longitude=20.52066439095038f
                         },
-                        new UserModel()
+                        new UserModel() // 21
                         {
                             Name="Marta Martic",
                             Email="martamartic@gmail.com",
@@ -440,7 +440,7 @@ namespace Server.Data
                             Latitude=44.82818147708655f,
                             Longitude=20.45872611349181f
                         },
-                        new UserModel()
+                        new UserModel() // 22
                         {
                             Name="Nikola Nikolic",
                             Email="nikolanikolic@gmail.com",
@@ -453,7 +453,7 @@ namespace Server.Data
                             Latitude=44.82656831500527f,
                             Longitude=20.459219639950664f
                         },
-                        new UserModel()
+                        new UserModel() // 23
                         {
                             Name="Goran Goranovic",
                             Email="gorangoranovic@gmail.com",
@@ -466,7 +466,7 @@ namespace Server.Data
                             Latitude=45.23112665659611f,
                             Longitude=19.862177949005275f
                         },
-                        new UserModel()
+                        new UserModel() // 24
                         {
                             Name="Jagoda Jagodic",
                             Email="jagodajagodic@gmail.com",
@@ -507,11 +507,6 @@ namespace Server.Data
                     {
                         new DeviceType()
                         {
-                            Name = "Fridge", 
-                            CategoryId = 2
-                        },
-                        new DeviceType()
-                        {
                             Name = "TV",
                             CategoryId = 2
                         },
@@ -539,6 +534,11 @@ namespace Server.Data
                         {
                             Name = "Bateries",
                             CategoryId = 3
+                        },
+                        new DeviceType()
+                        {
+                            Name = "Air conditioning",
+                            CategoryId = 2
                         }
                     });
                     context.SaveChanges();
@@ -565,6 +565,14 @@ namespace Server.Data
                         },
                         new DeviceBrand()
                         {
+                            Name = "GREE"
+                        },
+                        new DeviceBrand()
+                        {
+                            Name = "HISENSE"
+                        },
+                        new DeviceBrand()
+                        {
                             Name = "Other"
                         }
                     });
@@ -574,7 +582,7 @@ namespace Server.Data
                 {
                     context.DeviceModels.AddRange(new[]
                     {
-                        new DeviceModel()
+                        new DeviceModel() // 1
                         {
                             DeviceBrandId = 1,
                             DeviceTypeId = 1,
@@ -582,7 +590,7 @@ namespace Server.Data
                             StandByKwh = 0,
                             Mark = "oznaka1"
                         },
-                        new DeviceModel()
+                        new DeviceModel() // 2
                         {
                             DeviceBrandId = 1,
                             DeviceTypeId = 2,
@@ -590,13 +598,53 @@ namespace Server.Data
                             StandByKwh = 0,
                             Mark = "oznaka2"
                         },
-                        new DeviceModel()
+                        new DeviceModel() // 3
                         {
                             DeviceBrandId = 2,
                             DeviceTypeId = 1,
                             EnergyKwh = 100,
                             StandByKwh = 0,
                             Mark = "oznaka3"
+                        },
+                        new DeviceModel() // 4 - klima VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 7,
+                            EnergyKwh = 1.1f,
+                            StandByKwh = 0,
+                            Mark = "VSA4-12BE"
+                        },
+                        new DeviceModel() // 5 - klima GREE
+                        {
+                            DeviceBrandId = 5,
+                            DeviceTypeId = 7,
+                            EnergyKwh = 5.2f,
+                            StandByKwh = 0,
+                            Mark = "PULAR 18K"
+                        },
+                        new DeviceModel() // 6 - klima GREE
+                        {
+                            DeviceBrandId = 5,
+                            DeviceTypeId = 7,
+                            EnergyKwh = 3.4f,
+                            StandByKwh = 0,
+                            Mark = "PULAR 12K"
+                        },
+                        new DeviceModel() // 7 - klima HISENSE
+                        {
+                            DeviceBrandId = 6,
+                            DeviceTypeId = 7,
+                            EnergyKwh = 1.1f,
+                            StandByKwh = 0,
+                            Mark = "Expert Smart 12K"
+                        },
+                        new DeviceModel() // 8 - klima HISENSE
+                        {
+                            DeviceBrandId = 6,
+                            DeviceTypeId = 7,
+                            EnergyKwh = 1.14f,
+                            StandByKwh = 0,
+                            Mark = "WINGS HINANO 12K"
                         }
                     });
                     context.SaveChanges();
@@ -660,6 +708,69 @@ namespace Server.Data
                             DeviceModelId = 1, 
                             Visibility = true, 
                             Controlability = true, 
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="Klima dnevna soba dole",
+                            DeviceModelId = 5,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="Klima dnevna soba gore",
+                            DeviceModelId = 6,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 6,
+                            Name="Klima hodnik",
+                            DeviceModelId = 4,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 7,
+                            Name="Klima velika",
+                            DeviceModelId = 5,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 8,
+                            Name="Mala klima",
+                            DeviceModelId = 7,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 9,
+                            Name="Klima",
+                            DeviceModelId = 8,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 10,
+                            Name="Klima",
+                            DeviceModelId = 8,
+                            Visibility = true,
+                            Controlability = true,
                             TurnOn = false
                         }
                     });
