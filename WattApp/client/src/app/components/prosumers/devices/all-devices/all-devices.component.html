@@ -1,10 +1,7 @@
-<div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-12" style="margin-top: 150px;">
+<!-- <div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-12" style="margin-top: 150px;">
     <div class="first">
         <br>
-        <!--
-    <br>
-    <h2>List </h2>
-    <br> -->
+
   
         <table *ngIf="devices">
             <thead>
@@ -39,8 +36,6 @@
                     <td>
                       <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)"> on</button>
                       <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)"> off</button>
-                      <!-- <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)"> on</button>
-                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)"> off</button> -->
                     </td>
                     <td><a [routerLink]='["/device-update/"+device.id]'><button style="width: 84px; height:30px; " > UPDATE</button></a></td>
                     <td><button style="width: 84px; height:30px; " (click)="delete(device.id)">DELETE</button></td>
@@ -53,4 +48,24 @@
     </div>
     <button id="buttonAdd" [routerLink]='["/device-add"]'>ADD</button>
   </div>
-  
+   -->
+<div class="main">
+
+    <div class="alldevices">
+        <div class="adddevices">
+            <h1 id="allh1">All devices</h1>
+            <a class="btn btn-primary" href="device-add" role="button">Add device</a>
+        </div>
+        <div class="devices" *ngFor="let device of devices">
+            <div class="devices-item" id="slide-1">
+                <a [routerLink]='["/device/"+device.id]' class="devices-device-item">
+                    <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
+
+                </a>
+                <h3 id="deviceh3">{{device.name}}</h3>
+            </div>
+         
+            <app-prosumer-footer></app-prosumer-footer>
+        </div>
+    </div>
+</div>

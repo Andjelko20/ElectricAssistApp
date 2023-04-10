@@ -1,21 +1,23 @@
 
 
-<div class="main">
-    <div class="device">
+<div class="main"  *ngIf="device">
+    <div class="device" >
         <div class="back">
             <a href="prosumer-devices-page"><img id="turnback" src="assets/img/turn-back.png" alt=""></a>
         </div>
         <div class="glavni">
             <div class="updatedelete">
-                <a class="btn btn-primary" href="#" role="button">Delete</a>
-                <a class="btn btn-primary" href="#" role="button">Update</a>
+                <a class="btn btn-primary" (click)="delete(device.id)" role="button">Delete</a>
+                <a class="btn btn-primary" [routerLink]='["/device-update/"+idDevice]' role="button">Update</a>
             </div>
             <div class="deviceimg">
-                <div class="infoimg">
-                    <h2>Water heater</h2>
+                <div class="infoimg" >
+                    
+                    <h2 >{{device.name}}</h2>
+                    
                     <a class="btn" href="#" role="button" id="startbutton">Start</a>
                 </div>
-                <img id="imgdevice" src="assets/img/water-heater.png" alt="">
+                <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
 
                 <div class="info">
                     <p>Session Started</p>
@@ -23,7 +25,7 @@
                     <p>Energy consumtion</p>
                 </div>
             </div>
-
+<!-- 
             <div class="schcons">
                 <div class="schedular">
                     <p id="pschedular">Schedular</p>
@@ -32,7 +34,7 @@
                     <p id="phistiry">Consumtion and Production Hostory</p>
                 </div>
 
-            </div>
+            </div> -->
         </div>
         
     </div>

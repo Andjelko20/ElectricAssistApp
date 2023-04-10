@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
-import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
   selector: 'app-all-devices',
@@ -12,12 +11,28 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
 export class AllDevicesComponent implements OnInit {
 
   devices:ShowDevices[] = [];
+  pageNumber?:number;
+  pageSize?:number;
   constructor(private router:Router,private deviceService:DevicesService,
     private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.deviceService.getAllDevices().subscribe(devices => {
-     this.devices=devices
+    
+    this.deviceService.getAllDevices(1,7).subscribe(devices => {
+     this.devices=devices.data.map((u:any)=>({
+      id:u.id,
+      userId: u.userId,
+      deviceCategory: u.deviceCategory,
+      deviceType: u.deviceType ,
+      deviceBrand: u.deviceBrand ,
+      deviceModel: u.deviceModel ,
+      name: u.name ,
+      energyInKwh: u.energyInKwh,
+      standByKwh: u.standByKwh,
+      visibility: u.visibility,
+      controlability: u.controlability,
+      turnOn: u.turnOn,
+     })as ShowDevices)
     });
 
     }
@@ -28,7 +43,7 @@ export class AllDevicesComponent implements OnInit {
       this.deviceService.delete(id)
       .subscribe({
         next:()=>{
-          this.router.navigate(['devices-crud']);
+          this.router.navigate(['devices']);
           location.reload();
         }
       });

@@ -10,16 +10,17 @@ import { DevicesService } from 'src/app/services/devices.service';
 })
 export class OneDeviceComponent implements OnInit{
   
-  devices:ShowDevices[] = [];
+  device?:ShowDevices;
+  idDevice?:number;
   constructor(private router:Router,private deviceService:DevicesService,
     private route:ActivatedRoute) { }
 
-  ngOnInit(): void {
-    this.deviceService.getAllDevices().subscribe(devices => {
-     this.devices=devices
-    });
-
-    }
+    ngOnInit(): void {
+      this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
+      this.deviceService.getDevice( this.idDevice).subscribe(devices => {
+        this.device=devices})
+  
+      }
   delete(id:number)
   {
     if(confirm('Are you sere to delete? '+id))
@@ -27,30 +28,29 @@ export class OneDeviceComponent implements OnInit{
       this.deviceService.delete(id)
       .subscribe({
         next:()=>{
-          this.router.navigate(['devices-crud']);
-          location.reload();
+          this.router.navigate(['devices']);
         }
       });
     }
   }
   
-  turnOnOff(id: number) {
-    console.log(id);
+  // turnOnOff(id: number) {
+  //   console.log(id);
     
-      this.deviceService.turnOnOff(id).subscribe({
-        next:()=>{
-          const userIndex = this.devices.findIndex(device => device.id === id);
-          if(this.devices[userIndex].turnOn==false)
-          {
-            this.devices[userIndex].turnOn = true;
-          }   
-          else if(this.devices[userIndex].turnOn==true)
-          {
-            this.devices[userIndex].turnOn = false;
-          }
-        }
-      });
-  }
+  //     this.deviceService.turnOnOff(id).subscribe({
+  //       next:()=>{
+  //         const userIndex = this.devices.findIndex(device => device.id === id);
+  //         if(this.devices[userIndex].turnOn==false)
+  //         {
+  //           this.devices[userIndex].turnOn = true;
+  //         }   
+  //         else if(this.devices[userIndex].turnOn==true)
+  //         {
+  //           this.devices[userIndex].turnOn = false;
+  //         }
+  //       }
+  //     });
+  // }
   
 
 }
