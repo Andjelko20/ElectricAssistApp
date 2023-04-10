@@ -21,53 +21,64 @@ export class LoginComponent implements OnInit {
 
 	ngOnInit(): void {
 		
+		const storedUsername = localStorage.getItem("username");
+		const storedPassword = localStorage.getItem("password");
+		if (storedUsername && storedPassword) {
+			this.username = storedUsername;
+			this.password = storedPassword;
+		}
+
+		// Reload the page when the user navigates to the login page
 		this.router.events.subscribe(event => {
 			if (event instanceof NavigationEnd) {
-			  window.location.reload();
+				window.location.reload();
 			}
-		  });
+		});
 	}
 	
 	login(){
-		
-		if(this.username.trim().length===0){
-			this.errorMsg="User name is required";
+		if (this.username.trim().length === 0) {
+			this.errorMsg = "User name is required";
 			return;
 		}
-		if(this.password.trim().length===0){
-			this.errorMsg="Password is required";
+		if (this.password.trim().length === 0) {
+			this.errorMsg = "Password is required";
 			return;
 		}
-		this.authService.login(this.username,this.password)
-		.subscribe(
-			{
-				next:response=>{
-					if(response.status==401)
-					{
-						this.errorMsg = "Pogresno korisnicko ime/lozinka!";
-						return;
-					}
-					let body = response.body as any;
-					localStorage.setItem("token",body.token);
-					this.authService.isLoginSubject.next(true)
-					this.router.navigate([""]);
-				},
-				error:response=>{
-					if(response.status==401)
-					{
-						this.errorMsg = "Pogresno korisnicko ime/lozinka!";
-						return;
-					}
-
-					// let body = response.body as any;
-					// localStorage.setItem("token",body.token);
-					// this.authService.isLoginSubject.next(true)
-					// this.router.navigate(["/admindso"]);
+	
+		// Check if the "Remember me" checkbox is checked
+		const rememberMe = (document.querySelector("#remember") as HTMLInputElement).checked;
+	
+		this.authService.login(this.username, this.password).subscribe({
+			next: response => {
+				if (response.status == 401) {
+					this.errorMsg = "Pogresno korisnicko ime/lozinka!";
+					return;
+				}
+	
+				let body = response.body as any;
+				localStorage.setItem("token", body.token);
+	
+				// If "Remember me" is checked, store the username and password in local storage
+				if (rememberMe) {
+					localStorage.setItem("username", this.username);
+					localStorage.setItem("password", this.password);
+				} else {
+					// If "Remember me" is not checked, remove the stored credentials from local storage (if any)
+					localStorage.removeItem("username");
+					localStorage.removeItem("password");
+				}
+	
+				this.authService.isLoginSubject.next(true);
+				this.router.navigate([""]);
+			},
+			error: response => {
+				if (response.status == 401) {
+					this.errorMsg = "Pogresno korisnicko ime/lozinka!";
+					return;
 				}
 			}
-		  );
-	
-    		
+		});
 	}
 	// checkToken() {
 	// 	const token = localStorage.getItem('token');
