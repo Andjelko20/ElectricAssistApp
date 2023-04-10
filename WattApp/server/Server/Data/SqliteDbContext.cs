@@ -505,39 +505,44 @@ namespace Server.Data
                 {
                     context.DeviceTypes.AddRange(new[]
                     {
-                        new DeviceType()
+                        new DeviceType() // 1
                         {
                             Name = "TV",
                             CategoryId = 2
                         },
-                        new DeviceType()
+                        new DeviceType() // 2
                         {
                             Name = "Freezer",
                             CategoryId = 2
                         },
-                        new DeviceType()
+                        new DeviceType() // 3
                         {
                             Name = "Boiler", 
                             CategoryId = 2
                         },
-                        new DeviceType()
+                        new DeviceType() // 4
                         {
                             Name = "Electric car", 
                             CategoryId = 3
                         },
-                        new DeviceType()
+                        new DeviceType() // 5
                         {
                             Name = "Solar panel",
                             CategoryId = 1
                         },
-                        new DeviceType()
+                        new DeviceType() // 6
                         {
                             Name = "Bateries",
                             CategoryId = 3
                         },
-                        new DeviceType()
+                        new DeviceType() // 7
                         {
                             Name = "Air conditioning",
+                            CategoryId = 2
+                        },
+                        new DeviceType() // 8
+                        {
+                            Name = "Electric stove",
                             CategoryId = 2
                         }
                     });
@@ -547,31 +552,39 @@ namespace Server.Data
                 {
                     context.DeviceBrands.AddRange(new[]
                     {
-                        new DeviceBrand()
+                        new DeviceBrand() // 1
                         {
                             Name = "VOX"
                         },
-                        new DeviceBrand()
+                        new DeviceBrand() // 2
                         {
                             Name = "VIVAX"
                         },
-                        new DeviceBrand()
+                        new DeviceBrand() // 3
                         {
                             Name = "TESLA"
                         },
-                        new DeviceBrand()
+                        new DeviceBrand() // 4
                         {
                             Name = "SunPower"
                         },
-                        new DeviceBrand()
+                        new DeviceBrand() // 5
                         {
                             Name = "GREE"
                         },
-                        new DeviceBrand()
+                        new DeviceBrand() // 6
                         {
                             Name = "HISENSE"
                         },
-                        new DeviceBrand()
+                        new DeviceBrand() // 7
+                        {
+                            Name = "BEKO"
+                        },
+                        new DeviceBrand() // 8
+                        {
+                            Name = "Bosch"
+                        },
+                        new DeviceBrand() //
                         {
                             Name = "Other"
                         }
@@ -645,6 +658,62 @@ namespace Server.Data
                             EnergyKwh = 1.14f,
                             StandByKwh = 0,
                             Mark = "WINGS HINANO 12K"
+                        },
+                        new DeviceModel() // 9 - BEKO elektricni sporet
+                        {
+                            DeviceBrandId = 7,
+                            DeviceTypeId = 8,
+                            EnergyKwh = 1.45f,
+                            StandByKwh = 0,
+                            Mark = "FSM 57300 GX"
+                        },
+                        new DeviceModel() // 10 - BEKO elektricni sporet
+                        {
+                            DeviceBrandId = 7,
+                            DeviceTypeId = 8,
+                            EnergyKwh = 1.5f,
+                            StandByKwh = 0,
+                            Mark = "FSS56000W"
+                        },
+                        new DeviceModel() // 11 - BEKO elektricni sporet
+                        {
+                            DeviceBrandId = 7,
+                            DeviceTypeId = 8,
+                            EnergyKwh = 1.45f,
+                            StandByKwh = 0,
+                            Mark = "FSE67310GX"
+                        },
+                        new DeviceModel() // 12 - VOX elektricni sporet
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 8,
+                            EnergyKwh = 2.37f,
+                            StandByKwh = 0,
+                            Mark = "CHT6000W"
+                        },
+                        new DeviceModel() // 13 - VOX elektricni sporet
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 8,
+                            EnergyKwh = 2.185f,
+                            StandByKwh = 0,
+                            Mark = "EHB 604 XL"
+                        },
+                        new DeviceModel() // 14 - Bosch elektricni sporet
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 8,
+                            EnergyKwh = 2.705f,
+                            StandByKwh = 0,
+                            Mark = "HKR39A150"
+                        },
+                        new DeviceModel() // 15 - Bosch elektricni sporet
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 8,
+                            EnergyKwh = 2.55f,
+                            StandByKwh = 0,
+                            Mark = "HKR39A120"
                         }
                     });
                     context.SaveChanges();
