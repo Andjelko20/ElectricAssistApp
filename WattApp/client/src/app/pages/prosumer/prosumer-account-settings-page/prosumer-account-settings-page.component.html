@@ -9,34 +9,47 @@
             <div>
                 <img id="imgdevice" src="assets/img/account.png" alt="">
             </div>
-            <h1>User1</h1>
+            <!-- <h1>{{updateUserDetail.name}}</h1> -->
 
-            <form>
+            <form #form="ngForm" (ngSubmit)="upDateProsumer()">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="usernameHelp" placeholder="User1">
+                    <input type="text" class="form-control" id="id" name="username" aria-describedby="usernameHelp" placeholder="User1" [(ngModel)]="updateUserDetail.username ">
                 </div>
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text" class="form-control" id="exampleInputAccount1" aria-describedby="accountHelp" placeholder="Prosumer">
+                    <input type="text" class="form-control" id="id" name="name" aria-describedby="accountHelp" placeholder="Prosumer" [(ngModel)]="updateUserDetail.name ">
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label>Adress</label>
-                    <input type="text" class="form-control" id="exampleInputAdress1" aria-describedby="addreslHelp" placeholder="Kraljice Marije">
-                </div>
+                    <input type="text" class="form-control" id="id" name="exampleInputAdress1" aria-describedby="addreslHelp" placeholder="Kraljice Marije">
+                </div> -->
 
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <div class="form-group">
                     <label>Email</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="electric@gmail.com">
+                    <input type="text" class="form-control" id="id" name="email" aria-describedby="emailHelp" placeholder="electric@gmail.com" [(ngModel)]="updateUserDetail.email ">
                 </div>
-                <button type="save" class="btn btn-primary">Save</button>
-                <button type="giveup" class="btn btn-primary" id="giveupbutton">Give up</button>
+                <button type="submite" class="btn btn-primary">Save</button>
+                <button type="submite" class="btn btn-primary" id="giveupbutton">Cancel</button>
+                <!-- <div class="changepass">
+                    <div class="form-group" id="">
+                        <label for="exampleInputPassword1">Old Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">New Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Repeat new Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <button type="save" class="btn btn-primary">Save</button>
+                    <button type="giveup" class="btn btn-primary" id="giveupbutton">Cancel</button>
+                </div> -->
             </form>
         </div>
+
     </div>
 </div>
 <app-prosumer-footer></app-prosumer-footer>

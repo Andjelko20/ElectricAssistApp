@@ -47,6 +47,11 @@ label {
     font-size: 15px !important;
 }
 
+.changepass {
+    border-top: 2px solid silver;
+    margin-top: 15px;
+}
+
 @media (min-width: 768px) {
     .centar {
         margin-top: 85px;
@@ -77,5 +82,8 @@ label {
         left: 8%;
         position: absolute;
         width: 80%;
+    }
+    .changepass {
+        margin-top: 15px;
     }
 }

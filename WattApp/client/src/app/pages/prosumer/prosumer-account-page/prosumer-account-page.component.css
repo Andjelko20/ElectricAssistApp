@@ -35,6 +35,7 @@ h1 {
 ul {
     margin-top: 15px;
     text-align: left;
+    list-style: none;
     margin-left: 10px;
 }
 

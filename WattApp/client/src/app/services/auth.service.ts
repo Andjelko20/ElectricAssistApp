@@ -2,7 +2,7 @@ import { Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
-import { Users } from '../models/users.model';
+import { Prosumers, Users } from '../models/users.model';
 import { JwtToken } from '../utilities/jwt-token';
 @Injectable({
   providedIn: 'root'
@@ -59,6 +59,14 @@ export class AuthService {
   upDate(id:number,updateRequest:Users):Observable<Users>
   {
     return this.http.put<Users>(environment.serverUrl+'/api/users/'+id,updateRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  getlogInUser():Observable<any>
+  {
+    return this.http.get<any>(environment.serverUrl+"/api/users/my_data",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  upDateProsumer(updateRequest:Prosumers):Observable<Prosumers>
+  {
+    return this.http.put<Prosumers>(environment.serverUrl+'/api/users',updateRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   delete(id:number):Observable<Users>
   {
