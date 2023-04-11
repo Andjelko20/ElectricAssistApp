@@ -523,7 +523,7 @@ namespace Server.Data
                         new DeviceType() // 4
                         {
                             Name = "Electric car", 
-                            CategoryId = 3
+                            CategoryId = 2
                         },
                         new DeviceType() // 5
                         {
@@ -922,6 +922,30 @@ namespace Server.Data
                             EnergyKwh =  50f, // brzi DC punjac
                             StandByKwh = 0,
                             Mark = "Model 3"
+                        },
+                        new DeviceModel() // 41 - solarni panel
+                        {
+                            DeviceBrandId = 4,
+                            DeviceTypeId = 5,
+                            EnergyKwh = 0.4f,
+                            StandByKwh = 0,
+                            Mark = "Maxeon"
+                        },
+                        new DeviceModel() // 42 - solarni panel
+                        {
+                            DeviceBrandId = 4,
+                            DeviceTypeId = 5,
+                            EnergyKwh = 0.36f,
+                            StandByKwh = 0,
+                            Mark = "Performance"
+                        },
+                        new DeviceModel() // 43 - solarni panel
+                        {
+                            DeviceBrandId = 4,
+                            DeviceTypeId = 5,
+                            EnergyKwh = 0.33f,
+                            StandByKwh = 0,
+                            Mark = "AC"
                         }
                     });
                     context.SaveChanges();
@@ -1349,6 +1373,51 @@ namespace Server.Data
                             UserId = 13,
                             Name="auto",
                             DeviceModelId = 40,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 24,
+                            Name="solarna ploca 1",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 24,
+                            Name="solarna ploca 2",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 24,
+                            Name="solarna ploca 3",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 23,
+                            Name="solarna ploca",
+                            DeviceModelId = 42,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 22,
+                            Name="solarni panel",
+                            DeviceModelId = 43,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = false
