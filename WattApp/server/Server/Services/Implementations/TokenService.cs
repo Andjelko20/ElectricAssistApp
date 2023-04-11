@@ -53,7 +53,7 @@ namespace Server.Services.Implementations
         /// <inheritdoc/>
         public string? GetClaim(HttpContext httpContext,string index)
         {
-            var identity = httpContext.User.Identity as ClaimsPrincipal;
+            var identity = httpContext.User.Identity as ClaimsIdentity;
             return identity?.FindFirst(index)?.Value;
         }
 
