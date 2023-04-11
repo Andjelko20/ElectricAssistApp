@@ -27,12 +27,14 @@ export class MapInputComponent {
 	  public settlementElement!:HTMLSelectElement;
 	  public countryElement!:HTMLSelectElement;
 	  constructor(){
-		this.countryElement=document.getElementById("country") as HTMLSelectElement
-		this.cityElement=document.getElementById("city") as HTMLSelectElement;
-		this.settlementElement=document.getElementById("settlement") as HTMLSelectElement;
+		
 	  }
 	  
 	  ngOnInit(): void {
+		this.countryElement=document.getElementById("country") as HTMLSelectElement
+		this.cityElement=document.getElementById("city") as HTMLSelectElement;
+		this.settlementElement=document.getElementById("settlement") as HTMLSelectElement;
+
 		fetch(environment.serverUrl+"/cities?countryId=1",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 	.then(res=>res.json())
 	.then(res=>{
@@ -93,18 +95,22 @@ export class MapInputComponent {
 		});
 	  }
 
-	  onSubmit(){
+	  changeLocations(){
+		if(this.address==undefined)
+			return;
 		let trimmedAddress=this.address.trim();
 		if(trimmedAddress=="" && trimmedAddress.length<2)
 			return;
-		this.searchUrl.searchParams.set("country",this.countryElement.value);
-		this.searchUrl.searchParams.set("city",this.cityElement.value);
-		this.searchUrl.searchParams.set("street",this.searchInput);
+		console.log(this.countryElement.value.replace('\n',''));
+		this.searchUrl.searchParams.set("country",JSON.parse(this.countryElement.value).name);
+		this.searchUrl.searchParams.set("city",JSON.parse(this.cityElement.value).name);
+		this.searchUrl.searchParams.set("street",this.address);
 		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
 		.then(res=>res.json())
 		.then(res=>{
 			this.locations=res;
 		});
+		this.sendData();
 	  }
 	  changeFocus(location:any){
 		let options:Leaflet.ZoomPanOptions={
@@ -116,18 +122,20 @@ export class MapInputComponent {
 		this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
 	  }
 	  onSelectedCity(event:any){
-		let id=JSON.parse(event.target.value).id;
+		let city=JSON.parse(event.target.value);
+		let id=city.id;
+		this.changeLocations();
 		fetch(environment.serverUrl+"/settlements?cityId="+id,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 		.then(res=>res.json())
 		.then(res=>{
 				this.settlements=res.map((r:any)=>({id:r.id,name:r.name}));
-				this.settlementChanged=this.settlements[0].id;
+				this.settlementId=this.settlements[0].id;
 			})
 	  }
 	  stringify(obj:any){
 		return JSON.stringify(obj);
 	  }
-	  sendSettlement(){
-		this.settlementChanged.emit(this.settlementId);
+	  sendData(){
+		this.settlementChanged.emit({settlement:this.settlementId,address:this.address});
 	  }
 }
