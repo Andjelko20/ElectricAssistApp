@@ -834,6 +834,62 @@ namespace Server.Data
                             EnergyKwh =  0.026f,
                             StandByKwh = 0,
                             Mark = "RCSA300K30SN"
+                        },
+                        new DeviceModel() // 30 - Bojler VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 3,
+                            EnergyKwh =  0.162f,
+                            StandByKwh = 0,
+                            Mark = "WHD 802 CLEAN"
+                        },
+                        new DeviceModel() // 31 - Bojler VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 3,
+                            EnergyKwh =  0.162f,
+                            StandByKwh = 0,
+                            Mark = "WHM 802 ECO"
+                        },
+                        new DeviceModel() // 32 - Bojler VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 3,
+                            EnergyKwh =  0.162f,
+                            StandByKwh = 0,
+                            Mark = "WHF 8021"
+                        },
+                        new DeviceModel() // 33 - Bojler VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 3,
+                            EnergyKwh =  0.2768f,
+                            StandByKwh = 0,
+                            Mark = "WHF 8021"
+                        },
+                        new DeviceModel() // 34 - Bojler BOSCH
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 3,
+                            EnergyKwh =  0.28f,
+                            StandByKwh = 0,
+                            Mark = "TR2000T 80 B"
+                        },
+                        new DeviceModel() // 35 - Bojler BOSCH
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 3,
+                            EnergyKwh =  0.28f,
+                            StandByKwh = 0,
+                            Mark = "TR4000 6 ET"
+                        },
+                        new DeviceModel() // 36 - Bojler BOSCH
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 3,
+                            EnergyKwh =  0.28f,
+                            StandByKwh = 0,
+                            Mark = "TR8500 15/18 DESOB"
                         }
                     });
                     context.SaveChanges();
@@ -1162,6 +1218,69 @@ namespace Server.Data
                             UserId = 24,
                             Name="Friz",
                             DeviceModelId = 27,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 4,
+                            Name="Bojler",
+                            DeviceModelId = 30,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 4,
+                            Name="Bojler",
+                            DeviceModelId = 36,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="Bojler",
+                            DeviceModelId = 31,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 6,
+                            Name="Bojler",
+                            DeviceModelId = 32,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 7,
+                            Name="Bojler",
+                            DeviceModelId = 33,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 8,
+                            Name="Bojler",
+                            DeviceModelId = 34,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 9,
+                            Name="Bojler",
+                            DeviceModelId = 35,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = false
