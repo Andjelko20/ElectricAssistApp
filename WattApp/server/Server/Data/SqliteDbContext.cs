@@ -723,7 +723,7 @@ namespace Server.Data
                             StandByKwh = 0,
                             Mark = "HKR39A120"
                         },
-                        new DeviceModel() ///// 16 - TV VOX
+                        new DeviceModel() // 16 - TV VOX
                         {
                             DeviceBrandId = 1,
                             DeviceTypeId = 1,
@@ -778,6 +778,62 @@ namespace Server.Data
                             EnergyKwh =  0.071f,
                             StandByKwh = 0,
                             Mark = "UE50AU7022KXXH"
+                        },
+                        new DeviceModel() // 23 - Frizider VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 2,
+                            EnergyKwh =  0.024f,
+                            StandByKwh = 0,
+                            Mark = "KG2500F"
+                        },
+                        new DeviceModel() // 24 - Frizider VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 2,
+                            EnergyKwh =  0.022f,
+                            StandByKwh = 0,
+                            Mark = "KG2630F"
+                        },
+                        new DeviceModel() // 25 - Frizider SAMSUNG
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 2,
+                            EnergyKwh =  0.0256f,
+                            StandByKwh = 0,
+                            Mark = "RB34T652ESA/EK"
+                        },
+                        new DeviceModel() // 26 - Frizider SAMSUNG
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 2,
+                            EnergyKwh =  0.0256f,
+                            StandByKwh = 0,
+                            Mark = "RB34T652EB1/EK"
+                        },
+                        new DeviceModel() // 27 - Frizider SAMSUNG
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 2,
+                            EnergyKwh =  0.026f,
+                            StandByKwh = 0,
+                            Mark = "RB34T672FWW/EK"
+                        },
+                        new DeviceModel() // 28 - Frizider BEKO
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 2,
+                            EnergyKwh =  0.026f,
+                            StandByKwh = 0,
+                            Mark = "RDSA240K30WN"
+                        },
+                        new DeviceModel() // 29 - Frizider BEKO
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 2,
+                            EnergyKwh =  0.026f,
+                            StandByKwh = 0,
+                            Mark = "RCSA300K30SN"
                         }
                     });
                     context.SaveChanges();
@@ -833,11 +889,8 @@ namespace Server.Data
                     {
                         new Device()
                         {
-                            UserId = 1, 
-                            //DeviceCategoryId = 1, 
-                            //DeviceTypeId = 1, 
-                            //DeviceBrandId = 1,
-                            Name="Uredjaj",
+                            UserId = 4,
+                            Name="TV FOX",
                             DeviceModelId = 1, 
                             Visibility = true, 
                             Controlability = true, 
@@ -917,6 +970,15 @@ namespace Server.Data
                         },
                         new Device()
                         {
+                            UserId = 10,
+                            Name="Friz",
+                            DeviceModelId = 29,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
                             UserId = 11,
                             Name="El. sporet",
                             DeviceModelId = 9,
@@ -974,6 +1036,15 @@ namespace Server.Data
                             UserId = 17,
                             Name="elektricni sporet",
                             DeviceModelId = 15,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 17,
+                            Name="Friz",
+                            DeviceModelId = 28,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = false
@@ -1046,6 +1117,51 @@ namespace Server.Data
                             UserId = 21,
                             Name="tv kancelarija",
                             DeviceModelId = 20,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 21,
+                            Name="frizider",
+                            DeviceModelId = 23,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 22,
+                            Name="frizider kuhinja",
+                            DeviceModelId = 24,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 23,
+                            Name="Frizider",
+                            DeviceModelId = 25,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 24,
+                            Name="Friz",
+                            DeviceModelId = 26,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 24,
+                            Name="Friz",
+                            DeviceModelId = 27,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = false
