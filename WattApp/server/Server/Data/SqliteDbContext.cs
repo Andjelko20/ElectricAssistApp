@@ -890,6 +890,38 @@ namespace Server.Data
                             EnergyKwh =  0.28f,
                             StandByKwh = 0,
                             Mark = "TR8500 15/18 DESOB"
+                        },
+                        new DeviceModel() // 37 - auto TESLA
+                        {
+                            DeviceBrandId = 3,
+                            DeviceTypeId = 4,
+                            EnergyKwh =  120f, // tesla super punjac
+                            StandByKwh = 0,
+                            Mark = "S 100D"
+                        },
+                        new DeviceModel() // 38 - auto TESLA
+                        {
+                            DeviceBrandId = 3,
+                            DeviceTypeId = 4,
+                            EnergyKwh =  50f, // brzi DC punjac
+                            StandByKwh = 0,
+                            Mark = "S 100D"
+                        },
+                        new DeviceModel() // 39 - auto TESLA
+                        {
+                            DeviceBrandId = 3,
+                            DeviceTypeId = 4,
+                            EnergyKwh =  120f, // tesla super punjac
+                            StandByKwh = 0,
+                            Mark = "Model 3"
+                        },
+                        new DeviceModel() // 40 - auto TESLA
+                        {
+                            DeviceBrandId = 3,
+                            DeviceTypeId = 4,
+                            EnergyKwh =  50f, // brzi DC punjac
+                            StandByKwh = 0,
+                            Mark = "Model 3"
                         }
                     });
                     context.SaveChanges();
@@ -1281,6 +1313,42 @@ namespace Server.Data
                             UserId = 9,
                             Name="Bojler",
                             DeviceModelId = 35,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 10,
+                            Name="kola",
+                            DeviceModelId = 37,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 11,
+                            Name="tesla",
+                            DeviceModelId = 38,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 12,
+                            Name="Kola",
+                            DeviceModelId = 39,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 13,
+                            Name="auto",
+                            DeviceModelId = 40,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = false
