@@ -7,3 +7,7 @@
   * **client** - Angular projekat
   * **server** - C# projekat
 * **sandbox** - direktorijum unutar koga se nalaze direktorijumi sa imenima članova tima, koji služe za čuvanje pomoćnih kodova
+
+## Pokretanje
+[Pokretanje fronta](./WattApp/client/README.md)  
+[Pokretanje servera](./WattApp/server/README.md)
