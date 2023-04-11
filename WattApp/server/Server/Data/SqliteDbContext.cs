@@ -544,6 +544,11 @@ namespace Server.Data
                         {
                             Name = "Electric stove",
                             CategoryId = 2
+                        },
+                        new DeviceType() // 9
+                        {
+                            Name = "Electric bulb",
+                            CategoryId = 2
                         }
                     });
                     context.SaveChanges();
@@ -591,6 +596,10 @@ namespace Server.Data
                         new DeviceBrand() // 10
                         {
                             Name = "SAMSUNG"
+                        },
+                        new DeviceBrand() // 11
+                        {
+                            Name = "Philips"
                         },
                         new DeviceBrand() //
                         {
@@ -946,6 +955,30 @@ namespace Server.Data
                             EnergyKwh = 0.33f,
                             StandByKwh = 0,
                             Mark = "AC"
+                        },
+                        new DeviceModel() // 44 - smart sijalica
+                        {
+                            DeviceBrandId = 11,
+                            DeviceTypeId = 9,
+                            EnergyKwh = 0.009f,
+                            StandByKwh = 0,
+                            Mark = "Hue Led Bulb WCA"
+                        },
+                        new DeviceModel() // 45 - smart sijalica
+                        {
+                            DeviceBrandId = 11,
+                            DeviceTypeId = 9,
+                            EnergyKwh = 0.01f,
+                            StandByKwh = 0,
+                            Mark = "Hue Starter kit E27"
+                        },
+                        new DeviceModel() // 46 - smart sijalica
+                        {
+                            DeviceBrandId = 11,
+                            DeviceTypeId = 9,
+                            EnergyKwh = 0.01f,
+                            StandByKwh = 0,
+                            Mark = "Hue White and Colour Ambiance 3/1"
                         }
                     });
                     context.SaveChanges();
@@ -1418,6 +1451,294 @@ namespace Server.Data
                             UserId = 22,
                             Name="solarni panel",
                             DeviceModelId = 43,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="sijalica dnevna soba",
+                            DeviceModelId = 44,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="sijalica hodnik",
+                            DeviceModelId = 44,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="sijalica kupatilo",
+                            DeviceModelId = 44,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="sijalica kuhinja",
+                            DeviceModelId = 44,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="sijalica trpezarija",
+                            DeviceModelId = 44,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="sijalica spavaca",
+                            DeviceModelId = 44,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="sijalica decija",
+                            DeviceModelId = 44,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 5,
+                            Name="sijalica garaza",
+                            DeviceModelId = 44,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 6,
+                            Name="sijalica dnevna soba",
+                            DeviceModelId = 45,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 6,
+                            Name="sijalica hodnik",
+                            DeviceModelId = 45,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 6,
+                            Name="sijalica kupatilo",
+                            DeviceModelId = 45,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 6,
+                            Name="sijalica kuhinja",
+                            DeviceModelId = 45,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 6,
+                            Name="sijalica trpezarija",
+                            DeviceModelId = 45,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 6,
+                            Name="sijalica spavaca",
+                            DeviceModelId = 45,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 6,
+                            Name="sijalica decija",
+                            DeviceModelId = 45,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 6,
+                            Name="sijalica garaza",
+                            DeviceModelId = 45,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 7,
+                            Name="sijalica dnevna soba",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 7,
+                            Name="sijalica hodnik",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 7,
+                            Name="sijalica kupatilo",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 7,
+                            Name="sijalica kuhinja",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 7,
+                            Name="sijalica trpezarija",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 7,
+                            Name="sijalica spavaca",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 7,
+                            Name="sijalica decija",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 7,
+                            Name="sijalica garaza",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 23,
+                            Name="sijalica dnevna soba",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 23,
+                            Name="sijalica hodnik",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 23,
+                            Name="sijalica kupatilo",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 23,
+                            Name="sijalica kuhinja",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 23,
+                            Name="sijalica trpezarija",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 23,
+                            Name="sijalica spavaca",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 23,
+                            Name="sijalica decija",
+                            DeviceModelId = 46,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 23,
+                            Name="sijalica garaza",
+                            DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = false
