@@ -1,15 +1,22 @@
 .weather-container {
+    width: 30%;
+    height: 150px;
     display: flex;
-    margin-top: 5px;
+    background: #ffffff;
+    margin-top: 10px;
     text-align: center;
+    justify-content: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
   
   .weather-container .flex-column {
     display: flex;
-    margin-left: 10px;
+    margin-left: 30px;
+    margin-top: 10px;
     flex-direction: column;
     align-items: center;
-  }
+    }
   
   .weather-container .small {
     font-size: 15px;

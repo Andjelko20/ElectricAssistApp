@@ -61,7 +61,7 @@ const routes: Routes = [
 	//DSO
 	{path:'',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard]},
-	{path:'prosumer',component:DsoOneProsumerPageComponent},
+	{path:'prosumer/:id',component:DsoOneProsumerPageComponent},
 	{path:'prediction',component:DsoPredictionPageComponent,canActivate:[DispatcherGuard]},
 	//PROSUMER
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},

@@ -56,6 +56,11 @@ export class AuthService {
     return this.http.get<any>(environment.serverUrl+"/api/users/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
+  getProsumer(id:number):Observable<any>
+  {
+    return this.http.get<any>(environment.serverUrl+"/api/ProsumersDetails/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
   upDate(id:number,updateRequest:Users):Observable<Users>
   {
     return this.http.put<Users>(environment.serverUrl+'/api/users/'+id,updateRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});

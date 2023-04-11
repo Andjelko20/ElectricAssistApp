@@ -44,7 +44,7 @@
     <tr *ngFor="let prosumer of filteredProsumers">
       
       <td>{{prosumer.id}}</td>
-      <td>{{prosumer.name}}</td>
+     <a [routerLink]='["/prosumer/",prosumer.id]'><td>{{prosumer.name}}</td></a>
       <td>{{prosumer.username}}</td>
       <!-- <td>{{prosumer.email}}</td> -->
       <td>{{prosumer.settlement}}</td>
