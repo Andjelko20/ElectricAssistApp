@@ -56,8 +56,8 @@
             <h1 id="allh1">All devices</h1>
             <a class="btn btn-primary" href="device-add" role="button">Add device</a>
         </div>
-        <div class="devices" *ngFor="let device of devices">
-            <div class="devices-item" id="slide-1">
+        <div class="devices" >
+            <div class="devices-item" id="slide-1" *ngFor="let device of devices">
                 <a [routerLink]='["/device/"+device.id]' class="devices-device-item">
                     <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
 

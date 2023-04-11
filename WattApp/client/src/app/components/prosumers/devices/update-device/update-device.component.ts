@@ -62,7 +62,7 @@ export class UpdateDeviceComponent implements OnInit{
     this.devicesService.upDateDevice(this.updateDevice)
     .subscribe({
       next:()=>{
-        this.router.navigate(['/devices-crud']);
+        this.router.navigate(['device/'+Number(this.route.snapshot.paramMap.get('id'))]);
       }
     });
   }

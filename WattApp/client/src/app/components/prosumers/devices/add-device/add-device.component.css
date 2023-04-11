@@ -1,5 +1,6 @@
 .global {
-    margin-left: 10px;
+    top: 10%;
+    position: absolute;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -13,7 +14,7 @@ input {
     box-shadow: 2px 4px gray;
     background-color: white;
     padding: 20px;
-    width: 50%;
+    width: 100%;
     margin-bottom: 30px;
 }
 
@@ -44,4 +45,14 @@ button {
     margin-left: 25%;
     width: 160px;
     background-color: #1C315E;
+}
+@media(min-width: 768px)
+{
+    .global{
+        top: 20%;
+        position: absolute;
+    }
+    .global1{
+        width: 50%;
+    }
 }

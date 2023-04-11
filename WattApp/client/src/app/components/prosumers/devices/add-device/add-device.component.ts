@@ -62,7 +62,7 @@ export class AddDeviceComponent implements OnInit{
     this.devicesService.addDevices(this.addDeviceRequest)
     .subscribe({
       next:()=>{
-         this.router.navigate(['/devices-crud']);
+         this.router.navigate(['/devices']);
       
       }
     });

@@ -18,7 +18,7 @@ export class AllDevicesComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.deviceService.getAllDevices(1,7).subscribe(devices => {
+    this.deviceService.getAllDevices(1,12).subscribe(devices => {
      this.devices=devices.data.map((u:any)=>({
       id:u.id,
       userId: u.userId,
