@@ -1,22 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Server.Data;
 using Server.DTOs;
 using Server.DTOs.Responses;
 using Server.Services;
 using Server.Services.Implementations;
 using Server.Utilities;
+using SQLitePCL;
 
 namespace Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProsumersController : Controller
+    public class ProsumersDetailsController : Controller
     {
         public readonly IUserService userService;
+        public readonly SqliteDbContext _sqliteDb;
+        public readonly IProsumerService prosumerService;
 
-        public ProsumersController(IUserService userService)
+        public ProsumersDetailsController(IUserService userService,SqliteDbContext sqliteDb,IProsumerService prosumerService)
         {
             this.userService = userService;
+            _sqliteDb = sqliteDb;
+            this.prosumerService = prosumerService;
         }
 
         ///<summary>Get all prosumers for map</summary>
@@ -58,6 +65,21 @@ namespace Server.Controllers
                 //logger.LogInformation(ex.Message);
                 return StatusCode(500, new { message = "Internal server error" });
             }
+        }
+
+        [HttpGet]
+        [Route("{id:long}")]
+        [Authorize(Roles = Roles.Dispatcher)]
+        public async Task<IActionResult> GetUserById([FromRoute] long id)
+        {
+            var user = await userService.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound(new { message = "User with id " + id.ToString() + " doesn\'t exist" });
+            }
+            if (user.RoleId != Roles.ProsumerId)
+                return Forbid();
+            return Ok(new UserDetailsDTO(user));
         }
     }
 }

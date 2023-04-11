@@ -86,6 +86,29 @@ namespace Server.Controllers
             }
             return Ok(new UserDetailsDTO(user));
         }
+
+        /// <summary>
+        /// Get data for logged in user
+        /// </summary>
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(UserDetailsDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
+
+        [HttpGet]
+        [Route("my_data")]
+        [Authorize]
+        public async Task<IActionResult> GetMyData()
+        {
+            string iid = tokenService.GetClaim(HttpContext, "id");
+            var id = long.Parse(iid);
+            var user = await userService.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound(new { message = "User with id " + id.ToString() + " doesn\'t exist" });
+            }
+            return Ok(new UserDetailsDTO(user));
+        }
         /// <summary>
         /// Get all roles
         /// </summary>
