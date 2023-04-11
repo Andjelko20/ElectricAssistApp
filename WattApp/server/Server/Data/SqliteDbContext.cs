@@ -584,6 +584,14 @@ namespace Server.Data
                         {
                             Name = "Bosch"
                         },
+                        new DeviceBrand() // 9
+                        {
+                            Name = "FOX"
+                        },
+                        new DeviceBrand() // 10
+                        {
+                            Name = "SAMSUNG"
+                        },
                         new DeviceBrand() //
                         {
                             Name = "Other"
@@ -595,29 +603,29 @@ namespace Server.Data
                 {
                     context.DeviceModels.AddRange(new[]
                     {
-                        new DeviceModel() // 1
+                        new DeviceModel() // 1 - TV FOX
                         {
-                            DeviceBrandId = 1,
+                            DeviceBrandId = 9,
                             DeviceTypeId = 1,
-                            EnergyKwh = 100,
+                            EnergyKwh = 0.05f,
                             StandByKwh = 0,
-                            Mark = "oznaka1"
+                            Mark = "43WOS620D"
                         },
-                        new DeviceModel() // 2
+                        new DeviceModel() // 2 - TV FOX
                         {
-                            DeviceBrandId = 1,
-                            DeviceTypeId = 2,
-                            EnergyKwh = 100,
-                            StandByKwh = 0,
-                            Mark = "oznaka2"
-                        },
-                        new DeviceModel() // 3
-                        {
-                            DeviceBrandId = 2,
+                            DeviceBrandId = 9,
                             DeviceTypeId = 1,
-                            EnergyKwh = 100,
+                            EnergyKwh = 0.064f,
                             StandByKwh = 0,
-                            Mark = "oznaka3"
+                            Mark = "50WOS620D"
+                        },
+                        new DeviceModel() // 3 - TV FOX
+                        {
+                            DeviceBrandId = 9,
+                            DeviceTypeId = 1,
+                            EnergyKwh =  0.026f,
+                            StandByKwh = 0,
+                            Mark = "32DTV220C"
                         },
                         new DeviceModel() // 4 - klima VOX
                         {
@@ -714,6 +722,62 @@ namespace Server.Data
                             EnergyKwh = 2.55f,
                             StandByKwh = 0,
                             Mark = "HKR39A120"
+                        },
+                        new DeviceModel() ///// 16 - TV VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 1,
+                            EnergyKwh = 0.03f,
+                            StandByKwh = 0,
+                            Mark = "32A11H672B"
+                        },
+                        new DeviceModel() // 17 - TV VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 1,
+                            EnergyKwh = 0.031f,
+                            StandByKwh = 0,
+                            Mark = "32A11H315FL"
+                        },
+                        new DeviceModel() // 18 - TV HISENSE
+                        {
+                            DeviceBrandId = 6,
+                            DeviceTypeId = 1,
+                            EnergyKwh =  0.13f,
+                            StandByKwh = 0,
+                            Mark = "50A6BG"
+                        },
+                        new DeviceModel() // 19 - TV HISENSE
+                        {
+                            DeviceBrandId = 6,
+                            DeviceTypeId = 1,
+                            EnergyKwh =  0.075f,
+                            StandByKwh = 0,
+                            Mark = "43A6BG"
+                        },
+                        new DeviceModel() // 20 - TV SAMSUNG
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 1,
+                            EnergyKwh =  0.07f,
+                            StandByKwh = 0,
+                            Mark = "UE43AU7172UXXH"
+                        },
+                        new DeviceModel() // 21 - TV SAMSUNG
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 1,
+                            EnergyKwh =  0.101f,
+                            StandByKwh = 0,
+                            Mark = "UE55AU7172UXXH"
+                        },
+                        new DeviceModel() // 22 - TV SAMSUNG
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 1,
+                            EnergyKwh =  0.071f,
+                            StandByKwh = 0,
+                            Mark = "UE50AU7022KXXH"
                         }
                     });
                     context.SaveChanges();
@@ -910,6 +974,78 @@ namespace Server.Data
                             UserId = 17,
                             Name="elektricni sporet",
                             DeviceModelId = 15,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 18,
+                            Name="tv",
+                            DeviceModelId = 16,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 18,
+                            Name="tv spavaca",
+                            DeviceModelId = 17,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 18,
+                            Name="tv dnevna",
+                            DeviceModelId = 16,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 19,
+                            Name="televizor",
+                            DeviceModelId = 18,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 20,
+                            Name="televizor dnevna soba",
+                            DeviceModelId = 19,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 20,
+                            Name="tv decija soba",
+                            DeviceModelId = 20,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 20,
+                            Name="tv moja soba",
+                            DeviceModelId = 21,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = false
+                        },
+                        new Device()
+                        {
+                            UserId = 21,
+                            Name="tv kancelarija",
+                            DeviceModelId = 20,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = false
