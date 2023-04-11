@@ -11,23 +11,23 @@
                     
                     <input type="number " class="form-control " id="id " name="userId " [(ngModel)]="idProsumer " disabled>
                     <br>
-                    <label for="name " class="form-label ">name</label>
+                    <label for="name " class="form-label ">Name</label>
                     <input type="text " class="form-control " id="id " name="name " [(ngModel)]="updateDevice.name "  required>
                     <br>
-                    <label for="energyInKwh " class="form-label ">energyInKwh</label>
+                    <label for="energyInKwh " class="form-label ">Energy in kWh</label>
                     <input type="number " class="form-control " id="id " name="energyInKwh " [(ngModel)]="updateDevice.energyInKwh "  required>
                     <br>
-                    <label for="standByKwh " class="form-label ">standByKwh</label>
+                    <label for="standByKwh " class="form-label ">Stand by in kWh</label>
                     <input type="number " class="form-control " id="id " name="standByKwh " [(ngModel)]="updateDevice.standByKwh "  required>
                     <br>
                     <form >
-                        <label for="visibilityOnOff" class="form-label ">visibility</label>
+                        <label for="visibilityOnOff" class="form-label ">Visibility</label>
                         <button style="width: 84px; height:30px; color: #fff;"  (click)="visibilityOnOff()" > {{ updateDevice.visibility ? 'On' : 'Off' }}</button>
                     </form>
                     <br>
                    
                     <form >
-                        <label for="controlabilityOnOff" class="form-label ">control</label>
+                        <label for="controlabilityOnOff" class="form-label ">Control</label>
                         <button style="width: 84px; height:30px; color: #fff;"  (click)="controlabilityOnOff()" > {{ updateDevice.controlability ? 'On' : 'Off' }}</button>
                     </form>
                     <br>

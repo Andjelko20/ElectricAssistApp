@@ -53,7 +53,16 @@
 
     <div class="alldevices">
         <div class="adddevices">
-            <h1 id="allh1">All devices</h1>
+            <h1 id="allh1">All devices 
+                <label for="deviceCategoryId " >Device Category</label>
+                <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)"    required>     
+                    <option [value]='0'>Select Category</option>
+                    <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
+                </select>
+            </h1>
+            
+            
+            
             <a class="btn btn-primary" href="device-add" role="button">Add device</a>
         </div>
         <div class="devices" >

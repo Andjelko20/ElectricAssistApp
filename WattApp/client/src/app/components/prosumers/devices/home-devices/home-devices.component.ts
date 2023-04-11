@@ -15,7 +15,7 @@ export class HomeDevicesComponent implements OnInit {
     private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.deviceService.getAllDevices(1,1).subscribe(devices => {
+    this.deviceService.getAllDevices(1,1,2).subscribe(devices => {
      this.devices=devices
     });
 

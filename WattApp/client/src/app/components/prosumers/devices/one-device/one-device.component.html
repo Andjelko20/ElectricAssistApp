@@ -7,7 +7,7 @@
         </div>
         <div class="glavni">
             <div class="updatedelete">
-                <a class="btn btn-primary" (click)="delete(device.id)" role="button">Delete</a>
+                <button class="btn btn-primary" (click)="delete(device.id)" >Delete</button>
                 <a class="btn btn-primary" [routerLink]='["/device-update/"+idDevice]' role="button">Update</a>
             </div>
             <div class="deviceimg">

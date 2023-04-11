@@ -37,7 +37,10 @@ export class UpdateDeviceComponent implements OnInit{
   this.devicesService.getDevice( Number(this.route.snapshot.paramMap.get('id')) )
         .subscribe({
           next:(response)=>{
+            console.log(this.idProsumer);
             this.updateDevice={
+             
+              
               id:Number(this.route.snapshot.paramMap.get('id')),
               userId: response.userId,
               name: response.name,

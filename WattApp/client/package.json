@@ -27,13 +27,13 @@
         "cors": "^2.8.5",
         "jquery": "^3.6.4",
         "leaflet": "^1.9.3",
+        "maplibre-gl": "^2.4.0",
         "ng2-charts": "^4.1.1",
         "ngx-gauge": "^7.0.0",
         "rxjs": "~7.8.0",
         "set-value": "^4.1.0",
         "update": "^0.7.4",
-        "zone.js": "~0.12.0",
-        "maplibre-gl": "^2.4.0"
+        "zone.js": "~0.12.0"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "^15.2.0",

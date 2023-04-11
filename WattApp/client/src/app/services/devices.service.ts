@@ -11,9 +11,9 @@ export class DevicesService {
 
   constructor(private http:HttpClient) { }
 
-  getAllDevices(pageNumber:number, pageSize:number):Observable<any>
+  getAllDevices(pageNumber:number, pageSize:number,categoryId:number):Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize='+pageSize,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize='+pageSize+'&categoryId='+categoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   getDevice(id:number):Observable<any>
   {
