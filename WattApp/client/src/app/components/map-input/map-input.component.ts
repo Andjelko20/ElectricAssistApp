@@ -101,10 +101,12 @@ export class MapInputComponent {
 		let trimmedAddress=this.address.trim();
 		if(trimmedAddress=="" && trimmedAddress.length<2)
 			return;
-		console.log(this.countryElement.value.replace('\n',''));
+		/*
 		this.searchUrl.searchParams.set("country",JSON.parse(this.countryElement.value).name);
 		this.searchUrl.searchParams.set("city",JSON.parse(this.cityElement.value).name);
 		this.searchUrl.searchParams.set("street",this.address);
+		*/
+		this.searchUrl.searchParams.set("q",this.address+","+JSON.parse(this.cityElement.value).name+","+JSON.parse(this.countryElement.value).name);
 		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
 		.then(res=>res.json())
 		.then(res=>{
