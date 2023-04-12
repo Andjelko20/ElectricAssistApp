@@ -108,6 +108,9 @@ namespace Server.Services.Implementations
                 device.StandByKwh = (float)result.StandByKwh;
             }
 
+            if(device.Controlability == true)
+                device.Visibility = true;
+
             _context.Devices.Add(device);
             _context.SaveChanges();
             return device;
@@ -285,8 +288,6 @@ namespace Server.Services.Implementations
         /// <inheritdoc/>
         public DataPage<DeviceResponseDTO> getUserDevices(long userId, DeviceFilterModel deviceFilter, int pageNumber, int pageSize)
         {
-
-            //return _context.Devices.Where(src => src.UserId == userId && src.Visibility == true).ToList();
             IQueryable<Device> query = _context.Devices.Where(src => src.UserId == userId && src.Visibility == true);
 
             if (deviceFilter != null)

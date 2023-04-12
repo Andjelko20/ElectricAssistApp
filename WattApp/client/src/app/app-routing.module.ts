@@ -30,6 +30,8 @@ import { UpdateDeviceComponent } from './components/prosumers/devices/update-dev
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
 import { FutureComponent } from './components/weather/future/future.component';
 import { DsoOneProsumerPageComponent } from './pages/dso/dso-one-prosumer-page/dso-one-prosumer-page.component';
+import { ProsumerAccountPageComponent } from './pages/prosumer/prosumer-account-page/prosumer-account-page.component';
+import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-account-settings-page/prosumer-account-settings-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -83,6 +85,8 @@ const routes: Routes = [
 	{path:'prosumer-devices-page',component:ProsumerDevicesPageComponent},
 	{path:'prosumer-device-page',component:ProsumerDevicePageComponent},
 	{path:'reset-password',component:ResetPasswordPageComponent},
+	{path:'prosumer-account-page',component:ProsumerAccountPageComponent},
+	{path:'prosumer-account-settings-page',component:ProsumerAccountSettingsPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	{path:"map-input",component:MapInputComponent},
 	{path:"future",component:TodayComponent},
