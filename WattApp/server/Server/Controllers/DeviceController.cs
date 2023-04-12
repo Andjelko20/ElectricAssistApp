@@ -112,19 +112,18 @@ namespace Server.Controllers
                     long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
 
                     device = _deviceService.getYourDeviceById(id, userId);
-                    responseDTO = _mapper.Map<DeviceResponseDTO>(device);
                 }
                 else
                 {
                     device = _deviceService.getDeviceById(id);
-                    modelId = device.DeviceModelId;
-                    responseDTO = _mapper.Map<DeviceResponseDTO>(device);
                 }
 
-                if (responseDTO == null)
+                if (device == null)
                 {
                     throw new ItemNotFoundException("Device not found!");
                 }
+                responseDTO = _mapper.Map<DeviceResponseDTO>(device);
+
                 formatDeviceResponseDTO(ref responseDTO, device.DeviceModelId);
                 return Ok(responseDTO);
             }
