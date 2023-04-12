@@ -4,3 +4,24 @@
     margin-left: 100px;
 
 }
+.tabel-map{
+	padding-top: 20px;
+	margin-bottom: 20px;
+}
+.nav-button{
+	border-radius: 20px;
+	border: 1px solid black;
+	padding: 5px 10px;
+	margin-left: 5px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.nav-button:not(.active){
+	background-color: white;
+	color: black;
+}
+.nav-button.active{
+	background-color: black;
+	color: white;
+}
