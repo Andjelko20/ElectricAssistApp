@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { empty } from 'rxjs';
 import { ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
 import { Categories } from 'src/app/utilities/categories';
@@ -25,26 +26,26 @@ export class AllDevicesComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.deviceService.getAllDevices(1,12,2).subscribe(devices => {
-     this.devices=devices.data.map((u:any)=>({
-      id:u.id,
-      userId: u.userId,
-      deviceCategory: u.deviceCategory,
-      deviceType: u.deviceType ,
-      deviceBrand: u.deviceBrand ,
-      deviceModel: u.deviceModel ,
-      name: u.name ,
-      energyInKwh: u.energyInKwh,
-      standByKwh: u.standByKwh,
-      visibility: u.visibility,
-      controlability: u.controlability,
-      turnOn: u.turnOn,
-     })as ShowDevices)
-    }, error => {
-      if (error.status === 404) {
-        console.log('Devices not found in database');
-     }} 
-     );
+    // this.deviceService.getAllDevices(1,12,2).subscribe(devices => {
+    //  this.devices=devices.data.map((u:any)=>({
+    //   id:u.id,
+    //   userId: u.userId,
+    //   deviceCategory: u.deviceCategory,
+    //   deviceType: u.deviceType ,
+    //   deviceBrand: u.deviceBrand ,
+    //   deviceModel: u.deviceModel ,
+    //   name: u.name ,
+    //   energyInKwh: u.energyInKwh,
+    //   standByKwh: u.standByKwh,
+    //   visibility: u.visibility,
+    //   controlability: u.controlability,
+    //   turnOn: u.turnOn,
+    //  })as ShowDevices)
+    // }, error => {
+    //   if (error.status === 404) {
+    //     console.log('Devices not found in database');
+    //  }} 
+    //  );
     }
     onSelectedCategory(event:any)
     {
@@ -69,6 +70,7 @@ export class AllDevicesComponent implements OnInit {
         })as ShowDevices)
        }, error => {
         if (error.status === 404) {
+          this.devices=[]
           console.log('Devices not found in database');
        }} 
        );

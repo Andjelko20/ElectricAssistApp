@@ -8,6 +8,6 @@
                 <a  class="devices-device-item1" *ngIf="device.turnOn===false" style="cursor: pointer;" (click)="turnOnOff(device.id)">
                         <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
                 </a>
-                <h3 id="deviceh3">{{device.deviceType}}</h3>
+                <h3 id="deviceh3">{{device.name}}</h3>
             </div>
         </div>
