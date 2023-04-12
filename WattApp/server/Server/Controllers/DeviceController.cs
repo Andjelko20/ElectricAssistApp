@@ -156,19 +156,11 @@ namespace Server.Controllers
         {
             try
             {
-                return Ok(_deviceService.getUserDevices(userId, filter, pageNumber, pageSize));
-                /*if (devices == null) throw new ItemNotFoundException("Devices not found!");
-
-                List<DeviceResponseDTO> deviceResponseDTOs = new List<DeviceResponseDTO>();
-                foreach(Device device in devices)
+                if(pageNumber == 0 || pageSize == 0)
                 {
-                    DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(device);
-
-                    formatDeviceResponseDTO(ref responseDTO, device.DeviceModelId);
-
-                    deviceResponseDTOs.Add(responseDTO);
+                    return Ok(_deviceService.getUserDevices(userId, filter, 1, 20));
                 }
-                return Ok(deviceResponseDTOs);*/
+                return Ok(_deviceService.getUserDevices(userId, filter, pageNumber, pageSize));
             }
             catch (HttpRequestException ex)
             {
@@ -205,43 +197,17 @@ namespace Server.Controllers
         {
             try
             {
-                /*List<Device> devices = new List<Device>();
-                List<DeviceResponseDTO> responseDTOs = new List<DeviceResponseDTO>();*/
-
                 var credentials = HttpContext.User.Identity as ClaimsIdentity;
                 long userId = long.Parse(credentials.FindFirst(ClaimTypes.Actor).Value);
-                /*if (pageNumber == null) pageNumber = 1;
-                if (pageSize == null) pageSize = 10;*/
+
+                if (pageNumber == 0 || pageSize == 0)
+                    return Ok(_deviceService.getMyDevices(userId, filter, 1, 20));
 
                 return Ok(_deviceService.getMyDevices(userId, filter, pageNumber, pageSize));
-                /*if (devices == null || devices.Count == 0)
-                {
-                    throw new ItemNotFoundException("Devices not found!");
-                }
-
-                foreach (Device device in devices)
-                {
-                    DeviceResponseDTO responseDTO = _mapper.Map<DeviceResponseDTO>(device);
-
-                    formatDeviceResponseDTO(ref responseDTO, device.DeviceModelId);
-
-                    responseDTOs.Add(responseDTO);
-                }
-
-                return Ok(responseDTOs);*/
             }
             catch (HttpRequestException ex)
             {
                 return StatusCode((int)ex.StatusCode.Value, ex.Message);
-            }
-            catch (ItemNotFoundException ex)
-            {
-                return NotFound(new
-                {
-                    title = "Devices not found!",
-                    status = 404,
-                    message = ex.Message,
-                });
             }
             catch (Exception ex)
             {
@@ -254,7 +220,6 @@ namespace Server.Controllers
             }
 
         }
-
        
 
         /// <summary>
