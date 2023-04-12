@@ -57,6 +57,7 @@ import { AllDevicesComponent } from "./components/prosumers/devices/all-devices/
 import { FutureComponent } from "./components/weather/future/future.component";
 import { DsoOneProsumerPageComponent } from "./pages/dso/dso-one-prosumer-page/dso-one-prosumer-page.component";
 import { TodayProductionComponent } from "./components/dso/meter-prosumer/today-production/today-production.component";
+import { AllDevicesDsoComponent } from './components/dso/all-devices-dso/all-devices-dso.component';
 
 
 @NgModule({
@@ -118,7 +119,8 @@ import { TodayProductionComponent } from "./components/dso/meter-prosumer/today-
   DsoOneProsumerPageComponent,
   TodayProductionComponent,
   TodayConsumptionComponent,
-  ResetPasswordPageComponent
+  ResetPasswordPageComponent,
+  AllDevicesDsoComponent
 
   ],
   imports: [

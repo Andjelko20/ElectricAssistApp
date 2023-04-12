@@ -142,4 +142,11 @@ li a {
     outline: none;
     background-color: #e0e0e0;
   }
+
+  @media(min-width:768px)
+  {
+    table{
+        
+    }
+  }
   
