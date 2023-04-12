@@ -108,6 +108,9 @@ namespace Server.Services.Implementations
                 device.StandByKwh = (float)result.StandByKwh;
             }
 
+            if(device.Controlability == true)
+                device.Visibility = true;
+
             _context.Devices.Add(device);
             _context.SaveChanges();
             return device;
