@@ -5,7 +5,7 @@ import { Categories } from '../../../../utilities/categories'
 import { DevicesService } from 'src/app/services/devices.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 import { environment } from 'src/environments/environment';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 let typeID:number=0;
 @Component({
@@ -15,7 +15,7 @@ let typeID:number=0;
 })
 export class AddDeviceComponent implements OnInit{
 
-  
+  myForm: FormGroup;
   addDeviceRequest={
     userId: 0,
     deviceCategoryId: 0 ,
@@ -40,9 +40,14 @@ export class AddDeviceComponent implements OnInit{
     {id:Categories.ELECTRICITY_STOCK_ID,name:Categories.ELECTRICITY_STOCK_NAME}
   ]
 
-  constructor(private devicesService:DevicesService,private router:Router) {
+  constructor(private devicesService:DevicesService,private router:Router,private formBuilder: FormBuilder) {
     this.addDeviceRequest.deviceCategoryId=this.categories[0]?.id
-    
+    this.myForm = this.formBuilder.group({
+      nameform1: ['', Validators.required],
+       nameform2: ['', Validators.required],
+       nameform3: ['', Validators.required]
+      
+    });
    }
  
   ngOnInit(): void {

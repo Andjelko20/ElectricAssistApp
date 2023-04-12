@@ -158,7 +158,11 @@ li a {
     display: inline-block;
     position: relative;
 }
-
+#deviceCategoryId{
+    width: 40%;
+    margin-left: 121px;
+    margin-top: -35px;
+}
 @media (min-width: 768px) {
     .alldevices {
         top: 10%;
@@ -188,8 +192,13 @@ li a {
     .btn {
         background-color: #1C315E;
         border-color: #1C315E;
-        margin-top: -65px;
+        margin-top: -45px;
         font-size: 20px;
         width: 200px;
+    }
+    #deviceCategoryId{
+        width: 20%;
+        margin-left: 40%;
+        margin-top: -50px;
     }
 }

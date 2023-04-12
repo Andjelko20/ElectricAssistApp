@@ -46,6 +46,17 @@ button {
     width: 160px;
     background-color: #1C315E;
 }
+input.ng-invalid.ng-touched {
+
+    border: 1px solid red;    
+}
+input.ng-valid {
+    border: 1px solid green;
+    
+}
+input.ng-touched {
+    border: 1px solid blue;
+}
 @media(min-width: 768px)
 {
     .global{

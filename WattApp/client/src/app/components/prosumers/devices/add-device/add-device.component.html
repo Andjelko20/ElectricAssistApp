@@ -2,7 +2,7 @@
     <div class="global1">
         <h1>Add</h1>
 
-        <form form #myForm="ngForm" (ngSubmit)="addDevices()">
+        <form  #form="ngForm" (ngSubmit)="addDevices()" [formGroup]="myForm">
             <div class="form-row">
                 <div class="form-group col-md-6 ">
                     
@@ -36,18 +36,18 @@
                     
                     <br>
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addDeviceRequest.name" required>
+                    <input type="text" class="form-control" id="name" name="name" formControlName="nameform1" [(ngModel)]="addDeviceRequest.name" required>
                     <br>
                     <label for="energyInKwh">Energy in kWh</label>
-                    <input type="number" class="form-control" id="energyInKwh" name="energyInKwh" [(ngModel)]="addDeviceRequest.energyInKwh" required>
+                    <input type="number" class="form-control" id="energyInKwh" name="energyInKwh" formControlName="nameform2" [(ngModel)]="addDeviceRequest.energyInKwh" >
                     <br>
                     <label for="standByKwh">Stand by in kWh</label>
-                    <input type="number" class="form-control" id="standByKwh" name="standByKwh" [(ngModel)]="addDeviceRequest.standByKwh" required>
+                    <input type="number" class="form-control" id="standByKwh" name="standByKwh" formControlName="nameform3" [(ngModel)]="addDeviceRequest.standByKwh" >
                     <br>
                     
                 </div>
             </div>
-            <button  class="btn btn-primary" style="cursor: pointer;"  [disabled]="!myForm.valid">ADD</button>
+            <button  class="btn btn-primary" style="cursor: pointer;"  [disabled]="!form.valid">ADD</button>
         </form>
         
     </div>
