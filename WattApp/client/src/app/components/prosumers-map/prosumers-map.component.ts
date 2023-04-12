@@ -36,6 +36,20 @@ export class ProsumersMapComponent {
 			consumption:100
 	  	}
 	];*/
+	public legend=[
+		{
+			color:"green",
+			description:"Green zone - Consumption less than 350 kWh"
+		},
+		{
+			color:"blue",
+			description:"Blue zone - Consumption between 351 and 1600 kWh"
+		},
+		{
+			color:"red",
+			description:"Red zone - Consumption less than 350 kWh"
+		}
+	]
 	private createMarker(url:string):Leaflet.Icon<Leaflet.IconOptions>{
 		return Leaflet.icon({
 			iconUrl: url,
@@ -77,7 +91,7 @@ export class ProsumersMapComponent {
 		  maxZoom: 19,
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
 		
-		fetch(environment.serverUrl+"/api/prosumersDetails",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+		fetch(environment.serverUrl+"/api/ProsumersDetails",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 		.then(res=>res.json())
 		.then(res=>{
 			this.prosumers=res;

@@ -26,3 +26,12 @@
 .location:hover{
 	text-decoration: underline;
 }
+.legend-item{
+	display: flex;
+	gap:20px;
+	align-items: center;
+}
+.legend-square{
+	width: 10px;
+	height: 10px;
+}

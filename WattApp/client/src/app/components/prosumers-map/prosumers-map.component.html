@@ -1,3 +1,12 @@
+<div class="legend">
+	<h2>Legend</h2>
+	<div class="legend-body">
+		<div class="legend-item" *ngFor="let leg of legend">
+			<div class="legend-square" [style.backgroundColor]="leg.color"></div>
+			<div class="legend-description">{{leg.description}}</div>
+		</div>
+	</div>
+</div>
 <div id="container">
 	<div class="search-container">
 		<form (submit)="onSubmit()">

@@ -43,7 +43,7 @@ export class AuthService {
   }
   getAllProsumers():Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+'/api/prosumersDetails/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.get<any>(environment.serverUrl+'/api/ProsumersDetails/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   addUsers(addUserRequest:any):Observable<any>
   {

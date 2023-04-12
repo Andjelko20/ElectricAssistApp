@@ -3,6 +3,7 @@ using Server.Data;
 using Server.DTOs;
 using Server.DTOs.Responses;
 using Server.Models;
+using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
 using Server.Utilities;
 using System.Linq;
@@ -14,10 +15,12 @@ namespace Server.Services.Implementations
     {
         public readonly SqliteDbContext context;
         public readonly ILogger<UserService> logger;
-        public UserService(SqliteDbContext context, ILogger<UserService> logger)
+        public readonly IHistoryService historyService;
+        public UserService(SqliteDbContext context, ILogger<UserService> logger, IHistoryService historyService)
         {
             this.context = context;
             this.logger = logger;
+            this.historyService = historyService;
         }
         public int GetNumberOfPages(int itemsPerPage,Func<UserModel, bool> filter)
         {
@@ -94,19 +97,42 @@ namespace Server.Services.Implementations
             return context.Users.Include(user => user.Role).FirstOrDefaultAsync(user => user.Username==username || user.Email==username);
         }
 
-        public Task<List<object>> GetAllProsumers()
+        public async Task<List<object>> GetAllProsumers()
         {
-            return context
+            List<UserModel> allUsers=await context
                 .Users
                 .Where(user => user.RoleId == Roles.ProsumerId)
-                .Select(user =>(object)(new
-                {
-                    Id=user.Id,
-                    Name=user.Name,
-                    Latitude=user.Latitude,
-                    Longitude=user.Longitude
-                }))
                 .ToListAsync();
+            List<object> lista = new List<object>();
+            foreach(var user in allUsers)
+            {
+                //var cons = GetConsumption(user.Id);
+                lista.Add((object)new
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Latitude = user.Latitude,
+                    Longitude = user.Longitude//,
+                    //Consumption = cons
+                });
+            }
+            return lista;
+        }
+        private double GetConsumption(long userId) {
+
+            if (!context.Devices.Any(u => u.UserId == userId))
+                return 0;
+            /*
+            if (!_sqliteDb.Devices.Any(u => u.DeviceCategoryId == deviceCategoryId))
+                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
+            */
+
+            if (!context.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == 2))
+            {
+                return 0;
+            }
+
+            return historyService.GetUserEnergyConsumptionForPastMonth(userId, 2);
         }
     }
 }
