@@ -1050,7 +1050,9 @@ namespace Server.Data
                             DeviceModelId = 5,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 5.2f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1059,7 +1061,9 @@ namespace Server.Data
                             DeviceModelId = 6,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 3.4f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1068,7 +1072,9 @@ namespace Server.Data
                             DeviceModelId = 4,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 1.1f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1077,7 +1083,9 @@ namespace Server.Data
                             DeviceModelId = 5,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 5.2f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1086,7 +1094,9 @@ namespace Server.Data
                             DeviceModelId = 7,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 1.1f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1095,7 +1105,9 @@ namespace Server.Data
                             DeviceModelId = 8,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 1.13f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1104,7 +1116,9 @@ namespace Server.Data
                             DeviceModelId = 8,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 1.13f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1113,7 +1127,9 @@ namespace Server.Data
                             DeviceModelId = 9,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 1.45f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1122,7 +1138,9 @@ namespace Server.Data
                             DeviceModelId = 29,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.026f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1131,7 +1149,9 @@ namespace Server.Data
                             DeviceModelId = 9,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 1.45f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1140,7 +1160,9 @@ namespace Server.Data
                             DeviceModelId = 10,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 1.5f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1149,7 +1171,9 @@ namespace Server.Data
                             DeviceModelId = 11,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 1.45f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1158,7 +1182,9 @@ namespace Server.Data
                             DeviceModelId = 12,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 2.37f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1167,7 +1193,9 @@ namespace Server.Data
                             DeviceModelId = 13,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 2.185f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1176,7 +1204,9 @@ namespace Server.Data
                             DeviceModelId = 14,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 2.7f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1185,7 +1215,9 @@ namespace Server.Data
                             DeviceModelId = 15,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 2.55f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1194,7 +1226,9 @@ namespace Server.Data
                             DeviceModelId = 28,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.026f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1203,7 +1237,9 @@ namespace Server.Data
                             DeviceModelId = 16,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.03f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1212,7 +1248,9 @@ namespace Server.Data
                             DeviceModelId = 17,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.03f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1221,7 +1259,9 @@ namespace Server.Data
                             DeviceModelId = 16,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.03f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1230,7 +1270,9 @@ namespace Server.Data
                             DeviceModelId = 18,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.13f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1239,7 +1281,9 @@ namespace Server.Data
                             DeviceModelId = 19,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.075f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1248,7 +1292,9 @@ namespace Server.Data
                             DeviceModelId = 20,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.07f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1257,7 +1303,9 @@ namespace Server.Data
                             DeviceModelId = 21,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.1f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1266,7 +1314,9 @@ namespace Server.Data
                             DeviceModelId = 20,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.07f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1275,7 +1325,9 @@ namespace Server.Data
                             DeviceModelId = 23,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.024f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1284,7 +1336,9 @@ namespace Server.Data
                             DeviceModelId = 24,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.022f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1293,7 +1347,9 @@ namespace Server.Data
                             DeviceModelId = 25,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.025f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1302,7 +1358,9 @@ namespace Server.Data
                             DeviceModelId = 26,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.026f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1311,7 +1369,9 @@ namespace Server.Data
                             DeviceModelId = 27,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.026f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1320,7 +1380,9 @@ namespace Server.Data
                             DeviceModelId = 30,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.162f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1329,7 +1391,9 @@ namespace Server.Data
                             DeviceModelId = 36,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.28f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1338,7 +1402,9 @@ namespace Server.Data
                             DeviceModelId = 31,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.162f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1347,7 +1413,9 @@ namespace Server.Data
                             DeviceModelId = 32,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.162f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1356,7 +1424,9 @@ namespace Server.Data
                             DeviceModelId = 33,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.2768f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1365,7 +1435,9 @@ namespace Server.Data
                             DeviceModelId = 34,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.28f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1374,7 +1446,9 @@ namespace Server.Data
                             DeviceModelId = 35,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.28f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1383,7 +1457,9 @@ namespace Server.Data
                             DeviceModelId = 37,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 120f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1392,7 +1468,9 @@ namespace Server.Data
                             DeviceModelId = 38,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 50f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1401,7 +1479,9 @@ namespace Server.Data
                             DeviceModelId = 39,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 120f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1410,7 +1490,9 @@ namespace Server.Data
                             DeviceModelId = 40,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 50f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1419,7 +1501,9 @@ namespace Server.Data
                             DeviceModelId = 41,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1428,7 +1512,9 @@ namespace Server.Data
                             DeviceModelId = 41,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1437,7 +1523,9 @@ namespace Server.Data
                             DeviceModelId = 41,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1446,7 +1534,9 @@ namespace Server.Data
                             DeviceModelId = 42,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.36f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1455,7 +1545,9 @@ namespace Server.Data
                             DeviceModelId = 43,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.33f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1464,7 +1556,9 @@ namespace Server.Data
                             DeviceModelId = 44,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1473,7 +1567,9 @@ namespace Server.Data
                             DeviceModelId = 44,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1482,7 +1578,9 @@ namespace Server.Data
                             DeviceModelId = 44,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1491,7 +1589,9 @@ namespace Server.Data
                             DeviceModelId = 44,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1500,7 +1600,9 @@ namespace Server.Data
                             DeviceModelId = 44,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1509,7 +1611,9 @@ namespace Server.Data
                             DeviceModelId = 44,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1518,7 +1622,9 @@ namespace Server.Data
                             DeviceModelId = 44,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1527,7 +1633,9 @@ namespace Server.Data
                             DeviceModelId = 44,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1536,7 +1644,9 @@ namespace Server.Data
                             DeviceModelId = 45,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1545,7 +1655,9 @@ namespace Server.Data
                             DeviceModelId = 45,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1554,7 +1666,9 @@ namespace Server.Data
                             DeviceModelId = 45,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1563,7 +1677,9 @@ namespace Server.Data
                             DeviceModelId = 45,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1572,7 +1688,9 @@ namespace Server.Data
                             DeviceModelId = 45,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1581,7 +1699,9 @@ namespace Server.Data
                             DeviceModelId = 45,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1590,7 +1710,9 @@ namespace Server.Data
                             DeviceModelId = 45,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1599,7 +1721,9 @@ namespace Server.Data
                             DeviceModelId = 45,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1608,7 +1732,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1617,7 +1743,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1626,7 +1754,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1635,7 +1765,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1644,7 +1776,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1653,7 +1787,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1662,7 +1798,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1671,7 +1809,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1680,7 +1820,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1689,7 +1831,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1698,7 +1842,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1707,7 +1853,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1716,7 +1864,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1725,7 +1875,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1734,7 +1886,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
@@ -1743,7 +1897,9 @@ namespace Server.Data
                             DeviceModelId = 46,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 0.009f,
+                            StandByKwh = 0
                         }
                     });
                     context.SaveChanges();
