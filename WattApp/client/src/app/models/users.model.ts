@@ -29,6 +29,7 @@ export interface Prosumers{
     settlement:string;
     city:string;
     country: string;
+    address : string;
 }
 export interface Register{
     name: string;

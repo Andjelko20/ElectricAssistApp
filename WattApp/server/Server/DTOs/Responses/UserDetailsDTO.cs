@@ -28,6 +28,7 @@ namespace Server.DTOs.Responses
             this.City = user.Settlement.City.Name;
             this.Country = user.Settlement.City.Country.Name;
             this.Address = user.Address;
+            this.Email = user.Email;
         }
     }
 }

@@ -2,15 +2,17 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/weather-icons/1.2/css/weather-icons.min.css);
 
 .weatherCard {
-  width: 30%;
+  width: 300px;
   height: 150px;
   font-family: 'Open Sans';
   position: relative;
+  background-color: white;
+  border-radius: 30px;
 }
 .currentTemp {
-  width: 55%;
+  width: 160px;
   height: 150px;
-  background: #ffffff;
+  /* background: #ffffff; */
   position: absolute;
   top: 0;
   left: 0;
@@ -19,9 +21,9 @@
 
 }
 .currentWeather {
-  width: 42%;
-  height: 100%;
-  background: #2ab2ea;
+  width: 130px;
+  height: 150px;
+  /* background: #2ab2ea; */
   margin: 0;
   position: absolute;
   text-align: center;
@@ -46,7 +48,7 @@
   display: block;
 }
 .conditions {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   font-size: 30px;
   display: block;
   text-align: center;
@@ -56,12 +58,12 @@
   margin-top: -20px;
 }
 .info {
-  width: 100%;
+  width: 130px;
   height: 50px;
   position: absolute;
   bottom: 0;
   right: 0;
-  background: #2ab2ea;
+  /* background: #2ab2ea; */
   font-weight: 700;
   color: #000000;
   text-align: center;
@@ -170,3 +172,33 @@
 .toggle input:checked~.labels::before {
   opacity: 1;
 }
+
+/* @media (max-width: 768px) {
+  .weatherCard {
+  width: 100%;
+  height: auto;
+  }
+  .currentTemp {
+  width: 100%;
+  border-radius: 0;
+  }
+  .currentWeather {
+  width: 100%;
+  border-radius: 0;
+  }
+  .info {
+  width: 100%;
+  height: auto;
+  position: relative;
+  }
+  .rain,
+  .wind {
+  width: 100%;
+  position: relative;
+  top: 0;
+  right: 0;
+  }
+  .wind {
+  right: auto;
+  }
+  } */
