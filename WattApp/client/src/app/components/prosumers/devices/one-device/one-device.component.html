@@ -1,11 +1,5 @@
 
-
-<div class="main"  *ngIf="device">
-    <div class="device" >
-        <div class="back">
-            <a href="prosumer-devices-page"><img id="turnback" src="assets/img/turn-back.png" alt=""></a>
-        </div>
-        <div class="glavni">
+        <div class="glavni"  *ngIf="device">
             <div class="updatedelete">
                 <button class="btn btn-primary" (click)="delete(device.id)" >Delete</button>
                 <a class="btn btn-primary" [routerLink]='["/device-update/"+idDevice]' role="button">Update</a>
@@ -15,7 +9,10 @@
                     
                     <h2 >{{device.name}}</h2>
                     
-                    <a class="btn" href="#" role="button" id="startbutton">Start</a>
+                    <a class="btn"  id="startbutton" role="button" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)" >On</a>
+                    <a class="btn"  id="startbutton" role="button" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)" >Off</a>
+
+                   
                 </div>
                 <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
 
@@ -25,18 +22,4 @@
                     <p>Energy consumtion</p>
                 </div>
             </div>
-<!-- 
-            <div class="schcons">
-                <div class="schedular">
-                    <p id="pschedular">Schedular</p>
-                </div>
-                <div class="history">
-                    <p id="phistiry">Consumtion and Production Hostory</p>
-                </div>
-
-            </div> -->
-            <app-prosumer-footer></app-prosumer-footer>
         </div>
-        
-    </div>
-</div>

@@ -10,10 +10,13 @@ import { DevicesService } from 'src/app/services/devices.service';
 })
 export class OneDeviceComponent implements OnInit{
   
-  device?:ShowDevices;
+  device!:ShowDevices;
   idDevice?:number;
+  buttonOnoff:boolean=false;
   constructor(private router:Router,private deviceService:DevicesService,
-    private route:ActivatedRoute) { }
+    private route:ActivatedRoute) {
+     
+     }
 
     ngOnInit(): void {
       this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
@@ -34,23 +37,23 @@ export class OneDeviceComponent implements OnInit{
     }
   }
   
-  // turnOnOff(id: number) {
-  //   console.log(id);
-    
-  //     this.deviceService.turnOnOff(id).subscribe({
-  //       next:()=>{
-  //         const userIndex = this.devices.findIndex(device => device.id === id);
-  //         if(this.devices[userIndex].turnOn==false)
-  //         {
-  //           this.devices[userIndex].turnOn = true;
-  //         }   
-  //         else if(this.devices[userIndex].turnOn==true)
-  //         {
-  //           this.devices[userIndex].turnOn = false;
-  //         }
-  //       }
-  //     });
-  // }
+  turnOnOff(id: number) {
+    console.log(id);
+    this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
+      this.deviceService.turnOnOff(id).subscribe({
+        next:()=>{
+          
+          if(this.device.turnOn==false)
+          {
+            this.device.turnOn = true;
+          }   
+          else if(this.device.turnOn==true)
+          {
+            this.device.turnOn = false;
+          }
+        }
+      });
+  }
   
 
 }
