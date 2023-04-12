@@ -19,7 +19,7 @@ def uredjajiKategorije1(DeviceId):
         EndTime = StartTime + datetime.timedelta(hours=randHours, minutes=randMinutes, seconds=randSeconds)
         if StartTime >= time or EndTime>=time:
             break
-        conn.execute(f"INSERT INTO DeviceEnergyUsages (DeviceId, StartTime, EndTime, EnergyInKwh) VALUES ({DeviceId}, '{StartTime}', '{EndTime}', 1.33)")
+        conn.execute(f"INSERT INTO DeviceEnergyUsages (DeviceId, StartTime, EndTime) VALUES ({DeviceId}, '{StartTime}', '{EndTime}')")
 
 def uredjajiKategorije2(DeviceId):
     time = datetime.datetime.now().replace(microsecond=0)
@@ -36,7 +36,7 @@ def uredjajiKategorije2(DeviceId):
         EndTime = StartTime + datetime.timedelta(hours=randHoursEnd, minutes=randMinutes, seconds=randSeconds)
         if StartTime >= time or EndTime>=time:
             break
-        conn.execute(f"INSERT INTO DeviceEnergyUsages (DeviceId, StartTime, EndTime, EnergyInKwh) VALUES ({DeviceId}, '{StartTime}', '{EndTime}', 1.33)")
+        conn.execute(f"INSERT INTO DeviceEnergyUsages (DeviceId, StartTime, EndTime) VALUES ({DeviceId}, '{StartTime}', '{EndTime}')")
 
 
 def popunjavanjeTabeleDeviceEnergyUsage(DeviceId, DeviceCategoryId):
