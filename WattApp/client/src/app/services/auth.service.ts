@@ -82,7 +82,7 @@ export class AuthService {
     return this.http.put(environment.serverUrl+"/api/users/set_blocked_status/"+id,{Status: false },{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
-    return this.http.post<any>(environment.serverUrl +'/api/users/change_password', { oldPassword, newPassword },{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
+    return this.http.put<any>(environment.serverUrl +'/api/Users/change_password', { oldPassword, newPassword },{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
   }
   adminChangePasswordEmail(email:string): Observable<any> {
     return this.http.put<any>(environment.serverUrl +'/api/users/generate_reset_token_admin', {email:email},{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});

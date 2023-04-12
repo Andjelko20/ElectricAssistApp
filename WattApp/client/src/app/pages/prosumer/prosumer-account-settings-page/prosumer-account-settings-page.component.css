@@ -5,6 +5,22 @@
     position: absolute;
 }
 
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+input.ng-valid {
+    border: 1px solid green;
+}
+
+input.ng-touched {
+    border: 1px solid blue;
+}
+
+input.ng-invalid[notEqual] {
+    border: 1px solid red;
+}
+
 .centar {
     max-width: 100%;
     margin-top: 45px;
@@ -49,7 +65,27 @@ label {
 
 .changepass {
     border-top: 2px solid silver;
+    margin-top: -35px;
+}
+
+#oldpas {
     margin-top: 15px;
+}
+
+p.error-message {
+    height: 35px;
+    color: red;
+}
+
+div.error-message {
+    color: red;
+    min-height: 40px;
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (min-width: 768px) {
@@ -57,6 +93,7 @@ label {
         margin-top: 85px;
     }
     #turnback {
+        margin-left: 25px;
         width: 3%;
     }
     #imgdevice {
@@ -67,7 +104,7 @@ label {
         margin-right: 200px;
     }
     h1 {
-        font-size: 50px;
+        font-size: 30px;
     }
     label {
         font-size: 20px !important;
@@ -84,6 +121,6 @@ label {
         width: 80%;
     }
     .changepass {
-        margin-top: 15px;
+        margin-top: -30px;
     }
 }

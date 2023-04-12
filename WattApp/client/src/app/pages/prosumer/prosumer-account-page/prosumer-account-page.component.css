@@ -55,6 +55,7 @@ a {
     }
     #turnback {
         width: 3%;
+        margin-left: 15px;
     }
     #imgdevice {
         width: 10%;
@@ -64,7 +65,7 @@ a {
         margin-right: 200px;
     }
     h1 {
-        font-size: 50px;
+        font-size: 30px;
     }
     label {
         font-size: 20px !important;
@@ -82,7 +83,7 @@ a {
         list-style: none;
     }
     ul li {
-        width: 40%;
+        width: 100%;
         text-align: left;
         font-size: 25px;
     }

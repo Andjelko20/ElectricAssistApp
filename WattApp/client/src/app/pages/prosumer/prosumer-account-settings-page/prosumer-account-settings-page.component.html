@@ -9,7 +9,7 @@
             <div>
                 <img id="imgdevice" src="assets/img/account.png" alt="">
             </div>
-            <!-- <h1>{{updateUserDetail.name}}</h1> -->
+            <h1>{{name}}</h1>
 
             <form #form="ngForm" (ngSubmit)="upDateProsumer()">
                 <div class="form-group">
@@ -20,34 +20,42 @@
                     <label>Name</label>
                     <input type="text" class="form-control" id="id" name="name" [(ngModel)]="updateUserDetail.name ">
                 </div>
-                <div class="form-group">
-                    <label>Adress</label>
-                    <input type="text" class="form-control" id="id" name="address" [(ngModel)]="updateUserDetail.address ">
-                </div>
+
 
                 <div class="form-group">
                     <label>Email</label>
                     <input type="text" class="form-control" id="id" name="email" [(ngModel)]="updateUserDetail.email ">
                 </div>
+
                 <button type="submite" class="btn btn-primary">Save</button>
-                <button type="submite" class="btn btn-primary" id="giveupbutton" [routerLink]="['prosumer-account-page']">Cancel</button>
-                <!-- <div class="changepass">
-                    <div class="form-group" id="">
-                        <label for="exampleInputPassword1">Old Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <button type="submite" class="btn btn-primary" id="giveupbutton" [routerLink]="['/prosumer-account-page']">Cancel</button>
+
+
+
+            </form>
+            <form #form="ngForm" (ngSubmit)="updatePasswordProsumer()" [formGroup]="myForm">
+                <div class="changepass">
+                    <div class="form-group">
+                        <label for="oldpass" id="oldpas">Old Password</label>
+                        <input type="password" formControlName="nameform1" class="form-control" name="oldPassword" placeholder="Old password" [(ngModel)]="oldPassword">
+
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">New Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <input type="password" formControlName="nameform2" class="form-control" name="newPassword" placeholder="New password" [(ngModel)]="newPassword">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Repeat new Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <label for="exampleInputPassword1">Confirm Password</label>
+                        <input type="password" formControlName="nameform3" class="form-control" name="confirmPassword" placeholder="Confirm password" [(ngModel)]="confirmPassword">
                     </div>
-                    <button type="save" class="btn btn-primary">Save</button>
-                    <button type="giveup" class="btn btn-primary" id="giveupbutton">Cancel</button>
-                </div> -->
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" id="giveupbutton" [routerLink]="['/prosumer-account-page']">Cancel</button>
+                </div>
+
+
+
             </form>
+
         </div>
 
     </div>
