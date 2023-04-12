@@ -1039,7 +1039,9 @@ namespace Server.Data
                             DeviceModelId = 1, 
                             Visibility = true, 
                             Controlability = true, 
-                            TurnOn = false
+                            TurnOn = false,
+                            EnergyInKwh = 1.1f,
+                            StandByKwh = 0
                         },
                         new Device()
                         {
