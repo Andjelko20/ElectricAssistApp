@@ -1,10 +1,17 @@
-<div class="col-sm-9 ml-sm-auto col-md-11" style="border: 1px solid black;">
+<div class="col-sm-9 ml-sm-auto col-md-12">
     <div style="background-color: white;">
-        <div class="tabel-map" style="border: 1px solid black;margin: auto; width: 80%; padding: 2px;">
-            <span >Number of users: 243</span>
-            <button (click)="showComponent()" style="cursor: pointer; ">Tabelar View</button>
-            <button (click)="showComponent1()" style="cursor: pointer;">Map</button>
-        </div>
+        <div class="toggle-container">
+            <div class="toggle-buttons">
+              <input type="radio" (click)="showComponent()" name="toggle" id="dashboard-btn" checked >
+              <label for="dashboard-btn">Tabelar view</label>
+              <span class="divider"></span>
+              <input type="radio" (click)="showComponent1()" name="toggle" id="devices-btn">
+              <label for="devices-btn">Map view</label>
+            </div>
+            <div class="date-time">
+              <p>Number of users</p>
+            </div>
+          </div>
         <div class="tabel-body" *ngIf="componentShown">
             <app-all-prosumers></app-all-prosumers>
         </div>
@@ -13,4 +20,4 @@
         </div>
     </div>
 </div>
-<app-maps *ngIf="componentShown1"></app-maps>
+<!-- <app-maps *ngIf="componentShown1"></app-maps> -->

@@ -28,7 +28,6 @@ import { ConsumptionYearWattmeterComponent } from "./components/dso/meter/consum
 import { CurrentPowerWattmeterComponent } from "./components/dso/meter/current-power-wattmeter/current-power-wattmeter.component";
 import { NumberOfUsersMeterComponent } from "./components/dso/meter/number-of-users-meter/number-of-users-meter.component";
 import { OneProsumerComponent } from "./components/dso/one-prosumer/one-prosumer.component";
-import { ProducingConsumingComponent } from "./components/dso/producing-consuming/producing-consuming.component";
 import { MapInputComponent } from "./components/map-input/map-input.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { ProsumerHouseComponent } from "./components/prosumers/prosumer-meter/prosumer-house/prosumer-house.component";
@@ -62,6 +61,7 @@ import { ProsumerAccountPageComponent } from './pages/prosumer/prosumer-account-
 import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-account-settings-page/prosumer-account-settings-page.component';
 import { HomeDevicesComponent } from './components/prosumers/devices/home-devices/home-devices.component';
 import { OneDeviceComponent } from './components/prosumers/devices/one-device/one-device.component';
+import { AllDevicesDsoComponent } from './components/dso/all-devices-dso/all-devices-dso.component';
 
 
 @NgModule({
@@ -103,7 +103,6 @@ import { OneDeviceComponent } from './components/prosumers/devices/one-device/on
     TodayConsumptionComponent,
     MonthConsumptionComponent,
     MonthProductionComponent,
-    ProducingConsumingComponent,
 	AdminDsoComponent,
 	ProsumerTowerComponent,
 	ProsumerNavbarComponent,
@@ -128,7 +127,8 @@ import { OneDeviceComponent } from './components/prosumers/devices/one-device/on
   ProsumerAccountPageComponent,
   ProsumerAccountSettingsPageComponent,
   HomeDevicesComponent,
-  OneDeviceComponent
+  OneDeviceComponent,
+  AllDevicesDsoComponent
 
   ],
   imports: [

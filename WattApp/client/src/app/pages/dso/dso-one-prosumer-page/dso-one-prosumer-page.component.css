@@ -49,21 +49,17 @@
   display: flex;
   max-width: 100%;
   min-height: 10%;
-  max-height: 100%;
-  justify-content: space-between;
-  padding: 10px;
 }
 
 .card-group {
   display: flex;
   flex-direction: row;
-  min-height: 10%;
-  max-width: 70%;
+  width: 65%;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
+  border-radius: 5px;
   background-color: white;
-  padding: 15px;
 }
 
 .card-group .consumption {
@@ -71,7 +67,6 @@
   max-width: calc(25% - 15px);
   margin-right: 15px;
   margin-bottom: 15px;
-  padding: 15px;
   box-sizing: border-box;
 }
 
@@ -89,26 +84,19 @@
 }
 
 .information {
-  min-width: 30%;
-  max-width: 70%;
-  padding: 15px;
-  margin: 0 15px;
-}
-
-.producing-consuming{
-  min-width: 30%;
-  max-width: 100%;
-  left: 0;
-  padding: 15px;
-  margin: 0 15px;
+  width: 35%;
+  margin-left: 15px;
 }
 
 .today-future{
+  display: block;
   min-width: 30%;
   max-width: 100%;
-  left: 0;
+  left: auto;
+  right: auto;
   padding: 15px;
   margin: 0 15px;
+  text-align: center;
 }
 
 * {
@@ -186,4 +174,62 @@
 
 .off {
   color: red;
+}
+
+@media (max-width: 768px) {
+  .toggle-container {
+    flex-direction: column;
+  }
+
+  .toggle-buttons {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .toggle-buttons label {
+    font-size: 16px;
+  }
+
+  .toggle-buttons span.divider {
+    display: none;
+  }
+
+  .date-time {
+    margin-right: 0;
+    margin-top: 10px;
+    text-align: left;
+}
+
+  .container {
+  flex-direction: column;
+  align-items: center;
+  }
+
+  .card-group{
+    width: 100%;
+  }
+.card-group .consumption {
+flex: 1 0 calc(50% - 15px);
+max-width: calc(50% - 15px);
+}
+
+.information {
+min-width: 100%;
+max-width: 100%;
+margin: 10px 0;
+}
+
+.today-future {
+min-width: 100%;
+max-width: 100%;
+margin: 10px 0;
+}
+
+.search input[type="text"] {
+width: 100%;
+}
+
+.table {
+width: 100%;
+}
 }
