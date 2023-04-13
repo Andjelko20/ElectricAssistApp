@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { first } from 'rxjs';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
   selector: 'app-current-power-wattmeter',
   templateUrl: './current-power-wattmeter.component.html',
   styleUrls: ['./current-power-wattmeter.component.css']
 })
-export class CurrentPowerWattmeterComponent {
-
+export class CurrentPowerWattmeterComponent implements OnInit{
+  
+  value!:number;
   min: number = 0;
   max: number = 1000;
   markerConfig = {
@@ -30,5 +34,15 @@ thresholdConfig = {
 //   updateValue() {
 //     this.gaugeValue = Math.floor(Math.random() * 101);
 //   }
+constructor(private todayConsumption:HistoryPredictionService){
+
+}
+  async ngOnInit(): Promise<void> {
+  let token=new JwtToken();
+  
+  const result = await this.todayConsumption.getTotalConsumptionProductionCity("Electricity Consumer","Kragujevac").pipe(first()).toPromise();
+
+  this.value = result!;
+}
 
 }

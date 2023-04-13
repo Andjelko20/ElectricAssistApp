@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 import { Prosumers } from 'src/app/models/users.model'
 import { ActivatedRoute } from '@angular/router';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-one-prosumer',
@@ -13,10 +15,11 @@ export class OneProsumerComponent implements OnInit{
 
   id?:number;
   dso!: Prosumers;
-  constructor(private authService:AuthService,private route:ActivatedRoute) {
+  avg!: number;
+  constructor(private authService:AuthService,private route:ActivatedRoute,private todayConsumption:HistoryPredictionService) {
     
   }
-  ngOnInit(): void {
+  async ngOnInit(){
     let token=new JwtToken();
     this.id=token.data.id as number;
 
@@ -26,5 +29,9 @@ export class OneProsumerComponent implements OnInit{
     })
 
     console.log(this.id);
+    
+    const result = await this.todayConsumption.getTotalConsumptionProductionProsumer("Electricity Consumer",Number(this.route.snapshot.paramMap.get('id'))).pipe(first()).toPromise();
+  
+    this.avg = result!;
   }
 }

@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { first } from 'rxjs';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
   selector: 'app-prosumer-solar',
@@ -7,21 +10,21 @@ import { Component } from '@angular/core';
 })
 export class ProsumerSolarComponent {
 
-  
+  idProsumer?: number;
   
 enableThresholds: boolean = false;
-value: number = 5.96;
+value: number = 0.00;
 thick: number = 15;
 size: number =200;
 type: any = "full";
 cap: any = "round";
-label: string = "consumption now";
+label: string = "solar power now";
 prepend: any = '';
 append: any = 'kWh';
 min: number = 0;
 max: number = 10000;
-foregroundColor: string = '#80F86C';
-backgroundColor: string = '#80F86C';
+foregroundColor: string = '#8394FE';
+backgroundColor: string = '#8394FE';
 
 enableMarkers: boolean = false;
 
@@ -31,6 +34,7 @@ markerConfig = {
     "7000": { color: '#yellow', size: 8, label: '60', type: 'line'},
     "10000": { color: '#red', size: 8, label: '100', type: 'line'},
 }
+  
 
 onClick() {
   console.log(this.foregroundColor, this.backgroundColor);
@@ -54,11 +58,21 @@ showNewGauge = false;
 // }
 
 
+constructor(private todayConsumption:HistoryPredictionService){
 
-  ngOnInit(): void {
-    this.MeterChart();
-  }
-  MeterChart(){
-    
-  }
+}
+async ngOnInit() {
+  let token=new JwtToken();
+  this.idProsumer=token.data.id as number;
+  const result = await this.todayConsumption.getTotalConsumptionProductionProsumer("Electricity Producer",this.idProsumer).pipe(first()).toPromise();
+
+  this.value = result!;
+// this.todayConsumption.getTotalConsumptionProduction("Electricity Consumer").subscribe(result => {
+//   this.value = typeof result === 'number' ? result : 0;
+//   this.cdr.detectChanges();
+// });
+
+
+
+}
 }

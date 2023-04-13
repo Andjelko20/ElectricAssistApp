@@ -1039,7 +1039,7 @@ namespace Server.Data
                             DeviceModelId = 1, 
                             Visibility = true, 
                             Controlability = true, 
-                            TurnOn = true,
+                            TurnOn = false,
                             EnergyInKwh = 1.1f,
                             StandByKwh = 0
                         },
@@ -1050,7 +1050,7 @@ namespace Server.Data
                             DeviceModelId = 5,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = true,
+                            TurnOn = false,
                             EnergyInKwh = 5.2f,
                             StandByKwh = 0
                         },
@@ -1061,7 +1061,7 @@ namespace Server.Data
                             DeviceModelId = 6,
                             Visibility = true,
                             Controlability = true,
-                            TurnOn = true,
+                            TurnOn = false,
                             EnergyInKwh = 3.4f,
                             StandByKwh = 0
                         },
