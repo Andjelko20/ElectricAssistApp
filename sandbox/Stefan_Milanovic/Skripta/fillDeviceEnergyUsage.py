@@ -14,10 +14,11 @@ def uredjajiKategorije1(DeviceId):
     StartTime = datetime.datetime.now().replace(microsecond=0)
     StartTime = StartTime.replace(year=StartTime.year-1)
     time = datetime.datetime.now().replace(microsecond=0)
+    time = time + datetime.timedelta(days=7)
     for i in range(20000):
         StartTime = StartTime + datetime.timedelta(hours=randHours, minutes=randMinutes, seconds=randSeconds)
         EndTime = StartTime + datetime.timedelta(hours=randHours, minutes=randMinutes, seconds=randSeconds)
-        if StartTime >= time or EndTime>=time:
+        if StartTime >= time:
             break
         conn.execute(f"INSERT INTO DeviceEnergyUsages (DeviceId, StartTime, EndTime) VALUES ({DeviceId}, '{StartTime}', '{EndTime}')")
 
@@ -54,9 +55,11 @@ rows = cur.fetchall()
 #print("---{}---".format(len(rows)))
 for i in range(0,len(rows)):
     DeviceCategoryId = rows[i][2]
+    print(DeviceCategoryId)
     #print(rows[i]) 
     #print("DeviceId: {} - DeviceCatgoryId: {}".format(i+1, DeviceCategoryId))
-    popunjavanjeTabeleDeviceEnergyUsage(i+1, DeviceCategoryId) # i+1 se salje jer se uredjaji popunjavaju od id 1, ne od id 0
+    #popunjavanjeTabeleDeviceEnergyUsage(i+1, DeviceCategoryId) # i+1 se salje jer se uredjaji popunjavaju od id 1, ne od id 0
+    uredjajiKategorije1(i+1)
 
 conn.commit()
 conn.close()
