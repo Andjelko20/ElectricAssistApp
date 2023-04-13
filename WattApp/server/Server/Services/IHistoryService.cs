@@ -30,5 +30,6 @@ namespace Server.Services
         public List<DailyEnergyConsumptionPastMonth> CityHistoryForThePastWeek(long cityId, long deviceCategoryId);
         public List<DailyEnergyConsumptionPastMonth> CityHistoryForThePastMonth(long cityId, long deviceCategoryId);
         public List<DailyEnergyConsumptionPastMonth> SettlementHistoryForThePastMonth(long cityId, long deviceCategoryId);
+        public List<MonthlyEnergyConsumptionLastYear> CityHistoryForThePastYearByMonth(long cityId, long deviceCategoryId);
     }
 }
