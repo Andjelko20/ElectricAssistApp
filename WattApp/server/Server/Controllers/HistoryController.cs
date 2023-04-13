@@ -346,5 +346,111 @@ namespace Server.Controllers
             var PredictionForNextWeek = historyService.UserHistoryForThePastWeek(userId, deviceCategoryId);
             return Ok(PredictionForNextWeek);
         }
+
+        /// <summary>
+        /// Consumption/Production for all users from settlement for last week (by day)
+        /// </summary>
+        [HttpGet]
+        [Route("WeekByDay/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetSettlementHistoryForPastWeekByDay([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
+                return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.Users.Any(u => u.SettlementId == settlementId))
+                return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not have registered users." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+
+            return Ok(historyService.SettlementHistoryForThePastWeek(settlementId, deviceCategoryId));
+        }
+
+        /// <summary>
+        /// Consumption/Production for all users from city for last week (by day)
+        /// </summary>
+        [HttpGet]
+        [Route("WeekByDay/City/{cityId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetCityHistoryForPastWeekByDay([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+                return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            return Ok(historyService.CityHistoryForThePastWeek(cityId, deviceCategoryId));
+        }
+
+        /// <summary>
+        /// Consumption/Production for all users from settlement for last month (by day)
+        /// </summary>
+        [HttpGet]
+        [Route("MonthByDay/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetSettlementHistoryForPastMonthByDay([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
+                return NotFound(new { message = "City with the ID: " + settlementId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            return Ok(historyService.SettlementHistoryForThePastMonth(settlementId, deviceCategoryId));
+        }
+
+        /// <summary>
+        /// Consumption/Production for all users from city for last month (by day)
+        /// </summary>
+        [HttpGet]
+        [Route("MonthByDay/City/{cityId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetCityHistoryForPastMonthByDay([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+                return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            return Ok(historyService.CityHistoryForThePastMonth(cityId, deviceCategoryId));
+        }
+
+        /// <summary>
+        /// Consumption/Production for all users from city for last year (by month)
+        /// </summary>
+        [HttpGet]
+        [Route("YearByDay/City/{cityId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetCityHistoryForPastYearByMonth([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+                return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            return Ok(historyService.CityHistoryForThePastYearByMonth(cityId, deviceCategoryId));
+        }
+
+        /// <summary>
+        /// Consumption/Production for all users from settlement for last year (by month)
+        /// </summary>
+        [HttpGet]
+        [Route("YearByDay/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetSettlementHistoryForPastYearByMonth([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
+                return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            return Ok(historyService.SettlementHistoryForThePastYearByMonth(settlementId, deviceCategoryId));
+        }
     }
 }
