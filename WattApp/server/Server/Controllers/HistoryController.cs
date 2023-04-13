@@ -385,7 +385,7 @@ namespace Server.Controllers
             return Ok(historyService.CityHistoryForThePastWeek(cityId, deviceCategoryId));
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Consumption/Production for all users from settlement for last month (by day)
         /// </summary>
         [HttpGet]
@@ -400,7 +400,7 @@ namespace Server.Controllers
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
             return Ok(historyService.SettlementHistoryForThePastMonth(settlementId, deviceCategoryId));
-        }*/
+        }
 
         /// <summary>
         /// Consumption/Production for all users from city for last month (by day)
