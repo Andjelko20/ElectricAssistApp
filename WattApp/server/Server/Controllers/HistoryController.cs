@@ -346,5 +346,22 @@ namespace Server.Controllers
             var PredictionForNextWeek = historyService.UserHistoryForThePastWeek(userId, deviceCategoryId);
             return Ok(PredictionForNextWeek);
         }
+
+        /// <summary>
+        /// Consumption/Production for all users from settlement for last week (by day)
+        /// </summary>
+        [HttpGet]
+        [Route("WeekByDay/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetSettlementHistoryForPastWeekByDay([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
+                return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.Users.Any(u => u.SettlementId == settlementId))
+                return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not have registered users." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+
+            return Ok(historyService.SettlementHistoryForThePastWeek(settlementId, deviceCategoryId));
+        }
     }
 }

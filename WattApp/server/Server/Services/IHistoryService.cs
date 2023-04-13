@@ -26,5 +26,6 @@ namespace Server.Services
         // ZA PROSLEDJEN ID KORISNIKA POTROSNJA ZA GRAFIKE
         public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(long userId, long deviceCategoryId);
         public List<DailyEnergyConsumptionPastMonth> UserHistoryForThePastWeek(long userId, long deviceCategoryId);
+        public List<DailyEnergyConsumptionPastMonth> SettlementHistoryForThePastWeek(long settlementName, long deviceCategoryName);
     }
 }
