@@ -1,5 +1,6 @@
 #container{
 	display: flex;
+	gap:5px;
 }
 #map-wrapper{
 	width: 50vw;
@@ -26,6 +27,9 @@
 .location:hover{
 	text-decoration: underline;
 }
+.legend{
+	margin-bottom: 10px;
+}
 .legend-item{
 	display: flex;
 	gap:20px;
@@ -34,4 +38,14 @@
 .legend-square{
 	width: 10px;
 	height: 10px;
+}
+
+.search-container > form{
+	display: flex;
+	gap:20px;
+}
+
+.search-container > form > input[type="text"]{
+	flex-grow: 1;
+	border-radius: 5px;
 }

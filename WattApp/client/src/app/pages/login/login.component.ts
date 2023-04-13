@@ -34,6 +34,13 @@ export class LoginComponent implements OnInit {
 				window.location.reload();
 			}
 		});
+		document.onkeydown=(event)=>{
+			let keycode = event.keyCode || event.which;
+			if(keycode==13)
+			{
+				this.login();
+			}
+		};
 	}
 	
 	login(){
