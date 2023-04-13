@@ -36,6 +36,20 @@ export class ProsumersMapComponent {
 			consumption:100
 	  	}
 	];*/
+	public legend=[
+		{
+			color:"green",
+			description:"Green zone - Consumption less than 350 kWh"
+		},
+		{
+			color:"blue",
+			description:"Blue zone - Consumption between 351 and 1600 kWh"
+		},
+		{
+			color:"red",
+			description:"Red zone - Consumption more than 1601 kWh"
+		}
+	]
 	private createMarker(url:string):Leaflet.Icon<Leaflet.IconOptions>{
 		return Leaflet.icon({
 			iconUrl: url,
@@ -67,6 +81,8 @@ export class ProsumersMapComponent {
 		const greenIcon = this.createMarker('assets/marker-green.png');
 
 		const redIcon = this.createMarker('assets/marker-red.png');
+
+		const blueIcon=this.createMarker('assets/blue-marker.png');
 	
 		Leaflet.Marker.prototype.options.icon = icon;
 	  
@@ -77,17 +93,18 @@ export class ProsumersMapComponent {
 		  maxZoom: 19,
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
 		
-		fetch(environment.serverUrl+"/api/prosumersdetails",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+		fetch(environment.serverUrl+"/api/ProsumersDetails",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 		.then(res=>res.json())
 		.then(res=>{
 			this.prosumers=res;
-			let i=0;
 			for(let prosumer of this.prosumers){
-				i++;
+				if(prosumer.consumption==undefined)
+					prosumer.consumption=0;
 				let icon;
-				if(i%2==0)
-					icon=redIcon;
-				else icon=greenIcon;
+				if(prosumer.consumption<=350)
+					icon=greenIcon;
+				else if(prosumer.consumption>=1600) icon=redIcon;
+				else icon=blueIcon;
 				let marker=Leaflet.marker([prosumer.latitude,prosumer.longitude],{icon}).addTo(this.map);
 				marker.bindPopup(`<b>${prosumer.name}</b><br><a href="prosumer/${prosumer.id}">Details</a>`);
 			}

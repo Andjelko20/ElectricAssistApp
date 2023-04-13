@@ -81,5 +81,13 @@ namespace Server.Controllers
                 return Forbid();
             return Ok(new UserDetailsDTO(user));
         }
+
+        [HttpGet]
+        [Route("count")]
+        [Authorize(Roles = Roles.Dispatcher)]
+        public async Task<IActionResult> GetCount([FromRoute] long id)
+        {
+            return Ok(_sqliteDb.Users.ToList().Count(user => user.RoleId == Roles.ProsumerId));
+        }
     }
 }

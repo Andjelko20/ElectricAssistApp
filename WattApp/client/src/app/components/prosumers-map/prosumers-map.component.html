@@ -1,8 +1,17 @@
+<div class="legend">
+	<h2>Legend</h2>
+	<div class="legend-body">
+		<div class="legend-item" *ngFor="let leg of legend">
+			<div class="legend-square" [style.backgroundColor]="leg.color"></div>
+			<div class="legend-description">{{leg.description}}</div>
+		</div>
+	</div>
+</div>
 <div id="container">
 	<div class="search-container">
 		<form (submit)="onSubmit()">
-			<input type="text" name="search-input" [(ngModel)]="searchInput">
-			<button>Search</button>
+			<input type="text" name="search-input" class="form-control" [(ngModel)]="searchInput" placeholder="Enter location">
+			<button class="btn btn-primary">Search</button>
 		</form>
 		<div class="search-result">
 			<div *ngFor="let location of locations" (click)="changeFocus(location)" class="location">
