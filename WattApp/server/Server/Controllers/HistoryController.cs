@@ -384,5 +384,39 @@ namespace Server.Controllers
 
             return Ok(historyService.CityHistoryForThePastWeek(cityId, deviceCategoryId));
         }
+
+        /*/// <summary>
+        /// Consumption/Production for all users from settlement for last month (by day)
+        /// </summary>
+        [HttpGet]
+        [Route("MonthByDay/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetSettlementHistoryForPastMonthByDay([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
+                return NotFound(new { message = "City with the ID: " + settlementId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            return Ok(historyService.SettlementHistoryForThePastMonth(settlementId, deviceCategoryId));
+        }*/
+
+        /// <summary>
+        /// Consumption/Production for all users from city for last month (by day)
+        /// </summary>
+        [HttpGet]
+        [Route("MonthByDay/City/{cityId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetCityHistoryForPastMonthByDay([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+                return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            return Ok(historyService.CityHistoryForThePastMonth(cityId, deviceCategoryId));
+        }
     }
 }

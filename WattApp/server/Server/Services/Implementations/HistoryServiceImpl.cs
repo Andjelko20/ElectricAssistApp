@@ -439,7 +439,7 @@ namespace Server.Services.Implementations
                     dailyTotalUsage += deviceEnergyUsage * usageTime;
                 }
 
-                settlementHistory.Add(new DailyEnergyConsumptionPastMonth
+                settlementHistory.Insert(0, new DailyEnergyConsumptionPastMonth
                 {
                     Day = currentDay.ToString("dd.MM.yyyy"),
                     EnergyUsageResult = dailyTotalUsage
@@ -451,9 +451,8 @@ namespace Server.Services.Implementations
 
         public List<DailyEnergyConsumptionPastMonth> CityHistoryForThePastWeek(long cityId, long deviceCategoryId)
         {
-            Console.WriteLine("********************************************************** ID GRADA : " + cityId);
             var now = DateTime.Now;
-            var settlementHistory = new List<DailyEnergyConsumptionPastMonth>();
+            var cityHistory = new List<DailyEnergyConsumptionPastMonth>();
 
             // pronalazimo kategoriju uredjaja
             var deviceCategory = _context.DeviceCategories
@@ -507,14 +506,81 @@ namespace Server.Services.Implementations
                     dailyTotalUsage += deviceEnergyUsage * usageTime;
                 }
 
-                settlementHistory.Add(new DailyEnergyConsumptionPastMonth
+                cityHistory.Insert(0, new DailyEnergyConsumptionPastMonth
                 {
                     Day = currentDay.ToString("dd.MM.yyyy"),
                     EnergyUsageResult = dailyTotalUsage
                 });
             }
 
-            return settlementHistory;
+            return cityHistory;
+        }
+
+        public List<DailyEnergyConsumptionPastMonth> CityHistoryForThePastMonth(long cityId, long deviceCategoryId)
+        {
+            var now = DateTime.Now;
+            var cityHistory = new List<DailyEnergyConsumptionPastMonth>();
+
+            // pronalazimo kategoriju uredjaja
+            var deviceCategory = _context.DeviceCategories
+                                .FirstOrDefault(dc => dc.Id == deviceCategoryId);
+
+            // pronalazimo sve tipove uredjaja koji pripadaju toj kategoriji
+            var deviceTypeIds = _context.DeviceTypes
+                .Where(dt => dt.CategoryId == deviceCategory.Id)
+                .Select(dt => dt.Id)
+                .ToList();
+
+            // pronalazimo sve modele uredjaja koji pripadaju tim tipovima uredjaja
+            var deviceModelIds = _context.DeviceModels
+                .Where(dm => deviceTypeIds.Contains(dm.DeviceTypeId))
+                .Select(dm => dm.Id)
+                .ToList();
+
+            // pronalazimo sve uredjaje koji koriste te modele uredjaja i pripadaju datom naselju
+            var devices = _context.Devices
+                .Where(d => deviceModelIds.Contains(d.DeviceModelId) && _context.Users.Any(u => u.Id == d.UserId && u.Settlement.CityId == cityId))
+                .Select(d => d.Id)
+                .ToList();
+
+            for (int i = 0; i < 30; i++) //iteriramo kroz svaki dan u prethodnoj nedelji
+            {
+                var currentDay = now.AddDays(-i); //trenutni dan u iteraciji
+
+                // pronalazimo uredjaje te kategorije u tabeli DeviceEnergyUsages i to ako su radili tog dana
+                var usages = _context.DeviceEnergyUsages
+                    .Where(u => devices.Contains(u.DeviceId) && u.StartTime <= currentDay.AddDays(1) && (u.EndTime >= currentDay || u.EndTime == null))
+                    .ToList();
+
+                var dailyTotalUsage = 0.0;
+                foreach (var usage in usages)
+                {
+                    var usageStart = usage.StartTime;
+
+                    var usageEnd = usage.EndTime;
+                    if (usageEnd == null || usageEnd > currentDay.AddDays(1))
+                    {
+                        usageEnd = currentDay.AddDays(1);
+                    }
+
+                    var usageTime = (usageEnd - usageStart).TotalHours;
+                    var deviceEnergyUsage = _context.Devices
+                        .Include(d => d.DeviceModel)
+                        .Where(d => d.Id == usage.DeviceId)
+                        .Select(d => d.DeviceModel.EnergyKwh)
+                        .FirstOrDefault();
+
+                    dailyTotalUsage += deviceEnergyUsage * usageTime;
+                }
+
+                cityHistory.Insert(0, new DailyEnergyConsumptionPastMonth
+                {
+                    Day = currentDay.ToString("dd.MM.yyyy"),
+                    EnergyUsageResult = dailyTotalUsage
+                });
+            }
+
+            return cityHistory;
         }
     }
 }
