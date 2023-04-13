@@ -43,7 +43,7 @@ export class AuthService {
   }
   getAllProsumers():Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+'/api/prosumers/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.get<any>(environment.serverUrl+'/api/prosumersdetails/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   addUsers(addUserRequest:any):Observable<any>
   {
@@ -58,7 +58,7 @@ export class AuthService {
 
   getProsumer(id:number):Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+"/api/ProsumersDetails/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.get<any>(environment.serverUrl+"/api/prosumersDetails/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
   upDate(id:number,updateRequest:Users):Observable<Users>
@@ -98,5 +98,6 @@ export class AuthService {
   resetPasswordWithResetCode(resetKey:string,newPassword:string):Observable<any>{   
     return this.http.post(environment.serverUrl+'/api/authentication/reset_password',{resetKey:resetKey,newPassword:newPassword});
   }
+  
   
 }

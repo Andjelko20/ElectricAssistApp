@@ -77,7 +77,7 @@ export class ProsumersMapComponent {
 		  maxZoom: 19,
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
 		
-		fetch(environment.serverUrl+"/api/prosumers",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+		fetch(environment.serverUrl+"/api/prosumersdetails",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 		.then(res=>res.json())
 		.then(res=>{
 			this.prosumers=res;

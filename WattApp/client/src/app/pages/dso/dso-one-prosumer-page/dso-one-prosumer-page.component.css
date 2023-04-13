@@ -5,12 +5,14 @@
   align-items: center;
   background-color: white;
   padding: 10px;
+  border-bottom: 1px solid black;
 }
 
 .toggle-buttons {
   margin-left: 15px;
   display: flex;
   align-items: center;
+  
 }
 
 .toggle-buttons label {

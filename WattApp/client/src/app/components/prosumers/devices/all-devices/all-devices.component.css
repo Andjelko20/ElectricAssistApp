@@ -130,7 +130,6 @@ li a {
     background-size: cover;
     box-shadow: 5px dodgerblue;
     background-color: white;
-    padding: 5px;
     width: 30%;
     text-align: center;
     display: inline-block;
@@ -225,6 +224,7 @@ label {
     }
     #nodevices{
         margin-top: 10%;
+        font-size: 40px;
 
     }
 }
