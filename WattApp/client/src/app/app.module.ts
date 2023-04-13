@@ -60,6 +60,8 @@ import { DsoOneProsumerPageComponent } from "./pages/dso/dso-one-prosumer-page/d
 import { TodayProductionComponent } from "./components/dso/meter-prosumer/today-production/today-production.component";
 import { ProsumerAccountPageComponent } from './pages/prosumer/prosumer-account-page/prosumer-account-page.component';
 import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-account-settings-page/prosumer-account-settings-page.component';
+import { HomeDevicesComponent } from './components/prosumers/devices/home-devices/home-devices.component';
+import { OneDeviceComponent } from './components/prosumers/devices/one-device/one-device.component';
 
 
 @NgModule({
@@ -124,7 +126,9 @@ import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-
   TodayConsumptionComponent,
   ResetPasswordPageComponent,
   ProsumerAccountPageComponent,
-  ProsumerAccountSettingsPageComponent
+  ProsumerAccountSettingsPageComponent,
+  HomeDevicesComponent,
+  OneDeviceComponent
 
   ],
   imports: [

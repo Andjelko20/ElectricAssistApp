@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {  ShowDevices, updateDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
@@ -12,7 +13,7 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
 })
 export class UpdateDeviceComponent implements OnInit{
 
-
+  myForm: FormGroup;
   updateDevice:updateDevices={
     id: 0,
     userId: 0,
@@ -26,18 +27,29 @@ export class UpdateDeviceComponent implements OnInit{
   }
   devices:ShowDevices[] = [];
   idProsumer?:number
-  constructor(private devicesService:DevicesService,private router:Router,private route:ActivatedRoute) { }
+  constructor(private devicesService:DevicesService,private router:Router,private route:ActivatedRoute,private formBuilder: FormBuilder) {
+    this.myForm = this.formBuilder.group({
+      nameform1: ['', Validators.required],
+       nameform2: ['', Validators.required],
+       nameform3: ['', Validators.required]
+      
+    });
+   }
   ngOnInit(): void {
     
     let token=new JwtToken();
     this.idProsumer=token.data.id as number;
-
+    console.log(this.idProsumer);
+    
     
 
   this.devicesService.getDevice( Number(this.route.snapshot.paramMap.get('id')) )
         .subscribe({
           next:(response)=>{
+            console.log(this.idProsumer);
             this.updateDevice={
+             
+              
               id:Number(this.route.snapshot.paramMap.get('id')),
               userId: response.userId,
               name: response.name,
@@ -62,7 +74,7 @@ export class UpdateDeviceComponent implements OnInit{
     this.devicesService.upDateDevice(this.updateDevice)
     .subscribe({
       next:()=>{
-        this.router.navigate(['/devices-crud']);
+        this.router.navigate(['device/'+Number(this.route.snapshot.paramMap.get('id'))]);
       }
     });
   }
@@ -73,8 +85,6 @@ export class UpdateDeviceComponent implements OnInit{
   }
   visibilityOnOff()
   {
-    
-    
     this.updateDevice.visibility=!this.updateDevice.visibility
     console.log( this.updateDevice.visibility);
   }

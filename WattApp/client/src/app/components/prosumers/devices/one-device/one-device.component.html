@@ -1,0 +1,25 @@
+
+        <div class="glavni"  *ngIf="device">
+            <div class="updatedelete">
+                <button class="btn btn-primary" (click)="delete(device.id)" >Delete</button>
+                <a class="btn btn-primary" [routerLink]='["/device-update/"+idDevice]' role="button">Update</a>
+            </div>
+            <div class="deviceimg">
+                <div class="infoimg" >
+                    
+                    <h2 >{{device.name}}</h2>
+                    
+                    <a class="btn"  id="startbutton" role="button" style="background-color: greenyellow;" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)" >On</a>
+                    <a class="btn"  id="startbutton" role="button" style="background-color: red;"*ngIf="device.turnOn===false" (click)="turnOnOff(device.id)" >Off</a>
+
+                   
+                </div>
+                <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
+
+                <div class="info">
+                    <p>Session Started</p>
+                    <p>Duration</p>
+                    <p>Energy consumtion</p>
+                </div>
+            </div>
+        </div>

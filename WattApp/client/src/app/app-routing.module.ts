@@ -69,8 +69,8 @@ const routes: Routes = [
 	//PROSUMER
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
 	{path:'devices',component:ProsumerDevicesPageComponent,canActivate:[ProsumerGuard]},
+	{path:'device/:id',component:ProsumerDevicePageComponent,canActivate:[ProsumerGuard]},
 	{path:'reports',component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
-	{path:"devices-crud",component:AllDevicesComponent,canActivate:[ProsumerGuard]},
 	{path:"device-update/:id",component:UpdateDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"device-add",component:AddDeviceComponent,canActivate:[ProsumerGuard]},
 
