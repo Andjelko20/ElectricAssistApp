@@ -435,5 +435,22 @@ namespace Server.Controllers
 
             return Ok(historyService.CityHistoryForThePastYearByMonth(cityId, deviceCategoryId));
         }
+
+        /// <summary>
+        /// Consumption/Production for all users from settlement for last year (by month)
+        /// </summary>
+        [HttpGet]
+        [Route("YearByDay/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetSettlementHistoryForPastYearByMonth([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
+                return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            return Ok(historyService.SettlementHistoryForThePastYearByMonth(settlementId, deviceCategoryId));
+        }
     }
 }
