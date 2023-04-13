@@ -53,9 +53,8 @@
         <div class="adddevices">
             <h1 id="allh1">All devices 
             </h1>
-            <!-- <label for="deviceCategoryId " >Device Category</label> -->
-            <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" required>     
-                <option [value]='0'>Select Category</option>
+            <label for="deviceCategoryId">Filter by:</label>
+            <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>     
                 <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
             </select>
             
@@ -72,6 +71,6 @@
             </div>
         </div> 
         <div class="devices"  *ngIf="devices.length===0">
-            <h1>You don't have any devices</h1>
+            <h1 id="nodevices">You don't have any devices</h1>
         </div> 
  

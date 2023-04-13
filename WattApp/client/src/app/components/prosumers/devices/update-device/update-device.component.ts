@@ -85,8 +85,6 @@ export class UpdateDeviceComponent implements OnInit{
   }
   visibilityOnOff()
   {
-    
-    
     this.updateDevice.visibility=!this.updateDevice.visibility
     console.log( this.updateDevice.visibility);
   }

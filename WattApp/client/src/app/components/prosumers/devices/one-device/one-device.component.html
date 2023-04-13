@@ -9,8 +9,8 @@
                     
                     <h2 >{{device.name}}</h2>
                     
-                    <a class="btn"  id="startbutton" role="button" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)" >On</a>
-                    <a class="btn"  id="startbutton" role="button" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)" >Off</a>
+                    <a class="btn"  id="startbutton" role="button" style="background-color: greenyellow;" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)" >On</a>
+                    <a class="btn"  id="startbutton" role="button" style="background-color: red;"*ngIf="device.turnOn===false" (click)="turnOnOff(device.id)" >Off</a>
 
                    
                 </div>
