@@ -361,7 +361,28 @@ namespace Server.Controllers
             if (!_sqliteDb.Users.Any(u => u.SettlementId == settlementId))
                 return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not have registered users." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
 
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+
             return Ok(historyService.SettlementHistoryForThePastWeek(settlementId, deviceCategoryId));
+        }
+
+        /// <summary>
+        /// Consumption/Production for all users from city for last week (by day)
+        /// </summary>
+        [HttpGet]
+        [Route("WeekByDay/City/{cityId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetCityHistoryForPastWeekByDay([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+                return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            return Ok(historyService.CityHistoryForThePastWeek(cityId, deviceCategoryId));
         }
     }
 }
