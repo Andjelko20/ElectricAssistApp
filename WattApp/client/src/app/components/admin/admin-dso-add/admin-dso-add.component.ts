@@ -106,4 +106,8 @@ export class AdminDsoAddComponent implements OnInit{
 			}
 		})
 	}
+	settlementChanged(event:any){
+		this.addUserRequest.address=event.address;
+		this.addUserRequest.settlementId=event.settlement;
+	}
 }

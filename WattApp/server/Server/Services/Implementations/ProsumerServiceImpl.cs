@@ -67,7 +67,7 @@ namespace Server.Services.Implementations
 
             // pronalazimo sve uredjaje koji koriste te modele uredjaja
             var devices = _context.Devices
-                .Where(d => deviceModelIds.Contains(d.DeviceModelId))
+                .Where(d => deviceModelIds.Contains(d.DeviceModelId) && d.TurnOn==true)
                 .Select(d => d.Id)
                 .ToList();
 
@@ -253,7 +253,7 @@ namespace Server.Services.Implementations
 
             // pronalazimo sve uredjaje koji koriste te modele uredjaja i pripadaju datom korisniku
             var devices = _context.Devices
-                .Where(d => deviceModelIds.Contains(d.DeviceModelId) && d.UserId == userId)
+                .Where(d => deviceModelIds.Contains(d.DeviceModelId) && d.UserId == userId && d.TurnOn == true)
                 .Select(d => d.Id)
                 .ToList();
 

@@ -14,6 +14,8 @@ namespace Server.DTOs.Responses
         public string City { get; set; }
         public string Country { get; set; }
 
+        public string Address { get; set; }
+
         public UserDetailsDTO() { }
         public UserDetailsDTO(UserModel user)
         {
@@ -25,6 +27,8 @@ namespace Server.DTOs.Responses
             this.Settlement = user.Settlement.Name;
             this.City = user.Settlement.City.Name;
             this.Country = user.Settlement.City.Country.Name;
+            this.Address = user.Address;
+            this.Email = user.Email;
         }
     }
 }

@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { first } from 'rxjs';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
   selector: 'app-prosumer-tower',
@@ -8,9 +11,9 @@ import { Component } from '@angular/core';
 export class ProsumerTowerComponent {
 
   
-  
+  idProsumer?: number;
 enableThresholds: boolean = false;
-value: number = 5.96;
+value!: number ;
 thick: number = 15;
 size: number = 200;
 type: any = "full";
@@ -31,6 +34,7 @@ markerConfig = {
     "7000": { color: '#yellow', size: 8, label: '60', type: 'line'},
     "10000": { color: '#red', size: 8, label: '100', type: 'line'},
 }
+ 
 
 onClick() {
   console.log(this.foregroundColor, this.backgroundColor);
@@ -55,10 +59,15 @@ showNewGauge = false;
 
 
 
-  ngOnInit(): void {
-    this.MeterChart();
-  }
-  MeterChart(){
+constructor(private todayConsumption:HistoryPredictionService){
+
+}
+
+    async ngOnInit() {
+      let token=new JwtToken();
+      this.idProsumer=token.data.id as number;
+      const result = await this.todayConsumption.getTotalConsumptionProductionProsumer("Electricity Consumer",this.idProsumer).pipe(first()).toPromise();
     
-  }
+      this.value = result!;
+    }
 }

@@ -1,15 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dso-prosumers-page',
   templateUrl: './dso-prosumers-page.component.html',
   styleUrls: ['./dso-prosumers-page.component.css']
 })
-export class DsoProsumersPageComponent {
+export class DsoProsumersPageComponent implements OnInit {
+  ngOnInit(): void {
+	  fetch(environment.serverUrl+"/api/ProsumersDetails/count",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+	  .then(res=>res.json())
+	  .then(res=>this.numberOfProsumers=res);
+  }
 
   componentShown = true;
   componentShown1 = false;
-
+  numberOfProsumers=0;
   showComponent() {
     this.componentShown = true;
   

@@ -2,7 +2,7 @@ import { Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
-import { Users } from '../models/users.model';
+import { Prosumers, Users } from '../models/users.model';
 import { JwtToken } from '../utilities/jwt-token';
 @Injectable({
   providedIn: 'root'
@@ -43,7 +43,7 @@ export class AuthService {
   }
   getAllProsumers():Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+'/api/prosumers/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.get<any>(environment.serverUrl+'/api/ProsumersDetails/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   addUsers(addUserRequest:any):Observable<any>
   {
@@ -56,9 +56,22 @@ export class AuthService {
     return this.http.get<any>(environment.serverUrl+"/api/users/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
+  getProsumer(id:number):Observable<any>
+  {
+    return this.http.get<any>(environment.serverUrl+"/api/prosumersDetails/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
   upDate(id:number,updateRequest:Users):Observable<Users>
   {
     return this.http.put<Users>(environment.serverUrl+'/api/users/'+id,updateRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  getlogInUser():Observable<any>
+  {
+    return this.http.get<any>(environment.serverUrl+"/api/users/my_data",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  upDateProsumer(updateRequest:Prosumers):Observable<Prosumers>
+  {
+    return this.http.put<Prosumers>(environment.serverUrl+'/api/users',updateRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   delete(id:number):Observable<Users>
   {
@@ -74,7 +87,7 @@ export class AuthService {
     return this.http.put(environment.serverUrl+"/api/users/set_blocked_status/"+id,{Status: false },{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
-    return this.http.post<any>(environment.serverUrl +'/api/users/change_password', { oldPassword, newPassword },{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
+    return this.http.put<any>(environment.serverUrl +'/api/Users/change_password', { oldPassword, newPassword },{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
   }
   adminChangePasswordEmail(email:string): Observable<any> {
     return this.http.put<any>(environment.serverUrl +'/api/users/generate_reset_token_admin', {email:email},{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}});
@@ -85,5 +98,6 @@ export class AuthService {
   resetPasswordWithResetCode(resetKey:string,newPassword:string):Observable<any>{   
     return this.http.post(environment.serverUrl+'/api/authentication/reset_password',{resetKey:resetKey,newPassword:newPassword});
   }
+  
   
 }

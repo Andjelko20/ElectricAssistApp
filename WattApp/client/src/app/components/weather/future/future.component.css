@@ -1,15 +1,21 @@
 .weather-container {
+    width: 30%;
+    height: 150px;
     display: flex;
-    margin-top: 5px;
+    background: #ffffff;
+    margin-top: 10px;
     text-align: center;
+    justify-content: center;
+    border-radius: 30px;
   }
   
   .weather-container .flex-column {
     display: flex;
-    margin-left: 10px;
+    margin-left: 5%;
+    margin-top: 10px;
     flex-direction: column;
     align-items: center;
-  }
+    }
   
   .weather-container .small {
     font-size: 15px;
@@ -18,5 +24,18 @@
   .weather-container .image {
     width: 50px;
     height: 50px;
+  }
+
+  @media (max-width:768px) {
+    .weather-container {
+      width: 90%;
+      height: 150px;
+      display: flex;
+      background: #ffffff;
+      margin-top: 10px;
+      text-align: center;
+      justify-content: center;
+      border-radius: 30px;
+    }
   }
   

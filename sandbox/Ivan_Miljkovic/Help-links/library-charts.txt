@@ -9,3 +9,6 @@ npm i cors
 npm install chartjs-plugin-datalabels --save
 
 npm i ngx-gauge
+
+ng add @angular/material
+

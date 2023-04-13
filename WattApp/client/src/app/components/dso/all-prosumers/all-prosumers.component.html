@@ -1,50 +1,52 @@
-<div class="row" style="margin-bottom:15px; margin-left: 20px; margin-top: 10px;">
+
+<!--<div class="row" style="margin-bottom:15px; margin-left: 20px; margin-top: 10px;">
   <div class="col-md-2">
-      <input type="text" placeholder="Search by name" style="padding-bottom: 8px; padding-top: 5px; " [(ngModel)]="listFilter"/>
-      
+    <input id="search-input" type="text" placeholder="Search by name" [(ngModel)]="listFilter">
   </div>
+  
   <div class="col-md-2">
-      Filter by:
-      <select style="padding: 10px; text-align: center;">
-          <option value="option1">Aerodrom</option>
-          <option value="option2">Bresnica</option>
-          <option value="option3">Erdoglija</option>
-          <option value="option1">Bagremar</option>
-          <option value="option2">Belosevac</option>
-          <option value="option3">Pivara</option>
-        </select>
+    <select id="filter-select">
+      <option value="aerodrom">Aerodrom</option>
+      <option value="bresnica">Bresnica</option>
+      <option value="erdoglija">Erdoglija</option>
+      <option value="bagremar">Bagremar</option>
+      <option value="belosevac">Belosevac</option>
+      <option value="pivara">Pivara</option>
+    </select>
   </div>
-  <!-- <div class="col-md-2">
+  
+  <div class="col-md-2">
+  <div class="col-md-2">
       Sort by:
       <select style="padding: 10px; text-align: center;">
           <option value="option1">City</option>
           <option value="option2">Communities</option>
           <option value="option3">Adress</option>
         </select>
-  </div> -->
-</div>
+  </div> 
+</div> -->
 
-
-<table *ngIf="prosumers">
+<div class="table-responsive">
+<table *ngIf="prosumers" class="table">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>name</th>
-      <th>username</th>
+      <th scope="col">ID</th>
+      <th scope="col">name</th>
+      <th scope="col">username</th>
       <!-- <th>email</th> -->
-      <th>settlement</th>
-      <th>city</th>
-      <th>country</th>
-      <th>peak consumption</th>
-      <th>month consumption</th>
-      <th>year consumption</th>
+      <th scope="col">settlement</th>
+      <th scope="col">city</th>
+      <th scope="col">country</th>
+      <th scope="col">peak consumption</th>
+      <th scope="col">month consumption</th>
+      <th scope="col">year consumption</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let prosumer of filteredProsumers">
       
-      <td>{{prosumer.id}}</td>
-      <td>{{prosumer.name}}</td>
+      <td scope="row">{{prosumer.id}}</td>
+      <td><a [routerLink]='["/prosumer/",prosumer.id]'>{{prosumer.name}}</a></td>
       <td>{{prosumer.username}}</td>
       <!-- <td>{{prosumer.email}}</td> -->
       <td>{{prosumer.settlement}}</td>
@@ -56,3 +58,4 @@
     </tr>
   </tbody>
 </table>
+</div>
