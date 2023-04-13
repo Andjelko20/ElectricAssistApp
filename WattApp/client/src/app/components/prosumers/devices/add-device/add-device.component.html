@@ -2,52 +2,52 @@
     <div class="global1">
         <h1>Add</h1>
 
-        <form form #myForm="ngForm" (ngSubmit)="addDevices()">
+        <form  #form="ngForm" (ngSubmit)="addDevices()" [formGroup]="myForm">
             <div class="form-row">
                 <div class="form-group col-md-6 ">
                     
                 
-                    <label for="deviceCategoryId " >deviceCategoryId</label>
+                    <label for="deviceCategoryId " >Device Category</label>
                     <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)"    required>     
                         <option [value]='0'>Select Category</option>
                         <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
                     </select>
                    
                     <br>
-                    <label for="deviceTypeId " >deviceType</label>
+                    <label for="deviceTypeId " >Device Type</label>
                     <select id="deviceTypeId" class="form-control" name="deviceTypeId" (change)="onSelectType($event)"   required>     
                         <option [value]='0'>Select Type</option>
                         <option *ngFor="let type of types" [value]="type.id"  >{{type.name}}</option>
                     </select>
                     
                     <br>
-                    <label for="deviceBrandId " >deviceBrandId</label>
+                    <label for="deviceBrandId " >Device Brand</label>
                     <select id="deviceBrandId" class="form-control" name="deviceBrandId" (change)="onSelectBrand($event)"    required>     
                         <option [value]='0'>Select Brand</option>
                         <option *ngFor="let brand of brands" [value]="brand.id"  >{{brand.name}}</option>
                     </select>
                     
                     <br>
-                    <label for="deviceModelId " >deviceModelId</label>
+                    <label for="deviceModelId " >Device Model</label>
                     <select id="deviceModelId" class="form-control" name="deviceModelId" (change)="onSelectModel($event)" required>     
                         <option [value]='0'>Select Model</option>
-                        <option *ngFor="let model of models" [value]="model.id"  >{{model.mark}}</option>
+                        <option *ngFor="let model of models" [value]="model.id">{{model.mark}}</option>
                     </select>
                     
                     <br>
-                    <label for="name">name</label>
-                    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addDeviceRequest.name" required>
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" formControlName="nameform1" [(ngModel)]="addDeviceRequest.name" required>
                     <br>
-                    <label for="energyInKwh">energyInKwh</label>
-                    <input type="number" class="form-control" id="energyInKwh" name="energyInKwh" [(ngModel)]="addDeviceRequest.energyInKwh" required>
+                    <label for="energyInKwh">Energy in kWh</label>
+                    <input type="number" class="form-control" id="energyInKwh" name="energyInKwh" formControlName="nameform2" [(ngModel)]="addDeviceRequest.energyInKwh" >
                     <br>
-                    <label for="standByKwh">standByKwh</label>
-                    <input type="number" class="form-control" id="standByKwh" name="standByKwh" [(ngModel)]="addDeviceRequest.standByKwh" required>
+                    <label for="standByKwh">Stand by in kWh</label>
+                    <input type="number" class="form-control" id="standByKwh" name="standByKwh" formControlName="nameform3" [(ngModel)]="addDeviceRequest.standByKwh" >
                     <br>
                     
                 </div>
             </div>
-            <button  class="btn btn-primary" style="cursor: pointer;"  [disabled]="!myForm.valid">ADD</button>
+            <button  class="btn btn-primary" style="cursor: pointer;"  [disabled]="!form.valid">ADD</button>
         </form>
         
     </div>

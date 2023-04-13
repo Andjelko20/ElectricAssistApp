@@ -11,13 +11,18 @@ export class DevicesService {
 
   constructor(private http:HttpClient) { }
 
-  getAllDevices():Observable<any>
+  getAllDevices(pageNumber:number, pageSize:number,categoryId:number):Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+'/api/device',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12&categoryId='+categoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   getDevice(id:number):Observable<any>
   {
     return this.http.get<any>(environment.serverUrl+"/api/device/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  getDeviceProsumer(id:number,pageNumber:number,pageSize:number,category:number):Observable<any>
+  {
+    return this.http.get<any>(environment.serverUrl+"/api/Device/devices"+id+"?pageNumber="+pageNumber+"&pageSize="+pageSize+"&categoryId="+category,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   addDevices(addDeviceRequest:any):Observable<any>
   {

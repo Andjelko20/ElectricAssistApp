@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { first } from 'rxjs';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
   selector: 'app-consumption-month-wattmeter',
   templateUrl: './consumption-month-wattmeter.component.html',
   styleUrls: ['./consumption-month-wattmeter.component.css']
 })
-export class ConsumptionMonthWattmeterComponent {
-
+export class ConsumptionMonthWattmeterComponent implements OnInit {
+  value!: number;
   min: number = 0;
   max: number = 1000;
   markerConfig = {
@@ -25,4 +28,14 @@ export class ConsumptionMonthWattmeterComponent {
     '400': { color: 'orange', "bgOpacity": 0.2 },
     '750': { color: 'red', "bgOpacity": 0.2 }
   };
+  constructor(private todayConsumption:HistoryPredictionService){
+
+  }
+    async ngOnInit(): Promise<void> {
+    let token=new JwtToken();
+    
+    const result = await this.todayConsumption.getTotalConsumptionProductionCity("Electricity Producer","Kragujevac").pipe(first()).toPromise();
+  
+    this.value = result!;
+  }
 }

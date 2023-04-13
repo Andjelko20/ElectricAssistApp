@@ -6,7 +6,7 @@
   padding: 10px;
   border-radius: 5px;
   font-size: 24px;
-  max-width: 100%;
+  width: 100%;
 }
 
 .prosumer-info > .info-cell:not(:last-child) {

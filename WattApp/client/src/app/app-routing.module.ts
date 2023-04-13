@@ -22,7 +22,6 @@ import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-
 import { ProsumerDevicesPageComponent } from './pages/prosumer/prosumer-devices-page/prosumer-devices-page.component';
 import { ProsumerReportsPageComponent } from './pages/prosumer/prosumer-reports-page/prosumer-reports-page.component';
 import { OneProsumerComponent } from './components/dso/one-prosumer/one-prosumer.component';
-import { ProducingConsumingComponent } from './components/dso/producing-consuming/producing-consuming.component';
 import { TodayComponent } from './components/weather/today/today.component';
 import { ProsumerDevicePageComponent } from './pages/prosumer/prosumer-device-page/prosumer-device-page.component';
 import { AllDevicesComponent } from './components/prosumers/devices/all-devices/all-devices.component';
@@ -30,26 +29,13 @@ import { UpdateDeviceComponent } from './components/prosumers/devices/update-dev
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
 import { FutureComponent } from './components/weather/future/future.component';
 import { DsoOneProsumerPageComponent } from './pages/dso/dso-one-prosumer-page/dso-one-prosumer-page.component';
+import { ProsumerAccountPageComponent } from './pages/prosumer/prosumer-account-page/prosumer-account-page.component';
+import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-account-settings-page/prosumer-account-settings-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
 	//login
 	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
-	/* //da li treba obrisati ovo
-	{path:'admindso',component:AdminDsoComponent,canActivate:[AuthenticatedGuard]},
-	{path:'admindsoadd',component:AdminDsoAddComponent,canActivate:[AuthenticatedGuard]},
-	{path:'admindsoupdate/:id',component:AdminDsoUpdateComponent,canActivate:[AuthenticatedGuard]},
-	//{path:'register',component:RegisterComponent},
-
-	//{path:'maps',component:MapsComponent},
-	//{path:'tower',component:ProsumerTowerComponent},
-	//{path:'solar',component:ProsumerSolarComponent},
-	//{path:'house',component:ProsumerHouseComponent},
-	//{path:'change-password',component:ChangePasswordComponent},
-	{path:'dsohome',component:DsoHomePageComponent,canActivate:[AuthenticatedGuard]},
-	{path:'dsoprosumer',component:DsoProsumersPageComponent,canActivate:[AuthenticatedGuard]},
-	//{path:'admin-prosumers-page',component:AdminProsumersPageComponent,canActivate:[AuthenticatedGuard]},
-	*/
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	
@@ -62,13 +48,13 @@ const routes: Routes = [
 	//DSO
 	{path:'',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard]},
-	{path:'prosumer',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
+	{path:'prosumer/:id',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prediction',component:DsoPredictionPageComponent,canActivate:[DispatcherGuard]},
 	//PROSUMER
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
 	{path:'devices',component:ProsumerDevicesPageComponent,canActivate:[ProsumerGuard]},
+	{path:'device/:id',component:ProsumerDevicePageComponent,canActivate:[ProsumerGuard]},
 	{path:'reports',component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
-	{path:"devices-crud",component:AllDevicesComponent,canActivate:[ProsumerGuard]},
 	{path:"device-update/:id",component:UpdateDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"device-add",component:AddDeviceComponent,canActivate:[ProsumerGuard]},
 
@@ -83,6 +69,8 @@ const routes: Routes = [
 	{path:'prosumer-devices-page',component:ProsumerDevicesPageComponent},
 	{path:'prosumer-device-page',component:ProsumerDevicePageComponent},
 	{path:'reset-password',component:ResetPasswordPageComponent},
+	{path:'prosumer-account-page',component:ProsumerAccountPageComponent},
+	{path:'prosumer-account-settings-page',component:ProsumerAccountSettingsPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	{path:"map-input",component:MapInputComponent},
 	{path:"future",component:TodayComponent},
