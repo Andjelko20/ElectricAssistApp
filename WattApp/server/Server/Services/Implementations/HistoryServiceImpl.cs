@@ -156,7 +156,9 @@ namespace Server.Services.Implementations
 
                 Results.Add(new DailyEnergyConsumptionPastMonth
                 {
-                    Day = date.ToString("dd.MM.yyyy"),
+                    Day = date.Day,
+                    Month = date.ToString("MMMM"),
+                    Year = date.Year,
                     EnergyUsageResult = EnergyUsage
                 });
             }
@@ -188,7 +190,9 @@ namespace Server.Services.Implementations
 
                 Results.Add(new DailyEnergyConsumptionPastMonth
                 {
-                    Day = date.ToString("dd.MM.yyyy"),
+                    Day = date.Day,
+                    Month = date.ToString("MMMM"),
+                    Year = date.Year,
                     EnergyUsageResult = EnergyUsage
                 });
             }
@@ -364,19 +368,23 @@ namespace Server.Services.Implementations
 
                     Results.Add(new DailyEnergyConsumptionPastMonth // klasa moze i za week
                     {
-                        Day = date.ToString("dd.MM.yyyy"),
+                        Day = date.Day,
+                        Month = date.ToString("MMMM"),
+                        Year = date.Year,
                         EnergyUsageResult = EnergyUsage
                     });
                 }
             }
 
-            var sumByDay = Results.GroupBy(r => r.Day)
-                                .Select(g => new DailyEnergyConsumptionPastMonth
-                                {
-                                    Day = g.Key,
-                                    EnergyUsageResult = g.Sum(d => d.EnergyUsageResult)
-                                })
-                                .ToList();
+            var sumByDay = Results.GroupBy(r => new { r.Day, r.Month, r.Year })
+                               .Select(g => new DailyEnergyConsumptionPastMonth
+                               {
+                                   Day = g.Key.Day,
+                                   Month = g.Key.Month,
+                                   Year = g.Key.Year,
+                                   EnergyUsageResult = g.Sum(d => d.EnergyUsageResult)
+                               })
+                               .ToList();
 
             return sumByDay;
         }
@@ -444,7 +452,9 @@ namespace Server.Services.Implementations
 
                 settlementHistory.Insert(0, new DailyEnergyConsumptionPastMonth
                 {
-                    Day = currentDay.ToString("dd.MM.yyyy"),
+                    Day = currentDay.Day,
+                    Month = currentDay.ToString("MMMM"),
+                    Year = currentDay.Year,
                     EnergyUsageResult = dailyTotalUsage
                 });
             }
@@ -511,7 +521,9 @@ namespace Server.Services.Implementations
 
                 cityHistory.Insert(0, new DailyEnergyConsumptionPastMonth
                 {
-                    Day = currentDay.ToString("dd.MM.yyyy"),
+                    Day = currentDay.Day,
+                    Month = currentDay.ToString("MMMM"),
+                    Year = currentDay.Year,
                     EnergyUsageResult = dailyTotalUsage
                 });
             }
@@ -582,7 +594,9 @@ namespace Server.Services.Implementations
 
                 settlementHistory.Insert(0, new DailyEnergyConsumptionPastMonth
                 {
-                    Day = currentDay.ToString("dd.MM.yyyy"),
+                    Day = currentDay.Day,
+                    Month = currentDay.ToString("MMMM"),
+                    Year = currentDay.Year,
                     EnergyUsageResult = dailyTotalUsage
                 });
             }
@@ -649,7 +663,9 @@ namespace Server.Services.Implementations
 
                 cityHistory.Insert(0, new DailyEnergyConsumptionPastMonth
                 {
-                    Day = currentDay.ToString("dd.MM.yyyy"),
+                    Day = currentDay.Day,
+                    Month = currentDay.ToString("MMMM"),
+                    Year = currentDay.Year,
                     EnergyUsageResult = dailyTotalUsage
                 });
             }
