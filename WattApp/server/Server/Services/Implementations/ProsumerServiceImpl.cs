@@ -44,18 +44,14 @@ namespace Server.Services.Implementations
             return TotalEnergyUsage;
         }*/
 
-        public double GetTotalConsumptionInTheMoment(string deviceCategoryName)
+        public double GetTotalConsumptionInTheMoment(long deviceCategoryId)
         {
             var now = DateTime.Now;
             var totalUsage = 0.0;
 
-            // pronalazimo kategoriju uredjaja
-            var deviceCategory = _context.DeviceCategories
-                                .FirstOrDefault(dc => EF.Functions.Like(dc.Name, $"%{deviceCategoryName}%"));
-
             // pronalazimo sve tipove uredjaja koji pripadaju toj kategoriji
             var deviceTypeIds = _context.DeviceTypes
-                .Where(dt => dt.CategoryId == deviceCategory.Id)
+                .Where(dt => dt.CategoryId == deviceCategoryId)
                 .Select(dt => dt.Id)
                 .ToList();
 
