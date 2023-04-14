@@ -63,6 +63,7 @@ import { HomeDevicesComponent } from './components/prosumers/devices/home-device
 import { OneDeviceComponent } from './components/prosumers/devices/one-device/one-device.component';
 import { AllDevicesDsoComponent } from './components/dso/all-devices-dso/all-devices-dso.component';
 import { TabelarViewComponent } from './components/dso/tabelar-view/tabelar-view.component';
+import { TodayDsoComponent } from './components/weather/today-dso/today-dso.component';
 
 
 @NgModule({
@@ -130,7 +131,8 @@ import { TabelarViewComponent } from './components/dso/tabelar-view/tabelar-view
   HomeDevicesComponent,
   OneDeviceComponent,
   AllDevicesDsoComponent,
-  TabelarViewComponent
+  TabelarViewComponent,
+  TodayDsoComponent
 
   ],
   imports: [
