@@ -8,11 +8,11 @@ namespace Server.Services
         public double GetTotalConsumptionInTheMoment(long deviceCategoryName);
         public double GetTotalNumberOfDevicesInTheCity(long deviceCategoryId, long cityId);
         public double GetTotalNumberOfDevicesInTheSettlement(long deviceCategoryId, long cityId, long settlementId);
-        public double GetTotalConsumptionInTheMomentForSettlement(string deviceCategoryName, string settlementName);
-        public double GetTotalConsumptionInTheMomentForCity(string deviceCategoryName, string cityName);
-        public double GetTotalConsumptionInTheMomentForOneProsumer(string deviceCategoryName, long userId);
-        public double GetAverageConsumptionInTheMomentForSettlement(string settlementName, double totalEnergyUsage);
-        public double GetAverageConsumptionInTheMomentForCity(string settlementName, double totalEnergyUsage);
+        public double GetTotalConsumptionInTheMomentForSettlement(long deviceCategoryId, long settlementId);
+        public double GetTotalConsumptionInTheMomentForCity(long deviceCategoryId, long cityId);
+        public double GetTotalConsumptionInTheMomentForOneProsumer(long deviceCategoryId, long userId);
+        public double GetAverageConsumptionInTheMomentForSettlement(long settlementId, double totalEnergyUsage);
+        public double GetAverageConsumptionInTheMomentForCity(long settlementName, double totalEnergyUsage);
         public double GetAverageConsumptionProductionInTheMomentForAllProsumers(double totalEnergyUsage);
     }
 }

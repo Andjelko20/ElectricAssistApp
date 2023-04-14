@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.Models;
+using System.Linq;
 
 namespace Server.Services.Implementations
 {
@@ -99,18 +100,14 @@ namespace Server.Services.Implementations
             return totalUsage;
         }
 
-        public double GetTotalConsumptionInTheMomentForSettlement(string deviceCategoryName, string settlementName)
+        public double GetTotalConsumptionInTheMomentForSettlement(long deviceCategoryId, long settlementId)
         {
             var now = DateTime.Now;
             var totalUsage = 0.0;
 
-            // pronalazimo kategoriju uredjaja
-            var deviceCategory = _context.DeviceCategories
-                                .FirstOrDefault(dc => EF.Functions.Like(dc.Name, $"%{deviceCategoryName}%"));
-
             // pronalazimo sve tipove uredjaja koji pripadaju toj kategoriji
             var deviceTypeIds = _context.DeviceTypes
-                .Where(dt => dt.CategoryId == deviceCategory.Id)
+                .Where(dt => dt.CategoryId == deviceCategoryId)
                 .Select(dt => dt.Id)
                 .ToList();
 
@@ -125,12 +122,6 @@ namespace Server.Services.Implementations
                 .Where(d => deviceModelIds.Contains(d.DeviceModelId))
                 .Select(d => d.Id)
                 .ToList();
-
-            // pronalazimo ID naselja iz tabele Settlements, preko imena naselja
-            var settlementId = _context.Settlements
-                .Where(s => EF.Functions.Like(s.Name, $"%{settlementName}%"))
-                .Select(s => s.Id)
-                .FirstOrDefault();
 
             // pronalazimo uredjaje te kategorije u tabeli DeviceEnergyUsages i to ako trenutno rade
             var usages = _context.DeviceEnergyUsages
@@ -166,18 +157,14 @@ namespace Server.Services.Implementations
             return totalUsage;
         }
 
-        public double GetTotalConsumptionInTheMomentForCity(string deviceCategoryName, string cityName)
+        public double GetTotalConsumptionInTheMomentForCity(long deviceCategoryId, long cityId)
         {
             var now = DateTime.Now;
             var totalUsage = 0.0;
 
-            // pronalazimo kategoriju uredjaja
-            var deviceCategory = _context.DeviceCategories
-                                .FirstOrDefault(dc => EF.Functions.Like(dc.Name, $"%{deviceCategoryName}%"));
-
             // pronalazimo sve tipove uredjaja koji pripadaju toj kategoriji
             var deviceTypeIds = _context.DeviceTypes
-                .Where(dt => dt.CategoryId == deviceCategory.Id)
+                .Where(dt => dt.CategoryId == deviceCategoryId)
                 .Select(dt => dt.Id)
                 .ToList();
 
@@ -192,12 +179,6 @@ namespace Server.Services.Implementations
                 .Where(d => deviceModelIds.Contains(d.DeviceModelId))
                 .Select(d => d.Id)
                 .ToList();
-
-            // pronalazimo ID grada iz tabele Cities, preko imena grada
-            var cityId = _context.Cities
-                .Where(c => EF.Functions.Like(c.Name, $"%{cityName}%"))
-                .Select(c => c.Id)
-                .FirstOrDefault();
 
             // pronalazimo uredjaje te kategorije u tabeli DeviceEnergyUsages i to ako trenutno rade
             var usages = _context.DeviceEnergyUsages
@@ -226,18 +207,14 @@ namespace Server.Services.Implementations
             return totalUsage;
         }
 
-        public double GetTotalConsumptionInTheMomentForOneProsumer(string deviceCategoryName, long userId)
+        public double GetTotalConsumptionInTheMomentForOneProsumer(long deviceCategoryId, long userId)
         {
             var now = DateTime.Now;
             var totalUsage = 0.0;
 
-            // pronalazimo kategoriju uredjaja
-            var deviceCategory = _context.DeviceCategories
-                                .FirstOrDefault(dc => EF.Functions.Like(dc.Name, $"%{deviceCategoryName}%"));
-
             // pronalazimo sve tipove uredjaja koji pripadaju toj kategoriji
             var deviceTypeIds = _context.DeviceTypes
-                .Where(dt => dt.CategoryId == deviceCategory.Id)
+                .Where(dt => dt.CategoryId == deviceCategoryId)
                 .Select(dt => dt.Id)
                 .ToList();
 
@@ -280,10 +257,10 @@ namespace Server.Services.Implementations
             return totalUsage;
         }
 
-        public double GetNumberOfProsumersFromSettlement(string settlementName)
+        public double GetNumberOfProsumersFromSettlement(long settlementId)
         {
             var totalPopulation = _context.Users
-                                    .Where(u => u.Settlement.Name.Contains(settlementName))
+                                    .Where(u => u.SettlementId == settlementId)
                                     .Count();
 
             Console.WriteLine("++++++++++++++++Broj usera: " + totalPopulation);
@@ -291,10 +268,10 @@ namespace Server.Services.Implementations
             return totalPopulation;
         }
 
-        public double GetNumberOfProsumersFromCity(string cityName)
+        public double GetNumberOfProsumersFromCity(long cityId)
         {
             var totalPopulation = _context.Users
-                                        .Where(u => u.Settlement.City.Name.Contains(cityName))
+                                        .Where(u => u.Settlement.City.Id == cityId)
                                         .Count();
 
             Console.WriteLine("++++++++++++++++Broj usera city: " + totalPopulation);
@@ -302,17 +279,17 @@ namespace Server.Services.Implementations
             return totalPopulation;
         }
 
-        public double GetAverageConsumptionInTheMomentForSettlement(string settlementName, double totalEnergyUsage)
+        public double GetAverageConsumptionInTheMomentForSettlement(long settlementId, double totalEnergyUsage)
         {
-            var totalPopulation = GetNumberOfProsumersFromSettlement(settlementName);
+            var totalPopulation = GetNumberOfProsumersFromSettlement(settlementId);
             if (totalPopulation == 0)
                 return 0;
             return totalEnergyUsage / totalPopulation;
         }
 
-        public double GetAverageConsumptionInTheMomentForCity(string settlementName, double totalEnergyUsage)
+        public double GetAverageConsumptionInTheMomentForCity(long settlementId, double totalEnergyUsage)
         {
-            var totalPopulation = GetNumberOfProsumersFromCity(settlementName);
+            var totalPopulation = GetNumberOfProsumersFromCity(settlementId);
             if (totalPopulation == 0)
                 return 0;
             return totalEnergyUsage / totalPopulation;
