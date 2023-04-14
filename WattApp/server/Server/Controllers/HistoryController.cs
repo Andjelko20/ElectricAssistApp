@@ -423,7 +423,7 @@ namespace Server.Controllers
         /// Consumption/Production for all users from city for last year (by month)
         /// </summary>
         [HttpGet]
-        [Route("YearByDay/City/{cityId:long}/{deviceCategoryId:long}")]
+        [Route("YearByMonth/City/{cityId:long}/{deviceCategoryId:long}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetCityHistoryForPastYearByMonth([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
         {
@@ -440,7 +440,7 @@ namespace Server.Controllers
         /// Consumption/Production for all users from settlement for last year (by month)
         /// </summary>
         [HttpGet]
-        [Route("YearByDay/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
+        [Route("YearByMonth/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetSettlementHistoryForPastYearByMonth([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
         {

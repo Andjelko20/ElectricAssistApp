@@ -103,9 +103,10 @@ namespace Server.Services.Implementations
                 double UsageInKwh = 0.0;
                 if (UsageList == null)
                 {
-                    Results.Add(new MonthlyEnergyConsumptionLastYear
+                    Results.Insert(0, new MonthlyEnergyConsumptionLastYear
                     {
-                        Month = StartDate.ToString("MMMM yyyy"),
+                        Month = StartDate.ToString("MMMM"),
+                        Year = StartDate.Year,
                         EnergyUsageResult = UsageInKwh
                     });
                 }
@@ -122,7 +123,8 @@ namespace Server.Services.Implementations
                     //Console.WriteLine("****** " + StartDate + " - " + UsageInKwh);
                     Results.Insert(0, new MonthlyEnergyConsumptionLastYear
                     {
-                        Month = StartDate.ToString("MMMM yyyy"),
+                        Month = StartDate.ToString("MMMM"),
+                        Year = StartDate.Year,
                         EnergyUsageResult = UsageInKwh
                     });
                 }
@@ -318,7 +320,8 @@ namespace Server.Services.Implementations
 
                 monthlyUsage.Add(new MonthlyEnergyConsumptionLastYear
                 {
-                    Month = monthStartDate.ToString("MMMM yyyy"),
+                    Month = monthStartDate.ToString("MMMM"),
+                    Year = monthStartDate.Year,
                     EnergyUsageResult = monthlyEnergyUsage
                 });
             }
@@ -715,7 +718,8 @@ namespace Server.Services.Implementations
 
                 monthlyEnergyConsumption.Insert(0, new MonthlyEnergyConsumptionLastYear
                 {
-                    Month = currentMonth.ToString("MMM yyyy"),
+                    Month = currentMonth.ToString("MMMM"),
+                    Year = currentMonth.Year,
                     EnergyUsageResult = monthlyTotalUsage
                 });
             }
@@ -786,7 +790,8 @@ namespace Server.Services.Implementations
 
                 monthlyEnergyConsumption.Insert(0, new MonthlyEnergyConsumptionLastYear
                 {
-                    Month = currentMonth.ToString("MM.yyyy"),
+                    Month = currentMonth.ToString("MMMM"),
+                    Year = currentMonth.Year,
                     EnergyUsageResult = monthlyTotalUsage
                 });
             }
