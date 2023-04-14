@@ -97,7 +97,7 @@ namespace Server.Services.Implementations
                 totalUsage += deviceEnergyUsage * usageTime;
             }
 
-            return totalUsage;
+            return Math.Round(totalUsage,2 );
         }
 
         public double GetTotalConsumptionInTheMomentForSettlement(long deviceCategoryId, long settlementId)
@@ -154,7 +154,7 @@ namespace Server.Services.Implementations
                 totalUsage += deviceEnergyUsage * usageTime;
             }
 
-            return totalUsage;
+            return Math.Round(totalUsage, 2);
         }
 
         public double GetTotalConsumptionInTheMomentForCity(long deviceCategoryId, long cityId)
@@ -204,7 +204,7 @@ namespace Server.Services.Implementations
                 totalUsage += deviceEnergyUsage * usageTime;
             }
 
-            return totalUsage;
+            return Math.Round(totalUsage, 2);
         }
 
         public double GetTotalConsumptionInTheMomentForOneProsumer(long deviceCategoryId, long userId)
@@ -254,7 +254,7 @@ namespace Server.Services.Implementations
                 totalUsage += deviceEnergyUsage * usageTime;
             }
 
-            return totalUsage;
+            return Math.Round(totalUsage, 2);
         }
 
         public double GetNumberOfProsumersFromSettlement(long settlementId)
@@ -262,7 +262,7 @@ namespace Server.Services.Implementations
             var totalPopulation = _context.Users
                                     .Where(u => u.SettlementId == settlementId)
                                     .Count();
-
+             
             Console.WriteLine("++++++++++++++++Broj usera: " + totalPopulation);
 
             return totalPopulation;
@@ -284,7 +284,7 @@ namespace Server.Services.Implementations
             var totalPopulation = GetNumberOfProsumersFromSettlement(settlementId);
             if (totalPopulation == 0)
                 return 0;
-            return totalEnergyUsage / totalPopulation;
+            return Math.Round(totalEnergyUsage / totalPopulation, 2);
         }
 
         public double GetAverageConsumptionInTheMomentForCity(long settlementId, double totalEnergyUsage)
@@ -292,7 +292,7 @@ namespace Server.Services.Implementations
             var totalPopulation = GetNumberOfProsumersFromCity(settlementId);
             if (totalPopulation == 0)
                 return 0;
-            return totalEnergyUsage / totalPopulation;
+            return Math.Round(totalEnergyUsage / totalPopulation, 2);
         }
 
         public double GetAverageConsumptionProductionInTheMomentForAllProsumers(double totalEnergyUsage)
@@ -304,7 +304,7 @@ namespace Server.Services.Implementations
             if (totalPopulation == 0)
                 return 0;
 
-            return totalEnergyUsage / totalPopulation;
+            return Math.Round(totalEnergyUsage / totalPopulation, 2);
         }
 
         public double GetTotalNumberOfDevicesInTheCity(long deviceCategoryId, long cityId)

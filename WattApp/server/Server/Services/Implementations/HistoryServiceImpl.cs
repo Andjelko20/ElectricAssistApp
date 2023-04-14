@@ -76,10 +76,10 @@ namespace Server.Services.Implementations
             foreach (var item in deviceEnergyUsageLista)
             {
                 Hours = (item.EndTime - item.StartTime).TotalHours;
-                Consumption += (double)Math.Round(EnergyInKwh * Hours, 2);
+                Consumption += (double)(EnergyInKwh * Hours);
             }
 
-            return Consumption;
+            return Math.Round(Consumption, 2);
         }
 
         // za bar plot, istorija za godinu dana, prikaz po mesecima
@@ -125,7 +125,7 @@ namespace Server.Services.Implementations
                     {
                         Month = StartDate.ToString("MMMM"),
                         Year = StartDate.Year,
-                        EnergyUsageResult = UsageInKwh
+                        EnergyUsageResult = Math.Round(UsageInKwh, 2)
                     });
                 }
             }
@@ -159,7 +159,7 @@ namespace Server.Services.Implementations
                     Day = date.Day,
                     Month = date.ToString("MMMM"),
                     Year = date.Year,
-                    EnergyUsageResult = EnergyUsage
+                    EnergyUsageResult = Math.Round(EnergyUsage, 2)
                 });
             }
 
@@ -193,7 +193,7 @@ namespace Server.Services.Implementations
                     Day = date.Day,
                     Month = date.ToString("MMMM"),
                     Year = date.Year,
-                    EnergyUsageResult = EnergyUsage
+                    EnergyUsageResult = Math.Round(EnergyUsage, 2)
                 });
             }
 
@@ -281,7 +281,7 @@ namespace Server.Services.Implementations
                 }
             }
 
-            return totalEnergyConsumption;
+            return Math.Round(totalEnergyConsumption, 2);
         }
 
         // ZA PROSLEDJEN ID KORISNIKA POTROSNJA ZA GRAFIKE
@@ -326,7 +326,7 @@ namespace Server.Services.Implementations
                 {
                     Month = monthStartDate.ToString("MMMM"),
                     Year = monthStartDate.Year,
-                    EnergyUsageResult = monthlyEnergyUsage
+                    EnergyUsageResult = Math.Round(monthlyEnergyUsage, 2)
                 });
             }
 
@@ -371,7 +371,7 @@ namespace Server.Services.Implementations
                         Day = date.Day,
                         Month = date.ToString("MMMM"),
                         Year = date.Year,
-                        EnergyUsageResult = EnergyUsage
+                        EnergyUsageResult = Math.Round(EnergyUsage, 2)
                     });
                 }
             }
@@ -382,7 +382,7 @@ namespace Server.Services.Implementations
                                    Day = g.Key.Day,
                                    Month = g.Key.Month,
                                    Year = g.Key.Year,
-                                   EnergyUsageResult = g.Sum(d => d.EnergyUsageResult)
+                                   EnergyUsageResult = Math.Round(g.Sum(d => d.EnergyUsageResult), 2)
                                })
                                .ToList();
 
@@ -455,7 +455,7 @@ namespace Server.Services.Implementations
                     Day = currentDay.Day,
                     Month = currentDay.ToString("MMMM"),
                     Year = currentDay.Year,
-                    EnergyUsageResult = dailyTotalUsage
+                    EnergyUsageResult = Math.Round(dailyTotalUsage, 2)
                 });
             }
 
@@ -524,7 +524,7 @@ namespace Server.Services.Implementations
                     Day = currentDay.Day,
                     Month = currentDay.ToString("MMMM"),
                     Year = currentDay.Year,
-                    EnergyUsageResult = dailyTotalUsage
+                    EnergyUsageResult = Math.Round(dailyTotalUsage, 2)
                 });
             }
 
@@ -597,7 +597,7 @@ namespace Server.Services.Implementations
                     Day = currentDay.Day,
                     Month = currentDay.ToString("MMMM"),
                     Year = currentDay.Year,
-                    EnergyUsageResult = dailyTotalUsage
+                    EnergyUsageResult = Math.Round(dailyTotalUsage, 2)
                 });
             }
 
@@ -666,7 +666,7 @@ namespace Server.Services.Implementations
                     Day = currentDay.Day,
                     Month = currentDay.ToString("MMMM"),
                     Year = currentDay.Year,
-                    EnergyUsageResult = dailyTotalUsage
+                    EnergyUsageResult = Math.Round(dailyTotalUsage, 2)
                 });
             }
 
@@ -736,7 +736,7 @@ namespace Server.Services.Implementations
                 {
                     Month = currentMonth.ToString("MMMM"),
                     Year = currentMonth.Year,
-                    EnergyUsageResult = monthlyTotalUsage
+                    EnergyUsageResult = Math.Round(monthlyTotalUsage, 2)
                 });
             }
 
@@ -808,7 +808,7 @@ namespace Server.Services.Implementations
                 {
                     Month = currentMonth.ToString("MMMM"),
                     Year = currentMonth.Year,
-                    EnergyUsageResult = monthlyTotalUsage
+                    EnergyUsageResult = Math.Round(monthlyTotalUsage, 2)
                 });
             }
 

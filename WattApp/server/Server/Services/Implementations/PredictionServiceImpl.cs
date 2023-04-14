@@ -42,7 +42,7 @@ namespace Server.Services.Implementations
                     Day = date.Day,
                     Month = date.ToString("MMMM"),
                     Year = date.Year,
-                    EnergyUsageResult = EnergyUsage
+                    EnergyUsageResult = Math.Round(EnergyUsage, 2)
                 });
             }
 
@@ -90,7 +90,7 @@ namespace Server.Services.Implementations
                         Day = date.Day,
                         Month = date.ToString("MMMM"),
                         Year = date.Year,
-                        EnergyUsageResult = EnergyUsage
+                        EnergyUsageResult = Math.Round(EnergyUsage, 2)
                     });
                 }
             }
@@ -101,7 +101,7 @@ namespace Server.Services.Implementations
                                    Day = g.Key.Day,
                                    Month = g.Key.Month,
                                    Year = g.Key.Year,
-                                   EnergyUsageResult = g.Sum(d => d.EnergyUsageResult)
+                                   EnergyUsageResult = Math.Round(g.Sum(d => d.EnergyUsageResult), 2)
                                })
                                .ToList();
 
