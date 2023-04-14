@@ -54,30 +54,42 @@
         </div>
 
         <div class="history-charts">
+            <div class="toggle-container">
+                <div class="toggle-buttons">
+                  <input type="radio" (click)="showGraph()" name="toggle" id="dashboard-btn" checked >
+                  <label for="dashboard-btn">Graphical view</label>
+                  <span class="divider"></span>
+                  <input type="radio" (click)="showTable()" name="toggle" id="devices-btn">
+                  <label for="devices-btn">Tabelar view</label>
+                </div>
+            </div>
             <div class="csv-body">
                 <span>Power and Energy </span>
                 <button style="cursor: pointer;">CSV</button>
             </div>
-            <div class="chart-body">
-                <button (click)="showComponent()" style="cursor: pointer;">Day</button>
-                <button (click)="showComponent1()" style="cursor: pointer;">Week</button>
-                <button (click)="showComponent2()" style="cursor: pointer;">Month</button>
-                <button (click)="showComponent3()" style="cursor: pointer;">Year</button>
-            </div>
-            <div class="history-charts-body" *ngIf="componentShown">
-                <app-line-day-chart></app-line-day-chart>
-
-            </div>
-            <div class="history-charts-body" *ngIf="componentShown1">
-                <app-line-week-chart></app-line-week-chart>
-            </div>
-            <div class="history-charts-body" *ngIf="componentShown2">
-                <app-bar-month-chart></app-bar-month-chart>
-            </div>
-            <div class="history-charts-body" *ngIf="componentShown3">
-                <app-bar-year-chart></app-bar-year-chart>
-            </div>
-
+            <ng-container *ngIf="graph">
+                <div class="chart-body">
+                    <button (click)="showComponent()" style="cursor: pointer;">Day</button>
+                    <button (click)="showComponent1()" style="cursor: pointer;">Week</button>
+                    <button (click)="showComponent2()" style="cursor: pointer;">Month</button>
+                    <button (click)="showComponent3()" style="cursor: pointer;">Year</button>
+                </div>
+                <div class="history-charts-body" *ngIf="componentShown">
+                    <app-line-day-chart></app-line-day-chart>
+                </div>
+                <div class="history-charts-body" *ngIf="componentShown1">
+                    <app-line-week-chart></app-line-week-chart>
+                </div>
+                <div class="history-charts-body" *ngIf="componentShown2">
+                    <app-bar-month-chart></app-bar-month-chart>
+                </div>
+                <div class="history-charts-body" *ngIf="componentShown3">
+                    <app-bar-year-chart></app-bar-year-chart>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="tabelar">
+                <app-tabelar-view></app-tabelar-view>
+            </ng-container>
 
 
         </div>

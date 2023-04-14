@@ -62,6 +62,7 @@ import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-
 import { HomeDevicesComponent } from './components/prosumers/devices/home-devices/home-devices.component';
 import { OneDeviceComponent } from './components/prosumers/devices/one-device/one-device.component';
 import { AllDevicesDsoComponent } from './components/dso/all-devices-dso/all-devices-dso.component';
+import { TabelarViewComponent } from './components/dso/tabelar-view/tabelar-view.component';
 
 
 @NgModule({
@@ -128,7 +129,8 @@ import { AllDevicesDsoComponent } from './components/dso/all-devices-dso/all-dev
   ProsumerAccountSettingsPageComponent,
   HomeDevicesComponent,
   OneDeviceComponent,
-  AllDevicesDsoComponent
+  AllDevicesDsoComponent,
+  TabelarViewComponent
 
   ],
   imports: [

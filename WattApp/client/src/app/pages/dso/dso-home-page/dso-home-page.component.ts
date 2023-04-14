@@ -7,6 +7,10 @@ import { Component } from '@angular/core';
 })
 export class DsoHomePageComponent {
 
+  graph:boolean = true;
+  tabelar:boolean = false;
+
+
   componentShown = true;
   componentShown1 = false;
   componentShown2 = false;
@@ -39,5 +43,14 @@ export class DsoHomePageComponent {
     this.componentShown=false;
     this.componentShown1=false;
     this.componentShown2 = false;
+}
+
+showGraph(){
+  this.graph = true;
+  this.tabelar = false;
+}
+showTable(){
+  this.graph = false;
+  this.tabelar = true;
 }
 }
