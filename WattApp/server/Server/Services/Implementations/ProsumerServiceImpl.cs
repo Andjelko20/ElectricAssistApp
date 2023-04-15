@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.Data;
+using Server.DTOs;
 using Server.Models;
 using System.Linq;
 
@@ -339,6 +340,76 @@ namespace Server.Services.Implementations
             NumberOfDevices = Devices.Count;
 
             return NumberOfDevices;
+        }
+
+        public List<EnergyToday> CalculateEnergyUsageForToday(long deviceId)
+        {
+            var device = _context.Devices
+                .Include(d => d.DeviceModel) // da bih izvukao EnergyKwh odatle
+                .FirstOrDefault(d => d.Id == deviceId);
+
+            if (device == null)
+                return null;
+
+            var energyKwh = device.DeviceModel.EnergyKwh;
+            Console.WriteLine("+++++++++++++++++++++++++++++++++ device ID:"+device.Id);
+
+            var Result = new List<EnergyToday>();
+
+            // racunamo potrosnju trazenog uredjaja od 00:00h do ovog trenutka, danasnjeg dana
+            var deviceEnergyUsages = _context.DeviceEnergyUsages
+                .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date == DateTime.Today && (usage.EndTime == null || usage.EndTime <= DateTime.Now))
+                .ToList();
+
+            // prolazimo kroz sve sate danasnjeg dana do ovog trenutka i racunamo potrosnju za svaki sat
+            for (int hour = 0; hour <= DateTime.Now.Hour; hour++)
+            {
+                var startTime = DateTime.Today.AddHours(hour);
+                var endTime = DateTime.Today.AddHours(hour + 1);
+                var energyUsageResult = 0.0;
+
+                foreach (var usage in deviceEnergyUsages)
+                {
+                    Console.WriteLine("********************************** DeviceId="+usage.DeviceId+" --- StartTime="+usage.StartTime+" --- EndTime="+usage.EndTime);
+
+                    DateTime overlapStart;
+                    if (usage.StartTime < startTime)
+                    {
+                        overlapStart = startTime;
+                    }
+                    else
+                    {
+                        overlapStart = usage.StartTime;
+                    }
+
+                    DateTime overlapEnd;
+                    if (usage.EndTime == null || usage.EndTime > endTime)
+                    {
+                        overlapEnd = endTime;
+                    }
+                    else
+                    {
+                        overlapEnd = usage.EndTime;
+                    }
+
+                    if (overlapStart < overlapEnd)
+                    {
+                        var durationInHours = (overlapEnd - overlapStart).TotalHours;
+                        energyUsageResult += durationInHours * energyKwh;
+                    }
+                }
+
+                Result.Add(new EnergyToday
+                {
+                    EnergyUsageResult = energyUsageResult,
+                    Hour = startTime.Hour,
+                    Day = DateTime.Now.Day,
+                    Month = DateTime.Now.ToString("MMMM"),
+                    Year = DateTime.Now.Year
+                });
+            }
+
+            return Result;
         }
     }
 }

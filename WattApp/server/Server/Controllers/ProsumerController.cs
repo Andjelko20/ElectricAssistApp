@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
+using Server.DTOs;
 using Server.Models;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
@@ -64,7 +65,7 @@ namespace Server.Controllers
         /// Total Consumption/Production in The Moment (City)
         /// </summary>
         [HttpGet]
-        [Route("city/{deviceCategoryId:long}/{cityId}")]
+        [Route("city/{deviceCategoryId:long}/{cityId:long}")]
         //[Authorize(Roles = "dispecer")]
         public async Task<IActionResult> GetTotalConsumptionInTheMomentForCategoryInCity([FromRoute] long deviceCategoryId, [FromRoute] long cityId)
         {
@@ -147,7 +148,7 @@ namespace Server.Controllers
         /// Average Consumption/Production in The Moment (country)
         /// </summary>
         [HttpGet]
-        [Route("average/{deviceCategoryId}")]
+        [Route("average/{deviceCategoryId:long}")]
         //[Authorize(Roles = "dispecer")]
         public async Task<IActionResult> GetAvgConsumptionInTheMomentForCountry([FromRoute] long deviceCategoryId)
         {
@@ -180,6 +181,21 @@ namespace Server.Controllers
                 return Ok(TotalResult);
             }
             return BadRequest("Invalid parameter. Please use 'city' or 'settlement'.");
+        }
+
+        /// <summary>
+        /// Today`s Consumption/Production for device (by hour)
+        /// </summary>
+        [HttpGet]
+        [Route("today")]
+        //[Authorize(Roles = "dispecer")]
+        public async Task<IActionResult> GetDeviceEnergyFromTodaysDay([FromQuery] long deviceId)
+        {
+            List<EnergyToday> energyTodayList = prosumerService.CalculateEnergyUsageForToday(deviceId);
+            if(energyTodayList == null)
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+
+            return Ok(energyTodayList);
         }
     }
 }

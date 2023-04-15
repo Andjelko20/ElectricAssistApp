@@ -1,4 +1,5 @@
-﻿using Server.Models.DropDowns.Devices;
+﻿using Server.DTOs;
+using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
 
 namespace Server.Services
@@ -14,5 +15,6 @@ namespace Server.Services
         public double GetAverageConsumptionInTheMomentForSettlement(long settlementId, double totalEnergyUsage);
         public double GetAverageConsumptionInTheMomentForCity(long settlementName, double totalEnergyUsage);
         public double GetAverageConsumptionProductionInTheMomentForAllProsumers(double totalEnergyUsage);
+        public List<EnergyToday> CalculateEnergyUsageForToday(long deviceId);
     }
 }
