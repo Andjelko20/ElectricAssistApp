@@ -1,2 +1,8 @@
 <ng-content></ng-content>
-<pagination-controls (pageChange)="pageChanged($event)" ></pagination-controls>
+<div class="mt-8 py-5 flex justify-center item-center" id="pagination">
+	<pagination-controls 
+	(pageChange)="pageChanged($event)" 
+	previousLabel=""
+	nextLabel=""
+	></pagination-controls>
+</div>

@@ -19,7 +19,7 @@ export class DsoProsumersPageComponent implements OnInit {
   pageUrl=environment.serverUrl+"/api/ProsumersDetails/page";
   currentPage=1;
   itemsPerPage=10;
-  totalItems=100;
+  totalItems=20;
   items:any[]=[];
   showComponent() {
     this.componentShown = true;

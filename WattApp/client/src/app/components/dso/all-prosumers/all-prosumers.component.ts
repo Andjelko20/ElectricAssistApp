@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './all-prosumers.component.html',
   styleUrls: ['./all-prosumers.component.css']
 })
-export class AllProsumersComponent implements OnInit,OnChanges{
+export class AllProsumersComponent implements OnInit{
 	@Input() currentPage!:number;
 	@Input() itemsPerPage!:number;
 	@Input() totalItems!:number;
@@ -72,26 +72,6 @@ export class AllProsumersComponent implements OnInit,OnChanges{
      }as Prosumers));
     
      });
-  }
-  ngOnChanges(changes: SimpleChanges){
-	// Detect changes in the input property
-	console.log(this.totalItems)
-	console.log(this.data)
-    if (changes['childProperty']) {
-		console.log(true)
-		// Update the inner property with the new value
-		this.filteredProsumers = this.data.map((u:any)=>({
-			id: u.id,
-			name: u.name,
-			username: u.username,
-			email: u.email,
-			role: u.role,
-			blocked: u.blocked,
-			settlement:u.settlement,
-			city:u.city,
-			country: u.country
-		}as Prosumers));
-	  }
   }
   get mapirano(){
 	return this.data?.map((u:any)=>({

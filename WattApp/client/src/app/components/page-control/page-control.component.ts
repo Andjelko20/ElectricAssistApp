@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./page-control.component.css']
 })
 export class PageControlComponent implements OnInit{
-	@Input() url:string="";
+	@Input() url!:string;
 
 	@Input() currentPage:number=1;
 	@Output() currentPageChange:EventEmitter<number>=new EventEmitter<number>();
@@ -29,10 +29,19 @@ export class PageControlComponent implements OnInit{
 		let url=new URL(this.url);
 		url.searchParams.set("pageNumber",pageNumber.toString());
 		url.searchParams.set("pageSize",this.itemsPerPage.toString());
-		fetch(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+		let controller=new AbortController();
+		setTimeout(()=>{
+			alert('bbb');
+			controller.abort();
+			console.log("aborted");
+		},1000);
+		fetch(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem("token")},signal:controller.signal})
 		.then(res=>{
-			if(res.status==401)
-				throw new Error();
+			if(res.status==401 || res.status==403){
+				alert('aaa');
+				return Promise.reject("aaa");
+			}
+			console.log('works');
 			return res.json();
 		})
 		.then(res=>{
@@ -40,7 +49,6 @@ export class PageControlComponent implements OnInit{
 			this.itemsChange.emit(res.data);
 			this.currentPageChange.emit(pageNumber);
 			this.totalItemsChange.emit(res.numberOfPages*this.itemsPerPage);
-			console.table({totalItems:this.totalItems,currentPage:this.currentPage})
 		})
 		.catch(err=>{
 			localStorage.removeItem("token");
