@@ -51,34 +51,34 @@ export class OneDeviceComponent implements OnInit{
     console.log(turnOn);
    if(turnOn!=null)
    {
-    turnOn.addEventListener('click', () => {
-      this.deviceService.turnOnOff(id).subscribe({
-        next:()=>{
-          
-          
-         if(this.device.turnOn==true)
-          {
-            this.device.turnOn = false;
-          }
-        }
+        turnOn.addEventListener('click', () => {
+          this.deviceService.turnOnOff(id).subscribe({
+            next:()=>{
+              
+              
+            if(this.device.turnOn==false)
+              {
+                this.device.turnOn = true;
+              }
+            }
+          });
       });
-  });
    }
    if(turnOff!=null)
    {
-    
-    turnOff.addEventListener('click', () => {
-      this.deviceService.turnOnOff(id).subscribe({
-        next:()=>{
-         
-          if(this.device.turnOn==false)
-          {
-            this.device.turnOn = true;
-          }   
-          
-        }
+        
+        turnOff.addEventListener('click', () => {
+          this.deviceService.turnOnOff(id).subscribe({
+            next:()=>{
+            
+              if(this.device.turnOn==true)
+              {
+                this.device.turnOn = false;
+              }   
+              
+            }
+          });
       });
-  });
    }
    
   }

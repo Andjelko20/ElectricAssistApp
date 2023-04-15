@@ -71,15 +71,23 @@ export class AdminDsoUpdateComponent implements OnInit {
     map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
   }
   sendEmail(){
-		this.emailUp=this.updateUserDetail.email;
-		this.updateService.adminChangePasswordEmail(this.emailUp).subscribe({
-			next:()=>{
-				this.success=true;
-			},
-			error:(response:HttpErrorResponse)=>{
-				this.success=false;
-				this.errorMessage=response.error.message;
-			}
-		})
-	}
+    const changepass= document.getElementById('change-pass-popup');
+    if(changepass!=null)
+    {
+      changepass.addEventListener('click', () => {
+
+        this.emailUp=this.updateUserDetail.email;
+        this.updateService.adminChangePasswordEmail(this.emailUp).subscribe({
+          next:()=>{
+            this.success=true;
+          },
+          error:(response:HttpErrorResponse)=>{
+            this.success=false;
+            this.errorMessage=response.error.message;
+          }
+        })
+      });
+		
+	  }
+  }
 }

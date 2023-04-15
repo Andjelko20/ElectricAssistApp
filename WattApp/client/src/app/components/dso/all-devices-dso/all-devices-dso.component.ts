@@ -91,27 +91,52 @@ export class AllDevicesDsoComponent implements OnInit{
     
     );
     }
-    turnOnOff(id: number) {
-
-       console.log(id);
-      this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
-      this.deviceService.turnOnOff(id).subscribe({
-      next:()=>{
-        const userIndex = this.devicesList.findIndex(user => user.id === id);
+    
+       turnOnOff(id: number) {
+        //console.log(id);
         
-      if(this.devicesList[userIndex].turnOn == false)
-      {
-      this.devicesList[userIndex].turnOn = true;
-      } 
-      else if(this.devicesList[userIndex].turnOn == true)
-      {
-        this.devicesList[userIndex].turnOn = false;
-      }
-      
-      }
-      
-      });
-      
+        const turnOn= document.getElementById('turn-on-popup');
+        const turnOff= document.getElementById('turn-off-popup');
+        console.log(turnOn);
+       if(turnOn!=null)
+       {
+            turnOn.addEventListener('click', () => {
+              this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
+              this.deviceService.turnOnOff(id).subscribe({
+              next:()=>{
+                const userIndex = this.devicesList.findIndex(user => user.id === id);
+                
+                  if(this.devicesList[userIndex].turnOn == false)
+                  {
+                  this.devicesList[userIndex].turnOn = true;
+                  } 
+                 
+                  
+              }
+              
+              });
+          });
        }
+       if(turnOff!=null)
+       {
+            turnOff.addEventListener('click', () => {
+              this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
+              this.deviceService.turnOnOff(id).subscribe({
+              next:()=>{
+                const userIndex = this.devicesList.findIndex(user => user.id === id);
+                
+                  if(this.devicesList[userIndex].turnOn == true)
+                  {
+                    this.devicesList[userIndex].turnOn = false;
+                  } 
+                
+                  
+              }
+              
+              });
+            });
+       }
+       
+      }
 
 }
