@@ -1,6 +1,6 @@
 <header>
     <!-- Logo -->
-    <a href="prosumer-home-page" class="logo">WattApp</a>
+    <a [routerLink]='["prosumer-home-page"]' class="logo">WattApp</a>
     <!-- <a href="prosumer-home-page" class="logoimi"><img id="logoimi" src="assets/img/logo.png" alt=""></a> -->
     <!-- Hamburger icon -->
     <input class="side-menu" type="checkbox" id="side-menu" />
@@ -8,11 +8,11 @@
     <!-- Menu -->
     <nav class="nav">
         <ul class="menu">
-            <li><a href="prosumer-home-page">Dashboard</a></li>
-            <li><a href="prosumer-devices-page">Devices</a> </li>
-            <li><a href="prosumer-account-page">Profile</a></li>
+            <li><a [routerLink]='["prosumer-home-page"]' >Dashboard</a></li>
+            <li><a [routerLink]='["/prosumer-devices-page"]'>Devices</a> </li>
+            <li><a [routerLink]='["/prosumer-account-page"]'>Profile</a></li>
             <li>
-                <a href="#" id="logouta" (click)="logout()">Logout</a>
+                <a  id="logouta" (click)="logout()">Logout</a>
             </li>
 
 

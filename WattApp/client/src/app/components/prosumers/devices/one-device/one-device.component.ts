@@ -26,33 +26,61 @@ export class OneDeviceComponent implements OnInit{
       }
   delete(id:number)
   {
-    if(confirm('Are you sere to delete? '+id))
-    {
+    const deletePopup= document.getElementById('delete-popup');
+    
+   if(deletePopup!=null)
+   {
+    deletePopup.addEventListener('click', () => {
       this.deviceService.delete(id)
       .subscribe({
         next:()=>{
           this.router.navigate(['devices']);
         }
       });
-    }
+    });
+   }
+      
+    
   }
   
   turnOnOff(id: number) {
-    console.log(id);
-    this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
+    //console.log(id);
+    
+    const turnOn= document.getElementById('turn-on-popup');
+    const turnOff= document.getElementById('turn-off-popup');
+    console.log(turnOn);
+   if(turnOn!=null)
+   {
+    turnOn.addEventListener('click', () => {
       this.deviceService.turnOnOff(id).subscribe({
         next:()=>{
           
-          if(this.device.turnOn==false)
-          {
-            this.device.turnOn = true;
-          }   
-          else if(this.device.turnOn==true)
+          
+         if(this.device.turnOn==true)
           {
             this.device.turnOn = false;
           }
         }
       });
+  });
+   }
+   if(turnOff!=null)
+   {
+    
+    turnOff.addEventListener('click', () => {
+      this.deviceService.turnOnOff(id).subscribe({
+        next:()=>{
+         
+          if(this.device.turnOn==false)
+          {
+            this.device.turnOn = true;
+          }   
+          
+        }
+      });
+  });
+   }
+   
   }
   
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild, ElementRef} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
@@ -74,9 +74,31 @@ export class HomeDevicesComponent implements OnInit {
       
       
     }
-  turnOnOff(id: number) {
-    console.log(id);
     
+  turnOnOff(id: number) {
+    //console.log(id);
+    
+    const turnOn= document.getElementById('turn-on-popup');
+    const turnOff= document.getElementById('turn-off-popup');
+   if(turnOn!=null)
+   {
+    turnOn.addEventListener('click', () => {
+      this.deviceService.turnOnOff(id).subscribe({
+        next:()=>{
+          
+          const userIndex = this.devices.findIndex(device => device.id === id);
+         if(this.devices[userIndex].turnOn==true)
+          {
+            this.devices[userIndex].turnOn = false;
+          }
+        }
+      });
+  });
+   }
+   if(turnOff!=null)
+   {
+    
+    turnOff.addEventListener('click', () => {
       this.deviceService.turnOnOff(id).subscribe({
         next:()=>{
           const userIndex = this.devices.findIndex(device => device.id === id);
@@ -84,11 +106,14 @@ export class HomeDevicesComponent implements OnInit {
           {
             this.devices[userIndex].turnOn = true;
           }   
-          else if(this.devices[userIndex].turnOn==true)
-          {
-            this.devices[userIndex].turnOn = false;
-          }
+          
         }
       });
+  });
+   }
+   
   }
+  
+  
+  
 }
