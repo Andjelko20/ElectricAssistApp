@@ -43,7 +43,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let prosumer of filteredProsumers">
+    <tr *ngFor="let prosumer of mapirano | paginate: {currentPage,itemsPerPage,totalItems}">
       
       <td scope="row">{{prosumer.id}}</td>
       <td><a [routerLink]='["/prosumer/",prosumer.id]'>{{prosumer.name}}</a></td>
