@@ -85,7 +85,6 @@ export class AdminDsoComponent {
   logout()
   {
     localStorage.removeItem('token');
-    localStorage.clear();
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }
