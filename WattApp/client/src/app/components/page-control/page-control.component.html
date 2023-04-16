@@ -1,8 +1,8 @@
-<ng-content></ng-content>
 <div class="mt-8 py-5 flex justify-center item-center" id="pagination">
 	<pagination-controls 
 	(pageChange)="pageChanged($event)" 
 	previousLabel=""
 	nextLabel=""
+	[maxSize]="5"
 	></pagination-controls>
 </div>

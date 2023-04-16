@@ -27,7 +27,7 @@
 </div> -->
 
 <div class="table-responsive">
-<table *ngIf="prosumers" class="table">
+<table *ngIf="data?.length!=0" class="table">
   <thead>
     <tr>
       <th scope="col">name</th>
@@ -42,7 +42,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let prosumer of mapirano | paginate: {currentPage,itemsPerPage,totalItems}">
+    <tr *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}">
       <td><a [routerLink]='["/prosumer/",prosumer.id]'>{{prosumer.name}}</a></td>
       <td>{{prosumer.username}}</td>
       <!-- <td>{{prosumer.email}}</td> -->
@@ -55,4 +55,6 @@
     </tr>
   </tbody>
 </table>
+<app-page-control (pageChange)="pageChanged($event)"></app-page-control>
 </div>
+
