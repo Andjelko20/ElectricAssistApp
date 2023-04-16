@@ -1,7 +1,7 @@
 #dashboard {
     width: 100%;
 	min-height: 100vh;
-    padding: 20px;
+    padding: 50px;
 }
 
 .wrapper1 {
@@ -20,6 +20,9 @@
 
 #sidebar {
     transition: all 0.3s;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
 
 #sidebar.active {
@@ -35,6 +38,7 @@
 
 #sidebar.active .sidebar-header strong {
     display: block;
+    margin-right: 30px!important;
 }
 
 #sidebar ul li a {
@@ -182,7 +186,7 @@ ul li :hover {
         min-width: 40px;
         max-width: 80px;
         text-align: center;
-        margin-left: -80px !important;
+        margin-left: -120px !important;
     }
     .dropdown-toggle::after {
         top: auto;
@@ -218,7 +222,5 @@ ul li :hover {
     #sidebar ul li a i {
         font-size: 1.3em;
     }
-    #sidebar {
-        margin-left: 0;
-    }
+   
 }

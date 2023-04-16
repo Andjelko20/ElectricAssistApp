@@ -33,4 +33,9 @@ export class NavbarComponent implements OnInit {
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }
+  showDropdown = false;
+
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
 }
