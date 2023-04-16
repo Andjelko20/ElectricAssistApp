@@ -452,5 +452,22 @@ namespace Server.Controllers
 
             return Ok(historyService.SettlementHistoryForThePastYearByMonth(settlementId, deviceCategoryId));
         }
+
+        /// <summary>
+        /// Total device Consumption/Production in this month
+        /// </summary>
+        [HttpGet]
+        [Route("Month")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDeviceInThisMonth([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceInThisMonth(deviceId);
+            return Ok(historyList);
+        }
     }
 }

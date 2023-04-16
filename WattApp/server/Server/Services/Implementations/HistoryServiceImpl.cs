@@ -70,13 +70,15 @@ namespace Server.Services.Implementations
             var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
             var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
             float EnergyInKwh = DeviceModel.EnergyKwh; // da li je null proverava se u kontroleru i vraca NotFound
-
+            Console.WriteLine("''''''''''''''''''''''''' EnergyInKwh="+EnergyInKwh);
             double Consumption = 0.0;
             double Hours = -1;
             foreach (var item in deviceEnergyUsageLista)
             {
-                Hours = (item.EndTime - item.StartTime).TotalHours;
+                Hours = Math.Abs((item.EndTime - item.StartTime).TotalHours);
+                Console.WriteLine("'''''''''''''''''' Hours="+Hours);
                 Consumption += (double)(EnergyInKwh * Hours);
+                Console.WriteLine("''''''''''''''''''Consumption="+Consumption);
             }
 
             return Math.Round(Consumption, 2);
@@ -813,6 +815,26 @@ namespace Server.Services.Implementations
             }
 
             return monthlyEnergyConsumption;
+        }
+
+        public double GetUsageHistoryForDeviceInThisMonth(long deviceId)
+        {
+            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            DateTime endTime = DateTime.Now;
+
+            List<DeviceEnergyUsage> deviceEnergyUsageList = _context.DeviceEnergyUsages
+                .Where(u => u.DeviceId == deviceId && u.StartTime >= startOfMonth/* && u.EndTime <= endTime*/)
+                .ToList();
+
+            foreach (var usage in deviceEnergyUsageList)
+            {
+                if (usage.EndTime > endTime)
+                    usage.EndTime = endTime;
+
+                Console.WriteLine("-------------++++++++++++++++++---------- deviceId="+usage.DeviceId+" --- startTime="+usage.StartTime+" --- endTime="+usage.EndTime);
+            }
+
+            return GetConsumptionForForwardedList(deviceId, deviceEnergyUsageList);
         }
     }
 }
