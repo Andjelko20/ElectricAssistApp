@@ -22,6 +22,9 @@ body {
     right: 0; */
 }
 
+button{
+	cursor: pointer;
+}
 
 /* .containters {
     max-width: 100%;

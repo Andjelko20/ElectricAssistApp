@@ -13,7 +13,7 @@ import { Categories } from 'src/app/utilities/categories';
 export class AllDevicesDsoComponent implements OnInit{
   currentPage:number=1;
   itemsPerPage:number=12;
-  totalItems:number=12;
+  totalItems:number=10;
 
   devicesList:ShowDevices[] = [];
   deviceCategoryId!: number;
@@ -32,7 +32,8 @@ export class AllDevicesDsoComponent implements OnInit{
   ngOnInit(): void {
     this.deviceCategoryId = 2;
     this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
-      this.devicesList=devices.data.map((u:any)=>({
+    	this.totalItems=devices.numberOfPages*this.itemsPerPage;
+		this.devicesList=devices.data.map((u:any)=>({
         id:u.id,
         userId: u.userId,
         deviceCategory:u.deviceCategory,
@@ -98,8 +99,9 @@ export class AllDevicesDsoComponent implements OnInit{
   onSelectedCategory(event:any){
 
     this.deviceCategoryId = event.target.value;
-    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,12,this.deviceCategoryId).subscribe(devices => {
-      this.devicesList=devices.data.map((u:any)=>({
+    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+		this.totalItems=devices.numberOfPages*this.itemsPerPage;
+		this.devicesList=devices.data.map((u:any)=>({
         id:u.id,
         userId: u.userId,
         deviceCategory:u.deviceCategory,
