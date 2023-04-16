@@ -352,14 +352,17 @@ namespace Server.Services.Implementations
                 return null;
 
             var energyKwh = device.DeviceModel.EnergyKwh;
-            Console.WriteLine("+++++++++++++++++++++++++++++++++ device ID:"+device.Id);
+            //Console.WriteLine("+++++++++++++++++++++++++++++++++ device ID:"+device.Id);
 
             var Result = new List<EnergyToday>();
 
             // racunamo potrosnju trazenog uredjaja od 00:00h do ovog trenutka, danasnjeg dana
             var deviceEnergyUsages = _context.DeviceEnergyUsages
-                .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date == DateTime.Today && (usage.EndTime == null || usage.EndTime <= DateTime.Now))
+                .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date == DateTime.Today)
                 .ToList();
+
+            Console.WriteLine("::::::::::::::::::DateTime.Today = "+DateTime.Today);
+            Console.WriteLine("::::::::::::::::::DateTime.Now = " + DateTime.Now);
 
             // prolazimo kroz sve sate danasnjeg dana do ovog trenutka i racunamo potrosnju za svaki sat
             for (int hour = 0; hour <= DateTime.Now.Hour; hour++)
@@ -367,7 +370,7 @@ namespace Server.Services.Implementations
                 var startTime = DateTime.Today.AddHours(hour);
                 var endTime = DateTime.Today.AddHours(hour + 1);
                 var energyUsageResult = 0.0;
-
+                Console.WriteLine("++++++++++++++++++++++ startTime="+startTime+" --- endTime="+endTime);
                 foreach (var usage in deviceEnergyUsages)
                 {
                     Console.WriteLine("********************************** DeviceId="+usage.DeviceId+" --- StartTime="+usage.StartTime+" --- EndTime="+usage.EndTime);
@@ -389,7 +392,10 @@ namespace Server.Services.Implementations
                     }
                     else
                     {
-                        overlapEnd = usage.EndTime;
+                        if (usage.EndTime > DateTime.Now)
+                            overlapEnd = DateTime.Now;
+                        else
+                            overlapEnd = usage.EndTime;
                     }
 
                     if (overlapStart < overlapEnd)
