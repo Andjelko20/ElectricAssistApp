@@ -12,11 +12,11 @@
                 <option value="asc">Ascending</option>
                 <option value="desc">Descending</option>
               </select>
-              <select>
+              <!--<select>
                 <option value="10">10 per page</option>
                 <option value="20">20 per page</option>
                 <option value="50">50 per page</option>
-              </select>
+              </select>-->
             </div>
             <div class="table">
                 <div class="table">
@@ -32,7 +32,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let dev of devicesList">
+                        <tr *ngFor="let dev of devicesList | paginate: {currentPage,itemsPerPage,totalItems}">
                             <ng-container *ngIf="dev.visibility">
                               <ng-container *ngIf="dev.controlability">
                                 <td>{{dev.deviceType}}</td>
@@ -61,6 +61,7 @@
                           
                           </tbody>
                     </table>
+					<app-page-control (pageChange)="pageChanged($event)"></app-page-control>
                 </div>
             </div>
           </div>
