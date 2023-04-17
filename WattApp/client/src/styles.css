@@ -16,12 +16,14 @@ body {
     background-color: rgb(238, 238, 238);
     color: #000000;
     min-height: 100%;
+    -webkit-text-size-adjust: 100%;
+    overflow: auto !important;
+
     /* bottom: 0;
     top: 0;
     left: 0;
     right: 0; */
 }
-
 
 /* .containters {
     max-width: 100%;

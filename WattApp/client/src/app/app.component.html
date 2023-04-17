@@ -1,10 +1,10 @@
 <div *ngIf="(islogg |async)">
 
 
-    <app-navbar *ngIf="this.role==this.admin || this.role==this.dso ||  this.role==this.superadmin"></app-navbar>
-    <app-sidebar *ngIf="this.role==this.admin || this.role==this.dso ||  this.role==this.superadmin"></app-sidebar>
-    <app-prosumer-navbar *ngIf="this.role==this.prosumer"></app-prosumer-navbar>
-    <router-outlet></router-outlet>
+    <app-navbar ></app-navbar>
+    <app-sidebar ></app-sidebar>
+    <!-- <app-prosumer-navbar *ngIf="this.role==this.prosumer"></app-prosumer-navbar> -->
+    
 
 
 </div>

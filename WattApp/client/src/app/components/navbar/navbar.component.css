@@ -1,98 +1,109 @@
- #content {
-  position: fixed;
-    width: 100%;
-    min-height: 5%;
-    transition: all 0.3s;
+.wrapper{
+  display: none;
+}
+  @media (min-width: 768px) {
+    .wrapper{
+      display: block;
+      z-index: -1;
+    }
+    #content {
+      position: fixed;
+      z-index: 1000;
+      width: 100%;
+      min-height: 5%;
+      margin-bottom: 30px;
+      transition: all 0.3s;
+    }
+    
+    .navbar {
+      background-color: #1C315E;
+    }
+    
+    .container-fluid {
+      margin: 0;
+      float: left;
+    }
+    
+    .navbar-brand {
+      margin-top: -40px;
+      margin-right: auto;
+      height: 100px;
+    }
+    
+    .user {
+      margin-top: -10px;
+      padding-right: 30px;
+    }
+    
+    .nav-link {
+      font-size: 20px;
+    }
+    
+    .logo {
+      width: 60px;
+    }
+    
+    a {
+      color: white;
+    }
+    
+    #sidebarCollapse {
+      background-color: #1C315E;
+      border: #1C315E;
+      width: 60px;
+      float: left;
+    }
+    
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropbtn {
+      color: white;
+      padding: 20px;
+      font-size: 20px;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .dropdown.show .dropdown-content {
+      display: block;
+    }
+    
+    .dropdown-content {
+      border-radius: 5px;
+      width: 150px;
+      border: 1px solid black;
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+    
+    .dropdown-content a {
+      color: #1C315E;
+      padding: 20px 20px;
+      text-decoration: none;
+      display: block;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: #1C315E;
+      color: #f9f9f9;
+    }
+    
+    .dropdown:focus .dropdown-content {
+      display: block;
+    }
+    
+    .dropdown-content:hover .dropbtn {
+      background-color: #1C315E;
+    }
+    
+    .dropbtn a:hover {
+      background-color: #f9f9f9;
+    }
+    
   }
-  
-  .navbar {
-    background-color: #1C315E;
-  }
-  
-  .container-fluid {
-    margin: 0;
-    float: left;
-  }
-  
-  .navbar-brand {
-    margin-top: -40px;
-    margin-right: auto;
-    height: 100px;
-  }
-  
-  .user {
-    margin-top: -10px;
-    padding-right: 30px;
-  }
-  
-  .nav-link {
-    font-size: 20px;
-  }
-  
-  .logo {
-    width: 60px;
-  }
-  
-  a {
-    color: white;
-  }
-  
-  #sidebarCollapse {
-    background-color: #1C315E;
-    border: #1C315E;
-    width: 60px;
-    float: left;
-  }
-  
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .dropbtn {
-    color: white;
-    padding: 20px;
-    font-size: 20px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .dropdown.show .dropdown-content {
-    display: block;
-  }
-  
-  .dropdown-content {
-    border-radius: 5px;
-    width: 150px;
-    border: 1px solid black;
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: #1C315E;
-    padding: 20px 20px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {
-    background-color: #1C315E;
-    color: #f9f9f9;
-  }
-  
-  .dropdown:focus .dropdown-content {
-    display: block;
-  }
-  
-  .dropdown-content:hover .dropbtn {
-    background-color: #1C315E;
-  }
-  
-  .dropbtn a:hover {
-    background-color: #f9f9f9;
-  }
-  

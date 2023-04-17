@@ -1,42 +1,46 @@
-<div class="col-sm-9 ml-sm-auto col-md-12">
+<div class="wrapper">
     <div class="card-group">
         <div class="price">
             <div class="price-body">
                 <h1 id="price-title">Current price of Electricity</h1>
-                <p style="font-size: 55px;"><b>2.96</b> RSD/kWh</p>
+                <p style="font-size: 25px;"><b>2.96</b> RSD/kWh</p>
                 <hr style="width: 300px; margin: auto;">
                 <p style="font-size: 15px;">The predicted price may differ from the final one, it is based on...</p>
             </div>
         </div>
         <div class="overview">
             <div class="overview-body">
-                <span><b>Overview of Kragujevac</b> </span>
-                <span class="green-square"></span>Green Zone
-                <span class="yellow-square"></span>Yellow Zone
-                <span class="red-square"></span>Red Zone
-
+                <span><b>Overview of Kragujevac </b> </span>
+                <span class="green-square"></span> Green zone
+                <span class="blue-square"></span> Blue zone
+                <span class="red-square" ></span> Red zone
+              <hr>
                 
             </div>
             <div class="card-group">
                 <div class="consumption">
                     <div class="consumption-body">
                         <app-current-power-wattmeter></app-current-power-wattmeter>
+                        <span>text</span>
                     </div>
                 </div>
                 <div class="consumption">
                     <div class="consumption-body">
                         <app-consumption-today-wattmeter></app-consumption-today-wattmeter>
+                        <span>text</span>
                     </div>
                 </div>
 
                 <div class="consumption">
                     <div class="consumption-body">
                         <app-consumption-month-wattmeter></app-consumption-month-wattmeter>
+                        <span>text</span>
                     </div>
                 </div>
                 <div class="consumption">
                     <div class="consumption-body">
                         <app-consumption-year-wattmeter></app-consumption-year-wattmeter>
+                        <span>text</span>
                     </div>
                 </div>
             </div>

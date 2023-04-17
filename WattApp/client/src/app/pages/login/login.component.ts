@@ -30,11 +30,11 @@ export class LoginComponent implements OnInit {
 		}
 
 		// Reload the page when the user navigates to the login page
-		this.router.events.subscribe(event => {
-			if (event instanceof NavigationEnd) {
-				window.location.reload();
-			}
-		});
+		// this.router.events.subscribe(event => {
+		// 	if (event instanceof NavigationEnd) {
+		// 		window.location.reload();
+		// 	}
+		// });
 		document.onkeydown=(event)=>{
 			let keycode = event.keyCode || event.which;
 			if(keycode==13)

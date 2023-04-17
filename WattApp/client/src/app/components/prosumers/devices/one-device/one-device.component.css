@@ -132,6 +132,7 @@ p {
 }
 
 @media (min-width: 768px) {
+   
     .device {
         top: 83px;
     }

@@ -27,6 +27,8 @@ export class AllDevicesDsoComponent implements OnInit{
      ]
 
   ngOnInit(): void {
+   
+    
     this.deviceCategoryId = 2;
     this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,12,this.deviceCategoryId).subscribe(devices => {
       this.devicesList=devices.data.map((u:any)=>({
