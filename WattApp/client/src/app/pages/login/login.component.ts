@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Route,Router,NavigationEnd } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { Location } from '@angular/common';
 // import jwt_decode from "jwt-decode";
 // import { Token } from '../../models/users.model';
 
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
 	}
 	
 	login(){
+		
 		if (this.username.trim().length === 0) {
 			this.errorMsg = "User name is required";
 			return;

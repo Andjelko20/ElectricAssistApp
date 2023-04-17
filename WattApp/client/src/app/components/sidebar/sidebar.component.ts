@@ -26,6 +26,11 @@ export class SidebarComponent implements OnInit{
     let token=new JwtToken();
     this.role=token.data.role as string;
   }
+  showSidebarContent = false;
+
+  toggleSidebarContent() {
+    this.showSidebarContent = !this.showSidebarContent;
+  }
   logout()
   {
     localStorage.removeItem('token');

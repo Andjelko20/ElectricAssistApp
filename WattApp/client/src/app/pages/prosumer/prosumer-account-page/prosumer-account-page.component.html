@@ -3,7 +3,7 @@
     <div class="centar">
         <div class="card">
             <div class="back">
-                <a href="prosumer-home-page"><img id="turnback" src="assets/img/turn-back.png" alt=""></a>
+                <a [routerLink]='["/"]'><img id="turnback" src="assets/img/turn-back.png" alt=""></a>
             </div>
             <div class="userimg">
                 <img id="imgdevice" src="assets/img/account.png" alt="">
@@ -13,8 +13,8 @@
                 <ul>
                     <li>User name: {{name}}</li>
                     <li>Number of devices: 25</li>
-                    <li><a href="prosumer-account-settings-page">Edit profile</a></li>
-                    <li><a href="#" (click)="logout()">Logout</a></li>
+                    <li><a [routerLink]='["/profile-update"]'>Edit profile</a></li>
+                    <li><a  (click)="logout()">Logout</a></li>
                 </ul>
             </div>
 

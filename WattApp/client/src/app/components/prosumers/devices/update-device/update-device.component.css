@@ -12,7 +12,11 @@
     display: flex;
     justify-content: center;
 }
-
+#turnback {
+    margin-top: 5px;
+    width: 7%;
+    margin-left: 5px;
+}
 input {
     color: #1C315E;
 }
@@ -69,5 +73,10 @@ input.ng-touched {
     .global{
         top: 20%;
         position: absolute;
+    }
+    #turnback {
+        width: 3%;
+        margin-top: 100px;
+        margin-left: 2%;
     }
 }

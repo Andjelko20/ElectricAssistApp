@@ -36,6 +36,8 @@ export class AppComponent implements OnInit {
       let token=new JwtToken();
       this.role=token.data.role as string;
     }
+
+
    
   }
   

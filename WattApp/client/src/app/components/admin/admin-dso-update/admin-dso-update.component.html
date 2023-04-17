@@ -25,7 +25,7 @@
                         </select>
                     <br>
                     <form style="margin: 0;padding: 0;">
-                        <button type=" submit " class="btn btn-primary mr-5 " (click)="sendEmail()">Change password</button>
+                        <button type=" submit " class="btn btn-primary mr-5 " data-bs-toggle="modal" data-bs-target="#myModaChangePassword" (click)="sendEmail()">Change password</button>
                         <div *ngIf="errorMessage" style="margin: 0; padding: 0;">
                             {{ errorMessage }}
                         </div>
@@ -45,3 +45,23 @@
         </form>
     </div>
 </div>
+<!-- Modal Off -->
+<div class="modal fade" id="myModaChangePassword" tabindex="-1" aria-labelledby="myModaChangePasswordLabel"  aria-hidden="true" data-bs-backdrop="false" data-bs-keyboard="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModaChangePasswordLabel" style="text-align: center;">Do you want to turn off this device?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-bs-keyboard="true"></button>
+        </div>
+        <!-- <div class="modal-body">...</div> -->
+        <div class="modal-footer" >
+            <button type="button" class="btn1 btn-primary" data-bs-dismiss="modal" id="change-pass-popup">Turn Off</button>
+            
+          <button type="button" class="btn1 btn-primary" data-bs-dismiss="modal">
+            Close
+          </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
