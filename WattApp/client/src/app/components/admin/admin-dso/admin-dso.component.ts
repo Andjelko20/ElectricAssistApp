@@ -30,16 +30,20 @@ export class AdminDsoComponent {
 
 
   blockUser(id: number) {
-      this.usersService.blockUser(id).subscribe(() => {
-        const userIndex = this.showUsers.findIndex(user => user.id === id);
-        this.showUsers[userIndex].block = true;
-      });
+    
+     
+        this.usersService.blockUser(id).subscribe(() => {
+          const userIndex = this.showUsers.findIndex(user => user.id === id);
+          this.showUsers[userIndex].block = true;
+        });
   }
   unblockUser(id: number) {
-      this.usersService.unblockUser(id).subscribe(() => {
-        const userIndex = this.showUsers.findIndex(user => user.id === id);
-        this.showUsers[userIndex].block = false;
-      });
+   
+      
+        this.usersService.unblockUser(id).subscribe(() => {
+          const userIndex = this.showUsers.findIndex(user => user.id === id);
+          this.showUsers[userIndex].block = false;
+        });
   }
 
 
@@ -50,16 +54,14 @@ export class AdminDsoComponent {
 
   delete(id:number)
   {
-    if(confirm('Are you sere to delete? '+id))
-    {
       this.usersService.delete(id)
       .subscribe({
-        next:(response)=>{
+        next:()=>{
           this.router.navigate(['dashboard']);
           location.reload();
         }
       });
-    }
+    
   }
  
  
@@ -85,7 +87,6 @@ export class AdminDsoComponent {
   logout()
   {
     localStorage.removeItem('token');
-    localStorage.clear();
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }

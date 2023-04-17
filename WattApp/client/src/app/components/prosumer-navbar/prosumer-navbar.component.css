@@ -133,6 +133,10 @@ ul {
 }
 
 @media (min-width: 768px) {
+    header {
+        display: none;
+    }
+    
     .nav {
         max-height: none;
         top: 0;

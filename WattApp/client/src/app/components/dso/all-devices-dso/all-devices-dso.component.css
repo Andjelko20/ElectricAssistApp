@@ -3,7 +3,9 @@
     flex-direction: column;
     align-items: center;
   }
-  
+  .modal-backdrop {
+    display: none;
+  }
   .search {
     display: flex;
     align-items: center;

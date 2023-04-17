@@ -80,13 +80,62 @@ export class UpdateDeviceComponent implements OnInit{
   }
 
   controlabilityOnOff(){
-    this.updateDevice.controlability=!this.updateDevice.controlability
-    console.log( this.updateDevice.controlability);
+    const controlabilityOnPopup= document.getElementById('controlability-on-popup');
+    const controlabilityOffPopup= document.getElementById('controlability-off-popup');
+    
+    if(controlabilityOnPopup!=null)
+    {
+      controlabilityOnPopup.addEventListener('click', () => {
+        if( this.updateDevice.controlability==false && this.updateDevice.visibility==true)
+        {
+          this.updateDevice.controlability=true
+          console.log( this.updateDevice.controlability);
+        }
+        
+     });
+    }
+    if(controlabilityOffPopup!=null)
+    {
+      controlabilityOffPopup.addEventListener('click', () => {
+        if( this.updateDevice.controlability==true )
+        {
+          this.updateDevice.controlability=false
+          console.log( this.updateDevice.controlability);
+        }
+     });
+    }
+    
   }
   visibilityOnOff()
   {
-    this.updateDevice.visibility=!this.updateDevice.visibility
-    console.log( this.updateDevice.visibility);
+    
+    const visibilityOnPopup= document.getElementById('visibility-on-popup');
+    const visibilityOffPopup= document.getElementById('visibility-off-popup');
+    console.log( visibilityOnPopup);
+    console.log( visibilityOffPopup);
+    if(visibilityOnPopup!=null)
+    {
+      visibilityOnPopup.addEventListener('click', () => {
+        if( this.updateDevice.visibility==false)
+        {
+          this.updateDevice.visibility=true
+          console.log( this.updateDevice.visibility);
+        }
+        
+     });
+    }
+    if(visibilityOffPopup!=null)
+    {
+      visibilityOffPopup.addEventListener('click', () => {
+        if( this.updateDevice.visibility==true)
+        {
+          this.updateDevice.visibility=false
+          console.log( this.updateDevice.visibility);
+        }
+     });
+    }
+    
+    
   }
 
 

@@ -5,7 +5,7 @@
 
 </div> -->
 
-<div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-12">
+
     <div class="first">
         <br>
         <!--
@@ -34,8 +34,8 @@
                     <td>{{show.role}}</td>
                     <td><a [routerLink]='["/update-user/",show.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
                     <td>
-                        <button style="width: 84px; height:30px" *ngIf="show.block===true" (click)="unblockUser(show.id)"> UNBLOCK</button>
-                        <button style="width: 84px; height:30px" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button>
+                        <button style="width: 84px; height:30px"  *ngIf="show.block===true" (click)="unblockUser(show.id)"> BLOCK</button>
+                        <button style="width: 84px; height:30px"  *ngIf="show.block===false" (click)="blockUser(show.id)"> UNBLOCK</button>
                     </td>
                     <!--<td><a [routerLink]='["/change-password"]'><button style="min-width: 84px; height:30px" > PASSWORD</button></a></td>-->
 
@@ -48,4 +48,3 @@
 
     </div>
     <a [routerLink]='["/add-user"]'><button id="buttonAdd">ADD</button></a>
-</div>

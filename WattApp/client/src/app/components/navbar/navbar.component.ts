@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   dso?:string;
   prosumer?:string;
   superadmin?:string;
+  name!:any;
   constructor(private router:Router,private usersService:AuthService,
     private route:ActivatedRoute) {
       this.admin=Roles.ADMIN_NAME;
@@ -25,12 +26,20 @@ export class NavbarComponent implements OnInit {
       this.superadmin=Roles.SUPERADMIN_NAME;
      }
   ngOnInit(): void {
+    let token=new JwtToken();
+    this.name=token.data.role as any;
 
+    
   }
   logout()
   {
     localStorage.removeItem('token');
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
+  }
+  showDropdown = false;
+
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
   }
 }

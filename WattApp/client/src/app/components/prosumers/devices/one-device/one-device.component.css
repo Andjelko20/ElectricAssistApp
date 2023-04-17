@@ -45,6 +45,17 @@
     width: 60px;
     border-radius: 10px;
 }
+.btn1 {
+    background-color: #3E5483;
+    border-color: #3E5483;
+    float: right;
+    font-size: 10px;
+    margin: 5px;
+    box-shadow: none;
+    color: white;
+    width: 60px;
+    border-radius: 10px;
+}
 
 .deviceimg {
     margin-top: 5px;
@@ -129,9 +140,18 @@ p {
         margin-left: 2%;
     }
     .btn {
-        width: 12% !important;
+        width: 15% !important;
         font-size: 20px;
         margin: 9px;
+    }
+    .btn1 {
+        width: 35% !important;
+        font-size: 20px;
+        
+    }
+    .btn1:hover{
+        background-color: #5675b8;
+        border-color: #425a8d;
     }
     .updatedelete {
         height: 60px;

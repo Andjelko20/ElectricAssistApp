@@ -1,5 +1,10 @@
+<div class="back">
+    <a [routerLink]='["/devices"]'><img id="turnback" src="assets/img/turn-back.png" alt=""></a>
+</div>
 <div class="global">
+    
     <div class="global1">
+        
         <h1>Add</h1>
 
         <form  #form="ngForm" (ngSubmit)="addDevices()" [formGroup]="myForm">

@@ -41,8 +41,8 @@
                                 <td>{{dev.name}}</td>
                                 <td>{{dev.energyInKwh}}</td>
                                 <td class="on-off">
-                                  <a class="btn" id="startbutton" role="button" *ngIf="dev.turnOn === true" (click)="turnOnOff(dev.id)">On</a>
-                                  <a class="btn" id="startbutton" role="button" *ngIf="dev.turnOn === false" (click)="turnOnOff(dev.id)">Off</a>
+                                  <a class="btn" id="startbutton" role="button"  *ngIf="dev.turnOn === true" (click)="turnOnOff(dev.id)">On</a>
+                                  <a class="btn" id="startbutton" role="button"  *ngIf="dev.turnOn === false" (click)="turnOnOff(dev.id)">Off</a>
                                 </td>
                               </ng-container>
                               <ng-container *ngIf="!dev.controlability">
@@ -52,8 +52,8 @@
                                 <td>{{dev.name}}</td>
                                 <td>{{dev.energyInKwh}}</td>
                                 <td class="on-off">
-                                  <a class="btn disabled" id="startbutton" role="button" *ngIf="dev.turnOn === true" (click)="turnOnOff(dev.id)">On</a>
-                                  <a class="btn disabled" id="startbutton" role="button" *ngIf="dev.turnOn === false" (click)="turnOnOff(dev.id)">Off</a>
+                                  <a class="btn " id="startbutton" role="button"  *ngIf="dev.turnOn === true" >On</a>
+                                  <a class="btn " id="startbutton" role="button" *ngIf="dev.turnOn === false" >Off</a>
                                 </td>
                               </ng-container>
                             </ng-container>
@@ -64,3 +64,5 @@
                 </div>
             </div>
           </div>
+
+         

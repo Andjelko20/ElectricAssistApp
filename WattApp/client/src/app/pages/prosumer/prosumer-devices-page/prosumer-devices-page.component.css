@@ -5,7 +5,11 @@
     position: absolute;
     justify-content: center;
 }
-
+#turnback {
+    margin-top: 5px;
+    width: 7%;
+    margin-left: 5px;
+}
 .alldevices {
     top: 43px;
     left: 0;
@@ -88,6 +92,10 @@
     .alldevices {
         top: 10%;
         position: absolute;
+    }
+    #turnback {
+        width: 3%;
+        margin-left: 2%;
     }
     #allh1 {
         font-size: 30px;

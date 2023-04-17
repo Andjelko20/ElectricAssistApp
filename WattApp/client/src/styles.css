@@ -13,9 +13,12 @@
 
 body {
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(238, 238, 238);
     color: #000000;
     min-height: 100%;
+    -webkit-text-size-adjust: 100%;
+    overflow: auto !important;
+
     /* bottom: 0;
     top: 0;
     left: 0;
