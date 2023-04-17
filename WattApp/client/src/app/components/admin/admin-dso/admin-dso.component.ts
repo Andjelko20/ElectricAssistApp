@@ -30,20 +30,32 @@ export class AdminDsoComponent {
 
 
   blockUser(id: number) {
-    
-     
+    const block= document.getElementById('block-popup');
+    if(block!=null)
+    {
+      block.addEventListener('click', () => {
         this.usersService.blockUser(id).subscribe(() => {
           const userIndex = this.showUsers.findIndex(user => user.id === id);
           this.showUsers[userIndex].block = true;
         });
+      }
+      );
+    }
+      
   }
   unblockUser(id: number) {
-   
-      
+    const unblock= document.getElementById('unblock-popup');
+    if(unblock!=null)
+    {
+      unblock.addEventListener('click', () => {
         this.usersService.unblockUser(id).subscribe(() => {
           const userIndex = this.showUsers.findIndex(user => user.id === id);
           this.showUsers[userIndex].block = false;
         });
+      });
+
+      
+    }
   }
 
 
@@ -54,6 +66,14 @@ export class AdminDsoComponent {
 
   delete(id:number)
   {
+    
+      
+   
+    const deletePopup= document.getElementById('delete-admin-popup');
+    
+    if(deletePopup!=null)
+    {
+     deletePopup.addEventListener('click', () => {
       this.usersService.delete(id)
       .subscribe({
         next:()=>{
@@ -61,7 +81,8 @@ export class AdminDsoComponent {
           location.reload();
         }
       });
-    
+     });
+    }
   }
  
  
