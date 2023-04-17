@@ -2,6 +2,7 @@
 using Server.Data;
 using Server.DTOs;
 using Server.Models;
+using System.Threading;
 
 namespace Server.Services.Implementations
 {
@@ -835,6 +836,25 @@ namespace Server.Services.Implementations
             }
 
             return GetConsumptionForForwardedList(deviceId, deviceEnergyUsageList);
+        }
+
+        public double GetUsageHistoryForDeviceToday(long deviceId)
+        {
+            // za trazeni uredjaj, samo kada je radio tokom danasenjeg dana
+            var deviceEnergyUsages = _context.DeviceEnergyUsages
+                .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date == DateTime.Today)
+                .ToList();
+
+            foreach (var usage in deviceEnergyUsages)
+            {
+                // od 00:00h do ovog trenutka, danasnjeg dana
+                if (usage.EndTime > DateTime.Now)
+                    usage.EndTime = DateTime.Now;
+
+                Console.WriteLine("-------------++++++++++++++++++---------- deviceId=" + usage.DeviceId + " --- startTime=" + usage.StartTime + " --- endTime=" + usage.EndTime);
+            }
+
+            return GetConsumptionForForwardedList(deviceId, deviceEnergyUsages);
         }
     }
 }

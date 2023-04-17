@@ -469,5 +469,22 @@ namespace Server.Controllers
             var historyList = historyService.GetUsageHistoryForDeviceInThisMonth(deviceId);
             return Ok(historyList);
         }
+
+        /// <summary>
+        /// Total device Consumption/Production today
+        /// </summary>
+        [HttpGet]
+        [Route("Today")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDeviceToday([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceToday(deviceId);
+            return Ok(historyList);
+        }
     }
 }
