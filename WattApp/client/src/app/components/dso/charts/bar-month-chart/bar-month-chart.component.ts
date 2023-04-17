@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { WeekByDay } from 'src/app/models/devices.model';
+import { DevicesService } from 'src/app/services/devices.service';
 Chart.register(...registerables)
 
 
@@ -16,17 +18,33 @@ Chart.defaults.color = "#fff";
 export class BarMonthChartComponent {
 
   
+  list1:WeekByDay[]=[];
+  list2:WeekByDay[]=[];
+
   itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
   ,'20','21','22','23','24','25','26','27','28','29','30'];
-  constructor() {
+  constructor(private deviceService:DevicesService) {
     
   }
 
   ngOnInit(): void {
-    this.BarPlot();
+
+    this.deviceService.monthByDay(2,2).subscribe((data:WeekByDay[])=>{
+      console.log("Data => ", data);
+      this.list1 = data;
+      this.deviceService.monthByDay(2,1).subscribe((data:WeekByDay[])=>{
+        console.log("Data => ", data);
+        this.list2 = data;
+        this.BarPlot();
+      })
+    })
+
+    
   }
   BarPlot(){
     
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const Linechart =new Chart("barplot", {
         type: 'bar',
        
@@ -36,14 +54,14 @@ export class BarMonthChartComponent {
           datasets: [
             {
               label: 'Consumption',
-              data: [111,10,23,120,70,90,80,9,30,130,111,10,23,120,70,90,80,9,30,130,111,10,23,120,70,90,80,9,30,130],
+              data: energyUsageResults1,
               borderColor: 'rgb(128, 0, 128)',
               backgroundColor: 'rgb(128, 0, 128)',
               
             },
             {
               label: 'Production',
-              data: [21,100,41,60,110,102,80,129,45,67,21,100,41,60,110,102,80,129,45,67,21,100,41,60,110,102,80,129,45,67],
+              data: energyUsageResults2,
               borderColor: 'rgb(255, 165, 0)',
               backgroundColor: 'rgb(255, 165, 0)'
             },
@@ -63,8 +81,6 @@ export class BarMonthChartComponent {
                 }
               },
               position: "left",
-              suggestedMin: 5,
-              suggestedMax: 140,
               title:{
                 display:true,
                 text: "kWh",

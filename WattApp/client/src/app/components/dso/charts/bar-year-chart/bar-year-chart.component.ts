@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 
 import { Chart,registerables } from 'node_modules/chart.js'
+import { WeekByDay, YearsByMonth } from 'src/app/models/devices.model';
+import { DevicesService } from 'src/app/services/devices.service';
 Chart.register(...registerables)
 
 
@@ -14,17 +16,27 @@ Chart.defaults.color = "#fff";
 })
 export class BarYearChartComponent {
 
-  
+  list1:YearsByMonth[]=[];
+  list2:YearsByMonth[]=[];
   itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
-  constructor() {
+  constructor(private deviceService:DevicesService) {
     
   }
 
   ngOnInit(): void {
-    this.BarPlot();
+    this.deviceService.yearByMonth(2,2).subscribe((data:YearsByMonth[])=>{
+      console.log("Data => ", data);
+      this.list1 = data;
+      this.deviceService.yearByMonth(2,1).subscribe((data:YearsByMonth[])=>{
+        console.log("Data => ", data);
+        this.list2 = data;
+        this.BarPlot();
+      })
+    })
   }
   BarPlot(){
-    
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const Linechart =new Chart("barplot", {
         type: 'bar',
        
@@ -34,14 +46,14 @@ export class BarYearChartComponent {
           datasets: [
             {
               label: 'Consumption',
-              data: [111,10,23,120,70,90,80,33,55,76,123,99],
+              data: energyUsageResults1,
               borderColor: 'rgb(128, 0, 128)',
               backgroundColor: 'rgb(128, 0, 128)',
               
             },
             {
               label: 'Production',
-              data: [21,100,41,60,110,110,80,34,54,111,89,130],
+              data: energyUsageResults2,
               borderColor: 'rgb(255, 165, 0)',
               backgroundColor: 'rgb(255, 165, 0)'
             },

@@ -70,16 +70,18 @@ namespace Server.Services.Implementations
             var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
             var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
             float EnergyInKwh = DeviceModel.EnergyKwh; // da li je null proverava se u kontroleru i vraca NotFound
-
+            Console.WriteLine("''''''''''''''''''''''''' EnergyInKwh="+EnergyInKwh);
             double Consumption = 0.0;
             double Hours = -1;
             foreach (var item in deviceEnergyUsageLista)
             {
-                Hours = (item.EndTime - item.StartTime).TotalHours;
-                Consumption += (double)Math.Round(EnergyInKwh * Hours, 2);
+                Hours = Math.Abs((item.EndTime - item.StartTime).TotalHours);
+                Console.WriteLine("'''''''''''''''''' Hours="+Hours);
+                Consumption += (double)(EnergyInKwh * Hours);
+                Console.WriteLine("''''''''''''''''''Consumption="+Consumption);
             }
 
-            return Consumption;
+            return Math.Round(Consumption, 2);
         }
 
         // za bar plot, istorija za godinu dana, prikaz po mesecima
@@ -103,9 +105,10 @@ namespace Server.Services.Implementations
                 double UsageInKwh = 0.0;
                 if (UsageList == null)
                 {
-                    Results.Add(new MonthlyEnergyConsumptionLastYear
+                    Results.Insert(0, new MonthlyEnergyConsumptionLastYear
                     {
-                        Month = StartDate.ToString("MMMM yyyy"),
+                        Month = StartDate.ToString("MMMM"),
+                        Year = StartDate.Year,
                         EnergyUsageResult = UsageInKwh
                     });
                 }
@@ -122,8 +125,9 @@ namespace Server.Services.Implementations
                     //Console.WriteLine("****** " + StartDate + " - " + UsageInKwh);
                     Results.Insert(0, new MonthlyEnergyConsumptionLastYear
                     {
-                        Month = StartDate.ToString("MMMM yyyy"),
-                        EnergyUsageResult = UsageInKwh
+                        Month = StartDate.ToString("MMMM"),
+                        Year = StartDate.Year,
+                        EnergyUsageResult = Math.Round(UsageInKwh, 2)
                     });
                 }
             }
@@ -154,8 +158,10 @@ namespace Server.Services.Implementations
 
                 Results.Add(new DailyEnergyConsumptionPastMonth
                 {
-                    Day = date.ToString("dd.MM.yyyy"),
-                    EnergyUsageResult = EnergyUsage
+                    Day = date.Day,
+                    Month = date.ToString("MMMM"),
+                    Year = date.Year,
+                    EnergyUsageResult = Math.Round(EnergyUsage, 2)
                 });
             }
 
@@ -186,8 +192,10 @@ namespace Server.Services.Implementations
 
                 Results.Add(new DailyEnergyConsumptionPastMonth
                 {
-                    Day = date.ToString("dd.MM.yyyy"),
-                    EnergyUsageResult = EnergyUsage
+                    Day = date.Day,
+                    Month = date.ToString("MMMM"),
+                    Year = date.Year,
+                    EnergyUsageResult = Math.Round(EnergyUsage, 2)
                 });
             }
 
@@ -275,7 +283,7 @@ namespace Server.Services.Implementations
                 }
             }
 
-            return totalEnergyConsumption;
+            return Math.Round(totalEnergyConsumption, 2);
         }
 
         // ZA PROSLEDJEN ID KORISNIKA POTROSNJA ZA GRAFIKE
@@ -318,8 +326,9 @@ namespace Server.Services.Implementations
 
                 monthlyUsage.Add(new MonthlyEnergyConsumptionLastYear
                 {
-                    Month = monthStartDate.ToString("MMMM yyyy"),
-                    EnergyUsageResult = monthlyEnergyUsage
+                    Month = monthStartDate.ToString("MMMM"),
+                    Year = monthStartDate.Year,
+                    EnergyUsageResult = Math.Round(monthlyEnergyUsage, 2)
                 });
             }
 
@@ -361,19 +370,23 @@ namespace Server.Services.Implementations
 
                     Results.Add(new DailyEnergyConsumptionPastMonth // klasa moze i za week
                     {
-                        Day = date.ToString("dd.MM.yyyy"),
-                        EnergyUsageResult = EnergyUsage
+                        Day = date.Day,
+                        Month = date.ToString("MMMM"),
+                        Year = date.Year,
+                        EnergyUsageResult = Math.Round(EnergyUsage, 2)
                     });
                 }
             }
 
-            var sumByDay = Results.GroupBy(r => r.Day)
-                                .Select(g => new DailyEnergyConsumptionPastMonth
-                                {
-                                    Day = g.Key,
-                                    EnergyUsageResult = g.Sum(d => d.EnergyUsageResult)
-                                })
-                                .ToList();
+            var sumByDay = Results.GroupBy(r => new { r.Day, r.Month, r.Year })
+                               .Select(g => new DailyEnergyConsumptionPastMonth
+                               {
+                                   Day = g.Key.Day,
+                                   Month = g.Key.Month,
+                                   Year = g.Key.Year,
+                                   EnergyUsageResult = Math.Round(g.Sum(d => d.EnergyUsageResult), 2)
+                               })
+                               .ToList();
 
             return sumByDay;
         }
@@ -441,8 +454,10 @@ namespace Server.Services.Implementations
 
                 settlementHistory.Insert(0, new DailyEnergyConsumptionPastMonth
                 {
-                    Day = currentDay.ToString("dd.MM.yyyy"),
-                    EnergyUsageResult = dailyTotalUsage
+                    Day = currentDay.Day,
+                    Month = currentDay.ToString("MMMM"),
+                    Year = currentDay.Year,
+                    EnergyUsageResult = Math.Round(dailyTotalUsage, 2)
                 });
             }
 
@@ -508,8 +523,10 @@ namespace Server.Services.Implementations
 
                 cityHistory.Insert(0, new DailyEnergyConsumptionPastMonth
                 {
-                    Day = currentDay.ToString("dd.MM.yyyy"),
-                    EnergyUsageResult = dailyTotalUsage
+                    Day = currentDay.Day,
+                    Month = currentDay.ToString("MMMM"),
+                    Year = currentDay.Year,
+                    EnergyUsageResult = Math.Round(dailyTotalUsage, 2)
                 });
             }
 
@@ -579,8 +596,10 @@ namespace Server.Services.Implementations
 
                 settlementHistory.Insert(0, new DailyEnergyConsumptionPastMonth
                 {
-                    Day = currentDay.ToString("dd.MM.yyyy"),
-                    EnergyUsageResult = dailyTotalUsage
+                    Day = currentDay.Day,
+                    Month = currentDay.ToString("MMMM"),
+                    Year = currentDay.Year,
+                    EnergyUsageResult = Math.Round(dailyTotalUsage, 2)
                 });
             }
 
@@ -646,8 +665,10 @@ namespace Server.Services.Implementations
 
                 cityHistory.Insert(0, new DailyEnergyConsumptionPastMonth
                 {
-                    Day = currentDay.ToString("dd.MM.yyyy"),
-                    EnergyUsageResult = dailyTotalUsage
+                    Day = currentDay.Day,
+                    Month = currentDay.ToString("MMMM"),
+                    Year = currentDay.Year,
+                    EnergyUsageResult = Math.Round(dailyTotalUsage, 2)
                 });
             }
 
@@ -715,8 +736,9 @@ namespace Server.Services.Implementations
 
                 monthlyEnergyConsumption.Insert(0, new MonthlyEnergyConsumptionLastYear
                 {
-                    Month = currentMonth.ToString("MMM yyyy"),
-                    EnergyUsageResult = monthlyTotalUsage
+                    Month = currentMonth.ToString("MMMM"),
+                    Year = currentMonth.Year,
+                    EnergyUsageResult = Math.Round(monthlyTotalUsage, 2)
                 });
             }
 
@@ -786,12 +808,33 @@ namespace Server.Services.Implementations
 
                 monthlyEnergyConsumption.Insert(0, new MonthlyEnergyConsumptionLastYear
                 {
-                    Month = currentMonth.ToString("MM.yyyy"),
-                    EnergyUsageResult = monthlyTotalUsage
+                    Month = currentMonth.ToString("MMMM"),
+                    Year = currentMonth.Year,
+                    EnergyUsageResult = Math.Round(monthlyTotalUsage, 2)
                 });
             }
 
             return monthlyEnergyConsumption;
+        }
+
+        public double GetUsageHistoryForDeviceInThisMonth(long deviceId)
+        {
+            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            DateTime endTime = DateTime.Now;
+
+            List<DeviceEnergyUsage> deviceEnergyUsageList = _context.DeviceEnergyUsages
+                .Where(u => u.DeviceId == deviceId && u.StartTime >= startOfMonth/* && u.EndTime <= endTime*/)
+                .ToList();
+
+            foreach (var usage in deviceEnergyUsageList)
+            {
+                if (usage.EndTime > endTime)
+                    usage.EndTime = endTime;
+
+                Console.WriteLine("-------------++++++++++++++++++---------- deviceId="+usage.DeviceId+" --- startTime="+usage.StartTime+" --- endTime="+usage.EndTime);
+            }
+
+            return GetConsumptionForForwardedList(deviceId, deviceEnergyUsageList);
         }
     }
 }

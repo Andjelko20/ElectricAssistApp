@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { WeekByDay } from 'src/app/models/devices.model';
+import { DevicesService } from 'src/app/services/devices.service';
 Chart.register(...registerables)
 @Component({
   selector: 'app-line-week-chart',
@@ -8,23 +10,43 @@ Chart.register(...registerables)
 })
 export class LineWeekChartComponent {
 
-  constructor() {
+
+  list1:WeekByDay[] = [];
+  list2:WeekByDay[] = [];
+
+  constructor(private deviceService:DevicesService) {
     
   }
   ngOnInit(): void {
-    this.LineChart();
+
+    this.deviceService.weekByDay(2,2).subscribe((data: WeekByDay[]) =>{
+      console.log("Data => ", data);
+      this.list1 = data;
+      this.deviceService.weekByDay(2,1).subscribe((data: WeekByDay[]) =>{
+        console.log("Data => ", data);
+        this.list2 = data;
+        this.LineChart();
+      })
+
+    })
+    
+    // console.log(this.list);
+    
+    
   }
   LineChart(){
-    
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
+
     const Linechart =new Chart("linechart", {
       type: 'line',
       data : {
-        labels: ['0','1','2','3','4','5','6',''],
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
         
         datasets:  [
           {
             label: 'consumption',
-            data: [130,10,23,120,70,90,80,79,45,34,76,89],
+            data: energyUsageResults1,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -49,7 +71,7 @@ export class LineWeekChartComponent {
           },
           {
             label: 'production',
-            data: [91,12,41,45,3,133,106,50,70,80,150,123],
+            data: energyUsageResults2,
             tension:0.5,
             backgroundColor: 'rgba(0, 255, 0, 0.2)',
             borderColor: 'rgba(0, 255, 0, 1)',
@@ -76,8 +98,6 @@ export class LineWeekChartComponent {
               }
             },
             position: "left",
-            suggestedMin: 5,
-            suggestedMax: 140,
             title:{
               display:true,
               text: "kWh",
