@@ -38,7 +38,7 @@ input.ng-invalid[notEqual] {
 }
 
 #turnback {
-    margin-top: 5px;
+    margin-top: 10px;
     width: 7%;
 }
 
@@ -89,6 +89,9 @@ div.error-message {
 }
 
 @media (min-width: 768px) {
+    .back {
+        margin-top: 15px;
+    }
     .centar {
         margin-top: 85px;
     }
@@ -114,7 +117,7 @@ div.error-message {
     }
     .card {
         border-radius: 15px;
-        background-color: rgb(166, 203, 235);
+        background-color: #daeafb;
         top: 10%;
         left: 8%;
         position: absolute;
