@@ -27,11 +27,13 @@ export class ProsumerAccountPageComponent {
   public idUser!:number;
   public role!:string;
   public name!:string;
+  public email!:string;
   public emailErrorMessage:string="";
 	public errorMessage:string="";
 	public success:boolean=false;
   public passwordGen='';
   public emailUp='';
+  public adres!:string;
   constructor(private route:ActivatedRoute,private router:Router,private updateService:AuthService) { }
 
   ngOnInit(): void {
@@ -58,6 +60,8 @@ export class ProsumerAccountPageComponent {
               
               };
               this.name=response.name;
+              this.email=response.email;
+              this.adres=response.address;
             },
 			error:(response)=>{
 				this.router.navigate(["prosumer-account-page"]);
