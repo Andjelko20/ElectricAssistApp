@@ -136,7 +136,7 @@ li a {
     margin: 5px;
     text-align: center;
     display: inline-block;
-    padding: 20px;
+    padding: 10px;
     position: relative;
 }
 
@@ -159,6 +159,7 @@ li a {
     border-radius: 100px;
     max-width: 100%;
     display: inline-block;
+    background-color: white;
     position: relative;
 }
 

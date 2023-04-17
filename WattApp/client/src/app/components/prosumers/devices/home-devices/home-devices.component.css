@@ -108,12 +108,14 @@ ul {
     background-size: cover;
     box-shadow: 5px dodgerblue;
     box-shadow: 2px 5px silver;
-    background-color: white;
+    background-color: #eef2ff;
     width: 25%;
     text-align: center;
     display: inline-block;
     flex-shrink: 0;
-    padding-top: 20px;
+    padding-top: 10px;
+    border-radius: 15px;
+    margin: 0.5%;
 }
 
 #deviceh3 {
@@ -136,6 +138,7 @@ ul {
     background-size: cover;
     max-width: 60%;
     height: auto;
+    background-color: white;
     display: inline-block;
 }
 
@@ -143,6 +146,7 @@ ul {
     border: 3px solid rgb(236, 7, 41);
     border-radius: 100px;
     background-size: cover;
+    background-color: white;
     max-width: 60%;
     height: auto;
     display: inline-block;
