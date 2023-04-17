@@ -856,5 +856,26 @@ namespace Server.Services.Implementations
 
             return GetConsumptionForForwardedList(deviceId, deviceEnergyUsages);
         }
+
+        public double GetUsageHistoryForDeviceThisYear(long deviceId)
+        {
+            DateTime startOfTheYear = new DateTime(DateTime.Now.Year, 1, 1);
+            Console.WriteLine("----------------------- startOfTheYear="+startOfTheYear);
+            // za trazeni uredjaj, samo kada je radio od pocetka ove godine
+            var deviceEnergyUsages = _context.DeviceEnergyUsages
+                .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date >= startOfTheYear)
+                .ToList();
+
+            foreach (var usage in deviceEnergyUsages)
+            {
+                // od 01.01.2023.(trenutne godine) 00:00:00h do ovog trenutka, danasnjeg dana
+                if (usage.EndTime > DateTime.Now)
+                    usage.EndTime = DateTime.Now;
+
+                Console.WriteLine("-------------++++++++++++++++++---------- deviceId=" + usage.DeviceId + " --- startTime=" + usage.StartTime + " --- endTime=" + usage.EndTime);
+            }
+
+            return GetConsumptionForForwardedList(deviceId, deviceEnergyUsages);
+        }
     }
 }

@@ -34,5 +34,6 @@ namespace Server.Services
         public List<MonthlyEnergyConsumptionLastYear> SettlementHistoryForThePastYearByMonth(long settlementId, long deviceCategoryId);
         public double GetUsageHistoryForDeviceInThisMonth(long deviceId);
         public double GetUsageHistoryForDeviceToday(long deviceId);
+        public double GetUsageHistoryForDeviceThisYear(long deviceId);
     }
 }
