@@ -71,11 +71,7 @@ export class AdminDsoUpdateComponent implements OnInit {
     map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
   }
   sendEmail(){
-    const changepass= document.getElementById('change-pass-popup');
-    if(changepass!=null)
-    {
-      changepass.addEventListener('click', () => {
-
+    
         this.emailUp=this.updateUserDetail.email;
         this.updateService.adminChangePasswordEmail(this.emailUp).subscribe({
           next:()=>{
@@ -86,8 +82,6 @@ export class AdminDsoUpdateComponent implements OnInit {
             this.errorMessage=response.error.message;
           }
         })
-      });
-		
-	  }
+
   }
 }

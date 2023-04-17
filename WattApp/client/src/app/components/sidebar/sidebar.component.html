@@ -20,6 +20,15 @@
                     
                 </a>
             </li>
+            <li *ngIf="role==prosumer " id="role-li">
+                <a class="nav-link" >
+                    
+                    <span class="role-icon" ><i class="fa fa-user" ></i> </span>
+                    <span class="role-title" >{{prosumer}}</span>
+                    <hr class="role-line">
+                    
+                </a>
+            </li>
             <li *ngIf="role==dso">
                 
                 <a class="nav-link" [routerLink]='["/"]'>
@@ -55,7 +64,10 @@
                 </a>
             </li>
             <li *ngIf="role==prosumer">
-                <a class="nav-link" [routerLink]='["/"]'><i class="fa fa-user"></i> Prosumer home</a>
+                <a class="nav-link" [routerLink]='["/"]'>
+                <span class="icon-holder"><i class="fas fa-home"></i></span>
+                <span class="title" >Home</span>
+                </a>
 
             </li>
             

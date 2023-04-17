@@ -25,6 +25,9 @@ export class SidebarComponent implements OnInit{
   ngOnInit(): void {
     let token=new JwtToken();
     this.role=token.data.role as string;
+
+
+    
   }
   showSidebarContent = false;
 

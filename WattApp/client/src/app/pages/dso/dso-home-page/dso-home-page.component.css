@@ -1,4 +1,9 @@
 
+.wrapper{
+    margin-top: 60px;
+    min-height: calc(100vh - 61px);
+    width: 100%;
+}
 .head {
     justify-content: flex-end;
     height: 100%;
