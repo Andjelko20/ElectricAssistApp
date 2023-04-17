@@ -19,6 +19,7 @@
     position: absolute;
     width: 100%;
     display: flex;
+    padding: 10px;
     justify-content: center;
 }
 
@@ -27,11 +28,12 @@ input {
 }
 
 .global1 {
+    border-radius: 5px;
     box-shadow: 2px 4px gray;
-    background-color: white;
+    background-color: gainsboro;
     padding: 20px;
-    width: 80%;
-    margin-bottom: 30px;
+    width: 100%;
+    margin-bottom: 15%;
 }
 
 h1 {
@@ -76,9 +78,8 @@ input.ng-touched {
 }
 
 @media(min-width:768px) {
-    .global {
-        top: 20%;
-        position: absolute;
+    .global1 {
+        width: 60%;
     }
     .back {
         margin-top: 95px;

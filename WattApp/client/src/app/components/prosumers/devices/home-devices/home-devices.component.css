@@ -98,6 +98,7 @@ ul {
     text-align: center;
     transition: all 0.3s;
     display: flex;
+    bottom: 10px;
     overflow-x: auto;
     position: relative;
 }
@@ -126,6 +127,7 @@ ul {
     /* max-width: 140px;
     max-height: 120px; */
     width: 65%;
+    margin: 15%;
 }
 
 .devices-device-item {
@@ -136,6 +138,7 @@ ul {
     height: auto;
     display: inline-block;
 }
+
 .devices-device-item1 {
     border: 3px solid rgb(236, 7, 41);
     border-radius: 100px;
@@ -144,6 +147,7 @@ ul {
     height: auto;
     display: inline-block;
 }
+
 .consumptionNow {
     /* display: flexbox;
     width: 10%;
@@ -158,7 +162,7 @@ ul {
 
 .prognosis {
     display: flex;
-   /* border: 1px solid black; */
+    /* border: 1px solid black; */
     width: 25%;
     height: 7%;
     top: 12%;
