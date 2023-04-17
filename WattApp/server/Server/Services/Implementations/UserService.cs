@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.DTOs;
@@ -22,31 +23,31 @@ namespace Server.Services.Implementations
             this.logger = logger;
             this.historyService = historyService;
         }
-        public int GetNumberOfPages(int itemsPerPage,Func<UserModel, bool> filter)
+        public int GetNumberOfPages(int itemsPerPage, Func<UserModel, bool> filter)
         {
             int numberOfItems = context.Users.Count(filter);
-            if(numberOfItems%itemsPerPage==0)
-                return numberOfItems/itemsPerPage;
+            if (numberOfItems % itemsPerPage == 0)
+                return numberOfItems / itemsPerPage;
             return numberOfItems / itemsPerPage + 1;
         }
-        public async Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber,int itemsPerPage,Func<UserModel,bool> filter)
+        public async Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber, int itemsPerPage, Func<UserModel, bool> filter)
         {
             DataPage<UserDetailsDTO> page = new();
-            page.NumberOfPages = GetNumberOfPages(itemsPerPage,filter);
+            page.NumberOfPages = GetNumberOfPages(itemsPerPage, filter);
             if (page.NumberOfPages == 0)
-                throw new HttpRequestException("No items",null,HttpStatusCode.NotFound);
-            if (page.NumberOfPages < pageNumber || pageNumber<1)
-                throw new HttpRequestException("Invalid page number",null,HttpStatusCode.BadRequest);
+                throw new HttpRequestException("No items", null, HttpStatusCode.NotFound);
+            if (page.NumberOfPages < pageNumber || pageNumber < 1)
+                throw new HttpRequestException("Invalid page number", null, HttpStatusCode.BadRequest);
             logger.LogInformation(page.NumberOfPages.ToString());
-            var users=context.Users
-                .Include(user=>user.Role)
-                .Include(user=>user.Settlement)
-                .Include(user=>user.Settlement.City)
-                .Include(user=>user.Settlement.City.Country)
+            var users = context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
                 .Where(filter)
-                .Skip((pageNumber-1)*itemsPerPage)
+                .Skip((pageNumber - 1) * itemsPerPage)
                 .Take(itemsPerPage)
-                .Select(user=>new UserDetailsDTO(user))
+                .Select(user => new UserDetailsDTO(user))
                 .ToList();
             page.Data = users;
             page.PreviousPage = (pageNumber == 1) ? null : pageNumber - 1;
@@ -58,10 +59,10 @@ namespace Server.Services.Implementations
         {
             return context
                 .Users
-                .Include(user=>user.Role)
-                .Include(user=>user.Settlement)
-                .Include(user=>user.Settlement.City)
-                .Include(user=>user.Settlement.City.Country)
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
                 .FirstOrDefaultAsync(user => user.Email == email);
         }
         public async Task<UserModel?> GetUserByUsername(string username)
@@ -71,7 +72,7 @@ namespace Server.Services.Implementations
                 var user = await context.Users.Include(user => user.Role).FirstOrDefaultAsync(user => user.Username == username);
                 return user;
             }
-            catch(NullReferenceException ex)
+            catch (NullReferenceException ex)
             {
                 return null;
             }
@@ -94,17 +95,17 @@ namespace Server.Services.Implementations
 
         public Task<UserModel?>? Login(string username)
         {
-            return context.Users.Include(user => user.Role).FirstOrDefaultAsync(user => user.Username==username || user.Email==username);
+            return context.Users.Include(user => user.Role).FirstOrDefaultAsync(user => user.Username == username || user.Email == username);
         }
 
         public async Task<List<object>> GetAllProsumers()
         {
-            List<UserModel> allUsers=await context
+            List<UserModel> allUsers = await context
                 .Users
                 .Where(user => user.RoleId == Roles.ProsumerId)
                 .ToListAsync();
             List<object> lista = new List<object>();
-            foreach(var user in allUsers)
+            foreach (var user in allUsers)
             {
                 //var cons = GetConsumption(user.Id);
                 lista.Add((object)new
@@ -133,6 +134,38 @@ namespace Server.Services.Implementations
             }
 
             return historyService.GetUserEnergyConsumptionForPastMonth(userId, 2);
+        }
+
+        PendingUserModel CreatePendingUser(PendingUserModel pendingUser)
+        {
+            var user = context.PendingUsers.Add(pendingUser);
+            context.SaveChangesAsync();
+            if (user == null)
+                return null;
+            return pendingUser;
+        }
+
+        PendingUserModel GetPendingUserByEmail(string email)
+        {
+            return context.PendingUsers.FirstOrDefault(src => src.Email == email);
+        }
+
+        PendingUserModel DeletePendingUser(PendingUserModel pendingUser)
+        {
+            var user = context.PendingUsers.Remove(pendingUser);
+            if (user == null)
+                return null;
+            return pendingUser;
+        }
+
+        List<PendingUserModel> DeleteAllExpiredPendingUsers()
+        {
+            List<PendingUserModel> pendingUserModels = context.PendingUsers.Where(src => src.ExpireAt > DateTime.Now).ToList();
+            foreach (PendingUserModel pendingUser in pendingUserModels)
+            {
+                context.PendingUsers.Remove(pendingUser);
+            }
+            return pendingUserModels;
         }
     }
 }

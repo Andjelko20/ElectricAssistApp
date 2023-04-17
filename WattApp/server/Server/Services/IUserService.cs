@@ -12,8 +12,12 @@ namespace Server.Services
         Task<UserModel?> GetUserByUsername(string username);
         Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber, int itemsPerPage, Func<UserModel, bool> filter);
         Task<List<RoleModel>> GetAllRoles();
-
         Task<List<object>> GetAllProsumers();
+
+        PendingUserModel CreatePendingUser(PendingUserModel pendingUser);
+        PendingUserModel GetPendingUserByEmail(string email);
+        PendingUserModel DeletePendingUser(PendingUserModel pendingUser);
+        List<PendingUserModel> DeleteAllExpiredPendingUsers();
 
     }
 }

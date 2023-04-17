@@ -11,6 +11,8 @@ using Server.Services;
 using Server.DTOs.Responses;
 using Server.DTOs.Requests;
 using Server.Services.Implementations;
+using MimeKit.Encodings;
+using Server.Exceptions;
 
 namespace Server.Controllers
 {
@@ -150,6 +152,8 @@ namespace Server.Controllers
         {
             try
             {
+                userService.DeleteAllExpiredPendingUsers();
+
                 UserModel user = new UserModel
                 {
                     Username = requestBody.Username,
@@ -157,12 +161,37 @@ namespace Server.Controllers
                     Password = HashGenerator.Hash(requestBody.Password),
                     Blocked = requestBody.Blocked,
                     RoleId = requestBody.RoleId,
-                    Email=requestBody.Email,
-                    Address=requestBody.Address,
-                    Latitude=requestBody.Latitude,
-                    Longitude=requestBody.Longitude,
-                    SettlementId=requestBody.SettlementId
+                    Email = requestBody.Email,
+                    Address = requestBody.Address,
+                    Latitude = requestBody.Latitude,
+                    Longitude = requestBody.Longitude,
+                    SettlementId = requestBody.SettlementId
                 };
+
+                var userModel = userService.GetUserByEmail(user.Email);
+                if (userModel != null)
+                {
+                    throw new EmailAddressAlreadyInUseException("An account with the email address" + user.Email + "already exists. Please use a different email address or log in to your existing account.");
+                }
+
+                PendingUserModel pendingUser = userService.GetPendingUserByEmail(user.Email);
+                if(pendingUser == null || (pendingUser != null && pendingUser.ExpireAt > DateTime.Now))
+                {
+                    if(pendingUser.ExpireAt > DateTime.Now)
+                    {
+                        var deletedPendingUser = userService.DeletePendingUser(pendingUser);
+                        if (deletedPendingUser == null)
+                            throw new FailedToDeleteException("Something went wrong. Please try again in a few minutes.");
+                    }
+
+
+
+                }
+                else if(pendingUser != null)
+                {
+                    throw new EmailAddressAlreadyInUseException("The request to create an account with email: " + pendingUser.Email + " has already been sent. Please check your email inbox and follow the instructions to confirm your account.");
+                }
+                
 
                 _sqliteDb.Users.Add(user);
                 try
