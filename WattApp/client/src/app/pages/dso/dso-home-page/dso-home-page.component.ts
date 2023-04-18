@@ -11,38 +11,63 @@ export class DsoHomePageComponent {
   tabelar:boolean = false;
 
 
-  componentShown = true;
-  componentShown1 = false;
-  componentShown2 = false;
-  componentShown3 = false;
-  showComponent() {
-      this.componentShown = true;
-  
-    
-    this.componentShown1=false;
-    this.componentShown2=false;
-    this.componentShown3 = false;
-  }
-  showComponent1() {
-      this.componentShown1 = true;
+  compGraph = true;
+  compGraph1 = false;
+  compGraph2 = false;
+  compGraph3 = false;
 
-      this.componentShown=false;
-      this.componentShown2=false;
-      this.componentShown3 = false;
+  compTable = true;
+  compTable1 = false;
+  compTable2 = false;
+  compTable3 = false;
+  showComponentTable() {
+    this.compTable = true;
+    this.compTable1=false;
+    this.compTable2=false;
+    this.compGraph3 = false;
   }
-  showComponent2() {
-      this.componentShown2 = true;
+  showComponentTable1() {
+      this.compTable = true;
+      this.compTable1=false;
+      this.compTable2=false;
+      this.compTable3 = false;
+  }
+  showComponentTable2() {
+      this.compTable = true;
+      this.compGraph1=false;
+      this.compTable2=false;
+      this.compTable3 = false;
+  }
+  showComponentTable3() {
+    this.compTable=false;
+    this.compTable1=false;
+    this.compTable2 = false;
+    this.compTable3 = true;
+}
 
-      this.componentShown=false;
-      this.componentShown1=false;
-      this.componentShown3 = false;
-  }
-  showComponent3() {
-    this.componentShown3 = true;
-    
-    this.componentShown=false;
-    this.componentShown1=false;
-    this.componentShown2 = false;
+showComponentGraph() {
+  this.compGraph = true;
+  this.compGraph1=false;
+  this.compGraph2=false;
+  this.compGraph3 = false;
+}
+showComponentGraph1() {
+    this.compGraph = true;
+    this.compGraph1=false;
+    this.compGraph2=false;
+    this.compGraph3 = false;
+}
+showComponentGraph2() {
+    this.compGraph = true;
+    this.compGraph1=false;
+    this.compGraph2=false;
+    this.compGraph3 = false;
+}
+showComponentGraph3() {
+  this.compGraph=false;
+  this.compGraph1=false;
+  this.compGraph2 = false;
+  this.compGraph3 = true;
 }
 
 showGraph(){

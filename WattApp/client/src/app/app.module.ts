@@ -62,8 +62,11 @@ import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-
 import { HomeDevicesComponent } from './components/prosumers/devices/home-devices/home-devices.component';
 import { OneDeviceComponent } from './components/prosumers/devices/one-device/one-device.component';
 import { AllDevicesDsoComponent } from './components/dso/all-devices-dso/all-devices-dso.component';
-import { TabelarViewComponent } from './components/dso/tabelar-view/tabelar-view.component';
+import { TabelarViewComponent } from './components/dso/tabelar-views/tabelar-view-by-day/tabelar-view.component';
 import { TodayDsoComponent } from './components/weather/today-dso/today-dso.component';
+import { TabelarViewByMonthComponent } from "./components/dso/tabelar-views/tabelar-view-by-month/tabelar-view-by-month.component";
+import { TabelarViewByYearComponent } from './components/dso/tabelar-views/tabelar-view-by-year/tabelar-view-by-year.component';
+import { TabelarViewByWeekComponent } from './components/dso/tabelar-views/tabelar-view-by-week/tabelar-view-by-week.component';
 
 
 @NgModule({
@@ -132,8 +135,10 @@ import { TodayDsoComponent } from './components/weather/today-dso/today-dso.comp
   OneDeviceComponent,
   AllDevicesDsoComponent,
   TabelarViewComponent,
-  TodayDsoComponent
-
+  TodayDsoComponent,
+  TabelarViewByMonthComponent,
+  TabelarViewByYearComponent,
+  TabelarViewByWeekComponent
   ],
   imports: [
     BrowserModule,
