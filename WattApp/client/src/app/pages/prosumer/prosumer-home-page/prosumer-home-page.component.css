@@ -217,6 +217,9 @@ h1 {
 /* Responsiveness */
 
 @media (min-width: 768px) {
+    .carbattery {
+        padding-left: 10%;
+    }
     #smarthomeh2 {
         padding-left: 55px;
         font-size: 35px;
