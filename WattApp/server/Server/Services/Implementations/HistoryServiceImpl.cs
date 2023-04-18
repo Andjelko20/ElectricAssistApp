@@ -877,5 +877,29 @@ namespace Server.Services.Implementations
 
             return GetConsumptionForForwardedList(deviceId, deviceEnergyUsages);
         }
+
+        public double GetUsageHistoryForDeviceForPreviousMonth(long deviceId)
+        {
+            DateTime startOfThePreviousMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month-1, 1);
+            DateTime startOfTheCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime endOfThePreviousMonth = startOfTheCurrentMonth.AddSeconds(-1);
+            Console.WriteLine("----------------------- startOfThePreviousMonth=" + startOfThePreviousMonth);
+            Console.WriteLine("----------------------- startOfThePreviousMonth=" + endOfThePreviousMonth);
+            // za trazeni uredjaj, samo kada je radio od pocetka do kraja prethodnog meseca
+            var deviceEnergyUsages = _context.DeviceEnergyUsages
+                .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date >= startOfThePreviousMonth && usage.EndTime <= endOfThePreviousMonth)
+                .ToList();
+
+            foreach (var usage in deviceEnergyUsages)
+            {
+                // od 01. u prethodnom mesecu od 00:00:00h do 23:59:59h poslednjeg dana u mesecu
+                /*if (usage.EndTime > endOfThePreviousMonth)
+                    usage.EndTime = endOfThePreviousMonth;*/
+
+                Console.WriteLine("-------------++++++++++++++++++---------- deviceId=" + usage.DeviceId + " --- startTime=" + usage.StartTime + " --- endTime=" + usage.EndTime);
+            }
+
+            return GetConsumptionForForwardedList(deviceId, deviceEnergyUsages);
+        }
     }
 }

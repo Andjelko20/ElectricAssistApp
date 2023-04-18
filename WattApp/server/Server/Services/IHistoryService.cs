@@ -35,5 +35,6 @@ namespace Server.Services
         public double GetUsageHistoryForDeviceInThisMonth(long deviceId);
         public double GetUsageHistoryForDeviceToday(long deviceId);
         public double GetUsageHistoryForDeviceThisYear(long deviceId);
+        public double GetUsageHistoryForDeviceForPreviousMonth(long deviceId);
     }
 }
