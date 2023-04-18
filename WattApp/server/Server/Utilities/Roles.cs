@@ -15,5 +15,7 @@ namespace Server.Utilities
         public const string Superadmin = "superadmin";
         public const long SuperadminId = 5;
         public const string AdminPermission = "admin,superadmin";
+        public const long OperaterId = 6;
+        public const string OperaterPermission = "operater";
     }
 }
