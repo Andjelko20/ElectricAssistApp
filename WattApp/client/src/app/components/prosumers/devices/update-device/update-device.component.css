@@ -51,7 +51,7 @@ form {
     justify-content: center;
 }
 
-button {
+#save {
     justify-content: center;
     margin-left: 25%;
     width: 160px;
