@@ -55,6 +55,9 @@ ul {
     align-items: center;
     justify-content: center;
     display: inline-block;
+    border-radius: 15px;
+    margin: 0.5%;
+    background-color: #eef2ff;
     transition: all .2s ease-out;
 }
 
@@ -66,6 +69,7 @@ ul {
 }
 
 #carbatteryh3 {
+    padding-top: 5px;
     font-size: 10px;
 }
 
@@ -213,6 +217,9 @@ h1 {
 /* Responsiveness */
 
 @media (min-width: 768px) {
+    .carbattery {
+        padding-left: 10%;
+    }
     #smarthomeh2 {
         padding-left: 55px;
         font-size: 35px;
@@ -233,11 +240,11 @@ h1 {
     #deviceh3 {
         font-size: 30px;
     }
-    .carbatterytree {
+    /* .carbatterytree {
         margin-left: 10%;
         margin-top: 1%;
         margin-bottom: 2%;
-    }
+    } */
     .prodactionToday {
         display: flexbox;
         width: 300px;
