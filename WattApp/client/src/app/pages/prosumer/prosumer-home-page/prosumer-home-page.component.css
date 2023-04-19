@@ -8,7 +8,6 @@ ul {
 
 .main {
     top: 0;
-    width: 100%;
     min-height: 100vh;
     position: absolute;
 }
@@ -32,6 +31,31 @@ ul {
 
 
 /* pravi problem kad se smanji na 320px */
+
+.midle {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.midletree {
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid black; */
+    width: 100%;
+    height: auto;
+}
+
+.midletreeform {
+    margin: 1%;
+    float: left;
+    border: 1px solid black;
+    width: 50%;
+    /* visina je stavljena samo da bi se videlo da je tu taj div */
+    height: 50px;
+}
 
 
 /* Car and battery */
@@ -84,7 +108,7 @@ ul {
     padding-top: 5px;
     background-color: white;
     padding-left: 5px;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 .alldevice {
@@ -178,17 +202,18 @@ ul {
 }
 
 .prodactionToday {
-    width: 70px;
+    min-width: 70px;
     height: 3%;
     position: absolute;
-    top: 12%;
+    top: 7%;
+    padding-left: 5px;
     transition: all 0.3s;
 }
 
 .prodactionToday h2,
 h1 {
     text-align: center;
-    font-size: 8px;
+    font-size: 15px;
     transition: all 0.3s;
 }
 
@@ -217,11 +242,34 @@ h1 {
 /* Responsiveness */
 
 @media (min-width: 768px) {
+    .midle {
+        /* border: 1px solid black; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
+    .midletree {
+        display: flex;
+        justify-content: center;
+        /* border: 1px solid black; */
+        width: 100%;
+        height: auto;
+    }
+    .midletreeform {
+        margin: 1%;
+        float: left;
+        border: 1px solid black;
+        width: 50%;
+        /* visina je stavljena samo da bi se videlo da je tu taj div */
+        height: 50px;
+    }
     .carbattery {
         padding-left: 10%;
     }
     #smarthomeh2 {
-        padding-left: 55px;
+        padding-left: 25px;
         font-size: 35px;
     }
     #deviceh3 {
@@ -249,9 +297,6 @@ h1 {
         display: flexbox;
         width: 300px;
         height: 100px;
-        position: absolute;
-        top: 19%;
-        right: 5px;
         transition: all 0.3s;
     }
     .prodactionToday h2,

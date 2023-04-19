@@ -22,11 +22,7 @@
     padding: 10px;
     justify-content: center;
 }
-#turnback {
-    margin-top: 5px;
-    width: 7%;
-    margin-left: 5px;
-}
+
 input {
     color: #1C315E;
 }
@@ -62,7 +58,7 @@ form {
     justify-content: center;
 }
 
-#save {
+button {
     justify-content: center;
     margin-left: 25%;
     width: 160px;
@@ -92,15 +88,5 @@ input.ng-touched {
         margin-top: 5px;
         width: 3%;
         margin-left: 35px;
-    }
-    #turnback {
-        width: 3%;
-        margin-top: 100px;
-        margin-left: 2%;
-    }
-    #turnback {
-        width: 3%;
-        margin-top: 100px;
-        margin-left: 2%;
     }
 }

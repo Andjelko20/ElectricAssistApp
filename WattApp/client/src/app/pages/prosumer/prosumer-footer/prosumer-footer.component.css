@@ -9,6 +9,12 @@
     left: 0;
 }
 
+a {
+    text-decoration: none;
+    color: white;
+    float: inherit;
+}
+
 .footer-app {
     position: relative;
     margin: 0px 20px 0px 20px;
@@ -22,6 +28,5 @@
 @media (min-width: 768px) {
     #pros {
         display: none;
-       
     }
 }
