@@ -14,10 +14,11 @@ namespace Server.Services
         Task<List<RoleModel>> GetAllRoles();
         Task<List<object>> GetAllProsumers();
 
-        PendingUserModel CreatePendingUser(PendingUserModel pendingUser);
+        /*PendingUserModel CreatePendingUser(PendingUserModel pendingUser);
         PendingUserModel GetPendingUserByEmail(string email);
         PendingUserModel DeletePendingUser(PendingUserModel pendingUser);
-        List<PendingUserModel> DeleteAllExpiredPendingUsers();
+        List<PendingUserModel> DeleteAllExpiredPendingUsers();*/
+        Object CreatePendingUser(PendingUserModel pendingUser);
 
     }
 }

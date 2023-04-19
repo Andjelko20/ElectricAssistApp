@@ -136,16 +136,27 @@ namespace Server.Services.Implementations
             return historyService.GetUserEnergyConsumptionForPastMonth(userId, 2);
         }
 
-        PendingUserModel CreatePendingUser(PendingUserModel pendingUser)
+        public Object CreatePendingUser(PendingUserModel pendingUser)
         {
-            var user = context.PendingUsers.Add(pendingUser);
-            context.SaveChangesAsync();
-            if (user == null)
+            var user = context.Users.Where(src => src.Email == pendingUser.Email).FirstOrDefault();
+            if (user != null)
+                return new HttpRequestException("User with that email address already exists.");
+            
+            var pending = context.PendingUsers.Where(src => src.Email == pendingUser.Email).FirstOrDefault();
+            if (pending != null && pending.ExpireAt < DateTime.Now)
+                return new HttpRequestException("Request with that email already exists. Please check your email address.");
+            else if(pending != null && pending.ExpireAt > DateTime.Now)
+                context.PendingUsers.Remove(pending);
+            
+            var response = context.PendingUsers.Add(pendingUser);
+            context.SaveChanges();
+            if (response == null)
                 return null;
-            return pendingUser;
+            return response;
         }
 
-        PendingUserModel GetPendingUserByEmail(string email)
+
+        /*PendingUserModel GetPendingUserByEmail(string email)
         {
             return context.PendingUsers.FirstOrDefault(src => src.Email == email);
         }
@@ -166,6 +177,6 @@ namespace Server.Services.Implementations
                 context.PendingUsers.Remove(pendingUser);
             }
             return pendingUserModels;
-        }
+        }*/
     }
 }

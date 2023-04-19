@@ -146,13 +146,12 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
-        [HttpPost]
+        /*[HttpPost]
         [Authorize(Roles =Roles.AdminPermission)]
         public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO requestBody)
         {
             try
             {
-                userService.DeleteAllExpiredPendingUsers();
 
                 UserModel user = new UserModel
                 {
@@ -185,7 +184,6 @@ namespace Server.Controllers
                     }
 
 
-
                 }
                 else if(pendingUser != null)
                 {
@@ -211,7 +209,48 @@ namespace Server.Controllers
                 return StatusCode(400, new MessageResponseDTO("Already exists user with that username or email"));
             }
 
+        }*/
+
+        [HttpPost]
+        [Authorize(Roles = Roles.AdminPermission)]
+        public IActionResult CreateUser([FromBody] UserCreateDTO requestBody)
+        {
+            try
+            {
+
+                PendingUserModel user = new PendingUserModel
+                {
+                    Username = requestBody.Username,
+                    Name = requestBody.Name,
+                    Password = HashGenerator.Hash(requestBody.Password),
+                    Blocked = requestBody.Blocked,
+                    RoleId = requestBody.RoleId,
+                    Email = requestBody.Email,
+                    Address = requestBody.Address,
+                    Latitude = requestBody.Latitude,
+                    Longitude = requestBody.Longitude,
+                    SettlementId = requestBody.SettlementId, 
+                    ExpireAt = DateTime.UtcNow,
+                    ConfirmKey = ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
+                };
+
+                var pendingUser = userService.CreatePendingUser(user);
+                if (pendingUser == null)
+                    throw new EmailAddressAlreadyInUseException("Doslo je do greske prilikom kreiranja zahteva");
+
+                emailService.SendEmail(requestBody.Email, "Account created", "Your account is created successfully. Your password is <b>" + requestBody.Password + "</b>", true);
+
+                return Ok("Uspesno poslato");
+               
+            }
+            catch(HttpRequestException ex)
+            {
+                return StatusCode(405, ex.Message);
+            }
+
+
         }
+
         /// <summary>
         /// Update user by admin
         /// </summary>
