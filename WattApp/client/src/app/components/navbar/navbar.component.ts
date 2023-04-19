@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,8 +11,7 @@ import { Roles } from 'src/app/utilities/role';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-   
+  showDropdown = false;
   role?:string;
   admin?:string;
   dso?:string;
@@ -21,8 +20,7 @@ export class NavbarComponent implements OnInit {
   name!:string;
   id?:number;
   user!:Users;
-  constructor(private router:Router,private usersService:AuthService,
-    private route:ActivatedRoute) {
+  constructor(private router:Router,private usersService:AuthService,private route:ActivatedRoute,private elementRef: ElementRef) {
       this.admin=Roles.ADMIN_NAME;
       this.dso=Roles.DISPATCHER_NAME;
       this.prosumer=Roles.PROSUMER_NAME;
@@ -36,7 +34,7 @@ export class NavbarComponent implements OnInit {
       this.name=user.name
     });
 
-
+    
     
   }
   logout()
@@ -45,9 +43,20 @@ export class NavbarComponent implements OnInit {
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }
-  showDropdown = false;
+
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
   }
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    const clickedElement = event.target as HTMLElement;
+    const dropdownElement = this.elementRef.nativeElement;
+    const navbarElement = dropdownElement.querySelector('.dropbtn') as HTMLElement;
+    if (!dropdownElement.contains(clickedElement) || !navbarElement.contains(clickedElement)) {
+      this.showDropdown = false;
+    }
+  }
+
+
 }

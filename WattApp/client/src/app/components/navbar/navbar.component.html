@@ -11,7 +11,7 @@
           </a>
           <div class="user">
             <div class="dropdown" [class.show]="showDropdown">
-              <a class="dropbtn" (click)="toggleDropdown()"><i class="fa fa-user"></i> <span> {{name}}</span></a>
+              <a class="dropbtn" (click)="toggleDropdown()" style="text-decoration: none;"><i class="fa fa-user"></i> <span> {{name}}</span></a>
               <div class="dropdown-content">
                 <a href="#"><i class="fa fa-settings"></i> Settings</a>
                 <a [routerLink]='["/"]' id="logouta" (click)="logout()"><i class="fa fa-user"></i>  Logout</a>
