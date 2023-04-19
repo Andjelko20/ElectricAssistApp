@@ -24,7 +24,7 @@ export class DsoHomePageComponent {
     this.compTable = true;
     this.compTable1=false;
     this.compTable2=false;
-    this.compGraph3 = false;
+    this.compTable3 = false;
   }
   showComponentTable1() {
       this.compTable = false;
@@ -34,7 +34,7 @@ export class DsoHomePageComponent {
   }
   showComponentTable2() {
       this.compTable = false;
-      this.compGraph1=false;
+      this.compTable1=false;
       this.compTable2=true;
       this.compTable3 = false;
   }
