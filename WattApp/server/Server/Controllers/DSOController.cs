@@ -58,5 +58,19 @@ namespace Server.Controllers
 
             return Ok(settlements);
         }
+
+        /// <summary>
+        /// Get CityId
+        /// </summary>
+        [HttpGet]
+        [Route("CityDouble/")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetCity([FromQuery] long cityId, [FromQuery] long deviceCategoryId)
+        {
+            var result = dsoService.GetCityConsumptionForToday(cityId, deviceCategoryId);
+
+            
+            return Ok(result);
+        }
     }
 }

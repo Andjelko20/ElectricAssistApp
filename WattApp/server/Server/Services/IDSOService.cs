@@ -6,5 +6,6 @@ namespace Server.Services
     {
         public long GetCityId(string cityName);
         public List<SettlementDTO> GetSettlements(long cityId);
+        public double GetCityConsumptionForToday(long cityId, long deviceCategoryId);
     }
 }
