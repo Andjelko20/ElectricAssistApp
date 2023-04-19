@@ -70,6 +70,13 @@
                 </a>
 
             </li>
+            <li *ngIf="role==prosumer">
+                <a class="nav-link" [routerLink]='["/devices"]'>
+                <span class="icon-holder"><i class="fas fa-copy"></i></span>
+                <span class="title" >Devices</span>
+                </a>
+
+            </li>
             
 
         </ul>

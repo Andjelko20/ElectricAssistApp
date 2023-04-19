@@ -62,7 +62,7 @@ form {
     justify-content: center;
 }
 
-button {
+#save {
     justify-content: center;
     margin-left: 25%;
     width: 160px;
@@ -92,6 +92,11 @@ input.ng-touched {
         margin-top: 5px;
         width: 3%;
         margin-left: 35px;
+    }
+    #turnback {
+        width: 3%;
+        margin-top: 100px;
+        margin-left: 2%;
     }
     #turnback {
         width: 3%;

@@ -74,46 +74,5 @@ export class HomeDevicesComponent implements OnInit {
       
       
     }
-    
-  turnOnOff(id: number) {
-    //console.log(id);
-    
-    const turnOn= document.getElementById('turn-on-popup');
-    const turnOff= document.getElementById('turn-off-popup');
-   if(turnOn!=null)
-   {
-    turnOn.addEventListener('click', () => {
-      this.deviceService.turnOnOff(id).subscribe({
-        next:()=>{
-          
-          const userIndex = this.devices.findIndex(device => device.id === id);
-         if(this.devices[userIndex].turnOn==true)
-          {
-            this.devices[userIndex].turnOn = false;
-          }
-        }
-      });
-  });
-   }
-   if(turnOff!=null)
-   {
-    
-    turnOff.addEventListener('click', () => {
-      this.deviceService.turnOnOff(id).subscribe({
-        next:()=>{
-          const userIndex = this.devices.findIndex(device => device.id === id);
-          if(this.devices[userIndex].turnOn==false)
-          {
-            this.devices[userIndex].turnOn = true;
-          }   
-          
-        }
-      });
-  });
-   }
-   
-  }
-  
-  
   
 }
