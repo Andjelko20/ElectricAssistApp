@@ -27,15 +27,15 @@ export class DsoHomePageComponent {
     this.compGraph3 = false;
   }
   showComponentTable1() {
-      this.compTable = true;
-      this.compTable1=false;
+      this.compTable = false;
+      this.compTable1=true;
       this.compTable2=false;
       this.compTable3 = false;
   }
   showComponentTable2() {
-      this.compTable = true;
+      this.compTable = false;
       this.compGraph1=false;
-      this.compTable2=false;
+      this.compTable2=true;
       this.compTable3 = false;
   }
   showComponentTable3() {
@@ -52,15 +52,15 @@ showComponentGraph() {
   this.compGraph3 = false;
 }
 showComponentGraph1() {
-    this.compGraph = true;
-    this.compGraph1=false;
+    this.compGraph = false;
+    this.compGraph1=true;
     this.compGraph2=false;
     this.compGraph3 = false;
 }
 showComponentGraph2() {
-    this.compGraph = true;
+    this.compGraph = false;
     this.compGraph1=false;
-    this.compGraph2=false;
+    this.compGraph2=true;
     this.compGraph3 = false;
 }
 showComponentGraph3() {

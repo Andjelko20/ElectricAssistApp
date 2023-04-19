@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { WeekByDay } from 'src/app/models/devices.model';
+import { Settlement } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 Chart.register(...registerables)
 @Component({
@@ -13,32 +15,79 @@ export class LineWeekChartComponent {
 
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
-
-  constructor(private deviceService:DevicesService) {
+  settlements:Settlement[] = [];
+  constructor(private deviceService:DevicesService,private authService:AuthService) {
     
   }
+
+  selectedOption: number = 0;
+
+  onOptionSelected() {
+    this.ngOnInit();
+  }
+
   ngOnInit(): void {
-
-    this.deviceService.weekByDay(2,2).subscribe((data: WeekByDay[]) =>{
-      console.log("Data => ", data);
-      this.list1 = data;
-      this.deviceService.weekByDay(2,1).subscribe((data: WeekByDay[]) =>{
-        console.log("Data => ", data);
-        this.list2 = data;
-        this.LineChart();
+    console.log("Selektovano je "+this.selectedOption); // Do whatever you want with the selected option here]
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.settlements = settlement;
+        })
+        if(this.selectedOption == 0){
+          this.deviceService.weekByDay(number,2).subscribe((data: WeekByDay[]) =>{
+            console.log("Data => ", data);
+            this.list1 = data;
+            this.deviceService.weekByDay(number,1).subscribe((data: WeekByDay[]) =>{
+              console.log("Data => ", data);
+              this.list2 = data;
+              this.LineChart();
+            })
+      
+          })
+        }
+        else{
+          this.deviceService.weekByDaySettlement(this.selectedOption,2).subscribe((data: WeekByDay[]) =>{
+            console.log("Data => ", data);
+            this.list1 = data;
+            this.deviceService.weekByDaySettlement(this.selectedOption,1).subscribe((data: WeekByDay[]) =>{
+              console.log("Data => ", data);
+              this.list2 = data;
+              this.LineChart();
+            })
+      
+          })
+        }
+        
       })
-
     })
+    
+    // this.deviceService.weekByDay(1,2).subscribe((data: WeekByDay[]) =>{
+    //   console.log("Data => ", data);
+    //   this.list1 = data;
+    //   this.deviceService.weekByDay(1,1).subscribe((data: WeekByDay[]) =>{
+    //     console.log("Data => ", data);
+    //     this.list2 = data;
+    //     this.LineChart();
+    //   })
+
+    // })
     
     // console.log(this.list);
     
     
   }
   LineChart(){
+
+    const chartId = 'linechart';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
 
-    const Linechart =new Chart("linechart", {
+    const Linechart = new Chart("linechart", {
       type: 'line',
       data : {
         labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],

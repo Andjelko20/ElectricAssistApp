@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { WeekByDay } from 'src/app/models/devices.model';
+import { Settlement } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 Chart.register(...registerables)
 
@@ -20,29 +22,72 @@ export class BarMonthChartComponent {
   
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
-
+  settlements:Settlement[] = [];
   itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
   ,'20','21','22','23','24','25','26','27','28','29','30'];
-  constructor(private deviceService:DevicesService) {
+  constructor(private deviceService:DevicesService,private authService:AuthService) {
     
   }
 
+  selectedOption: number = 0;
+
+  onOptionSelected() {
+    this.ngOnInit();
+  }
+  
   ngOnInit(): void {
 
-    this.deviceService.monthByDay(2,2).subscribe((data:WeekByDay[])=>{
-      console.log("Data => ", data);
-      this.list1 = data;
-      this.deviceService.monthByDay(2,1).subscribe((data:WeekByDay[])=>{
-        console.log("Data => ", data);
-        this.list2 = data;
-        this.BarPlot();
+
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.settlements = settlement;
+        })
+        if(this.selectedOption == 0){
+          this.deviceService.monthByDay(number,2).subscribe((data:WeekByDay[])=>{
+            console.log("Data => ", data);
+            this.list1 = data;
+            this.deviceService.monthByDay(number,1).subscribe((data:WeekByDay[])=>{
+              console.log("Data => ", data);
+              this.list2 = data;
+              this.BarPlot();
+            })
+          })
+        }
+        else{
+          this.deviceService.monthByDaySettlement(this.selectedOption,2).subscribe((data:WeekByDay[])=>{
+            console.log("Data => ", data);
+            this.list1 = data;
+            this.deviceService.monthByDaySettlement(this.selectedOption,1).subscribe((data:WeekByDay[])=>{
+              console.log("Data => ", data);
+              this.list2 = data;
+              this.BarPlot();
+            })
+          })
+        }
+        
       })
     })
+    // this.deviceService.monthByDay(2,2).subscribe((data:WeekByDay[])=>{
+    //   console.log("Data => ", data);
+    //   this.list1 = data;
+    //   this.deviceService.monthByDay(2,1).subscribe((data:WeekByDay[])=>{
+    //     console.log("Data => ", data);
+    //     this.list2 = data;
+    //     this.BarPlot();
+    //   })
+    // })
 
     
   }
   BarPlot(){
     
+    const chartId = 'barplot';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const Linechart =new Chart("barplot", {

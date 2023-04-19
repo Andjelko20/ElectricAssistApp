@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WeekByDay } from 'src/app/models/devices.model';
+import { Settlement } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 
 @Component({
@@ -10,20 +12,45 @@ import { DevicesService } from 'src/app/services/devices.service';
 export class TabelarViewByWeekComponent implements OnInit {
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  settlements:Settlement[] = [];
+  constructor(private deviceService:DevicesService,private authService:AuthService) {}
+  selectedOption: number = 0;
 
-  constructor(private deviceService:DevicesService) {
-    
+  onOptionSelected() {
+    this.ngOnInit();
   }
     ngOnInit(): void {
 
-      this.deviceService.weekByDay(2,2).subscribe((data: WeekByDay[]) =>{
-        console.log("Data => ", data);
-        this.list1 = data;
-        this.deviceService.weekByDay(2,1).subscribe((data: WeekByDay[]) =>{
-          console.log("Data => ", data);
-          this.list2 = data;
+      console.log("Selektovano je "+this.selectedOption);
+      this.authService.getlogInUser().subscribe(user=>{
+        this.authService.getCityId(user.city).subscribe(number=>{
+          this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+            this.settlements = settlement;
+          })
+          if(this.selectedOption == 0){
+            this.deviceService.weekByDay(number,2).subscribe((data: WeekByDay[]) =>{
+              console.log("Data => ", data);
+              this.list1 = data;
+              this.deviceService.weekByDay(number,1).subscribe((data: WeekByDay[]) =>{
+                console.log("Data => ", data);
+                this.list2 = data;
+              })
+        
+            })
+          }
+          else{
+            this.deviceService.weekByDaySettlement(this.selectedOption,2).subscribe((data: WeekByDay[]) =>{
+              console.log("Data => ", data);
+              this.list1 = data;
+              this.deviceService.weekByDaySettlement(this.selectedOption,1).subscribe((data: WeekByDay[]) =>{
+                console.log("Data => ", data);
+                this.list2 = data;
+              })
+        
+            })
+          }
+          
         })
-
       })
   }
 }

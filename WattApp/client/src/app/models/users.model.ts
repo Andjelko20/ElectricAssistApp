@@ -42,3 +42,10 @@ export interface Token {
     iat: number;
     exp: number;
   }
+
+  export interface Settlement {
+    id: number,
+    cityId: number,
+    city: string,
+    name: string
+  }
