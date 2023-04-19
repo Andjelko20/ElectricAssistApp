@@ -89,6 +89,7 @@
 }
 
 @media (min-width: 768px) {
+   
     .alldevices {
         top: 10%;
         position: absolute;

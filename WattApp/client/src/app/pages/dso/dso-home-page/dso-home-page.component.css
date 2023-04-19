@@ -1,142 +1,237 @@
-
-.wrapper{
-    margin-top: 60px;
-    min-height: calc(100vh - 61px);
-    width: 100%;
-}
-.head {
-    justify-content: flex-end;
-    height: 100%;
-}
-
-.card-group {
-    margin-top: 10px;
-    margin-left: 17px;
-    margin-right: 15px;
-    flex-wrap: 100px;
-
+@media (min-width: 768px) {
+    .wrapper{
+        margin-top: 60px;
+        min-height: calc(100vh - 61px);
+        width: 100%;
+    }
+    .head {
+        justify-content: flex-end;
+        height: 100%;
+    }
+    /* .overview {
+        background-color: white;
+        box-shadow: 2px 4px grey;
+        margin-right: 15px;
+        margin-left: 0px;
+        padding-left: 17px;
+        padding-right: 15px;
+        flex-grow: 100;
+        text-align: center;
+        border: 1px solid black;
+    } */
     
-    /* border: 1px solid black; */
-}
+    
+       /* satici */
+    
+    /* .consumption {
 
-.overview {
-    background-color: white;
-    box-shadow: 2px 4px grey;
-    margin-right: 15px;
-    margin-left: 0px;
-    padding-left: 17px;
-    padding-right: 15px;
-    flex-grow: 100;
-    text-align: center;
-    /* border: 1px solid black; */
-}
+        
+        width:23%;
 
-.green-square {
-    display: inline-block;
-    background-color: green;
-    width: 15px; /* Set the width to your desired size */
-    height: 15px; /* Set the height to the same value as the width to create a square shape */
-    margin-left: 10px;
-}
+        border-right: 1px solid gray;
+       
+    }
+    .consumption-body {
+        background-color: white;
+        width: 20%;
+        text-align: center;
+    } */
+    
+    .card-group {
 
-  .blue-square {
-    display: inline-block;
-    background-color: blue;
-    width: 15px; /* Set the width to your desired size */
-    height: 15px; /* Set the height to the same value as the width to create a square shape */
-    margin-left: 10px;
-}
-  .red-square {
-    display: inline-block;
-    background-color: red;
-    width: 15px; /* Set the width to your desired size */
-    height: 15px; /* Set the height to the same value as the width to create a square shape */
-    margin-left: 10px;
-}
-  
-/* satici */
+        margin-left: 17px;
+        margin-right: 15px;
+        flex-wrap: 100px;
+        text-align: center;
+        
+        /* border: 1px solid black; */
+    }
+    .ta-c {
+        text-align: center !important;
+    }
+    .mT-20 {
+        margin-top: 20px !important;
+    }
+    .jc-sb {
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+    .peers {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-flow: row wrap;
+        flex-flow: row wrap;
+        height: auto;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+    }
+    .gap-10 > * {
+        padding: 5px !important;
+    }
+    .gap-10 {
+        margin: 5px !important;
+    }
+    [class*='gap'] {
+        width: auto !important;
+        overflow: hidden !important;
+    }
+    .bgc-white, .bgcH-white:hover {
+        background-color: #ffffff !important;
+        border-radius: 5px;
+        box-shadow: 1px 2px grey;
+        margin-bottom: 7px;
+    }
+    
+    .bd {
+        border: 1px solid rgba(0, 0, 0, 0.0625) !important;
+    }
+    .p-20 {
+        padding: 20px !important;
+    }
+    .peer {
+        display: block;
+        height: auto;
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+    }
+    
+   
+    
+    .history-charts {
+        background-color: white;
+        box-shadow: 2px 4px grey;
+        /* border: 1px solid black; */
+        height: 100%;
+        flex-grow: 100;
+        padding-left: 5%;
+        margin-right: 15px;
+        width: 200px;
+    }
+    
+    .history-charts-body {
+        margin-top: 15px;
+        flex-grow: 100;
+        left: -80px;
+        right: -120px;
+        bottom: 0px;
+        top: 0px;
+        margin-right: 15px;
+    }
+    
+    
+    /* .chart-body {
+        border: 1px solid black;
+        padding-top: 2px;
+    } */
+    
+    
+    /* .csv-body {
+        border: 1px solid black;
+    } */
+    
+    .csv-body {
+        flex-grow: 100;
+    }
+    
+    .chart-body {
+        margin-left: 40%;
+        flex-grow: 100;
+    }
+    
+    
+    /* .history-charts-body{
+        margin-left: 200px;
+    } */
+    
+    .numpro {
+        margin-left: 10px;
+        margin-right: 10px;
+        background-color: white;
+        border-radius: 5px;
+        width: 20%;
+        box-shadow: 1px 2px grey;
+        margin-bottom: 7px;
+      }
+      
+      .tile_stats_count {
+        width: 65%;
+        margin-top: 15px;
+        float: none;
+        display: inline-block;
+        text-align: center;
+      }
+      
+      .count_top {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #7B7B7B;
+      }
 
-.consumption {
-
-    /* border: 1px solid black; */
-    padding-right: 25px;
-    margin-right: 20px;
-    width: 10px;
-    flex-grow: 100;
-}
-.consumption-body {
-    background-color: white;
-    /* border: 1px solid black; */
+      .count {
+        font-size: 30px;
+        font-weight: bold;
+        color: #3071af;
+      }
+      
+      .count_bottom {
+        font-size: 12px;
+        color: #999;
+        margin-top: 2px;
+      }
+      
+      .green {
+        color: #3071af;
+      }
+      
+      .numpro-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+        font-size: 14px;
+        color: #7B7B7B;
+      }
+      
+    .green-square {
+        display: inline-block;
+        background-color: green;
+        width: 17px; /* Set the width to your desired size */
+        height: 17px; /* Set the height to the same value as the width to create a square shape */
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    
+      .blue-square {
+        display: inline-block;
+        background-color: blue;
+        width: 17px; /* Set the width to your desired size */
+        height: 17px; /* Set the height to the same value as the width to create a square shape */
+        margin-left: 10px;
+        cursor: pointer;
+    }
+      .red-square {
+        display: inline-block;
+        background-color: red;
+        width: 17px; /* Set the width to your desired size */
+        height: 17px; /* Set the height to the same value as the width to create a square shape */
+        margin-left: 10px;
+        cursor: pointer;
+    }
     
 }
-
-.price {
-    padding: 10px;
-    margin-right: 10px;
-    background-color: white;
-    box-shadow: 2px 4px grey;
-    float: left;
-    /* border: 1px solid black; */
-}
-
-.price-body {
-    /* border: 1px solid black; */
-    margin-top: 2px;
-    font-size: 20px;
-    padding-top: 20px;
-    margin-left: 5px;
-    text-align: center;
-}
-
-.history-charts {
-    background-color: white;
-    box-shadow: 2px 4px grey;
-    /* border: 1px solid black; */
-    height: 100%;
-    flex-grow: 100;
-    padding-left: 5%;
-    margin-right: 15px;
-    width: 200px;
-}
-
-.history-charts-body {
-    margin-top: 15px;
-    flex-grow: 100;
-    left: -80px;
-    right: -120px;
-    bottom: 0px;
-    top: 0px;
-    margin-right: 15px;
-}
-
-
-/* .chart-body {
-    border: 1px solid black;
-    padding-top: 2px;
-} */
-
-
-/* .csv-body {
-    border: 1px solid black;
-} */
-
-.csv-body {
-    flex-grow: 100;
-}
-
-.chart-body {
-    margin-left: 40%;
-    flex-grow: 100;
-}
-
-
-/* .history-charts-body{
-    margin-left: 200px;
-} */
-
-.weather {
-    margin-right: 10px;
-    background-color: white;
-    box-shadow: 2px 4px grey;
-}
-

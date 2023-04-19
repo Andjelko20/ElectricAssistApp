@@ -1,8 +1,13 @@
 
+#sidebar{
+    display: none;
+
+}
+
 @media (min-width: 768px) {
     #dashboard {
         padding-left: 80px;
-        padding-right: 5px;
+        
         min-height: calc(100vh - 61px);
         width: 100%;
         
@@ -35,7 +40,8 @@
         z-index: 1;
         min-width: 40px;
         max-width: 80px;
-
+        display: block;
+        
     }
     #sidebar.active {
         min-width: 180px;
@@ -240,6 +246,11 @@
         display: block;
         
     }
-   
+    .list-unstyled.components li.active a {
+        background-color:  #1C315E;
+        color: white; 
+      }
+    
+      
    
 }
