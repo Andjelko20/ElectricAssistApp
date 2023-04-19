@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.Data;
+using Server.DTOs;
+using Server.Models.DropDowns.Location;
+using System.Collections.Generic;
 
 namespace Server.Services.Implementations
 {
@@ -18,6 +21,12 @@ namespace Server.Services.Implementations
             if (city == null) 
                 return -1;
             return city.Id;
+        }
+
+        public List<SettlementDTO> GetSettlements(long cityId)
+        {
+            var settlements = _context.Settlements.Where(s => s.CityId == cityId).Select(s => new SettlementDTO { Id=s.Id, Name=s.Name }).ToList();
+            return settlements;
         }
     }
 }

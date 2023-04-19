@@ -2043,55 +2043,55 @@ namespace Server.Data
                         {
                             UserId = 11,
                             Name="Solarna ploca",
-                            DeviceModelId = 44,
+                            DeviceModelId = 41,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = true,
-                            EnergyInKwh = 0.33f,
+                            EnergyInKwh = 0.4f,
                             StandByKwh = 0
                         },
                         new Device() // 90
                         {
                             UserId = 11,
                             Name="Solarna ploca",
-                            DeviceModelId = 44,
+                            DeviceModelId = 42,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = true,
-                            EnergyInKwh = 0.33f,
+                            EnergyInKwh = 0.36f,
                             StandByKwh = 0
                         },
                         new Device() // 91
                         {
                             UserId = 20,
                             Name="Solarna ploca",
-                            DeviceModelId = 44,
+                            DeviceModelId = 41,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = true,
-                            EnergyInKwh = 0.33f,
+                            EnergyInKwh = 0.4f,
                             StandByKwh = 0
                         },
                         new Device() // 92
                         {
                             UserId = 22,
                             Name="Solarna ploca",
-                            DeviceModelId = 44,
+                            DeviceModelId = 42,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = true,
-                            EnergyInKwh = 0.33f,
+                            EnergyInKwh = 0.36f,
                             StandByKwh = 0
                         },
                         new Device() // 93
                         {
                             UserId = 22,
                             Name="Solarna ploca",
-                            DeviceModelId = 44,
+                            DeviceModelId = 42,
                             Visibility = true,
                             Controlability = true,
                             TurnOn = true,
-                            EnergyInKwh = 0.33f,
+                            EnergyInKwh = 0.36f,
                             StandByKwh = 0
                         }
                     });

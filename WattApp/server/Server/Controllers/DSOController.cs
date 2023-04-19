@@ -30,7 +30,7 @@ namespace Server.Controllers
         [HttpGet]
         [Route("City/")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetHistoryForDeviceInLastYear([FromQuery] string cityName)
+        public async Task<IActionResult> GetCity([FromQuery] string cityName)
         {
             var cityId = dsoService.GetCityId(cityName);
 
@@ -38,6 +38,25 @@ namespace Server.Controllers
                 return NotFound(new { message = "City with name: " + cityName.ToString() + " does not exist." });
 
             return Ok(cityId);
+        }
+
+        /// <summary>
+        /// Get (settlementId, settlementName)
+        /// </summary>
+        [HttpGet]
+        [Route("Settlement/")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetSettlements([FromQuery] long cityId)
+        {
+            if (cityId == -1)
+                return NotFound(new { message = "City with name: " + cityId.ToString() + " does not exist." });
+
+            var settlements = dsoService.GetSettlements(cityId);
+            
+            if(settlements == null)
+                return NotFound(new { message = "Settlements for city with ID: " + cityId.ToString() + " don`t exist." });
+
+            return Ok(settlements);
         }
     }
 }

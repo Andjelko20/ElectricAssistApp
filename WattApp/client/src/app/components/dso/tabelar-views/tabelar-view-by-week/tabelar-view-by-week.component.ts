@@ -46,11 +46,15 @@ export class TabelarViewByWeekComponent implements OnInit {
                 console.log("Data => ", data);
                 this.list2 = data;
               })
-        
             })
           }
           
         })
       })
+
+      
+      
+
+      
   }
 }
