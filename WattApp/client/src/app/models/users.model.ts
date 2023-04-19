@@ -6,6 +6,11 @@ export interface Users {
     email:string;
     block: boolean;
     roleId:number;
+    settlement:string;
+    city:string;
+    country: string;
+    address:string;
+
 
 
 }

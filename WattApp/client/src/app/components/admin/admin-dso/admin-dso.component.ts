@@ -67,6 +67,8 @@ export class AdminDsoComponent {
   delete(id:number)
   {
     
+      
+   
     const deletePopup= document.getElementById('delete-admin-popup');
     
     if(deletePopup!=null)

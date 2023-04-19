@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 import { Roles } from 'src/app/utilities/role';
@@ -17,7 +18,9 @@ export class NavbarComponent implements OnInit {
   dso?:string;
   prosumer?:string;
   superadmin?:string;
-  name!:any;
+  name!:string;
+  id?:number;
+  user!:Users;
   constructor(private router:Router,private usersService:AuthService,
     private route:ActivatedRoute) {
       this.admin=Roles.ADMIN_NAME;
@@ -27,7 +30,12 @@ export class NavbarComponent implements OnInit {
      }
   ngOnInit(): void {
     let token=new JwtToken();
-    this.name=token.data.role as any;
+    this.id=token.data.id as number;
+    this.usersService.getlogInUser().subscribe(user=>{
+      this.user=user
+      this.name=user.name
+    });
+
 
     
   }

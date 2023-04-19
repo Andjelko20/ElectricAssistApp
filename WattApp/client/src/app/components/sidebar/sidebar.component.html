@@ -29,50 +29,51 @@
                     
                 </a>
             </li>
-            <li *ngIf="role==dso">
-                
-                <a class="nav-link" [routerLink]='["/"]'>
-                    <span class="icon-holder"><i class="fas fa-home"></i></span>
-                    <span class="title" >Home</span>
-                </a>
-            </li>
+            
 
-            <li *ngIf="role==admin || role==superadmin">
-                <a class="nav-link" [routerLink]='["/"]'>
+            <li *ngIf="role==admin || role==superadmin" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link" [routerLink]='["/dashboard"]'>
                     <span class="icon-holder"><i class="fas fa-home"></i> </span>
                     <span class="title" >Home</span>
                 </a>
             </li>
-            <li *ngIf="role==admin || role==superadmin">
+            <li *ngIf="role==admin || role==superadmin" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
                 <a class="nav-link" [routerLink]='["/add-user"]'>
                     <span class="icon-holder"><i class="fa fa-user"></i> </span>
                     <span class="title" >Add User</span>
                 </a>
             </li>
-            
-            <li *ngIf="role==dso">
+            <li *ngIf="role==dso " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" >
+                
+                <a class="nav-link" [routerLink]='["/dashboard"]' >
+                    <span class="icon-holder"><i class="fas fa-home"></i></span>
+                    <span class="title" >Home</span>
+                </a>
+            </li>
+            <li *ngIf="role==dso" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
                 <a class="nav-link" [routerLink]='["/prosumers"]'>
                     <span class="icon-holder"><i class="fa fa-user" ></i></span>
                     <span class="title" >Prosumers</span>
                 </a>
             </li>
-            <li *ngIf="role==dso">
+            <li *ngIf="role==dso" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
               
-                <a class="nav-link" [routerLink]='["/"]'>
+                <a class="nav-link" [routerLink]='["/prediction"]' >
                     <span class="icon-holder"><i class="fas fa-copy"></i></span>
                     <span class="title" >Reports</span>
                 </a>
             </li>
-            <li *ngIf="role==prosumer">
-                <a class="nav-link" [routerLink]='["/"]'>
+            
+            <li *ngIf="role==prosumer" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link" [routerLink]='["/dashboard"]'>
                 <span class="icon-holder"><i class="fas fa-home"></i></span>
                 <span class="title" >Home</span>
                 </a>
 
             </li>
-            <li *ngIf="role==prosumer">
+            <li *ngIf="role==prosumer" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
                 <a class="nav-link" [routerLink]='["/devices"]'>
-                <span class="icon-holder"><i class="fas fa-copy"></i></span>
+                <span class="icon-holder"><i class="fa fa-mobile"></i></span>
                 <span class="title" >Devices</span>
                 </a>
 
@@ -83,6 +84,8 @@
     </nav>
     <div id="dashboard">
         <router-outlet></router-outlet>
-        
+        <app-footer></app-footer>
     </div>
+    
 </div>
+

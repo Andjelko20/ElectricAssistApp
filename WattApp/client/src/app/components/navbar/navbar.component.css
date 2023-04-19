@@ -14,7 +14,16 @@
       margin-bottom: 30px;
       transition: all 0.3s;
     }
-    
+    #sidebarCollapse {
+      transition: all 0.2s ease-in-out;
+    }
+    /* #sidebarCollapse:hover {
+      background-color: #1c32af;
+      border-color: #ffffff;
+    } */
+    #sidebarCollapse:hover {
+      color: rgb(48, 98, 204);
+    }
     .navbar {
       background-color: #1C315E;
     }
