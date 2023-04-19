@@ -38,12 +38,12 @@ namespace Server.Services.Implementations
             if (page.NumberOfPages < pageNumber || pageNumber<1)
                 throw new HttpRequestException("Invalid page number",null,HttpStatusCode.BadRequest);
             logger.LogInformation(page.NumberOfPages.ToString());
-            var users=context.Users
-                .Include(user=>user.Role)
-                .Include(user=>user.Settlement)
-                .Include(user=>user.Settlement.City)
-                .Include(user=>user.Settlement.City.Country)
-                .Where(filter)
+            var users = context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
+                .Where(user => filter.Invoke(user) && user.RoleId!=Roles.SuperadminId)
                 .Skip((pageNumber-1)*itemsPerPage)
                 .Take(itemsPerPage)
                 .Select(user=>new UserDetailsDTO(user))

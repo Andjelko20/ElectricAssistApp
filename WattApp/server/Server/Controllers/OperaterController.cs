@@ -49,7 +49,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("page/{page:int}")]
-        [Authorize(Roles = Roles.OperaterPermission)]
+        [Authorize(Roles = Roles.Operater)]
         public async Task<IActionResult> GetPage([FromRoute]int page)
         {
             try
@@ -76,7 +76,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("{id:long}")]
-        [Authorize(Roles = Roles.OperaterPermission)]
+        [Authorize(Roles = Roles.Operater)]
         public async Task<IActionResult> GetUserById([FromRoute]long id)
         {
             var user = await userService.GetUserById(id);
@@ -98,7 +98,7 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpPost]
-        [Authorize(Roles =Roles.OperaterPermission)]
+        [Authorize(Roles =Roles.Operater)]
         public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO requestBody)
         {
             try
@@ -147,7 +147,7 @@ namespace Server.Controllers
 
         [HttpPut]
         [Route("{id:long}")]
-        [Authorize(Roles =Roles.AdminPermission)]
+        [Authorize(Roles =Roles.Admin)]
         public async Task<IActionResult> UpdateUserByAdmin([FromBody] UpdateUserByAdminDTO requestBody, [FromRoute]long id)
         {
             try
@@ -179,7 +179,7 @@ namespace Server.Controllers
 
         [HttpDelete]
         [Route("{id:long}")]
-        [Authorize(Roles =Roles.AdminPermission)]
+        [Authorize(Roles =Roles.Operater)]
         public async Task<IActionResult> DeleteUser([FromRoute] long id)
         {
             var user=await userService.GetUserById(id);
