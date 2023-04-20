@@ -31,6 +31,7 @@
         "ng2-charts": "^4.1.1",
         "ngx-gauge": "^7.0.0",
         "popper.js": "^1.16.1",
+        "ngx-pagination": "^6.0.3",
         "rxjs": "~7.8.0",
         "set-value": "^4.1.0",
         "update": "^0.7.4",

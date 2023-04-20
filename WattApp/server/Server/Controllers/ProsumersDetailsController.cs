@@ -48,13 +48,13 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpGet]
-        [Route("page/{page:int}")]
+        [Route("page")]
         [Authorize(Roles=Roles.Dispatcher)]
-        public async Task<IActionResult> GetPage([FromRoute] int page)
+        public async Task<IActionResult> GetPage([FromQuery] int pageNumber, [FromQuery] int pageSize=20)
         {
             try
             {
-                return Ok(await userService.GetPageOfUsers(page, 20, (user) => user.RoleId==Roles.ProsumerId));
+                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId));
             }
             catch (HttpRequestException ex)
             {

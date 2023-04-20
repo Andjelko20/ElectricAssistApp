@@ -37,9 +37,12 @@ export class AuthService {
     return this.http.get(environment.serverUrl );
   }
 
-  getAllUsers():Observable<any>
+  getAllUsers(pageNumber:number,pageSize:number=10):Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+'/api/users/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+	let url=new URL(environment.serverUrl+'/api/users/page');
+	url.searchParams.set("pageNumber",pageNumber.toString());
+	url.searchParams.set("pageSize",pageSize.toString());
+    return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   getAllProsumers():Observable<any>
   {

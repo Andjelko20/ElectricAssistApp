@@ -62,13 +62,14 @@
             <a class="btn btn-primary" href="device-add" role="button">Add device</a>
         </div>
         <div class="devices"  *ngIf="devices.length!==0">
-            <div class="devices-item" id="slide-1" *ngFor="let device of devices" >
+            <div class="devices-item" id="slide-1" *ngFor="let device of devices | paginate: {currentPage,itemsPerPage,totalItems}" >
                 <a [routerLink]='["/device/"+device.id]' class="devices-device-item">
                     <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
 
                 </a>
                 <h3 id="deviceh3">{{device.name}}</h3>
             </div>
+			<app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
         </div> 
         <div class="devices"  *ngIf="devices.length===0">
             <h1 id="nodevices">You don't have any devices</h1>

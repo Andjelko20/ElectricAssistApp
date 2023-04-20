@@ -48,13 +48,13 @@ namespace Server.Controllers
 
 
         [HttpGet]
-        [Route("page/{page:int}")]
+        [Route("page")]
         [Authorize(Roles = Roles.AdminPermission)]
-        public async Task<IActionResult> GetPage([FromRoute]int page)
+        public async Task<IActionResult> GetPage([FromQuery]int pageNumber, [FromQuery] int pageSize=10)
         {
             try
             {
-                return Ok(await userService.GetPageOfUsers(page, 20, (user) => true));
+                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => true));
             }
             catch(HttpRequestException ex)
             {
