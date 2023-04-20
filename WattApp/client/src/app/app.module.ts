@@ -65,6 +65,11 @@ import { AllDevicesDsoComponent } from './components/dso/all-devices-dso/all-dev
 import { PageControlComponent } from './components/page-control/page-control.component';
 import { NgxPaginationModule } from "ngx-pagination";
 import { FooterComponent } from './components/footer/footer.component';
+import { TabelarViewComponent } from './components/dso/tabelar-views/tabelar-view-by-day/tabelar-view.component';
+import { TodayDsoComponent } from './components/weather/today-dso/today-dso.component';
+import { TabelarViewByMonthComponent } from "./components/dso/tabelar-views/tabelar-view-by-month/tabelar-view-by-month.component";
+import { TabelarViewByYearComponent } from './components/dso/tabelar-views/tabelar-view-by-year/tabelar-view-by-year.component';
+import { TabelarViewByWeekComponent } from './components/dso/tabelar-views/tabelar-view-by-week/tabelar-view-by-week.component';
 
 
 @NgModule({
@@ -133,10 +138,13 @@ import { FooterComponent } from './components/footer/footer.component';
   OneDeviceComponent,
   AllDevicesDsoComponent,
   PageControlComponent,
-  FooterComponent
+  FooterComponent,
+  TabelarViewComponent,
+  TodayDsoComponent,
+  TabelarViewByYearComponent,
+  TabelarViewByWeekComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,

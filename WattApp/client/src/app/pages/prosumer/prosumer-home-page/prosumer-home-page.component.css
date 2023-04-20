@@ -156,7 +156,7 @@ ul {
 .prognosis {
     display: none;
     /* border: 1px solid black; */
-    width: 25%;
+    width: 50%;
     height: 7%;
     top: 12%;
     right: 2%;
@@ -282,10 +282,10 @@ h1 {
     .prognosis {
         display: flex;
         /* border: 1px solid black; */
-        width: 30%;
-        height: 15%;
+        width: 20%;
+        height: 20%;
         top: 8%;
-        right: -12%;
+        right: -2%;
         position: absolute;
         transition: all 0.3s;
     }

@@ -1,0 +1,40 @@
+.table-container {
+    margin: 20px 0;
+  }
+  
+  .table-wrapper {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    flex-basis: 48%;
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+  
+  .table-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  
+  .table {
+    border-collapse: collapse;
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .table th,
+  .table td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .table th {
+    background-color: #0077cc;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
