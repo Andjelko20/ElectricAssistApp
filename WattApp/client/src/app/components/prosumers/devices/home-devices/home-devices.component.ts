@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild, ElementRef} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
@@ -74,21 +74,5 @@ export class HomeDevicesComponent implements OnInit {
       
       
     }
-  turnOnOff(id: number) {
-    console.log(id);
-    
-      this.deviceService.turnOnOff(id).subscribe({
-        next:()=>{
-          const userIndex = this.devices.findIndex(device => device.id === id);
-          if(this.devices[userIndex].turnOn==false)
-          {
-            this.devices[userIndex].turnOn = true;
-          }   
-          else if(this.devices[userIndex].turnOn==true)
-          {
-            this.devices[userIndex].turnOn = false;
-          }
-        }
-      });
-  }
+  
 }

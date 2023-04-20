@@ -9,14 +9,17 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./admin-dso.component.css']
 })
 export class AdminDsoComponent {
-
+	currentPage:number=1;
+	itemsPerPage:number=10;
+	totalItems:number=10;
   
   showUsers:ShowUsers[]=[];
   constructor(private router:Router,private usersService:AuthService,
     private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.usersService.getAllUsers().subscribe(users => {
+    this.usersService.getAllUsers(1).subscribe(users => {
+	 this.totalItems=users.numberOfPages*this.itemsPerPage;
      this.showUsers=users.data.map((u:any)=>({
        id: u.id,
        name: u.name,
@@ -27,19 +30,49 @@ export class AdminDsoComponent {
      } as ShowUsers));
     });
     }
+	pageChanged(pageNumber:number){
+		this.currentPage=pageNumber;
+		this.usersService.getAllUsers(pageNumber,this.itemsPerPage).subscribe(users => {
+			this.totalItems=users.numberOfPages*this.itemsPerPage;
+			this.showUsers=users.data.map((u:any)=>({
+			  id: u.id,
+			  name: u.name,
+			  username: u.username,
+			  block: u.blocked,
+			  email: u.email,
+			  role: u.role
+			} as ShowUsers));
+		   });
+	}
 
 
   blockUser(id: number) {
-      this.usersService.blockUser(id).subscribe(() => {
-        const userIndex = this.showUsers.findIndex(user => user.id === id);
-        this.showUsers[userIndex].block = true;
-      });
+    const block= document.getElementById('block-popup');
+    if(block!=null)
+    {
+      block.addEventListener('click', () => {
+        this.usersService.blockUser(id).subscribe(() => {
+          const userIndex = this.showUsers.findIndex(user => user.id === id);
+          this.showUsers[userIndex].block = true;
+        });
+      }
+      );
+    }
+      
   }
   unblockUser(id: number) {
-      this.usersService.unblockUser(id).subscribe(() => {
-        const userIndex = this.showUsers.findIndex(user => user.id === id);
-        this.showUsers[userIndex].block = false;
+    const unblock= document.getElementById('unblock-popup');
+    if(unblock!=null)
+    {
+      unblock.addEventListener('click', () => {
+        this.usersService.unblockUser(id).subscribe(() => {
+          const userIndex = this.showUsers.findIndex(user => user.id === id);
+          this.showUsers[userIndex].block = false;
+        });
       });
+
+      
+    }
   }
 
 
@@ -50,15 +83,20 @@ export class AdminDsoComponent {
 
   delete(id:number)
   {
-    if(confirm('Are you sere to delete? '+id))
+    
+      
+   
+    const deletePopup= document.getElementById('delete-admin-popup');
+    
+    if(deletePopup!=null)
     {
+     deletePopup.addEventListener('click', () => {
       this.usersService.delete(id)
-      .subscribe({
-        next:(response)=>{
+      .subscribe(()=>{
           this.router.navigate(['dashboard']);
           location.reload();
-        }
       });
+     });
     }
   }
  
@@ -85,7 +123,6 @@ export class AdminDsoComponent {
   logout()
   {
     localStorage.removeItem('token');
-    localStorage.clear();
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }

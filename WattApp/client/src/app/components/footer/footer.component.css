@@ -1,0 +1,9 @@
+#allfooter{
+    display: none;
+}
+@media (min-width: 768px) {
+    #allfooter{
+        display: block;
+        width: 100%;
+    }
+}

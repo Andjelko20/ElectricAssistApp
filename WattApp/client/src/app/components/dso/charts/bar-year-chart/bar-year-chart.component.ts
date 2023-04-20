@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 
 import { Chart,registerables } from 'node_modules/chart.js'
+import { WeekByDay, YearsByMonth } from 'src/app/models/devices.model';
+import { Settlement } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { DevicesService } from 'src/app/services/devices.service';
 Chart.register(...registerables)
 
 
@@ -14,17 +18,73 @@ Chart.defaults.color = "#fff";
 })
 export class BarYearChartComponent {
 
-  
+  list1:YearsByMonth[]=[];
+  list2:YearsByMonth[]=[];
+  settlements:Settlement[] = [];
   itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
-  constructor() {
+  constructor(private deviceService:DevicesService,private authService:AuthService) {
     
   }
 
+  selectedOption: number = 0;
+
+  onOptionSelected() {
+    this.ngOnInit();
+  }
+
   ngOnInit(): void {
-    this.BarPlot();
+
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.settlements = settlement;
+        })
+        if(this.selectedOption == 0){
+          this.deviceService.yearByMonth(number,2).subscribe((data:YearsByMonth[])=>{
+            console.log("Data => ", data);
+            this.list1 = data;
+            this.deviceService.yearByMonth(number,1).subscribe((data:YearsByMonth[])=>{
+              console.log("Data => ", data);
+              this.list2 = data;
+              this.BarPlot();
+            })
+          })
+        }
+        else{
+          this.deviceService.yearByMonthSettlement(this.selectedOption,2).subscribe((data:YearsByMonth[])=>{
+            console.log("Data => ", data);
+            this.list1 = data;
+            this.deviceService.yearByMonthSettlement(this.selectedOption,1).subscribe((data:YearsByMonth[])=>{
+              console.log("Data => ", data);
+              this.list2 = data;
+              this.BarPlot();
+            })
+          })
+        }
+        
+      })
+    })
+    // this.deviceService.yearByMonth(2,2).subscribe((data:YearsByMonth[])=>{
+    //   console.log("Data => ", data);
+    //   this.list1 = data;
+    //   this.deviceService.yearByMonth(2,1).subscribe((data:YearsByMonth[])=>{
+    //     console.log("Data => ", data);
+    //     this.list2 = data;
+    //     this.BarPlot();
+    //   })
+    // })
   }
   BarPlot(){
-    
+
+    const chartId = 'barplot';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
+
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const Linechart =new Chart("barplot", {
         type: 'bar',
        
@@ -34,14 +94,14 @@ export class BarYearChartComponent {
           datasets: [
             {
               label: 'Consumption',
-              data: [111,10,23,120,70,90,80,33,55,76,123,99],
+              data: energyUsageResults1,
               borderColor: 'rgb(128, 0, 128)',
               backgroundColor: 'rgb(128, 0, 128)',
               
             },
             {
               label: 'Production',
-              data: [21,100,41,60,110,110,80,34,54,111,89,130],
+              data: energyUsageResults2,
               borderColor: 'rgb(255, 165, 0)',
               backgroundColor: 'rgb(255, 165, 0)'
             },

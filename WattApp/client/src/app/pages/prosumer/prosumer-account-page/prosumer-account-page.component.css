@@ -22,7 +22,7 @@
 }
 
 #turnback {
-    margin-top: 5px;
+    margin-top: 10px;
     width: 7%;
 }
 
@@ -47,6 +47,17 @@ ul li {
 a {
     color: black;
     text-decoration: none;
+}
+
+a:hover {
+    border-radius: 5px;
+    background-color: rgb(129, 202, 248);
+    color: white;
+}
+
+#number {
+    border-bottom: 1px solid rgb(183, 183, 183);
+    max-width: 300px;
 }
 
 @media (min-width: 768px) {

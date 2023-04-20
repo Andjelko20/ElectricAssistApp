@@ -73,6 +73,7 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
 } */
+
 .main {
     top: 0px;
     width: 100%;
@@ -129,11 +130,13 @@ li a {
     /* position: sticky; */
     background-size: cover;
     box-shadow: 5px dodgerblue;
-    background-color: white;
+    background-color: #eef2ff;
+    border-radius: 15px;
     width: 30%;
+    margin: 5px;
     text-align: center;
     display: inline-block;
-    padding-top: 20px;
+    padding: 10px;
     position: relative;
 }
 
@@ -148,6 +151,7 @@ li a {
     /* max-width: 140px;
     max-height: 120px; */
     width: 65%;
+    margin: 15%;
 }
 
 .devices-device-item {
@@ -155,25 +159,29 @@ li a {
     border-radius: 100px;
     max-width: 100%;
     display: inline-block;
+    background-color: white;
     position: relative;
 }
-#deviceCategoryId{
+
+#deviceCategoryId {
     width: 41%;
     font-size: 12px;
-    margin-left: 115px;
+    margin-left: 28%;
     margin-top: -35px;
 }
+
 label {
     display: inline-block;
     font-size: 15px;
     margin-left: 4%;
     margin-bottom: 0.5rem;
 }
-#nodevices{
+
+#nodevices {
     margin-top: 30%;
-    font-size:20px;
-    
+    font-size: 20px;
 }
+
 @media (min-width: 768px) {
     .alldevices {
         top: 10%;
@@ -189,6 +197,7 @@ label {
     }
     .devices-device-item {
         margin: 15px;
+        width: 75%;
     }
     /* .devices-item {
         border: 1px solid red;
@@ -207,24 +216,21 @@ label {
         font-size: 20px;
         width: 200px;
         margin-right: 5%;
-        
     }
-    #deviceCategoryId{
+    #deviceCategoryId {
         width: 20%;
-        font-size: 25px;
+        font-size: 20px;
         margin-left: 40%;
         margin-top: -50px;
         margin-bottom: 0.8rem;
     }
-    label{
+    label {
         display: inline-block;
-        
         margin-left: 25%;
         font-size: 30px;
     }
-    #nodevices{
+    #nodevices {
         margin-top: 10%;
         font-size: 40px;
-
     }
 }

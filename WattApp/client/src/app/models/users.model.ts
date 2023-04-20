@@ -6,6 +6,11 @@ export interface Users {
     email:string;
     block: boolean;
     roleId:number;
+    settlement:string;
+    city:string;
+    country: string;
+    address:string;
+
 
 
 }
@@ -41,4 +46,11 @@ export interface Token {
     sub: string;
     iat: number;
     exp: number;
+  }
+
+  export interface Settlement {
+    id: number,
+    cityId: number,
+    city: string,
+    name: string
   }

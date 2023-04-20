@@ -1,6 +1,6 @@
 /* Footer */
 
-footer {
+#pros {
     background-color: #1C315E;
     position: fixed;
     width: 100%;
@@ -20,8 +20,8 @@ footer {
 }
 
 @media (min-width: 768px) {
-    footer {
-        display: flex;
+    #pros {
         display: none;
+       
     }
 }

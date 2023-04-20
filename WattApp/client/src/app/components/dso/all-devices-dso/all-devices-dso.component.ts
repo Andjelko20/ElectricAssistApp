@@ -11,8 +11,11 @@ import { Categories } from 'src/app/utilities/categories';
   styleUrls: ['./all-devices-dso.component.css']
 })
 export class AllDevicesDsoComponent implements OnInit{
-  
-  devicesList:ShowDevices[] = []
+  currentPage:number=1;
+  itemsPerPage:number=12;
+  totalItems:number=10;
+
+  devicesList:ShowDevices[] = [];
   deviceCategoryId!: number;
   idDevice!: number;
   constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute) {}
@@ -27,9 +30,12 @@ export class AllDevicesDsoComponent implements OnInit{
      ]
 
   ngOnInit(): void {
+   
+    
     this.deviceCategoryId = 2;
-    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,12,this.deviceCategoryId).subscribe(devices => {
-      this.devicesList=devices.data.map((u:any)=>({
+    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+    	this.totalItems=devices.numberOfPages*this.itemsPerPage;
+		this.devicesList=devices.data.map((u:any)=>({
         id:u.id,
         userId: u.userId,
         deviceCategory:u.deviceCategory,
@@ -59,11 +65,45 @@ export class AllDevicesDsoComponent implements OnInit{
     
   }
 
+  pageChanged(pageNumber:number){
+	this.currentPage=pageNumber;
+	this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),pageNumber,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+		this.totalItems=devices.numberOfPages*this.itemsPerPage;
+		this.devicesList=devices.data.map((u:any)=>({
+		  id:u.id,
+		  userId: u.userId,
+		  deviceCategory:u.deviceCategory,
+		  deviceType: u.deviceType ,
+		  deviceBrand: u.deviceBrand ,
+		  deviceModel: u.deviceModel ,
+		  name: u.name ,
+		  energyInKwh: u.energyInKwh,
+		  standByKwh: u.standByKwh,
+		  visibility: u.visibility,
+		  controlability: u.controlability,
+		  turnOn: u.turnOn,
+	  
+	  })as ShowDevices)
+	  
+	  }, (error: { status: number; }) => {
+	  
+	  if (error.status === 404) {
+	  
+		this.devicesList=[]
+	  
+		console.log('Devices not found in database');
+	  
+	  }}
+	  
+	  );
+  }
+
   onSelectedCategory(event:any){
 
     this.deviceCategoryId = event.target.value;
-    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,12,this.deviceCategoryId).subscribe(devices => {
-      this.devicesList=devices.data.map((u:any)=>({
+    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+		this.totalItems=devices.numberOfPages*this.itemsPerPage;
+		this.devicesList=devices.data.map((u:any)=>({
         id:u.id,
         userId: u.userId,
         deviceCategory:u.deviceCategory,
@@ -91,27 +131,52 @@ export class AllDevicesDsoComponent implements OnInit{
     
     );
     }
-    turnOnOff(id: number) {
-
-       console.log(id);
-      this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
-      this.deviceService.turnOnOff(id).subscribe({
-      next:()=>{
-        const userIndex = this.devicesList.findIndex(user => user.id === id);
+    
+       turnOnOff(id: number) {
+        //console.log(id);
         
-      if(this.devicesList[userIndex].turnOn == false)
-      {
-      this.devicesList[userIndex].turnOn = true;
-      } 
-      else if(this.devicesList[userIndex].turnOn == true)
-      {
-        this.devicesList[userIndex].turnOn = false;
-      }
-      
-      }
-      
-      });
-      
+        const turnOn= document.getElementById('turn-on-popup');
+        const turnOff= document.getElementById('turn-off-popup');
+        console.log(turnOn);
+       if(turnOn!=null)
+       {
+            turnOn.addEventListener('click', () => {
+              this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
+              this.deviceService.turnOnOff(id).subscribe({
+              next:()=>{
+                const userIndex = this.devicesList.findIndex(user => user.id === id);
+                
+                  if(this.devicesList[userIndex].turnOn == false)
+                  {
+                  this.devicesList[userIndex].turnOn = true;
+                  } 
+                 
+                  
+              }
+              
+              });
+          });
        }
+       if(turnOff!=null)
+       {
+            turnOff.addEventListener('click', () => {
+              this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
+              this.deviceService.turnOnOff(id).subscribe({
+              next:()=>{
+                const userIndex = this.devicesList.findIndex(user => user.id === id);
+                
+                  if(this.devicesList[userIndex].turnOn == true)
+                  {
+                    this.devicesList[userIndex].turnOn = false;
+                  } 
+                
+                  
+              }
+              
+              });
+            });
+       }
+       
+      }
 
 }

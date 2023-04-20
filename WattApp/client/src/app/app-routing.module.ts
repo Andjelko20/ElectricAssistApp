@@ -57,6 +57,9 @@ const routes: Routes = [
 	{path:'reports',component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"device-update/:id",component:UpdateDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"device-add",component:AddDeviceComponent,canActivate:[ProsumerGuard]},
+	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard]},
+	{path:"profile-update",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
+
 
 
 	//TEST

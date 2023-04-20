@@ -1,10 +1,10 @@
 <div id="asdf">
-    <ngx-gauge [size]="300"
+    <ngx-gauge 
+            [margin]="18" 
            type="arch" 
            [thick]="15" 
            [value]="value" 
            cap="butt" 
-           label="Current production" 
            append="kWh"
            [markers]="markerConfig"  [thresholds]="thresholdConfig" [min]="min" [max]="max" >
 </ngx-gauge>

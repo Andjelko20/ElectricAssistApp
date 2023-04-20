@@ -38,4 +38,18 @@ export interface DeviceType {
     name: string;
 };
 
+export interface WeekByDay {
+    day: number;
+    month: string;
+    year : number;
+    energyUsageResult: number;
+}
+
+export interface YearsByMonth {
+    month: string;
+    year : number;
+    energyUsageResult: number;
+}
+
+
 
