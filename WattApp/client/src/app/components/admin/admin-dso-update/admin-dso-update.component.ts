@@ -13,13 +13,18 @@ import { environment } from 'src/environments/environment';
 export class AdminDsoUpdateComponent implements OnInit {
 	roles!:any[];
   updateUserDetail:Users={
-	id:0,
-    name:'',
-    username:'',
-    password:'',
-    email:'',
-    block:false,
-    roleId:0
+
+  id: 0,
+  name: '',
+  username: '',
+  email: '',
+  roleId: 0,
+  block: false,
+  settlement: '',
+  city: '',
+  country: '',
+  address: '',
+  password: ''
   }
   public emailErrorMessage:string="";
 	public errorMessage:string="";
@@ -43,7 +48,11 @@ export class AdminDsoUpdateComponent implements OnInit {
               password:"",
               email:response.email,
               block:response.blocked,
-              roleId:this.roles.find(r=>r.name==response.role)?.id
+              roleId:this.roles.find(r=>r.name==response.role)?.id,
+              settlement: response.settlement,
+              city: response.city,
+              country: response.country,
+              address: response.address
               };
             },
 			error:(response)=>{

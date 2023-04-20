@@ -5,11 +5,24 @@
     position: absolute;
     justify-content: center;
 }
+
+.back {
+    margin-top: 20%;
+}
+
 #turnback {
-    margin-top: 5px;
     width: 7%;
     margin-left: 5px;
 }
+
+.global {
+    position: absolute;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
 input {
     color: #1C315E;
 }
@@ -72,17 +85,8 @@ input.ng-touched {
         margin-top: 95px;
     }
     #turnback {
-<<<<<<< HEAD
         margin-top: 5px;
         width: 3%;
         margin-left: 35px;
     }
-    #turnback {
-=======
->>>>>>> origin/75-popup
-        width: 3%;
-        margin-top: 100px;
-        margin-left: 2%;
-    }
-
 }

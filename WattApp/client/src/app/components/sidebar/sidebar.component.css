@@ -4,7 +4,7 @@
 @media (min-width: 768px) {
     #dashboard {
         padding-left: 80px;
-        padding-right: 5px;
+        
         min-height: calc(100vh - 61px);
         width: 100%;
         
@@ -242,6 +242,11 @@
         display: block;
         
     }
-   
+    .list-unstyled.components li.active a {
+        background-color:  #1C315E;
+        color: white; 
+      }
+    
+      
    
 }

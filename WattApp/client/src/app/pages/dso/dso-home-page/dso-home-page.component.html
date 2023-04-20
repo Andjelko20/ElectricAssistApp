@@ -1,62 +1,108 @@
 <div class="wrapper">
     <div class="card-group">
-        <div class="price">
-            <div class="price-body">
-                <h1 id="price-title">Current price of Electricity</h1>
-                <p style="font-size: 25px;"><b>2.96</b> RSD/kWh</p>
-                <hr style="width: 300px; margin: auto;">
-                <p style="font-size: 15px;">The predicted price may differ from the final one, it is based on...</p>
-            </div>
-        </div>
-        <div class="overview">
-            <div class="overview-body">
+        <div class="bgc-white p-20 bd">
+            <div class="c-grey-900">
                 <span><b>Overview of Kragujevac </b> </span>
-                <span class="green-square"></span> Green zone
-                <span class="blue-square"></span> Blue zone
-                <span class="red-square" ></span> Red zone
-              <hr>
-                
+                <span class="green-square" data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than 350 kWh"></span> Green zone 
+                <span class="blue-square" data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh"></span> Blue zone 
+                <span class="red-square" data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh"></span> Red zone
+                <!-- <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+                <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+                    Tooltip on top
+                  </button> -->
+                <hr>
             </div>
-            <div class="card-group">
-                <div class="consumption">
-                    <div class="consumption-body">
+            <div class="peers mT-20 fxw-nw@lg+ jc-sb ta-c gap-10">
+                <div class="peer">
                         <app-current-power-wattmeter></app-current-power-wattmeter>
-                        <span>text</span>
-                    </div>
+                        <span>Current consumption</span>
                 </div>
-                <div class="consumption">
-                    <div class="consumption-body">
+                <div class="peer">
                         <app-consumption-today-wattmeter></app-consumption-today-wattmeter>
-                        <span>text</span>
-                    </div>
+                        <span>Today consumption</span>
                 </div>
 
-                <div class="consumption">
-                    <div class="consumption-body">
+                <div class="peer">
                         <app-consumption-month-wattmeter></app-consumption-month-wattmeter>
-                        <span>text</span>
-                    </div>
+                        <span>Month consumption</span>
                 </div>
-                <div class="consumption">
-                    <div class="consumption-body">
+                <div class="peer">
                         <app-consumption-year-wattmeter></app-consumption-year-wattmeter>
-                        <span>text</span>
-                    </div>
+                        <span>Year consumption</span>
                 </div>
             </div>
+        </div>
+        <div class="numpro">
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i style="font-size: 15px;" class="fa fa-user"></i> Total Prosumers in Kragujevac</span>
+                <div class="count">50</div>
+                <span class="count_bottom"><i class="green">10% </i> From last Week</span>
+            </div>
+            <hr style="margin: 0;">
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i style="font-size: 15px;"class="fa fa-sun"></i> Prosumers producing in Kragujevac</span>
+                <div class="count">20</div>
+                <span class="count_bottom"><i class="green">2% </i> From last Week</span>
+            </div>
+            
+            <hr style="margin: 0;">
+            <div class="col-md-2 col-sm-4  tile_stats_count">
+                <span class="count_top"><i style="font-size: 15px;" class="fa fa-bolt"></i>Average production in Kragujevac</span>
+                <div class="count">20 kWh</div>
+                <span class="count_bottom"><i class="green"><i class="fa fa-arrow-up"></i>14% </i> From last Week</span>
+            </div>
+            
+        </div>
+        <div id="pie">
+            
+            <span style="margin: 0; padding: 0;"><b>Current production in stettlements </b><hr> </span>
+            
+            <div id="chart">
+                <app-pie-chart></app-pie-chart>
+            </div>
+            <!-- <div id="show-settlement-data">
+                
+                <table>
+                    <tr>
+                      <th>Current consumption</th>
+                      <th>Current production</th>
+                      <th>Average consumption</th>
+                      <th>Average production</th>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </table>
+            </div> -->
+            
+
+
         </div>
 
     </div>
-
+<!-- <hr>
+            <div class="numpro-body">
+                <span><app-number-of-users-meter></app-number-of-users-meter></span>
+                <span>Number of prosumers producing</span>
+            </div> -->
 
     <div class="card-group">
-        <div class="weather">
+        <!-- <div class="weather">
             <div class="weather-body">
                 <span><app-number-of-users-meter></app-number-of-users-meter></span>
                 <span>weather API</span>
             </div>
-        </div>
-
+        </div> -->
+<!-- 
         <div class="history-charts">
             <div class="csv-body">
                 <span>Power and Energy </span>
@@ -84,7 +130,7 @@
 
 
 
-        </div>
+        </div> -->
     </div>
 
 </div>

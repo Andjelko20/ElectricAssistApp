@@ -62,8 +62,12 @@ import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-
 import { HomeDevicesComponent } from './components/prosumers/devices/home-devices/home-devices.component';
 import { OneDeviceComponent } from './components/prosumers/devices/one-device/one-device.component';
 import { AllDevicesDsoComponent } from './components/dso/all-devices-dso/all-devices-dso.component';
+<<<<<<< HEAD
 import { PageControlComponent } from './components/page-control/page-control.component';
 import { NgxPaginationModule } from "ngx-pagination";
+=======
+import { FooterComponent } from './components/footer/footer.component';
+>>>>>>> d885decdf0a4eea811976f8bf9bbfac59fc04c94
 
 
 @NgModule({
@@ -131,8 +135,8 @@ import { NgxPaginationModule } from "ngx-pagination";
   HomeDevicesComponent,
   OneDeviceComponent,
   AllDevicesDsoComponent,
-  PageControlComponent
-
+  PageControlComponent,
+  FooterComponent
   ],
   imports: [
     BrowserModule,
