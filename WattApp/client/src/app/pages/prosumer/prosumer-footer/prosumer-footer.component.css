@@ -5,7 +5,8 @@
     position: fixed;
     width: 100%;
     bottom: 0;
-    text-align: center;
+    display: flex;
+    justify-content: center;
     left: 0;
 }
 
@@ -23,6 +24,20 @@ a {
 #footerimg {
     width: 30px;
     margin: 5px;
+}
+
+.nav-link {
+    padding: 5%;
+    border: 1px solid white;
+    float: left;
+}
+
+.icon-holder {
+    width: 5% !important;
+}
+
+.title {
+    font-size: 15px;
 }
 
 @media (min-width: 768px) {

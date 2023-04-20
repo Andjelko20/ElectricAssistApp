@@ -1,6 +1,13 @@
 <footer id="pros">
-    <a href="prosumer-home-page" class="footer-app"><img id="footerimg" src="assets/img/dashboard.png" alt="">Home</a>
-    <a href="prosumer-devices-page" class="footer-app"><img id="footerimg" src="assets/img/device.png" alt="">Devices</a>
-    <a href="prosumer-home-page" class="footer-app"><img id="footerimg" src="assets/img/reports.png" alt="">Reports</a>
-    <a href="prosumer-account-page" class="footer-app"><img id="footerimg" src="assets/img/user.png" alt="">User</a>
+
+    <a class="nav-link" [routerLink]='["/prosumer-home-page"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><span class="icon-holder"><i class="fa fa-home"></i></span>
+        <span class="title">Devices</span></a>
+    <a class="nav-link" [routerLink]='["/devices"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><span class="icon-holder" ><i class="fa fa-mobile"></i></span>
+        <span class="title">Devices</span></a>
+    <a class="nav-link" [routerLink]='["/devices"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><span class="icon-holder"><i class="fa fa-reports"></i></span>
+        <span class="title">Devices</span></a>
+
+    <a class="nav-link" [routerLink]='["/devices"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><span class="icon-holder"><i class="fa fa-user"></i></span>
+        <span class="title">Devices</span></a>
+
 </footer>
