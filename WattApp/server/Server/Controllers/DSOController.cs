@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Server.Data;
 using Server.Models;
 using Server.Services;
+using Server.Models.DropDowns.Location;
 
 namespace Server.Controllers
 {
@@ -48,8 +49,8 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetSettlements([FromQuery] long cityId)
         {
-            if (cityId == -1)
-                return NotFound(new { message = "City with name: " + cityId.ToString() + " does not exist." });
+            if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+                return NotFound(new { message = "City with ID: " + cityId.ToString() + " does not exist." });
 
             var settlements = dsoService.GetSettlements(cityId);
             
@@ -60,17 +61,32 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Get CityId
+        /// Get double consumptio/production for cityId - today or this month
         /// </summary>
         [HttpGet]
         [Route("CityDouble/")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetCity([FromQuery] long cityId, [FromQuery] long deviceCategoryId)
+        public async Task<IActionResult> GetCity([FromQuery] long deviceCategoryId, long todayCityId, long thisMonthCityId)
         {
-            var result = dsoService.GetCityConsumptionForToday(cityId, deviceCategoryId);
+            if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with ID: " + deviceCategoryId.ToString() + " doesnt exist"});        
 
-            
-            return Ok(result);
+            if (todayCityId!=0)
+            {
+                if (!_sqliteDb.Cities.Any(c => c.Id == todayCityId))
+                    return NotFound(new { message = "City with ID: " + todayCityId.ToString() + " doesnt exist" });
+                
+                return Ok(dsoService.GetCityConsumptionForToday(todayCityId, deviceCategoryId));
+            } 
+            else if(thisMonthCityId!=0)
+            {
+                if (!_sqliteDb.Cities.Any(c => c.Id == thisMonthCityId))
+                    return NotFound(new { message = "City with ID: " + thisMonthCityId.ToString() + " doesnt exist" });
+
+                return Ok(dsoService.GetUsageHistoryForDeviceInThisMonth(thisMonthCityId, deviceCategoryId));
+            }
+
+            return BadRequest("Input parameters are empty.");
         }
     }
 }
