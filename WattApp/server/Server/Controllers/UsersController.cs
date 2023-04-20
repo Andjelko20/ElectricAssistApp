@@ -230,7 +230,7 @@ namespace Server.Controllers
                     Latitude = requestBody.Latitude,
                     Longitude = requestBody.Longitude,
                     SettlementId = requestBody.SettlementId, 
-                    ExpireAt = DateTime.UtcNow,
+                    ExpireAt = DateTime.Now.AddDays(1),
                     ConfirmKey = ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
                 };
 
