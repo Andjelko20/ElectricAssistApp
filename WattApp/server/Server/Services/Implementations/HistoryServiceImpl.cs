@@ -824,7 +824,7 @@ namespace Server.Services.Implementations
             DateTime endTime = DateTime.Now;
 
             List<DeviceEnergyUsage> deviceEnergyUsageList = _context.DeviceEnergyUsages
-                .Where(u => u.DeviceId == deviceId && u.StartTime >= startOfMonth/* && u.EndTime <= endTime*/)
+                .Where(u => u.DeviceId == deviceId && u.StartTime >= startOfMonth && u.StartTime <= DateTime.Now/* && u.EndTime <= endTime*/)
                 .ToList();
 
             foreach (var usage in deviceEnergyUsageList)
@@ -863,7 +863,7 @@ namespace Server.Services.Implementations
             Console.WriteLine("----------------------- startOfTheYear="+startOfTheYear);
             // za trazeni uredjaj, samo kada je radio od pocetka ove godine
             var deviceEnergyUsages = _context.DeviceEnergyUsages
-                .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date >= startOfTheYear)
+                .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date >= startOfTheYear && usage.StartTime <= DateTime.Now)
                 .ToList();
 
             foreach (var usage in deviceEnergyUsages)
