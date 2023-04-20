@@ -64,9 +64,9 @@ namespace Server.Controllers
         /// Get double consumptio/production for cityId - today or this month
         /// </summary>
         [HttpGet]
-        [Route("CityDouble/")]
+        [Route("CityDouble/{deviceCategoryId:long}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetCity([FromQuery] long deviceCategoryId, long todayCityId, long thisMonthCityId)
+        public async Task<IActionResult> GetCity([FromRoute] long deviceCategoryId, [FromQuery] long todayCityId, long thisMonthCityId, long thisYearCityId)
         {
             if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with ID: " + deviceCategoryId.ToString() + " doesnt exist"});        
@@ -84,6 +84,13 @@ namespace Server.Controllers
                     return NotFound(new { message = "City with ID: " + thisMonthCityId.ToString() + " doesnt exist" });
 
                 return Ok(dsoService.GetUsageHistoryForDeviceInThisMonth(thisMonthCityId, deviceCategoryId));
+            }
+            else if(thisYearCityId!=0)
+            {
+                if (!_sqliteDb.Cities.Any(c => c.Id == thisYearCityId))
+                    return NotFound(new { message = "City with ID: " + thisYearCityId.ToString() + " doesnt exist" });
+
+                return Ok(dsoService.GetUsageHistoryForDeviceInThisYear(thisYearCityId, deviceCategoryId));
             }
 
             return BadRequest("Input parameters are empty.");
