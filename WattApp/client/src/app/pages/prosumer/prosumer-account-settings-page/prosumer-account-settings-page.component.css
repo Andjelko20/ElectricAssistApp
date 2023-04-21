@@ -22,6 +22,7 @@ input.ng-invalid[notEqual] {
 }
 
 .centar {
+    margin-bottom: 15px;
     max-width: 100%;
     margin-top: 45px;
     text-align: center;
@@ -53,8 +54,12 @@ form {
     margin-bottom: 50px;
 }
 
+.btn {
+    margin-right: 20px;
+    margin-top: 15px;
+}
+
 #giveupbutton {
-    margin-left: 20px;
     background-color: red !important;
     border: red;
 }
@@ -89,11 +94,16 @@ div.error-message {
 }
 
 @media (min-width: 768px) {
+    .main {
+        top: 0;
+        position: relative !important;
+    }
     .back {
         margin-top: 15px;
     }
     .centar {
-        margin-top: 85px;
+        display: flex;
+        justify-content: center;
     }
     #turnback {
         margin-left: 25px;

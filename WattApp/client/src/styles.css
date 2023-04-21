@@ -11,12 +11,14 @@
     box-sizing: border-box;
 }
 
+.main {
+    background-color: rgb(196, 65, 65);
+}
+
 body {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: rgb(238, 238, 238);
     color: #727272;
-    min-height: 100%;
-    -webkit-text-size-adjust: 100%;
     overflow: auto !important;
     /* bottom: 0;
     top: 0;

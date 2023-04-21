@@ -2,14 +2,12 @@
     top: 0;
     width: 100%;
     min-height: 100vh;
-    position: absolute;
 }
 
 .centar {
     max-width: 100%;
     margin-top: 45px;
     text-align: center;
-    height: auto;
 }
 
 #imgdevice {
@@ -29,11 +27,12 @@
 h1 {
     text-align: center;
     margin-top: 15px;
-    font-size: 15px;
+    font-size: 20px;
 }
 
 ul {
-    margin-top: 15px;
+    margin-top: 20px;
+    margin-left: -15px;
     text-align: left;
     list-style: none;
     margin-left: 10px;
@@ -41,7 +40,7 @@ ul {
 
 ul li {
     text-decoration: none;
-    font-size: 15px;
+    font-size: 20px;
 }
 
 a {
