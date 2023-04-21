@@ -4,8 +4,8 @@
 
 @media (min-width: 768px) {
     #allfooter {
-        bottom: 0;
-        position: absolute;
+        /* bottom: 0;
+        position: absolute; */
         display: block;
         width: 100%;
     }

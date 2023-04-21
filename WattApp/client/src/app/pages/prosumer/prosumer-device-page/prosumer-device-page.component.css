@@ -125,6 +125,13 @@ p {
 }
 
 @media (min-width: 768px) {
+    .main {
+        top: 0px;
+        width: 100%;
+        min-height: 100vh;
+        position: relative !important;
+        justify-content: center;
+    }
     .device {
         top: 83px;
     }

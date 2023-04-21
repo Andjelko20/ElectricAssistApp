@@ -1,13 +1,11 @@
 .main {
     top: 0px;
     width: 100%;
-    min-height: 100vh;
-    position: absolute;
     justify-content: center;
 }
 
 .back {
-    margin-top: 20%;
+    margin-top: 50px;
 }
 
 #turnback {
@@ -16,10 +14,9 @@
 }
 
 .global {
-    position: absolute;
     width: 100%;
-    display: flex;
     padding: 10px;
+    display: flex;
     justify-content: center;
 }
 
@@ -31,9 +28,11 @@ input {
     border-radius: 5px;
     box-shadow: 2px 4px gray;
     background-color: gainsboro;
-    padding: 20px;
+    margin-left: 26px;
+    margin-right: 26px;
     width: 100%;
-    margin-bottom: 15%;
+    margin-bottom: 70px;
+    padding-bottom: 5px;
 }
 
 h1 {

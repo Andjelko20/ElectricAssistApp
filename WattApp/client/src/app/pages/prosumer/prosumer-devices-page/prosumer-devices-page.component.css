@@ -2,6 +2,8 @@
     top: 0px;
     width: 100%;
     min-height: 100vh;
+    position: absolute;
+    justify-content: center;
 }
 
 #turnback {
@@ -89,6 +91,12 @@
 }
 
 @media (min-width: 768px) {
+    .main {
+        top: 0px;
+        width: 100%;
+        min-height: 100vh;
+        justify-content: center;
+    }
     .alldevices {
         top: 10%;
         position: absolute;
