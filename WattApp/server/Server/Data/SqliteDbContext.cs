@@ -483,6 +483,45 @@ namespace Server.Data
                             Address="Ribnjak donji put 89",
                             Latitude=45.23619484032214f,
                             Longitude=19.856997759771957f
+                        },
+                        new UserModel() // 25
+                        {
+                            Name="DSO NS",
+                            Email="dso.ns@gmail.com",
+                            RoleId = 2,
+                            Blocked=false,
+                            Username="dso.ns",
+                            Password=HashGenerator.Hash("dso.ns"),
+                            SettlementId=6,
+                            Address="Bulevar oslobodjenja 96",
+                            Latitude=45.24591602861516f,
+                            Longitude=19.839801159727955f
+                        },
+                        new UserModel() // 26
+                        {
+                            Name="DSO BG",
+                            Email="dso.bg@gmail.com",
+                            RoleId = 2,
+                            Blocked=false,
+                            Username="dso.bg",
+                            Password=HashGenerator.Hash("dso.bg"),
+                            SettlementId=4,
+                            Address="Masarikova 1-3",
+                            Latitude=44.80751078632107f, 
+                            Longitude=20.46303794922657f
+                        },
+                        new UserModel() // 27
+                        {
+                            Name="DSO KG",
+                            Email="dso.kg@gmail.com",
+                            RoleId = 2,
+                            Blocked=false,
+                            Username="dso.kg",
+                            Password=HashGenerator.Hash("dso.kg"),
+                            SettlementId=2,
+                            Address="Slobode 7",
+                            Latitude=44.02907224180809f,
+                            Longitude=20.92016052263715f
                         }
                     });
                     context.SaveChanges();
@@ -1037,7 +1076,7 @@ namespace Server.Data
                 {
                     context.Devices.AddRange(new[]
                     {
-                        new Device()
+                        new Device() // 1
                         {
                             UserId = 4,
                             Name="TV FOX",
@@ -1048,7 +1087,7 @@ namespace Server.Data
                             EnergyInKwh = 1.1f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 2
                         {
                             UserId = 5,
                             Name="Klima dnevna soba dole",
@@ -1059,7 +1098,7 @@ namespace Server.Data
                             EnergyInKwh = 5.2f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 3
                         {
                             UserId = 5,
                             Name="Klima dnevna soba gore",
@@ -1070,7 +1109,7 @@ namespace Server.Data
                             EnergyInKwh = 3.4f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 4
                         {
                             UserId = 6,
                             Name="Klima hodnik",
@@ -1081,7 +1120,7 @@ namespace Server.Data
                             EnergyInKwh = 1.1f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 5
                         {
                             UserId = 7,
                             Name="Klima velika",
@@ -1092,7 +1131,7 @@ namespace Server.Data
                             EnergyInKwh = 5.2f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 6
                         {
                             UserId = 8,
                             Name="Mala klima",
@@ -1103,7 +1142,7 @@ namespace Server.Data
                             EnergyInKwh = 1.1f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 7
                         {
                             UserId = 9,
                             Name="Klima",
@@ -1114,7 +1153,7 @@ namespace Server.Data
                             EnergyInKwh = 1.13f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 8
                         {
                             UserId = 10,
                             Name="Klima",
@@ -1125,7 +1164,7 @@ namespace Server.Data
                             EnergyInKwh = 1.13f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 9
                         {
                             UserId = 10,
                             Name="Elektricni sporet",
@@ -1136,7 +1175,7 @@ namespace Server.Data
                             EnergyInKwh = 1.45f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 10
                         {
                             UserId = 10,
                             Name="Friz",
@@ -1147,7 +1186,7 @@ namespace Server.Data
                             EnergyInKwh = 0.026f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 11
                         {
                             UserId = 11,
                             Name="El. sporet",
@@ -1158,7 +1197,7 @@ namespace Server.Data
                             EnergyInKwh = 1.45f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 12
                         {
                             UserId = 12,
                             Name="Sporet",
@@ -1169,7 +1208,7 @@ namespace Server.Data
                             EnergyInKwh = 1.5f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 13
                         {
                             UserId = 13,
                             Name="Elektr. sporet",
@@ -1180,7 +1219,7 @@ namespace Server.Data
                             EnergyInKwh = 1.45f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 14
                         {
                             UserId = 14,
                             Name="Elektricni sporet",
@@ -1191,7 +1230,7 @@ namespace Server.Data
                             EnergyInKwh = 2.37f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 15
                         {
                             UserId = 15,
                             Name="Elektricni donja kuhinja",
@@ -1202,7 +1241,7 @@ namespace Server.Data
                             EnergyInKwh = 2.185f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 16
                         {
                             UserId = 16,
                             Name="elektricni",
@@ -1213,7 +1252,7 @@ namespace Server.Data
                             EnergyInKwh = 2.7f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 17
                         {
                             UserId = 17,
                             Name="elektricni sporet",
@@ -1224,7 +1263,7 @@ namespace Server.Data
                             EnergyInKwh = 2.55f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 18
                         {
                             UserId = 17,
                             Name="Friz",
@@ -1235,7 +1274,7 @@ namespace Server.Data
                             EnergyInKwh = 0.026f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 19
                         {
                             UserId = 18,
                             Name="tv",
@@ -1246,7 +1285,7 @@ namespace Server.Data
                             EnergyInKwh = 0.03f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 20
                         {
                             UserId = 18,
                             Name="tv spavaca",
@@ -1257,7 +1296,7 @@ namespace Server.Data
                             EnergyInKwh = 0.03f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 21
                         {
                             UserId = 18,
                             Name="tv dnevna",
@@ -1268,7 +1307,7 @@ namespace Server.Data
                             EnergyInKwh = 0.03f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 22
                         {
                             UserId = 19,
                             Name="televizor",
@@ -1279,7 +1318,7 @@ namespace Server.Data
                             EnergyInKwh = 0.13f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 23
                         {
                             UserId = 20,
                             Name="televizor dnevna soba",
@@ -1290,7 +1329,7 @@ namespace Server.Data
                             EnergyInKwh = 0.075f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 24
                         {
                             UserId = 20,
                             Name="tv decija soba",
@@ -1301,7 +1340,7 @@ namespace Server.Data
                             EnergyInKwh = 0.07f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 25
                         {
                             UserId = 20,
                             Name="tv moja soba",
@@ -1312,7 +1351,7 @@ namespace Server.Data
                             EnergyInKwh = 0.1f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 26
                         {
                             UserId = 21,
                             Name="tv kancelarija",
@@ -1323,7 +1362,7 @@ namespace Server.Data
                             EnergyInKwh = 0.07f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 27
                         {
                             UserId = 21,
                             Name="frizider",
@@ -1334,7 +1373,7 @@ namespace Server.Data
                             EnergyInKwh = 0.024f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 28
                         {
                             UserId = 22,
                             Name="frizider kuhinja",
@@ -1345,7 +1384,7 @@ namespace Server.Data
                             EnergyInKwh = 0.022f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 29
                         {
                             UserId = 23,
                             Name="Frizider",
@@ -1356,7 +1395,7 @@ namespace Server.Data
                             EnergyInKwh = 0.025f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 30
                         {
                             UserId = 24,
                             Name="Friz",
@@ -1367,7 +1406,7 @@ namespace Server.Data
                             EnergyInKwh = 0.026f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 31
                         {
                             UserId = 24,
                             Name="Friz",
@@ -1378,7 +1417,7 @@ namespace Server.Data
                             EnergyInKwh = 0.026f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 32
                         {
                             UserId = 4,
                             Name="Bojler",
@@ -1389,7 +1428,7 @@ namespace Server.Data
                             EnergyInKwh = 0.162f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 33
                         {
                             UserId = 4,
                             Name="Bojler",
@@ -1400,7 +1439,7 @@ namespace Server.Data
                             EnergyInKwh = 0.28f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 34
                         {
                             UserId = 5,
                             Name="Bojler",
@@ -1411,7 +1450,7 @@ namespace Server.Data
                             EnergyInKwh = 0.162f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 35
                         {
                             UserId = 6,
                             Name="Bojler",
@@ -1422,7 +1461,7 @@ namespace Server.Data
                             EnergyInKwh = 0.162f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 36
                         {
                             UserId = 7,
                             Name="Bojler",
@@ -1433,7 +1472,7 @@ namespace Server.Data
                             EnergyInKwh = 0.2768f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 37
                         {
                             UserId = 8,
                             Name="Bojler",
@@ -1444,7 +1483,7 @@ namespace Server.Data
                             EnergyInKwh = 0.28f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 38
                         {
                             UserId = 9,
                             Name="Bojler",
@@ -1455,7 +1494,7 @@ namespace Server.Data
                             EnergyInKwh = 0.28f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 39
                         {
                             UserId = 10,
                             Name="kola",
@@ -1466,7 +1505,7 @@ namespace Server.Data
                             EnergyInKwh = 120f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 40
                         {
                             UserId = 11,
                             Name="tesla",
@@ -1477,7 +1516,7 @@ namespace Server.Data
                             EnergyInKwh = 50f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 41
                         {
                             UserId = 12,
                             Name="Kola",
@@ -1488,7 +1527,7 @@ namespace Server.Data
                             EnergyInKwh = 120f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 42
                         {
                             UserId = 13,
                             Name="auto",
@@ -1499,7 +1538,7 @@ namespace Server.Data
                             EnergyInKwh = 50f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 43
                         {
                             UserId = 24,
                             Name="solarna ploca 1",
@@ -1510,7 +1549,7 @@ namespace Server.Data
                             EnergyInKwh = 0.4f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 44
                         {
                             UserId = 24,
                             Name="solarna ploca 2",
@@ -1521,7 +1560,7 @@ namespace Server.Data
                             EnergyInKwh = 0.4f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 45
                         {
                             UserId = 24,
                             Name="solarna ploca 3",
@@ -1532,7 +1571,7 @@ namespace Server.Data
                             EnergyInKwh = 0.4f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 46
                         {
                             UserId = 23,
                             Name="solarna ploca",
@@ -1543,7 +1582,7 @@ namespace Server.Data
                             EnergyInKwh = 0.36f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 47
                         {
                             UserId = 22,
                             Name="solarni panel",
@@ -1554,7 +1593,7 @@ namespace Server.Data
                             EnergyInKwh = 0.33f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 48
                         {
                             UserId = 5,
                             Name="sijalica dnevna soba",
@@ -1565,7 +1604,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 49
                         {
                             UserId = 5,
                             Name="sijalica hodnik",
@@ -1576,7 +1615,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 50
                         {
                             UserId = 5,
                             Name="sijalica kupatilo",
@@ -1587,7 +1626,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 51
                         {
                             UserId = 5,
                             Name="sijalica kuhinja",
@@ -1598,7 +1637,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 52
                         {
                             UserId = 5,
                             Name="sijalica trpezarija",
@@ -1609,7 +1648,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 53
                         {
                             UserId = 5,
                             Name="sijalica spavaca",
@@ -1620,7 +1659,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 54
                         {
                             UserId = 5,
                             Name="sijalica decija",
@@ -1631,7 +1670,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 55
                         {
                             UserId = 5,
                             Name="sijalica garaza",
@@ -1642,7 +1681,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 56
                         {
                             UserId = 6,
                             Name="sijalica dnevna soba",
@@ -1653,7 +1692,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 57
                         {
                             UserId = 6,
                             Name="sijalica hodnik",
@@ -1664,7 +1703,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 58
                         {
                             UserId = 6,
                             Name="sijalica kupatilo",
@@ -1675,7 +1714,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 59
                         {
                             UserId = 6,
                             Name="sijalica kuhinja",
@@ -1686,7 +1725,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 60
                         {
                             UserId = 6,
                             Name="sijalica trpezarija",
@@ -1697,7 +1736,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 61
                         {
                             UserId = 6,
                             Name="sijalica spavaca",
@@ -1708,7 +1747,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 62
                         {
                             UserId = 6,
                             Name="sijalica decija",
@@ -1719,7 +1758,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 63
                         {
                             UserId = 6,
                             Name="sijalica garaza",
@@ -1730,7 +1769,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 64
                         {
                             UserId = 7,
                             Name="sijalica dnevna soba",
@@ -1741,7 +1780,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 65
                         {
                             UserId = 7,
                             Name="sijalica hodnik",
@@ -1752,7 +1791,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 66
                         {
                             UserId = 7,
                             Name="sijalica kupatilo",
@@ -1763,7 +1802,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 67
                         {
                             UserId = 7,
                             Name="sijalica kuhinja",
@@ -1774,7 +1813,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 68
                         {
                             UserId = 7,
                             Name="sijalica trpezarija",
@@ -1785,7 +1824,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 69
                         {
                             UserId = 7,
                             Name="sijalica spavaca",
@@ -1796,7 +1835,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 70
                         {
                             UserId = 7,
                             Name="sijalica decija",
@@ -1807,7 +1846,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 71
                         {
                             UserId = 7,
                             Name="sijalica garaza",
@@ -1818,7 +1857,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 72
                         {
                             UserId = 23,
                             Name="sijalica dnevna soba",
@@ -1829,7 +1868,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 73
                         {
                             UserId = 23,
                             Name="sijalica hodnik",
@@ -1840,7 +1879,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 74
                         {
                             UserId = 23,
                             Name="sijalica kupatilo",
@@ -1851,7 +1890,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 75
                         {
                             UserId = 23,
                             Name="sijalica kuhinja",
@@ -1862,7 +1901,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 76
                         {
                             UserId = 23,
                             Name="sijalica trpezarija",
@@ -1873,7 +1912,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 77
                         {
                             UserId = 23,
                             Name="sijalica spavaca",
@@ -1884,7 +1923,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 78
                         {
                             UserId = 23,
                             Name="sijalica decija",
@@ -1895,7 +1934,7 @@ namespace Server.Data
                             EnergyInKwh = 0.009f,
                             StandByKwh = 0
                         },
-                        new Device()
+                        new Device() // 79
                         {
                             UserId = 23,
                             Name="sijalica garaza",
@@ -1904,6 +1943,160 @@ namespace Server.Data
                             Controlability = true,
                             TurnOn = true,
                             EnergyInKwh = 0.009f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 80
+                        {
+                            UserId = 17,
+                            Name="moj solarni panel",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 81
+                        {
+                            UserId = 17,
+                            Name="moj solarni panel 2",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 82
+                        {
+                            UserId = 17,
+                            Name="moj solarni panel 3",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 83
+                        {
+                            UserId = 17,
+                            Name="moj solarni panel 4",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 84
+                        {
+                            UserId = 17,
+                            Name="moj solarni panel 5",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 85
+                        {
+                            UserId = 17,
+                            Name="moj solarni panel 6",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 86
+                        {
+                            UserId = 16,
+                            Name="Panel 1",
+                            DeviceModelId = 42,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.36f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 87
+                        {
+                            UserId = 16,
+                            Name="Panel 2",
+                            DeviceModelId = 42,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.36f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 88
+                        {
+                            UserId = 16,
+                            Name="Panel 3",
+                            DeviceModelId = 42,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.36f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 89
+                        {
+                            UserId = 11,
+                            Name="Solarna ploca",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 90
+                        {
+                            UserId = 11,
+                            Name="Solarna ploca",
+                            DeviceModelId = 42,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.36f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 91
+                        {
+                            UserId = 20,
+                            Name="Solarna ploca",
+                            DeviceModelId = 41,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.4f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 92
+                        {
+                            UserId = 22,
+                            Name="Solarna ploca",
+                            DeviceModelId = 42,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.36f,
+                            StandByKwh = 0
+                        },
+                        new Device() // 93
+                        {
+                            UserId = 22,
+                            Name="Solarna ploca",
+                            DeviceModelId = 42,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.36f,
                             StandByKwh = 0
                         }
                     });

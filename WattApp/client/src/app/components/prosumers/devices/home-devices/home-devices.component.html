@@ -2,15 +2,19 @@
 
         <div class="devices">
             <div class="devices-item" id="slide-1" *ngFor="let device of devices">
-                <a data-bs-toggle="modal" data-bs-target="#myModalOn" class="devices-device-item" *ngIf="device.turnOn===true" style="cursor: pointer;"  (click)="turnOnOff(device.id)">
+                <a  class="devices-device-item" *ngIf="device.turnOn===true" style="cursor: pointer;" [routerLink]="['/device/'+device.id]">
                     <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
                 </a>
-                <a  data-bs-toggle="modal" data-bs-target="#myModalOff" class="devices-device-item1" *ngIf="device.turnOn===false" style="cursor: pointer;"   (click)="turnOnOff(device.id)">
+                <a   class="devices-device-item1" *ngIf="device.turnOn===false" style="cursor: pointer;"   [routerLink]="['/device/'+device.id]" >
                         <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
                 </a>
                 <h3 id="deviceh3">{{device.name}}</h3>
                 
             </div>
+            <div>
+              <h3><a  [routerLink]='["/devices"]'>More devices</a></h3>
+            </div>
+            
             
         </div>
         <!-- Button trigger modal -->
@@ -18,17 +22,19 @@
   
   <!-- Modal On-->
   <div class="modal fade" id="myModalOn" tabindex="-1" aria-labelledby="myModalOnLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-    <div class="modal-dialog modal-sm  modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="myModalOnLabel" style="text-align: center;">Do you want to turn off this device?</h5>
+          <!-- <h5 class="modal-title" id="myModalOnLabel" style="text-align: center;">Do you want to turn off this device?</h5> -->
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true"></button>
         </div>
-        <!-- <div class="modal-body">...</div> -->
+        <div class="modal-body">
+           <h5 class="modal-title" id="myModalOnLabel" style="text-align: center;">Do you want to turn off this device?</h5>
+          </div>
         <div class="modal-footer" >
             <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="turn-on-popup">Turn Off</button>
             
-          <button type="button" class="btn btn-primary " data-bs-dismiss="modal">
+          <button type="button" class="btn btn-outline-danger " data-bs-dismiss="modal">
             Close
           </button>
           
@@ -39,17 +45,20 @@
 
    <!-- Modal Off -->
    <div class="modal fade" id="myModalOff" tabindex="-1" aria-labelledby="myModalOffLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-    <div class="modal-dialog modal-sm  modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="myModalOffLabel" style="text-align: center;">Do you want to turn on this device?</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true"></button>
+          <!-- <h5 class="modal-title" id="myModalOffLabel" style="text-align: center;"></h5> -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
         </div>
-        <!-- <div class="modal-body">...</div> -->
+        
+        <div class="modal-body">
+          <h5 class="modal-title" id="myModalOffLabel" style="text-align: center;">Do you want to turn on this device?</h5>
+        </div>
         <div class="modal-footer" >
             <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="turn-off-popup">Turn On</button>
             
-          <button type="button" class="btn btn-primary " data-bs-dismiss="modal">
+          <button type="button" class="btn btn-outline-danger " data-bs-dismiss="modal">
             Close
           </button>
           

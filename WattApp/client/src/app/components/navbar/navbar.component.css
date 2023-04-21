@@ -2,18 +2,28 @@
   display: none;
 }
   @media (min-width: 768px) {
-
     .wrapper{
       display: block;
+      z-index: -1;
     }
     #content {
       position: fixed;
+      z-index: 1000;
       width: 100%;
       min-height: 5%;
       margin-bottom: 30px;
       transition: all 0.3s;
     }
-    
+    #sidebarCollapse {
+      transition: all 0.2s ease-in-out;
+    }
+    /* #sidebarCollapse:hover {
+      background-color: #1c32af;
+      border-color: #ffffff;
+    } */
+    #sidebarCollapse:hover {
+      color: rgb(48, 98, 204);
+    }
     .navbar {
       background-color: #1C315E;
     }
@@ -56,6 +66,7 @@
     .dropdown {
       position: relative;
       display: inline-block;
+      margin-top: 15px;
     }
     
     .dropbtn {
@@ -77,6 +88,7 @@
       display: none;
       position: absolute;
       background-color: #f9f9f9;
+      margin-top: 20px;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 1;
     }

@@ -1,25 +1,39 @@
-.global {
-    top: 10%;
-    position: absolute;
+.main {
+    top: 0px;
     width: 100%;
-    display: flex;
+    min-height: 100vh;
+    position: absolute;
     justify-content: center;
 }
+
+.back {
+    margin-top: 20%;
+}
+
 #turnback {
-    margin-top: 5px;
     width: 7%;
     margin-left: 5px;
 }
+
+.global {
+    position: absolute;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
 input {
     color: #1C315E;
 }
 
 .global1 {
+    border-radius: 5px;
     box-shadow: 2px 4px gray;
-    background-color: white;
-    padding: 20px;
+    background-color: gainsboro;
+    padding: 30px;
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 15%;
 }
 
 h1 {
@@ -50,30 +64,29 @@ button {
     width: 160px;
     background-color: #1C315E;
 }
-input.ng-invalid.ng-touched {
 
-    border: 1px solid red;    
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
 }
+
 input.ng-valid {
     border: 1px solid green;
-    
 }
+
 input.ng-touched {
     border: 1px solid blue;
 }
-@media(min-width: 768px)
-{
-    .global{
-        top: 20%;
-        position: absolute;
+
+@media(min-width: 768px) {
+    .global1 {
+        width: 60%;
     }
-    .global1{
-        width: 50%;
+    .back {
+        margin-top: 95px;
     }
     #turnback {
+        margin-top: 5px;
         width: 3%;
-        margin-top: 100px;
-        margin-left: 2%;
+        margin-left: 35px;
     }
-
 }

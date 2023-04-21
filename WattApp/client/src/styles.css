@@ -14,7 +14,7 @@
 body {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: rgb(238, 238, 238);
-    color: #000000;
+    color: #727272;
     min-height: 100%;
     -webkit-text-size-adjust: 100%;
     overflow: auto !important;
@@ -25,6 +25,9 @@ body {
     right: 0; */
 }
 
+button{
+	cursor: pointer;
+}
 
 /* .containters {
     max-width: 100%;
