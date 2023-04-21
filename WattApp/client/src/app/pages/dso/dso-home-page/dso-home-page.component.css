@@ -76,6 +76,7 @@
     max-width: 100%;
     margin: 0;
     padding: 0;
+    
     justify-content: center;
 }
 .gap-10 > * {
@@ -100,6 +101,7 @@
 }
 .p-20 {
     padding: 20px !important;
+    margin-right: 10px;
 }
 .peer {
     display: block;
@@ -108,6 +110,7 @@
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     margin-top: 20px;
+    
 }
 
 
@@ -208,8 +211,8 @@
 } */
 
 .numpro {
-    margin-left: 15px;
-    
+   
+    margin-right: 10px;
     background-color: white;
     border-radius: 5px;
     width: 20%;
@@ -219,7 +222,7 @@
   
   .tile_stats_count {
     width: 65%;
-    margin-top: 15px;
+    margin-top: 2px;
     float: none;
     display: inline-block;
     text-align: center;
@@ -257,11 +260,11 @@
     color: #7B7B7B;
   }
   #pie{
-    margin-left: 15px;
+    
 
     background-color: white;
     border-radius: 5px;
-    width:25%;
+    width:26%;
     box-shadow: 1px 2px grey;
     margin-bottom: 7px;
     display: flex;
@@ -281,7 +284,7 @@
     width: 17px; /* Set the width to your desired size */
     height: 17px; /* Set the height to the same value as the width to create a square shape */
     margin-left: 10px;
-    cursor: pointer;
+    
 }
 
   .blue-square {
@@ -290,7 +293,7 @@
     width: 17px; /* Set the width to your desired size */
     height: 17px; /* Set the height to the same value as the width to create a square shape */
     margin-left: 10px;
-    cursor: pointer;
+   
 }
   .red-square {
     display: inline-block;
@@ -298,7 +301,8 @@
     width: 17px; /* Set the width to your desired size */
     height: 17px; /* Set the height to the same value as the width to create a square shape */
     margin-left: 10px;
-    cursor: pointer;
+    
+    
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .wrapper{
@@ -461,7 +465,7 @@
     } */
     
     .numpro {
-        margin-left: 15px;
+        
         
         background-color: white;
         border-radius: 5px;
@@ -472,7 +476,7 @@
       
       .tile_stats_count {
         width: 65%;
-        margin-top: 15px;
+        margin-top: 2px;
         float: none;
         display: inline-block;
         text-align: center;
@@ -510,12 +514,10 @@
         color: #7B7B7B;
       }
       #pie{
-        margin-left: 15px;
-        
- 
+        /* margin-left: 15px; */
         background-color: white;
         border-radius: 5px;
-        width:65%;
+        width:66.5%;
         box-shadow: 1px 2px grey;
         margin-bottom: 7px;
         display: flex;
@@ -535,7 +537,7 @@
         width: 17px; /* Set the width to your desired size */
         height: 17px; /* Set the height to the same value as the width to create a square shape */
         margin-left: 10px;
-        cursor: pointer;
+       
     }
     
       .blue-square {
@@ -544,7 +546,8 @@
         width: 17px; /* Set the width to your desired size */
         height: 17px; /* Set the height to the same value as the width to create a square shape */
         margin-left: 10px;
-        cursor: pointer;
+        
+     
     }
       .red-square {
         display: inline-block;
@@ -552,10 +555,9 @@
         width: 17px; /* Set the width to your desired size */
         height: 17px; /* Set the height to the same value as the width to create a square shape */
         margin-left: 10px;
-        cursor: pointer;
+       
     }
     
-}
 .weather {
   width: 20%;
   margin-right: 10px;
@@ -616,3 +618,5 @@
   .toggle-buttons input[type="radio"]:not(:checked) + label {
     color: gray;
   }
+
+}
