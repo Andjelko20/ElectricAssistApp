@@ -1,11 +1,12 @@
 <div class="wrapper">
     <div class="card-group">
         <div class="bgc-white p-20 bd">
-            <div class="c-grey-900">
-                <span><b>Overview of Kragujevac </b> </span>
-                <span class="green-square" data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than 350 kWh"></span> Green zone 
-                <span class="blue-square" data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh"></span> Blue zone 
-                <span class="red-square" data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh"></span> Red zone
+            <div class="c-grey-900 "  >
+                <div style="display: inline-block;"><span   style=" font-weight: bolder;">Overview of Kragujevac</span></div>
+                
+                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than 350 kWh" style="display: inline-block; cursor: pointer;"><span class="green-square" ></span> Green zone </div>
+                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;"><span class="blue-square"></span> Blue zone</div>
+                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;"><span class="red-square" ></span> Red zone</div>
                 <!-- <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
                 <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
                     Tooltip on top
@@ -60,29 +61,6 @@
             <div id="chart">
                 <app-pie-chart></app-pie-chart>
             </div>
-            <!-- <div id="show-settlement-data">
-                
-                <table>
-                    <tr>
-                      <th>Current consumption</th>
-                      <th>Current production</th>
-                      <th>Average consumption</th>
-                      <th>Average production</th>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </table>
-            </div> -->
             
 
 
@@ -96,14 +74,14 @@
             </div> -->
 
     <div class="card-group">
-        <!-- <div class="weather">
+        <div class="weather">
             <div class="weather-body">
                 <app-today></app-today>
                 <app-future></app-future>
             </div>
-        </div> -->
-<!-- 
-        <div class="history-charts">
+        </div>
+
+       <div class="history-charts">
             <div class="toggle-container">
                 <div class="toggle-buttons">
                   <input type="radio" (click)="showGraph()" name="toggle" id="dashboard-btn" checked >
@@ -160,7 +138,7 @@
             </ng-container>
 
 
-        </div> -->
+        </div> 
     </div>
 
 </div>

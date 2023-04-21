@@ -1,11 +1,12 @@
 <div id="asdf">
-    <ngx-gauge [margin]="18" 
-           type="arch" 
-           [thick]="15" 
-           [value]="value" 
-           cap="butt" 
-           
-           append="kWh"
-           [markers]="markerConfig"  [thresholds]="thresholdConfig" [min]="min" [max]="max" >
+    <ngx-gauge
+    [margin]="15"
+    type="arch" 
+    [thick]="15" 
+    [value]="valuekWh" 
+    cap="butt" 
+    [markers]="markerConfig"  [thresholds]="thresholdConfig" [min]="min" [max]="max"  >
+    <ngx-gauge-value style="font-size: 26.08px; transform: translateY(78px);">{{valuekWh}}</ngx-gauge-value>
+    <ngx-gauge-append style="font-size: 26.08px; transform: translateY(78px);">kWh</ngx-gauge-append>
 </ngx-gauge>
 </div>
