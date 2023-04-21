@@ -87,6 +87,11 @@ namespace Server.Data
                         {
                             Id=5,
                             Name="superadmin"
+                        },
+                        new RoleModel()
+                        {
+                            Id=6,
+                            Name="operater"
                         }
 
                     });
