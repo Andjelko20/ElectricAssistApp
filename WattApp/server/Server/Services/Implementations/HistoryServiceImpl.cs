@@ -18,13 +18,56 @@ namespace Server.Services.Implementations
         {
             DateTime OneYearAgo = DateTime.Now.AddYears(-1); // tip DATETIME, trenutna godina 2023. -1 = 2022.
             DateTime TheTime = DateTime.Now;
+            double consumption = 0.0;
 
-            List<DeviceEnergyUsage> deviceEnergyUsageLista = _context.DeviceEnergyUsages
-                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= OneYearAgo && u.EndTime <= TheTime)
-                                                            .OrderBy(u => u.StartTime)
-                                                            .ToList();
+            using var connection = _context.Database.GetDbConnection();
+            connection.Open();
 
-            return GetConsumptionForForwardedList(deviceId, deviceEnergyUsageLista);
+            var commandText = $@"SELECT StartTime, EndTime
+                                 FROM DeviceEnergyUsages
+                                 WHERE DeviceId = @deviceId
+                                        AND StartTime >= '{OneYearAgo.ToString("yyyy-MM-dd HH:mm:ss")}'
+                                        AND EndTime <= '{TheTime.ToString("yyyy-MM-dd HH:mm:ss")}'";
+
+            using var command = connection.CreateCommand(); // using blok oznacava da se sve naredbe automatski oslobode nakon izvrsavanja bloka
+            command.CommandText = commandText;
+
+            // dodajemo parametar za deviceId
+            var deviceIdParam = command.CreateParameter();
+            deviceIdParam.ParameterName = "@deviceId";
+            deviceIdParam.Value = deviceId;
+            command.Parameters.Add(deviceIdParam);
+
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var startTime = reader.GetDateTime(0);
+                var endTime = reader.GetDateTime(1);
+                var hours = Math.Abs((endTime - startTime).TotalHours);
+
+                // EnergyKwh uređaja iz DeviceModels tabele
+                var deviceModelCommandText = @"SELECT EnergyKwh
+                                               FROM DeviceModels
+                                               WHERE Id = (SELECT DeviceModelId FROM Devices WHERE Id = @deviceId)";
+
+                using var deviceModelCommand = connection.CreateCommand();
+                deviceModelCommand.CommandText = deviceModelCommandText;
+                var deviceModelIdParam = deviceModelCommand.CreateParameter();
+                deviceModelIdParam.ParameterName = "@deviceId";
+                deviceModelIdParam.Value = deviceId;
+                deviceModelCommand.Parameters.Add(deviceModelIdParam);
+
+                using var deviceModelReader = deviceModelCommand.ExecuteReader();
+                if (deviceModelReader.Read())
+                {
+                    var energyInKwh = deviceModelReader.GetFloat(0);
+                    consumption += (double)(energyInKwh * hours);
+                }
+            }
+
+            connection.Close();
+
+            return Math.Round(consumption, 2);
         }
 
         public double GetUsageHistoryForDeviceInLastMonth(long deviceId)
