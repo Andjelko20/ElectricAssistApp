@@ -43,7 +43,7 @@ namespace Server.Services.Implementations
                 .Include(user => user.Settlement)
                 .Include(user => user.Settlement.City)
                 .Include(user => user.Settlement.City.Country)
-                .Where(user => filter.Invoke(user) && user.RoleId!=Roles.SuperadminId)
+                .Where(filter)
                 .Skip((pageNumber-1)*itemsPerPage)
                 .Take(itemsPerPage)
                 .Select(user=>new UserDetailsDTO(user))

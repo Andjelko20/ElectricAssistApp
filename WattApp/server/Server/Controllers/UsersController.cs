@@ -55,8 +55,8 @@ namespace Server.Controllers
             try
             {
                 if (User.IsInRole(Roles.Operater))
-                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId));
-                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => true));
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId && user.RoleId!=Roles.SuperadminId));
+                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId != Roles.SuperadminId));
             }
             catch(HttpRequestException ex)
             {
