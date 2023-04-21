@@ -16,56 +16,24 @@ namespace Server.Services.Implementations
 
         public double GetUsageHistoryForDeviceInLastYear(long deviceId)
         {
-            DateTime OneYearAgo = DateTime.Now.AddYears(-1); // tip DATETIME, trenutna godina 2023. -1 = 2022.
-            DateTime TheTime = DateTime.Now;
+            DateTime oneYearAgo = DateTime.Now.AddYears(-1);
+            DateTime theTime = DateTime.Now;
             double consumption = 0.0;
 
-            using var connection = _context.Database.GetDbConnection();
-            connection.Open();
+            var deviceModelEnergyKwh = _context.Devices
+                .Where(d => d.Id == deviceId)
+                .Select(d => d.DeviceModel.EnergyKwh)
+                .FirstOrDefault();
 
-            var commandText = $@"SELECT StartTime, EndTime
-                                 FROM DeviceEnergyUsages
-                                 WHERE DeviceId = @deviceId
-                                        AND StartTime >= '{OneYearAgo.ToString("yyyy-MM-dd HH:mm:ss")}'
-                                        AND EndTime <= '{TheTime.ToString("yyyy-MM-dd HH:mm:ss")}'";
+            var energyUsages = _context.DeviceEnergyUsages
+                .Where(du => du.DeviceId == deviceId && du.StartTime >= oneYearAgo && du.EndTime <= theTime)
+                .ToList();
 
-            using var command = connection.CreateCommand(); // using blok oznacava da se sve naredbe automatski oslobode nakon izvrsavanja bloka
-            command.CommandText = commandText;
-
-            // dodajemo parametar za deviceId
-            var deviceIdParam = command.CreateParameter();
-            deviceIdParam.ParameterName = "@deviceId";
-            deviceIdParam.Value = deviceId;
-            command.Parameters.Add(deviceIdParam);
-
-            using var reader = command.ExecuteReader();
-            while (reader.Read())
+            foreach (var energyUsage in energyUsages)
             {
-                var startTime = reader.GetDateTime(0);
-                var endTime = reader.GetDateTime(1);
-                var hours = Math.Abs((endTime - startTime).TotalHours);
-
-                // EnergyKwh uređaja iz DeviceModels tabele
-                var deviceModelCommandText = @"SELECT EnergyKwh
-                                               FROM DeviceModels
-                                               WHERE Id = (SELECT DeviceModelId FROM Devices WHERE Id = @deviceId)";
-
-                using var deviceModelCommand = connection.CreateCommand();
-                deviceModelCommand.CommandText = deviceModelCommandText;
-                var deviceModelIdParam = deviceModelCommand.CreateParameter();
-                deviceModelIdParam.ParameterName = "@deviceId";
-                deviceModelIdParam.Value = deviceId;
-                deviceModelCommand.Parameters.Add(deviceModelIdParam);
-
-                using var deviceModelReader = deviceModelCommand.ExecuteReader();
-                if (deviceModelReader.Read())
-                {
-                    var energyInKwh = deviceModelReader.GetFloat(0);
-                    consumption += (double)(energyInKwh * hours);
-                }
+                var hours = Math.Abs((energyUsage.EndTime - energyUsage.StartTime).TotalHours);
+                consumption += (double)(deviceModelEnergyKwh * hours);
             }
-
-            connection.Close();
 
             return Math.Round(consumption, 2);
         }
