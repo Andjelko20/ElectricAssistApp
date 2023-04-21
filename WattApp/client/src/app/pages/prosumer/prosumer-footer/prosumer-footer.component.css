@@ -27,13 +27,26 @@ a {
 }
 
 .nav-link {
-    padding: 5%;
-    border: 1px solid white;
+    text-align: center;
+    width: 100%;
+    margin: 5px;
     float: left;
 }
 
+.active {
+    margin: 5px;
+    background-color: #1C315E !important;
+    color: rgb(0, 0, 0);
+}
+
+a:hover {
+    background-color: #1C315E;
+    color: white;
+}
+
 .icon-holder {
-    width: 5% !important;
+    display: flex;
+    justify-content: center;
 }
 
 .title {
