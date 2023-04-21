@@ -16,5 +16,6 @@ namespace Server.Services
         public double GetAverageConsumptionInTheMomentForCity(long settlementName, double totalEnergyUsage);
         public double GetAverageConsumptionProductionInTheMomentForAllProsumers(double totalEnergyUsage);
         public List<EnergyToday> CalculateEnergyUsageForToday(long deviceId);
+        public int GetNumberOfDevicesOfOneProsumer(long userId);
     }
 }
