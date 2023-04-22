@@ -1,11 +1,12 @@
 #container{
 	display: flex;
+	flex-direction: column;
 	margin: 40px;
 	height: auto;
 	gap:5px;
 }
 #map-wrapper{
-	width: 80%;
+	width: 100%;
 	height: 70vh;
 }
 #prosumers-map{

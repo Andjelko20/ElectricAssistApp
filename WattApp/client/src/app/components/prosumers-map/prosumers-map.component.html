@@ -10,8 +10,11 @@
 <div id="container">
 	<div class="search-container">
 		<form (submit)="onSubmit()">
+			<div>
+				<input type="radio" name="search-type" value="location">Location
+				<input type="radio" name="search-type" value="user">User
+			</div>
 			<input type="text" name="search-input" class="form-control" [(ngModel)]="searchInput" placeholder="Enter location">
-			<button class="btn btn-primary">Search</button>
 		</form>
 		<div class="search-result">
 			<div *ngFor="let location of locations" (click)="changeFocus(location)" class="location">
