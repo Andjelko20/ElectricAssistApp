@@ -99,7 +99,10 @@ namespace Server.Services.Implementations
         // za bar plot, istorija za godinu dana, prikaz po mesecima
         public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsage(long deviceId)
         {
-            var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
+            //var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
+            var Device = _context.Devices.Find(deviceId);
+            var DeviceModel = _context.DeviceModels.Find(Device.DeviceModelId);
+            float EnergyInKwh = DeviceModel.EnergyKwh;
 
             var Results = new List<MonthlyEnergyConsumptionLastYear>();
             for (int i = 0; i < 12; i++)
@@ -128,8 +131,8 @@ namespace Server.Services.Implementations
                 {
                     foreach (var item in UsageList)
                     {
-                        var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
-                        float EnergyInKwh = DeviceModel.EnergyKwh;
+                        //var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
+                        //float EnergyInKwh = DeviceModel.EnergyKwh;
 
                         UsageInHours = (item.EndTime - item.StartTime).TotalHours;
                         UsageInKwh += UsageInHours * EnergyInKwh; //Device.EnergyInKwh;
