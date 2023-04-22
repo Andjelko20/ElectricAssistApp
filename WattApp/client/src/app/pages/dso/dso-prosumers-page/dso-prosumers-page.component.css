@@ -1,12 +1,53 @@
-main{
-	margin-bottom: 20px;
+.wrapper{
+  margin-top: 60px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 2px grey;
 }
-#map-body{
-    height: 100%;
-    width: 100%;
-    /* margin-left: 10px; */
+.tabel-body{
+  
+}
+.tabel-map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 10px;
+}
 
+#numpros {
+  display: flex;
+  align-items: center;
 }
+
+#numpros span {
+  margin-right: 10px;
+}
+
+#select-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 280px;
+}
+
+.map{
+  margin-left: 50px;
+  margin-right: 50px;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+
 
 .toggle-container {
     display: flex;
@@ -37,8 +78,8 @@ main{
   
   .toggle-buttons span.divider {
     display: inline-block;
-    width: 1px;
-    height: 20px;
+    /* width: 1px;
+    height: 20px; */
     margin: 0 10px;
     background-color: gray;
   }
@@ -55,24 +96,163 @@ main{
     margin-right: 15px;
     text-align: right;
   }
-.tabel-map{
-	padding-top: 20px;
-	margin-bottom: 20px;
-}
+
 .nav-button{
-	border-radius: 20px;
-	border: 1px solid black;
-	padding: 5px 10px;
-	margin-left: 5px;
-	margin-right: 10px;
-	cursor: pointer;
+
+    cursor: pointer;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    color: #2199e8;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+
 }
 
 .nav-button:not(.active){
-	background-color: white;
-	color: black;
+  background-color: white;
+  color: #2199e8;
+  box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
 .nav-button.active{
-	background-color: black;
-	color: white;
+  background-color: #2199e8;
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+}
+.nav-button:hover {
+  background-color: #2199e8;
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .wrapper{
+    margin-top: 60px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 2px grey;
+  }
+  
+.tabel-map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+#numpros {
+  display: flex;
+  align-items: center;
+}
+
+#numpros span {
+  margin-right: 10px;
+}
+
+#select-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 220px;
+}
+
+
+.map{
+  
+  border: 1px solid black;
+}
+  
+  .toggle-container {
+      display: flex;
+      margin: 15px;
+      justify-content: space-between;
+      align-items: center;
+      background-color: white;
+      padding: 10px;
+      border-bottom: 1px solid black;
+    }
+    
+    .toggle-buttons {
+      margin-left: 15px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .toggle-buttons label {
+      display: inline-block;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    
+    .toggle-buttons input[type="radio"] {
+      display: none;
+    }
+    
+    .toggle-buttons span.divider {
+      display: inline-block;
+      width: 1px;
+      height: 20px;
+      margin: 0 10px;
+      background-color: gray;
+    }
+    
+    .toggle-buttons input[type="radio"]:checked + label {
+      font-weight: bold;
+    }
+    
+    .toggle-buttons input[type="radio"]:not(:checked) + label {
+      color: gray;
+    }
+    
+    .date-time {
+      margin-right: 15px;
+      text-align: right;
+    }
+  
+  .nav-button{
+
+    cursor: pointer;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    color: #2199e8;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+
+  }
+
+  .nav-button:not(.active){
+    background-color: white;
+    color: #2199e8;
+    box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+  }
+  .nav-button.active{
+    background-color: #2199e8;
+    color: white;
+    box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+  }
+  .nav-button:hover {
+    background-color: #2199e8;
+    color: white;
+    box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+  }
 }

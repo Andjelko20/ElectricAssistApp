@@ -1,15 +1,30 @@
-import { Component,OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component,OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import { environment } from 'src/environments/environment';
 import { NgModel } from '@angular/forms';
+import { Popover, Tooltip } from 'bootstrap';
 
 @Component({
   selector: 'app-prosumers-map',
   templateUrl: './prosumers-map.component.html',
   styleUrls: ['./prosumers-map.component.css']
 })
-export class ProsumersMapComponent {
+export class ProsumersMapComponent implements AfterViewInit {
+	popover: Popover | undefined;
+  	tooltip: Tooltip | undefined;
+	ngAfterViewInit(): void {
+		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+		const popoverList = Array.from(popoverTriggerList).map(function (popoverTriggerEl) {
+		  return new Popover(popoverTriggerEl)
+		});
+		this.popover = popoverList[0];
+		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+		const tooltipList = Array.from(tooltipTriggerList).map(function (tooltipTriggerEl) {
+		  return new Tooltip(tooltipTriggerEl)
+		});
+		this.tooltip = tooltipList[0];
+	}
 	
 	  private map!: Leaflet.Map;
 	  private searchUrl!:URL;

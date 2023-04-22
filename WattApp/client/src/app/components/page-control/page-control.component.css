@@ -3,6 +3,7 @@
 	justify-content: center;
 	align-items: center;
 	gap:4px;
+	margin-right: 120px;
 }
 
 ::ng-deep .ngx-pagination li{
@@ -15,7 +16,10 @@
 	align-items: center;
 	position: relative;
 }
-
+.ngx-pagination {
+    margin-right: 20px;
+    margin-bottom: 1rem;
+}
 ::ng-deep .ngx-pagination li.small-screen{
 	display: none !important;
 }

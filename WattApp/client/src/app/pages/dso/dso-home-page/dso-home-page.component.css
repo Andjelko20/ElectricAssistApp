@@ -1,6 +1,6 @@
 .wrapper{
     margin-top: 60px;
-    min-height: calc(100vh - 61px);
+    /* min-height: calc(100vh - 61px); */
     width: 100%;
 }
 .head {
@@ -42,7 +42,7 @@
     margin-right: 15px;
     flex-wrap: 100px;
     text-align: center;
-    
+    margin-bottom: 60px;
     /* border: 1px solid black; */
 }
 .ta-c {
@@ -158,7 +158,7 @@
 }
 
 .csv-button {
-  background-color: #0077cc;
+  background-color: #2199e8;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -191,7 +191,7 @@
   border: none;
   padding: 10px 20px;
   margin: 0 10px;
-  color: #0077cc;
+  color: #2199e8;
   font-size: 16px;
   font-weight: bold;
   border-radius: 25px;
@@ -201,7 +201,7 @@
 }
 
 .chart-button:hover {
-  background-color: #0077cc;
+  background-color: #2199e8;
   color: white;
   box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
@@ -307,8 +307,9 @@
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .wrapper{
         margin-top: 60px;
-        min-height: calc(100vh - 61px);
+        /* min-height: calc(100vh - 61px); */
         width: 100%;
+        margin-bottom: 70px;
     }
     .head {
         justify-content: flex-end;
