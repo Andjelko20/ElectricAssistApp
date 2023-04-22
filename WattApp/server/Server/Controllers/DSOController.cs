@@ -95,5 +95,24 @@ namespace Server.Controllers
 
             return BadRequest("Input parameters are empty.");
         }
+
+        /// <summary>
+        /// Consumption/Production for settlement - today by hour
+        /// </summary>
+        [HttpGet]
+        [Route("SettlementDayByHour/")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetSettlementDayByHour([FromQuery] long settlementId, [FromQuery] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
+                return NotFound(new { message = "Settlement with ID: " + settlementId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with ID: " + deviceCategoryId.ToString() + " does not exist." });
+
+            var resultList = dsoService.CalculateEnergyUsageForToday(settlementId, deviceCategoryId);
+
+            return Ok(resultList);
+        }
     }
 }
