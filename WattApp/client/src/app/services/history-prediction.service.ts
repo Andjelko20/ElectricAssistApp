@@ -24,9 +24,9 @@ export class HistoryPredictionService {
   {
     return this.http.get<number>(environment.serverUrl+'/api/Prosumer/'+name+'/city/'+city,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}})
   }
-  getAverageConsumptionProductionCity(name:string,city:string):Observable<number>
+  getAverageConsumptionProductionCity(idCat: number,idCity:number):Observable<number>
   {
-    return this.http.get<number>(environment.serverUrl+'/api/Prosumer/'+name+'/average/'+city,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}})
+    return this.http.get<number>(environment.serverUrl+'/api/Prosumer/average/'+idCat+'/'+idCity,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}})
   }
   
 

@@ -7,6 +7,7 @@
   background-color: white;
   border-radius: 10px;
   box-shadow: 1px 2px grey;
+  margin-bottom: 70px;
 }
 .tabel-body{
   
@@ -46,6 +47,7 @@
   margin-right: 50px;
   border: 1px solid gray;
   border-radius: 10px;
+  margin-bottom: 0;
 }
 
 
@@ -133,11 +135,12 @@
     margin-top: 60px;
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 1px 2px grey;
+    margin-bottom: 70px;
   }
   
 .tabel-map {
@@ -167,13 +170,17 @@
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  padding-right: 220px;
+  padding-right: 100px;
 }
 
 
 .map{
   
-  border: 1px solid black;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  margin-bottom: 0;
 }
   
   .toggle-container {

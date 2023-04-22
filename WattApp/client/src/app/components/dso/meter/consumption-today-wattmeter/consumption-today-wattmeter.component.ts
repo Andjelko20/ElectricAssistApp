@@ -36,8 +36,8 @@ export class ConsumptionTodayWattmeterComponent implements OnInit{
     async ngOnInit(): Promise<void> {
     let token=new JwtToken();
     
-    const result = await this.todayConsumption.getAverageConsumptionProductionCity("Electricity Consumer","Kragujevac").pipe(first()).toPromise();
+    // const result = await this.todayConsumption.getAverageConsumptionProductionCity("Electricity Consumer","Kragujevac").pipe(first()).toPromise();
   
-    this.valuekWh = result!;
+    // this.valuekWh = result!;
   }
 }

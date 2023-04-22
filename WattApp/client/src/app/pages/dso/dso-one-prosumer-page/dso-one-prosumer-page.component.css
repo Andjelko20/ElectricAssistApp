@@ -1,6 +1,18 @@
+.wrapper{
+  margin-top: 60px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 2px grey;
+  margin-bottom: 70px;
+}
 .toggle-container {
+
   display: flex;
-  margin: 15px;
+  
   justify-content: space-between;
   align-items: center;
   background-color: white;
@@ -179,6 +191,17 @@
 }
 
 @media (max-width: 768px) {
+  .wrapper{
+    margin-top: 60px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 2px grey;
+    margin-bottom: 70px;
+  }
   .toggle-container {
     flex-direction: column;
   }

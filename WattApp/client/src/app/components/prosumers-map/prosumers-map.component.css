@@ -17,6 +17,7 @@
 	flex-grow: 1;
 	width: 20%;
 	text-align: center;
+	
 }
 
 input{
@@ -33,6 +34,7 @@ button{
 	display: flex;
 	flex-direction: column;
 	gap:10px;
+	
 }
 .location{
 	background-color: white;
@@ -41,6 +43,7 @@ button{
 	margin-left: 5px;
 	max-width: 100%;
 	text-align: left;
+	
 }
 .location:hover{
 	text-decoration: underline;
