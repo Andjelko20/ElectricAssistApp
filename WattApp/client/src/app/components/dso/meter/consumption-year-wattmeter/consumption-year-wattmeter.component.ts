@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs';
+import { WeekByDay, YearsByMonth } from 'src/app/models/devices.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 
@@ -28,14 +30,19 @@ export class ConsumptionYearWattmeterComponent implements OnInit {
     '351': { color: 'blue', "bgOpacity": 0.2 },
     '1601': { color: 'red', "bgOpacity": 0.2 }
   };
-  constructor(private todayConsumption:HistoryPredictionService){
+  constructor(private historyService:HistoryPredictionService,private authService:AuthService){
 
   }
-    async ngOnInit(): Promise<void> {
+    async ngOnInit(){
     let token=new JwtToken();
     
-    const result = await this.todayConsumption.getAverageConsumptionProductionCity("Electricity Producer","Kragujevac").pipe(first()).toPromise();
-  
-    this.valuekWh = result!;
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.historyService.yearByMonth(number,2).subscribe((data:YearsByMonth[])=>{
+          this.valuekWh = data.reduce((acc, item) => acc + item.energyUsageResult, 0);
+          console.log(this.valuekWh);
+        })
+      })
+    })
   }
 }

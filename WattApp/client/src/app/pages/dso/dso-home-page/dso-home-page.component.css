@@ -1,6 +1,6 @@
 .wrapper{
     margin-top: 60px;
-    min-height: calc(100vh - 61px);
+    /* min-height: calc(100vh - 61px); */
     width: 100%;
 }
 .head {
@@ -42,7 +42,7 @@
     margin-right: 15px;
     flex-wrap: 100px;
     text-align: center;
-    
+    margin-bottom: 60px;
     /* border: 1px solid black; */
 }
 .ta-c {
@@ -91,7 +91,7 @@
 }
 .bgc-white, .bgcH-white:hover {
     background-color: #ffffff !important;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 1px 2px grey;
     margin-bottom: 7px;
 }
@@ -153,15 +153,15 @@
   align-items: center;
   margin-bottom: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 10px;
 }
 
 .csv-button {
-  background-color: #0077cc;
+  background-color: #2199e8;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 8px 16px;
   font-size: 16px;
   font-weight: bold;
@@ -191,7 +191,7 @@
   border: none;
   padding: 10px 20px;
   margin: 0 10px;
-  color: #0077cc;
+  color: #2199e8;
   font-size: 16px;
   font-weight: bold;
   border-radius: 25px;
@@ -201,7 +201,7 @@
 }
 
 .chart-button:hover {
-  background-color: #0077cc;
+  background-color: #2199e8;
   color: white;
   box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
@@ -214,7 +214,7 @@
    
     margin-right: 10px;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 20%;
     box-shadow: 1px 2px grey;
     margin-bottom: 7px;
@@ -263,7 +263,7 @@
     
 
     background-color: white;
-    border-radius: 5px;
+    border-radius: 10px;
     width:26%;
     box-shadow: 1px 2px grey;
     margin-bottom: 7px;
@@ -307,8 +307,9 @@
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .wrapper{
         margin-top: 60px;
-        min-height: calc(100vh - 61px);
+        /* min-height: calc(100vh - 61px); */
         width: 100%;
+        margin-bottom: 70px;
     }
     .head {
         justify-content: flex-end;
@@ -397,7 +398,7 @@
     }
     .bgc-white, .bgcH-white:hover {
         background-color: #ffffff !important;
-        border-radius: 5px;
+        border-radius: 10px;
         box-shadow: 1px 2px grey;
         margin-bottom: 7px;
     }
@@ -468,7 +469,7 @@
         
         
         background-color: white;
-        border-radius: 5px;
+        border-radius: 10px;
         width: 30%;
         box-shadow: 1px 2px grey;
         margin-bottom: 7px;
@@ -516,7 +517,7 @@
       #pie{
         /* margin-left: 15px; */
         background-color: white;
-        border-radius: 5px;
+        border-radius:10px;
         width:66.5%;
         box-shadow: 1px 2px grey;
         margin-bottom: 7px;

@@ -1,9 +1,40 @@
-#allfooter{
+footer {
     display: none;
 }
 @media (min-width: 768px) {
-    #allfooter{
+    /* #allfooter{
         display: block;
         width: 100%;
+    } */
+    footer {
+        display: block;
+        width: 100%;
+        z-index: 1;
+        position: relative;
     }
+    .c-grey-600, .cH-grey-600:hover {
+        color: #7c8695 !important;
+    }
+    
+    .c-grey-600, .cH-grey-600:hover {
+        color: #757575 !important;
+    }
+    .bdT {
+        border-top: 1px solid rgba(0, 0, 0, 0.0625) !important;
+        background-color: white;
+    }
+    .lh-0 {
+        line-height: 0 !important;
+    }
+    .fsz-sm {
+        font-size: 0.87rem !important;
+    }
+    .ta-c {
+        text-align: center !important;
+    }
+    .p-30 {
+     
+        padding: 30px !important;
+    }
+  
 }

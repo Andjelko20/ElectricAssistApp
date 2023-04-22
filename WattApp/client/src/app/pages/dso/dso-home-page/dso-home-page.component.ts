@@ -1,5 +1,11 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Popover, Tooltip } from 'bootstrap';
+import { first } from 'rxjs';
+import { Prosumers } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 import { environment } from 'src/environments/environment';
 
 declare var $: any;
@@ -9,10 +15,29 @@ declare var $: any;
   styleUrls: ['./dso-home-page.component.css'],
 
 })
-export class DsoHomePageComponent implements AfterViewInit{
+export class DsoHomePageComponent implements AfterViewInit, OnInit{
+ 
   popover: Popover | undefined;
   tooltip: Tooltip | undefined;
-  
+  numberOfProsumers=0;
+  avgProduction?:number;
+  idUser!:number;
+  role!:string;
+  updateUserDetail:Prosumers={
+    id: 0,
+    name: '',
+    username: '',
+    email: '',
+    role: '',
+    blocked: false,
+    settlement:'',
+    city:'',
+    country: '',
+    address:''
+  }
+  constructor(private avgConsumption:HistoryPredictionService,private route:ActivatedRoute,private router:Router,private updateService:AuthService){
+
+  }
   ngAfterViewInit() {
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     const popoverList = Array.from(popoverTriggerList).map(function (popoverTriggerEl) {
@@ -22,10 +47,48 @@ export class DsoHomePageComponent implements AfterViewInit{
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = Array.from(tooltipTriggerList).map(function (tooltipTriggerEl) {
       return new Tooltip(tooltipTriggerEl)
+
+      
     });
     this.tooltip = tooltipList[0];
+   
   }
+  async ngOnInit(): Promise<void> {
+    let token=new JwtToken();
+    this.idUser=token.data.id as number;
+    this.role=token.data.role as string;
+    console.log(this.idUser);
+    this.updateService.getlogInUser()
+        .subscribe({
+          next:(response)=>{
+            this.updateUserDetail={
+              id:this.idUser,
+              name:response.name,
+              username:response.username,
+              email:response.email,
+              blocked:response.blocked,
+              role:this.role,
+              settlement:response.settlement,
+              city:response.city,
+              country: response.country,
+              address:response.address
+              
+              };
+            
+            },
+			error:(response)=>{
+				this.router.navigate(["prosumer-account-page"]);
+			}
+          });
+    fetch(environment.serverUrl+"/api/ProsumersDetails/count",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+	  .then(res=>res.json())
+	  .then(res=>this.numberOfProsumers=res);
+    const result = await this.avgConsumption.getAverageConsumptionProductionCity(1,2).pipe(first()).toPromise();
   
+    this.avgProduction = result!;
+    console.log(this.avgProduction);
+    
+  }
 
   graph:boolean = true;
   tabelar:boolean = false;

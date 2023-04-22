@@ -6,7 +6,7 @@
         [value]="valuekWh" 
         cap="butt" 
         [markers]="markerConfig"  [thresholds]="thresholdConfig" [min]="min" [max]="max"  >
-        <ngx-gauge-value style="font-size: 36.08px; transform: translateY(78px);">{{valuekWh}}</ngx-gauge-value>
+        <ngx-gauge-value style="font-size: 36.08px; transform: translateY(78px);">{{valuekWh | number:'1.1-1'}}</ngx-gauge-value>
         <ngx-gauge-append style="font-size: 36.08px; transform: translateY(78px);">kWh</ngx-gauge-append>
 </ngx-gauge>
 </div>

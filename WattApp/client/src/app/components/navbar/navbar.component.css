@@ -16,6 +16,8 @@
     }
     #sidebarCollapse {
       transition: all 0.2s ease-in-out;
+      color: white;
+      font-size: 20px
     }
     /* #sidebarCollapse:hover {
       background-color: #1c32af;
@@ -23,6 +25,8 @@
     } */
     #sidebarCollapse:hover {
       color: rgb(48, 98, 204);
+      transition: all 0.2s ease-in-out;
+      font-size: 26px
     }
     .navbar {
       background-color: #1C315E;
@@ -88,7 +92,11 @@
       display: none;
       position: absolute;
       background-color: #f9f9f9;
+      align-items: center;
+      align-content: center;
+      text-align: center;
       margin-top: 20px;
+      margin-left: 20px;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 1;
     }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 
@@ -34,15 +35,23 @@ thresholdConfig = {
 //   updateValue() {
 //     this.gaugeValue = Math.floor(Math.random() * 101);
 //   }
-constructor(private todayConsumption:HistoryPredictionService){
+constructor(private historyService:HistoryPredictionService,private authService:AuthService){
 
 }
-  async ngOnInit(): Promise<void> {
+  async ngOnInit(){
   let token=new JwtToken();
   
-  const result = await this.todayConsumption.getTotalConsumptionProductionCity("Electricity Consumer","Kragujevac").pipe(first()).toPromise();
+  this.authService.getlogInUser().subscribe(user=>{
+    this.authService.getCityId(user.city).subscribe(number=>{
+      this.historyService.getCurrentConsumptionProductionCity(2,number).subscribe(data=>{
+        this.valuekWh = data;
+      })
+    })
+  })
 
-  this.valuekWh = result!;
+  // const result = await this.todayConsumption.getTotalConsumptionProductionCity("Electricity Consumer","Kragujevac").pipe(first()).toPromise();
+
+  // this.valuekWh = result!;
 }
 
 }

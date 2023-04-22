@@ -34,8 +34,8 @@
                     <td>{{show.role}}</td>
                     <td><a [routerLink]='["/update-user/",show.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
                     <td>
-                        <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalUnblockAdmin" *ngIf="show.block===true" (click)="unblockUser(show.id)"> BLOCK</button>
-                        <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalBlockAdmin" *ngIf="show.block===false" (click)="blockUser(show.id)"> UNBLOCK</button>
+                        <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalUnblockAdmin" *ngIf="show.block===true" (click)="unblockUser(show.id)">UNBLOCK </button>
+                        <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalBlockAdmin" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button>
                     </td>
                     <!--<td><a [routerLink]='["/change-password"]'><button style="min-width: 84px; height:30px" > PASSWORD</button></a></td>-->
 
@@ -46,7 +46,7 @@
         </table>
 		<app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
     </div>
-    <a [routerLink]='["/add-user"]'><button id="buttonAdd">ADD</button></a>
+    <!-- <a [routerLink]='["/add-user"]'><button id="buttonAdd">ADD</button></a> -->
 
   <!-- Modal Unblock -->
   <div class="modal fade" id="myModalUnblockAdmin" tabindex="-1" aria-labelledby="myModalUnblockAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">

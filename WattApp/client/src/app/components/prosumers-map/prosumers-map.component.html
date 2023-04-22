@@ -1,11 +1,15 @@
-<div class="legend">
-	<h2>Legend</h2>
-	<div class="legend-body">
-		<div class="legend-item" *ngFor="let leg of legend">
-			<div class="legend-square" [style.backgroundColor]="leg.color"></div>
-			<div class="legend-description">{{leg.description}}</div>
-		</div>
-	</div>
+
+<div class="c-grey-900 text-center"  >
+	<div style="display: inline-block;"><h2   style=" font-weight: bolder;">Legend</h2></div>
+	
+	<div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than 350 kWh" style="display: inline-block; cursor: pointer;"><span class="green-square" ></span> Green zone </div>
+	<div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;"><span class="blue-square"></span> Blue zone</div>
+	<div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;"><span class="red-square" ></span> Red zone</div>
+	<!-- <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+	<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+		Tooltip on top
+	  </button> -->
+	<hr>
 </div>
 <div id="container">
 	<div class="search-container">
