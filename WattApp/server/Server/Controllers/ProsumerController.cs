@@ -189,7 +189,7 @@ namespace Server.Controllers
         [HttpGet]
         [Route("today")]
         //[Authorize(Roles = "dispecer")]
-        public async Task<IActionResult> GetDeviceEnergyFromTodaysDay([FromQuery] long deviceId, long doubleUserId, long deviceCategoryId)
+        public async Task<IActionResult> GetDeviceEnergyFromTodaysDay([FromQuery] long deviceId, long doubleTodayUserId, long deviceCategoryId)
         {
             if(deviceId != 0)
             {
@@ -199,21 +199,43 @@ namespace Server.Controllers
 
                 return Ok(energyTodayList);
             }
-            else
+            else //if(doubleTodayUserId != 0)
             {
-                if (!_sqliteDb.Users.Any(u => u.Id == doubleUserId))
-                    return NotFound(new { message = "User with the ID: " + doubleUserId.ToString() + " does not exist." });
+                if (!_sqliteDb.Users.Any(u => u.Id == doubleTodayUserId))
+                    return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not exist." });
 
-                if (!_sqliteDb.Devices.Any(u => u.UserId == doubleUserId))
-                    return NotFound(new { message = "User with the ID: " + doubleUserId.ToString() + " does not have registered devices." });
+                if (!_sqliteDb.Devices.Any(u => u.UserId == doubleTodayUserId))
+                    return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not have registered devices." });
 
                 if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
 
-                double energyUsageToday = prosumerService.GetUserEnergyConsumptionForToday(doubleUserId, deviceCategoryId);
+                double energyUsageToday = prosumerService.GetUserEnergyConsumptionForToday(doubleTodayUserId, deviceCategoryId);
                 return Ok(energyUsageToday);
             }
+        }
+
+        /// <summary>
+        /// 1.) This month Consumption/Production for one prosumer (double)
+        /// </summary>
+        [HttpGet]
+        [Route("month")]
+        //[Authorize(Roles = "dispecer")]
+        public async Task<IActionResult> GetProsumerEnergyFromThisMonth(long doubleMonthUserId, long deviceCategoryId)
+        {
+            if (!_sqliteDb.Users.Any(u => u.Id == doubleMonthUserId))
+                return NotFound(new { message = "User with the ID: " + doubleMonthUserId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.Devices.Any(u => u.UserId == doubleMonthUserId))
+                return NotFound(new { message = "User with the ID: " + doubleMonthUserId.ToString() + " does not have registered devices." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+
+            double energyUsageMonth = prosumerService.GetUserEnergyConsumptionForThisMonth(doubleMonthUserId, deviceCategoryId);
+            return Ok(energyUsageMonth);
         }
 
         /// <summary>
