@@ -432,5 +432,50 @@ namespace Server.Services.Implementations
 
             return result;
         }
+
+        public double GetUserEnergyConsumptionForToday(long userId, long deviceCategoryId)
+        {
+            var devicesForUser = _context.Devices
+                                .Include(d => d.DeviceModel)
+                                    .ThenInclude(dm => dm.DeviceType)
+                                    .ThenInclude(dt => dt.DeviceCategory)
+                                .Where(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId)                                
+                                .ToList();
+
+            if (devicesForUser.Count == 0)
+            {
+                return 0;
+            }
+
+            var deviceIds = devicesForUser.Select(d => d.Id).ToList();
+            var usageList = new List<DeviceEnergyUsage>();
+
+            var StartDate = DateTime.Today;
+            var EndDate = DateTime.Now;
+
+            usageList = _context.DeviceEnergyUsages
+                        .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= StartDate/* && u.EndTime <= EndDate*/)
+                        .ToList();
+
+            var totalEnergyConsumption = 0.0;
+
+            foreach (var device in devicesForUser)
+            {
+                var deviceUsageList = usageList.Where(u => u.Device.Id == device.Id).ToList();
+
+                var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == device.DeviceModelId);
+                float EnergyInKwh = DeviceModel.EnergyKwh;
+
+                foreach (var usage in deviceUsageList)
+                {
+                    if (usage.EndTime > EndDate)
+                        usage.EndTime = EndDate;
+
+                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// device.EnergyInKwh;
+                }
+            }
+
+            return Math.Round(totalEnergyConsumption, 2);
+        }
     }
 }

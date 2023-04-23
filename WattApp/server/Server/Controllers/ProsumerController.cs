@@ -184,18 +184,36 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Today`s Consumption/Production for device (by hour)
+        /// 1.) Today`s Consumption/Production for device (by hour) || 2.) Today`s Consumption/Production for one prosumer (double)
         /// </summary>
         [HttpGet]
         [Route("today")]
         //[Authorize(Roles = "dispecer")]
-        public async Task<IActionResult> GetDeviceEnergyFromTodaysDay([FromQuery] long deviceId)
+        public async Task<IActionResult> GetDeviceEnergyFromTodaysDay([FromQuery] long deviceId, long doubleUserId, long deviceCategoryId)
         {
-            List<EnergyToday> energyTodayList = prosumerService.CalculateEnergyUsageForToday(deviceId);
-            if(energyTodayList == null)
-                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            if(deviceId != 0)
+            {
+                List<EnergyToday> energyTodayList = prosumerService.CalculateEnergyUsageForToday(deviceId);
+                if (energyTodayList == null)
+                    return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
 
-            return Ok(energyTodayList);
+                return Ok(energyTodayList);
+            }
+            else
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == doubleUserId))
+                    return NotFound(new { message = "User with the ID: " + doubleUserId.ToString() + " does not exist." });
+
+                if (!_sqliteDb.Devices.Any(u => u.UserId == doubleUserId))
+                    return NotFound(new { message = "User with the ID: " + doubleUserId.ToString() + " does not have registered devices." });
+
+                if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                    return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+
+                double energyUsageToday = prosumerService.GetUserEnergyConsumptionForToday(doubleUserId, deviceCategoryId);
+                return Ok(energyUsageToday);
+            }
         }
 
         /// <summary>
