@@ -3,41 +3,47 @@
 
 <!-- Main content -->
 <div class="main">
-    <div class="content-wrap">
-        <img id="homeimg" src="assets/img/prosumerHome.png" alt="">
-        <!-- <div class="tower">
-            <img class="imgtower" src="assets/img/transmission-tower.png" alt="">
-        </div> -->
-        <!-- <div class="powerTransmissiontower">
-            <app-prosumer-tower></app-prosumer-tower>
-        </div> -->
-        <div class="consumptionNow">
-            <app-prosumer-house></app-prosumer-house>
-        </div>
 
-        <!-- <div class="solarPowerNow">
-            <app-prosumer-solar></app-prosumer-solar>
+    <img id="homeimg" src="assets/img/prosumerHome.png" alt="">
 
-        </div> -->
-        <!-- <div class="prognosis">
-            <app-today></app-today>
-        </div> -->
-        <div class="prodactionToday">
-            <h2>Production today</h2>
-            <h1><strong>24.56 kWh</strong></h1>
-        </div>
-        <div class="midle">
-            <div class="midletree">
-                <div class="midletreeform"></div>
-                <div class="midletreeform"></div>
-                <div class="midletreeform"></div>
+    <div class="prodactionToday">
+        <h2>Production today</h2>
+        <h1><strong>24.56 kWh</strong></h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">22.5 </p>
+
+                </div>
             </div>
         </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With </p>
 
-        <h2 id="smarthomeh2">Smart Home Devices</h2>
-        <app-home-devices></app-home-devices>
-
-        <app-prosumer-footer></app-prosumer-footer>
-
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With </p>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <h2 id="smarthomeh2">Smart Home Devices</h2>
+    <app-home-devices></app-home-devices>
+    <br><br>
+
+    <app-footer></app-footer>
+    <app-prosumer-footer></app-prosumer-footer>
 </div>

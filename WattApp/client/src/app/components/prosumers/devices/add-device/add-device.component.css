@@ -5,7 +5,7 @@
 }
 
 .back {
-    margin-top: 50px;
+    padding-top: 50px;
 }
 
 #turnback {
@@ -28,8 +28,6 @@ input {
     border-radius: 5px;
     box-shadow: 2px 4px gray;
     background-color: gainsboro;
-    margin-left: 26px;
-    margin-right: 26px;
     width: 100%;
     margin-bottom: 70px;
     padding-bottom: 5px;
@@ -87,5 +85,8 @@ input.ng-touched {
         margin-top: 5px;
         width: 3%;
         margin-left: 35px;
+    }
+    .all {
+        padding-top: 80px;
     }
 }

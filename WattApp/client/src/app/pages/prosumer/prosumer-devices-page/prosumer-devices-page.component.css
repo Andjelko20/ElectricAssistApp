@@ -13,12 +13,8 @@
 }
 
 .alldevices {
-    top: 43px;
-    left: 0;
-    right: 0;
     height: auto;
     max-width: 100%;
-    position: relative;
 }
 
 .adddevices {
@@ -98,8 +94,7 @@
         justify-content: center;
     }
     .alldevices {
-        top: 10%;
-        position: absolute;
+        padding-top: 80px;
     }
     #turnback {
         width: 3%;

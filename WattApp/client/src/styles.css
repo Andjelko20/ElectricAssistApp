@@ -12,14 +12,15 @@
 }
 
 .main {
-    background-color: rgb(196, 65, 65);
+    /* background-color: rgb(196, 65, 65); */
+    background-color: rgb(234, 234, 234);
 }
 
 body {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: rgb(238, 238, 238);
     color: #727272;
-    overflow: auto !important;
+    /* overflow: auto !important; */
     /* bottom: 0;
     top: 0;
     left: 0;

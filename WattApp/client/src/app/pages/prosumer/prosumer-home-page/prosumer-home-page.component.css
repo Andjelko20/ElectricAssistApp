@@ -31,6 +31,25 @@ ul {
 
 /* pravi problem kad se smanji na 320px */
 
+.row {
+    margin: 0;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
+.card {
+    margin: 5px;
+}
+
+.card-title {
+    font-size: 20px;
+}
+
+.card-text {
+    font-size: 25px;
+}
+
 .midle {
     border: 1px solid black;
     display: flex;
@@ -107,7 +126,7 @@ ul {
     padding-top: 5px;
     background-color: white;
     padding-left: 5px;
-    font-size: 15px;
+    font-size: 20px;
 }
 
 .alldevice {
@@ -164,6 +183,16 @@ ul {
     display: inline-block;
 }
 
+.moredevices {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    color: black;
+    width: 100%;
+    margin-top: 15px;
+    padding-left: 5px;
+}
+
 .consumptionNow {
     /* display: flexbox;
     width: 10%;
@@ -204,7 +233,7 @@ ul {
     min-width: 70px;
     height: 3%;
     position: absolute;
-    top: 7%;
+    top: 60px;
     padding-left: 5px;
     transition: all 0.3s;
 }
@@ -256,6 +285,12 @@ h1 {
         width: 100%;
         height: auto;
     }
+    .card-title {
+        font-size: 25px;
+    }
+    .card-text {
+        font-size: 35px;
+    }
     .midletreeform {
         margin: 1%;
         float: left;
@@ -284,6 +319,9 @@ h1 {
     .logo {
         font-size: 60px;
     }
+    .moredevices a {
+        font-size: 35px;
+    }
     #deviceh3 {
         font-size: 30px;
     }
@@ -295,6 +333,8 @@ h1 {
     .prodactionToday {
         display: flexbox;
         width: 300px;
+        top: 100px;
+        position: absolute;
         height: 100px;
         transition: all 0.3s;
     }
