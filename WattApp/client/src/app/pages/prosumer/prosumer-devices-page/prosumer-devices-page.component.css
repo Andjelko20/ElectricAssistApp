@@ -86,7 +86,6 @@
 
 @media (min-width: 768px) {
     .main {
-        border: 5px solid black;
         top: 0px;
         min-height: 100vh;
         position: absolute;

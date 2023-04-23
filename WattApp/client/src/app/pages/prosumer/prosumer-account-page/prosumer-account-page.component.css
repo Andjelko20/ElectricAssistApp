@@ -1,12 +1,12 @@
 .main {
     top: 0;
-    width: 100%;
+    justify-content: center;
     min-height: 100vh;
 }
 
 .centar {
-    max-width: 100%;
-    margin-top: 45px;
+    width: 100%;
+    min-height: 100vh;
     text-align: center;
 }
 
@@ -35,7 +35,6 @@ ul {
     margin-left: -15px;
     text-align: left;
     list-style: none;
-    margin-left: 10px;
 }
 
 ul li {
@@ -54,6 +53,11 @@ a:hover {
     color: white;
 }
 
+.card {
+    padding-top: 14%;
+    border-radius: 0px;
+}
+
 #number {
     border-bottom: 1px solid rgb(183, 183, 183);
     max-width: 300px;
@@ -61,14 +65,15 @@ a:hover {
 
 @media (min-width: 768px) {
     .centar {
-        margin-top: 85px;
+        min-height: 100vh;
+        width: 100%;
     }
     #turnback {
         width: 3%;
         margin-left: 15px;
     }
     #imgdevice {
-        width: 10%;
+        width: 20%;
     }
     form {
         margin-left: 200px;
@@ -86,10 +91,12 @@ a:hover {
     .info {
         border-radius: 15px;
         width: auto;
-        background-color: rgb(92, 166, 231);
+        margin: 15px;
+        background-color: rgb(208 233 255);
     }
     ul {
-        margin-left: 35%;
+        display: inline-block;
+        text-align: center;
         list-style: none;
     }
     ul li {
@@ -98,11 +105,16 @@ a:hover {
         font-size: 25px;
     }
     .card {
+        padding: 0;
+        margin-bottom: 0;
+        margin-top: 255px;
+        width: 60%;
+        display: inline-block;
         border-radius: 15px;
-        background-color: rgb(166, 203, 235);
-        top: 25%;
-        left: 8%;
-        position: absolute;
-        width: 80%;
+        background-color: #b8dcff;
+    }
+    app-footer {
+        width: 100%;
+        display: contents;
     }
 }

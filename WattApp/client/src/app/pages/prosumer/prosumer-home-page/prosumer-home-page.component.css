@@ -39,6 +39,7 @@ ul {
 }
 
 .card {
+    background-color: #bce9e4;
     margin: 5px;
 }
 
@@ -127,6 +128,8 @@ ul {
     background-color: white;
     padding-left: 5px;
     font-size: 20px;
+    margin: 15px;
+    border-radius: 5px;
 }
 
 .alldevice {
