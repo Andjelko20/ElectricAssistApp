@@ -1,8 +1,5 @@
 .main {
-    top: 0;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
 }
 
 input.ng-invalid.ng-touched {
@@ -25,6 +22,7 @@ input.ng-invalid[notEqual] {
     margin-bottom: 15px;
     max-width: 100%;
     margin-top: 45px;
+    min-height: 100vh;
     text-align: center;
     height: auto;
 }
@@ -96,14 +94,19 @@ div.error-message {
 @media (min-width: 768px) {
     .main {
         top: 0;
-        position: relative !important;
+        left: 0;
+        right: 0;
+        position: absolute;
+        min-height: 100vh;
     }
     .back {
         margin-top: 15px;
     }
     .centar {
         display: flex;
+        min-height: 100vh;
         justify-content: center;
+        min-height: 100vh;
     }
     #turnback {
         margin-left: 25px;
@@ -126,12 +129,11 @@ div.error-message {
         width: 105px;
     }
     .card {
+        margin-top: 55px;
+        margin-left: 100px;
         border-radius: 15px;
         background-color: #daeafb;
-        top: 10%;
-        left: 8%;
-        position: absolute;
-        width: 80%;
+        width: 70%;
     }
     .changepass {
         margin-top: -30px;
