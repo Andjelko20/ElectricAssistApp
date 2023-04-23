@@ -57,7 +57,7 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
     let token=new JwtToken();
     this.idUser=token.data.id as number;
     this.role=token.data.role as string;
-    console.log(this.idUser);
+    // console.log(this.idUser);
     this.updateService.getlogInUser()
         .subscribe({
           next:(response)=>{
@@ -86,7 +86,7 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
     const result = await this.avgConsumption.getAverageConsumptionProductionCity(1,2).pipe(first()).toPromise();
   
     this.avgProduction = result!;
-    console.log(this.avgProduction);
+    // console.log(this.avgProduction);
     
   }
 

@@ -4,6 +4,9 @@ import { Chart,registerables } from 'node_modules/chart.js'
 Chart.register(...registerables)
 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { AuthService } from 'src/app/services/auth.service';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { Settlement } from 'src/app/models/users.model';
 Chart.register(ChartDataLabels);
 
 
@@ -13,19 +16,43 @@ Chart.register(ChartDataLabels);
   styleUrls: ['./pie-chart.component.css']
 })
 export class PieChartComponent implements OnInit {
-
+  settlements:Settlement[] = [];
+  settlementsValue:number[] = [];
   itemList: string[] = ['Aerodrom', 'Bagremar', 'Erdoglija', 'Bresnica', 'Stanovo', 'Belosevac'];
-  constructor() {
-    
+  constructor(private authService:AuthService,private historyService:HistoryPredictionService) {
+  
   }
   ngOnInit(): void {
-    this.PieChart();
+
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.settlements = settlement;
+          this.settlements.forEach(settlement =>{
+            this.historyService.getCurrentConsumptionProductionSettlement(2,settlement.id).subscribe(value =>{
+              this.settlementsValue.push(value);
+              this.PieChart();
+            })
+            
+          })
+        })
+      })
+    })
   }
 
   PieChart(){
+
+
+    const chartId = 'piechart';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
+    const name = this.settlements.map(name => name.name);
     var data= [{
       label: '',
-      data: [30, 20, 15, 25, 14, 6],
+      data: this.settlementsValue,
       backgroundColor: [
          //dugine
         "#F7DC6F", 
@@ -66,7 +93,7 @@ export class PieChartComponent implements OnInit {
       
       type: 'doughnut',
       data: {
-        labels: this.itemList,
+        labels: name,
           datasets: data
       },
       options: {

@@ -38,10 +38,10 @@ export class ConsumptionYearWattmeterComponent implements OnInit {
     
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
-        this.historyService.yearByMonth(number,2).subscribe((data:YearsByMonth[])=>{
-          this.valuekWh = data.reduce((acc, item) => acc + item.energyUsageResult, 0);
-          console.log(this.valuekWh);
-        })
+        // this.historyService.yearByMonth(number,2).subscribe((data:YearsByMonth[])=>{
+        //   this.valuekWh = data.reduce((acc, item) => acc + item.energyUsageResult, 0);
+        //   console.log(this.valuekWh);
+        // })
       })
     })
   }

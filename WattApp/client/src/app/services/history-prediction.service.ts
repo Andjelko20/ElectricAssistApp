@@ -25,6 +25,10 @@ export class HistoryPredictionService {
   {
     return this.http.get<number>(environment.serverUrl+'/api/Prosumer/city/'+deviceCategoryId+'/'+cityId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}})
   }
+  getCurrentConsumptionProductionSettlement(deviceCategoryId : number,settlementId : number):Observable<number>
+  {
+    return this.http.get<number>(environment.serverUrl+'/api/Prosumer/'+deviceCategoryId+'/'+settlementId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}})
+  }
   getAverageConsumptionProductionCity(idCat: number,idCity:number):Observable<number>
   {
     return this.http.get<number>(environment.serverUrl+'/api/Prosumer/average/'+idCat+'/'+idCity,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}})
@@ -52,6 +56,14 @@ export class HistoryPredictionService {
 
   yearByMonthSettlement(settlementId:number,deviceCategoryId:number): Observable<YearsByMonth[]>{
     return this.http.get<YearsByMonth[]>(environment.serverUrl+"/api/History/YearByMonth/Settlement/"+settlementId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  historyDayUser(userId:number,deviceCategoryId:number): Observable<number>{
+    return this.http.get<number>(environment.serverUrl+"/api/History/Day/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  historyMonthUser(userId:number,deviceCategoryId:number): Observable<number>{
+    return this.http.get<number>(environment.serverUrl+"/api/History/Month/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
 

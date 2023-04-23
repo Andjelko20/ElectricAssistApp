@@ -1,11 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 
 @Component({
   selector: 'app-today-production',
   templateUrl: './today-production.component.html',
   styleUrls: ['./today-production.component.css']
 })
-export class TodayProductionComponent {
+export class TodayProductionComponent implements OnInit{
+
+  constructor(private authService:AuthService,private historyService:HistoryPredictionService,private route:ActivatedRoute){}
+
+  valuekwh!:number;
+  ngOnInit(): void {
+    this.historyService.historyDayUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe(number=>{
+      if(number != null){
+        this.valuekwh = number;
+      }
+      else{
+        this.valuekwh = 0;
+      }
+    })
+  }
   min: number = 0;
   max: number = 1000;
   markerConfig = {

@@ -1,11 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 
 @Component({
   selector: 'app-month-production',
   templateUrl: './month-production.component.html',
   styleUrls: ['./month-production.component.css']
 })
-export class MonthProductionComponent {
+export class MonthProductionComponent implements OnInit{
+
+  valuekwh!:number;
+  constructor(private historyService:HistoryPredictionService,private route:ActivatedRoute) {
+    
+  }
+  ngOnInit(): void {
+    this.historyService.historyMonthUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe(number=>{
+      if(number != null){
+        this.valuekwh = number;
+      }
+      else{
+        this.valuekwh = 0;
+      }
+    })
+  }
   min: number = 0;
   max: number = 1000;
   markerConfig = {
