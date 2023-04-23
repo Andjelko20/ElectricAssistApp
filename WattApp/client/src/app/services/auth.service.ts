@@ -2,7 +2,7 @@ import { Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
-import { Prosumers, Users } from '../models/users.model';
+import { Prosumers, Settlement, Users } from '../models/users.model';
 import { JwtToken } from '../utilities/jwt-token';
 @Injectable({
   providedIn: 'root'
@@ -37,9 +37,12 @@ export class AuthService {
     return this.http.get(environment.serverUrl );
   }
 
-  getAllUsers():Observable<any>
+  getAllUsers(pageNumber:number,pageSize:number=10):Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+'/api/users/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+	let url=new URL(environment.serverUrl+'/api/users/page');
+	url.searchParams.set("pageNumber",pageNumber.toString());
+	url.searchParams.set("pageSize",pageSize.toString());
+    return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   getAllProsumers():Observable<any>
   {
@@ -98,6 +101,14 @@ export class AuthService {
   resetPasswordWithResetCode(resetKey:string,newPassword:string):Observable<any>{   
     return this.http.post(environment.serverUrl+'/api/authentication/reset_password',{resetKey:resetKey,newPassword:newPassword});
   }
+
+  getCityId(cityName:string):Observable<any>{
+    return this.http.get<any>(environment.serverUrl+'/api/DSO/City?cityName='+cityName);
+
+  }
   
+  getSettlement(cityId:number):Observable<Settlement[]>{
+    return this.http.get<Settlement[]>(environment.serverUrl+"/settlements?cityId="+cityId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
   
 }

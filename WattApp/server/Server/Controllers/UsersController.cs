@@ -50,13 +50,15 @@ namespace Server.Controllers
 
 
         [HttpGet]
-        [Route("page/{page:int}")]
-        [Authorize(Roles = Roles.AdminPermission)]
-        public async Task<IActionResult> GetPage([FromRoute]int page)
+        [Route("page")]
+        [Authorize(Roles = Roles.AdminOperaterPermission)]
+        public async Task<IActionResult> GetPage([FromQuery]int pageNumber, [FromQuery] int pageSize=20)
         {
             try
             {
-                return Ok(await userService.GetPageOfUsers(page, 20, (user) => true));
+                if (User.IsInRole(Roles.Operater))
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId && user.RoleId!=Roles.SuperadminId));
+                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId != Roles.SuperadminId));
             }
             catch(HttpRequestException ex)
             {
@@ -78,7 +80,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("{id:long}")]
-        [Authorize(Roles = Roles.AdminPermission)]
+        [Authorize(Roles = Roles.AdminOperaterPermission)]
         public async Task<IActionResult> GetUserById([FromRoute]long id)
         {
             var user = await userService.GetUserById(id);
@@ -86,6 +88,10 @@ namespace Server.Controllers
             {
                 return NotFound(new { message="User with id "+id.ToString()+" doesn\'t exist" });
             }
+            if (user.RoleId == Roles.SuperadminId)
+                return Forbid();
+            if (User.IsInRole(Roles.Operater) && user.RoleId != Roles.ProsumerId)
+                return Forbid();
             return Ok(new UserDetailsDTO(user));
         }
 
@@ -122,13 +128,13 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("roles")]
-        [Authorize(Roles = Roles.AdminPermission)]
+        [Authorize(Roles = Roles.AdminOperaterPermission)]
         public async Task<IActionResult> GetRoles()
         {
             try
             {
                 var id = tokenService.GetClaim(HttpContext,JwtClaims.Id);
-                logger.LogInformation(id);
+                //logger.LogInformation(id);
                 return Ok(await userService.GetAllRoles());
             }
             catch (Exception e)
@@ -145,71 +151,6 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
-
-        /*[HttpPost]
-        [Authorize(Roles =Roles.AdminPermission)]
-        public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO requestBody)
-        {
-            try
-            {
-
-                UserModel user = new UserModel
-                {
-                    Username = requestBody.Username,
-                    Name = requestBody.Name,
-                    Password = HashGenerator.Hash(requestBody.Password),
-                    Blocked = requestBody.Blocked,
-                    RoleId = requestBody.RoleId,
-                    Email = requestBody.Email,
-                    Address = requestBody.Address,
-                    Latitude = requestBody.Latitude,
-                    Longitude = requestBody.Longitude,
-                    SettlementId = requestBody.SettlementId
-                };
-
-                var userModel = userService.GetUserByEmail(user.Email);
-                if (userModel != null)
-                {
-                    throw new EmailAddressAlreadyInUseException("An account with the email address" + user.Email + "already exists. Please use a different email address or log in to your existing account.");
-                }
-
-                PendingUserModel pendingUser = userService.GetPendingUserByEmail(user.Email);
-                if(pendingUser == null || (pendingUser != null && pendingUser.ExpireAt > DateTime.Now))
-                {
-                    if(pendingUser.ExpireAt > DateTime.Now)
-                    {
-                        var deletedPendingUser = userService.DeletePendingUser(pendingUser);
-                        if (deletedPendingUser == null)
-                            throw new FailedToDeleteException("Something went wrong. Please try again in a few minutes.");
-                    }
-
-
-                }
-                else if(pendingUser != null)
-                {
-                    throw new EmailAddressAlreadyInUseException("The request to create an account with email: " + pendingUser.Email + " has already been sent. Please check your email inbox and follow the instructions to confirm your account.");
-                }
-                
-
-                _sqliteDb.Users.Add(user);
-                try
-                {
-                    emailService.SendEmail(requestBody.Email,"Account created","Your account is created successfully. Your password is <b>"+requestBody.Password+"</b>",true);
-                }
-                catch
-                {
-                    return StatusCode(500, new MessageResponseDTO("Email is not sent. Check if your email exists."));
-                }
-                await _sqliteDb.SaveChangesAsync();
-                return Ok(new { message="Creted" });
-            }
-            catch(Exception ex)
-            {
-                //return StatusCode(400, new { message = "Already exists user with that username" });
-                return StatusCode(400, new MessageResponseDTO("Already exists user with that username or email"));
-            }
-
-        }*/
 
         [HttpPost]
         [Authorize(Roles = Roles.AdminPermission)]
@@ -289,7 +230,9 @@ namespace Server.Controllers
                 var user = await userService.GetUserById(id);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
-                if((requestBody.RoleId==Roles.AdminId && user.RoleId==Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId&& user.RoleId == Roles.AdminId))
+                if (user.RoleId == Roles.SuperadminId)
+                    return Forbid();
+                if ((requestBody.RoleId==Roles.AdminId && user.RoleId==Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId&& user.RoleId == Roles.AdminId))
                     user.RoleId = requestBody.RoleId;
                 user.Blocked = requestBody.Blocked;
                 user.Email = requestBody.Email;
@@ -350,6 +293,8 @@ namespace Server.Controllers
             var user = await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
             if (user==null)
                 return NotFound(new { message="User doesn't exists" });
+            if (user.RoleId == Roles.SuperadminId)
+                return Forbid();
             user.Blocked = requestBody.Status;
             await _sqliteDb.SaveChangesAsync();
             return Ok(new {message="User is blocked successfully"});
@@ -371,6 +316,8 @@ namespace Server.Controllers
             var user=await userService.GetUserById(id);
             if (user != null)
             {
+                if (user.RoleId == Roles.SuperadminId)
+                    return Forbid();
                 _sqliteDb.Remove(user);
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new {message="Deleted user"});

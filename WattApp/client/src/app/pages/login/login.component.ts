@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Route,Router,NavigationEnd } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { Location } from '@angular/common';
 // import jwt_decode from "jwt-decode";
 // import { Token } from '../../models/users.model';
 
@@ -29,11 +30,11 @@ export class LoginComponent implements OnInit {
 		}
 
 		// Reload the page when the user navigates to the login page
-		this.router.events.subscribe(event => {
-			if (event instanceof NavigationEnd) {
-				window.location.reload();
-			}
-		});
+		// this.router.events.subscribe(event => {
+		// 	if (event instanceof NavigationEnd) {
+		// 		window.location.reload();
+		// 	}
+		// });
 		document.onkeydown=(event)=>{
 			let keycode = event.keyCode || event.which;
 			if(keycode==13)
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
 	}
 	
 	login(){
+		
 		if (this.username.trim().length === 0) {
 			this.errorMsg = "User name is required";
 			return;

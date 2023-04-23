@@ -133,6 +133,10 @@ ul {
 }
 
 @media (min-width: 768px) {
+    header {
+        display: none;
+    }
+    
     .nav {
         max-height: none;
         top: 0;
@@ -152,7 +156,7 @@ ul {
         display: none;
     }
     .logo {
-        font-size: 60px;
+        font-size: 50px;
     }
     .logoimi {
         display: none;

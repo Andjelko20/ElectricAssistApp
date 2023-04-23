@@ -24,14 +24,28 @@ export class PieChartComponent implements OnInit {
 
   PieChart(){
     var data= [{
-      label: 'Percentage of Consumption in kWh',
-      data: [30, 20, 15, 15, 14, 6],
+      label: '',
+      data: [30, 20, 15, 25, 14, 6],
       backgroundColor: [
-              "#4b77a9",
-              "#5f255f",
-              "#d21243",
-              "#B27200",
-              "#1C315E"
+         //dugine
+        "#F7DC6F", 
+        "#AF7AC5",
+        " #2E8B57 ", 
+        "#F5B7B1", 
+        "#D5F5E3", 
+        "#483D8B ",
+        "#87CEFA",  
+        "#4B0082 ",
+        "#FFFFF0", 
+        "#BC8F8F",
+        "#696969 ",
+        "#483D8B ",
+        "#4B0082 ",
+
+       
+       
+        
+        
           ],
       borderWidth: 1,
       borderColor: "#00000"
@@ -50,7 +64,7 @@ export class PieChartComponent implements OnInit {
     var ctx = "piechart";
     var myChart = new Chart(ctx, {
       
-      type: 'pie',
+      type: 'doughnut',
       data: {
         labels: this.itemList,
           datasets: data
@@ -65,16 +79,24 @@ export class PieChartComponent implements OnInit {
                   sum += data;
                 });
                 
-                let percentage = (value * 100 / sum).toFixed(2) + "%";
+                let percentage = value + "kWh";
                 return percentage;
               },
                 color: '#fff',
+                font:{
+                  size:10
+                }
             },
             legend: {
               labels:{
-                color:'#000'
+                color:'#000',
+                font:{
+                  size:15
+                }
+                
               },
-              position: 'bottom',
+              
+              position: 'right',
               onHover: function (event, legendItem, legend) {
                 document.body.style.cursor = 'pointer';
               },
@@ -84,11 +106,15 @@ export class PieChartComponent implements OnInit {
               
               
             },
-            title: {
-              display: true,
-              text: 'Communities that consumes and produces',
-              color:'#000'
-            }
+            // title: {
+            //   display: true,
+            //   text: 'Current production in settlements',
+            //   color:'#727272',
+            //   font:{
+            //     size:15
+            //   }
+              
+            // }
             
         }}
       

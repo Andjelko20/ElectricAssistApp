@@ -42,7 +42,7 @@ const routes: Routes = [
 	//home
 	{path:'dashboard',component:HomePageComponent,canActivate:[AuthenticatedGuard]},
 	//ADMIN
-	{path:'admin/1',component:AdminDsoComponent,canActivate:[AdminGuard]},
+	{path:'',component:AdminDsoComponent,canActivate:[AdminGuard]},
 	{path:'add-user',component:AdminDsoAddComponent,canActivate:[AdminGuard]},
 	{path:'update-user/:id',component:AdminDsoUpdateComponent,canActivate:[AdminGuard]},
 	//DSO
@@ -57,6 +57,9 @@ const routes: Routes = [
 	{path:'reports',component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"device-update/:id",component:UpdateDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"device-add",component:AddDeviceComponent,canActivate:[ProsumerGuard]},
+	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard]},
+	{path:"profile-update",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
+
 
 
 	//TEST

@@ -1,8 +1,4 @@
-#homewrepper {
-    box-shadow: 2px 4px gray;
-    background-color: white;
-    padding: 20px;
-}
+
 
 .first {
     padding: 0;
@@ -59,11 +55,11 @@ td {
     text-align: center;
 }
 
-button {
+/* button {
     background-color: white;
     color: black;
     border: 2px solid #1C315E;
-}
+} */
 
 ul {
     list-style-type: none;

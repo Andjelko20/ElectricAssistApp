@@ -5,11 +5,21 @@
     position: absolute;
     justify-content: center;
 }
+
+.back {
+    margin-top: 20%;
+}
+
+#turnback {
+    width: 7%;
+    margin-left: 5px;
+}
+
 .global {
-    top: 10%;
     position: absolute;
     width: 100%;
     display: flex;
+    padding: 10px;
     justify-content: center;
 }
 
@@ -18,11 +28,12 @@ input {
 }
 
 .global1 {
+    border-radius: 5px;
     box-shadow: 2px 4px gray;
-    background-color: white;
+    background-color: gainsboro;
     padding: 20px;
-    width: 80%;
-    margin-bottom: 30px;
+    width: 100%;
+    margin-bottom: 15%;
 }
 
 h1 {
@@ -53,21 +64,29 @@ button {
     width: 160px;
     background-color: #1C315E;
 }
-input.ng-invalid.ng-touched {
 
-    border: 1px solid red;    
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
 }
+
 input.ng-valid {
     border: 1px solid green;
-    
 }
+
 input.ng-touched {
     border: 1px solid blue;
 }
-@media(min-width:768px)
-{
-    .global{
-        top: 20%;
-        position: absolute;
+
+@media(min-width:768px) {
+    .global1 {
+        width: 60%;
+    }
+    .back {
+        margin-top: 95px;
+    }
+    #turnback {
+        margin-top: 5px;
+        width: 3%;
+        margin-left: 35px;
     }
 }

@@ -14,11 +14,15 @@ export class RegisterComponent implements OnInit {
     id: 0,
     name: '',
     username: '',
-    password:'',
-    email:'',
+    email: '',
+    roleId: 0,
     block: false,
-    roleId:0,
-}
+    settlement: '',
+    city: '',
+    country: '',
+    address: '',
+    password: ''
+  }
   registerName='';
   registerUserName='';
   registerRassword='';
