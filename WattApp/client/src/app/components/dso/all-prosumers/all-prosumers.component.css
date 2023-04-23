@@ -28,7 +28,7 @@ table{
 table,
 td,
 th {
-    border: 1px solid black;
+    border-bottom: 1px solid gray;
     text-align: left;
     box-sizing: border-box;
 }
@@ -174,7 +174,7 @@ li a {
     table,
     td,
     th {
-        border: 1px solid black;
+        border-bottom: 1px solid gray;
         
         text-align: left;
         box-sizing: border-box;

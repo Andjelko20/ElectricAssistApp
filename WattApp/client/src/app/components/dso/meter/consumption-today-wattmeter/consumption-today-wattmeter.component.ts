@@ -9,8 +9,11 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
   styleUrls: ['./consumption-today-wattmeter.component.css']
 })
 export class ConsumptionTodayWattmeterComponent implements OnInit{
- 
-  valuekWh!: number;
+  
+  value!:any;
+  valuekWh!: any;
+  valueMWh!: any;
+  valueGWh!: any;
   min: number = 0;
   max: number = 2400;
   markerConfig = {
@@ -30,6 +33,7 @@ export class ConsumptionTodayWattmeterComponent implements OnInit{
     '1601': { color: 'red', "bgOpacity": 0.2 }
   };
   
+  
   constructor(private todayConsumption:HistoryPredictionService){
 
   }
@@ -38,6 +42,10 @@ export class ConsumptionTodayWattmeterComponent implements OnInit{
     
     // const result = await this.todayConsumption.getAverageConsumptionProductionCity("Electricity Consumer","Kragujevac").pipe(first()).toPromise();
   
-    // this.valuekWh = result!;
+    this.value=111999.2522323232323232
+    this.valuekWh = this.value.toFixed(2);
+     
+    this.valueMWh= (this.valuekWh*0.001).toFixed(2);
+    this.valueGWh= (this.valueMWh*0.001).toFixed(2);;
   }
 }

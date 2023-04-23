@@ -27,7 +27,7 @@
 </div> -->
 
 <div class="table-responsive">
-<table *ngIf="data?.length!=0" class="table">
+<table *ngIf="data?.length!=0" class="table" >
   <thead>
     <tr>
       <th scope="col">Name</th>
@@ -40,7 +40,7 @@
       <th scope="col">Year consumption</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody >
     <tr *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}">
       <td><a [routerLink]='["/prosumer/",prosumer.id]'>{{prosumer.name}}</a></td>
       <!-- <td>{{prosumer.email}}</td> -->

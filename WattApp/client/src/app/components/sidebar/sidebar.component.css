@@ -6,20 +6,26 @@
     position: relative;
     height: auto;
     width: 100%;
+    margin-top: 0;
+    padding-top: 0;
     margin-bottom: 0;
     padding-bottom: 0;
-    min-height: 97vh;
+    min-height: 98vh;
 }
 app-footer {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
+    
   }
 .wrapper1 {
-    
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
     position: absolute;
-    top: 30px;
+    top: 0px;
     bottom: 0;
     right: 0;
     left: 0;
@@ -258,22 +264,26 @@ ul ul a {
         bottom: 0;
         left: 0;
         width: 100%;
-       
       }
     #dashboard {
         padding-left: 80px;
         height: auto;
         width: 100%;
+        position: relative;
+        min-height: 100vh;
+        margin-top: 0;
+        padding-top: 0;
         margin-bottom: 0;
         padding-bottom: 0;
-        position: relative;
-        min-height: 97vh;
     }
    
     .wrapper1 {
-        
+        margin-top: 0;
+        padding-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
         position: relative;
-        /* top: 30px; */
+        top: 0px;
         bottom: 0;
         right: 0;
         left: 0;
@@ -284,7 +294,7 @@ ul ul a {
         transition: all 0.3s;
     }
     #sidebar {
-        margin-top: 40px;
+        margin-top: 70px;
         background-color: white;
         overflow: hidden;
         position: fixed;
@@ -468,6 +478,7 @@ ul ul a {
         transition: all 0.3s ease;
          display: none;
         font-size: 20px;
+        padding-left: 10px;
     }
     #sidebar ul #role-li a .role-icon{
         border-radius: 6px;

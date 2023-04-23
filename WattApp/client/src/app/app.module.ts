@@ -1,4 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
+import { DecimalPipe } from '@angular/common'; // import DecimalPipe
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -153,9 +154,10 @@ import { TabelarViewByWeekComponent } from './components/dso/tabelar-views/tabel
     LeafletModule,
     FormsModule,
     BrowserModule,
-	  NgxPaginationModule
+	  NgxPaginationModule,
+    
   ],
-  providers: [],
+  providers: [DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

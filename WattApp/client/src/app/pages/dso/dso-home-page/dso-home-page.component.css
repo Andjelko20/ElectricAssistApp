@@ -1,5 +1,5 @@
 .wrapper{
-    margin-top: 60px;
+    margin-top: 90px;
     /* min-height: calc(100vh - 61px); */
     width: 100%;
 }
@@ -215,7 +215,7 @@
     margin-right: 10px;
     background-color: white;
     border-radius: 10px;
-    width: 16%;
+    width: 15%;
     box-shadow: 1px 2px grey;
     margin-bottom: 7px;
   }
@@ -264,7 +264,7 @@
 
     background-color: white;
     border-radius: 10px;
-    width:26%;
+    width:24%;
     box-shadow: 1px 2px grey;
     margin-bottom: 7px;
     display: flex;
@@ -306,7 +306,7 @@
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .wrapper{
-        margin-top: 60px;
+        margin-top: 90px;
         /* min-height: calc(100vh - 61px); */
         width: 100%;
         margin-bottom: 70px;

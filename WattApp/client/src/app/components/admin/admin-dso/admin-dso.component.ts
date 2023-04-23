@@ -26,9 +26,15 @@ export class AdminDsoComponent {
        username: u.username,
        block: u.blocked,
        email: u.email,
-       role: u.role
+       role: u.role,
+       settlement:u.settlement,
+       city:u.city,
+       address:u.address,
+       country:u.country
      } as ShowUsers));
     });
+    
+    
     }
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
@@ -36,43 +42,50 @@ export class AdminDsoComponent {
 			this.totalItems=users.numberOfPages*this.itemsPerPage;
 			this.showUsers=users.data.map((u:any)=>({
 			  id: u.id,
-			  name: u.name,
-			  username: u.username,
-			  block: u.blocked,
-			  email: u.email,
-			  role: u.role
+       name: u.name,
+       username: u.username,
+       block: u.blocked,
+       email: u.email,
+       role: u.role,
+       settlement:u.settlement,
+       city:u.city,
+       address:u.address,
+       country:u.country
 			} as ShowUsers));
 		   });
 	}
 
-
-  blockUser(id: number) {
-    const block= document.getElementById('block-popup');
-    if(block!=null)
-    {
+  confirmBlock(id: number) {
+    const block = document.getElementById('block-popup');
+    if (block != null) {
       block.addEventListener('click', () => {
-        this.usersService.blockUser(id).subscribe(() => {
-          const userIndex = this.showUsers.findIndex(user => user.id === id);
-          this.showUsers[userIndex].block = true;
-        });
-      }
-      );
+        this.blockUser(id);
+      });
     }
-      
+  }
+  
+  blockUser(id: number) {
+    this.usersService.blockUser(id).subscribe(() => {
+      console.log(id + "a");
+      const userIndex = this.showUsers.findIndex(user => user.id === id);
+      this.showUsers[userIndex].block = true;
+    });
+  }
+  confirmUnblock(id: number) {
+    const unblock = document.getElementById('unblock-popup');
+    if (unblock != null) {
+      unblock.addEventListener('click', () => {
+        this.unblockUser(id);
+      });
+    }
   }
   unblockUser(id: number) {
-    const unblock= document.getElementById('unblock-popup');
-    if(unblock!=null)
-    {
-      unblock.addEventListener('click', () => {
-        this.usersService.unblockUser(id).subscribe(() => {
-          const userIndex = this.showUsers.findIndex(user => user.id === id);
-          this.showUsers[userIndex].block = false;
-        });
-      });
-
-      
-    }
+    
+    this.usersService.unblockUser(id).subscribe(() => {
+      console.log(id + "f");
+      const userIndex1 = this.showUsers.findIndex(user => user.id === id);
+      this.showUsers[userIndex1].block = false;
+    });
   }
 
 
