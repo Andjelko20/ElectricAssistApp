@@ -236,18 +236,37 @@ namespace Server.Controllers
 
                 var pendingUser = userService.CreatePendingUser(user);
                 if (pendingUser == null)
-                    throw new EmailAddressAlreadyInUseException("Doslo je do greske prilikom kreiranja zahteva");
+                    throw new EmailAddressAlreadyInUseException("Doslo je do greske prilikom kreiranja zahteva.");
+                else if(pendingUser is HttpRequestException)
+                {
+                    throw (HttpRequestException)pendingUser;
+                }
 
-                emailService.SendEmail(requestBody.Email, "Account created", "Your account is created successfully. Your password is <b>" + requestBody.Password + "</b>", true);
+                try
+                {
+                    emailService.SendEmail(requestBody.Email, "Account created", "Your account is created successfully. Your password is <b>" + requestBody.Password + "</b>", true);
+                }
+                catch
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+                }
 
-                return Ok("Uspesno poslato");
+
+                return Ok("Email sent successfully!");
                
             }
             catch(HttpRequestException ex)
             {
                 return StatusCode(405, ex.Message);
             }
-
+            catch(EmailAddressAlreadyInUseException ex)
+            {
+                return StatusCode(500, "Ooops... Something went wrong, please try again.");
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Ooops... Something went wrong, please try again.");
+            }
 
         }
 
