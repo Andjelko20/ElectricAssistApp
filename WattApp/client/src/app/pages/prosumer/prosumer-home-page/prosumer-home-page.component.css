@@ -197,6 +197,7 @@ ul {
 }
 
 .consumptionNow {
+    border: 1px solid black;
     /* display: flexbox;
     width: 10%;
     max-height: 20%;
@@ -363,7 +364,7 @@ h1 {
     .consumptionNow {
         display: flexbox;
         width: 15%;
-        max-height: 20%;
+        height: 15%;
         top: 30%;
         display: inline-block;
         left: 32%;
