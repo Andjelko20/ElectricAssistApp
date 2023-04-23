@@ -19,5 +19,6 @@ namespace Server.Services
         public int GetNumberOfDevicesOfOneProsumer(long userId);
         public double GetUserEnergyConsumptionForToday(long userId, long deviceCategoryId);
         public double GetUserEnergyConsumptionForThisMonth(long userId, long deviceCategoryId);
+        public double GetUserEnergyConsumptionForThisYear(long userId, long deviceCategoryId);
     }
 }

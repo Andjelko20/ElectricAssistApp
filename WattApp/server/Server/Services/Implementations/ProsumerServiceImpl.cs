@@ -444,6 +444,12 @@ namespace Server.Services.Implementations
             return SumEnergyConsumption(userId, startOfMonth, deviceCategoryId);
         }
 
+        public double GetUserEnergyConsumptionForThisYear(long userId, long deviceCategoryId)
+        {
+            DateTime startOfYear = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0);
+            return SumEnergyConsumption(userId, startOfYear, deviceCategoryId);
+        }
+
         public double SumEnergyConsumption(long userId, DateTime StartDate, long deviceCategoryId)
         {
             var devicesForUser = _context.Devices

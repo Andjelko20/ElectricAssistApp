@@ -238,6 +238,14 @@ namespace Server.Controllers
             return Ok(energyUsageMonth);
         }
 
+        [HttpGet]
+        [Route("year")]
+        public async Task<IActionResult> GetProsumerEnergyForThisYear(long doubleYearUserId, long deviceCategoryId)
+        {
+            double energyUsageYear = prosumerService.GetUserEnergyConsumptionForThisYear(doubleYearUserId, deviceCategoryId);
+            return Ok(energyUsageYear);
+        }
+
         /// <summary>
         /// Number of devices from one prosumer
         /// </summary>
