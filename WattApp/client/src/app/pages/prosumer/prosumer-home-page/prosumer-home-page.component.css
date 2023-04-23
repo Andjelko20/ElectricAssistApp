@@ -270,6 +270,10 @@ h1 {
 /* Responsiveness */
 
 @media (min-width: 768px) {
+    .main {
+        top: 0;
+        position: absolute;
+    }
     .midle {
         /* border: 1px solid black; */
         display: flex;
