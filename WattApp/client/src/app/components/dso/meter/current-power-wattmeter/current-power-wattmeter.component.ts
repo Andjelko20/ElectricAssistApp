@@ -10,7 +10,7 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
 })
 export class CurrentPowerWattmeterComponent implements OnInit{
   
-  value!:number;
+  valuekWh!:number;
   min: number = 0;
   max: number = 2400;
   markerConfig = {
@@ -42,7 +42,7 @@ constructor(private todayConsumption:HistoryPredictionService){
   
   const result = await this.todayConsumption.getTotalConsumptionProductionCity("Electricity Consumer","Kragujevac").pipe(first()).toPromise();
 
-  this.value = result!;
+  this.valuekWh = result!;
 }
 
 }

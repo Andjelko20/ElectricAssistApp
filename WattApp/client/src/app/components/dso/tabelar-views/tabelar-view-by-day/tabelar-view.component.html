@@ -1,0 +1,66 @@
+
+
+<div class="containers">
+    <div class="search">
+      <input type="text" placeholder="Search...">
+    </div>
+    <div class="sort-by">
+        <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>
+            <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
+        </select>
+      <select>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+      <select>
+        <option value="10">10 per page</option>
+        <option value="20">20 per page</option>
+        <option value="50">50 per page</option>
+      </select>
+    </div>
+    <div class="table">
+        <div class="table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Device Type</th>
+                  <th>Device Brand</th>
+                  <th>Device Model</th>
+                  <th>Device Name</th>
+                  <th>Peak Power</th>
+                  <th>On/Off</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let dev of devicesList">
+                    <ng-container *ngIf="dev.visibility">
+                      <ng-container *ngIf="dev.controlability">
+                        <td>{{dev.deviceType}}</td>
+                        <td>{{dev.deviceBrand}}</td>
+                        <td>{{dev.deviceModel}}</td>
+                        <td>{{dev.name}}</td>
+                        <td>{{dev.energyInKwh}}</td>
+                        <td class="on-off">
+                          <a class="btn" id="startbutton" role="button" *ngIf="dev.turnOn === true" (click)="turnOnOff(dev.id)">On</a>
+                          <a class="btn" id="startbutton" role="button" *ngIf="dev.turnOn === false" (click)="turnOnOff(dev.id)">Off</a>
+                        </td>
+                      </ng-container>
+                      <ng-container *ngIf="!dev.controlability">
+                        <td>{{dev.deviceType}}</td>
+                        <td>{{dev.deviceBrand}}</td>
+                        <td>{{dev.deviceModel}}</td>
+                        <td>{{dev.name}}</td>
+                        <td>{{dev.energyInKwh}}</td>
+                        <td class="on-off">
+                          <a class="btn disabled" id="startbutton" role="button" *ngIf="dev.turnOn === true" (click)="turnOnOff(dev.id)">On</a>
+                          <a class="btn disabled" id="startbutton" role="button" *ngIf="dev.turnOn === false" (click)="turnOnOff(dev.id)">Off</a>
+                        </td>
+                      </ng-container>
+                    </ng-container>
+                  </tr>
+                  
+                  </tbody>
+            </table>
+        </div>
+    </div>
+  </div>

@@ -27,7 +27,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let show of showUsers index as i">
+                <tr *ngFor="let show of showUsers | paginate: {currentPage,itemsPerPage,totalItems}">
                     <td>{{show.name}}</td>
                     <td>{{show.username}}</td>
                     <td>{{show.block}} </td>
@@ -44,8 +44,7 @@
                 </tr>
             </tbody>
         </table>
-        <br>
-
+		<app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
     </div>
     <a [routerLink]='["/add-user"]'><button id="buttonAdd">ADD</button></a>
 

@@ -76,6 +76,7 @@
     max-width: 100%;
     margin: 0;
     padding: 0;
+    
     justify-content: center;
 }
 .gap-10 > * {
@@ -100,6 +101,7 @@
 }
 .p-20 {
     padding: 20px !important;
+    margin-right: 10px;
 }
 .peer {
     display: block;
@@ -108,6 +110,7 @@
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     margin-top: 20px;
+    
 }
 
 
@@ -145,22 +148,71 @@
 } */
 
 .csv-body {
-    flex-grow: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.csv-button {
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.csv-button:hover {
+  background-color: #005ea6;
 }
 
 .chart-body {
-    margin-left: 40%;
-    flex-grow: 100;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
+.chart-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-button {
+  cursor: pointer;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  color: #0077cc;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.chart-button:hover {
+  background-color: #0077cc;
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+}
 
 /* .history-charts-body{
     margin-left: 200px;
 } */
 
 .numpro {
-    margin-left: 15px;
-    
+   
+    margin-right: 10px;
     background-color: white;
     border-radius: 5px;
     width: 20%;
@@ -170,7 +222,7 @@
   
   .tile_stats_count {
     width: 65%;
-    margin-top: 15px;
+    margin-top: 2px;
     float: none;
     display: inline-block;
     text-align: center;
@@ -208,11 +260,11 @@
     color: #7B7B7B;
   }
   #pie{
-    margin-left: 15px;
+    
 
     background-color: white;
     border-radius: 5px;
-    width:25%;
+    width:26%;
     box-shadow: 1px 2px grey;
     margin-bottom: 7px;
     display: flex;
@@ -232,7 +284,7 @@
     width: 17px; /* Set the width to your desired size */
     height: 17px; /* Set the height to the same value as the width to create a square shape */
     margin-left: 10px;
-    cursor: pointer;
+    
 }
 
   .blue-square {
@@ -241,7 +293,7 @@
     width: 17px; /* Set the width to your desired size */
     height: 17px; /* Set the height to the same value as the width to create a square shape */
     margin-left: 10px;
-    cursor: pointer;
+   
 }
   .red-square {
     display: inline-block;
@@ -249,7 +301,8 @@
     width: 17px; /* Set the width to your desired size */
     height: 17px; /* Set the height to the same value as the width to create a square shape */
     margin-left: 10px;
-    cursor: pointer;
+    
+    
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .wrapper{
@@ -412,7 +465,7 @@
     } */
     
     .numpro {
-        margin-left: 15px;
+        
         
         background-color: white;
         border-radius: 5px;
@@ -423,7 +476,7 @@
       
       .tile_stats_count {
         width: 65%;
-        margin-top: 15px;
+        margin-top: 2px;
         float: none;
         display: inline-block;
         text-align: center;
@@ -461,12 +514,10 @@
         color: #7B7B7B;
       }
       #pie{
-        margin-left: 15px;
-        
- 
+        /* margin-left: 15px; */
         background-color: white;
         border-radius: 5px;
-        width:65%;
+        width:66.5%;
         box-shadow: 1px 2px grey;
         margin-bottom: 7px;
         display: flex;
@@ -486,7 +537,7 @@
         width: 17px; /* Set the width to your desired size */
         height: 17px; /* Set the height to the same value as the width to create a square shape */
         margin-left: 10px;
-        cursor: pointer;
+       
     }
     
       .blue-square {
@@ -495,7 +546,8 @@
         width: 17px; /* Set the width to your desired size */
         height: 17px; /* Set the height to the same value as the width to create a square shape */
         margin-left: 10px;
-        cursor: pointer;
+        
+     
     }
       .red-square {
         display: inline-block;
@@ -503,7 +555,68 @@
         width: 17px; /* Set the width to your desired size */
         height: 17px; /* Set the height to the same value as the width to create a square shape */
         margin-left: 10px;
-        cursor: pointer;
+       
     }
     
+.weather {
+  width: 20%;
+  margin-right: 10px;
+  background-color: white;
+  box-shadow: 2px 4px grey;
+}
+
+.weather-body{
+  display: block;
+  left: auto;
+  right: auto;
+  padding: 15px;
+  margin: 0 15px;
+  text-align: center;
+}
+
+.toggle-container {
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding-top: 10px;
+    border-bottom: 1px solid black;
+  }
+  
+  .toggle-buttons {
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    
+  }
+  
+  .toggle-buttons label {
+    display: inline-block;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .toggle-buttons input[type="radio"] {
+    display: none;
+  }
+  
+  .toggle-buttons span.divider {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    margin: 0 10px;
+    background-color: gray;
+  }
+  
+  .toggle-buttons input[type="radio"]:checked + label {
+    font-weight: bold;
+  }
+  
+  .toggle-buttons input[type="radio"]:not(:checked) + label {
+    color: gray;
+  }
+
 }

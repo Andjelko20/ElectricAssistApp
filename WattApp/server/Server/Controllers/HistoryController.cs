@@ -423,7 +423,7 @@ namespace Server.Controllers
         /// Consumption/Production for all users from city for last year (by month)
         /// </summary>
         [HttpGet]
-        [Route("YearByDay/City/{cityId:long}/{deviceCategoryId:long}")]
+        [Route("YearByMonth/City/{cityId:long}/{deviceCategoryId:long}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetCityHistoryForPastYearByMonth([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
         {
@@ -440,7 +440,7 @@ namespace Server.Controllers
         /// Consumption/Production for all users from settlement for last year (by month)
         /// </summary>
         [HttpGet]
-        [Route("YearByDay/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
+        [Route("YearByMonth/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetSettlementHistoryForPastYearByMonth([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
         {
@@ -451,6 +451,74 @@ namespace Server.Controllers
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
             return Ok(historyService.SettlementHistoryForThePastYearByMonth(settlementId, deviceCategoryId));
+        }
+
+        /// <summary>
+        /// Total device Consumption/Production in this month
+        /// </summary>
+        [HttpGet]
+        [Route("Month")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDeviceInThisMonth([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceInThisMonth(deviceId);
+            return Ok(historyList);
+        }
+
+        /// <summary>
+        /// Total device Consumption/Production today
+        /// </summary>
+        [HttpGet]
+        [Route("Today")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDeviceToday([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceToday(deviceId);
+            return Ok(historyList);
+        }
+
+        /// <summary>
+        /// Total device Consumption/Production this year
+        /// </summary>
+        [HttpGet]
+        [Route("Year")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDeviceThisYear([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceThisYear(deviceId);
+            return Ok(historyList);
+        }
+
+        /// <summary>
+        /// Total device Consumption/Production this year
+        /// </summary>
+        [HttpGet]
+        [Route("PreviousMonth")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDevicePreviousMonth([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceForPreviousMonth(deviceId);
+            return Ok(historyList);
         }
     }
 }

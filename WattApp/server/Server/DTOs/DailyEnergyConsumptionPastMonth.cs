@@ -2,7 +2,9 @@
 {
     public class DailyEnergyConsumptionPastMonth
     {
-        public string Day { get; set; }
+        public int Day { get; set; }
+        public string Month { get; set; }
+        public int Year { get; set; }
         public double EnergyUsageResult { get; set; }
     }
 }

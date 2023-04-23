@@ -9,7 +9,7 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
   styleUrls: ['./consumption-year-wattmeter.component.css']
 })
 export class ConsumptionYearWattmeterComponent implements OnInit {
-  value!: number;
+  valuekWh!: number;
   min: number = 0;
   max: number = 2400;
   markerConfig = {
@@ -36,6 +36,6 @@ export class ConsumptionYearWattmeterComponent implements OnInit {
     
     const result = await this.todayConsumption.getAverageConsumptionProductionCity("Electricity Producer","Kragujevac").pipe(first()).toPromise();
   
-    this.value = result!;
+    this.valuekWh = result!;
   }
 }
