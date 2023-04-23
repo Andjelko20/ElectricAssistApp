@@ -479,7 +479,7 @@ namespace Server.Services.Implementations
 
                 foreach (var usage in deviceUsageList)
                 {
-                    if (usage.EndTime > EndDate)
+                    if (usage.EndTime == null)
                         usage.EndTime = EndDate;
 
                     totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// device.EnergyInKwh;
