@@ -12,6 +12,7 @@ input {
 .global1 {
     box-shadow: 2px 4px gray;
     background-color: white;
+    border-radius: 10px;
     padding: 20px;
     width: 50%;
     margin-bottom: 30px;
@@ -69,6 +70,7 @@ form {
     .global1 {
         box-shadow: 2px 4px gray;
         background-color: white;
+        border-radius: 10px;
         padding: 20px;
         width: 80%;
         margin-bottom: 130px;
