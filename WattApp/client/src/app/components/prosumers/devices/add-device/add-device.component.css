@@ -1,11 +1,9 @@
 .main {
-    top: 0px;
-    width: 100%;
-    justify-content: center;
+    min-height: 100vh;
 }
 
-.back {
-    padding-top: 50px;
+.all {
+    padding-top: 55px;
 }
 
 #turnback {
@@ -75,18 +73,27 @@ input.ng-touched {
 }
 
 @media(min-width: 768px) {
+    .main {
+        border: 5px solid black;
+        top: 0px;
+        min-height: 100vh;
+    }
+    .all {
+        border: 1px solid yellow;
+        padding-top: 80px;
+        min-height: 100vh;
+    }
     .global1 {
         width: 60%;
     }
     .back {
-        margin-top: 95px;
+        border: 1px solid black;
+        padding-top: 55px;
     }
     #turnback {
+        border: 1px solid black;
         margin-top: 5px;
         width: 3%;
         margin-left: 35px;
-    }
-    .all {
-        padding-top: 80px;
     }
 }

@@ -1,8 +1,5 @@
 .main {
-    top: 0px;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
     justify-content: center;
 }
 
@@ -14,6 +11,7 @@
 
 .alldevices {
     height: auto;
+    padding-top: 55px;
     max-width: 100%;
 }
 
@@ -88,10 +86,10 @@
 
 @media (min-width: 768px) {
     .main {
+        border: 5px solid black;
         top: 0px;
-        width: 100%;
         min-height: 100vh;
-        justify-content: center;
+        position: absolute;
     }
     .alldevices {
         padding-top: 80px;
