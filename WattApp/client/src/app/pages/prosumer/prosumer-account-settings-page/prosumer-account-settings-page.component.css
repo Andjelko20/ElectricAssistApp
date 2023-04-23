@@ -63,6 +63,7 @@ form {
 }
 
 label {
+    margin-top: 5px;
     font-size: 15px !important;
 }
 
@@ -123,6 +124,7 @@ div.error-message {
         font-size: 30px;
     }
     label {
+        margin-top: 15px;
         font-size: 20px !important;
     }
     button {
