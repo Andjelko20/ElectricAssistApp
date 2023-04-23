@@ -407,7 +407,7 @@ namespace Server.Services.Implementations
 
                 Result.Add(new EnergyToday
                 {
-                    EnergyUsageResult = energyUsageResult,
+                    EnergyUsageResult = Math.Round(energyUsageResult, 2),
                     Hour = startTime.Hour,
                     Day = DateTime.Now.Day,
                     Month = DateTime.Now.ToString("MMMM"),
