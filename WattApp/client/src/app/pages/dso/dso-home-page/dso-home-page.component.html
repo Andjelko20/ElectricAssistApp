@@ -3,31 +3,57 @@
         <div class="bgc-white p-20 bd">
             <div class="c-grey-900 text-center"  >
                 <div style="display: inline-block;"><h4 style=" font-weight: bolder;">Overview of {{updateUserDetail.city}}</h4></div>
-                
-                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than 350 kWh" style="display: inline-block; cursor: pointer;"><span class="green-square" ></span> Green zone </div>
+<!--                 
+                <div data-bs-toggle="tooltip" data-bs-placement="bottom" title="Current: less than 350 kWh 
+                Today: 130,000-260,000 kwh Month: 4,000,000-8,000,000 kWh Year:50,000,000-100,000,000kWh" style="display: inline-block; cursor: pointer;"><span class="green-square" ></span> Green zone </div>
                 <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;"><span class="blue-square"></span> Blue zone</div>
                 <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;"><span class="red-square" ></span> Red zone</div>
-                <!-- <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+                 -->
+                <!-- <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" title="Green zone" data-bs-content="Current: less than 350 kWh ,Today: 130,000 - 260,000 kwh">Click to toggle popover</button>
                 <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
                     Tooltip on top
                   </button> -->
-                <hr>
+                <hr style="margin-bottom: 0;padding-bottom: 0;">
             </div>
             <div class="peers mT-20 fxw-nw@lg+ jc-sb ta-c gap-10">
                 <div class="peer">
+                    <div class="c-grey-900 text-center"  >
+                        <div data-bs-toggle="tooltip" data-bs-placement="bottom" title="Current: less than 350 kWh 
+                        Today: 130,000-260,000 kwh Month: 4,000,000-8,000,000 kWh Year:50,000,000-100,000,000kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    </div>
                         <app-current-power-wattmeter></app-current-power-wattmeter>
                         <span>Current consumption</span>
                 </div>
                 <div class="peer">
+                    <div class="c-grey-900 text-center"  >
+                        <div data-bs-toggle="tooltip" data-bs-placement="bottom" title="Current: less than 350 kWh 
+                        Today: 130,000-260,000 kwh Month: 4,000,000-8,000,000 kWh Year:50,000,000-100,000,000kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    </div>
                         <app-consumption-today-wattmeter></app-consumption-today-wattmeter>
                         <span>Today consumption</span>
                 </div>
 
                 <div class="peer">
+                    <div class="c-grey-900 text-center"  >
+                        <div data-bs-toggle="tooltip" data-bs-placement="bottom" title="Current: less than 350 kWh 
+                        Today: 130,000-260,000 kwh Month: 4,000,000-8,000,000 kWh Year:50,000,000-100,000,000kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    </div>
                         <app-consumption-month-wattmeter></app-consumption-month-wattmeter>
                         <span>Month consumption</span>
                 </div>
                 <div class="peer">
+                    <div class="c-grey-900 text-center"  >
+                        <div data-bs-toggle="tooltip" data-bs-placement="bottom" title="Current: less than 350 kWh 
+                        Today: 130,000-260,000 kwh Month: 4,000,000-8,000,000 kWh Year:50,000,000-100,000,000kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    </div>
                         <app-consumption-year-wattmeter></app-consumption-year-wattmeter>
                         <span>Year consumption</span>
                 </div>
@@ -41,7 +67,7 @@
             </div>
             <hr style="margin: 0;">
             <div class="col-md-2 col-sm-4  tile_stats_count">
-                <span class="count_top"><i style="font-size: 15px;"class="fa fa-sun"></i> Prosumers producing in {{updateUserDetail.city}}</span>
+                <span class="count_top"><i style="font-size: 15px;"class="fa fa-sun"></i> Prosumers producing in Kragujevac{{updateUserDetail.city}}</span>
                 <div class="count">20</div>
                 <span class="count_bottom"><i class="green">2% </i> From last Week</span>
             </div>
@@ -56,7 +82,7 @@
         </div>
         <div id="pie">
             
-            <span style="margin: 0; padding: 0;"><b>Current production in stettlements </b><hr> </span>
+            <span style="margin: 0; padding: 0;"><b>Current production in stettlements </b> </span>
             
             <div id="chart">
                 <app-pie-chart></app-pie-chart>

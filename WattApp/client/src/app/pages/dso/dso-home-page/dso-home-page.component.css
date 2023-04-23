@@ -100,7 +100,7 @@
     border: 1px solid rgba(0, 0, 0, 0.0625) !important;
 }
 .p-20 {
-    padding: 20px !important;
+    padding: 5px !important;
     margin-right: 10px;
 }
 .peer {
@@ -109,7 +109,7 @@
     -webkit-box-flex: 0;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     
 }
 
@@ -215,7 +215,7 @@
     margin-right: 10px;
     background-color: white;
     border-radius: 10px;
-    width: 20%;
+    width: 16%;
     box-shadow: 1px 2px grey;
     margin-bottom: 7px;
   }
@@ -278,31 +278,31 @@
     padding-bottom: 0;
   }
   
-.green-square {
+  .green-square {
     display: inline-block;
     background-color: rgb(111, 180, 111);
-    width: 17px; /* Set the width to your desired size */
-    height: 17px; /* Set the height to the same value as the width to create a square shape */
+    width: 10px; /* Set the width to your desired size */
+    height: 10px; /* Set the height to the same value as the width to create a square shape */
     margin-left: 10px;
-    
+   
 }
 
   .blue-square {
     display: inline-block;
     background-color: rgb(120, 120, 238);
-    width: 17px; /* Set the width to your desired size */
-    height: 17px; /* Set the height to the same value as the width to create a square shape */
+    width: 10px; /* Set the width to your desired size */
+    height: 10px; /* Set the height to the same value as the width to create a square shape */
     margin-left: 10px;
-   
+    
+ 
 }
   .red-square {
     display: inline-block;
     background-color: rgb(247, 117, 117);
-    width: 17px; /* Set the width to your desired size */
-    height: 17px; /* Set the height to the same value as the width to create a square shape */
+    width: 10px; /* Set the width to your desired size */
+    height: 10px; /* Set the height to the same value as the width to create a square shape */
     margin-left: 10px;
-    
-    
+   
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .wrapper{
@@ -535,8 +535,8 @@
     .green-square {
         display: inline-block;
         background-color: rgb(111, 180, 111);
-        width: 17px; /* Set the width to your desired size */
-        height: 17px; /* Set the height to the same value as the width to create a square shape */
+        width: 10px; /* Set the width to your desired size */
+        height: 10px; /* Set the height to the same value as the width to create a square shape */
         margin-left: 10px;
        
     }
@@ -544,8 +544,8 @@
       .blue-square {
         display: inline-block;
         background-color: rgb(120, 120, 238);
-        width: 17px; /* Set the width to your desired size */
-        height: 17px; /* Set the height to the same value as the width to create a square shape */
+        width: 10px; /* Set the width to your desired size */
+        height: 10px; /* Set the height to the same value as the width to create a square shape */
         margin-left: 10px;
         
      
@@ -553,8 +553,8 @@
       .red-square {
         display: inline-block;
         background-color: rgb(247, 117, 117);
-        width: 17px; /* Set the width to your desired size */
-        height: 17px; /* Set the height to the same value as the width to create a square shape */
+        width: 10px; /* Set the width to your desired size */
+        height: 10px; /* Set the height to the same value as the width to create a square shape */
         margin-left: 10px;
        
     }
