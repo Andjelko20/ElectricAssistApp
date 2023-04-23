@@ -1,11 +1,5 @@
 .main {
-    top: 0px;
-    width: 100%;
-    justify-content: center;
-}
-
-.back {
-    padding-top: 50px;
+    min-height: 100vh;
 }
 
 #turnback {
@@ -27,7 +21,7 @@ input {
 .global1 {
     border-radius: 5px;
     box-shadow: 2px 4px gray;
-    background-color: gainsboro;
+    background-color: #bce9e4;
     margin-left: 26px;
     margin-right: 26px;
     width: 100%;
@@ -76,16 +70,28 @@ input.ng-touched {
     border: 1px solid blue;
 }
 
+.all {
+    padding-top: 55px;
+}
+
 @media(min-width:768px) {
-    .global1 {
-        width: 60%;
+    .main {
+        top: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
     }
-    .back {
-        margin-top: 95px;
+    .all {
+        padding-top: 80px;
+        min-height: 100vh;
+    }
+    .global1 {
+        margin-bottom: 5px;
+        width: 60%;
     }
     #turnback {
         margin-top: 5px;
         width: 3%;
-        margin-left: 35px;
+        margin-left: 105px;
     }
 }

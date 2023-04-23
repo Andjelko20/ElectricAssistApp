@@ -87,10 +87,14 @@
 @media (min-width: 768px) {
     .main {
         top: 0px;
+        left: 0;
+        right: 0;
         min-height: 100vh;
         position: absolute;
+        justify-content: center;
     }
     .alldevices {
+        min-height: 100vh;
         padding-top: 80px;
     }
     #turnback {
