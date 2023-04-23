@@ -221,7 +221,7 @@
   }
   
   .tile_stats_count {
-    width: 65%;
+    width: 85%;
     margin-top: 2px;
     float: none;
     display: inline-block;
@@ -315,34 +315,7 @@
         justify-content: flex-end;
         height: 100%;
     }
-    /* .overview {
-        background-color: white;
-        box-shadow: 2px 4px grey;
-        margin-right: 15px;
-        margin-left: 0px;
-        padding-left: 17px;
-        padding-right: 15px;
-        flex-grow: 100;
-        text-align: center;
-        border: 1px solid black;
-    } */
-    
-    
-       /* satici */
-    
-    /* .consumption {
-
-        
-        width:23%;
-
-        border-right: 1px solid gray;
-       
-    }
-    .consumption-body {
-        background-color: white;
-        width: 20%;
-        text-align: center;
-    } */
+ 
     
     .card-group {
 
@@ -440,17 +413,7 @@
         margin-right: 15px;
     }
     
-    
-    /* .chart-body {
-        border: 1px solid black;
-        padding-top: 2px;
-    } */
-    
-    
-    /* .csv-body {
-        border: 1px solid black;
-    } */
-    
+
     .csv-body {
         flex-grow: 100;
     }
@@ -461,9 +424,7 @@
     }
     
     
-    /* .history-charts-body{
-        margin-left: 200px;
-    } */
+
     
     .numpro {
         
