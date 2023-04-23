@@ -185,7 +185,23 @@ namespace Server.Controllers
 
                 try
                 {
-                    emailService.SendEmail(requestBody.Email, "Account created", "Your account is created successfully. Your password is <b>" + requestBody.Password + "</b>", true);
+                    //emailService.SendEmail(requestBody.Email, "Account created", "Your account is created successfully. Your password is <b>" + requestBody.Password + "</b>", true);
+                    string fromRoute = requestBody.Email;
+                    fromRoute.Replace("@", "%40");
+                    emailService.SendEmail(requestBody.Email,
+                            "Confirm Your Email Address",
+                             "Hello " + requestBody.Name + ", <br><br>" +
+                            "Thank you for signing up for our service.<br>" +
+                            "Before you can start using your account," +
+                            "we need to verify your email address.<br> <br>" +
+                            "Please click the link below to <b>confirm your email address</b>:<br>" +
+                            "<a href='https://localhost:7146/api/Users/emailConfirmation/" + requestBody.Email + "'>" + requestBody.Email + "</a><br><br>" +
+                            "If you did not sign up for our service, please ignore this email.<br><br>" +
+                            "Thank you, <br>" +
+                            "<i><b>ElectricAssist Team</b></i>"
+                        , true);
+                    //emailService.SendEmail(requestBody.Email, "Confirm", "<a href='https://localhost:7146/api/Users/emailConfirmation/" + requestBody.Email + "'>" + requestBody.Email + "</a>", true);
+                       
                 }
                 catch
                 {
@@ -209,6 +225,17 @@ namespace Server.Controllers
                 return StatusCode(500, "Ooops... Something went wrong, please try again.");
             }
 
+        }
+
+        [HttpPost("emailConfirmation/{email}")]
+        public IActionResult ConfirmEmailAddress([FromRoute] string email)
+        {
+            Object response = userService.ConfirmEmailAddress(email);
+            if (response is HttpRequestException)
+                return StatusCode(500, ((HttpRequestException)response).Message);
+            else
+                return Ok("Mail confirmed successfully");
+           
         }
 
         /// <summary>

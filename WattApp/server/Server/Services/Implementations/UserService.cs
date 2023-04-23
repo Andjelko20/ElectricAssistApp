@@ -8,7 +8,10 @@ using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
 using Server.Utilities;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Principal;
 
 namespace Server.Services.Implementations
 {
@@ -155,28 +158,58 @@ namespace Server.Services.Implementations
             return response;
         }
 
-
-        /*PendingUserModel GetPendingUserByEmail(string email)
+        public Object ConfirmEmailAddress(string email)
         {
-            return context.PendingUsers.FirstOrDefault(src => src.Email == email);
-        }
-
-        PendingUserModel DeletePendingUser(PendingUserModel pendingUser)
-        {
-            var user = context.PendingUsers.Remove(pendingUser);
-            if (user == null)
-                return null;
-            return pendingUser;
-        }
-
-        List<PendingUserModel> DeleteAllExpiredPendingUsers()
-        {
-            List<PendingUserModel> pendingUserModels = context.PendingUsers.Where(src => src.ExpireAt > DateTime.Now).ToList();
-            foreach (PendingUserModel pendingUser in pendingUserModels)
+            PendingUserModel pendingUser = context.PendingUsers.FirstOrDefault(src => src.Email == email);
+            if (pendingUser != null)
             {
-                context.PendingUsers.Remove(pendingUser);
+                //Zahtev postoji
+                if (pendingUser.ExpireAt > DateTime.Now)
+                {
+                    //Jos uvek je validan
+
+                    UserModel user = new UserModel
+                    {
+                        Username = pendingUser.Username,
+                        Name = pendingUser.Name,
+                        Password = pendingUser.Password,
+                        Blocked = pendingUser.Blocked,
+                        RoleId = pendingUser.RoleId,
+                        Email = pendingUser.Email,
+                        Address = pendingUser.Address,
+                        Latitude = pendingUser.Latitude,
+                        Longitude = pendingUser.Longitude,
+                        SettlementId = pendingUser.SettlementId
+                    };
+
+                    var response = context.Users.Add(user);
+                    context.Remove(pendingUser);
+                    context.SaveChanges();
+
+                    if(response == null)
+                    {
+                        return new HttpRequestException("Ooops... Something went wrong. Please try again.");
+                    }
+
+                    return response;
+
+                }
+                else
+                {
+                    return new HttpRequestException("The confirmation link has expired");
+                }
             }
-            return pendingUserModels;
-        }*/
+            else
+            {
+                UserModel user = context.Users.FirstOrDefault(src => src.Email == email);
+                if (user != null)
+                {
+                    return new HttpRequestException("This email has already been confirmed.");
+                }
+            }
+            return false;
+        }
+        
+
     }
 }
