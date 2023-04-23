@@ -65,7 +65,7 @@ namespace Server.Controllers
         [HttpGet]
         [Route("City/")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetCity([FromQuery] long deviceCategoryId, [FromQuery] long todayCityId, long thisMonthCityId, long thisYearCityId, string cityName="null")
+        public async Task<IActionResult> GetCity([FromQuery] long deviceCategoryId, [FromQuery] long todayByHourCityId, long todayCityId, long thisMonthCityId, long thisYearCityId, string cityName="null")
         {
             if(!cityName.Equals("null"))
             {
@@ -100,6 +100,13 @@ namespace Server.Controllers
                     return NotFound(new { message = "City with ID: " + thisYearCityId.ToString() + " doesnt exist" });
 
                 return Ok(dsoService.GetUsageHistoryForDeviceInThisYear(thisYearCityId, deviceCategoryId));
+            }
+            else if (todayByHourCityId != 0)
+            {
+                if (!_sqliteDb.Cities.Any(c => c.Id == todayByHourCityId))
+                    return NotFound(new { message = "City with ID: " + todayByHourCityId.ToString() + " doesnt exist" });
+
+                return Ok(dsoService.CalculateEnergyUsageForTodayInCity(todayByHourCityId, deviceCategoryId));
             }
 
             return BadRequest("Input parameters are empty.");
