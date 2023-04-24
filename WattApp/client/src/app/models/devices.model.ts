@@ -53,8 +53,8 @@ export interface YearsByMonth {
 
 export interface DayByHour {
     energyUsageResult: number;
-    hour:number;
-    day:number;
+    hour:any;
+    day:any;
     month: string;
     year : number;
 }

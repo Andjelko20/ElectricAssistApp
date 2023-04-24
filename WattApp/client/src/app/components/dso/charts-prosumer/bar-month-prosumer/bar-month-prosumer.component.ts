@@ -59,7 +59,6 @@ export class BarMonthProsumerComponent {
               data: energyUsageResults1,
               borderColor: 'rgb(128, 0, 128)',
               backgroundColor: 'rgb(128, 0, 128)',
-              
             },
             {
               label: 'Production',
@@ -118,7 +117,6 @@ export class BarMonthProsumerComponent {
           },
           responsive: true,
           plugins: {
-            
             legend: {
               onHover: function (event, legendItem, legend) {
                 document.body.style.cursor = 'pointer';

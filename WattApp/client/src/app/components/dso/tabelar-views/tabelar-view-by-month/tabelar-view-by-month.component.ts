@@ -31,20 +31,16 @@ export class TabelarViewByMonthComponent implements OnInit{
         })
         if(this.selectedOption == 0){
           this.deviceService.monthByDay(number,2).subscribe((data:WeekByDay[])=>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.monthByDay(number,1).subscribe((data:WeekByDay[])=>{
-              console.log("Data => ", data);
               this.list2 = data;
             })
           })
         }
         else{
           this.deviceService.monthByDaySettlement(this.selectedOption,2).subscribe((data:WeekByDay[])=>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.monthByDaySettlement(this.selectedOption,1).subscribe((data:WeekByDay[])=>{
-              console.log("Data => ", data);
               this.list2 = data;
             })
           })

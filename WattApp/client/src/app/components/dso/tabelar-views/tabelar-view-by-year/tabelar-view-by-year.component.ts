@@ -33,20 +33,17 @@ export class TabelarViewByYearComponent implements OnInit{
         })
         if(this.selectedOption == 0){
           this.deviceService.yearByMonth(number,2).subscribe((data:YearsByMonth[])=>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.yearByMonth(number,1).subscribe((data:YearsByMonth[])=>{
-              console.log("Data => ", data);
+
               this.list2 = data;
             })
           })
         }
         else{
           this.deviceService.yearByMonthSettlement(this.selectedOption,2).subscribe((data:YearsByMonth[])=>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.yearByMonthSettlement(this.selectedOption,1).subscribe((data:YearsByMonth[])=>{
-              console.log("Data => ", data);
               this.list2 = data;
             })
           })
@@ -54,13 +51,5 @@ export class TabelarViewByYearComponent implements OnInit{
         
       })
     })
-    // this.deviceService.yearByMonth(2,2).subscribe((data:YearsByMonth[])=>{
-    //   console.log("Data => ", data);
-    //   this.list1 = data;
-    //   this.deviceService.yearByMonth(2,1).subscribe((data:YearsByMonth[])=>{
-    //     console.log("Data => ", data);
-    //     this.list2 = data;
-    //   })
-    // })
   }
 }

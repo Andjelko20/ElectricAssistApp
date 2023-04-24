@@ -46,10 +46,8 @@ export class BarMonthChartComponent {
         })
         if(this.selectedOption == 0){
           this.deviceService.monthByDay(number,2).subscribe((data:WeekByDay[])=>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.monthByDay(number,1).subscribe((data:WeekByDay[])=>{
-              console.log("Data => ", data);
               this.list2 = data;
               this.BarPlot();
             })
@@ -57,10 +55,8 @@ export class BarMonthChartComponent {
         }
         else{
           this.deviceService.monthByDaySettlement(this.selectedOption,2).subscribe((data:WeekByDay[])=>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.monthByDaySettlement(this.selectedOption,1).subscribe((data:WeekByDay[])=>{
-              console.log("Data => ", data);
               this.list2 = data;
               this.BarPlot();
             })
@@ -69,17 +65,6 @@ export class BarMonthChartComponent {
         
       })
     })
-    // this.deviceService.monthByDay(2,2).subscribe((data:WeekByDay[])=>{
-    //   console.log("Data => ", data);
-    //   this.list1 = data;
-    //   this.deviceService.monthByDay(2,1).subscribe((data:WeekByDay[])=>{
-    //     console.log("Data => ", data);
-    //     this.list2 = data;
-    //     this.BarPlot();
-    //   })
-    // })
-
-    
   }
   BarPlot(){
     

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DayByHour } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,33 +23,22 @@ export class TodayTabelarProsumerComponent implements OnInit{
 
     this.ngOnInit();
   }
-  constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {}
+  constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {}
   ngOnInit(): void {
-    this.authService.getlogInUser().subscribe(user=>{
-      this.authService.getCityId(user.city).subscribe(number=>{
-        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
-          this.settlements = settlement;
-        })
-        if(this.selectedOption == 0){
-          this.deviceService.dayByHour(number,2).subscribe((data: DayByHour[]) =>{
-            this.list1 = data;
-            this.deviceService.dayByHour(number,1).subscribe((data: DayByHour[]) =>{
+      
+          this.deviceService.dayByHourUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data: DayByHour[]) =>{
+            this.list1 = data.map(value=>{
+              value.day = value.day.toString().padStart(2,'0');
+              value.hour = value.hour.toString().padStart(2,'0');
+
+              return value;
+            });
+            this.deviceService.dayByHourUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data: DayByHour[]) =>{
               this.list2 = data;
             })
-      
           })
-        }
-        else{
-          this.deviceService.dayByHourSettlement(this.selectedOption,2).subscribe((data: DayByHour[]) =>{
-            this.list1 = data;
-            this.deviceService.dayByHourSettlement(this.selectedOption,1).subscribe((data: DayByHour[]) =>{
-              this.list2 = data;
-            })
-      
-          })
-        }
         
-      })
-    })
+       
+    }
   }
-}
+

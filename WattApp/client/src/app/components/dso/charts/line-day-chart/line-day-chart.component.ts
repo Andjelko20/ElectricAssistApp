@@ -25,7 +25,6 @@ export class LineDayChartComponent {
     this.ngOnInit();
   }
   ngOnInit(): void {
-    console.log("Selektovano je "+this.selectedOption); // Do whatever you want with the selected option here]
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
@@ -33,10 +32,8 @@ export class LineDayChartComponent {
         })
         if(this.selectedOption == 0){
           this.deviceService.dayByHour(number,2).subscribe((data: DayByHour[]) =>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.dayByHour(number,1).subscribe((data: DayByHour[]) =>{
-              console.log("Data => ", data);
               this.list2 = data;
               this.LineChart();
             })
@@ -45,10 +42,8 @@ export class LineDayChartComponent {
         }
         else{
           this.deviceService.dayByHourSettlement(this.selectedOption,2).subscribe((data: DayByHour[]) =>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.dayByHourSettlement(this.selectedOption,1).subscribe((data: DayByHour[]) =>{
-              console.log("Data => ", data);
               this.list2 = data;
               this.LineChart();
             })

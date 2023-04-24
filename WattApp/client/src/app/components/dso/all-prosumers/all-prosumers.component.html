@@ -35,21 +35,26 @@
       <th scope="col">Settlement</th>
       <th scope="col">City</th>
       <th scope="col">Country</th>
-      <th scope="col">Today consumption</th>
-      <th scope="col">Month consumption</th>
-      <th scope="col">Year consumption</th>
+      <th scope="col">Current consumption</th>
+      <th scope="col">Current production</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}">
-      <td><a [routerLink]='["/prosumer/",prosumer.id]'>{{prosumer.name}}</a></td>
+      
       <!-- <td>{{prosumer.email}}</td> -->
-      <td>{{prosumer.settlement}}</td>
-      <td>{{prosumer.city}}</td>
-      <td>{{prosumer.country}}</td>
-      <td>8.5 kWh</td>
-      <td>30 kWh</td>
-      <td>100 kWh</td>
+      <ng-container *ngFor="let pr of prosumerValues | paginate: {currentPage,itemsPerPage,totalItems}" >
+        <ng-container *ngIf="prosumer.id == pr.id ">
+          <td><a [routerLink]='["/prosumer/",prosumer.id]'>{{prosumer.name}}</a></td>
+          <td>{{prosumer.settlement}}</td>
+          <td>{{prosumer.city}}</td>
+          <td>{{prosumer.country}}</td>
+          <td>{{pr.consumption}} kWh</td>
+          <td>{{pr.production}} kWh</td>
+        </ng-container>
+        
+      </ng-container>
+      
     </tr>
   </tbody>
 </table>

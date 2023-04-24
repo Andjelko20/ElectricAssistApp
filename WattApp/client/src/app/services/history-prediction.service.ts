@@ -74,7 +74,7 @@ export class HistoryPredictionService {
     return this.http.get<number>(environment.serverUrl+"/api/History/Day/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
-  avgDayUser(userId:number,deviceCategoryId:number): Observable<number>{
+  currentUserProductionConsumption(userId:number,deviceCategoryId:number): Observable<number>{
     return this.http.get<number>(environment.serverUrl+"/api/Prosumer/user/"+deviceCategoryId+"/"+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
@@ -84,6 +84,11 @@ export class HistoryPredictionService {
   dayByHour(cityId:number,deviceCategoryId:number): Observable<DayByHour[]>{
     return this.http.get<DayByHour[]>(environment.serverUrl+"/api/DSO/City?deviceCategoryId="+deviceCategoryId+"&todayByHourCityId="+cityId+"&cityName=null",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
+
+  dayByHourUser(userId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/History/DayByHour/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
   dayByHourSettlement(settlementId:number,deviceCategoryId:number): Observable<DayByHour[]>{
     return this.http.get<DayByHour[]>(environment.serverUrl+"/api/DSO/Settlement?settlementId="+settlementId+"&deviceCategoryId="+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }

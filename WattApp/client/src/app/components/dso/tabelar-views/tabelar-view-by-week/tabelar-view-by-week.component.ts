@@ -30,10 +30,8 @@ export class TabelarViewByWeekComponent implements OnInit {
           })
           if(this.selectedOption == 0){
             this.deviceService.weekByDay(number,2).subscribe((data: WeekByDay[]) =>{
-              console.log("Data => ", data);
               this.list1 = data;
               this.deviceService.weekByDay(number,1).subscribe((data: WeekByDay[]) =>{
-                console.log("Data => ", data);
                 this.list2 = data;
               })
         
@@ -41,10 +39,8 @@ export class TabelarViewByWeekComponent implements OnInit {
           }
           else{
             this.deviceService.weekByDaySettlement(this.selectedOption,2).subscribe((data: WeekByDay[]) =>{
-              console.log("Data => ", data);
               this.list1 = data;
               this.deviceService.weekByDaySettlement(this.selectedOption,1).subscribe((data: WeekByDay[]) =>{
-                console.log("Data => ", data);
                 this.list2 = data;
               })
             })

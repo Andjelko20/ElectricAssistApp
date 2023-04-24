@@ -23,10 +23,11 @@ export class BarYearProsumerComponent {
   }
   ngOnInit(): void {
 
-    this.deviceService.yearByMonth(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data:YearsByMonth[])=>{
+    this.deviceService.yearByMonthUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data:YearsByMonth[])=>{
       this.list1 = data;
-      this.deviceService.yearByMonth(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data:YearsByMonth[])=>{
+      this.deviceService.yearByMonthUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data:YearsByMonth[])=>{
         this.list2 = data;
+        this.BarPlot();
       })
     })
   }

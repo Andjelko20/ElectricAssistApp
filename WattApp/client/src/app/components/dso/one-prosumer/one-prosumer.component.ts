@@ -15,7 +15,8 @@ export class OneProsumerComponent implements OnInit{
 
   id?:number;
   dso!: Prosumers;
-  avg!: number;
+  cC!: number;
+  cP!:number;
   constructor(private authService:AuthService,private route:ActivatedRoute,private historyService:HistoryPredictionService) {
     
   }
@@ -26,8 +27,11 @@ export class OneProsumerComponent implements OnInit{
     this.authService.getProsumer(Number(this.route.snapshot.paramMap.get('id'))).subscribe(user=>{
       this.dso = user;
       console.log(this.dso);
-      this.historyService.avgDayUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe(data=>{
-        this.avg = data;
+      this.historyService.currentUserProductionConsumption(Number(this.route.snapshot.paramMap.get('id')),2).subscribe(data1=>{
+        this.cC = data1;
+        this.historyService.currentUserProductionConsumption(Number(this.route.snapshot.paramMap.get('id')),1).subscribe(data2=>{
+          this.cP = data2;
+        })
       })
     })
 

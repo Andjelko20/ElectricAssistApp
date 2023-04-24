@@ -28,7 +28,6 @@ export class LineWeekChartComponent {
   }
 
   ngOnInit(): void {
-    console.log("Selektovano je "+this.selectedOption); // Do whatever you want with the selected option here]
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
@@ -36,10 +35,8 @@ export class LineWeekChartComponent {
         })
         if(this.selectedOption == 0){
           this.deviceService.weekByDay(number,2).subscribe((data: WeekByDay[]) =>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.weekByDay(number,1).subscribe((data: WeekByDay[]) =>{
-              console.log("Data => ", data);
               this.list2 = data;
               this.LineChart();
             })
@@ -48,10 +45,8 @@ export class LineWeekChartComponent {
         }
         else{
           this.deviceService.weekByDaySettlement(this.selectedOption,2).subscribe((data: WeekByDay[]) =>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.weekByDaySettlement(this.selectedOption,1).subscribe((data: WeekByDay[]) =>{
-              console.log("Data => ", data);
               this.list2 = data;
               this.LineChart();
             })

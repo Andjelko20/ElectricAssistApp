@@ -202,13 +202,10 @@
 }
 
 .history-charts-body {
-  margin-top: 15px;
-  flex-grow: 100;
-  left: -80px;
-  right: -120px;
-  bottom: 0px;
-  top: 0px;
-  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 
@@ -283,7 +280,7 @@ box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 
 .tgl-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: white;
   padding: 10px;
