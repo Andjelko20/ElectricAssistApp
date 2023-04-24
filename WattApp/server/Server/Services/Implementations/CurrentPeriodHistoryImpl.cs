@@ -64,5 +64,18 @@ namespace Server.Services.Implementations
 
             return Math.Round(Consumption, 2);
         }
+
+        public double GetUsageHistoryForDeviceFromCurrentDay(long deviceId)
+        {
+            DateTime startOfTheDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            DateTime TheTime = DateTime.Now;
+
+            List<DeviceEnergyUsage> deviceEnergyUsageLista = _context.DeviceEnergyUsages
+                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= startOfTheDay && u.EndTime <= TheTime)
+                                                            .OrderBy(u => u.StartTime)
+                                                            .ToList();
+
+            return GetConsumptionForForwardedList(deviceId, deviceEnergyUsageLista);
+        }
     }
 }

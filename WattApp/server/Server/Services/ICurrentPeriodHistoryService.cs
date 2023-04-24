@@ -4,5 +4,6 @@
     {
         public double GetUsageHistoryForDeviceFromCurrentYear(long deviceId);
         public double GetUsageHistoryForDeviceFromCurrentMonth(long deviceId);
+        public double GetUsageHistoryForDeviceFromCurrentDay(long deviceId);
     }
 }
