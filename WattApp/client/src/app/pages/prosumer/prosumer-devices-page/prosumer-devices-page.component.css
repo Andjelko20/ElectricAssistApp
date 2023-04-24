@@ -1,22 +1,18 @@
 .main {
-    top: 0px;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
     justify-content: center;
 }
+
 #turnback {
     margin-top: 5px;
     width: 7%;
     margin-left: 5px;
 }
+
 .alldevices {
-    top: 43px;
-    left: 0;
-    right: 0;
     height: auto;
+    padding-top: 55px;
     max-width: 100%;
-    position: relative;
 }
 
 .adddevices {
@@ -89,10 +85,17 @@
 }
 
 @media (min-width: 768px) {
-   
-    .alldevices {
-        top: 10%;
+    .main {
+        top: 0px;
+        left: 0;
+        right: 0;
+        min-height: 100vh;
         position: absolute;
+        justify-content: center;
+    }
+    .alldevices {
+        min-height: 100vh;
+        padding-top: 80px;
     }
     #turnback {
         width: 3%;

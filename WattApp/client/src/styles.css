@@ -11,23 +11,26 @@
     box-sizing: border-box;
 }
 
+.main {
+    /* background-color: rgb(196, 65, 65); */
+    background-color: rgb(224 249 254);
+}
+
 body {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: rgb(238, 238, 238);
     color: #727272;
-    min-height: 100%;
-    -webkit-text-size-adjust: 100%;
-    overflow: auto !important;
-
+    /* overflow: auto !important; */
     /* bottom: 0;
     top: 0;
     left: 0;
     right: 0; */
 }
 
-button{
-	cursor: pointer;
+button {
+    cursor: pointer;
 }
+
 
 /* .containters {
     max-width: 100%;

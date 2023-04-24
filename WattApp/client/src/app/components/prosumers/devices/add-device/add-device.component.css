@@ -1,13 +1,9 @@
 .main {
-    top: 0px;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
-    justify-content: center;
 }
 
-.back {
-    margin-top: 20%;
+.all {
+    padding-top: 55px;
 }
 
 #turnback {
@@ -16,7 +12,6 @@
 }
 
 .global {
-    position: absolute;
     width: 100%;
     padding: 10px;
     display: flex;
@@ -30,10 +25,10 @@ input {
 .global1 {
     border-radius: 5px;
     box-shadow: 2px 4px gray;
-    background-color: gainsboro;
-    padding: 30px;
+    background-color: #bce9e4;
     width: 100%;
-    margin-bottom: 15%;
+    margin-bottom: 70px;
+    padding-bottom: 5px;
 }
 
 h1 {
@@ -78,15 +73,23 @@ input.ng-touched {
 }
 
 @media(min-width: 768px) {
+    .main {
+        top: 0px;
+        right: 0;
+        left: 0;
+        position: absolute;
+        min-height: 100vh;
+    }
+    .all {
+        padding-top: 80px;
+        min-height: 100vh;
+    }
     .global1 {
         width: 60%;
-    }
-    .back {
-        margin-top: 95px;
     }
     #turnback {
         margin-top: 5px;
         width: 3%;
-        margin-left: 35px;
+        margin-left: 105px;
     }
 }

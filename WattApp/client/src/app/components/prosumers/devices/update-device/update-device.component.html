@@ -1,185 +1,48 @@
 <app-prosumer-navbar></app-prosumer-navbar>
 <div class="main">
-    <div class="back">
-        <a href="#"><img id="turnback" src="assets/img/back.png" alt=""></a>
-    </div>
+    <div class="all">
+        <div class="back">
+            <a href="#"><img id="turnback" src="assets/img/back.png" alt=""></a>
+        </div>
+        <div class="global">
+            <div class="global1">
+                <h1>Update</h1>
+                <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="myForm">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 ">
 
-<div class="global">
-    <div class="global1">
-        <h1>Update</h1>
-        <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="myForm">
-            <div class="form-row">
-                <div class="form-group col-md-6 ">
-                
-                    <br>
-                    <label for="name " class="form-label ">Name</label>
-                    <input type="text " class="form-control " id="id " name="name " formControlName="nameform1" [(ngModel)]="updateDevice.name " required >
-                    <br>
-                    <label for="energyInKwh " class="form-label ">Energy in kWh</label>
-                    <input type="number " class="form-control " id="id " name="energyInKwh " formControlName="nameform2" [(ngModel)]="updateDevice.energyInKwh "  >
-                    <br>
-                    <label for="standByKwh " class="form-label ">Stand by in kWh</label>
-                    <input type="number " class="form-control " id="id " name="standByKwh " formControlName="nameform3" [(ngModel)]="updateDevice.standByKwh "  >
-                    <br>
-                    <form >
-                        <label for="visibilityOnOff" class="form-label ">Visibility</label>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalVisibilityOn" *ngIf="updateDevice.visibility==false"   (click)="visibilityOnOff()" > {{ updateDevice.visibility ? 'On' : 'Off' }}</button>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalVisibilityOff" *ngIf="updateDevice.visibility==true"   (click)="visibilityOnOff()" > {{ updateDevice.visibility ? 'On' : 'Off' }}</button>
-                    
-                      </form>
-                    <br>
-                   
-                    <form >
-                        <label for="controlabilityOnOff" class="form-label ">Control</label>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalControlabilityOn" *ngIf="updateDevice.controlability==false"  (click)="controlabilityOnOff()" > {{ updateDevice.controlability ? 'On' : 'Off' }}</button>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModalControlabilityOff" *ngIf="updateDevice.controlability==true"  (click)="controlabilityOnOff()" > {{ updateDevice.controlability ? 'On' : 'Off' }}</button>
-                    
-                    </form>
-                    <br>
-                    <br>
-                    
-                </div>
-            </div>
-            <button type=" submit " id="save" class="btn btn-primary mr-5 " style="cursor: pointer;" [disabled]="!form.valid">Save</button>
-        </form>
-        <app-prosumer-footer></app-prosumer-footer>
-    </div>
-    <div class="global">
-        <div class="global1">
-            <h1>Update</h1>
-            <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="myForm">
-                <div class="form-row">
-                    <div class="form-group col-md-6 ">
+                            <br>
+                            <label for="name " class="form-label ">Name</label>
+                            <input type="text " class="form-control " id="id " name="name " formControlName="nameform1" [(ngModel)]="updateDevice.name " required>
+                            <br>
+                            <label for="energyInKwh " class="form-label ">Energy in kWh</label>
+                            <input type="number " class="form-control " id="id " name="energyInKwh " formControlName="nameform2" [(ngModel)]="updateDevice.energyInKwh ">
+                            <br>
+                            <label for="standByKwh " class="form-label ">Stand by in kWh</label>
+                            <input type="number " class="form-control " id="id " name="standByKwh " formControlName="nameform3" [(ngModel)]="updateDevice.standByKwh ">
+                            <br>
+                            <form>
+                                <label for="visibilityOnOff" class="form-label ">Visibility</label>
+                                <button style="width: 84px; height:30px; color: #fff;" (click)="visibilityOnOff()"> {{ updateDevice.visibility ? 'On' : 'Off' }}</button>
+                            </form>
+                            <br>
 
-                        <br>
-                        <label for="name " class="form-label ">Name</label>
-                        <input type="text " class="form-control " id="id " name="name " formControlName="nameform1" [(ngModel)]="updateDevice.name " required>
-                        <br>
-                        <label for="energyInKwh " class="form-label ">Energy in kWh</label>
-                        <input type="number " class="form-control " id="id " name="energyInKwh " formControlName="nameform2" [(ngModel)]="updateDevice.energyInKwh ">
-                        <br>
-                        <label for="standByKwh " class="form-label ">Stand by in kWh</label>
-                        <input type="number " class="form-control " id="id " name="standByKwh " formControlName="nameform3" [(ngModel)]="updateDevice.standByKwh ">
-                        <br>
-                        <form>
-                            <label for="visibilityOnOff" class="form-label ">Visibility</label>
-                            <button style="width: 84px; height:30px; color: #fff;" (click)="visibilityOnOff()"> {{ updateDevice.visibility ? 'On' : 'Off' }}</button>
-                        </form>
-                        <br>
+                            <form>
+                                <label for="controlabilityOnOff" class="form-label ">Control</label>
+                                <button style="width: 84px; height:30px; color: #fff;" (click)="controlabilityOnOff()"> {{ updateDevice.controlability ? 'On' : 'Off' }}</button>
+                            </form>
+                            <br>
+                            <br>
 
-                        <form>
-                            <label for="controlabilityOnOff" class="form-label ">Control</label>
-                            <button style="width: 84px; height:30px; color: #fff;" (click)="controlabilityOnOff()"> {{ updateDevice.controlability ? 'On' : 'Off' }}</button>
-                        </form>
-                        <br>
-                        <br>
-
+                        </div>
                     </div>
-                </div>
-                <button type=" submit " class="btn btn-primary mr-5 " style="cursor: pointer;" [disabled]="!form.valid">Save</button>
-            </form>
-            <app-prosumer-footer></app-prosumer-footer>
+                    <button type=" submit " class="btn btn-primary mr-5 " style="cursor: pointer;" [disabled]="!form.valid">Save</button>
+                </form>
+
+            </div>
+
         </div>
-
     </div>
-
-</div>
-
-</div>
-
-
-
- <!-- Modal Visibility On -->
- <div class="modal fade" id="myModalVisibilityOn" tabindex="-1" aria-labelledby="myModalVisibilityOnLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-  <div class="modal-dialog modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-         <h5 class="modal-title" id="myModalVisibilityOnLabel" style="text-align: center;">Do you want to turn on Visibility?</h5>
-        </div>
-      <div class="modal-footer" >
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="visibility-on-popup">Turn on</button>
-          
-          
-        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-          Close
-        </button>
-        
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Modal Visibility Off -->
-<div class="modal fade" id="myModalVisibilityOff" tabindex="-1" aria-labelledby="myModalVisibilityOffLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-  <div class="modal-dialog  modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-         <h5 class="modal-title" id="myModalVisibilityOffLabel" style="text-align: center;">Do you want to turn off Visibility?</h5>
-      </div>
-      <div class="modal-footer" >
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="visibility-off-popup">Turn off</button>
-          
-          
-        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-          Close
-        </button>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal Controlability On -->
-<div class="modal fade" id="myModalControlabilityOn" tabindex="-1" aria-labelledby="myModalControlabilityOnLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-  <div class="modal-dialog  modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-      </div>
-      <div class="modal-body">
-        <h5 class="modal-title" id="myModalControlabilityOnLabel" style="text-align: center;" *ngIf="updateDevice.visibility==false" >You need to turn visibility on first!</h5>
-        
-        <h5 class="modal-title" id="myModalControlabilityOnLabel" style="text-align: center;" *ngIf="updateDevice.visibility==true">Do you want to turn on Controlability?</h5>
-      </div>
-      <div class="modal-footer" >
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="controlability-on-popup" *ngIf="updateDevice.visibility==true">Turn on</button>
-          
-          
-        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-          Close
-        </button>
-        
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Modal Controlability Off -->
-<div class="modal fade" id="myModalControlabilityOff" tabindex="-1" aria-labelledby="myModalControlabilityOffLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-  <div class="modal-dialog  modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body"> 
-        <h5 class="modal-title" id="myModalControlabilityOffLabel" style="text-align: center;">Do you want to turn off Controlability?</h5>
-      </div>
-      <div class="modal-footer" >
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="controlability-off-popup">Turn off</button>
-          
-          
-        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-          Close
-        </button>
-        
-      </div>
-    </div>
-  </div>
+    <app-footer></app-footer>
+    <app-prosumer-footer></app-prosumer-footer>
 </div>
