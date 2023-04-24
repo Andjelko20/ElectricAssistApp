@@ -38,9 +38,8 @@ export class ConsumptionMonthWattmeterComponent implements OnInit {
     
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
-        this.historyService.monthByDay(number,2).subscribe((data:WeekByDay[])=>{
-          this.valuekWh = data.reduce((acc, item) => acc + item.energyUsageResult, 0);
-          console.log(this.valuekWh);
+        this.historyService.getMonthTotalConsumption(number,2).subscribe(data=>{
+          this.valuekWh = data;
         })
       })
     })

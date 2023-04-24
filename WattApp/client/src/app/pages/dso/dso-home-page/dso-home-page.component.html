@@ -126,6 +126,9 @@
                       <button (click)="showComponentTable3()" class="chart-button">Year</button>
                     </div>
                   </div>
+                <div class="history-charts-body" *ngIf="compTable">
+                    <app-tabelar-view></app-tabelar-view>
+                </div>
                 <div class="history-charts-body" *ngIf="compTable1">
                     <app-tabelar-view-by-week></app-tabelar-view-by-week>
                 </div>

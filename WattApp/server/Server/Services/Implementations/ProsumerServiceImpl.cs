@@ -417,5 +417,20 @@ namespace Server.Services.Implementations
 
             return Result;
         }
+
+        public int GetNumberOfDevicesOfOneProsumer(long userId)
+        {
+            var connection = _context.Database.GetDbConnection();
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = $"SELECT COUNT(*) FROM Devices WHERE UserId = {userId}";
+
+            int result = Convert.ToInt32(command.ExecuteScalar()); // ne dozvoljava int jer je 64b
+
+            connection.Close();
+
+            return result;
+        }
     }
 }

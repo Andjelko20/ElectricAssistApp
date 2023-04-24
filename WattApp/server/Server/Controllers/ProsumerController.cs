@@ -197,5 +197,18 @@ namespace Server.Controllers
 
             return Ok(energyTodayList);
         }
+
+        /// <summary>
+        /// Number of devices from one prosumer
+        /// </summary>
+        [HttpGet]
+        [Route("numberOfDevices/{userId:long}")]
+        public async Task<IActionResult> GetNumberOfDevicesOfOneProsumer([FromRoute] long userId)
+        {
+            if (!_sqliteDb.Users.Any(u => u.Id == userId))
+                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
+
+            return Ok(prosumerService.GetNumberOfDevicesOfOneProsumer(userId));
+        }
     }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { WeekByDay, YearsByMonth } from '../models/devices.model';
+import { DayByHour, WeekByDay, YearsByMonth } from '../models/devices.model';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +65,23 @@ export class HistoryPredictionService {
   historyMonthUser(userId:number,deviceCategoryId:number): Observable<number>{
     return this.http.get<number>(environment.serverUrl+"/api/History/Month/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
+  dayByHour(cityId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/DSO/City?deviceCategoryId="+deviceCategoryId+"&todayByHourCityId="+cityId+"&cityName=null",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  dayByHourSettlement(settlementId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/DSO/Settlement?settlementId="+settlementId+"&deviceCategoryId="+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
 
+  getTodayTotalConsumption(cityId:number,deviceCategoryId:number): Observable<number>{
+    return this.http.get<number>(environment.serverUrl+"/api/DSO/City?deviceCategoryId="+deviceCategoryId+"&todayCityId="+cityId+"&cityName=null",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  getMonthTotalConsumption(cityId:number,deviceCategoryId:number): Observable<number>{
+    return this.http.get<number>(environment.serverUrl+"/api/DSO/City?deviceCategoryId="+deviceCategoryId+"&thisMonthCityId="+cityId+"&cityName=null",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  getYearTotalConsumption(cityId:number,deviceCategoryId:number): Observable<number>{
+    return this.http.get<number>(environment.serverUrl+"/api/DSO/City?deviceCategoryId="+deviceCategoryId+"&thisYearCityId="+cityId+"&cityName=null",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
 
 }
