@@ -2,6 +2,8 @@
 using Server.Data;
 using Server.DTOs;
 using Server.Models;
+using Server.Models.DropDowns.Devices;
+using System.Linq;
 using System.Threading;
 
 namespace Server.Services.Implementations
@@ -459,6 +461,55 @@ namespace Server.Services.Implementations
                                .ToList();
 
             return sumByDay;
+        }
+
+        public List<EnergyToday> UserHistoryForThePastDayByHour(long userId, long deviceCategoryId)
+        {
+            var deviceIds = _context.Devices
+                .Include(d => d.DeviceModel)
+                .ThenInclude(dm => dm.DeviceType)
+                .ThenInclude(dt => dt.DeviceCategory)
+                .Where(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId)
+                .Select(d => d.Id)
+                .ToList();
+
+            DateTime startOfDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 0, 0, 0);
+            DateTime endOfDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 23, 59, 59);
+
+            List<DeviceEnergyUsage> UsageList = new List<DeviceEnergyUsage>();
+            var Results = new List<EnergyToday>();
+
+            UsageList = _context.DeviceEnergyUsages
+                        .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= startOfDay && (u.EndTime <= endOfDay || u.EndTime == null))
+                        .ToList();
+
+            for (var hour = startOfDay.Hour; hour <= endOfDay.Hour; hour = hour + 1)
+            {
+                var UsageForHour = UsageList.Where(u => u.StartTime.Hour == hour).ToList();
+
+                double EnergyUsage = 0.0;
+                foreach (var usage in UsageForHour)
+                {
+                    double EnergyInKwh = _context.Devices
+                                        .Where(d => d.Id == usage.DeviceId)
+                                        .Select(d => d.DeviceModel)
+                                        .FirstOrDefault()
+                                        .EnergyKwh;
+
+                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;
+                }
+
+                Results.Add(new EnergyToday
+                {
+                    EnergyUsageResult = Math.Round(EnergyUsage, 2),
+                    Hour = hour,
+                    Day = startOfDay.Day,
+                    Month = startOfDay.ToString("MMMM"),
+                    Year = startOfDay.Year
+                });
+            }
+
+            return Results;
         }
 
         public List<DailyEnergyConsumptionPastMonth> SettlementHistoryForThePastWeek(long settlementId, long deviceCategoryId)
