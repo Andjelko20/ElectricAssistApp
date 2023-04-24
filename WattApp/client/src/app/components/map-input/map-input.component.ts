@@ -20,8 +20,8 @@ export class MapInputComponent {
 	  public cities:any;
 	  public settlements:any;
 
-	  public settlementId!:number;
-	  public address!:string;
+	  public settlementId:number=0;
+	  public address:string="";
 
 	  public cityElement!:HTMLSelectElement;
 	  public settlementElement!:HTMLSelectElement;

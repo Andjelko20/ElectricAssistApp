@@ -13,6 +13,8 @@
 	flex-grow: 1;
 }
 .search-result{
+	background-color: #fefefe;
+	box-shadow: 1px 1px 1px black;
 	overflow-y: auto;
 	display: flex;
 	flex-direction: column;
@@ -30,4 +32,7 @@ label {
     color: #1C315E;
     font-style: italic;
     font-size: 25px;
+}
+.none{
+	display:none;
 }
