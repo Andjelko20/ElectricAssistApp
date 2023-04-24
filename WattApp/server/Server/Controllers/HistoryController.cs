@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Server.Data;
 using Server.Models;
 using Server.Services;
+using System.Diagnostics;
 
 namespace Server.Controllers
 {
@@ -372,7 +373,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption/Production for all user`s devices for last week (by day)
+        /// Consumption/Production for user (yesterday by hour)
         /// </summary>
         [HttpGet]
         [Route("DayByHour/User/{userId:long}/{deviceCategoryId:long}")]

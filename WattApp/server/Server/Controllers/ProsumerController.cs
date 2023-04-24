@@ -189,7 +189,7 @@ namespace Server.Controllers
         [HttpGet]
         [Route("today")]
         //[Authorize(Roles = "dispecer")]
-        public async Task<IActionResult> GetDeviceEnergyFromTodaysDay([FromQuery] long deviceId, long doubleTodayUserId, long deviceCategoryId)
+        public async Task<IActionResult> GetDeviceEnergyFromTodaysDay([FromQuery] long deviceId, long doubleTodayUserId, long TodayByHourUserId, long deviceCategoryId)
         {
             if(deviceId != 0)
             {
@@ -199,7 +199,7 @@ namespace Server.Controllers
 
                 return Ok(energyTodayList);
             }
-            else //if(doubleTodayUserId != 0)
+            else if(doubleTodayUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == doubleTodayUserId))
                     return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not exist." });
@@ -212,6 +212,21 @@ namespace Server.Controllers
 
 
                 double energyUsageToday = prosumerService.GetUserEnergyConsumptionForToday(doubleTodayUserId, deviceCategoryId);
+                return Ok(energyUsageToday);
+            }
+            else //if(TodayByHourUserId != 0)
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == TodayByHourUserId))
+                    return NotFound(new { message = "User with the ID: " + TodayByHourUserId.ToString() + " does not exist." });
+
+                if (!_sqliteDb.Devices.Any(u => u.UserId == TodayByHourUserId))
+                    return NotFound(new { message = "User with the ID: " + TodayByHourUserId.ToString() + " does not have registered devices." });
+
+                if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                    return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+
+                var energyUsageToday = prosumerService.ProsumerElectricityUsageForTodayByHour(TodayByHourUserId, deviceCategoryId);
                 return Ok(energyUsageToday);
             }
         }
