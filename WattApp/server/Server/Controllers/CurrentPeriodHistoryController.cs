@@ -18,17 +18,28 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Total device Consumption/Production for current year
+        /// Total device Consumption/Production for current year, month, day
         /// </summary>
         [HttpGet]
         [Route("device")]
-        public async Task<IActionResult> GetHistoryForDeviceFromCurrentYear([FromQuery] long doubleYearDeviceId)
+        public async Task<IActionResult> GetHistoryForDeviceFromCurrentYear([FromQuery] long doubleYearDeviceId, long doubleMonthDeviceId)
         {
-            if (!_sqliteDb.Devices.Any(u => u.Id == doubleYearDeviceId))
-                return NotFound(new { message = "Device with the ID: " + doubleYearDeviceId.ToString() + " does not exist." });
-            
-            var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentYear(doubleYearDeviceId);
-            return Ok(result);
+            if (doubleYearDeviceId != 0)
+            {
+                if (!_sqliteDb.Devices.Any(u => u.Id == doubleYearDeviceId))
+                    return NotFound(new { message = "Device with the ID: " + doubleYearDeviceId.ToString() + " does not exist." });
+
+                var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentYear(doubleYearDeviceId);
+                return Ok(result);
+            }
+            else //if(doubleMonthDeviceId != 0)
+            {
+                if (!_sqliteDb.Devices.Any(u => u.Id == doubleMonthDeviceId))
+                    return NotFound(new { message = "Device with the ID: " + doubleMonthDeviceId.ToString() + " does not exist." });
+
+                var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentMonth(doubleMonthDeviceId);
+                return Ok(result);
+            }
         }
     }
 }

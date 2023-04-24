@@ -34,5 +34,35 @@ namespace Server.Services.Implementations
 
             return Math.Round(consumption, 2);
         }
+
+        public double GetUsageHistoryForDeviceFromCurrentMonth(long deviceId)
+        {
+            DateTime startOfTheMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            DateTime TheTime = DateTime.Now;
+
+            List<DeviceEnergyUsage> deviceEnergyUsageLista = _context.DeviceEnergyUsages
+                                                            .Where(u => u.DeviceId == deviceId && u.StartTime >= startOfTheMonth && (u.EndTime <= TheTime || u.EndTime == null))
+                                                            .OrderBy(u => u.StartTime)
+                                                            .ToList();
+
+            return GetConsumptionForForwardedList(deviceId, deviceEnergyUsageLista);
+        }
+
+        public double GetConsumptionForForwardedList(long deviceId, List<DeviceEnergyUsage> deviceEnergyUsageLista)
+        {
+            var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
+            var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
+            float EnergyInKwh = DeviceModel.EnergyKwh;
+
+            double Consumption = 0.0;
+            double Hours = -1;
+            foreach (var item in deviceEnergyUsageLista)
+            {
+                Hours = Math.Abs((item.EndTime - item.StartTime).TotalHours);
+                Consumption += (double)(EnergyInKwh * Hours);
+            }
+
+            return Math.Round(Consumption, 2);
+        }
     }
 }
