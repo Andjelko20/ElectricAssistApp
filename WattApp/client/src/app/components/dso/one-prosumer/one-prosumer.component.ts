@@ -16,7 +16,7 @@ export class OneProsumerComponent implements OnInit{
   id?:number;
   dso!: Prosumers;
   avg!: number;
-  constructor(private authService:AuthService,private route:ActivatedRoute,private todayConsumption:HistoryPredictionService) {
+  constructor(private authService:AuthService,private route:ActivatedRoute,private historyService:HistoryPredictionService) {
     
   }
   async ngOnInit(){
@@ -26,12 +26,12 @@ export class OneProsumerComponent implements OnInit{
     this.authService.getProsumer(Number(this.route.snapshot.paramMap.get('id'))).subscribe(user=>{
       this.dso = user;
       console.log(this.dso);
+      this.historyService.avgDayUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe(data=>{
+        this.avg = data;
+      })
     })
 
-    console.log(this.id);
     
-    const result = await this.todayConsumption.getTotalConsumptionProductionProsumer("Electricity Consumer",Number(this.route.snapshot.paramMap.get('id'))).pipe(first()).toPromise();
-  
-    this.avg = result!;
+
   }
 }

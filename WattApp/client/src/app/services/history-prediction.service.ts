@@ -38,12 +38,20 @@ export class HistoryPredictionService {
     return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/WeekByDay/City/"+cityId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
+  weekByDayUser(userId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/WeekByDay/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
   weekByDaySettlement(settlementId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
     return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/WeekByDay/Settlement/"+settlementId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
   monthByDay(cityId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
     return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/MonthByDay/City/"+cityId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  monthByDayUser(userId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/MonthByDay/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
   monthByDaySettlement(settlementId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
@@ -54,12 +62,20 @@ export class HistoryPredictionService {
     return this.http.get<YearsByMonth[]>(environment.serverUrl+"/api/History/YearByMonth/City/"+cityId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
+  yearByMonthUser(userId:number,deviceCategoryId:number): Observable<YearsByMonth[]>{
+    return this.http.get<YearsByMonth[]>(environment.serverUrl+"/api/History/YearByMonth/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
   yearByMonthSettlement(settlementId:number,deviceCategoryId:number): Observable<YearsByMonth[]>{
     return this.http.get<YearsByMonth[]>(environment.serverUrl+"/api/History/YearByMonth/Settlement/"+settlementId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
   historyDayUser(userId:number,deviceCategoryId:number): Observable<number>{
     return this.http.get<number>(environment.serverUrl+"/api/History/Day/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  avgDayUser(userId:number,deviceCategoryId:number): Observable<number>{
+    return this.http.get<number>(environment.serverUrl+"/api/Prosumer/user/"+deviceCategoryId+"/"+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
   historyMonthUser(userId:number,deviceCategoryId:number): Observable<number>{
