@@ -216,5 +216,60 @@ namespace Server.Services.Implementations
 
             return Results;
         }
+
+        public List<DailyEnergyConsumptionPastMonth> GetUsageHistoryForProsumerFromCurrentMonth(long userId, long deviceCategoryId)
+        {
+            var userDevices = _context.Devices
+                .Include(d => d.DeviceModel)
+                .ThenInclude(dm => dm.DeviceType)
+                .ThenInclude(dt => dt.DeviceCategory)
+                .Where(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId)
+                .ToList();
+
+            var EndDate = DateTime.Now;
+            var StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+
+            List<DeviceEnergyUsage> UsageList = new List<DeviceEnergyUsage>();
+            var Results = new List<DailyEnergyConsumptionPastMonth>();
+
+            foreach (var device in userDevices)
+            {
+                UsageList = _context.DeviceEnergyUsages
+                            .Where(u => u.DeviceId == device.Id && u.StartTime >= StartDate && u.EndTime < EndDate)
+                            .ToList();
+
+                var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == device.DeviceModelId);
+                float EnergyInKwh = DeviceModel.EnergyKwh;
+
+                for (var date = StartDate; date <= EndDate; date = date.AddDays(1))
+                {
+                    var UsageForDate = UsageList.Where(u => u.StartTime.Date == date.Date).ToList();
+
+                    double EnergyUsage = 0.0;
+                    foreach (var usage in UsageForDate)
+                        EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;
+
+                    Results.Add(new DailyEnergyConsumptionPastMonth
+                    {
+                        Day = date.Day,
+                        Month = date.ToString("MMMM"),
+                        Year = date.Year,
+                        EnergyUsageResult = Math.Round(EnergyUsage, 2)
+                    });
+                }
+            }
+
+            var sumByDay = Results.GroupBy(r => new { r.Day, r.Month, r.Year })
+                               .Select(g => new DailyEnergyConsumptionPastMonth
+                               {
+                                   Day = g.Key.Day,
+                                   Month = g.Key.Month,
+                                   Year = g.Key.Year,
+                                   EnergyUsageResult = Math.Round(g.Sum(d => d.EnergyUsageResult), 2)
+                               })
+                               .ToList();
+
+            return sumByDay;
+        }
     }
 }
