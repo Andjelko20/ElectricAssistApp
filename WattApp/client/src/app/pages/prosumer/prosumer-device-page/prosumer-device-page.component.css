@@ -1,10 +1,12 @@
 .main {
+    top: 0px;
+    position: absolute;
     min-height: 100vh;
 }
 
 .device {
     margin-top: 52px;
-    min-height: 100vh;
+    margin-bottom: 0px;
 }
 
 .back {
@@ -117,12 +119,34 @@ p {
     color: white;
 }
 
-.grafik {
-    display: flex;
-    justify-content: left;
-    border: 1px solid black;
-    height: auto;
-    margin: 10px;
+.glafik {
+    margin: 5px;
+    margin-bottom: 55px;
+}
+
+.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 9px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.active,
+.collapsible:hover {
+    background-color: #555;
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
 }
 
 @media (min-width: 768px) {
@@ -191,55 +215,32 @@ p {
         position: absolute;
         width: 96%;
     }
-    .grafik {
-        display: flex;
-        height: auto;
-        margin: 35px;
-        background-color: #1C315E;
+    .glafik {
+        /* min-height: 100vh; */
+        margin: 2%;
+        margin-bottom: 55px;
         border-radius: 5px;
     }
-    .dropdown-content {
+    .collapsible {
+        background-color: #777;
+        color: white;
         cursor: pointer;
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        width: 100%;
-        left: 0;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-    .dropdown {
-        width: 100%;
-        /* float: left; */
-        cursor: pointer;
-        font-size: 20px;
-    }
-    .dropdown .dropbtn {
-        font-size: 16px;
+        border-radius: 5px;
+        padding: 18px;
         width: 100%;
         border: none;
-        color: white;
-        padding: 14px 16px;
-        background-color: inherit;
-        font: inherit;
-        cursor: pointer;
-        margin: 0;
-    }
-    .dropdown-content .header {
-        background: red;
-        padding: 16px;
-        height: 300px;
-        color: white;
-    }
-    .dropdown:hover .dropdown-content {
-        display: block;
-        cursor: pointer;
-    }
-    .dropbtn {
         text-align: left;
+        outline: none;
+        font-size: 25px;
     }
-    i {
-        border: 1px solid black;
-        text-align: right;
+    .active,
+    .collapsible:hover {
+        background-color: #555;
+    }
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
     }
 }
