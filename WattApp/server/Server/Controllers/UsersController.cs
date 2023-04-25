@@ -294,7 +294,21 @@ namespace Server.Controllers
                     return NotFound(new { message = "User doesn't exists" });
                 user.Username = requestBody.Username;
                 user.Name = requestBody.Name;
-                user.Email = requestBody.Email;
+                if (user.Email.Equals(requestBody.Email) == false)
+                {
+                    //Znaci da zeli da menja email
+                    ChangeEmailModel changeEmailModel = new ChangeEmailModel
+                    {
+                        UserId = userId,
+                        OldEmail = user.Email,
+                        NewEmail = requestBody.Email,
+                        ExpireAt = DateTime.Now.AddDays(1),
+                        ChangeEmailKey = ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
+                    };
+
+                    userService.CreateChangeEmailRequest(changeEmailModel);
+                }
+                //user.Email = requestBody.Email;
                 _sqliteDb.Users.Update(user);
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message = "User is updated successfully" });
@@ -303,6 +317,16 @@ namespace Server.Controllers
             {
                 return StatusCode(500, new { message = "Internal Server Error" });
             }
+        }
+
+        [HttpPost("changeEmailConfirmation{key}")]
+        public IActionResult changeEmailAddressConfirmation([FromRoute]string key)
+        {
+            Object response = userService.ConfirmChageOfEmailAddress(key);
+            if (response is HttpRequestException)
+                return StatusCode(500, ((HttpRequestException)response).Message);
+            else
+                return Ok("Mail confirmed successfully");
         }
         /// <summary>
         /// Block or unblock user

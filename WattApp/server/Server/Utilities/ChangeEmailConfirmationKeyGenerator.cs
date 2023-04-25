@@ -1,10 +1,9 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Server.Utilities
 {
-    public class ConfirmEmailKeyGenerator
+    public class ChangeEmailConfirmationKeyGenerator
     {
         public static string GenerateConfirmEmailKey(int length = 20)
         {
@@ -26,7 +25,5 @@ namespace Server.Utilities
                 return result.ToString();
             }
         }
-
-
     }
 }

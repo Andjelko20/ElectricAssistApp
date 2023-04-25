@@ -16,6 +16,8 @@ namespace Server.Services
 
         Object CreatePendingUser(PendingUserModel pendingUser);
         Object ConfirmEmailAddress(string email);
+        Object CreateChangeEmailRequest(ChangeEmailModel changeEmail);
+        Object ConfirmChageOfEmailAddress(string key);
 
     }
 }

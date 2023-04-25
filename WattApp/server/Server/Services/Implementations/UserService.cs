@@ -209,7 +209,46 @@ namespace Server.Services.Implementations
             }
             return false;
         }
-        
 
+        public object CreateChangeEmailRequest(ChangeEmailModel changeEmail)
+        {
+            var user = context.Users.Where(src => src.Email == changeEmail.NewEmail).FirstOrDefault();
+            if (user != null)
+                return new HttpRequestException("User with that email address already exists.");
+
+            ChangeEmailModel changeEmailRequest = context.ChangeEmailModels.Where(src => src.OldEmail == changeEmail.OldEmail).FirstOrDefault();
+            if (changeEmailRequest != null && changeEmailRequest.ExpireAt > DateTime.Now)
+                return new HttpRequestException("You've already created request to change email address. Check your email inbox.");
+            else if (changeEmailRequest != null && changeEmailRequest.ExpireAt > DateTime.Now)
+                context.ChangeEmailModels.Remove(changeEmailRequest);
+
+            var response = context.ChangeEmailModels.Add(changeEmail);
+            context.SaveChanges();
+            if (response == null)
+                return null;
+            return response;
+        }
+
+        public object ConfirmChageOfEmailAddress(string key)
+        {
+            ChangeEmailModel changeEmail = context.ChangeEmailModels.Where(src => src.ChangeEmailKey == key).FirstOrDefault();
+            if(changeEmail == null)
+            {
+                throw new HttpRequestException("There is no request with such a key.");
+            }
+            else if(changeEmail != null && changeEmail.ExpireAt < DateTime.Now)
+            {
+                context.ChangeEmailModels.Remove(changeEmail);
+                throw new HttpRequestException("Confirmation link has been expired. Please create new request.");
+            }
+            UserModel user = context.Users.Find(changeEmail.UserId);
+            user.Email = changeEmail.NewEmail;
+
+            context.Users.Update(user);
+            context.ChangeEmailModels.Remove(changeEmail);
+
+            context.SaveChanges();
+            return new OkResult();
+        }
     }
 }

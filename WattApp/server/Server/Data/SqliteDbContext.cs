@@ -30,6 +30,7 @@ namespace Server.Data
         public DbSet<Bill> Bills { get; set; }
         public DbSet<DeviceModel> DeviceModels { get; set; }
 
+        public DbSet<ChangeEmailModel> ChangeEmailModels { get; set; }
         public DbSet<PendingUserModel> PendingUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
