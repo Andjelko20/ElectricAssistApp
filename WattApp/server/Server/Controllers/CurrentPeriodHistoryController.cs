@@ -22,7 +22,8 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("device")]
-        public async Task<IActionResult> GetHistoryForDeviceFromCurrentYear([FromQuery] long doubleYearDeviceId, long doubleMonthDeviceId, long doubleDayDeviceId)
+        public async Task<IActionResult> GetHistoryForDeviceFromCurrentYear([FromQuery] long doubleYearDeviceId, long doubleMonthDeviceId, long doubleDayDeviceId,
+                                                                                        long yearByMonthDeviceId)
         {
             if (doubleYearDeviceId != 0)
             {
@@ -40,12 +41,20 @@ namespace Server.Controllers
                 var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentMonth(doubleMonthDeviceId);
                 return Ok(result);
             }
-            else //if (doubleDayDeviceId != 0)
+            else if (doubleDayDeviceId != 0)
             {
                 if (!_sqliteDb.Devices.Any(u => u.Id == doubleDayDeviceId))
                     return NotFound(new { message = "Device with the ID: " + doubleDayDeviceId.ToString() + " does not exist." });
 
                 var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentDay(doubleDayDeviceId);
+                return Ok(result);
+            }
+            else //if (yearByMonthDeviceId != 0)
+            {
+                if (!_sqliteDb.Devices.Any(u => u.Id == yearByMonthDeviceId))
+                    return NotFound(new { message = "Device with the ID: " + yearByMonthDeviceId.ToString() + " does not exist." });
+
+                var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentYearByMonth(yearByMonthDeviceId);
                 return Ok(result);
             }
         }

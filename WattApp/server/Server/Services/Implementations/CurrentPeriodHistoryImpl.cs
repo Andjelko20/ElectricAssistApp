@@ -1,4 +1,5 @@
 ﻿using Server.Data;
+using Server.DTOs;
 using Server.Models;
 
 namespace Server.Services.Implementations
@@ -76,6 +77,57 @@ namespace Server.Services.Implementations
                                                             .ToList();
 
             return GetConsumptionForForwardedList(deviceId, deviceEnergyUsageLista);
+        }
+
+        public List<MonthlyEnergyConsumptionLastYear> GetUsageHistoryForDeviceFromCurrentYearByMonth(long deviceId)
+        {
+            var Device = _context.Devices.Find(deviceId);
+            var DeviceModel = _context.DeviceModels.Find(Device.DeviceModelId);
+            float EnergyInKwh = DeviceModel.EnergyKwh;
+
+            DateTime TheTime = DateTime.Now;
+            DateTime datum = DateTime.Now;
+            int redniBrojMeseca = datum.Month;
+
+            var Results = new List<MonthlyEnergyConsumptionLastYear>();
+            for (int i = 0; i < redniBrojMeseca; i++)
+            {
+                var StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-i).Date;
+                var EndDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-i + 1).AddDays(-1).Date.AddDays(1).AddSeconds(-1);
+
+                var UsageList = _context.DeviceEnergyUsages
+                                .Where(u => u.DeviceId == deviceId && u.StartTime.Month == redniBrojMeseca && u.EndTime <= EndDate)
+                                .OrderBy(u => u.StartTime)
+                                .ToList();
+
+                double UsageInHours = 0.0;
+                double UsageInKwh = 0.0;
+                if (UsageList == null)
+                {
+                    Results.Insert(0, new MonthlyEnergyConsumptionLastYear
+                    {
+                        Month = StartDate.ToString("MMMM"),
+                        Year = StartDate.Year,
+                        EnergyUsageResult = UsageInKwh
+                    });
+                }
+                else
+                {
+                    foreach (var item in UsageList)
+                    {
+                        UsageInHours = (item.EndTime - item.StartTime).TotalHours;
+                        UsageInKwh += UsageInHours * EnergyInKwh;
+                    }
+
+                    Results.Insert(0, new MonthlyEnergyConsumptionLastYear
+                    {
+                        Month = StartDate.ToString("MMMM"),
+                        Year = StartDate.Year,
+                        EnergyUsageResult = Math.Round(UsageInKwh, 2)
+                    });
+                }
+            }
+            return Results;
         }
     }
 }
