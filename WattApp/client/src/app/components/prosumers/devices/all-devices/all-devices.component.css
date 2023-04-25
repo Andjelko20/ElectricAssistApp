@@ -75,11 +75,7 @@ li a {
 } */
 
 .main {
-    top: 0px;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
-    justify-content: center;
 }
 
 .alldevices {
@@ -130,7 +126,7 @@ li a {
     /* position: sticky; */
     background-size: cover;
     box-shadow: 5px dodgerblue;
-    background-color: #eef2ff;
+    background-color: #bce9e4;
     border-radius: 15px;
     width: 30%;
     margin: 5px;
@@ -189,7 +185,7 @@ label {
     }
     #allh1 {
         font-size: 30px;
-        padding-left: 45px;
+        padding-left: 12%;
         padding-bottom: 15px;
     }
     #imgdevice {
@@ -215,7 +211,7 @@ label {
         margin-top: -55px;
         font-size: 20px;
         width: 200px;
-        margin-right: 5%;
+        margin-right: 8%;
     }
     #deviceCategoryId {
         width: 20%;

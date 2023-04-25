@@ -1,26 +1,21 @@
-#sidebar{
+#sidebar {
     display: none;
 }
+
 @media (min-width: 768px) {
     #dashboard {
         padding-left: 80px;
-        
         min-height: calc(100vh - 61px);
         width: 100%;
-        
     }
-   
     .wrapper1 {
-        
         position: absolute;
-        top: 30px;
         bottom: 0;
         right: 0;
         left: 0;
         display: flex;
         align-items: stretch;
         width: 100%;
-        
         min-height: 100vh;
         transition: all 0.3s;
     }
@@ -44,41 +39,32 @@
         max-width: 100px;
         text-align: center;
     }
-    
     #sidebar.active .sidebar-header h3,
     #sidebar.active .CTAs {
         display: none;
     }
-    
     #sidebar.active .sidebar-header strong {
         display: block;
         margin-right: 30px!important;
     }
-    
     #sidebar ul li a {
         text-align: left;
     }
-    
     #sidebar.active ul li a {
-        padding: 20px ;
+        padding: 20px;
         font-size: 0.85em;
     }
     #sidebar .sidebar-header {
         padding: 30px;
         background: #6d7fcc;
     }
-    
     #sidebar .sidebar-header strong {
         display: none;
         font-size: 1.8em;
     }
-    
-    
-    
     .nav {
         position: relative;
     }
-    
     .nav-link {
         color: #1C315E;
     }
@@ -87,18 +73,15 @@
         /* padding-left: 30px !important; */
         background: #6d7fcc;
     }
-    
     .active {
         background-color: white !important;
     }
-    
-     ul li a:hover {
+    ul li a:hover {
         background-color: #1C315E;
         color: white;
     }
     #sidebar ul.components {
         padding: 10px 0;
-        
     }
     #sidebar ul li a {
         display: block;
@@ -107,8 +90,6 @@
         padding: 5px 15px;
         position: relative;
         white-space: nowrap;
-        
-        
     }
     #sidebar.active ul li a {
         display: block;
@@ -117,11 +98,8 @@
         padding: 5px 15px;
         position: relative;
         white-space: nowrap;
-        
-        
     }
-    #sidebar ul li a .icon-holder{
-        
+    #sidebar ul li a .icon-holder {
         border-radius: 6px;
         display: inline-block;
         font-size: 30px;
@@ -135,10 +113,8 @@
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
         width: 52px;
-        
     }
-    
-    #sidebar ul li a .title{
+    #sidebar ul li a .title {
         -webkit-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
@@ -146,7 +122,6 @@
         font-size: 12px;
         text-align: center!important;
     }
-
     #sidebar.active {
         list-style-type: none;
         overflow: hidden !important;
@@ -154,10 +129,8 @@
         -ms-overflow-style: none;
         touch-action: auto;
         -ms-touch-action: auto;
-
     }
     #sidebar.active ul li a .title {
-        
         -webkit-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
@@ -180,14 +153,13 @@
         width: 35px;
     }
     #sidebar.active ul #role-li a .role-title {
-        
         -webkit-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
         display: inline-block;
         font-size: 20px;
     }
-    #sidebar.active ul #role-li a .role-icon{
+    #sidebar.active ul #role-li a .role-icon {
         border-radius: 6px;
         display: inline-block;
         font-size: 40px;
@@ -203,14 +175,13 @@
         width: 35px;
     }
     #sidebar ul #role-li a .role-title {
-        
         -webkit-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
-         display: none;
+        display: none;
         font-size: 20px;
     }
-    #sidebar ul #role-li a .role-icon{
+    #sidebar ul #role-li a .role-icon {
         border-radius: 6px;
         display: none;
         font-size: 40px;
@@ -225,28 +196,18 @@
         transition: all 0.3s ease;
         width: 35px;
     }
-    
-     ul #role-li a:hover {
-        background-color:  white;
+    ul #role-li a:hover {
+        background-color: white;
         color: #1C315E;
     }
-    
-  
-    #sidebar ul li a .role-line{
-       
+    #sidebar ul li a .role-line {
         display: none;
-        
     }
-    #sidebar.active ul li a .role-line{
-       
+    #sidebar.active ul li a .role-line {
         display: block;
-        
     }
     .list-unstyled.components li.active a {
-        background-color:  #1C315E;
-        color: white; 
-      }
-    
-      
-   
+        background-color: #1C315E;
+        color: white;
+    }
 }
