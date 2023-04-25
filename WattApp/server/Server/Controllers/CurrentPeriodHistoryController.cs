@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Data;
+using Server.Models.DropDowns.Devices;
 using Server.Services;
 
 namespace Server.Controllers
@@ -18,7 +19,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Total device Consumption/Production for current year, month, day
+        /// Device Consumption/Production for current year, month, day
         /// </summary>
         [HttpGet]
         [Route("device")]
@@ -33,7 +34,7 @@ namespace Server.Controllers
                 var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentYear(doubleYearDeviceId);
                 return Ok(result);
             }
-            else if(doubleMonthDeviceId != 0)
+            else if (doubleMonthDeviceId != 0)
             {
                 if (!_sqliteDb.Devices.Any(u => u.Id == doubleMonthDeviceId))
                     return NotFound(new { message = "Device with the ID: " + doubleMonthDeviceId.ToString() + " does not exist." });
@@ -65,6 +66,26 @@ namespace Server.Controllers
                 var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentMonthByDay(monthByDayDeviceId);
                 return Ok(result);
             }
+        }
+
+        /// <summary>
+        /// Prosumer Consumption/Production for current year, month, day
+        /// </summary>
+        [HttpGet]
+        [Route("user")]
+        public async Task<IActionResult> GetHistoryForDeviceFromCurrentYear([FromQuery] long deviceCategoryId, long dayByHourUserId)
+        {
+            if (!_sqliteDb.Users.Any(u => u.Id == dayByHourUserId))
+                return NotFound(new { message = "User with the ID: " + dayByHourUserId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.Devices.Any(u => u.UserId == dayByHourUserId))
+                return NotFound(new { message = "User with the ID: " + dayByHourUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            var resultsPastDayByHour = currentPeriodHistoryService.GetUsageHistoryForProsumerFromCurrentDayByHour(dayByHourUserId, deviceCategoryId);
+            return Ok(resultsPastDayByHour);
         }
     }
 }
