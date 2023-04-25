@@ -325,6 +325,20 @@ namespace Server.Services.Implementations
             return SumEnergyConsumption(userId, deviceCategoryId, StartTime, EndTime);
         }
 
+        public double GetUsageHistoryForProsumerFromCurrentMonth(long userId, long deviceCategoryId)
+        {
+            DateTime StartTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            DateTime EndTime = DateTime.Now;
+            return SumEnergyConsumption(userId, deviceCategoryId, StartTime, EndTime);
+        }
+
+        public double GetUsageHistoryForProsumerFromCurrentYear(long userId, long deviceCategoryId)
+        {
+            DateTime StartTime = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0);
+            DateTime EndTime = DateTime.Now;
+            return SumEnergyConsumption(userId, deviceCategoryId, StartTime, EndTime);
+        }
+
         public double SumEnergyConsumption(long userId, long deviceCategoryId, DateTime StartDate, DateTime EndDate)
         {
             var devicesForUser = _context.Devices
