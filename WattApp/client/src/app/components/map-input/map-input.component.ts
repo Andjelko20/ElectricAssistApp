@@ -127,6 +127,10 @@ export class MapInputComponent {
 		this.sendData();
 	  }
 	  changeFocus(location:any){
+		const road=location.address?.road;
+		if(road!==undefined){
+			this.address=road;
+		}
 		let options:Leaflet.ZoomPanOptions={
 			animate:true
 		};
