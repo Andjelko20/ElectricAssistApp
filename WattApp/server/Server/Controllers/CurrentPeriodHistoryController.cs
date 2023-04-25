@@ -73,7 +73,8 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("user")]
-        public async Task<IActionResult> GetHistoryForDeviceFromCurrentYear([FromQuery] long deviceCategoryId, long dayByHourUserId, long monthByDayUserId, long yearByMonthUserId)
+        public async Task<IActionResult> GetHistoryForProsumerFromCurrentYear([FromQuery] long deviceCategoryId, long dayByHourUserId, long monthByDayUserId, long yearByMonthUserId,
+                                                                                        long doubleTodayUserId)
         {
             if(dayByHourUserId!=0)
             { 
@@ -103,7 +104,7 @@ namespace Server.Controllers
                 var results = currentPeriodHistoryService.GetUsageHistoryForProsumerFromCurrentMonthByDay(monthByDayUserId, deviceCategoryId);
                 return Ok(results);
             }
-            else //if(yearByMonthUserId != 0)
+            else if(yearByMonthUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == yearByMonthUserId))
                     return NotFound(new { message = "User with the ID: " + yearByMonthUserId.ToString() + " does not exist." });
@@ -115,6 +116,20 @@ namespace Server.Controllers
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
                 var results = currentPeriodHistoryService.GetUsageHistoryForProsumerFromCurrentYearByMonth(yearByMonthUserId, deviceCategoryId);
+                return Ok(results);
+            }
+            else //if(doubleTodayUserId != 0)
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == doubleTodayUserId))
+                    return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not exist." });
+
+                if (!_sqliteDb.Devices.Any(u => u.UserId == doubleTodayUserId))
+                    return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+
+                if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                    return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+                var results = currentPeriodHistoryService.GetUsageHistoryForProsumerFromCurrentDay(doubleTodayUserId, deviceCategoryId);
                 return Ok(results);
             }
         }

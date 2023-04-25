@@ -12,7 +12,7 @@ namespace Server.Services
         public List<EnergyToday> GetUsageHistoryForProsumerFromCurrentDayByHour(long userId, long deviceCategoryId);
         public List<DailyEnergyConsumptionPastMonth> GetUsageHistoryForProsumerFromCurrentMonthByDay(long userId, long deviceCategoryId);
         public List<MonthlyEnergyConsumptionLastYear> GetUsageHistoryForProsumerFromCurrentYearByMonth(long userId, long deviceCategoryId);
-
+        public double GetUsageHistoryForProsumerFromCurrentDay(long userId, long deviceCategoryId);
 
     }
 }
