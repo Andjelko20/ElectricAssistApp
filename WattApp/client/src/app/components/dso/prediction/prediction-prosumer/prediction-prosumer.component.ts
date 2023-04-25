@@ -7,12 +7,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 Chart.register(...registerables)
+
 @Component({
-  selector: 'app-line-week-prosumer',
-  templateUrl: './line-week-prosumer.component.html',
-  styleUrls: ['./line-week-prosumer.component.css']
+  selector: 'app-prediction-prosumer',
+  templateUrl: './prediction-prosumer.component.html',
+  styleUrls: ['./prediction-prosumer.component.css']
 })
-export class LineWeekProsumerComponent {
+export class PredictionProsumerComponent {
 
 
   list1:WeekByDay[] = [];
@@ -22,9 +23,9 @@ export class LineWeekProsumerComponent {
   }
 
   ngOnInit(): void {
-    this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data: WeekByDay[]) =>{
+    this.deviceService.predictionUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data: WeekByDay[]) =>{
       this.list1 = data;
-      this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data: WeekByDay[]) =>{
+      this.deviceService.predictionUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data: WeekByDay[]) =>{
         this.list2 = data;
         this.LineChart();
       })

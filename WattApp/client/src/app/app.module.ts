@@ -78,6 +78,8 @@ import { BarMonthProsumerComponent } from './components/dso/charts-prosumer/bar-
 import { BarYearProsumerComponent } from './components/dso/charts-prosumer/bar-year-prosumer/bar-year-prosumer.component';
 import { LineDayProsumerComponent } from './components/dso/charts-prosumer/line-day-prosumer/line-day-prosumer.component';
 import { LineWeekProsumerComponent } from './components/dso/charts-prosumer/line-week-prosumer/line-week-prosumer.component';
+import { PredictionProsumerComponent } from './components/dso/prediction/prediction-prosumer/prediction-prosumer.component';
+import { PredictionDeviceComponent } from './components/dso/prediction/prediction-device/prediction-device.component';
 
 
 @NgModule({
@@ -159,6 +161,8 @@ import { LineWeekProsumerComponent } from './components/dso/charts-prosumer/line
     BarYearProsumerComponent,
     LineDayProsumerComponent,
     LineWeekProsumerComponent,
+    PredictionProsumerComponent,
+    PredictionDeviceComponent,
     
   ],
   imports: [

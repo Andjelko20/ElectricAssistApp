@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Server.Data;
 using Server.Models;
 using Server.Services;
+using System.Diagnostics;
 
 namespace Server.Controllers
 {
@@ -372,7 +373,7 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Consumption/Production for all user`s devices for last week (by day)
+        /// Consumption/Production for user (yesterday by hour)
         /// </summary>
         [HttpGet]
         [Route("DayByHour/User/{userId:long}/{deviceCategoryId:long}")]
@@ -388,9 +389,9 @@ namespace Server.Controllers
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
-            if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
+            /*if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
                 return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-
+            */
             var resultsPastDayByHour = historyService.UserHistoryForThePastDayByHour(userId, deviceCategoryId);
             return Ok(resultsPastDayByHour);
         }

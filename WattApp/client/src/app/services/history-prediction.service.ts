@@ -105,4 +105,14 @@ export class HistoryPredictionService {
     return this.http.get<number>(environment.serverUrl+"/api/DSO/City?deviceCategoryId="+deviceCategoryId+"&thisYearCityId="+cityId+"&cityName=null",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
+
+  predictionUser(userId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/Prediction/WeekByDay/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+
+  }
+
+  predictionDevice(deviceId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/Prediction/WeekByDay/Device/"+deviceId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+
+  }
 }

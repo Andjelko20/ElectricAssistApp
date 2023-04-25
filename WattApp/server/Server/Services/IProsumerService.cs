@@ -20,5 +20,6 @@ namespace Server.Services
         public double GetUserEnergyConsumptionForToday(long userId, long deviceCategoryId);
         public double GetUserEnergyConsumptionForThisMonth(long userId, long deviceCategoryId);
         public double GetUserEnergyConsumptionForThisYear(long userId, long deviceCategoryId);
+        public List<EnergyToday> ProsumerElectricityUsageForTodayByHour(long userId, long deviceCategoryId);
     }
 }
