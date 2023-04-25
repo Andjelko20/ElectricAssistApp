@@ -19,10 +19,6 @@
       color: white;
       font-size: 20px
     }
-    /* #sidebarCollapse:hover {
-      background-color: #1c32af;
-      border-color: #ffffff;
-    } */
     #sidebarCollapse:hover {
       color: rgb(48, 98, 204);
       transition: all 0.2s ease-in-out;
