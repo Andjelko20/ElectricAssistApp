@@ -231,21 +231,22 @@ namespace Server.Services.Implementations
 
         public object ConfirmChageOfEmailAddress(string key)
         {
-            ChangeEmailModel changeEmail = context.ChangeEmailModels.Where(src => src.ChangeEmailKey == key).FirstOrDefault();
+            var changeEmail = context.ChangeEmailModels.Where(src => src.ChangeEmailKey.Equals(key)).FirstOrDefault();
             if(changeEmail == null)
             {
-                throw new HttpRequestException("There is no request with such a key.");
+                return new HttpRequestException("There is no request with such a key.");
             }
             else if(changeEmail != null && changeEmail.ExpireAt < DateTime.Now)
             {
                 context.ChangeEmailModels.Remove(changeEmail);
-                throw new HttpRequestException("Confirmation link has been expired. Please create new request.");
+                return new HttpRequestException("Confirmation link has been expired. Please create new request.");
             }
-            UserModel user = context.Users.Find(changeEmail.UserId);
-            user.Email = changeEmail.NewEmail;
+            ChangeEmailModel model = (ChangeEmailModel)changeEmail;
+            UserModel user = context.Users.Find(model.UserId);
+            user.Email = model.NewEmail;
 
             context.Users.Update(user);
-            context.ChangeEmailModels.Remove(changeEmail);
+            context.ChangeEmailModels.Remove(model);
 
             context.SaveChanges();
             return new OkResult();

@@ -6,9 +6,9 @@ namespace Server.Models
     {
         [Key]
         public long UserId { get; set; }
-        public String OldEmail { get; set; }
-        public String NewEmail { get; set; }
+        public string OldEmail { get; set; }
+        public string NewEmail { get; set; }
         public DateTime ExpireAt { get; set; } = DateTime.Now.AddDays(1);
-        public String ChangeEmailKey { get; set; }
+        public string ChangeEmailKey { get; set; }
     }
 }

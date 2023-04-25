@@ -307,6 +307,29 @@ namespace Server.Controllers
                     };
 
                     userService.CreateChangeEmailRequest(changeEmailModel);
+
+                    try
+                    {
+                        emailService.SendEmail(changeEmailModel.NewEmail,
+                                "Confirm Your Email Address Change",
+                                 "Hello " + user.Name + ", <br><br>" +
+                                "Thank you for using our service.<br>" +
+                                "We have received a request to change the email address associated with your account." +
+                                "<br>To complete this process, please confirm the change by clicking on the link below:<br><br>" +
+                                "<a href='https://localhost:7146/api/Users/changeEmailConfirmation/" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
+                                "If you did not initiate this email address change request, please contact" +
+                                "our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
+
+                                "Thank you, <br>" +
+                                "<i><b>ElectricAssist Team</b></i>"
+                            , true);
+
+
+                    }
+                    catch
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+                    }
                 }
                 //user.Email = requestBody.Email;
                 _sqliteDb.Users.Update(user);
@@ -319,15 +342,16 @@ namespace Server.Controllers
             }
         }
 
-        [HttpPost("changeEmailConfirmation{key}")]
+        [HttpPost("changeEmailConfirmation/{key}")]
         public IActionResult changeEmailAddressConfirmation([FromRoute]string key)
         {
-            Object response = userService.ConfirmChageOfEmailAddress(key);
+            object response = userService.ConfirmChageOfEmailAddress(key);
             if (response is HttpRequestException)
                 return StatusCode(500, ((HttpRequestException)response).Message);
             else
                 return Ok("Mail confirmed successfully");
         }
+
         /// <summary>
         /// Block or unblock user
         /// </summary>
