@@ -9,9 +9,16 @@
                     
                     <h2 >{{device.name}}</h2>
                     
-                    <a data-bs-toggle="modal" data-bs-target="#myModalOff" class="btn1"  id="startbutton" role="button" style="background-color: greenyellow;" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)" >On</a>
-                    <a data-bs-toggle="modal" data-bs-target="#myModalOn" class="btn1"  id="startbutton" role="button" style="background-color: red;"*ngIf="device.turnOn===false" (click)="turnOnOff(device.id)" >Off</a>
-
+                    <label for="visibilityOnOff" class="form-label " *ngIf="device.turnOn===false" style="margin-right: 10px;">Disabled</label>
+                          <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalOn" *ngIf="device.turnOn===false"(click)="turnOnOff(device.id)">
+                            <input type="checkbox" [disabled]="!buttonOnoff">
+                            <span class="slider round"></span>
+                          </label>
+                          <label for="visibilityOnOff" class="form-label " *ngIf="device.turnOn===true" style="margin-right: 10px;">Active</label>
+                          <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalOff" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)">
+                            <input type="checkbox" checked [disabled]="!buttonOnoff">
+                            <span class="slider round"></span>
+                          </label>
                    
                 </div>
                 <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">

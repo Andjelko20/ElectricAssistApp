@@ -132,7 +132,6 @@ li a {
     margin: 5px;
     text-align: center;
     display: inline-block;
-    padding: 10px;
     position: relative;
 }
 
@@ -157,6 +156,7 @@ li a {
     display: inline-block;
     background-color: white;
     position: relative;
+    margin: 5px;
 }
 
 #deviceCategoryId {
@@ -203,6 +203,7 @@ label {
     }
     .devices-item {
         /* position: sticky; */
+        padding: 10px;
         width: 25%;
     }
     .btn {

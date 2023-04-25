@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Energy Usage</h1>
+        <div class="table-container">
+          <div class="table-wrapper">
+            <h2 class="table-title">Consumption/Production</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Month</th>
+                  <th>Day</th>
+                  <th>Consumption</th>
+                  <th>Production</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item1 of list1">
+                  <ng-container *ngFor="let item2 of list2">
+                    <ng-container *ngIf="item1.year == item2.year && item1.month == item2.month && item1.day == item2.day">
+                      <td>{{ item1.year }}</td>
+                      <td>{{ item1.month }}</td>
+                      <td>{{ item1.day }}</td>
+                      <td>{{ item1.energyUsageResult }} kWh</td>
+                      <td>{{ item2.energyUsageResult }} kWh</td>
+                    </ng-container>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+          <!-- <div class="table-wrapper">
+            <h2 class="table-title">Production</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Month</th>
+                  <th>Day</th>
+                  <th>Energy</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of list2">
+                  <td>{{ item.year }}</td>
+                  <td>{{ item.month }}</td>
+                  <td>{{ item.day }}</td>
+                  <td>{{ item.energyUsageResult }} kWh</td>
+                </tr>
+              </tbody>
+            </table>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  

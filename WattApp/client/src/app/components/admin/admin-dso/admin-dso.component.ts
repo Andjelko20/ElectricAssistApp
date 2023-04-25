@@ -14,6 +14,9 @@ export class AdminDsoComponent {
 	totalItems:number=10;
   
   showUsers:ShowUsers[]=[];
+  onBlockClick!: (this: HTMLElement, ev: MouseEvent) => any;
+  onUnblockClick!: (this: HTMLElement, ev: MouseEvent) => any;
+  
   constructor(private router:Router,private usersService:AuthService,
     private route:ActivatedRoute) { }
 
@@ -26,9 +29,15 @@ export class AdminDsoComponent {
        username: u.username,
        block: u.blocked,
        email: u.email,
-       role: u.role
+       role: u.role,
+       settlement:u.settlement,
+       city:u.city,
+       address:u.address,
+       country:u.country
      } as ShowUsers));
     });
+    
+    
     }
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
@@ -36,45 +45,51 @@ export class AdminDsoComponent {
 			this.totalItems=users.numberOfPages*this.itemsPerPage;
 			this.showUsers=users.data.map((u:any)=>({
 			  id: u.id,
-			  name: u.name,
-			  username: u.username,
-			  block: u.blocked,
-			  email: u.email,
-			  role: u.role
+       name: u.name,
+       username: u.username,
+       block: u.blocked,
+       email: u.email,
+       role: u.role,
+       settlement:u.settlement,
+       city:u.city,
+       address:u.address,
+       country:u.country
 			} as ShowUsers));
 		   });
 	}
 
-
   blockUser(id: number) {
-    const block= document.getElementById('block-popup');
-    if(block!=null)
-    {
-      block.addEventListener('click', () => {
+    const block = document.getElementById('block-popup');
+    if (block != null) {
+      block.removeEventListener('click', this.onBlockClick); // remove previous event listener
+      this.onBlockClick = () => { // create new event listener function
         this.usersService.blockUser(id).subscribe(() => {
+          
           const userIndex = this.showUsers.findIndex(user => user.id === id);
           this.showUsers[userIndex].block = true;
         });
-      }
-      );
+        block.removeEventListener('click', this.onBlockClick); // remove event listener after execution
+      };
+      block.addEventListener('click', this.onBlockClick); // add new event listener
     }
-      
   }
+  
   unblockUser(id: number) {
-    const unblock= document.getElementById('unblock-popup');
-    if(unblock!=null)
-    {
-      unblock.addEventListener('click', () => {
+    const unblock = document.getElementById('unblock-popup');
+    if (unblock != null) {
+      unblock.removeEventListener('click', this.onUnblockClick); // remove previous event listener
+      this.onUnblockClick = () => { // create new event listener function
         this.usersService.unblockUser(id).subscribe(() => {
+  
           const userIndex = this.showUsers.findIndex(user => user.id === id);
           this.showUsers[userIndex].block = false;
         });
-      });
-
-      
+        unblock.removeEventListener('click', this.onUnblockClick); // remove event listener after execution
+      };
+      unblock.addEventListener('click', this.onUnblockClick); // add new event listener
     }
   }
-
+  
 
   getUsers()
   {
@@ -83,8 +98,6 @@ export class AdminDsoComponent {
 
   delete(id:number)
   {
-    
-      
    
     const deletePopup= document.getElementById('delete-admin-popup');
     
@@ -94,7 +107,21 @@ export class AdminDsoComponent {
       this.usersService.delete(id)
       .subscribe(()=>{
           this.router.navigate(['dashboard']);
-          location.reload();
+          this.usersService.getAllUsers(1).subscribe(users => {
+            this.totalItems=users.numberOfPages*this.itemsPerPage;
+              this.showUsers=users.data.map((u:any)=>({
+                id: u.id,
+                name: u.name,
+                username: u.username,
+                block: u.blocked,
+                email: u.email,
+                role: u.role,
+                settlement:u.settlement,
+                city:u.city,
+                address:u.address,
+                country:u.country
+              } as ShowUsers));
+             });
       });
      });
     }

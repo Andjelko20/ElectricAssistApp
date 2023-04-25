@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 
@@ -9,7 +10,10 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
   styleUrls: ['./consumption-month-wattmeter.component.css']
 })
 export class ConsumptionMonthWattmeterComponent implements OnInit {
-  valuekWh!: number;
+  value!:any;
+  valuekWh!: any;
+  valueMWh!: any;
+  valueGWh!: any;
   min: number = 0;
   max: number = 2400;
   markerConfig = {
@@ -28,14 +32,24 @@ export class ConsumptionMonthWattmeterComponent implements OnInit {
     '351': { color: 'blue', "bgOpacity": 0.2 },
     '1601': { color: 'red', "bgOpacity": 0.2 }
   };
-  constructor(private todayConsumption:HistoryPredictionService){
+  constructor(private historyService:HistoryPredictionService,private authService:AuthService){
 
-  }
+  } 
+
     async ngOnInit(): Promise<void> {
+    
     let token=new JwtToken();
     
-    const result = await this.todayConsumption.getTotalConsumptionProductionCity("Electricity Producer","Kragujevac").pipe(first()).toPromise();
-  
-    this.valuekWh = result!;
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.historyService.getMonthTotalConsumption(number,2).subscribe(data=>{
+          this.value = data;  
+          this.valuekWh = this.value.toFixed(2);
+          this.valueMWh= (this.valuekWh*0.001).toFixed(2);
+          this.valueGWh= (this.valueMWh*0.001).toFixed(2);
+        })
+      })
+    })
+   
   }
 }

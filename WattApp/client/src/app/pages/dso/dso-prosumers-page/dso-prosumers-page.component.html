@@ -1,25 +1,14 @@
-<!--
-<div class="col-sm-9 ml-sm-auto col-md-12">
-    <div style="background-color: white;">
-        <div class="toggle-container">
-            <div class="toggle-buttons">
-              <input type="radio" (click)="showComponent()" name="toggle" id="dashboard-btn" checked >
-              <label for="dashboard-btn">Tabelar view</label>
-              <span class="divider"></span>
-              <input type="radio" (click)="showComponent1()" name="toggle" id="devices-btn">
-              <label for="devices-btn">Map view</label>
-            </div>
-            <div class="date-time">
-              <p>Number of users</p>
-            </div>
-          </div>
-		  -->
-<main class="col-sm-9 ml-sm-auto col-md-11" style="border: 1px solid black;">
-    <div style="background-color: white;">
+
+<div class="wrapper">
+    
         <div class="tabel-map">
+          <div id="numpros">
             <span >Number of prosumers: {{numberOfProsumers}}</span>
+          </div>
+          <div id="select-view">
             <button (click)="showComponent()" class="nav-button" [class.active]="componentShown">Tabelar View</button>
-            <button (click)="showComponent1()" class="nav-button" [class.active]="componentShown1">Map</button>
+            <button (click)="showComponent1()" class="nav-button" [class.active]="componentShown1">Map View</button>
+          </div>
         </div>
         <div class="tabel-body" *ngIf="componentShown">
 			<!--<app-page-control [url]="pageUrl" [(itemsPerPage)]="itemsPerPage" [(totalItems)]="totalItems" [(items)]="items" [(currentPage)]="currentPage">
@@ -28,9 +17,9 @@
 			<app-all-prosumers></app-all-prosumers>
         </div>
         <div class="map" *ngIf="componentShown1">
-            <app-prosumers-map *ngIf="componentShown1"></app-prosumers-map>
+            <app-prosumers-map ></app-prosumers-map>
         </div>
-    </div>
-</main>
-<div style="height: 20px;"></div>
+</div>
+
+<!-- <div style="height: 20px;"></div> -->
 <!--<app-maps *ngIf="componentShown1"></app-maps>-->

@@ -78,6 +78,7 @@ const routes: Routes = [
 	{path:"map-input",component:MapInputComponent},
 	{path:"future",component:TodayComponent},
 	{path:"future",component:FutureComponent},
+	{path:'asdf',component:DsoHomePageComponent},
 	{path:'**',redirectTo:"login"}
 ];
 
