@@ -12,6 +12,7 @@ import { NgModel } from '@angular/forms';
 export class MapInputComponent {
 	@Output() locationChanged:EventEmitter<any>=new EventEmitter<any>();
 	@Output() settlementChanged:EventEmitter<any>=new EventEmitter<any>();
+	public searchResultVisible:boolean=false;
 	  private map!: Leaflet.Map;
 	  private searchUrl!:URL;
 	  public searchInput!:string;
@@ -27,7 +28,12 @@ export class MapInputComponent {
 	  public settlementElement!:HTMLSelectElement;
 	  public countryElement!:HTMLSelectElement;
 	  constructor(){
-		
+		document.onclick=(event:any)=>{
+			let searchResult=document.getElementsByClassName("search-result")[0];
+			if(event.target!==searchResult && !searchResult.contains(event.target)){
+				this.searchResultVisible=false;
+			}
+		}
 	  }
 	  
 	  ngOnInit(): void {
@@ -96,16 +102,22 @@ export class MapInputComponent {
 	  }
 
 	  changeLocations(){
-		if(this.address==undefined)
+		if(this.address==undefined){
+			this.searchResultVisible=false;
 			return;
+		}
+		
 		let trimmedAddress=this.address.trim();
-		if(trimmedAddress=="" && trimmedAddress.length<2)
+		if(trimmedAddress=="" && trimmedAddress.length<2){
+			this.searchResultVisible=false;
 			return;
+		}
 		/*
 		this.searchUrl.searchParams.set("country",JSON.parse(this.countryElement.value).name);
 		this.searchUrl.searchParams.set("city",JSON.parse(this.cityElement.value).name);
 		this.searchUrl.searchParams.set("street",this.address);
 		*/
+		this.searchResultVisible=true;
 		this.searchUrl.searchParams.set("q",this.address+","+JSON.parse(this.cityElement.value).name+","+JSON.parse(this.countryElement.value).name);
 		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
 		.then(res=>res.json())
@@ -122,6 +134,7 @@ export class MapInputComponent {
 		this.marker.setLatLng([location.lat,location.lon]);
 		let latLng=this.marker.getLatLng();
 		this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
+		this.searchResultVisible=false;
 	  }
 	  onSelectedCity(event:any){
 		let city=JSON.parse(event.target.value);
