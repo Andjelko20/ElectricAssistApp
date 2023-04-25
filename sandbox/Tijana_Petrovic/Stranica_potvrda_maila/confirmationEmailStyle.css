@@ -18,6 +18,7 @@ body{
   padding-left: 5%;
   padding-right: 5%;
   text-justify: justify;
+  align-content: center;
 }
 
 .left-container > img{
