@@ -13,6 +13,11 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
 })
 export class UpdateDeviceComponent implements OnInit{
 
+  
+  onClickVisibility!: (this: HTMLElement, ev: MouseEvent) => any;
+  offClickVisibility!: (this: HTMLElement, ev: MouseEvent) => any;
+  onClickControlability!: (this: HTMLElement, ev: MouseEvent) => any;
+  offClickControlability!: (this: HTMLElement, ev: MouseEvent) => any;
   myForm: FormGroup;
   updateDevice:updateDevices={
     id: 0,
@@ -25,6 +30,8 @@ export class UpdateDeviceComponent implements OnInit{
     turnOn: false,
     
   }
+  confirmVisibility: boolean = false;
+  confirmControlability:boolean=false;
   devices:ShowDevices[] = [];
   idProsumer?:number
   constructor(private devicesService:DevicesService,private router:Router,private route:ActivatedRoute,private formBuilder: FormBuilder) {
@@ -82,27 +89,26 @@ export class UpdateDeviceComponent implements OnInit{
   controlabilityOnOff(){
     const controlabilityOnPopup= document.getElementById('controlability-on-popup');
     const controlabilityOffPopup= document.getElementById('controlability-off-popup');
-    
+    this.confirmControlability=false;
     if(controlabilityOnPopup!=null)
     {
-      controlabilityOnPopup.addEventListener('click', () => {
-        if( this.updateDevice.controlability==false && this.updateDevice.visibility==true)
-        {
+      controlabilityOnPopup.removeEventListener('click', this.onClickControlability);
+      this.onClickControlability=()=> {
           this.updateDevice.controlability=true
-          console.log( this.updateDevice.controlability);
-        }
-        
-     });
+          this.confirmControlability=true;
+          controlabilityOnPopup.removeEventListener('click',this.onClickControlability);
+     };
+     controlabilityOnPopup.addEventListener('click',this.onClickControlability);
     }
     if(controlabilityOffPopup!=null)
     {
-      controlabilityOffPopup.addEventListener('click', () => {
-        if( this.updateDevice.controlability==true )
-        {
-          this.updateDevice.controlability=false
-          console.log( this.updateDevice.controlability);
-        }
-     });
+      controlabilityOffPopup.removeEventListener('click', this.offClickControlability);
+      this.offClickControlability=()=> {
+          this.updateDevice.controlability=false;
+          this.confirmControlability=true;
+          controlabilityOffPopup.removeEventListener('click',this.offClickControlability);
+      };
+      controlabilityOffPopup.addEventListener('click',this.offClickControlability);
     }
     
   }
@@ -111,33 +117,39 @@ export class UpdateDeviceComponent implements OnInit{
     
     const visibilityOnPopup= document.getElementById('visibility-on-popup');
     const visibilityOffPopup= document.getElementById('visibility-off-popup');
-    console.log( visibilityOnPopup);
-    console.log( visibilityOffPopup);
+    this.confirmVisibility=false;
     if(visibilityOnPopup!=null)
     {
-      visibilityOnPopup.addEventListener('click', () => {
-        if( this.updateDevice.visibility==false)
-        {
-          this.updateDevice.visibility=true
-          console.log( this.updateDevice.visibility);
-        }
+      visibilityOnPopup.removeEventListener('click', this.onClickVisibility);
+      this.onClickVisibility=()=> {
         
-     });
+          this.updateDevice.visibility=true
+          this.confirmVisibility=true;
+          // console.log( this.updateDevice.visibility);
+        
+          visibilityOnPopup.removeEventListener('click',this.onClickVisibility);
+     };
+     visibilityOnPopup.addEventListener('click',this.onClickVisibility);
+    
     }
     if(visibilityOffPopup!=null)
     {
-      visibilityOffPopup.addEventListener('click', () => {
-        if( this.updateDevice.visibility==true)
-        {
-          this.updateDevice.visibility=false
-          console.log( this.updateDevice.visibility);
-        }
-     });
+      visibilityOffPopup.removeEventListener('click', this.offClickVisibility);
+      this.offClickVisibility=()=> {
+        
+          this.updateDevice.visibility=false;
+          this.updateDevice.controlability=false;
+          this.confirmVisibility=true;
+          // console.log( this.updateDevice.visibility);
+        
+          visibilityOffPopup.removeEventListener('click',this.offClickVisibility);
+     };
+     visibilityOffPopup.addEventListener('click',this.offClickVisibility);
+    
     }
     
     
   }
-
 
 
 }

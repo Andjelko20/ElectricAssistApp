@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 
@@ -34,18 +35,24 @@ export class ConsumptionTodayWattmeterComponent implements OnInit{
   };
   
   
-  constructor(private todayConsumption:HistoryPredictionService){
+  constructor(private historyService:HistoryPredictionService,private authService:AuthService){
 
   }
     async ngOnInit(): Promise<void> {
     let token=new JwtToken();
     
-    // const result = await this.todayConsumption.getAverageConsumptionProductionCity("Electricity Consumer","Kragujevac").pipe(first()).toPromise();
-  
-    this.value=111999.2522323232323232
-    this.valuekWh = this.value.toFixed(2);
-     
-    this.valueMWh= (this.valuekWh*0.001).toFixed(2);
-    this.valueGWh= (this.valueMWh*0.001).toFixed(2);;
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.historyService.getTodayTotalConsumption(number,2).subscribe(data=>{
+          
+          this.value = data;
+          this.valuekWh = this.value.toFixed(2);
+          this.valueMWh= (this.valuekWh*0.001).toFixed(2);
+          this.valueGWh= (this.valueMWh*0.001).toFixed(2);
+        })
+      })
+    })
+
+    
   }
 }

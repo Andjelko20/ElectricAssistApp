@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { DayByHour } from 'src/app/models/devices.model';
+import { Settlement } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 Chart.register(...registerables)
 
 @Component({
@@ -9,14 +13,56 @@ Chart.register(...registerables)
 })
 export class LineDayChartComponent {
 
-  constructor() {
+  constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {
     
+  }
+  list1:DayByHour[] = [];
+  list2:DayByHour[] = [];
+  settlements:Settlement[] = [];
+  selectedOption: number = 0;
+
+  onOptionSelected() {
+    this.ngOnInit();
   }
   ngOnInit(): void {
-    this.LineChart();
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.settlements = settlement;
+        })
+        if(this.selectedOption == 0){
+          this.deviceService.dayByHour(number,2).subscribe((data: DayByHour[]) =>{
+            this.list1 = data;
+            this.deviceService.dayByHour(number,1).subscribe((data: DayByHour[]) =>{
+              this.list2 = data;
+              this.LineChart();
+            })
+      
+          })
+        }
+        else{
+          this.deviceService.dayByHourSettlement(this.selectedOption,2).subscribe((data: DayByHour[]) =>{
+            this.list1 = data;
+            this.deviceService.dayByHourSettlement(this.selectedOption,1).subscribe((data: DayByHour[]) =>{
+              this.list2 = data;
+              this.LineChart();
+            })
+      
+          })
+        }
+        
+      })
+    })
   }
   LineChart(){
-    
+
+    const chartId = 'linechart';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const Linechart =new Chart("linechart", {
       type: 'line',
       data : {
@@ -25,7 +71,7 @@ export class LineDayChartComponent {
         datasets: [
           {
             label: 'consumption',
-            data: [130,10,23,120,70,90,80,79,45,34,76,89],
+            data: energyUsageResults1,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -50,7 +96,7 @@ export class LineDayChartComponent {
           },
           {
             label: 'production',
-            data: [91,12,41,45,3,133,106,50,70,80,150,123],
+            data: energyUsageResults2,
             tension:0.5,
             backgroundColor: 'rgba(0, 255, 0, 0.2)',
             borderColor: 'rgba(0, 255, 0, 1)',
@@ -77,8 +123,6 @@ export class LineDayChartComponent {
               }
             },
             position: "left",
-            suggestedMin: 5,
-            suggestedMax: 140,
             title:{
               display:true,
               text: " kWh",

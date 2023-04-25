@@ -1,5 +1,5 @@
 <div class="wrapper">
-<div class="toggle-container">
+  <div class="toggle-container">
   <div class="toggle-buttons">
     <input type="radio" (click)="toggleDa()" name="toggle" id="dashboard-btn" checked >
     <label for="dashboard-btn">Dashboard</label>
@@ -13,42 +13,122 @@
 </div>
 <div class="container" *ngIf="dashboard">
   <div class="card-group">
-    <div class="consumption">
-      <div class="consumption-body">
-        <app-today-consumption></app-today-consumption>
-      </div>
-    </div>
-    <div class="consumption">
-      <div class="consumption-body">
-        <app-month-consumption></app-month-consumption>    
-      </div>
-    </div>
-    <div class="consumption">
-      <div class="consumption-body">
-        <app-today-production></app-today-production>
-      </div>
-    </div>
-    <div class="consumption">
-      <div class="consumption-body">
-        <app-month-production></app-month-production>
-      </div>
-    </div>
-  </div>
-  <div class="information">
-    <app-one-prosumer></app-one-prosumer>
-  </div>
-</div>
+    <div class="bgc-white p-20 bd">
+        <div class="c-grey-900 text-center"  >
+            <div style="display: inline-block;"><h4 style=" font-weight: bolder;">Overview of Prosumer energy </h4></div>
+            <hr style="margin-bottom: 0;padding-bottom: 0;">
+        </div>
+        <div class="peers mT-20 fxw-nw@lg+ jc-sb ta-c gap-10">
+            <div class="peer">
+                <div class="c-grey-900 text-center"  >
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than 350 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    </div>
+                    <app-today-consumption></app-today-consumption>
+                    <span>Today consumption</span>
+            </div>
+            <div class="peer">
+                <div class="c-grey-900 text-center"  >
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 22,222 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 22,223-44,444 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 44,445 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                </div>
+                    <app-month-consumption></app-month-consumption>
+                    <span>Month consumption</span>
+            </div>
 
+            <div class="peer">
+                <div class="c-grey-900 text-center"  >
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 666,667 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 666,668 - 1,333,333 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 1,333,334 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                </div>
+                    <app-today-production></app-today-production>
+                    <span>Today production</span>
+            </div>
+            <div class="peer">
+                <div class="c-grey-900 text-center"  >
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 8,000,000 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 8,000,001-16,000,000 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 16,000,001 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                </div>
+                    <app-month-production></app-month-production>
+                    <span>Month production</span>
+            </div>
+        </div>
+    </div>
+  
+
+    <div class="information">
+      <app-one-prosumer></app-one-prosumer>
+    </div>
+  </div> 
+</div>
+ 
 <app-all-devices-dso *ngIf="devices"></app-all-devices-dso>
+  <div class="container2" *ngIf="dashboard">
+    <div class="history-charts">
+      <div class="tgl-container">
+          <div class="tgl-btn">
+            <input type="radio" (click)="showGraph()" name="toggle" id="graphic-btn" checked >
+            <label for="graphic-btn">Graphical view</label>
+            <span class="divider"></span>
+            <input type="radio" (click)="showTable()" name="toggle" id="tabelar-btn">
+            <label for="tabelar-btn">Tabelar view</label>
+          </div>
+      </div>
+      <div class="csv-body">
+          <span>Power and Energy</span>
+          <button class="csv-button">CSV</button>
+      </div>
+      <ng-container *ngIf="graph">
+          <div class="chart-body">
+              <div class="chart-buttons">
+                <button (click)="showComponentGraph()" class="chart-button">Day</button>
+                <button (click)="showComponentGraph1()" class="chart-button">Week</button>
+                <button (click)="showComponentGraph2()" class="chart-button">Month</button>
+                <button (click)="showComponentGraph3()" class="chart-button">Year</button>
+              </div>
+            </div>
+          <div class="history-charts-body" *ngIf="compGraph">
+              <app-line-day-prosumer></app-line-day-prosumer>
+          </div>
+          <div class="history-charts-body" *ngIf="compGraph1">
+              <app-line-week-prosumer></app-line-week-prosumer>
+          </div>
+          <div class="history-charts-body" *ngIf="compGraph2">
+              <app-bar-month-prosumer></app-bar-month-prosumer>
+          </div>
+          <div class="history-charts-body" *ngIf="compGraph3">
+              <app-bar-year-prosumer></app-bar-year-prosumer>
+          </div>
+      </ng-container>
+      <ng-container *ngIf="tabelar">
+          <div class="chart-body">
+              <div class="chart-buttons">
+                <button (click)="showComponentTable()" class="chart-button">Day</button>
+                <button (click)="showComponentTable1()" class="chart-button">Week</button>
+                <button (click)="showComponentTable2()" class="chart-button">Month</button>
+                <button (click)="showComponentTable3()" class="chart-button">Year</button>
+              </div>
+            </div>
+          <div class="history-charts-body" *ngIf="compTable">
+              <app-today-tabelar-prosumer></app-today-tabelar-prosumer>
+          </div>
+          <div class="history-charts-body" *ngIf="compTable1">
+              <app-week-tabelar-prosumer></app-week-tabelar-prosumer>
+          </div>
+          <div class="history-charts-body" *ngIf="compTable2">
+              <app-month-tabelar-prosumer></app-month-tabelar-prosumer>
+          </div>
+          <div class="history-charts-body" *ngIf="compTable3">
+              <app-year-tabelar-prosumer></app-year-tabelar-prosumer>
+          </div>
+      </ng-container>
 
-<div class="container2" *ngIf="dashboard">
-  <!-- <div class="today-future">
-    <app-today></app-today>
-    <app-future></app-future>
-  </div> -->
-  <div class="graph">
 
+    </div> 
   </div>
-</div>
 
 </div>

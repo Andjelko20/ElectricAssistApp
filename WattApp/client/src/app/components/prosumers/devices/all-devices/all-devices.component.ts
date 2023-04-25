@@ -56,7 +56,7 @@ export class AllDevicesComponent implements OnInit {
     }
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
-		this.deviceService.getAllDevices(1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+		this.deviceService.getAllDevices(pageNumber,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
 			this.totalItems=devices.numberOfPages*this.itemsPerPage;
 			  this.devices=devices.data.map((u:any)=>({
 			 id:u.id,

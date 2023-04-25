@@ -10,6 +10,8 @@ import { DevicesService } from 'src/app/services/devices.service';
 })
 export class OneDeviceComponent implements OnInit{
   
+  onClick!: (this: HTMLElement, ev: MouseEvent) => any;
+  offClick!: (this: HTMLElement, ev: MouseEvent) => any;
   device!:ShowDevices;
   idDevice?:number;
   buttonOnoff:boolean=false;
@@ -48,37 +50,41 @@ export class OneDeviceComponent implements OnInit{
     
     const turnOn= document.getElementById('turn-on-popup');
     const turnOff= document.getElementById('turn-off-popup');
-    console.log(turnOn);
+    this.buttonOnoff=false;
    if(turnOn!=null)
    {
-        turnOn.addEventListener('click', () => {
-          this.deviceService.turnOnOff(id).subscribe({
-            next:()=>{
-              
-              
-            if(this.device.turnOn==false)
-              {
-                this.device.turnOn = true;
-              }
-            }
-          });
-      });
-   }
+    turnOn.removeEventListener('click',  this.onClick)
+      this.onClick=()=> {
+        this.deviceService.turnOnOff(id).subscribe({
+          next:()=>{
+          
+            
+              this.device.turnOn = true;
+              this.buttonOnoff=true;
+            
+          }
+        });
+        turnOn.removeEventListener('click',this.onClick);
+      };
+      turnOn.addEventListener('click',this.onClick);
+    }
    if(turnOff!=null)
    {
         
-        turnOff.addEventListener('click', () => {
+        turnOff.removeEventListener('click',  this.offClick)
+        this.offClick=()=> {
           this.deviceService.turnOnOff(id).subscribe({
             next:()=>{
             
-              if(this.device.turnOn==true)
-              {
+              
                 this.device.turnOn = false;
-              }   
+                this.buttonOnoff=true;
               
             }
           });
-      });
+          turnOff.removeEventListener('click',this.offClick);
+      };
+      turnOff.addEventListener('click',this.offClick);
    }
    
   }

@@ -26,6 +26,10 @@
     }
     .navbar {
       background-color: #1C315E;
+      /* background-color: #285b86; */
+      /* background-color: #0F759B; */
+      
+      
     }
     
     .container-fluid {
@@ -92,7 +96,7 @@
       align-content: center;
       text-align: center;
       margin-top: 18px;
-      margin-left: 20px;
+      margin-left: 10px;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 1;
     }

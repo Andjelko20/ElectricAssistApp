@@ -4,6 +4,7 @@ import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 Chart.register(...registerables)
 
 
@@ -25,7 +26,7 @@ export class BarMonthChartComponent {
   settlements:Settlement[] = [];
   itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
   ,'20','21','22','23','24','25','26','27','28','29','30'];
-  constructor(private deviceService:DevicesService,private authService:AuthService) {
+  constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
     
   }
 
@@ -45,10 +46,8 @@ export class BarMonthChartComponent {
         })
         if(this.selectedOption == 0){
           this.deviceService.monthByDay(number,2).subscribe((data:WeekByDay[])=>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.monthByDay(number,1).subscribe((data:WeekByDay[])=>{
-              console.log("Data => ", data);
               this.list2 = data;
               this.BarPlot();
             })
@@ -56,10 +55,8 @@ export class BarMonthChartComponent {
         }
         else{
           this.deviceService.monthByDaySettlement(this.selectedOption,2).subscribe((data:WeekByDay[])=>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.monthByDaySettlement(this.selectedOption,1).subscribe((data:WeekByDay[])=>{
-              console.log("Data => ", data);
               this.list2 = data;
               this.BarPlot();
             })
@@ -68,17 +65,6 @@ export class BarMonthChartComponent {
         
       })
     })
-    // this.deviceService.monthByDay(2,2).subscribe((data:WeekByDay[])=>{
-    //   console.log("Data => ", data);
-    //   this.list1 = data;
-    //   this.deviceService.monthByDay(2,1).subscribe((data:WeekByDay[])=>{
-    //     console.log("Data => ", data);
-    //     this.list2 = data;
-    //     this.BarPlot();
-    //   })
-    // })
-
-    
   }
   BarPlot(){
     

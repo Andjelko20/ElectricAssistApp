@@ -1,13 +1,5 @@
 .main {
-    top: 0px;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
-    justify-content: center;
-}
-
-.back {
-    margin-top: 20%;
 }
 
 #turnback {
@@ -16,10 +8,9 @@
 }
 
 .global {
-    position: absolute;
     width: 100%;
-    display: flex;
     padding: 10px;
+    display: flex;
     justify-content: center;
 }
 
@@ -30,10 +21,12 @@ input {
 .global1 {
     border-radius: 5px;
     box-shadow: 2px 4px gray;
-    background-color: gainsboro;
-    padding: 20px;
+    background-color: #bce9e4;
+    margin-left: 26px;
+    margin-right: 26px;
     width: 100%;
-    margin-bottom: 15%;
+    margin-bottom: 70px;
+    padding-bottom: 5px;
 }
 
 h1 {
@@ -58,11 +51,10 @@ form {
     justify-content: center;
 }
 
-button {
+#btn1 {
     justify-content: center;
     margin-left: 25%;
-    width: 160px;
-    background-color: #1C315E;
+    width: 60px;
 }
 
 input.ng-invalid.ng-touched {
@@ -77,16 +69,154 @@ input.ng-touched {
     border: 1px solid blue;
 }
 
+.all {
+    padding-top: 55px;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+    
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
 @media(min-width:768px) {
-    .global1 {
-        width: 60%;
+    .main {
+        top: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
     }
-    .back {
-        margin-top: 95px;
+    .all {
+        padding-top: 80px;
+        min-height: 100vh;
+    }
+    .global1 {
+        margin-bottom: 5px;
+        width: 60%;
     }
     #turnback {
         margin-top: 5px;
         width: 3%;
-        margin-left: 35px;
+        margin-left: 105px;
     }
+    #btn1{
+        justify-content: center;
+        margin-left: 25%;
+        width: 180px;
+    }
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+      
+      .switch input { 
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        
+      }
+      
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+      
+      input:checked + .slider {
+        background-color: #2196F3;
+      }
+      
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+      }
+      
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+      
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 34px;
+        
+      }
+      
+      .slider.round:before {
+        border-radius: 50%;
+      }
 }

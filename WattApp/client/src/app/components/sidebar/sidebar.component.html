@@ -86,13 +86,34 @@
                 </a>
 
             </li>
+            <li *ngIf="role==prosumer" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link" [routerLink]='["/profile"]'>
+                <span class="icon-holder"><i class="fa fa-cog"></i></span>
+                <span class="title" >Settings</span>
+                </a>
+
+            </li>
+            <li *ngIf="role==admin || role==superadmin" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link" [routerLink]='["/profile"]'>
+                <span class="icon-holder"><i class="fa fa-cog"></i></span>
+                <span class="title" >Settings</span>
+                </a>
+
+            </li>
+            <li *ngIf="role==dso" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link" [routerLink]='["/prediction"]'>
+                <span class="icon-holder"><i class="fa fa-cog"></i></span>
+                <span class="title" >Settings</span>
+                </a>
+
+            </li>
             
 
         </ul>
     </nav>
     <div id="dashboard">
         <router-outlet></router-outlet>
-        <app-footer></app-footer>
+        <app-footer *ngIf="role==dso ||role==admin || role==superadmin"></app-footer>
     
     </div>
     

@@ -1,58 +1,37 @@
-
-<!--<div class="row" style="margin-bottom:15px; margin-left: 20px; margin-top: 10px;">
-  <div class="col-md-2">
-    <input id="search-input" type="text" placeholder="Search by name" [(ngModel)]="listFilter">
-  </div>
-  
-  <div class="col-md-2">
-    <select id="filter-select">
-      <option value="aerodrom">Aerodrom</option>
-      <option value="bresnica">Bresnica</option>
-      <option value="erdoglija">Erdoglija</option>
-      <option value="bagremar">Bagremar</option>
-      <option value="belosevac">Belosevac</option>
-      <option value="pivara">Pivara</option>
-    </select>
-  </div>
-  
-  <div class="col-md-2">
-  <div class="col-md-2">
-      Sort by:
-      <select style="padding: 10px; text-align: center;">
-          <option value="option1">City</option>
-          <option value="option2">Communities</option>
-          <option value="option3">Adress</option>
-        </select>
-  </div> 
-</div> -->
-
 <div class="table-responsive">
-<table *ngIf="data?.length!=0" class="table" >
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <!-- <th>email</th> -->
-      <th scope="col">Settlement</th>
-      <th scope="col">City</th>
-      <th scope="col">Country</th>
-      <th scope="col">Today consumption</th>
-      <th scope="col">Month consumption</th>
-      <th scope="col">Year consumption</th>
-    </tr>
-  </thead>
-  <tbody >
-    <tr *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}">
-      <td><a [routerLink]='["/prosumer/",prosumer.id]'>{{prosumer.name}}</a></td>
-      <!-- <td>{{prosumer.email}}</td> -->
-      <td>{{prosumer.settlement}}</td>
-      <td>{{prosumer.city}}</td>
-      <td>{{prosumer.country}}</td>
-      <td>8.5 kWh</td>
-      <td>30 kWh</td>
-      <td>100 kWh</td>
-    </tr>
-  </tbody>
-</table>
-<app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
-</div>
-
+  <table *ngIf="data?.length!=0" class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th scope="col">Name</th>
+        <!-- <th>email</th> -->
+        <th scope="col">Settlement</th>
+        <th scope="col">City</th>
+        <th scope="col">Country</th>
+        <th scope="col">Current consumption</th>
+        <th scope="col">Current production</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}let i = index ">
+        
+        
+        <ng-container *ngFor="let pr of prosumerValues | paginate: {currentPage,itemsPerPage,totalItems} " >
+          <ng-container *ngIf="prosumer.id === pr.id ">
+            <td>{{ (currentPage - 1) * itemsPerPage + i  }}</td>
+            <td><a [routerLink]='["/prosumer/",prosumer.id]'>{{prosumer.name}}</a></td>
+            <td>{{prosumer.settlement}}</td>
+            <td>{{prosumer.city}}</td>
+            <td>{{prosumer.country}}</td>
+            <td>{{pr.consumption}} kWh</td>
+            <td>{{pr.production}} kWh</td>
+          </ng-container>
+          
+        </ng-container>
+        
+      </tr>
+    </tbody>
+  </table>
+  <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
+  </div>
+  

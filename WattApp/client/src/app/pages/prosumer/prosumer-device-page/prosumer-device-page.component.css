@@ -1,18 +1,10 @@
 .main {
-    top: 0px;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
-    justify-content: center;
 }
 
 .device {
-    top: 43px;
-    left: 0;
-    right: 0;
-    height: auto;
-    max-width: 100%;
-    position: relative;
+    margin-top: 52px;
+    min-height: 100vh;
 }
 
 .back {
@@ -125,7 +117,16 @@ p {
 }
 
 @media (min-width: 768px) {
+    .main {
+        top: 0px;
+        left: 0;
+        right: 0;
+        min-height: 100vh;
+        position: absolute;
+    }
     .device {
+        margin-top: 85px;
+        margin-left: 80px;
         top: 83px;
     }
     #turnback {
