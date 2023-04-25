@@ -125,7 +125,7 @@ p {
 }
 
 .collapsible {
-    background-color: #777;
+    background-color: #1c315e;
     color: white;
     cursor: pointer;
     border-radius: 5px;
@@ -139,7 +139,7 @@ p {
 
 .active,
 .collapsible:hover {
-    background-color: #555;
+    background-color: #1c315e;
 }
 
 .content {
@@ -222,20 +222,13 @@ p {
         border-radius: 5px;
     }
     .collapsible {
-        background-color: #777;
-        color: white;
-        cursor: pointer;
-        border-radius: 5px;
+        background-color: #1c315e;
         padding: 18px;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
         font-size: 25px;
     }
     .active,
     .collapsible:hover {
-        background-color: #555;
+        background-color: #1c315e;
     }
     .content {
         padding: 0 18px;

@@ -10,6 +10,7 @@ export class ProsumerDevicePageComponent {
 
   constructor(private elementRef: ElementRef) {}
 
+ 
   ngAfterViewInit() {
     this.collapsibleButtons.forEach(button => {
       button.nativeElement.addEventListener('click', () => {
