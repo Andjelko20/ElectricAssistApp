@@ -79,6 +79,7 @@ import { MonthTabelarProsumerComponent } from "./components/dso/tabelar-view-pro
 import { WeekTabelarProsumerComponent } from "./components/dso/tabelar-view-prosumer/week-tabelar-prosumer/week-tabelar-prosumer.component";
 import { YearTabelarProsumerComponent } from "./components/dso/tabelar-view-prosumer/year-tabelar-prosumer/year-tabelar-prosumer.component";
 import { TodayTabelarProsumerComponent } from "./components/dso/tabelar-view-prosumer/today-tabelar-prosumer/today-tabelar-prosumer.component";
+import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
 
 
 @NgModule({
@@ -159,7 +160,8 @@ import { TodayTabelarProsumerComponent } from "./components/dso/tabelar-view-pro
     MonthTabelarProsumerComponent,
     WeekTabelarProsumerComponent,
     YearTabelarProsumerComponent,
-    TodayTabelarProsumerComponent
+    TodayTabelarProsumerComponent,
+    EmailConfirmationPageComponent
     
   ],
   imports: [
