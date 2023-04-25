@@ -8,5 +8,6 @@ namespace Server.Services
         public double GetUsageHistoryForDeviceFromCurrentMonth(long deviceId);
         public double GetUsageHistoryForDeviceFromCurrentDay(long deviceId);
         public List<MonthlyEnergyConsumptionLastYear> GetUsageHistoryForDeviceFromCurrentYearByMonth(long deviceId);
+        public List<DailyEnergyConsumptionPastMonth> GetUsageHistoryForDeviceFromCurrentMonthByDay(long deviceId);
     }
 }

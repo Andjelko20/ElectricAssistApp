@@ -129,5 +129,42 @@ namespace Server.Services.Implementations
             }
             return Results;
         }
+
+        public List<DailyEnergyConsumptionPastMonth> GetUsageHistoryForDeviceFromCurrentMonthByDay(long deviceId)
+        {
+            var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
+            var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
+            float EnergyInKwh = DeviceModel.EnergyKwh;
+            DateTime StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime EndDate = StartDate.AddMonths(1).AddDays(-1).Date.AddDays(1).AddSeconds(-1);
+
+            Console.WriteLine("**************** StartDate = " + StartDate);
+            Console.WriteLine("**************** EndDate = " + EndDate);
+
+            var UsageList = _context.DeviceEnergyUsages
+                            .Where(u => u.DeviceId == deviceId && u.StartTime >= StartDate && u.EndTime <= EndDate)
+                            .ToList();
+
+            var Results = new List<DailyEnergyConsumptionPastMonth>();
+
+            for (var date = StartDate; date <= EndDate; date = date.AddDays(1))
+            {
+                var UsageForDate = UsageList.Where(u => u.StartTime.Date == date.Date).ToList();
+
+                double EnergyUsage = 0.0;
+                foreach (var usage in UsageForDate)
+                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;
+
+                Results.Add(new DailyEnergyConsumptionPastMonth
+                {
+                    Day = date.Day,
+                    Month = date.ToString("MMMM"),
+                    Year = date.Year,
+                    EnergyUsageResult = Math.Round(EnergyUsage, 2)
+                });
+            }
+
+            return Results;
+        }
     }
 }
