@@ -19,12 +19,10 @@ input.ng-invalid[notEqual] {
 }
 
 .centar {
-    margin-bottom: 15px;
+    padding-bottom: 15px;
     max-width: 100%;
     margin-top: 45px;
-    min-height: 100vh;
     text-align: center;
-    height: auto;
 }
 
 #imgdevice {
@@ -105,9 +103,8 @@ div.error-message {
     }
     .centar {
         display: flex;
-        min-height: 100vh;
+        margin-bottom: 55px;
         justify-content: center;
-        min-height: 100vh;
     }
     #turnback {
         margin-left: 25px;
@@ -117,8 +114,8 @@ div.error-message {
         width: 10%;
     }
     form {
-        margin-left: 200px;
-        margin-right: 200px;
+        margin-left: 50px;
+        margin-right: 50px;
     }
     h1 {
         font-size: 30px;
@@ -135,7 +132,7 @@ div.error-message {
         margin-left: 100px;
         border-radius: 15px;
         background-color: #bce9e4;
-        width: 70%;
+        width: 50%;
     }
     .changepass {
         margin-top: -30px;
