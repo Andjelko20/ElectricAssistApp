@@ -5,6 +5,7 @@ using Server.DTOs;
 using Server.Models;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -727,72 +728,51 @@ namespace Server.Services.Implementations
 
         public List<MonthlyEnergyConsumptionLastYear> CityHistoryForThePastYearByMonth(long cityId, long deviceCategoryId)
         {
-            var now = DateTime.Now;
-            var monthlyEnergyConsumption = new List<MonthlyEnergyConsumptionLastYear>();
-
-            // Pronalazimo kategoriju uređaja
-            var deviceCategory = _context.DeviceCategories.FirstOrDefault(dc => dc.Id == deviceCategoryId);
-
-            // Pronalazimo sve tipove uređaja koji pripadaju toj kategoriji
-            var deviceTypeIds = _context.DeviceTypes
-                .Where(dt => dt.CategoryId == deviceCategory.Id)
-                .Select(dt => dt.Id)
-                .ToList();
-
-            // Pronalazimo sve modele uređaja koji pripadaju tim tipovima uređaja
-            var deviceModelIds = _context.DeviceModels
-                .Where(dm => deviceTypeIds.Contains(dm.DeviceTypeId))
-                .Select(dm => dm.Id)
-                .ToList();
-
-            // Pronalazimo sve uređaje koji koriste te modele uređaja
-            var devices = _context.Devices
-                .Where(d => deviceModelIds.Contains(d.DeviceModelId))
-                .Select(d => d.Id)
-                .ToList();
-
-            // Pronalazimo grad iz tabele Cities
-            var city = _context.Cities.FirstOrDefault(c => c.Id == cityId);
-
-            for (int i = 0; i < 12; i++) // Iteriramo kroz svaki mesec u prethodnoj godini
+            using (var _connection = _context.Database.GetDbConnection())
             {
-                var currentMonth = now.AddMonths(-i); // Trenutni mesec u iteraciji
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT strftime('%Y-%m', deu.StartTime) AS MonthYear, 
+                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM DeviceEnergyUsages deu 
+                                        JOIN Devices d ON deu.DeviceId=d.Id
+							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
+							            JOIN DeviceTypes dt ON dm.DeviceTypeId=dt.Id AND dt.CategoryId = @categoryId
+							            JOIN Users u ON d.UserId=u.Id
+							            JOIN Settlements s ON s.Id=u.SettlementId AND s.CityId = @cityId
+                                        WHERE deu.StartTime >= date('now', '-1 year') 
+                                            AND (deu.EndTime <= date('now') OR deu.EndTime IS NULL)
+                                        GROUP BY strftime('%Y-%m', deu.StartTime)";
 
-                // Pronalazimo uređaje te kategorije u tabeli DeviceEnergyUsages i to ako su radili tog meseca
-                var usages = _context.DeviceEnergyUsages
-                    .Where(u => devices.Contains(u.DeviceId) && u.StartTime <= currentMonth.AddMonths(1) && (u.EndTime >= currentMonth || u.EndTime == null) && _context.Devices.Any(d => d.Id == u.DeviceId && _context.Users.Any(u => u.Id == d.UserId && u.Settlement.CityId == city.Id)))
-                    .ToList();
+                command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
+                command.Parameters.Add(new SqliteParameter("@cityId", cityId));
 
-                var monthlyTotalUsage = 0.0;
-                foreach (var usage in usages)
+                var energyUsages = new List<MonthlyEnergyConsumptionLastYear>();
+
+                using (var reader = command.ExecuteReader())
                 {
-                    var usageStart = usage.StartTime;
-
-                    var usageEnd = usage.EndTime;
-                    if (usageEnd == null || usageEnd > currentMonth.AddMonths(1))
+                    while (reader.Read())
                     {
-                        usageEnd = currentMonth.AddMonths(1);
+                        Console.WriteLine("*********** " + reader.GetString(0) + " -- " + reader.GetDouble(1));
+                        DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM", CultureInfo.InvariantCulture);
+
+                        var month = date.ToString("MMMM");
+                        var year = date.Year;
+                        var energyUsage = reader.GetDouble(1);
+
+                        var dailyEnergyUsage = new MonthlyEnergyConsumptionLastYear
+                        {
+                            Month = month,
+                            Year = year,
+                            EnergyUsageResult = energyUsage
+                        };
+                        energyUsages.Add(dailyEnergyUsage);
                     }
-
-                    var usageTime = (usageEnd - usageStart).TotalHours;
-                    var deviceEnergyUsage = _context.Devices
-                        .Include(d => d.DeviceModel)
-                        .Where(d => d.Id == usage.DeviceId)
-                        .Select(d => d.DeviceModel.EnergyKwh)
-                        .FirstOrDefault();
-
-                    monthlyTotalUsage += deviceEnergyUsage * usageTime;
                 }
 
-                monthlyEnergyConsumption.Insert(0, new MonthlyEnergyConsumptionLastYear
-                {
-                    Month = currentMonth.ToString("MMMM"),
-                    Year = currentMonth.Year,
-                    EnergyUsageResult = Math.Round(monthlyTotalUsage, 2)
-                });
+                return energyUsages;
             }
-
-            return monthlyEnergyConsumption;
         }
 
         public List<MonthlyEnergyConsumptionLastYear> SettlementHistoryForThePastYearByMonth(long settlementId, long deviceCategoryId)
