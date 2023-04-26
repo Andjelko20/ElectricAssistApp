@@ -80,7 +80,7 @@
 
             </li>
             <li *ngIf="role==prosumer" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/reports"]'>
+                <a class="nav-link" [routerLink]='["/prosumer-reports"]'>
                 <span class="icon-holder"><i class="fas fa-chart-bar"></i></span>
                 <span class="title" >Reports</span>
                 </a>
@@ -107,13 +107,7 @@
                 </a>
 
             </li>
-            <li *ngIf="role==prosumer" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/reports"]'>
-                <span class="icon-holder"><i class="fas fa-chart-bar"></i></span>
-                <span class="title" >Reports</span>
-                </a>
-
-            </li>
+           
             
 
         </ul>
