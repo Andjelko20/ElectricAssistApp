@@ -54,7 +54,8 @@ namespace Server.Controllers
         {
             try
             {
-                return Ok(await userService.GetPageOfUsers(page, 20, (user) => user.RoleId==Roles.ProsumerId));
+                long myId = long.Parse(tokenService.GetClaim(HttpContext, "id"));
+                return Ok(await userService.GetPageOfUsers(page, 20, (user) => user.RoleId==Roles.ProsumerId && user.Id!=myId));
             }
             catch(HttpRequestException ex)
             {
@@ -103,11 +104,12 @@ namespace Server.Controllers
         {
             try
             {
+                string password = PasswordGenerator.GenerateRandomPassword();
                 UserModel user = new UserModel
                 {
                     Username = requestBody.Username,
                     Name = requestBody.Name,
-                    Password = HashGenerator.Hash(requestBody.Password),
+                    Password = HashGenerator.Hash(password),
                     Blocked = requestBody.Blocked,
                     RoleId = Roles.ProsumerId,
                     Email=requestBody.Email,
@@ -120,7 +122,7 @@ namespace Server.Controllers
                 _sqliteDb.Users.Add(user);
                 try
                 {
-                    emailService.SendEmail(requestBody.Email,"Account created","Your account is created successfully. Your password is <b>"+requestBody.Password+"</b>",true);
+                    emailService.SendEmail(requestBody.Email,"Account created","Your account is created successfully. Your password is <b>"+password+"</b>",true);
                 }
                 catch
                 {

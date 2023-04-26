@@ -54,9 +54,10 @@ namespace Server.Controllers
         {
             try
             {
+                long myId = long.Parse(tokenService.GetClaim(HttpContext,"id"));
                 if (User.IsInRole(Roles.Operater))
-                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId && user.RoleId!=Roles.SuperadminId));
-                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId != Roles.SuperadminId));
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId && user.RoleId!=Roles.SuperadminId && user.Id!=myId));
+                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId != Roles.SuperadminId && user.Id!=myId));
             }
             catch(HttpRequestException ex)
             {
@@ -156,11 +157,12 @@ namespace Server.Controllers
         {
             try
             {
+                string password = PasswordGenerator.GenerateRandomPassword();
                 UserModel user = new UserModel
                 {
                     Username = requestBody.Username,
                     Name = requestBody.Name,
-                    Password = HashGenerator.Hash(requestBody.Password),
+                    Password = HashGenerator.Hash(password),
                     Blocked = requestBody.Blocked,
                     RoleId = requestBody.RoleId,
                     Email=requestBody.Email,
@@ -175,7 +177,7 @@ namespace Server.Controllers
                 _sqliteDb.Users.Add(user);
                 try
                 {
-                    emailService.SendEmail(requestBody.Email,"Account created","Your account is created successfully. Your password is <b>"+requestBody.Password+"</b>",true);
+                    emailService.SendEmail(requestBody.Email,"Account created","Your account is created successfully. Your password is <b>"+password+"</b>",true);
                 }
                 catch
                 {
@@ -270,9 +272,14 @@ namespace Server.Controllers
         [Authorize(Roles =Roles.AdminPermission)]
         public async Task<IActionResult> BlockUser([FromBody] BlockedStatusDTO requestBody, [FromRoute] long id)
         {
+            long userId = long.Parse(tokenService.GetClaim(HttpContext, "id"));
+            if (userId == id)
+            {
+                return NotFound(new { message = "User doesn't exists" });
+            }
             var user = await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
             if (user==null)
-                return NotFound(new { message="User doesn't exists" });
+                return NotFound(new { message = "User doesn't exists" });
             if (user.RoleId == Roles.SuperadminId)
                 return Forbid();
             user.Blocked = requestBody.Status;
