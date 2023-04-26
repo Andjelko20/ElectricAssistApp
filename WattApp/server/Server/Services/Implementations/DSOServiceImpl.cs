@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.DTOs;
 using Server.Models;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Server.Services.Implementations
 {
@@ -142,52 +144,34 @@ namespace Server.Services.Implementations
 
         public double GetUsageHistoryForDeviceInThisYear(long cityId, long deviceCategoryId)
         {
-            DateTime startOfYear = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0);
-            DateTime endTime = DateTime.Now;
-
-            var deviceTypeIds = _context.DeviceTypes
-                .Where(dt => dt.CategoryId == deviceCategoryId)
-                .Select(dt => dt.Id)
-                .ToList();
-
-            var deviceModelIds = _context.DeviceModels
-                .Where(dm => deviceTypeIds.Contains(dm.DeviceTypeId))
-                .Select(dm => dm.Id)
-                .ToList();
-
-            var devices = _context.Devices
-                .Where(d => deviceModelIds.Contains(d.DeviceModelId))
-                .Select(d => d.Id)
-                .ToList();
-
-            List<DeviceEnergyUsage> deviceEnergyUsages = _context.DeviceEnergyUsages
-                            .Where(deu => devices.Contains(deu.DeviceId)
-                                    && deu.StartTime >= startOfYear  && deu.StartTime <= endTime
-                                    && _context.Devices.Any(d => d.Id == deu.DeviceId
-                                        && _context.Users.Any(u => u.Id == d.UserId
-                                            && _context.Settlements.Any(s => s.Id == u.SettlementId
-                                                && s.CityId == cityId
-                                                && _context.Cities.Any(c => c.Id == s.CityId)))))
-                            .ToList();
-
-            double totalUsage = 0.0;
-            foreach (var usage in deviceEnergyUsages)
+            using (var _connection = _context.Database.GetDbConnection())
             {
-                if (usage.EndTime == null || usage.EndTime > endTime)
-                    usage.EndTime = endTime;
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL)*dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM DeviceEnergyUsages deu JOIN Devices d ON deu.DeviceId=d.Id
+							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
+							            JOIN DeviceTypes dt ON dm.DeviceTypeId=dt.Id AND dt.CategoryId = @categoryId
+							            JOIN Users u ON d.UserId=u.Id
+							            JOIN Settlements s ON s.Id = u.SettlementId AND s.CityId = @cityId
+                                        WHERE deu.StartTime >= date('now', 'start of year') 
+                                            AND (deu.EndTime <= date('now') OR deu.EndTime IS NULL)";
 
-                var usageTime = Math.Abs((usage.EndTime - usage.StartTime).TotalHours);
-                var deviceEnergyUsage = _context.Devices
-                    .Include(d => d.DeviceModel)
-                    .Where(d => d.Id == usage.DeviceId)
-                    .Select(d => d.DeviceModel.EnergyKwh)
-                    .FirstOrDefault();
+                command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
+                command.Parameters.Add(new SqliteParameter("@cityId", cityId));
 
-                totalUsage += deviceEnergyUsage * usageTime;
+                double energyUsage = 0;
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        energyUsage += reader.GetDouble(0);
+                    }
+                }
+                return energyUsage;
             }
-
-            //return Math.Round(totalUsage, 2);
-            return totalUsage;
         }
 
         public List<EnergyToday> CalculateEnergyUsageForToday(long settlementId, long deviceCategoryId)
