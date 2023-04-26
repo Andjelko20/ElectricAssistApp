@@ -13,6 +13,8 @@ using Server.DTOs.Requests;
 using Server.Services.Implementations;
 using MimeKit.Encodings;
 using Server.Exceptions;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Http;
 
 namespace Server.Controllers
 {
@@ -182,25 +184,21 @@ namespace Server.Controllers
                 {
                     throw (HttpRequestException)pendingUser;
                 }
-
+                
                 try
                 {
-                    //emailService.SendEmail(requestBody.Email, "Account created", "Your account is created successfully. Your password is <b>" + requestBody.Password + "</b>", true);
-                    string fromRoute = requestBody.Email;
-                    fromRoute.Replace("@", "%40");
-                    emailService.SendEmail(requestBody.Email,
+                    emailService.SendEmail(user.Email,
                             "Confirm Your Email Address",
-                             "Hello " + requestBody.Name + ", <br><br>" +
+                             "Hello " + user.Name + ", <br><br>" +
                             "Thank you for signing up for our service.<br>" +
                             "Before you can start using your account," +
                             "we need to verify your email address.<br> <br>" +
                             "Please click the link below to <b>confirm your email address</b>:<br>" +
-                            "<a href='https://localhost:7146/api/Users/emailConfirmation/" + requestBody.Email + "'>" + requestBody.Email + "</a><br><br>" +
+                            "<a href='http://localhost:4200/email-confirmation?key=" + user.ConfirmKey + "'>" + user.Email + "</a><br><br>" +
                             "If you did not sign up for our service, please ignore this email.<br><br>" +
                             "Thank you, <br>" +
                             "<i><b>ElectricAssist Team</b></i>"
                         , true);
-                    //emailService.SendEmail(requestBody.Email, "Confirm", "<a href='https://localhost:7146/api/Users/emailConfirmation/" + requestBody.Email + "'>" + requestBody.Email + "</a>", true);
                        
                 }
                 catch
@@ -227,14 +225,20 @@ namespace Server.Controllers
 
         }
 
-        [HttpPost("emailConfirmation/{email}")]
-        public IActionResult ConfirmEmailAddress([FromRoute] string email)
+        [HttpPost("emailConfirmation/{key}")]
+        public IActionResult ConfirmEmailAddress([FromRoute] string key)
         {
-            Object response = userService.ConfirmEmailAddress(email);
+            Object response = userService.ConfirmEmailAddress(key);
+            ConfirmEmailResponseDTO responseDTO = new ConfirmEmailResponseDTO();
             if (response is HttpRequestException)
-                return StatusCode(500, ((HttpRequestException)response).Message);
+            {
+                responseDTO.error = ((HttpRequestException)response).Message;
+            }
             else
-                return Ok("Mail confirmed successfully");
+            {
+                responseDTO.isConfirmed = true;
+            }
+                return Ok(responseDTO);
            
         }
 
@@ -266,6 +270,7 @@ namespace Server.Controllers
                 _sqliteDb.Users.Update(user);   
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message = "User is updated successfully" });
+                //Dobijam sifru i nov mail, ako je sifra dobra menjam mail za novog korisnika
             }
             catch(Exception ex)
             {
@@ -316,14 +321,14 @@ namespace Server.Controllers
                                 "Thank you for using our service.<br>" +
                                 "We have received a request to change the email address associated with your account." +
                                 "<br>To complete this process, please confirm the change by clicking on the link below:<br><br>" +
-                                "<a href='https://localhost:7146/api/Users/changeEmailConfirmation/" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
+                                "<a href='http://localhost:4200/email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
                                 "If you did not initiate this email address change request, please contact" +
                                 "our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
 
                                 "Thank you, <br>" +
                                 "<i><b>ElectricAssist Team</b></i>"
                             , true);
-
+                        //FrontUrl, ClientUrl
 
                     }
                     catch

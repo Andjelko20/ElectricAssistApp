@@ -15,7 +15,7 @@ namespace Server.Services
         Task<List<object>> GetAllProsumers();
 
         Object CreatePendingUser(PendingUserModel pendingUser);
-        Object ConfirmEmailAddress(string email);
+        Object ConfirmEmailAddress(string key);
         Object CreateChangeEmailRequest(ChangeEmailModel changeEmail);
         Object ConfirmChageOfEmailAddress(string key);
 

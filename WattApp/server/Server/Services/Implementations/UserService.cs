@@ -158,9 +158,9 @@ namespace Server.Services.Implementations
             return response;
         }
 
-        public Object ConfirmEmailAddress(string email)
+        public Object ConfirmEmailAddress(string key)
         {
-            PendingUserModel pendingUser = context.PendingUsers.FirstOrDefault(src => src.Email == email);
+            PendingUserModel pendingUser = context.PendingUsers.FirstOrDefault(src => src.ConfirmKey == key);
             if (pendingUser != null)
             {
                 //Zahtev postoji
@@ -199,14 +199,14 @@ namespace Server.Services.Implementations
                     return new HttpRequestException("The confirmation link has expired");
                 }
             }
-            else
+            /*else
             {
                 UserModel user = context.Users.FirstOrDefault(src => src.Email == email);
                 if (user != null)
                 {
                     return new HttpRequestException("This email has already been confirmed.");
                 }
-            }
+            }*/
             return false;
         }
 
