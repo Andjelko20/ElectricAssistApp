@@ -197,12 +197,11 @@ namespace Server.Controllers
                             "Before you can start using your account," +
                             "we need to verify your email address.<br> <br>" +
                             "Please click the link below to <b>confirm your email address</b>:<br>" +
-                            "<a href='http://localhost:4200/email-confirmation?key=" + user.ConfirmKey + "'>" + user.Email + "</a><br><br>" +
+                            "<a href='" + configuration.GetValue<string>("frontUrl") + "/email-confirmation?key=" + user.ConfirmKey + "'>" + user.Email + "</a><br><br>" +
                             "If you did not sign up for our service, please ignore this email.<br><br>" +
                             "Thank you, <br>" +
                             "<i><b>ElectricAssist Team</b></i>"
                         , true);
-                       
                 }
                 catch
                 {
@@ -241,8 +240,7 @@ namespace Server.Controllers
             {
                 responseDTO.isConfirmed = true;
             }
-                return Ok(responseDTO);
-           
+            return Ok(responseDTO);
         }
 
         /// <summary>
@@ -359,7 +357,7 @@ namespace Server.Controllers
                                 "Thank you for using our service.<br>" +
                                 "We have received a request to change the email address associated with your account." +
                                 "<br>To complete this process, please confirm the change by clicking on the link below:<br><br>" +
-                                "<a href='http://localhost:4200/email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
+                                "<a href='" + configuration.GetValue<string>("frontUrl") + "/email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
                                 "If you did not initiate this email address change request, please contact" +
                                 "our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
 

@@ -160,7 +160,7 @@ namespace Server.Services.Implementations
 
         public Object ConfirmEmailAddress(string key)
         {
-            PendingUserModel pendingUser = context.PendingUsers.FirstOrDefault(src => src.ConfirmKey == key);
+            PendingUserModel pendingUser = context.PendingUsers.Where(src => src.ConfirmKey.Equals(key)).FirstOrDefault();
             if (pendingUser != null)
             {
                 //Zahtev postoji
@@ -182,16 +182,18 @@ namespace Server.Services.Implementations
                         SettlementId = pendingUser.SettlementId
                     };
 
-                    var response = context.Users.Add(user);
-                    context.Remove(pendingUser);
-                    context.SaveChanges();
-
-                    if(response == null)
+                    var result = context.Users.Where(src => src.Username.Equals(user.Username)).FirstOrDefault();
+                    if(result == null)
                     {
-                        return new HttpRequestException("Ooops... Something went wrong. Please try again.");
+                        var response = context.Users.Add(user);
+                        context.Remove(pendingUser);
+                        context.SaveChanges();
+                        return response;
                     }
-
-                    return response;
+                    else
+                    {
+                        return new HttpRequestException("It appears that someone has preceded you. A user with this username already exists.");
+                    }  
 
                 }
                 else
@@ -199,14 +201,7 @@ namespace Server.Services.Implementations
                     return new HttpRequestException("The confirmation link has expired");
                 }
             }
-            /*else
-            {
-                UserModel user = context.Users.FirstOrDefault(src => src.Email == email);
-                if (user != null)
-                {
-                    return new HttpRequestException("This email has already been confirmed.");
-                }
-            }*/
+
             return new HttpRequestException("There is no such a key");
         }
 

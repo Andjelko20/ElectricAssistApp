@@ -18,13 +18,12 @@
     </div>
 
     <div *ngIf="!isConfirmed;">
-        <h1>Hguyvshbvsj</h1>
         <div class="container">
             <div class="left-container">
                 <img src="assets/emailConfirmation/not_confirmed.png" alt="Email confirmation failed.">
             </div>
             <div class="right-container">
-                <h3 class="title">Ooops... Seems like you've already confirmed your email address.</h3>
+                <h3 class="title">{{message}}</h3>
                 <br>
                 You can try <a (click)="goToLogin()">login</a> to our app and take control of your energy usage
                 because it seems you have already have account with this email address.

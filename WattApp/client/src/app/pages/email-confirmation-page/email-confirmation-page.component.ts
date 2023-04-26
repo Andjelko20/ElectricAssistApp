@@ -8,7 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./email-confirmation-page.component.css']
 })
 export class EmailConfirmationPageComponent implements OnInit{
-  isConfirmed : boolean = false;
+  isConfirmed : boolean | null = null;
+  message : string | null = null;
   constructor(private http : HttpClient, private route : ActivatedRoute, private router : Router){
 
   }
@@ -23,8 +24,14 @@ export class EmailConfirmationPageComponent implements OnInit{
       console.log(key);
       this.http.post<ConfirmEmailResponseDTO>(`https://localhost:7146/api/Users/emailConfirmation/${key}`, undefined).subscribe((response) => {
         console.log(response);
+        console.log(response.isConfirmed);
+        console.log(response.error);
         if(response && response.isConfirmed){
           this.isConfirmed = true;
+        }
+        else{
+          this.isConfirmed = false;
+          this.message = response.error;
         }
       });
     });
