@@ -349,22 +349,22 @@ box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 .green-square {
   display: inline-block;
   background-color: rgb(111, 180, 111);
-  width: 10px; /* Set the width to your desired size */
-  height: 10px; /* Set the height to the same value as the width to create a square shape */
+  width: 10px;
+  height: 10px;
   margin-left: 10px;
 }
 .blue-square {
   display: inline-block;
   background-color: rgb(120, 120, 238);
-  width: 10px; /* Set the width to your desired size */
-  height: 10px; /* Set the height to the same value as the width to create a square shape */
+  width: 10px; 
+  height: 10px; 
   margin-left: 10px;
 }
 .red-square {
   display: inline-block;
   background-color: rgb(247, 117, 117);
-  width: 10px; /* Set the width to your desired size */
-  height: 10px; /* Set the height to the same value as the width to create a square shape */
+  width: 10px;
+  height: 10px; 
   margin-left: 10px;
 }  
 @media (max-width: 768px) {

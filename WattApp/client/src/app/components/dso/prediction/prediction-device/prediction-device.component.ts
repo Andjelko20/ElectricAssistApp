@@ -8,11 +8,11 @@ import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 Chart.register(...registerables)
 @Component({
-  selector: 'app-line-week-prosumer',
-  templateUrl: './line-week-prosumer.component.html',
-  styleUrls: ['./line-week-prosumer.component.css']
+  selector: 'app-prediction-device',
+  templateUrl: './prediction-device.component.html',
+  styleUrls: ['./prediction-device.component.css']
 })
-export class LineWeekProsumerComponent {
+export class PredictionDeviceComponent {
 
 
   list1:WeekByDay[] = [];
@@ -29,6 +29,20 @@ export class LineWeekProsumerComponent {
         this.LineChart();
       })
     })
+    
+    // this.deviceService.weekByDay(1,2).subscribe((data: WeekByDay[]) =>{
+    //   console.log("Data => ", data);
+    //   this.list1 = data;
+    //   this.deviceService.weekByDay(1,1).subscribe((data: WeekByDay[]) =>{
+    //     console.log("Data => ", data);
+    //     this.list2 = data;
+    //     this.LineChart();
+    //   })
+
+    // })
+    
+    // console.log(this.list);
+    
     
   }
   LineChart(){

@@ -4,8 +4,8 @@ import { Chart,registerables } from 'node_modules/chart.js'
 Chart.register(...registerables)
 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { Settlement } from 'src/app/models/users.model';
 Chart.register(ChartDataLabels);
 
@@ -16,10 +16,8 @@ Chart.register(ChartDataLabels);
   styleUrls: ['./pie-chart.component.css']
 })
 export class PieChartComponent implements OnInit {
-
   settlements:Settlement[] = [];
   settlementsValue:number[] = [];
-  itemList: string[] = ['Aerodrom', 'Bagremar', 'Erdoglija', 'Bresnica', 'Stanovo', 'Belosevac'];
   constructor(private authService:AuthService,private historyService:HistoryPredictionService) {
   
   }

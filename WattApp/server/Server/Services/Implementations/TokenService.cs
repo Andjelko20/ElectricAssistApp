@@ -41,7 +41,7 @@ namespace Server.Services.Implementations
                     new Claim(JwtClaims.Id, user.Id.ToString()),
                     new Claim(ClaimTypes.Role,user.Role.Name)
                 }),
-                Expires = DateTime.Now.AddHours(2),
+                Expires = DateTime.Now.AddHours(24),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
             };
 

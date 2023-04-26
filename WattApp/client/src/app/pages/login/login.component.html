@@ -7,11 +7,11 @@
             <div class="login-form">
                 <div class="form-group">
                     <label for="username">User name</label>
-                    <input type="text" name="username" class="form-control" [(ngModel)]="username" />
+                    <input type="text" name="username" class="form-control" [(ngModel)]="username" id="username" (keydown)="toPassword($event)" />
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" class="form-control" [(ngModel)]="password" />
+                    <input type="password" name="password" class="form-control" [(ngModel)]="password" id="password" (keydown)="toLogin($event)"/>
                     <input class="checkbox" type="checkbox" name="forgotpass" id="remember"><label for="remember">Remember me</label>
                 </div>
 

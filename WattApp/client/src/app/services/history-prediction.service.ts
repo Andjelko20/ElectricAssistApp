@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { WeekByDay, YearsByMonth, DayByHour } from '../models/devices.model';
+import { DayByHour, WeekByDay, YearsByMonth } from '../models/devices.model';
 
 @Injectable({
   providedIn: 'root'
@@ -106,5 +106,13 @@ export class HistoryPredictionService {
   }
 
 
+  predictionUser(userId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/Prediction/WeekByDay/User/"+userId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
 
+  }
+
+  predictionDevice(deviceId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/Prediction/WeekByDay/Device/"+deviceId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+
+  }
 }

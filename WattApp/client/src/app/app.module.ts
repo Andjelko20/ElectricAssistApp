@@ -71,14 +71,16 @@ import { TodayDsoComponent } from './components/weather/today-dso/today-dso.comp
 import { TabelarViewByMonthComponent } from "./components/dso/tabelar-views/tabelar-view-by-month/tabelar-view-by-month.component";
 import { TabelarViewByYearComponent } from './components/dso/tabelar-views/tabelar-view-by-year/tabelar-view-by-year.component';
 import { TabelarViewByWeekComponent } from './components/dso/tabelar-views/tabelar-view-by-week/tabelar-view-by-week.component';
-import { BarMonthProsumerComponent } from "./components/dso/charts-prosumer/bar-month-prosumer/bar-month-prosumer.component";
-import { BarYearProsumerComponent } from "./components/dso/charts-prosumer/bar-year-prosumer/bar-year-prosumer.component";
-import { LineDayProsumerComponent } from "./components/dso/charts-prosumer/line-day-prosumer/line-day-prosumer.component";
-import { LineWeekProsumerComponent } from "./components/dso/charts-prosumer/line-week-prosumer/line-week-prosumer.component";
-import { MonthTabelarProsumerComponent } from "./components/dso/tabelar-view-prosumer/month-tabelar-prosumer/month-tabelar-prosumer.component";
-import { WeekTabelarProsumerComponent } from "./components/dso/tabelar-view-prosumer/week-tabelar-prosumer/week-tabelar-prosumer.component";
-import { YearTabelarProsumerComponent } from "./components/dso/tabelar-view-prosumer/year-tabelar-prosumer/year-tabelar-prosumer.component";
-import { TodayTabelarProsumerComponent } from "./components/dso/tabelar-view-prosumer/today-tabelar-prosumer/today-tabelar-prosumer.component";
+import { TodayTabelarProsumerComponent } from './components/dso/tabelar-view-prosumer/today-tabelar-prosumer/today-tabelar-prosumer.component';
+import { MonthTabelarProsumerComponent } from './components/dso/tabelar-view-prosumer/month-tabelar-prosumer/month-tabelar-prosumer.component';
+import { WeekTabelarProsumerComponent } from './components/dso/tabelar-view-prosumer/week-tabelar-prosumer/week-tabelar-prosumer.component';
+import { YearTabelarProsumerComponent } from './components/dso/tabelar-view-prosumer/year-tabelar-prosumer/year-tabelar-prosumer.component';
+import { BarMonthProsumerComponent } from './components/dso/charts-prosumer/bar-month-prosumer/bar-month-prosumer.component';
+import { BarYearProsumerComponent } from './components/dso/charts-prosumer/bar-year-prosumer/bar-year-prosumer.component';
+import { LineDayProsumerComponent } from './components/dso/charts-prosumer/line-day-prosumer/line-day-prosumer.component';
+import { LineWeekProsumerComponent } from './components/dso/charts-prosumer/line-week-prosumer/line-week-prosumer.component';
+import { PredictionProsumerComponent } from './components/dso/prediction/prediction-prosumer/prediction-prosumer.component';
+import { PredictionDeviceComponent } from './components/dso/prediction/prediction-device/prediction-device.component';
 import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
 
 
@@ -153,10 +155,16 @@ import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/
     TabelarViewByYearComponent,
     TabelarViewByWeekComponent,
     TabelarViewByMonthComponent,
+    TodayTabelarProsumerComponent,
+    MonthTabelarProsumerComponent,
+    WeekTabelarProsumerComponent,
+    YearTabelarProsumerComponent,
     BarMonthProsumerComponent,
     BarYearProsumerComponent,
     LineDayProsumerComponent,
     LineWeekProsumerComponent,
+    PredictionProsumerComponent,
+    PredictionDeviceComponent,
     MonthTabelarProsumerComponent,
     WeekTabelarProsumerComponent,
     YearTabelarProsumerComponent,

@@ -6,25 +6,32 @@ import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 Chart.register(...registerables)
+
 @Component({
-  selector: 'app-line-week-prosumer',
-  templateUrl: './line-week-prosumer.component.html',
-  styleUrls: ['./line-week-prosumer.component.css']
+  selector: 'app-prediction-prosumer',
+  templateUrl: './prediction-prosumer.component.html',
+  styleUrls: ['./prediction-prosumer.component.css']
 })
-export class LineWeekProsumerComponent {
+export class PredictionProsumerComponent {
 
 
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  idProsumer!:number;
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     
   }
 
   ngOnInit(): void {
-    this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data: WeekByDay[]) =>{
+
+    let token=new JwtToken();
+    this.idProsumer=token.data.id as number;
+
+    this.deviceService.predictionUser(this.idProsumer,2).subscribe((data: WeekByDay[]) =>{
       this.list1 = data;
-      this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data: WeekByDay[]) =>{
+      this.deviceService.predictionUser(this.idProsumer,1).subscribe((data: WeekByDay[]) =>{
         this.list2 = data;
         this.LineChart();
       })
