@@ -30,20 +30,6 @@ export class LineWeekProsumerComponent {
       })
     })
     
-    // this.deviceService.weekByDay(1,2).subscribe((data: WeekByDay[]) =>{
-    //   console.log("Data => ", data);
-    //   this.list1 = data;
-    //   this.deviceService.weekByDay(1,1).subscribe((data: WeekByDay[]) =>{
-    //     console.log("Data => ", data);
-    //     this.list2 = data;
-    //     this.LineChart();
-    //   })
-
-    // })
-    
-    // console.log(this.list);
-    
-    
   }
   LineChart(){
 

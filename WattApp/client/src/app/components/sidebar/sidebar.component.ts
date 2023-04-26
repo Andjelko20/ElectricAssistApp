@@ -31,8 +31,6 @@ export class SidebarComponent implements OnInit{
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.currentUrl = event.url;
-        console.log(this.currentUrl);
-        
       }
     });
     const dashboard = document.getElementById('dashboard');
@@ -42,8 +40,6 @@ export class SidebarComponent implements OnInit{
     {
       sidebar.style.height = dashboard.clientHeight + 'px';
     }
-        
-            // Set sidebar height on window resize
             window.addEventListener('resize', this.setSidebarHeight);
     
       }

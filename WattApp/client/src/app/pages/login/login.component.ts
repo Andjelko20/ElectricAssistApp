@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
 		// 		window.location.reload();
 		// 	}
 		// });
+		/*
 		document.onkeydown=(event)=>{
 			let keycode = event.keyCode || event.which;
 			if(keycode==13)
@@ -42,8 +43,22 @@ export class LoginComponent implements OnInit {
 				this.login();
 			}
 		};
+		*/
 	}
-	
+	toPassword(event:any){
+		let keycode = event.keyCode || event.which;
+		if(keycode==13) // ENTER
+		{
+			document.getElementById("password")?.focus();
+		}
+	}
+	toLogin(event:any){
+		let keycode = event.keyCode || event.which;
+		if(keycode==13) // ENTER
+		{
+			this.login();
+		}
+	}
 	login(){
 		
 		if (this.username.trim().length === 0) {

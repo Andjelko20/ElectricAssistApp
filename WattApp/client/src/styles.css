@@ -20,7 +20,11 @@ body {
     min-height: 100%;
     -webkit-text-size-adjust: 100%;
     overflow: auto !important;
+
 }
 button{
 	cursor: pointer;
+}
+.modal-open{
+    padding-right: 0px!important;
 }

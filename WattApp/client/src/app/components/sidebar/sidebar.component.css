@@ -1,4 +1,4 @@
-#sidebar{
+#sidebar {
     display: none;
 }
 #dashboard {
@@ -276,7 +276,6 @@ ul ul a {
         margin-bottom: 0;
         padding-bottom: 0;
     }
-   
     .wrapper1 {
         margin-top: 0;
         padding-top: 0;
@@ -313,41 +312,32 @@ ul ul a {
         max-width: 100px;
         text-align: center;
     }
-    
     #sidebar.active .sidebar-header h3,
     #sidebar.active .CTAs {
         display: none;
     }
-    
     #sidebar.active .sidebar-header strong {
         display: block;
         margin-right: 30px!important;
     }
-    
     #sidebar ul li a {
         text-align: left;
     }
-    
     #sidebar.active ul li a {
-        padding: 20px ;
+        padding: 20px;
         font-size: 0.85em;
     }
     #sidebar .sidebar-header {
         padding: 30px;
         background: #6d7fcc;
     }
-    
     #sidebar .sidebar-header strong {
         display: none;
         font-size: 1.8em;
     }
-    
-    
-    
     .nav {
         position: relative;
     }
-    
     .nav-link {
         color: #1C315E;
     }
@@ -356,18 +346,15 @@ ul ul a {
         /* padding-left: 30px !important; */
         background: #6d7fcc;
     }
-    
     .active {
         background-color: white !important;
     }
-    
-     ul li a:hover {
+    ul li a:hover {
         background-color: #1C315E;
         color: white;
     }
     #sidebar ul.components {
         padding: 10px 0;
-        
     }
     #sidebar ul li a {
         display: block;
@@ -376,8 +363,6 @@ ul ul a {
         padding: 5px 15px;
         position: relative;
         white-space: nowrap;
-        
-        
     }
     #sidebar.active ul li a {
         display: block;
@@ -386,11 +371,8 @@ ul ul a {
         padding: 5px 15px;
         position: relative;
         white-space: nowrap;
-        
-        
     }
-    #sidebar ul li a .icon-holder{
-        
+    #sidebar ul li a .icon-holder {
         border-radius: 6px;
         display: inline-block;
         font-size: 30px;
@@ -404,10 +386,8 @@ ul ul a {
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
         width: 52px;
-        
     }
-    
-    #sidebar ul li a .title{
+    #sidebar ul li a .title {
         -webkit-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
@@ -415,7 +395,6 @@ ul ul a {
         font-size: 12px;
         text-align: center!important;
     }
-
     #sidebar.active {
         list-style-type: none;
         overflow: hidden !important;
@@ -423,10 +402,8 @@ ul ul a {
         -ms-overflow-style: none;
         touch-action: auto;
         -ms-touch-action: auto;
-
     }
     #sidebar.active ul li a .title {
-        
         -webkit-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
@@ -449,14 +426,13 @@ ul ul a {
         width: 35px;
     }
     #sidebar.active ul #role-li a .role-title {
-        
         -webkit-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
         display: inline-block;
         font-size: 20px;
     }
-    #sidebar.active ul #role-li a .role-icon{
+    #sidebar.active ul #role-li a .role-icon {
         border-radius: 6px;
         display: inline-block;
         font-size: 40px;
@@ -472,15 +448,14 @@ ul ul a {
         width: 35px;
     }
     #sidebar ul #role-li a .role-title {
-        
         -webkit-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
         transition: all 0.3s ease;
-         display: none;
+        display: none;
         font-size: 20px;
         padding-left: 10px;
     }
-    #sidebar ul #role-li a .role-icon{
+    #sidebar ul #role-li a .role-icon {
         border-radius: 6px;
         display: none;
         font-size: 40px;
@@ -495,22 +470,15 @@ ul ul a {
         transition: all 0.3s ease;
         width: 35px;
     }
-    
-     ul #role-li a:hover {
-        background-color:  white;
+    ul #role-li a:hover {
+        background-color: white;
         color: #1C315E;
     }
-    
-  
-    #sidebar ul li a .role-line{
-       
+    #sidebar ul li a .role-line {
         display: none;
-        
     }
-    #sidebar.active ul li a .role-line{
-       
+    #sidebar.active ul li a .role-line {
         display: block;
-        
     }
     .list-unstyled.components li.active a {
         background-color:  #1C315E;

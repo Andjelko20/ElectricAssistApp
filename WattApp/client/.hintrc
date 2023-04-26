@@ -43,7 +43,8 @@
       {
         "ignore": [
           "-webkit-overflow-scrolling",
-          "width: fit-content"
+          "width: fit-content",
+          "overflow-anchor"
         ]
       }
     ]
