@@ -1,28 +1,41 @@
 <div class="legend">
 	<h2>Legend</h2>
 	<div class="legend-body">
-		<div class="legend-item" *ngFor="let leg of legend">
-			<div class="legend-square" [style.backgroundColor]="leg.color"></div>
+		<div class="legend-item" *ngFor="let leg of legend" [style]="'--bg-color:var('+leg.color+');'">
+			<div class="legend-square"></div>
 			<div class="legend-description">{{leg.description}}</div>
 		</div>
 	</div>
 </div>
 <div id="container">
 	<div class="search-container">
-		<form (submit)="onSubmit()">
-			<div>
-				<input type="radio" name="search-type" value="location">Location
-				<input type="radio" name="search-type" value="user">User
+		<div class="map-filters-container">
+			<div class="filter-select">
+				<label>Filter by zone</label>
+				<select name="zone" (change)="changeZone()" [(ngModel)]="zone">
+					<option value="0">All zones</option>
+					<option value="1">Green zone</option>
+					<option value="2">Blue zone</option>
+					<option value="3">Red zone</option>
+				</select>
 			</div>
-			<input type="text" name="search-input" class="form-control" [(ngModel)]="searchInput" placeholder="Enter location">
-		</form>
-		<div class="search-result">
-			<div *ngFor="let location of locations" (click)="changeFocus(location)" class="location">
-				{{location.display_name}}
+			<div class="filter-select">
+				<label>Filter by city</label>
+				<select name="city" [(ngModel)]="city">
+					<option value="0">All cities</option>
+				</select>
+			</div>
+			<div class="search-user">
+				<input class="form-control" type="text" name="user">
+				<div class="search-result">
+					<div *ngFor="let location of locations" (click)="changeFocus(location)" class="location">
+						{{location.display_name}}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<div id="map-wrapper">
-		<div id="prosumers-map"></div>
+		<div id="prosumers-map" ></div>
 	</div>
 </div>

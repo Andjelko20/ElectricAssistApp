@@ -1,33 +1,16 @@
-<!--<div id="container">
-	<div class="search-container">
-		<form (submit)="onSubmit()">
-			<input type="text" name="search-input" [(ngModel)]="searchInput">
-			<button>Search</button>
-		</form>
-		<div class="search-result">
-			<div *ngFor="let location of locations" (click)="changeFocus(location)" class="location">
-				{{location.display_name}}
-			</div>
-		</div>
-	</div>
-	<div id="map-wrapper">
-		<div id="prosumers-map"></div>
-	</div>
-</div>
--->
 <label for="country">Country</label>
 
-<select id="country" class="form-control" name="country">     
+<select id="country" class="select-form-control" name="country">     
     <option [value]="stringify({id:1,name:'Serbia'})" >Serbia</option>
 </select>
 <br>
 <label for="city">City</label>
-<select id="city" class="form-control" name="city" (change)="onSelectedCity($event)">     
+<select id="city" class="select-form-control" name="city" (change)="onSelectedCity($event)">     
     <option *ngFor="let city of cities" [value]="stringify(city)" >{{city.name}}</option>
 </select>
 <br>
 <label for="settlement">Settlement</label>
-<select id="settlement" class="form-control" name="settlement" [(ngModel)]="settlementId" (change)="sendData()">     
+<select id="settlement" class="select-form-control" name="settlement" [(ngModel)]="settlementId" (change)="sendData()">     
     <option *ngFor="let settlement of settlements" [value]="settlement.id"  >{{settlement.name}}</option>
 </select>
 <br>

@@ -103,11 +103,12 @@ namespace Server.Controllers
         {
             try
             {
+                string password = PasswordGenerator.GenerateRandomPassword();
                 UserModel user = new UserModel
                 {
                     Username = requestBody.Username,
                     Name = requestBody.Name,
-                    Password = HashGenerator.Hash(requestBody.Password),
+                    Password = HashGenerator.Hash(password),
                     Blocked = requestBody.Blocked,
                     RoleId = Roles.ProsumerId,
                     Email=requestBody.Email,
@@ -120,7 +121,7 @@ namespace Server.Controllers
                 _sqliteDb.Users.Add(user);
                 try
                 {
-                    emailService.SendEmail(requestBody.Email,"Account created","Your account is created successfully. Your password is <b>"+requestBody.Password+"</b>",true);
+                    emailService.SendEmail(requestBody.Email,"Account created","Your account is created successfully. Your password is <b>"+password+"</b>",true);
                 }
                 catch
                 {

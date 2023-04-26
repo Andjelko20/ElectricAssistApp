@@ -34,9 +34,9 @@ namespace Server.Controllers
 
         [HttpGet]
         [Authorize(Roles = Roles.Dispatcher)]
-        public async Task<IActionResult> GetAllProsumers()
+        public async Task<IActionResult> GetAllProsumers([FromQuery] string? zone = "0", [FromQuery] int? city=0)
         {
-            return Ok(await userService.GetAllProsumers());
+            return Ok(await userService.GetAllProsumers(zone, (int)((city==null)?0:city)));
         }
 
         /// <summary>
