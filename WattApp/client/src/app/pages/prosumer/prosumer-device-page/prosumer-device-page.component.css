@@ -1,10 +1,12 @@
 .main {
+    top: 0px;
+    position: absolute;
     min-height: 100vh;
 }
 
 .device {
     margin-top: 52px;
-    min-height: 100vh;
+    margin-bottom: 0px;
 }
 
 .back {
@@ -30,7 +32,8 @@
     justify-content: center;
 }
 
-.btn {
+
+/* .btn {
     background-color: #3E5483;
     border-color: #3E5483;
     float: right;
@@ -40,7 +43,7 @@
     color: white;
     width: 60px;
     border-radius: 10px;
-}
+} */
 
 .deviceimg {
     margin-top: 5px;
@@ -116,6 +119,36 @@ p {
     color: white;
 }
 
+.glafik {
+    margin: 5px;
+    margin-bottom: 55px;
+}
+
+.collapsible {
+    background-color: #1c315e;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 9px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.active,
+.collapsible:hover {
+    background-color: #1c315e;
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
 @media (min-width: 768px) {
     .main {
         top: 0px;
@@ -133,11 +166,11 @@ p {
         width: 3%;
         margin-left: 2%;
     }
-    .btn {
+    /* .btn {
         width: 12% !important;
         font-size: 20px;
         margin: 9px;
-    }
+    } */
     .updatedelete {
         height: 60px;
     }
@@ -181,5 +214,26 @@ p {
     .schcons {
         position: absolute;
         width: 96%;
+    }
+    .glafik {
+        /* min-height: 100vh; */
+        margin: 2%;
+        margin-bottom: 55px;
+        border-radius: 5px;
+    }
+    .collapsible {
+        background-color: #1c315e;
+        padding: 18px;
+        font-size: 25px;
+    }
+    .active,
+    .collapsible:hover {
+        background-color: #1c315e;
+    }
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
     }
 }

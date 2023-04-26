@@ -60,8 +60,7 @@ const routes: Routes = [
 	{path:"device-add",component:AddDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard]},
 	{path:"profile-update",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
-
-
+	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 
 	//TEST
 	// {path:'register',component:RegisterComponent},
