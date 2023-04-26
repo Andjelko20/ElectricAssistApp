@@ -9,13 +9,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EmailConfirmationPageComponent implements OnInit{
   isConfirmed : boolean = false;
-  constructor(private http : HttpClient, private route : ActivatedRoute){
+  constructor(private http : HttpClient, private route : ActivatedRoute, private router : Router){
 
+  }
+
+  goToLogin(){
+    this.router.navigate(['login']);
   }
 
   ngOnInit(){
     this.route.queryParams.subscribe(params => {
       const key = params['key'];
+      console.log(key);
       this.http.post<ConfirmEmailResponseDTO>(`https://localhost:7146/api/Users/emailConfirmation/${key}`, undefined).subscribe((response) => {
         console.log(response);
         if(response && response.isConfirmed){

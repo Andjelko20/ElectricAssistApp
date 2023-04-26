@@ -389,10 +389,16 @@ namespace Server.Controllers
         public IActionResult changeEmailAddressConfirmation([FromRoute]string key)
         {
             object response = userService.ConfirmChageOfEmailAddress(key);
+            ConfirmEmailResponseDTO responseDTO = new ConfirmEmailResponseDTO();
             if (response is HttpRequestException)
-                return StatusCode(500, ((HttpRequestException)response).Message);
+            {
+                responseDTO.error = ((HttpRequestException)response).Message;
+            }
             else
-                return Ok("Mail confirmed successfully");
+            {
+                responseDTO.isConfirmed = true;
+            }
+            return Ok(responseDTO);
         }
 
         /// <summary>

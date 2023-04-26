@@ -207,7 +207,7 @@ namespace Server.Services.Implementations
                     return new HttpRequestException("This email has already been confirmed.");
                 }
             }*/
-            return false;
+            return new HttpRequestException("There is no such a key");
         }
 
         public object CreateChangeEmailRequest(ChangeEmailModel changeEmail)
