@@ -21,7 +21,10 @@ export interface ShowUsers {
     email:string;
     block: boolean;
     role:string;
-
+    settlement:string;
+    city:string;
+    country: string;
+    address:string;
 
 }
 export interface Prosumers{

@@ -31,6 +31,7 @@ import { FutureComponent } from './components/weather/future/future.component';
 import { DsoOneProsumerPageComponent } from './pages/dso/dso-one-prosumer-page/dso-one-prosumer-page.component';
 import { ProsumerAccountPageComponent } from './pages/prosumer/prosumer-account-page/prosumer-account-page.component';
 import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-account-settings-page/prosumer-account-settings-page.component';
+import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -78,6 +79,7 @@ const routes: Routes = [
 	{path:"map-input",component:MapInputComponent},
 	{path:"future",component:TodayComponent},
 	{path:"future",component:FutureComponent},
+	{path:'email-confirmation',component:EmailConfirmationPageComponent},
 	{path:'**',redirectTo:"login"}
 ];
 

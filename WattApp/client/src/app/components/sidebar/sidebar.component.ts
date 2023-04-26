@@ -35,8 +35,18 @@ export class SidebarComponent implements OnInit{
         
       }
     });
+    const dashboard = document.getElementById('dashboard');
+    const sidebar = document.getElementById('sidebar');
     
-  }
+    if(sidebar && dashboard)
+    {
+      sidebar.style.height = dashboard.clientHeight + 'px';
+    }
+        
+            // Set sidebar height on window resize
+            window.addEventListener('resize', this.setSidebarHeight);
+    
+      }
   showSidebarContent = false;
 
   toggleSidebarContent() {
@@ -48,5 +58,13 @@ export class SidebarComponent implements OnInit{
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }
-  
+   setSidebarHeight() {
+    const dashboard = document.getElementById('dashboard');
+    const sidebar = document.getElementById('sidebar');
+    
+    if(sidebar && dashboard)
+    {
+      sidebar.style.height = dashboard.clientHeight + 'px';
+    }
+   }
 }

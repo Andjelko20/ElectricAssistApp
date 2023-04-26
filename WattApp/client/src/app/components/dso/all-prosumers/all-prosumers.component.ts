@@ -1,6 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Prosumers, Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -14,10 +16,11 @@ export class AllProsumersComponent implements OnInit{
 	itemsPerPage:number=10;
 	totalItems:number=20;
 	data:any[]=[];
+  prosumerValues: any[] = [];
   prosumers:Prosumers[] = [];
   filteredProsumers: Prosumers[] = [];
   _listFilter = '';
-  constructor(private userService:AuthService)
+  constructor(private userService:AuthService,private historyService:HistoryPredictionService)
   {
     
   }
@@ -35,7 +38,6 @@ export class AllProsumersComponent implements OnInit{
     this.filteredProsumers = this.listFilter ? this.performFilter(this.listFilter) : this.prosumers;
   }
   ngOnInit(): void {
-	console.log(this.itemsPerPage)
     this.filteredProsumers = this.data?.map((u:any)=>({
 		id: u.id,
 		name: u.name,
@@ -47,7 +49,13 @@ export class AllProsumersComponent implements OnInit{
 		city:u.city,
 		country: u.country
 	}as Prosumers));
+
+
+  
   }
+
+
+
   getUsers(): void {
     this.userService.getAllProsumers().subscribe(prosumers => {
       this.prosumers=prosumers.data.map((u:any)=>({
@@ -100,6 +108,26 @@ export class AllProsumersComponent implements OnInit{
 				this.data=res?.data;
 				this.currentPage=pageNumber;
 				this.totalItems=res.numberOfPages*this.itemsPerPage;
+        this.prosumerValues = [];
+        this.data.forEach(prosumer =>{
+          this.historyService.currentUserProductionConsumption(prosumer.id,2).subscribe(vr1=>{
+            if(typeof vr1 !== 'number'){
+              vr1 = 0;
+            }
+            this.historyService.currentUserProductionConsumption(prosumer.id,1).subscribe(vr2=>{
+              if(typeof vr2 !== 'number')
+              {
+                vr2 = 0;
+              }
+              const prosumerData = {
+                id: prosumer.id,
+                consumption: vr1,
+                production: vr2
+              };
+              this.prosumerValues.push(prosumerData);
+            })
+          })
+        })
 			}
 			catch(err:any){
 				console.log(err.message);
@@ -107,9 +135,9 @@ export class AllProsumersComponent implements OnInit{
 			
 		})
 		.catch(err=>{
-			console.log(err?.name);
 			localStorage.removeItem("token");
 			//this.router.navigate(["login"]);
 		});
+    
   }
 }

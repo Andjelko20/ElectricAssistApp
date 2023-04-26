@@ -14,7 +14,9 @@ export class AllDevicesDsoComponent implements OnInit{
   currentPage:number=1;
   itemsPerPage:number=12;
   totalItems:number=10;
-
+  onClick!: (this: HTMLElement, ev: MouseEvent) => any;
+  offClick!: (this: HTMLElement, ev: MouseEvent) => any;
+  
   devicesList:ShowDevices[] = [];
   deviceCategoryId!: number;
   idDevice!: number;
@@ -140,41 +142,37 @@ export class AllDevicesDsoComponent implements OnInit{
         console.log(turnOn);
        if(turnOn!=null)
        {
-            turnOn.addEventListener('click', () => {
+            turnOn.removeEventListener('click', this.onClick);
+            this.onClick=() => {
               this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
               this.deviceService.turnOnOff(id).subscribe({
               next:()=>{
                 const userIndex = this.devicesList.findIndex(user => user.id === id);
                 
-                  if(this.devicesList[userIndex].turnOn == false)
-                  {
                   this.devicesList[userIndex].turnOn = true;
-                  } 
-                 
-                  
               }
               
               });
-          });
+              turnOn.removeEventListener('click', this.onClick);
+          };
+          turnOn.addEventListener('click', this.onClick);
        }
        if(turnOff!=null)
        {
-            turnOff.addEventListener('click', () => {
+        turnOff.removeEventListener('click', this.offClick);
+            this.offClick=() => {
               this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
               this.deviceService.turnOnOff(id).subscribe({
               next:()=>{
                 const userIndex = this.devicesList.findIndex(user => user.id === id);
                 
-                  if(this.devicesList[userIndex].turnOn == true)
-                  {
-                    this.devicesList[userIndex].turnOn = false;
-                  } 
-                
-                  
+                  this.devicesList[userIndex].turnOn = false;
               }
               
               });
-            });
+              turnOff.removeEventListener('click', this.offClick);
+          };
+          turnOff.addEventListener('click', this.offClick);
        }
        
       }
