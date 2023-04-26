@@ -297,7 +297,6 @@ namespace Server.Controllers
                                 "Thank you, <br>" +
                                 "<i><b>ElectricAssist Team</b></i>"
                             , true);
-                        //FrontUrl, ClientUrl
 
                     }
                     catch
