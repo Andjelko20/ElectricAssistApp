@@ -33,8 +33,10 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetSettlements([FromQuery] long cityId, [FromQuery] long settlementId, [FromQuery] long deviceCategoryId)
         {
-            if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
-                return NotFound(new { message = "City with ID: " + cityId.ToString() + " does not exist." });
+            if (cityId != 0)
+            {
+                if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+                    return NotFound(new { message = "City with ID: " + cityId.ToString() + " does not exist." });
 
                 var settlements = dsoService.GetSettlements(cityId);
 
@@ -111,13 +113,23 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Get double consumptio/production for cityId - today or this month
+        /// 1.) Get double consumptio/production for cityId - today or this month || 2.) Get cityId
         /// </summary>
         [HttpGet]
-        [Route("CityDouble/{deviceCategoryId:long}")]
+        [Route("City/")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetCity([FromRoute] long deviceCategoryId, [FromQuery] long todayCityId, long thisMonthCityId, long thisYearCityId)
+        public async Task<IActionResult> GetCity([FromQuery] long deviceCategoryId, [FromQuery] long todayByHourCityId, long todayCityId, long thisMonthCityId, long thisYearCityId, string cityName="null")
         {
+            if(!cityName.Equals("null"))
+            {
+                var cityId = dsoService.GetCityId(cityName);
+
+                if (cityId == -1)
+                    return NotFound(new { message = "City with name: " + cityName.ToString() + " does not exist." });
+
+                return Ok(cityId);
+            }
+
             if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with ID: " + deviceCategoryId.ToString() + " doesnt exist"});        
 
@@ -141,6 +153,13 @@ namespace Server.Controllers
                     return NotFound(new { message = "City with ID: " + thisYearCityId.ToString() + " doesnt exist" });
 
                 return Ok(dsoService.GetUsageHistoryForDeviceInThisYear(thisYearCityId, deviceCategoryId));
+            }
+            else if (todayByHourCityId != 0)
+            {
+                if (!_sqliteDb.Cities.Any(c => c.Id == todayByHourCityId))
+                    return NotFound(new { message = "City with ID: " + todayByHourCityId.ToString() + " doesnt exist" });
+
+                return Ok(dsoService.CalculateEnergyUsageForTodayInCity(todayByHourCityId, deviceCategoryId));
             }
 
             return BadRequest("Input parameters are empty.");

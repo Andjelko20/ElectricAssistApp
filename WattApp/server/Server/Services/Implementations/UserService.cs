@@ -97,23 +97,34 @@ namespace Server.Services.Implementations
             return context.Users.Include(user => user.Role).FirstOrDefaultAsync(user => user.Username==username || user.Email==username);
         }
 
-        public async Task<List<object>> GetAllProsumers()
+        public async Task<List<object>> GetAllProsumers(string zone,int city)
         {
             List<UserModel> allUsers=await context
                 .Users
+                .Include(user=>user.Settlement)
                 .Where(user => user.RoleId == Roles.ProsumerId)
                 .ToListAsync();
             List<object> lista = new List<object>();
             foreach(var user in allUsers)
             {
-                //var cons = GetConsumption(user.Id);
+                var cons = GetConsumption(user.Id);
+                if (zone == "1" && cons > 350)
+                    continue;
+                if (zone == "2" && ( cons <= 350 || cons > 1600 ) )
+                    continue;
+                if (zone == "3" && cons <= 1600)
+                    continue;
+                if (city != 0 && user.Settlement.CityId != city)
+                    continue;
                 lista.Add((object)new
                 {
                     Id = user.Id,
                     Name = user.Name,
                     Latitude = user.Latitude,
-                    Longitude = user.Longitude//,
-                    //Consumption = cons
+                    Longitude = user.Longitude,
+                    Consumption = cons,
+                    CityId=user.Settlement.CityId,
+                    Address=user.Address
                 });
             }
             return lista;

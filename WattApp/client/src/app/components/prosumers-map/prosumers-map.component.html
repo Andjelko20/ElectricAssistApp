@@ -13,17 +13,40 @@
 </div>
 <div id="container">
 	<div class="search-container">
-		<form (submit)="onSubmit()">
-			<input type="text" name="search-input" class="form-control" [(ngModel)]="searchInput" placeholder="Enter location">
-			<button class="btn btn-primary">Search</button>
-		</form>
-		<div class="search-result">
-			<div *ngFor="let location of locations" (click)="changeFocus(location)" class="location">
-				{{location.display_name}}
+		<div class="map-filters-container">
+			<div class="filter-select">
+				<label>Filter by zone</label>
+				<select name="zone" (change)="changeZone()" [(ngModel)]="zone">
+					<option value="0">All zones</option>
+					<option value="1">Green zone</option>
+					<option value="2">Blue zone</option>
+					<option value="3">Red zone</option>
+				</select>
+			</div>
+			<div class="filter-select">
+				<label>Filter by city</label>
+				<select name="city" [(ngModel)]="city" (change)="changeCity()">
+					<option value="0">All cities</option>
+					<option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
+				</select>
+			</div>
+			<div class="search-user">
+				<label>Search by name of user</label>
+				<input class="input-form-control" type="text" name="user" [(ngModel)]="name" (keydown)="changeName()">
+				<div class="search-result" [class.none]="!searchResultVisible">
+					<div *ngIf="filteredUsers.length==0" class="no-results">
+						<p>There are no results</p>
+					</div>	
+					<div *ngFor="let user of filteredUsers" (click)="focusUser(user)" class="location">
+						{{user.name}},{{cities[user.cityId-1].name}},{{user.address}}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div id="map-wrapper">
+	<div class="no-prosumers-map" *ngIf="loading">Loading ...</div>
+	<div class="no-prosumers-map" *ngIf="!loading && prosumers.length==0">There are no prosumers to show</div>
+	<div id="map-wrapper" [class.none]="prosumers.length==0">
 		<div id="prosumers-map"></div>
 	</div>
 </div>

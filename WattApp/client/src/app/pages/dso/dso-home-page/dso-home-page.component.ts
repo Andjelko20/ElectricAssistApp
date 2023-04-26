@@ -12,7 +12,7 @@ declare var $: any;
 @Component({
   selector: 'app-dso-home-page',
   templateUrl: './dso-home-page.component.html',
-  styleUrls: ['./dso-home-page.component.css'],
+  styleUrls: ['./dso-home-page.component.css','./dso-css.css'],
 
 })
 export class DsoHomePageComponent implements AfterViewInit, OnInit{

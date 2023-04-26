@@ -81,6 +81,7 @@ import { LineDayProsumerComponent } from './components/dso/charts-prosumer/line-
 import { LineWeekProsumerComponent } from './components/dso/charts-prosumer/line-week-prosumer/line-week-prosumer.component';
 import { PredictionProsumerComponent } from './components/dso/prediction/prediction-prosumer/prediction-prosumer.component';
 import { PredictionDeviceComponent } from './components/dso/prediction/prediction-device/prediction-device.component';
+import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
 
 
 @NgModule({
@@ -164,6 +165,11 @@ import { PredictionDeviceComponent } from './components/dso/prediction/predictio
     LineWeekProsumerComponent,
     PredictionProsumerComponent,
     PredictionDeviceComponent,
+    MonthTabelarProsumerComponent,
+    WeekTabelarProsumerComponent,
+    YearTabelarProsumerComponent,
+    TodayTabelarProsumerComponent,
+    EmailConfirmationPageComponent
     
   ],
   imports: [
