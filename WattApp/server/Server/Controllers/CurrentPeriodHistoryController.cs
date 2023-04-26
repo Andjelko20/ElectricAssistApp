@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Data;
 using Server.Models.DropDowns.Devices;
+using Server.Models.DropDowns.Location;
 using Server.Services;
 
 namespace Server.Controllers
