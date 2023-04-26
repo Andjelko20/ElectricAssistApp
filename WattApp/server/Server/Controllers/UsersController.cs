@@ -266,7 +266,42 @@ namespace Server.Controllers
                 if ((requestBody.RoleId==Roles.AdminId && user.RoleId==Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId&& user.RoleId == Roles.AdminId))
                     user.RoleId = requestBody.RoleId;
                 user.Blocked = requestBody.Blocked;
-                user.Email = requestBody.Email;
+                if (user.Email.Equals(requestBody.Email) == false)
+                {
+                    ChangeEmailModel changeEmailModel = new ChangeEmailModel
+                    {
+                        UserId = id,
+                        OldEmail = user.Email,
+                        NewEmail = requestBody.Email,
+                        ExpireAt = DateTime.Now.AddDays(1),
+                        ChangeEmailKey = ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
+                    };
+
+                    userService.CreateChangeEmailRequest(changeEmailModel);
+
+                    try
+                    {
+                        emailService.SendEmail(changeEmailModel.NewEmail,
+                                "Confirm Your Email Address Change",
+                                 "Hello " + user.Name + ", <br><br>" +
+                                "Thank you for using our service.<br>" +
+                                "We have received a request to change the email address associated with your account." +
+                                "<br>To complete this process, please confirm the change by clicking on the link below:<br><br>" +
+                                "<a href='http://localhost:4200/email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
+                                "If you did not initiate this email address change request, please contact" +
+                                "our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
+
+                                "Thank you, <br>" +
+                                "<i><b>ElectricAssist Team</b></i>"
+                            , true);
+                        //FrontUrl, ClientUrl
+
+                    }
+                    catch
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+                    }
+                }
                 _sqliteDb.Users.Update(user);   
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message = "User is updated successfully" });
