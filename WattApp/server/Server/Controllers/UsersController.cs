@@ -240,15 +240,42 @@ namespace Server.Controllers
             }
             else
             {
+                UserModel user = (UserModel)response;
+                string password = PasswordGenerator.GenerateRandomPassword(15);
+                try
+                {
+                    emailService.SendEmail(user.Email,
+                        "ElecticAssist account created successfully - details",
+                        "Hello " + user.Name + ",<br><br>"
+                        + "Congratulations! You have successfully created an account and can now start using our app.<br>" +
+                        "Please find your login details below:"
+                        + "<br><br>" +
+                        "Username: " + "<b>" + user.Username + "</b><br>" +
+                        "Password: " + "<b>" + password + "</b>" +
+                        "<br><br>" +
+                        "For security reasons, we recommend that you change your password by logging into your account and accessing the account settings. This will help to protect your account.<br>" +
+                        "<br> Thank you, <br> <b><i>ElecticAssist Team</b></i>",
+                        true);
+                }
+                catch
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+                }
+                user.Password = HashGenerator.Hash(password);
+                _sqliteDb.Users.Update(user);
+                _sqliteDb.SaveChanges();
                 responseDTO.isConfirmed = true;
             }
             return Ok(responseDTO);
         }
+    
 
-/// <summary>
-/// Update user by admin
-/// </summary>
-[Produces("application/json")]
+
+
+    /// <summary>
+    /// Update user by admin
+    /// </summary>
+    [Produces("application/json")]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]

@@ -164,13 +164,13 @@ namespace Server.Services.Implementations
         public object ConfirmEmailAddress(string key)
         {
             PendingUserModel pendingUser = context.PendingUsers.FirstOrDefault(src => src.ConfirmKey == key);
-            if(pendingUser == null)
+            if (pendingUser == null)
             {
                 return new HttpRequestException("There is no pending request with such a key");
             }
             else
             {
-                if(pendingUser.ExpireAt < DateTime.Now)
+                if (pendingUser.ExpireAt < DateTime.Now)
                 {
                     context.PendingUsers.Remove(pendingUser);
                     context.SaveChanges();
@@ -179,7 +179,7 @@ namespace Server.Services.Implementations
                 else
                 {
                     UserModel userModel = context.Users.FirstOrDefault(src => src.Username == pendingUser.Username || src.Email == pendingUser.Email);
-                    if(userModel != null)
+                    if (userModel != null)
                     {
                         return new HttpRequestException("Ooops... Looks like there is a user with such username or email.");
                     }
@@ -198,9 +198,9 @@ namespace Server.Services.Implementations
                             Blocked = pendingUser.Blocked,
                             SettlementId = pendingUser.SettlementId
                         };
-                        var response = context.Users.Add(userModel);
+                        UserModel response = context.Users.Add(userModel).Entity;
                         context.PendingUsers.Remove(pendingUser);
-                        if(response == null)
+                        if (response == null)
                         {
                             return new HttpRequestException("Ooops... Something went wrong! Please try again");
                         }
