@@ -27,6 +27,7 @@ namespace Server.Controllers
         public readonly ITokenService tokenService;
         public readonly IUserService userService;
         public readonly IEmailService emailService;
+        public readonly IConfiguration configuration;
         public readonly int NUMBER_OF_ITEMS_PER_PAGE = 20;
 
         public UsersController(
@@ -34,13 +35,15 @@ namespace Server.Controllers
             ILogger<UsersController> logger,
             ITokenService tokenService,
             IUserService userService,
-            IEmailService emailService)
+            IEmailService emailService,
+            IConfiguration configuration)
         {
             _sqliteDb = sqliteDb;
             this.logger = logger;
             this.tokenService = tokenService;
             this.userService = userService;
             this.emailService = emailService;
+            this.configuration = configuration;
         }
         /// <summary>
         /// Get 20 users per page
@@ -287,7 +290,7 @@ namespace Server.Controllers
                                 "Thank you for using our service.<br>" +
                                 "We have received a request to change the email address associated with your account." +
                                 "<br>To complete this process, please confirm the change by clicking on the link below:<br><br>" +
-                                "<a href='http://localhost:4200/email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
+                                "<a href='" + configuration.GetValue<string>("frontUrl") + "/email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
                                 "If you did not initiate this email address change request, please contact" +
                                 "our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
 
