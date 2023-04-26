@@ -516,75 +516,54 @@ namespace Server.Services.Implementations
 
         public List<DailyEnergyConsumptionPastMonth> SettlementHistoryForThePastWeek(long settlementId, long deviceCategoryId)
         {
-            var now = DateTime.Now;
-            var settlementHistory = new List<DailyEnergyConsumptionPastMonth>();
-
-            // pronalazimo kategoriju uredjaja
-            var deviceCategory = _context.DeviceCategories
-                                .FirstOrDefault(dc => dc.Id == deviceCategoryId);
-
-            // pronalazimo sve tipove uredjaja koji pripadaju toj kategoriji
-            var deviceTypeIds = _context.DeviceTypes
-                .Where(dt => dt.CategoryId == deviceCategory.Id)
-                .Select(dt => dt.Id)
-                .ToList();
-
-            // pronalazimo sve modele uredjaja koji pripadaju tim tipovima uredjaja
-            var deviceModelIds = _context.DeviceModels
-                .Where(dm => deviceTypeIds.Contains(dm.DeviceTypeId))
-                .Select(dm => dm.Id)
-                .ToList();
-
-            // pronalazimo sve uredjaje koji koriste te modele uredjaja
-            var devices = _context.Devices
-                .Where(d => deviceModelIds.Contains(d.DeviceModelId))
-                .Select(d => d.Id)
-                .ToList();
-
-            // pronalazimo naselje iz tabele Settlements
-            var settlement = _context.Settlements
-                .FirstOrDefault(s => s.Id == settlementId);
-
-            for (int i = 0; i < 7; i++) //iteriramo kroz svaki dan u prethodnoj nedelji
+            using (var _connection = _context.Database.GetDbConnection())
             {
-                var currentDay = now.AddDays(-i); //trenutni dan u iteraciji
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT DATE(deu.StartTime) AS Day, 
+                                               strftime('%m', deu.StartTime) AS Month,
+                                               strftime('%Y', deu.StartTime) AS Year,
+                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM DeviceEnergyUsages deu 
+                                        JOIN Devices d ON deu.DeviceId = d.Id
+                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
+                                        JOIN Users u ON d.UserId = u.Id AND u.SettlementId = @settlementId
+                                        WHERE deu.StartTime >= date('now', '-7 day') 
+                                            AND (deu.EndTime <= date('now') OR deu.EndTime IS NULL)
+                                        GROUP BY DATE(deu.StartTime)";
 
-                // pronalazimo uredjaje te kategorije u tabeli DeviceEnergyUsages i to ako su radili tog dana
-                var usages = _context.DeviceEnergyUsages
-                    .Where(u => devices.Contains(u.DeviceId) && u.StartTime <= currentDay.AddDays(1) && (u.EndTime >= currentDay || u.EndTime == null) && _context.Devices.Any(d => d.Id == u.DeviceId && _context.Users.Any(u => u.Id == d.UserId && u.SettlementId == settlement.Id)))
-                    .ToList();
+                command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
+                command.Parameters.Add(new SqliteParameter("@settlementId", settlementId));
 
-                var dailyTotalUsage = 0.0;
-                foreach (var usage in usages)
+                var energyUsages = new List<DailyEnergyConsumptionPastMonth>();
+
+                using (var reader = command.ExecuteReader())
                 {
-                    var usageStart = usage.StartTime;
-
-                    var usageEnd = usage.EndTime;
-                    if (usageEnd == null || usageEnd > currentDay.AddDays(1))
+                    while (reader.Read())
                     {
-                        usageEnd = currentDay.AddDays(1);
+                        DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                        var day = date.Day;
+                        var month = date.ToString("MMMM");
+                        var year = date.Year;
+                        var energyUsage = Convert.ToDouble(reader.GetString(3));
+
+                        var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                        {
+                            Day = day,
+                            Month = month,
+                            Year = year,
+                            EnergyUsageResult = energyUsage
+                        };
+
+                        energyUsages.Add(dailyEnergyUsage);
                     }
-
-                    var usageTime = (usageEnd - usageStart).TotalHours;
-                    var deviceEnergyUsage = _context.Devices
-                        .Include(d => d.DeviceModel)
-                        .Where(d => d.Id == usage.DeviceId)
-                        .Select(d => d.DeviceModel.EnergyKwh)
-                        .FirstOrDefault();
-
-                    dailyTotalUsage += deviceEnergyUsage * usageTime;
                 }
 
-                settlementHistory.Insert(0, new DailyEnergyConsumptionPastMonth
-                {
-                    Day = currentDay.Day,
-                    Month = currentDay.ToString("MMMM"),
-                    Year = currentDay.Year,
-                    EnergyUsageResult = Math.Round(dailyTotalUsage, 2)
-                });
+                return energyUsages;
             }
-
-            return settlementHistory;
         }
 
         public List<DailyEnergyConsumptionPastMonth> CityHistoryForThePastWeek(long cityId, long deviceCategoryId)
@@ -663,18 +642,18 @@ namespace Server.Services.Implementations
                 _connection.Open();
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
-            SELECT DATE(deu.StartTime) AS Day, 
-                   strftime('%m', deu.StartTime) AS Month,
-                   strftime('%Y', deu.StartTime) AS Year,
-                   SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
-            FROM DeviceEnergyUsages deu 
-            JOIN Devices d ON deu.DeviceId = d.Id
-            JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
-            JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
-            JOIN Users u ON d.UserId = u.Id AND u.SettlementId = @settlementId
-            WHERE deu.StartTime >= date('now', '-1 month') 
-                AND (deu.EndTime <= date('now') OR deu.EndTime IS NULL)
-            GROUP BY DATE(deu.StartTime)";
+                                        SELECT DATE(deu.StartTime) AS Day, 
+                                               strftime('%m', deu.StartTime) AS Month,
+                                               strftime('%Y', deu.StartTime) AS Year,
+                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM DeviceEnergyUsages deu 
+                                        JOIN Devices d ON deu.DeviceId = d.Id
+                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
+                                        JOIN Users u ON d.UserId = u.Id AND u.SettlementId = @settlementId
+                                        WHERE deu.StartTime >= date('now', '-1 month') 
+                                            AND (deu.EndTime <= date('now') OR deu.EndTime IS NULL)
+                                        GROUP BY DATE(deu.StartTime)";
 
                 command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
                 command.Parameters.Add(new SqliteParameter("@settlementId", settlementId));
