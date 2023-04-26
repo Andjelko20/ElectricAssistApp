@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-email-confirmation-page',
@@ -20,13 +21,13 @@ export class EmailConfirmationPageComponent implements OnInit{
 
   ngOnInit(){
     this.route.queryParams.subscribe(params => {
-      const key = params['key'];
+      const key = encodeURIComponent(params['key']);
       console.log(key);
-      this.http.post<ConfirmEmailResponseDTO>(`https://localhost:7146/api/Users/emailConfirmation/${key}`, undefined).subscribe((response) => {
+      this.http.post<ConfirmEmailResponseDTO>(`${environment.serverUrl}/api/Users/emailConfirmation/${key}`, null).subscribe((response) => {
         console.log(response);
         console.log(response.isConfirmed);
         console.log(response.error);
-        if(response && response.isConfirmed){
+        if(response.isConfirmed){
           this.isConfirmed = true;
         }
         else{

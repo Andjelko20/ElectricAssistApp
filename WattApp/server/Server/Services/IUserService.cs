@@ -14,10 +14,10 @@ namespace Server.Services
         Task<List<RoleModel>> GetAllRoles();
         Task<List<object>> GetAllProsumers();
 
-        Object CreatePendingUser(PendingUserModel pendingUser);
-        Object ConfirmEmailAddress(string key);
-        Object CreateChangeEmailRequest(ChangeEmailModel changeEmail);
-        Object ConfirmChageOfEmailAddress(string key);
+        object CreatePendingUser(PendingUserModel pendingUser);
+        object ConfirmEmailAddress(string key);
+        object CreateChangeEmailRequest(ChangeEmailModel changeEmail);
+        object ConfirmChageOfEmailAddress(string key);
 
     }
 }

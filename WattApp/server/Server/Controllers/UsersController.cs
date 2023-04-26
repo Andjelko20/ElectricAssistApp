@@ -15,6 +15,8 @@ using MimeKit.Encodings;
 using Server.Exceptions;
 using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace Server.Controllers
 {
@@ -230,7 +232,7 @@ namespace Server.Controllers
         [HttpPost("emailConfirmation/{key}")]
         public IActionResult ConfirmEmailAddress([FromRoute] string key)
         {
-            Object response = userService.ConfirmEmailAddress(key);
+            object response = userService.ConfirmEmailAddress(key);
             ConfirmEmailResponseDTO responseDTO = new ConfirmEmailResponseDTO();
             if (response is HttpRequestException)
             {
@@ -243,10 +245,10 @@ namespace Server.Controllers
             return Ok(responseDTO);
         }
 
-        /// <summary>
-        /// Update user by admin
-        /// </summary>
-        [Produces("application/json")]
+/// <summary>
+/// Update user by admin
+/// </summary>
+[Produces("application/json")]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
@@ -267,7 +269,7 @@ namespace Server.Controllers
                 if ((requestBody.RoleId==Roles.AdminId && user.RoleId==Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId&& user.RoleId == Roles.AdminId))
                     user.RoleId = requestBody.RoleId;
                 user.Blocked = requestBody.Blocked;
-                if (user.Email.Equals(requestBody.Email) == false)
+                if (user.Email != requestBody.Email)
                 {
                     ChangeEmailModel changeEmailModel = new ChangeEmailModel
                     {
@@ -288,7 +290,7 @@ namespace Server.Controllers
                                 "Thank you for using our service.<br>" +
                                 "We have received a request to change the email address associated with your account." +
                                 "<br>To complete this process, please confirm the change by clicking on the link below:<br><br>" +
-                                "<a href='" + configuration.GetValue<string>("frontUrl") + "/email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
+                                "<a href='" + configuration.GetValue<string>("frontUrl") + "/change-email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
                                 "If you did not initiate this email address change request, please contact" +
                                 "our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
 
@@ -335,7 +337,7 @@ namespace Server.Controllers
                     return NotFound(new { message = "User doesn't exists" });
                 user.Username = requestBody.Username;
                 user.Name = requestBody.Name;
-                if (user.Email.Equals(requestBody.Email) == false)
+                if (user.Email  != requestBody.Email)
                 {
                     //Znaci da zeli da menja email
                     ChangeEmailModel changeEmailModel = new ChangeEmailModel
@@ -357,7 +359,7 @@ namespace Server.Controllers
                                 "Thank you for using our service.<br>" +
                                 "We have received a request to change the email address associated with your account." +
                                 "<br>To complete this process, please confirm the change by clicking on the link below:<br><br>" +
-                                "<a href='" + configuration.GetValue<string>("frontUrl") + "/email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
+                                "<a href='" + configuration.GetValue<string>("frontUrl") + "/change-email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
                                 "If you did not initiate this email address change request, please contact" +
                                 "our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
 
@@ -372,7 +374,6 @@ namespace Server.Controllers
                         return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
                     }
                 }
-                //user.Email = requestBody.Email;
                 _sqliteDb.Users.Update(user);
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message = "User is updated successfully" });

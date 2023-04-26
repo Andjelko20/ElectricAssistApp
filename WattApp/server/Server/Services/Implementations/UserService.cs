@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Polly;
 using Server.Data;
 using Server.DTOs;
 using Server.DTOs.Responses;
@@ -139,7 +142,7 @@ namespace Server.Services.Implementations
             return historyService.GetUserEnergyConsumptionForPastMonth(userId, 2);
         }
 
-        public Object CreatePendingUser(PendingUserModel pendingUser)
+        public object CreatePendingUser(PendingUserModel pendingUser)
         {
             var user = context.Users.Where(src => src.Email == pendingUser.Email).FirstOrDefault();
             if (user != null)
@@ -158,51 +161,54 @@ namespace Server.Services.Implementations
             return response;
         }
 
-        public Object ConfirmEmailAddress(string key)
+        public object ConfirmEmailAddress(string key)
         {
-            PendingUserModel pendingUser = context.PendingUsers.Where(src => src.ConfirmKey.Equals(key)).FirstOrDefault();
-            if (pendingUser != null)
+            PendingUserModel pendingUser = context.PendingUsers.FirstOrDefault(src => src.ConfirmKey == key);
+            if(pendingUser == null)
             {
-                //Zahtev postoji
-                if (pendingUser.ExpireAt > DateTime.Now)
+                return new HttpRequestException("There is no pending request with such a key");
+            }
+            else
+            {
+                if(pendingUser.ExpireAt < DateTime.Now)
                 {
-                    //Jos uvek je validan
-
-                    UserModel user = new UserModel
-                    {
-                        Username = pendingUser.Username,
-                        Name = pendingUser.Name,
-                        Password = pendingUser.Password,
-                        Blocked = pendingUser.Blocked,
-                        RoleId = pendingUser.RoleId,
-                        Email = pendingUser.Email,
-                        Address = pendingUser.Address,
-                        Latitude = pendingUser.Latitude,
-                        Longitude = pendingUser.Longitude,
-                        SettlementId = pendingUser.SettlementId
-                    };
-
-                    var result = context.Users.Where(src => src.Username.Equals(user.Username)).FirstOrDefault();
-                    if(result == null)
-                    {
-                        var response = context.Users.Add(user);
-                        context.Remove(pendingUser);
-                        context.SaveChanges();
-                        return response;
-                    }
-                    else
-                    {
-                        return new HttpRequestException("It appears that someone has preceded you. A user with this username already exists.");
-                    }  
-
+                    context.PendingUsers.Remove(pendingUser);
+                    context.SaveChanges();
+                    return new HttpRequestException("Confirmation link has been expired");
                 }
                 else
                 {
-                    return new HttpRequestException("The confirmation link has expired");
+                    UserModel userModel = context.Users.FirstOrDefault(src => src.Username == pendingUser.Username || src.Email == pendingUser.Email);
+                    if(userModel != null)
+                    {
+                        return new HttpRequestException("Ooops... Looks like there is a user with such username or email.");
+                    }
+                    else
+                    {
+                        userModel = new UserModel()
+                        {
+                            Username = pendingUser.Username,
+                            Password = pendingUser.Password,
+                            Name = pendingUser.Name,
+                            Address = pendingUser.Address,
+                            Longitude = pendingUser.Longitude,
+                            Latitude = pendingUser.Latitude,
+                            Email = pendingUser.Email,
+                            RoleId = pendingUser.RoleId,
+                            Blocked = pendingUser.Blocked,
+                            SettlementId = pendingUser.SettlementId
+                        };
+                        var response = context.Users.Add(userModel);
+                        context.PendingUsers.Remove(pendingUser);
+                        if(response == null)
+                        {
+                            return new HttpRequestException("Ooops... Something went wrong! Please try again");
+                        }
+                        context.SaveChanges();
+                        return response;
+                    }
                 }
             }
-
-            return new HttpRequestException("There is no such a key");
         }
 
         public object CreateChangeEmailRequest(ChangeEmailModel changeEmail)
@@ -226,7 +232,7 @@ namespace Server.Services.Implementations
 
         public object ConfirmChageOfEmailAddress(string key)
         {
-            var changeEmail = context.ChangeEmailModels.Where(src => src.ChangeEmailKey.Equals(key)).FirstOrDefault();
+            var changeEmail = context.ChangeEmailModels.FirstOrDefault(src => src.ChangeEmailKey == key);
             if(changeEmail == null)
             {
                 return new HttpRequestException("There is no request with such a key.");
@@ -238,6 +244,11 @@ namespace Server.Services.Implementations
             }
             ChangeEmailModel model = (ChangeEmailModel)changeEmail;
             UserModel user = context.Users.Find(model.UserId);
+            if(user == null)
+            {
+                context.ChangeEmailModels.Remove(changeEmail);
+                return new HttpRequestException("There is no user with that username");
+            }
             user.Email = model.NewEmail;
 
             context.Users.Update(user);
