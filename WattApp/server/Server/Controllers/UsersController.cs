@@ -179,7 +179,7 @@ namespace Server.Controllers
                     Longitude = requestBody.Longitude,
                     SettlementId = requestBody.SettlementId, 
                     ExpireAt = DateTime.Now.AddDays(1),
-                    ConfirmKey = ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
+                    ConfirmKey = PasswordGenerator.GenerateRandomPassword(15)//ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
                 };
 
                 var pendingUser = userService.CreatePendingUser(user);
@@ -277,7 +277,7 @@ namespace Server.Controllers
                         OldEmail = user.Email,
                         NewEmail = requestBody.Email,
                         ExpireAt = DateTime.Now.AddDays(1),
-                        ChangeEmailKey = ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
+                        ChangeEmailKey = PasswordGenerator.GenerateRandomPassword(15)//ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
                     };
 
                     userService.CreateChangeEmailRequest(changeEmailModel);
@@ -346,7 +346,7 @@ namespace Server.Controllers
                         OldEmail = user.Email,
                         NewEmail = requestBody.Email,
                         ExpireAt = DateTime.Now.AddDays(1),
-                        ChangeEmailKey = ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
+                        ChangeEmailKey = PasswordGenerator.GenerateRandomPassword(15)//ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
                     };
 
                     userService.CreateChangeEmailRequest(changeEmailModel);
@@ -494,11 +494,11 @@ namespace Server.Controllers
             }
             else if (resetPassword.ExpireAt > DateTime.Now)
                 return BadRequest(new MessageResponseDTO("Reset key is already submited on your email"));
-            resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
+            resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(15);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
             try
             {
-                emailService.SendEmail(requestBody.Email, "Reset password", "Click on this link to reset your password:<a href='http://localhost:4200/reset-password/" + resetPassword.ResetKey + "'>" + resetPassword.ResetKey + "</a>", true);
+                emailService.SendEmail(requestBody.Email, "Reset password", "Click on this link to reset your password:<a href='"+ configuration.GetValue<string>("frontUrl") + "/reset-password/" + resetPassword.ResetKey + "'>" + resetPassword.ResetKey + "</a>", true);
             }
             catch
             {
