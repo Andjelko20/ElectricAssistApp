@@ -21,21 +21,28 @@
 			</div>
 			<div class="filter-select">
 				<label>Filter by city</label>
-				<select name="city" [(ngModel)]="city">
+				<select name="city" [(ngModel)]="city" (change)="changeCity()">
 					<option value="0">All cities</option>
+					<option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
 				</select>
 			</div>
 			<div class="search-user">
-				<input class="form-control" type="text" name="user">
-				<div class="search-result">
-					<div *ngFor="let location of locations" (click)="changeFocus(location)" class="location">
-						{{location.display_name}}
+				<label>Search by name of user</label>
+				<input class="input-form-control" type="text" name="user" [(ngModel)]="name" (keydown)="changeName()">
+				<div class="search-result" [class.none]="!searchResultVisible">
+					<div *ngIf="filteredUsers.length==0" class="no-results">
+						<p>There are no results</p>
+					</div>	
+					<div *ngFor="let user of filteredUsers" (click)="focusUser(user)" class="location">
+						{{user.name}},{{cities[user.cityId-1].name}},{{user.address}}
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="map-wrapper">
-		<div id="prosumers-map" ></div>
+	<div class="no-prosumers-map" *ngIf="loading">Loading ...</div>
+	<div class="no-prosumers-map" *ngIf="!loading && prosumers.length==0">There are no prosumers to show</div>
+	<div id="map-wrapper" [class.none]="prosumers.length==0">
+		<div id="prosumers-map"></div>
 	</div>
 </div>

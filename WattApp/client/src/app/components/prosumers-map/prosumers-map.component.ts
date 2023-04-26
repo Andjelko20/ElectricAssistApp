@@ -4,6 +4,10 @@ import * as Leaflet from 'leaflet';
 import { environment } from 'src/environments/environment';
 import { NgModel } from '@angular/forms';
 
+function escape(regex:string) {
+	return regex.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Koristi escape() funkciju da izbegne specijalne karaktere
+}
+
 @Component({
   selector: 'app-prosumers-map',
   templateUrl: './prosumers-map.component.html',
@@ -19,12 +23,16 @@ export class ProsumersMapComponent {
 	  private searchUrl!:URL;
 	  public searchInput!:string;
 	  public locations:any[]=[];
-	  private prosumers!:any[];
+	  public prosumers:any[]=[];
+	  public filteredUsers:any[]=[];
 	  private mapLayer:Leaflet.LayerGroup<any>|null=null;
 	  public zone:any="0";
 	  public city:any="0";
+	  public cities:any[]=[];
 	  private prosumersUrl!:URL;
+	  public name:string="";
 	  public loading:boolean=true;
+	  public searchResultVisible:boolean=false;
 	public legend=[
 		{
 			color:"--green-square",
@@ -51,6 +59,13 @@ export class ProsumersMapComponent {
 		});
 	}
 	  ngOnInit(): void {
+		document.onclick=(event:any)=>{
+			let searchResult=document.getElementsByClassName("search-result")[0];
+			if(event.target!==searchResult && !searchResult.contains(event.target)){
+				this.searchResultVisible=false;
+			}
+		};
+
 		this.searchUrl=new URL(environment.mapSearchUrl);
 		this.searchUrl.searchParams.set("format","json");
 		this.searchUrl.searchParams.set("addressdetails","addressdetails");
@@ -82,23 +97,28 @@ export class ProsumersMapComponent {
 		  maxZoom: 19,
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
 		this.prosumersUrl=new URL(environment.serverUrl+"/api/ProsumersDetails");
-		
+		fetch(environment.serverUrl+"/cities?countryId=1")
+		.then(res=>res.json())
+		.then(res=>{
+			this.cities=res;
+		})
 		this.fetchMarkers();
 		
 	  }
 	  fetchMarkers(){
-		/*
-		for(let marker of this.markers){
-			marker.removeFrom(this.map);
-		}
-		*/
 		if(this.mapLayer!=null)
 			this.mapLayer.removeFrom(this.map);
 		this.markers=[];
+		this.loading=true;
 		fetch(this.prosumersUrl.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 		.then(res=>res.json())
 		.then(res=>{
-			//let markers=[];
+			this.loading=false;
+			this.prosumers=res.map((r:any,i:number)=>{
+				r.index=i;
+				return r;
+			});
+			let markers=[];
 			this.mapLayer=new Leaflet.LayerGroup<any>();
 			for(let prosumer of res){
 				if(prosumer.consumption==undefined)
@@ -110,22 +130,11 @@ export class ProsumersMapComponent {
 				else icon=this.blueIcon;
 				
 				let marker=Leaflet.marker([prosumer.latitude,prosumer.longitude],{icon}).addTo(this.mapLayer);
-				//markers.push(marker);
+				markers.push(marker);
 				marker.bindPopup(`<b>${prosumer.name}</b><br><a href="prosumer/${prosumer.id}">Details</a>`);
 			}
 			this.mapLayer.addTo(this.map);
-			this.prosumers=res;
-			//this.markers=markers;
-		});
-	  }
-	  onSubmit(){
-		if(this.searchInput=="" || this.searchInput==undefined)
-			return;
-		this.searchUrl.searchParams.set("q",this.searchInput);
-		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
-		.then(res=>res.json())
-		.then(res=>{
-			this.locations=res;
+			this.markers=markers;
 		});
 	  }
 	  changeFocus(location:any){
@@ -137,5 +146,37 @@ export class ProsumersMapComponent {
 	  changeZone(){
 		this.prosumersUrl.searchParams.set("zone",this.zone);
 		this.fetchMarkers();
+	  }
+	  changeCity(){
+		let city=this.cities.find(city=>city.id==this.city);
+		this.searchUrl.searchParams.set("q",city.name+",Serbia");
+		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
+		.then(res=>res.json())
+		.then(res=>{
+			this.changeFocus(res[0]);
+		});
+	  }
+	  changeName(){
+		console.log(this.name)
+		if(this.name=="" || this.name==undefined || this.name.length<2){
+			this.filteredUsers=[];
+			this.searchResultVisible=false;
+			return;
+		}
+		const regexObject = new RegExp(escape(this.name), "g"); // Kreiranje RegExp objekta sa ignorisanjem specijalnih karaktera
+		this.filteredUsers=this.prosumers.filter(prosumer=>{
+			if(this.city!=0 && prosumer.cityId!=this.city)
+				return false;
+			if(!regexObject.test(prosumer.name))
+				return false;
+			return true;
+		});
+		this.searchResultVisible=true;
+	  }
+	  focusUser(user:any){
+		this.name="";
+		this.changeFocus({lat:user.latitude,lon:user.longitude});
+		this.searchResultVisible=false;
+		this.markers[user.index].openPopup();
 	  }
 }

@@ -122,7 +122,9 @@ namespace Server.Services.Implementations
                     Name = user.Name,
                     Latitude = user.Latitude,
                     Longitude = user.Longitude,
-                    Consumption = cons
+                    Consumption = cons,
+                    CityId=user.Settlement.CityId,
+                    Address=user.Address
                 });
             }
             return lista;
