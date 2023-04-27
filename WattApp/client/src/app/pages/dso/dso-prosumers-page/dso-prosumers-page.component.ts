@@ -7,11 +7,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./dso-prosumers-page.component.css']
 })
 export class DsoProsumersPageComponent implements OnInit {
-  ngOnInit(): void {
-	  fetch(environment.serverUrl+"/api/ProsumersDetails/count",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
-	  .then(res=>res.json())
-	  .then(res=>this.numberOfProsumers=res);
-  }
+
 
   componentShown = true;
   componentShown1 = false;
@@ -21,6 +17,11 @@ export class DsoProsumersPageComponent implements OnInit {
   itemsPerPage=10;
   totalItems=20;
   items:any[]=[];
+  ngOnInit(): void {
+	  fetch(environment.serverUrl+"/api/ProsumersDetails/count",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+	  .then(res=>res.json())
+	  .then(res=>this.numberOfProsumers=res);
+  }
   showComponent() {
     this.componentShown = true;
   

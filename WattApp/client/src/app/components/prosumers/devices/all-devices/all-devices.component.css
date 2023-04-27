@@ -81,6 +81,15 @@
     position: relative;
     margin: 5px;
 }
+.devices-device-item1 {
+    border: 3px solid rgb(236, 7, 41);
+    border-radius: 100px;
+    max-width: 100%;
+    display: inline-block;
+    background-color: white;
+    position: relative;
+    margin: 5px;
+}
 
 #deviceCategoryId {
     width: 41%;
@@ -115,6 +124,10 @@ label {
         width: 35%;
     }
     .devices-device-item {
+        margin: 15px;
+        width: 75%;
+    }
+    .devices-device-item1 {
         margin: 15px;
         width: 75%;
     }

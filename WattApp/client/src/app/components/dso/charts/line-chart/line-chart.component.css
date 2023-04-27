@@ -5,6 +5,6 @@
 .chart{
     width: 1500px;
     height: 680px;
-    margin-left: 150px;
+    display: inline-block;
 
 }

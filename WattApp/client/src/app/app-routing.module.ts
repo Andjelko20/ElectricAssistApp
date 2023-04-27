@@ -51,6 +51,8 @@ const routes: Routes = [
 	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumer/:id',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prediction',component:DsoPredictionPageComponent,canActivate:[DispatcherGuard]},
+	{path:"profile-dso",component:ProsumerAccountPageComponent,canActivate:[DispatcherGuard]},
+	{path:"profile-dso-update",component:ProsumerAccountSettingsPageComponent,canActivate:[DispatcherGuard]},
 	//PROSUMER
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
 	{path:'devices',component:ProsumerDevicesPageComponent,canActivate:[ProsumerGuard]},

@@ -25,15 +25,6 @@ ul {
     min-height: 280px;
 }
 
-
-/* Logo */
-
-
-/* pravi problem kad se smanji na 320px */
-
-
-/* Car and battery */
-
 .carbattery {
     position: sticky;
     background-color: white;
@@ -113,8 +104,13 @@ ul {
     display: flex;
     overflow-x: auto;
     position: relative;
-}
-
+    cursor: grab;
+  }
+  
+  .devices.grabbing {
+    cursor: grabbing;
+  }
+  
 .devices-item {
     position: sticky;
     background-size: cover;
@@ -153,7 +149,6 @@ ul {
     background-color: white;
     display: inline-block;
 }
-
 .devices-device-item1 {
     border: 3px solid rgb(236, 7, 41);
     border-radius: 100px;
@@ -333,7 +328,30 @@ h1 {
     }
     .moredevices a {
         font-size: 35px;
+        border-bottom: 3px solid #bce9e4;
     }
+    .moredevices a:hover{
+        border-bottom: 3px solid dodgerblue;
+    }
+    .devices {
+        position: sticky;
+        align-items: stretch;
+        width: 100%;
+        height: auto;
+        text-align: center;
+        transition: all 0.3s;
+        display: flex;
+        overflow-x: scroll;
+        position: relative;
+        cursor: grab;
+      }
+      
+      .devices.grabbing {
+        cursor: grabbing;
+      }
+      
+    
+    
 }
 
 

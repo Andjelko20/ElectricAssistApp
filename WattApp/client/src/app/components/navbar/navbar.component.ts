@@ -29,6 +29,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     let token=new JwtToken();
     this.id=token.data.id as number;
+    this.role=token.data.role as string;
     this.usersService.getlogInUser().subscribe(user=>{
       this.user=user
       this.name=user.name

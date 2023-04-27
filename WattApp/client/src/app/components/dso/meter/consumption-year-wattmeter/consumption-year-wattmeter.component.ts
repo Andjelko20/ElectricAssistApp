@@ -44,7 +44,7 @@ export class ConsumptionYearWattmeterComponent implements OnInit {
           this.value= data;
           this.valuekWh = this.value.toFixed(2);
           this.valueMWh= (this.valuekWh*0.001).toFixed(2);
-          this.valueGWh= (this.valueMWh*0.001).toFixed(2);;
+          this.valueGWh= (this.valueMWh*0.001).toFixed(2);
         })
       })
     })

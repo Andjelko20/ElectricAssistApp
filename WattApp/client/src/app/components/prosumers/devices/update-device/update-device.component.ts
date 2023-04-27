@@ -33,7 +33,8 @@ export class UpdateDeviceComponent implements OnInit{
   confirmVisibility: boolean = false;
   confirmControlability:boolean=false;
   devices:ShowDevices[] = [];
-  idProsumer?:number
+  idProsumer?:number;
+  idDevice?:number;
   constructor(private devicesService:DevicesService,private router:Router,private route:ActivatedRoute,private formBuilder: FormBuilder) {
     this.myForm = this.formBuilder.group({
       nameform1: ['', Validators.required],
@@ -42,21 +43,16 @@ export class UpdateDeviceComponent implements OnInit{
       
     });
    }
+
   ngOnInit(): void {
     
     let token=new JwtToken();
     this.idProsumer=token.data.id as number;
-    console.log(this.idProsumer);
-    
-    
-
+    this.idDevice=Number(this.route.snapshot.paramMap.get('id'));
   this.devicesService.getDevice( Number(this.route.snapshot.paramMap.get('id')) )
         .subscribe({
           next:(response)=>{
-            console.log(this.idProsumer);
             this.updateDevice={
-             
-              
               id:Number(this.route.snapshot.paramMap.get('id')),
               userId: response.userId,
               name: response.name,

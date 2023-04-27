@@ -26,8 +26,7 @@ export class OneProsumerComponent implements OnInit{
 
     this.authService.getProsumer(Number(this.route.snapshot.paramMap.get('id'))).subscribe(user=>{
 
-      this.dso = user;
-      console.log(this.dso);
+      this.dso = user; 
       this.historyService.currentUserProductionConsumption(Number(this.route.snapshot.paramMap.get('id')),2).subscribe(data1=>{
         this.cC = data1;
         this.historyService.currentUserProductionConsumption(Number(this.route.snapshot.paramMap.get('id')),1).subscribe(data2=>{

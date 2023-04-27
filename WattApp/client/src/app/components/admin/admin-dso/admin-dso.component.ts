@@ -12,7 +12,7 @@ export class AdminDsoComponent {
 	currentPage:number=1;
 	itemsPerPage:number=10;
 	totalItems:number=10;
-  
+  confirmBlock?:boolean=false;
   showUsers:ShowUsers[]=[];
   onBlockClick!: (this: HTMLElement, ev: MouseEvent) => any;
   onUnblockClick!: (this: HTMLElement, ev: MouseEvent) => any;
@@ -59,6 +59,7 @@ export class AdminDsoComponent {
 	}
 
   blockUser(id: number) {
+    this.confirmBlock=false;
     const block = document.getElementById('block-popup');
     if (block != null) {
       block.removeEventListener('click', this.onBlockClick); // remove previous event listener
@@ -67,6 +68,7 @@ export class AdminDsoComponent {
           
           const userIndex = this.showUsers.findIndex(user => user.id === id);
           this.showUsers[userIndex].block = true;
+          this.confirmBlock=true;
         });
         block.removeEventListener('click', this.onBlockClick); // remove event listener after execution
       };
@@ -75,6 +77,7 @@ export class AdminDsoComponent {
   }
   
   unblockUser(id: number) {
+    this.confirmBlock=false;
     const unblock = document.getElementById('unblock-popup');
     if (unblock != null) {
       unblock.removeEventListener('click', this.onUnblockClick); // remove previous event listener
@@ -83,6 +86,7 @@ export class AdminDsoComponent {
   
           const userIndex = this.showUsers.findIndex(user => user.id === id);
           this.showUsers[userIndex].block = false;
+          this.confirmBlock=true;
         });
         unblock.removeEventListener('click', this.onUnblockClick); // remove event listener after execution
       };

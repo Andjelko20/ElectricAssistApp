@@ -1,6 +1,7 @@
 
         <div class="glavni"  *ngIf="device">
             <div class="updatedelete">
+                <span id="typedev">{{device.deviceType}}</span>
                 <button id="del" class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#myModalDelete" (click)="delete(device.id)" >Delete</button>
                 <a id="del"class="btn btn-primary" [routerLink]='["/device-update/"+idDevice]' role="button">Update</a>
             </div>
@@ -9,12 +10,11 @@
                     
                     <h2 >{{device.name}}</h2>
                     
-                    <label for="visibilityOnOff" class="form-label " *ngIf="device.turnOn===false" style="margin-right: 10px;">Disabled</label>
+                    
                           <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalOn" *ngIf="device.turnOn===false"(click)="turnOnOff(device.id)">
                             <input type="checkbox" [disabled]="!buttonOnoff">
                             <span class="slider round"></span>
                           </label>
-                          <label for="visibilityOnOff" class="form-label " *ngIf="device.turnOn===true" style="margin-right: 10px;">Active</label>
                           <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalOff" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)">
                             <input type="checkbox" checked [disabled]="!buttonOnoff">
                             <span class="slider round"></span>

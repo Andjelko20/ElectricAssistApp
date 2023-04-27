@@ -74,12 +74,12 @@ export class ProsumersMapComponent implements OnInit,AfterViewInit {
 		});
 	}
 	  ngOnInit(): void {
-		document.onclick=(event:any)=>{
-			let searchResult=document.getElementsByClassName("search-result")[0];
-			if(event.target!==searchResult && !searchResult.contains(event.target)){
-				this.searchResultVisible=false;
+		document.addEventListener('click', (event) => {
+			const searchResult = document.querySelector('.search-result');
+			if (searchResult && event.target !== searchResult && !searchResult.contains(event.target as Node)) {
+			  this.searchResultVisible = false;
 			}
-		};
+		  });
 
 		this.searchUrl=new URL(environment.mapSearchUrl);
 		this.searchUrl.searchParams.set("format","json");

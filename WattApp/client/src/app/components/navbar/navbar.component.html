@@ -5,7 +5,7 @@
           <button type="button" id="sidebarCollapse" class="btn btn-info">
             <i  class="fas fa-align-justify"></i>
           </button>
-          <a class="navbar-brand" href="/">
+          <a class="navbar-brand" [routerLink]='["/dashboard"]'>
             <img src="../../assets/white-logo.png" class="logo">
             <span>WattApp</span>
           </a>
@@ -13,8 +13,10 @@
             <div class="dropdown" [class.show]="showDropdown">
               <a class="dropbtn" (click)="toggleDropdown()" style="text-decoration: none;"><i class="fa fa-user" style="font-size: 30px;" ></i> <span> {{name}}</span></a>
               <div class="dropdown-content">
-                <a href="#"><i class="fas fa-address-card" style="font-size: 25px;"></i> Settings</a>
-                <a [routerLink]='["/"]' id="logouta" (click)="logout()"><i class="fas fa-sign-out-alt" style="font-size: 25px;"></i> Logout</a>
+                <a *ngIf="this.role===this.dso"[routerLink]='["/profile-dso"]'><i class="fas fa-address-card" style="font-size: 25px;"></i> Settings</a>
+                <a *ngIf="this.role===this.prosumer" [routerLink]='["/profile"]'><i class="fas fa-address-card" style="font-size: 25px;"></i> Settings</a>
+                <a *ngIf="this.role===this.admin || this.role===this.superadmin" [routerLink]='["/"]'><i class="fas fa-address-card" style="font-size: 25px;"></i> Settings</a>
+                <a id="logouta" (click)="logout()"><i class="fas fa-sign-out-alt" style="font-size: 25px;"></i> Logout</a>
               </div>
             </div>
           </div>

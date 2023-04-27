@@ -103,12 +103,15 @@ export class BarMonthChartComponent {
         },
         options: 
         {
+
+          responsive: true, // Enable responsiveness
+          
           scales:{
             y: {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:15
                 }
               },
               position: "left",
@@ -117,7 +120,7 @@ export class BarMonthChartComponent {
                 text: "kWh",
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 }
               }
             }
@@ -126,7 +129,7 @@ export class BarMonthChartComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:15
                 }
                 
               },
@@ -135,7 +138,7 @@ export class BarMonthChartComponent {
                 text: "Days in a month",
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 }
               }
             }
@@ -145,7 +148,7 @@ export class BarMonthChartComponent {
             
             
           },
-          responsive: true,
+         
           plugins: {
             
             legend: {
@@ -161,7 +164,7 @@ export class BarMonthChartComponent {
                 usePointStyle: true,
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 } 
                 // ,
                 // boxHeight:100,

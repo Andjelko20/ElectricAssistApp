@@ -110,5 +110,10 @@ export class AuthService {
   getSettlement(cityId:number):Observable<Settlement[]>{
     return this.http.get<Settlement[]>(environment.serverUrl+"/settlements?cityId="+cityId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
+  getNumberOfDevices(id:number):Observable<any>
+  {
+    return this.http.get<any>(environment.serverUrl+'/api/Prosumer/numberOfDevices/'+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+
+  }
   
 }

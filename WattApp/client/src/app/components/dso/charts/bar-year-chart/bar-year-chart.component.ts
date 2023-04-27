@@ -99,13 +99,13 @@ export class BarYearChartComponent {
           
         },
         options: 
-        {
+        {responsive: true,
           scales:{
             y: {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:15
                 }
               },
               position: "left",
@@ -116,7 +116,7 @@ export class BarYearChartComponent {
                 text: "kWh",
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 }
                 
               }
@@ -126,7 +126,7 @@ export class BarYearChartComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:15
                 }
                 
               },
@@ -135,7 +135,7 @@ export class BarYearChartComponent {
                 text: "Months in a Year",
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 }
               }
             }
@@ -145,7 +145,7 @@ export class BarYearChartComponent {
             
             
           },
-          responsive: true,
+          
           plugins: {
             
             legend: {

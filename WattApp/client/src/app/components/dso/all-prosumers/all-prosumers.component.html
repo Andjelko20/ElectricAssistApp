@@ -18,8 +18,8 @@
         
         <ng-container *ngFor="let pr of prosumerValues | paginate: {currentPage,itemsPerPage,totalItems} " >
           <ng-container *ngIf="prosumer.id === pr.id ">
-            <td>{{ (currentPage - 1) * itemsPerPage + i  }}</td>
-            <td><a [routerLink]='["/prosumer/",prosumer.id]'>{{prosumer.name}}</a></td>
+            <td>{{ (currentPage - 1) * itemsPerPage + i +1  }}</td>
+            <td><a [routerLink]='["/prosumer/"+prosumer.id]'>{{prosumer.name}}</a></td>
             <td>{{prosumer.settlement}}</td>
             <td>{{prosumer.city}}</td>
             <td>{{prosumer.country}}</td>

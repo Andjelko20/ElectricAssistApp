@@ -37,21 +37,22 @@ export class AllProsumersComponent implements OnInit{
     this._listFilter = value;
     this.filteredProsumers = this.listFilter ? this.performFilter(this.listFilter) : this.prosumers;
   }
+
   ngOnInit(): void {
-    this.filteredProsumers = this.data?.map((u:any)=>({
-		id: u.id,
-		name: u.name,
-		username: u.username,
-		email: u.email,
-		role: u.role,
-		blocked: u.blocked,
-		settlement:u.settlement,
-		city:u.city,
-		country: u.country
-	}as Prosumers));
+  //   this.prosumers = this.data?.map((u:any)=>({
+	// 	id: u.id,
+	// 	name: u.name,
+	// 	username: u.username,
+	// 	email: u.email,
+	// 	role: u.role,
+	// 	blocked: u.blocked,
+	// 	settlement:u.settlement,
+	// 	city:u.city,
+	// 	country: u.country
+	// }as Prosumers));
 
 
-  
+    // this.getUsers();
   }
 
 
@@ -134,10 +135,10 @@ export class AllProsumersComponent implements OnInit{
 			}
 			
 		})
-		.catch(err=>{
-			localStorage.removeItem("token");
-			//this.router.navigate(["login"]);
-		});
+		// .catch(err=>{
+		// 	localStorage.removeItem("token");
+		// 	//this.router.navigate(["login"]);
+		// });
     
   }
 }

@@ -57,20 +57,7 @@ export class LineWeekChartComponent {
       })
     })
     
-    // this.deviceService.weekByDay(1,2).subscribe((data: WeekByDay[]) =>{
-    //   console.log("Data => ", data);
-    //   this.list1 = data;
-    //   this.deviceService.weekByDay(1,1).subscribe((data: WeekByDay[]) =>{
-    //     console.log("Data => ", data);
-    //     this.list2 = data;
-    //     this.LineChart();
-    //   })
 
-    // })
-    
-    // console.log(this.list);
-    
-    
   }
   LineChart(){
 
@@ -134,12 +121,13 @@ export class LineWeekChartComponent {
       }
       ,
       options: {
+        responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             position: "left",
@@ -148,7 +136,7 @@ export class LineWeekChartComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
@@ -157,7 +145,7 @@ export class LineWeekChartComponent {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             title:{
@@ -165,13 +153,13 @@ export class LineWeekChartComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
           ,
         },
-        responsive: true,
+        
         plugins: {
           datalabels:{display: false},
           legend: {

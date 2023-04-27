@@ -1,6 +1,8 @@
 .wrapper{
     margin-top: 90px;
     width: 100%;
+    margin-bottom: 70px;
+    padding-left: 19px;
 }
 .head {
     justify-content: flex-end;
@@ -13,7 +15,7 @@
   align-items: center;
   background-color: white;
   padding: 10px;
-
+  border-radius: 10px;
 }
 .toggle-buttons {
   margin-left: 15px;
@@ -43,9 +45,6 @@
   color: gray;
 }
 .card-group {
-    margin-left: 17px;
-    margin-right: 15px;
-    flex-wrap: 100px;
     text-align: center;
     margin-bottom: 10px;
 }
@@ -112,23 +111,21 @@
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
 }
+/* chart */
 .history-charts {
     background-color: white;
+    border-radius: 10px;
     box-shadow: 2px 4px grey;
-    height: 100%;
-    flex-grow: 100;
-    padding-left: 5%;
-    margin-right: 15px;
-    width: 200px;
+    width: 74%;
+    /* height: 700px; */
 }
 .history-charts-body {
     margin-top: 15px;
-    flex-grow: 100;
-    left: -80px;
-    right: -120px;
+    /* left: -80px;
+    right: -120px; */
     bottom: 0px;
     top: 0px;
-    margin-right: 15px;
+    /* margin-right: 15px; */
 }
 .csv-body {
   display: flex;
@@ -153,10 +150,11 @@
 .csv-button:hover {
   background-color: #005ea6;
 }
+/* chart */
 .chart-body {
-  display: flex;
+
   justify-content: center;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 .chart-buttons {
   display: flex;
@@ -261,6 +259,23 @@
   height: 10px; /* Set the height to the same value as the width to create a square shape */
   margin-left: 10px;
 }  
+.weather {
+  width: 25%;
+  height: 50%;
+  margin-right: 10px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 2px grey;
+}
+
+.weather-body{
+  display: block;
+  left: auto;
+  right: auto;
+  padding: 10px;
+  margin: 0 15px;
+  text-align: center;
+}
 @media only screen and (min-width: 768px) and (max-width: 1280px) {
     .wrapper{
         margin-top: 90px;
@@ -274,8 +289,6 @@
     .card-group {
       display: flex;
       justify-content: center;
-      margin-left: 17px;
-      margin-right: 15px;
       flex-wrap: wrap;
       text-align: center;
     }
@@ -341,6 +354,7 @@
         -ms-flex: 0 0 auto;
         flex: 0 0 auto;
     }
+    /* charts */
     .history-charts {
         background-color: white;
         box-shadow: 2px 4px grey;
@@ -348,7 +362,8 @@
         flex-grow: 100;
         padding-left: 5%;
         margin-right: 15px;
-        width: 200px;
+        width: 30%;
+        
     }
     .history-charts-body {
         margin-top: 15px;
@@ -366,6 +381,7 @@
         margin-left: 40%;
         flex-grow: 100;
     }
+    /* charts end */
     .numpro {
         background-color: white;
         border-radius: 10px;
@@ -451,8 +467,10 @@
     }
             
       .weather {
-        width: 20%;
+        width: 80%;
+        margin-left: 20px;
         margin-right: 10px;
+        margin-bottom: 20px;
         background-color: white;
         box-shadow: 2px 4px grey;
       }
@@ -468,7 +486,7 @@
 
       .toggle-container {
           display: flex;
-
+          border-radius: 10px;
           flex-direction: column;
           justify-content: center;
           align-items: center;
@@ -510,6 +528,25 @@
         .toggle-buttons input[type="radio"]:not(:checked) + label {
           color: gray;
         }
-
+        
+      .chart-buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+      .chart-button {
+        cursor: pointer;
+        border: none;
+        padding: 10px 20px;
+        margin: 0 10px;
+        color: #2199e8;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 25px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
 
 }
