@@ -1,25 +1,52 @@
-<div class="legend">
-	<h2>Legend</h2>
-	<div class="legend-body">
-		<div class="legend-item" *ngFor="let leg of legend">
-			<div class="legend-square" [style.backgroundColor]="leg.color"></div>
-			<div class="legend-description">{{leg.description}}</div>
-		</div>
-	</div>
+
+<div class="c-grey-900 text-center"  >
+	<div style="display: inline-block;"><h2   style=" font-weight: bolder;">Legend</h2></div>
+	
+	<div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than 350 kWh" style="display: inline-block; cursor: pointer;"><span class="green-square" ></span> Green zone </div>
+	<div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;"><span class="blue-square"></span> Blue zone</div>
+	<div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;"><span class="red-square" ></span> Red zone</div>
+	<!-- <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+	<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+		Tooltip on top
+	  </button> -->
+	<hr>
 </div>
 <div id="container">
 	<div class="search-container">
-		<form (submit)="onSubmit()">
-			<input type="text" name="search-input" class="form-control" [(ngModel)]="searchInput" placeholder="Enter location">
-			<button class="btn btn-primary">Search</button>
-		</form>
-		<div class="search-result">
-			<div *ngFor="let location of locations" (click)="changeFocus(location)" class="location">
-				{{location.display_name}}
+		<div class="map-filters-container">
+			<div class="filter-select">
+				<label>Filter by zone</label>
+				<select name="zone" (change)="changeZone()" [(ngModel)]="zone">
+					<option value="0">All zones</option>
+					<option value="1">Green zone</option>
+					<option value="2">Blue zone</option>
+					<option value="3">Red zone</option>
+				</select>
+			</div>
+			<div class="filter-select">
+				<label>Filter by city</label>
+				<select name="city" [(ngModel)]="city" (change)="changeCity()">
+					<option value="0">All cities</option>
+					<option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
+				</select>
+			</div>
+			<div class="search-user">
+				<label>Search by name of user</label>
+				<input class="input-form-control" type="text" name="user" [(ngModel)]="name" (keydown)="changeName()">
+				<div class="search-result" [class.none]="!searchResultVisible">
+					<div *ngIf="filteredUsers.length==0" class="no-results">
+						<p>There are no results</p>
+					</div>	
+					<div *ngFor="let user of filteredUsers" (click)="focusUser(user)" class="location">
+						{{user.name}},{{cities[user.cityId-1].name}},{{user.address}}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div id="map-wrapper">
+	<div class="no-prosumers-map" *ngIf="loading">Loading ...</div>
+	<div class="no-prosumers-map" *ngIf="!loading && prosumers.length==0">There are no prosumers to show</div>
+	<div id="map-wrapper" [class.none]="prosumers.length==0">
 		<div id="prosumers-map"></div>
 	</div>
 </div>

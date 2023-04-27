@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
+import { Roles } from 'src/app/utilities/role';
 
 @Component({
   selector: 'app-prosumer-account-page',
@@ -24,22 +25,36 @@ export class ProsumerAccountPageComponent {
     country: '',
     address:''
   }
+  numOfDevices?:number;
+  admin?:string;
+  dso?:string;
+  prosumer?:string;
   public idUser!:number;
   public role!:string;
   public name!:string;
+  public email!:string;
   public emailErrorMessage:string="";
 	public errorMessage:string="";
 	public success:boolean=false;
   public passwordGen='';
   public emailUp='';
-  constructor(private route:ActivatedRoute,private router:Router,private updateService:AuthService) { }
+  public adres!:string;
+  constructor(private route:ActivatedRoute,private router:Router,private updateService:AuthService) { 
+    this.admin=Roles.ADMIN_NAME;
+    this.dso=Roles.DISPATCHER_NAME;
+    this.prosumer=Roles.PROSUMER_NAME;
+  }
 
   ngOnInit(): void {
     let token=new JwtToken();
     this.idUser=token.data.id as number;
-
+    this.updateService.getNumberOfDevices(this.idUser).subscribe({
+      next:(response)=>{
+        this.numOfDevices=response;
+      }
+    })
     this.role=token.data.role as string;
-    console.log(this.idUser);
+    console.log(this.role);
 	
         this.updateService.getlogInUser()
         .subscribe({
@@ -58,6 +73,8 @@ export class ProsumerAccountPageComponent {
               
               };
               this.name=response.name;
+              this.email=response.email;
+              this.adres=response.address;
             },
 			error:(response)=>{
 				this.router.navigate(["prosumer-account-page"]);

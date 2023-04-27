@@ -1,6 +1,11 @@
-
 .chart{
-    width: 850px;
-    height: 500px;
-
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#piechart{
+    width: 300px;
+    height: 360px;
 }

@@ -34,9 +34,9 @@ namespace Server.Controllers
 
         [HttpGet]
         [Authorize(Roles = Roles.Dispatcher)]
-        public async Task<IActionResult> GetAllProsumers()
+        public async Task<IActionResult> GetAllProsumers([FromQuery] string? zone = "0", [FromQuery] int? city=0)
         {
-            return Ok(await userService.GetAllProsumers());
+            return Ok(await userService.GetAllProsumers(zone, (int)((city==null)?0:city)));
         }
 
         /// <summary>
@@ -48,13 +48,13 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpGet]
-        [Route("page/{page:int}")]
+        [Route("page")]
         [Authorize(Roles=Roles.Dispatcher)]
-        public async Task<IActionResult> GetPage([FromRoute] int page)
+        public async Task<IActionResult> GetPage([FromQuery] int pageNumber, [FromQuery] int pageSize=20)
         {
             try
             {
-                return Ok(await userService.GetPageOfUsers(page, 20, (user) => user.RoleId==Roles.ProsumerId));
+                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId));
             }
             catch (HttpRequestException ex)
             {

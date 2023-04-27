@@ -11,6 +11,12 @@ using Server.Services;
 using Server.DTOs.Responses;
 using Server.DTOs.Requests;
 using Server.Services.Implementations;
+using MimeKit.Encodings;
+using Server.Exceptions;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace Server.Controllers
 {
@@ -23,6 +29,7 @@ namespace Server.Controllers
         public readonly ITokenService tokenService;
         public readonly IUserService userService;
         public readonly IEmailService emailService;
+        public readonly IConfiguration configuration;
         public readonly int NUMBER_OF_ITEMS_PER_PAGE = 20;
 
         public UsersController(
@@ -30,13 +37,15 @@ namespace Server.Controllers
             ILogger<UsersController> logger,
             ITokenService tokenService,
             IUserService userService,
-            IEmailService emailService)
+            IEmailService emailService,
+            IConfiguration configuration)
         {
             _sqliteDb = sqliteDb;
             this.logger = logger;
             this.tokenService = tokenService;
             this.userService = userService;
             this.emailService = emailService;
+            this.configuration = configuration;
         }
         /// <summary>
         /// Get 20 users per page
@@ -48,13 +57,16 @@ namespace Server.Controllers
 
 
         [HttpGet]
-        [Route("page/{page:int}")]
-        [Authorize(Roles = Roles.AdminPermission)]
-        public async Task<IActionResult> GetPage([FromRoute]int page)
+        [Route("page")]
+        [Authorize(Roles = Roles.AdminOperaterPermission)]
+        public async Task<IActionResult> GetPage([FromQuery]int pageNumber, [FromQuery] int pageSize=20)
         {
             try
             {
-                return Ok(await userService.GetPageOfUsers(page, 20, (user) => true));
+                long myId = long.Parse(tokenService.GetClaim(HttpContext,"id"));
+                if (User.IsInRole(Roles.Operater))
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId && user.RoleId!=Roles.SuperadminId && user.Id!=myId));
+                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId != Roles.SuperadminId && user.Id!=myId));
             }
             catch(HttpRequestException ex)
             {
@@ -76,7 +88,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("{id:long}")]
-        [Authorize(Roles = Roles.AdminPermission)]
+        [Authorize(Roles = Roles.AdminOperaterPermission)]
         public async Task<IActionResult> GetUserById([FromRoute]long id)
         {
             var user = await userService.GetUserById(id);
@@ -84,6 +96,10 @@ namespace Server.Controllers
             {
                 return NotFound(new { message="User with id "+id.ToString()+" doesn\'t exist" });
             }
+            if (user.RoleId == Roles.SuperadminId)
+                return Forbid();
+            if (User.IsInRole(Roles.Operater) && user.RoleId != Roles.ProsumerId)
+                return Forbid();
             return Ok(new UserDetailsDTO(user));
         }
 
@@ -120,13 +136,13 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("roles")]
-        [Authorize(Roles = Roles.AdminPermission)]
+        [Authorize(Roles = Roles.AdminOperaterPermission)]
         public async Task<IActionResult> GetRoles()
         {
             try
             {
                 var id = tokenService.GetClaim(HttpContext,JwtClaims.Id);
-                logger.LogInformation(id);
+                //logger.LogInformation(id);
                 return Ok(await userService.GetAllRoles());
             }
             catch (Exception e)
@@ -145,48 +161,122 @@ namespace Server.Controllers
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
 
         [HttpPost]
-        [Authorize(Roles =Roles.AdminPermission)]
-        public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO requestBody)
+        [Authorize(Roles = Roles.AdminPermission)]
+        public IActionResult CreateUser([FromBody] UserCreateDTO requestBody)
         {
             try
             {
-                UserModel user = new UserModel
+
+                PendingUserModel user = new PendingUserModel
                 {
                     Username = requestBody.Username,
                     Name = requestBody.Name,
-                    Password = HashGenerator.Hash(requestBody.Password),
+                    Password = HashGenerator.Hash(password),
                     Blocked = requestBody.Blocked,
                     RoleId = requestBody.RoleId,
-                    Email=requestBody.Email,
-                    Address=requestBody.Address,
-                    Latitude=requestBody.Latitude,
-                    Longitude=requestBody.Longitude,
-                    SettlementId=requestBody.SettlementId
+                    Email = requestBody.Email,
+                    Address = requestBody.Address,
+                    Latitude = requestBody.Latitude,
+                    Longitude = requestBody.Longitude,
+                    SettlementId = requestBody.SettlementId, 
+                    ExpireAt = DateTime.Now.AddDays(1),
+                    ConfirmKey = PasswordGenerator.GenerateRandomPassword(15)//ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
                 };
 
-                _sqliteDb.Users.Add(user);
+                var pendingUser = userService.CreatePendingUser(user);
+                if (pendingUser == null)
+                    throw new EmailAddressAlreadyInUseException("Doslo je do greske prilikom kreiranja zahteva.");
+                else if(pendingUser is HttpRequestException)
+                {
+                    throw (HttpRequestException)pendingUser;
+                }
+                
                 try
                 {
-                    emailService.SendEmail(requestBody.Email,"Account created","Your account is created successfully. Your password is <b>"+requestBody.Password+"</b>",true);
+                    emailService.SendEmail(user.Email,
+                            "Confirm Your Email Address",
+                             "Hello " + user.Name + ", <br><br>" +
+                            "Thank you for signing up for our service.<br>" +
+                            "Before you can start using your account," +
+                            "we need to verify your email address.<br> <br>" +
+                            "Please click the link below to <b>confirm your email address</b>:<br>" +
+                            "<a href='" + configuration.GetValue<string>("frontUrl") + "/email-confirmation?key=" + user.ConfirmKey + "'>" + user.Email + "</a><br><br>" +
+                            "If you did not sign up for our service, please ignore this email.<br><br>" +
+                            "Thank you, <br>" +
+                            "<i><b>ElectricAssist Team</b></i>"
+                        , true);
                 }
                 catch
                 {
-                    return StatusCode(500, new MessageResponseDTO("Email is not sent. Check if your email exists."));
+                    return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
                 }
-                await _sqliteDb.SaveChangesAsync();
-                return Ok(new { message="Creted" });
+
+
+                return Ok("Email sent successfully!");
+               
+            }
+            catch(HttpRequestException ex)
+            {
+                return StatusCode(405, ex.Message);
+            }
+            catch(EmailAddressAlreadyInUseException ex)
+            {
+                return StatusCode(500, "Ooops... Something went wrong, please try again.");
             }
             catch(Exception ex)
             {
-                //return StatusCode(400, new { message = "Already exists user with that username" });
-                return StatusCode(400, new MessageResponseDTO("Already exists user with that username or email"));
+                return StatusCode(500, "Ooops... Something went wrong, please try again.");
             }
 
         }
-        /// <summary>
-        /// Update user by admin
-        /// </summary>
-        [Produces("application/json")]
+
+        [HttpPost("emailConfirmation/{key}")]
+        public IActionResult ConfirmEmailAddress([FromRoute] string key)
+        {
+            object response = userService.ConfirmEmailAddress(key);
+            ConfirmEmailResponseDTO responseDTO = new ConfirmEmailResponseDTO();
+            if (response is HttpRequestException)
+            {
+                responseDTO.error = ((HttpRequestException)response).Message;
+            }
+            else
+            {
+                UserModel user = (UserModel)response;
+                string password = PasswordGenerator.GenerateRandomPassword(15);
+                try
+                {
+                    emailService.SendEmail(user.Email,
+                        "ElecticAssist account created successfully - details",
+                        "Hello " + user.Name + ",<br><br>"
+                        + "Congratulations! You have successfully created an account and can now start using our app.<br>" +
+                        "Please find your login details below:"
+                        + "<br><br>" +
+                        "Username: " + "<b>" + user.Username + "</b><br>" +
+                        "Password: " + "<b>" + password + "</b>" +
+                        "<br><br>" +
+                        "For security reasons, we recommend that you change your password by logging into your account and accessing the account settings. This will help to protect your account.<br>" +
+                        "<br> Thank you, <br> <b><i>ElecticAssist Team</b></i>",
+                        true);
+                }
+                catch
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+                }
+                user.Password = HashGenerator.Hash(password);
+                _sqliteDb.Users.Update(user);
+                _sqliteDb.SaveChanges();
+                responseDTO.isConfirmed = true;
+            }
+            return Ok(responseDTO);
+        }
+    
+
+
+
+    /// <summary>
+    /// Update user by admin
+    /// </summary>
+    [Produces("application/json")]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BadRequestStatusResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(MessageResponseDTO), StatusCodes.Status500InternalServerError)]
@@ -202,13 +292,50 @@ namespace Server.Controllers
                 var user = await userService.GetUserById(id);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
-                if((requestBody.RoleId==Roles.AdminId && user.RoleId==Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId&& user.RoleId == Roles.AdminId))
+                if (user.RoleId == Roles.SuperadminId)
+                    return Forbid();
+                if ((requestBody.RoleId==Roles.AdminId && user.RoleId==Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId&& user.RoleId == Roles.AdminId))
                     user.RoleId = requestBody.RoleId;
                 user.Blocked = requestBody.Blocked;
-                user.Email = requestBody.Email;
+                if (user.Email != requestBody.Email)
+                {
+                    ChangeEmailModel changeEmailModel = new ChangeEmailModel
+                    {
+                        UserId = id,
+                        OldEmail = user.Email,
+                        NewEmail = requestBody.Email,
+                        ExpireAt = DateTime.Now.AddDays(1),
+                        ChangeEmailKey = PasswordGenerator.GenerateRandomPassword(15)//ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
+                    };
+
+                    userService.CreateChangeEmailRequest(changeEmailModel);
+
+                    try
+                    {
+                        emailService.SendEmail(changeEmailModel.NewEmail,
+                                "Confirm Your Email Address Change",
+                                 "Hello " + user.Name + ", <br><br>" +
+                                "Thank you for using our service.<br>" +
+                                "We have received a request to change the email address associated with your account." +
+                                "<br>To complete this process, please confirm the change by clicking on the link below:<br><br>" +
+                                "<a href='" + configuration.GetValue<string>("frontUrl") + "/change-email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
+                                "If you did not initiate this email address change request, please contact" +
+                                "our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
+
+                                "Thank you, <br>" +
+                                "<i><b>ElectricAssist Team</b></i>"
+                            , true);
+
+                    }
+                    catch
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+                    }
+                }
                 _sqliteDb.Users.Update(user);   
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message = "User is updated successfully" });
+                //Dobijam sifru i nov mail, ako je sifra dobra menjam mail za novog korisnika
             }
             catch(Exception ex)
             {
@@ -237,7 +364,43 @@ namespace Server.Controllers
                     return NotFound(new { message = "User doesn't exists" });
                 user.Username = requestBody.Username;
                 user.Name = requestBody.Name;
-                user.Email = requestBody.Email;
+                if (user.Email  != requestBody.Email)
+                {
+                    //Znaci da zeli da menja email
+                    ChangeEmailModel changeEmailModel = new ChangeEmailModel
+                    {
+                        UserId = userId,
+                        OldEmail = user.Email,
+                        NewEmail = requestBody.Email,
+                        ExpireAt = DateTime.Now.AddDays(1),
+                        ChangeEmailKey = PasswordGenerator.GenerateRandomPassword(15)//ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
+                    };
+
+                    userService.CreateChangeEmailRequest(changeEmailModel);
+
+                    try
+                    {
+                        emailService.SendEmail(changeEmailModel.NewEmail,
+                                "Confirm Your Email Address Change",
+                                 "Hello " + user.Name + ", <br><br>" +
+                                "Thank you for using our service.<br>" +
+                                "We have received a request to change the email address associated with your account." +
+                                "<br>To complete this process, please confirm the change by clicking on the link below:<br><br>" +
+                                "<a href='" + configuration.GetValue<string>("frontUrl") + "/change-email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
+                                "If you did not initiate this email address change request, please contact" +
+                                "our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
+
+                                "Thank you, <br>" +
+                                "<i><b>ElectricAssist Team</b></i>"
+                            , true);
+                        //FrontUrl, ClientUrl
+
+                    }
+                    catch
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+                    }
+                }
                 _sqliteDb.Users.Update(user);
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message = "User is updated successfully" });
@@ -247,6 +410,23 @@ namespace Server.Controllers
                 return StatusCode(500, new { message = "Internal Server Error" });
             }
         }
+
+        [HttpPost("changeEmailConfirmation/{key}")]
+        public IActionResult changeEmailAddressConfirmation([FromRoute]string key)
+        {
+            object response = userService.ConfirmChageOfEmailAddress(key);
+            ConfirmEmailResponseDTO responseDTO = new ConfirmEmailResponseDTO();
+            if (response is HttpRequestException)
+            {
+                responseDTO.error = ((HttpRequestException)response).Message;
+            }
+            else
+            {
+                responseDTO.isConfirmed = true;
+            }
+            return Ok(responseDTO);
+        }
+
         /// <summary>
         /// Block or unblock user
         /// </summary>
@@ -260,9 +440,16 @@ namespace Server.Controllers
         [Authorize(Roles =Roles.AdminPermission)]
         public async Task<IActionResult> BlockUser([FromBody] BlockedStatusDTO requestBody, [FromRoute] long id)
         {
+            long userId = long.Parse(tokenService.GetClaim(HttpContext, "id"));
+            if (userId == id)
+            {
+                return NotFound(new { message = "User doesn't exists" });
+            }
             var user = await _sqliteDb.Users.FirstOrDefaultAsync(user=>user.Id==id);
             if (user==null)
-                return NotFound(new { message="User doesn't exists" });
+                return NotFound(new { message = "User doesn't exists" });
+            if (user.RoleId == Roles.SuperadminId)
+                return Forbid();
             user.Blocked = requestBody.Status;
             await _sqliteDb.SaveChangesAsync();
             return Ok(new {message="User is blocked successfully"});
@@ -284,6 +471,8 @@ namespace Server.Controllers
             var user=await userService.GetUserById(id);
             if (user != null)
             {
+                if (user.RoleId == Roles.SuperadminId)
+                    return Forbid();
                 _sqliteDb.Remove(user);
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new {message="Deleted user"});
@@ -337,11 +526,11 @@ namespace Server.Controllers
             }
             else if (resetPassword.ExpireAt > DateTime.Now)
                 return BadRequest(new MessageResponseDTO("Reset key is already submited on your email"));
-            resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
+            resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(15);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
             try
             {
-                emailService.SendEmail(requestBody.Email, "Reset password", "Click on this link to reset your password:<a href='http://localhost:4200/reset-password/" + resetPassword.ResetKey + "'>" + resetPassword.ResetKey + "</a>", true);
+                emailService.SendEmail(requestBody.Email, "Reset password", "Click on this link to reset your password:<a href='"+ configuration.GetValue<string>("frontUrl") + "/reset-password/" + resetPassword.ResetKey + "'>" + resetPassword.ResetKey + "</a>", true);
             }
             catch
             {

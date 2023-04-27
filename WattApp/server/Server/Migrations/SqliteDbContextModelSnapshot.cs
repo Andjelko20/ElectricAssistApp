@@ -39,6 +39,32 @@ namespace Server.Migrations
                     b.ToTable("Bills");
                 });
 
+            modelBuilder.Entity("Server.Models.ChangeEmailModel", b =>
+                {
+                    b.Property<long>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ChangeEmailKey")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ExpireAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NewEmail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OldEmail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("ChangeEmailModels");
+                });
+
             modelBuilder.Entity("Server.Models.Device", b =>
                 {
                     b.Property<long>("Id")
@@ -88,9 +114,6 @@ namespace Server.Migrations
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
-
-                    b.Property<float>("EnergyInKwh")
-                        .HasColumnType("REAL");
 
                     b.HasKey("DeviceId", "StartTime", "EndTime");
 
@@ -253,6 +276,69 @@ namespace Server.Migrations
                     b.HasKey("DeviceId", "Day", "TurnOn", "TurnOff");
 
                     b.ToTable("InclusionSchedulers");
+                });
+
+            modelBuilder.Entity("Server.Models.PendingUserModel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ConfirmKey")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ExpireAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<float>("Latitude")
+                        .HasColumnType("REAL");
+
+                    b.Property<float>("Longitude")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("SettlementId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("SettlementId");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("PendingUsers");
                 });
 
             modelBuilder.Entity("Server.Models.ResetPasswordModel", b =>
@@ -467,6 +553,25 @@ namespace Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Device");
+                });
+
+            modelBuilder.Entity("Server.Models.PendingUserModel", b =>
+                {
+                    b.HasOne("Server.Models.RoleModel", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.Models.DropDowns.Location.Settlement", "Settlement")
+                        .WithMany()
+                        .HasForeignKey("SettlementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("Settlement");
                 });
 
             modelBuilder.Entity("Server.Models.ResetPasswordModel", b =>

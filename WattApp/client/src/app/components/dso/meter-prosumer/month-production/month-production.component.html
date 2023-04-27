@@ -1,11 +1,36 @@
-<div id="asdf">
-    <ngx-gauge
-           type="arch" 
-           [thick]="10" 
-           [value]="670" 
-           cap="butt" 
-           label="Month Production" 
-           append="kWh"
-           [markers]="markerConfig" [margin]="30" [thresholds]="thresholdConfig" [min]="min" [max]="max" >
+<div *ngIf="valuekWh<1000">
+    <ngx-gauge 
+        [margin]="15"
+        type="arch" 
+        [thick]="15" 
+        [value]="valuekWh" 
+        cap="butt" 
+        [markers]="markerConfig"  [thresholds]="thresholdConfig" [min]="min" [max]="max"  >
+        <ngx-gauge-value style="font-size: 26px; transform: translateY(78px);">{{valuekWh}}</ngx-gauge-value>
+        <ngx-gauge-append style="font-size: 15px; transform: translateY(78px);">kWh</ngx-gauge-append>
+</ngx-gauge>
+</div>
+<div *ngIf="valuekWh>1000 && valueMWh<1000">
+    <ngx-gauge 
+        [margin]="15"
+        type="arch" 
+        [thick]="15" 
+        [value]="valueMWh" 
+        cap="butt" 
+        [markers]="markerConfig"  [thresholds]="thresholdConfig" [min]="min" [max]="max"  >
+        <ngx-gauge-value style="font-size: 26px; transform: translateY(78px);">{{valueMWh}}</ngx-gauge-value>
+        <ngx-gauge-append style="font-size: 15px; transform: translateY(78px);">MWh</ngx-gauge-append>
+</ngx-gauge>
+</div>
+<div *ngIf="valueMWh>1000 && valueGWh<1000">
+    <ngx-gauge 
+        [margin]="15"
+        type="arch" 
+        [thick]="15" 
+        [value]="valueGWh" 
+        cap="butt" 
+        [markers]="markerConfig"  [thresholds]="thresholdConfig" [min]="min" [max]="max"  >
+        <ngx-gauge-value style="font-size: 26px; transform: translateY(78px);">{{valueGWh}}</ngx-gauge-value>
+        <ngx-gauge-append style="font-size: 15px; transform: translateY(78px);">GWh</ngx-gauge-append>
 </ngx-gauge>
 </div>

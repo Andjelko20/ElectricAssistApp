@@ -1,12 +1,19 @@
 /* Footer */
 
-footer {
+#pros {
     background-color: #1C315E;
     position: fixed;
     width: 100%;
     bottom: 0;
-    text-align: center;
+    display: flex;
+    justify-content: center;
     left: 0;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    float: inherit;
 }
 
 .footer-app {
@@ -19,9 +26,35 @@ footer {
     margin: 5px;
 }
 
+.nav-link {
+    text-align: center;
+    width: 100%;
+    margin: 5px;
+    float: left;
+}
+
+.active {
+    margin: 5px;
+    background-color: #1C315E !important;
+    color: rgb(0, 0, 0);
+}
+
+a:hover {
+    background-color: #1C315E;
+    color: white;
+}
+
+.icon-holder {
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    font-size: 15px;
+}
+
 @media (min-width: 768px) {
-    footer {
-        display: flex;
+    #pros {
         display: none;
     }
 }

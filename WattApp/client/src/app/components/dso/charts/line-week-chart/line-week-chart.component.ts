@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { WeekByDay } from 'src/app/models/devices.model';
+import { Settlement } from 'src/app/models/users.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { DevicesService } from 'src/app/services/devices.service';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 Chart.register(...registerables)
 @Component({
   selector: 'app-line-week-chart',
@@ -8,23 +13,72 @@ Chart.register(...registerables)
 })
 export class LineWeekChartComponent {
 
-  constructor() {
+
+  list1:WeekByDay[] = [];
+  list2:WeekByDay[] = [];
+  settlements:Settlement[] = [];
+  constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
     
   }
+
+  selectedOption: number = 0;
+
+  onOptionSelected() {
+    this.ngOnInit();
+  }
+
   ngOnInit(): void {
-    this.LineChart();
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.settlements = settlement;
+        })
+        if(this.selectedOption == 0){
+          this.deviceService.weekByDay(number,2).subscribe((data: WeekByDay[]) =>{
+            this.list1 = data;
+            this.deviceService.weekByDay(number,1).subscribe((data: WeekByDay[]) =>{
+              this.list2 = data;
+              this.LineChart();
+            })
+      
+          })
+        }
+        else{
+          this.deviceService.weekByDaySettlement(this.selectedOption,2).subscribe((data: WeekByDay[]) =>{
+            this.list1 = data;
+            this.deviceService.weekByDaySettlement(this.selectedOption,1).subscribe((data: WeekByDay[]) =>{
+              this.list2 = data;
+              this.LineChart();
+            })
+      
+          })
+        }
+        
+      })
+    })
+    
+
   }
   LineChart(){
-    
-    const Linechart =new Chart("linechart", {
+
+    const chartId = 'linechart';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
+
+    const Linechart = new Chart("linechart", {
       type: 'line',
       data : {
-        labels: ['0','1','2','3','4','5','6',''],
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
         
         datasets:  [
           {
             label: 'consumption',
-            data: [130,10,23,120,70,90,80,79,45,34,76,89],
+            data: energyUsageResults1,
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -49,7 +103,7 @@ export class LineWeekChartComponent {
           },
           {
             label: 'production',
-            data: [91,12,41,45,3,133,106,50,70,80,150,123],
+            data: energyUsageResults2,
             tension:0.5,
             backgroundColor: 'rgba(0, 255, 0, 0.2)',
             borderColor: 'rgba(0, 255, 0, 1)',
@@ -67,23 +121,22 @@ export class LineWeekChartComponent {
       }
       ,
       options: {
+        responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             position: "left",
-            suggestedMin: 5,
-            suggestedMax: 140,
             title:{
               display:true,
               text: "kWh",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
@@ -92,7 +145,7 @@ export class LineWeekChartComponent {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             title:{
@@ -100,13 +153,13 @@ export class LineWeekChartComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
           ,
         },
-        responsive: true,
+        
         plugins: {
           datalabels:{display: false},
           legend: {

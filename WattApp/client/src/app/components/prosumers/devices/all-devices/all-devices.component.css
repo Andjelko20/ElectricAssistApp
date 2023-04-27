@@ -1,84 +1,5 @@
-/* #homewrepper {
-    box-shadow: 2px 4px gray;
-    background-color: white;
-    padding: 20px;
-}
-
-.first {
-    padding: 0;
-    margin-bottom: 30px;
-    justify-content: center;
-}
-
-#buttonAdd {
-    width: 100px;
-    height: 50px;
-}
-
-#buttonAdd:hover {
-    background-color: #1C315E;
-    color: white;
-}
-
-table,
-td,
-th {
-    border: 1px solid black;
-    text-align: left;
-}
-
-th {
-    text-align: left;
-    background-color: #1C315E;
-    color: white;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td {
-    color: #1C315E;
-}
-
-th,
-td {
-    padding: 15px;
-    text-align: center;
-}
-
-button {
-    background-color: white;
-    color: black;
-    border: 2px solid #1C315E;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #1C315E;
-}
-
-li {
-    float: left;
-}
-
-li a {
-    display: block;
-    color: #1C315E;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-} */
 .main {
-    top: 0px;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
-    justify-content: center;
 }
 
 .alldevices {
@@ -117,7 +38,6 @@ li a {
     align-items: stretch; */
     width: 100%;
     height: auto;
-    padding-bottom: 35px;
     text-align: center;
     transition: all 0.3s;
     /* display: flex;
@@ -129,11 +49,12 @@ li a {
     /* position: sticky; */
     background-size: cover;
     box-shadow: 5px dodgerblue;
-    background-color: white;
+    background-color: #bce9e4;
+    border-radius: 15px;
     width: 30%;
+    margin: 5px;
     text-align: center;
     display: inline-block;
-    padding-top: 20px;
     position: relative;
 }
 
@@ -148,6 +69,7 @@ li a {
     /* max-width: 140px;
     max-height: 120px; */
     width: 65%;
+    margin: 15%;
 }
 
 .devices-device-item {
@@ -155,25 +77,39 @@ li a {
     border-radius: 100px;
     max-width: 100%;
     display: inline-block;
+    background-color: white;
     position: relative;
+    margin: 5px;
 }
-#deviceCategoryId{
+.devices-device-item1 {
+    border: 3px solid rgb(236, 7, 41);
+    border-radius: 100px;
+    max-width: 100%;
+    display: inline-block;
+    background-color: white;
+    position: relative;
+    margin: 5px;
+}
+
+#deviceCategoryId {
     width: 41%;
     font-size: 12px;
-    margin-left: 115px;
+    margin-left: 28%;
     margin-top: -35px;
 }
+
 label {
     display: inline-block;
     font-size: 15px;
     margin-left: 4%;
     margin-bottom: 0.5rem;
 }
-#nodevices{
+
+#nodevices {
     margin-top: 30%;
-    font-size:20px;
-    
+    font-size: 20px;
 }
+
 @media (min-width: 768px) {
     .alldevices {
         top: 10%;
@@ -181,7 +117,7 @@ label {
     }
     #allh1 {
         font-size: 30px;
-        padding-left: 45px;
+        padding-left: 12%;
         padding-bottom: 15px;
     }
     #imgdevice {
@@ -189,6 +125,11 @@ label {
     }
     .devices-device-item {
         margin: 15px;
+        width: 75%;
+    }
+    .devices-device-item1 {
+        margin: 15px;
+        width: 75%;
     }
     /* .devices-item {
         border: 1px solid red;
@@ -198,6 +139,7 @@ label {
     }
     .devices-item {
         /* position: sticky; */
+        padding: 10px;
         width: 25%;
     }
     .btn {
@@ -206,25 +148,22 @@ label {
         margin-top: -55px;
         font-size: 20px;
         width: 200px;
-        margin-right: 5%;
-        
+        margin-right: 8%;
     }
-    #deviceCategoryId{
+    #deviceCategoryId {
         width: 20%;
-        font-size: 25px;
+        font-size: 20px;
         margin-left: 40%;
         margin-top: -50px;
         margin-bottom: 0.8rem;
     }
-    label{
+    label {
         display: inline-block;
-        
         margin-left: 25%;
         font-size: 30px;
     }
-    #nodevices{
+    #nodevices {
         margin-top: 10%;
         font-size: 40px;
-
     }
 }

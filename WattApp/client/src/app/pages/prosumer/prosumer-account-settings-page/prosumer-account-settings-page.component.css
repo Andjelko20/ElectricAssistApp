@@ -1,8 +1,5 @@
 .main {
-    top: 0;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
 }
 
 input.ng-invalid.ng-touched {
@@ -22,10 +19,10 @@ input.ng-invalid[notEqual] {
 }
 
 .centar {
+    padding-bottom: 15px;
     max-width: 100%;
     margin-top: 45px;
     text-align: center;
-    height: auto;
 }
 
 #imgdevice {
@@ -38,7 +35,7 @@ input.ng-invalid[notEqual] {
 }
 
 #turnback {
-    margin-top: 5px;
+    margin-top: 10px;
     width: 7%;
 }
 
@@ -53,13 +50,18 @@ form {
     margin-bottom: 50px;
 }
 
+.btn {
+    margin-right: 20px;
+    margin-top: 15px;
+}
+
 #giveupbutton {
-    margin-left: 20px;
     background-color: red !important;
     border: red;
 }
 
 label {
+    margin-top: 5px;
     font-size: 15px !important;
 }
 
@@ -89,8 +91,20 @@ div.error-message {
 }
 
 @media (min-width: 768px) {
+    .main {
+        top: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
+        min-height: 100vh;
+    }
+    .back {
+        margin-top: 15px;
+    }
     .centar {
-        margin-top: 85px;
+        display: flex;
+        margin-bottom: 55px;
+        justify-content: center;
     }
     #turnback {
         margin-left: 25px;
@@ -100,25 +114,25 @@ div.error-message {
         width: 10%;
     }
     form {
-        margin-left: 200px;
-        margin-right: 200px;
+        margin-left: 50px;
+        margin-right: 50px;
     }
     h1 {
         font-size: 30px;
     }
     label {
+        margin-top: 15px;
         font-size: 20px !important;
     }
     button {
         width: 105px;
     }
     .card {
+        margin-top: 55px;
+        margin-left: 100px;
         border-radius: 15px;
-        background-color: rgb(166, 203, 235);
-        top: 10%;
-        left: 8%;
-        position: absolute;
-        width: 80%;
+        background-color: #bce9e4;
+        width: 50%;
     }
     .changepass {
         margin-top: -30px;

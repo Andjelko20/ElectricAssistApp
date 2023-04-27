@@ -11,6 +11,10 @@ import { Categories } from 'src/app/utilities/categories';
   styleUrls: ['./all-devices.component.css']
 })
 export class AllDevicesComponent implements OnInit {
+	currentPage:number=1;
+  itemsPerPage:number=12;
+  totalItems:number=10;
+
 
   devices:ShowDevices[] = [];
   pageNumber?:number;
@@ -26,8 +30,9 @@ export class AllDevicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.deviceCategoryId=2
-    this.deviceService.getAllDevices(1,12,this.deviceCategoryId).subscribe(devices => {
-      this.devices=devices.data.map((u:any)=>({
+    this.deviceService.getAllDevices(1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+      this.totalItems=devices.numberOfPages*this.itemsPerPage;
+		this.devices=devices.data.map((u:any)=>({
        id:u.id,
        userId: u.userId,
        deviceCategory:u.deviceCategory,
@@ -49,6 +54,31 @@ export class AllDevicesComponent implements OnInit {
      );
     
     }
+	pageChanged(pageNumber:number){
+		this.currentPage=pageNumber;
+		this.deviceService.getAllDevices(pageNumber,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+			this.totalItems=devices.numberOfPages*this.itemsPerPage;
+			  this.devices=devices.data.map((u:any)=>({
+			 id:u.id,
+			 userId: u.userId,
+			 deviceCategory:u.deviceCategory,
+			 deviceType: u.deviceType ,
+			 deviceBrand: u.deviceBrand ,
+			 deviceModel: u.deviceModel ,
+			 name: u.name ,
+			 energyInKwh: u.energyInKwh,
+			 standByKwh: u.standByKwh,
+			 visibility: u.visibility,
+			 controlability: u.controlability,
+			 turnOn: u.turnOn,
+			})as ShowDevices)
+		   }, error => {
+			if (error.status === 404) {
+			  this.devices=[]
+			  console.log('Devices not found in database');
+		   }} 
+		   );
+	}
     onSelectedCategory(event:any)
     {
       

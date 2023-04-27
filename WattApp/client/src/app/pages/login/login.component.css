@@ -1,6 +1,7 @@
-label[for="remember"]{
-	cursor: pointer;
+label[for="remember"] {
+    cursor: pointer;
 }
+
 main {
     width: 100%;
     min-height: 100vh;
@@ -165,9 +166,6 @@ main {
         height: auto;
         line-height: none;
     }
-    .checkbox {
-        margin-left: 15px;
-    }
     /* .form-group {
         margin-left: 15px;
         justify-content: center;
@@ -199,66 +197,3 @@ main {
         display: block;
     }
 }
-
-
-/* 
-@media screen and (min-width:320px) and (max-width:700px) {
-    .login-form-wrapper {
-        transition: all 0.6s;
-    }
-    .checkbox {
-        margin-left: 35px;
-        transition: all 0.3s;
-    }
-    .form-control {
-        height: 38px;
-    }
-    .form-group {
-        margin-left: 20px;
-        margin-right: 20px;
-        justify-content: center;
-        width: auto;
-        transition: all 0.3s;
-    }
-    label {
-        font-size: 20px;
-    }
-    .linka {
-        padding-top: -50px;
-        font-size: 15px;
-    }
-    .linka {
-        margin-top: 2px;
-    }
-    .logo {
-        width: 100px;
-        max-height: 300px;
-        text-align: center;
-    }
-    .logo>img {
-        width: 100%;
-        height: auto;
-    }
-    .link {
-        font-size: 13px;
-    }
-    .checkbox {
-        margin-left: 0px;
-        font-size: 5px;
-    }
-    button {
-        font-size: 15px;
-    }
-    .container2 {
-        display: none;
-    }
-    .btn-container>.btn {
-        margin-top: 15px;
-        height: 40px;
-        font-size: 15px;
-        margin-bottom: -15px;
-    }
-    .error-message {
-        font-size: 15px;
-    }
-} */

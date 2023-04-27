@@ -1,8 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 @import url(https://cdnjs.cloudflare.com/ajax/libs/weather-icons/1.2/css/weather-icons.min.css);
-
+#weather_wrapper{
+  width: 80%;
+  display: inline-block;
+}
 .weatherCard {
-  width: 30%;
   height: 150px;
   font-family: 'Open Sans';
   position: relative;
@@ -10,7 +12,6 @@
   border-radius: 30px;
 }
 .currentTemp {
-  width: 50%;
   height: 150px;
   /* background: #ffffff; */
   position: absolute;
@@ -21,7 +22,7 @@
 
 }
 .currentWeather {
-  width: 50%;
+  width: 40%;
   height: 150px;
   /* background: #2ab2ea; */
   margin: 0;
@@ -67,7 +68,7 @@
   font-weight: 700;
   color: #000000;
   text-align: center;
-  margin-right: 25%;
+  /* margin-right: 15%; */
 }
 .rain,
 .wind {
@@ -173,48 +174,64 @@
 .toggle input:checked~.labels::before {
   opacity: 1;
 }
-
-@media (max-width: 768px) {
+@media only screen and (min-width: 768px) {
   .weatherCard {
-    width: 100%;
-    height: 150px;
-    font-family: 'Open Sans';
-    position: relative;
-    background-color: white;
-    border-radius: 30px;
+  height: 120px;
+  border-radius: 20px;
   }
   .currentTemp {
-    width: 75%;
-    height: 150px;
-    /* background: #ffffff; */
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   }
   .currentWeather {
-    width: 75%;
-    height: 150px;
-    /* background: #2ab2ea; */
-    margin: 0;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    right: 0;
-    border-radius: 10px;
+  width: 35%;
+  height: 120px;
+  border-radius: 5px;
+  }
+  .temp {
+  font-size: 36px;
+  padding: 8px 0 0;
+  }
+  .location {
+  font-size: 20px;
+  }
+  .conditions {
+  font-size: 24px;
   }
   .info {
-    width: 30%;
-    height: 50px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    /* background: #2ab2ea; */
-    font-weight: 700;
-    color: #000000;
-    text-align: center;
-    margin-right: 35%;
+  width: 110px;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  }
+  .rain,
+  .wind {
+  width: 50%;
+  position: absolute;
+  top: 3px;
+  }
+  .wind {
+  right: -5px;
+  }
+  .wind::before {
+  font-size: 16px;
+  top: 5px;
+  left: -5px;
+  }
+  .toggle {
+  --width: 50px;
+  --height: calc(var(--width) / 3);
+  margin-top: 5px;
+  margin-bottom: 5px;
+  }
+  .toggle .labels {
+  font-size: 12px;
+  }
+  .toggle .labels::after {
+  right: 3px;
+  }
+  .toggle .labels::before {
+  left: 3px;
   }
   }
+  

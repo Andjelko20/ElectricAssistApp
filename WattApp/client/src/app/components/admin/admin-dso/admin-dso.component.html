@@ -1,51 +1,120 @@
-<!-- <div>
-     <ul>
-        <li><a (click)="logout()"> LOGOUT</a></li>
-    </ul> 
 
-</div> -->
 
-<div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-12">
     <div class="first">
-        <br>
-        <!--
-    <br>
-    <h2>List </h2>
-    <br> -->
-
         <table *ngIf="showUsers">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Name</th>
                     <th>User name</th>
-                    <th>Block</th>
                     <th>Role</th>
-                    <th></th>
-                    <!--<th></th>-->
-                    <th></th>
-                    <th></th>
+                    <th>Address</th>
+                    <th>Settlement</th>
+                    <th>City</th>
+                    <th>Status</th>
+                    <th>Block</th>
+                    <th>Actions</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let show of showUsers index as i">
+                <tr *ngFor="let show of showUsers | paginate: {currentPage,itemsPerPage,totalItems} let i = index">
+                    <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
                     <td>{{show.name}}</td>
                     <td>{{show.username}}</td>
-                    <td>{{show.block}} </td>
                     <td>{{show.role}}</td>
-                    <td><a [routerLink]='["/update-user/",show.id]'><button style="width: 84px; height:30px" > UPDATE</button></a></td>
-                    <td>
-                        <button style="width: 84px; height:30px" *ngIf="show.block===true" (click)="unblockUser(show.id)"> UNBLOCK</button>
-                        <button style="width: 84px; height:30px" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button>
+                    <td>{{show.address}}</td>
+                    <td>{{show.settlement}}</td>
+                    <td>{{show.city}}</td>
+                    <td *ngIf="show.block===true" style="text-align: center;padding-left: 25px;"><span class="yellow-circle"></span> Inactive</td>
+                    <td *ngIf="show.block===false" style="text-align: center;"><span class="green-circle"></span> Active</td>
+                    <td style="padding: 1px;">
+                      <!-- <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalUnblockAdmin" *ngIf="show.block===true" (click)="unblockUser (show.id)">UNBLOCK </button>
+                      <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalBlockAdmin" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button> -->
+                      <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalBlockAdmin" *ngIf="show.block===false" (click)="blockUser(show.id)">
+                        <input type="checkbox" [disabled]="!confirmBlock">
+                        <span class="slider round"></span>
+                      </label>
+                      <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalUnblockAdmin" *ngIf="show.block===true"  (click)="unblockUser (show.id)">
+                        <input type="checkbox" checked [disabled]="!confirmBlock">
+                        <span class="slider round"></span>
+                      </label>
                     </td>
-                    <!--<td><a [routerLink]='["/change-password"]'><button style="min-width: 84px; height:30px" > PASSWORD</button></a></td>-->
-
-                    <td><button style="width: 84px; height:30px" (click)="delete(show.id)">DELETE</button></td>
+                    
+                    <td><a [routerLink]='["/update-user/",show.id]' style="text-decoration: none; padding-right: 20px; color: #2199e8;"><i class="fas fa-cog" style="color: #2199e8"> </i> Edit</a>
+                   
+                    <a data-bs-toggle="modal" data-bs-target="#myModalDeleteAdmin" (click)="delete(show.id)" style="cursor: pointer; color: red;"><i class="fas fa-trash" style="color: red"> </i> DELETE</a>
+                  </td>
 
                 </tr>
             </tbody>
         </table>
-        <br>
-
+		<app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
     </div>
-    <a [routerLink]='["/add-user"]'><button id="buttonAdd">ADD</button></a>
+  <!-- Modal Unblock -->
+  <div class="modal fade" id="myModalUnblockAdmin" tabindex="-1" aria-labelledby="myModalUnblockAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+            </div>
+            <div class="modal-body">
+              <h5 class="modal-title" id="myModalUnblockAdminLabel" style="text-align: center;">Do you want to unblock this user?</h5>
+            
+            </div>
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="unblock-popup">Unblock</button>
+                
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                Close
+            </button>
+            
+            </div>
+        </div>
+    </div>
 </div>
+
+   <!-- Modal Block -->
+   <div class="modal fade" id="myModalBlockAdmin" tabindex="-1" aria-labelledby="myModalBlockAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+        </div>
+        <div class="modal-body">
+          <h5 class="modal-title" id="myModalBlockAdminLabel" style="text-align: center;">Do you want to block this user?</h5>
+        </div>
+        <div class="modal-footer" >
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="block-popup">Block</button>
+            
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+            Close
+          </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal delete -->
+  <div class="modal fade" id="myModalDeleteAdmin" tabindex="-1" aria-labelledby="myModalDeleteAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
+    <div class="modal-dialog  modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+        </div>
+        <div class="modal-body">
+          <h5 class="modal-title" id="myModalDeleteAdminLabel" style="text-align: center;">Do you want to delete this user?</h5>
+        </div>
+        <div class="modal-footer" >
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="delete-admin-popup">Delete</button>
+            
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+            Close
+          </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>

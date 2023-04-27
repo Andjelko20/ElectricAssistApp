@@ -1,15 +1,11 @@
 .main {
-    top: 0;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
 }
 
 .centar {
-    max-width: 100%;
-    margin-top: 45px;
+    width: 100%;
+    min-height: 100vh;
     text-align: center;
-    height: auto;
 }
 
 #imgdevice {
@@ -22,26 +18,26 @@
 }
 
 #turnback {
-    margin-top: 5px;
+    margin-top: 10px;
     width: 7%;
 }
 
 h1 {
     text-align: center;
     margin-top: 15px;
-    font-size: 15px;
+    font-size: 20px;
 }
 
 ul {
-    margin-top: 15px;
+    margin-top: 20px;
+    margin-left: -15px;
     text-align: left;
     list-style: none;
-    margin-left: 10px;
 }
 
 ul li {
     text-decoration: none;
-    font-size: 15px;
+    font-size: 20px;
 }
 
 a {
@@ -49,16 +45,54 @@ a {
     text-decoration: none;
 }
 
+.aa {
+    margin-top: 10px;
+}
+
+.aa a {
+    border: 2px solid #b8dcff;
+    border-radius: 5px;
+    margin-top: 15px;
+    padding: 5px;
+    color: #727272;
+}
+
+a:hover {
+    border-radius: 5px;
+    background-color: rgb(129, 202, 248);
+    color: white;
+}
+
+.card {
+    padding-top: 14%;
+    margin-bottom: 50px;
+    border-radius: 0px;
+}
+
+#number {
+    border-bottom: 1px solid rgb(183, 183, 183);
+    max-width: 300px;
+}
+
 @media (min-width: 768px) {
+    .main {
+        top: 0;
+        right: 0;
+        left: 0;
+        position: absolute;
+        justify-content: center;
+        min-height: 100vh;
+    }
     .centar {
-        margin-top: 85px;
+        min-height: 100vh;
+        width: 100%;
     }
     #turnback {
         width: 3%;
         margin-left: 15px;
     }
     #imgdevice {
-        width: 10%;
+        width: 20%;
     }
     form {
         margin-left: 200px;
@@ -76,10 +110,12 @@ a {
     .info {
         border-radius: 15px;
         width: auto;
-        background-color: rgb(92, 166, 231);
+        margin: 15px;
+        background-color: rgb(208 233 255);
     }
     ul {
-        margin-left: 35%;
+        display: inline-block;
+        text-align: center;
         list-style: none;
     }
     ul li {
@@ -88,11 +124,16 @@ a {
         font-size: 25px;
     }
     .card {
+        padding: 0;
+        margin-top: 155px;
+        margin-left: 80px;
+        width: 60%;
+        display: inline-block;
         border-radius: 15px;
-        background-color: rgb(166, 203, 235);
-        top: 25%;
-        left: 8%;
-        position: absolute;
-        width: 80%;
+        background-color: #b8dcff;
+    }
+    app-footer {
+        width: 100%;
+        display: contents;
     }
 }

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Prosumers, Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
+import { Roles } from 'src/app/utilities/role';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -27,6 +28,9 @@ export class ProsumerAccountSettingsPageComponent {
     country: '',
     address:''
   }
+  admin?:string;
+  dso?:string;
+  prosumer?:string;
   public idUser!:number;
   public role!:string;
   public name!:string;
@@ -52,7 +56,9 @@ export class ProsumerAccountSettingsPageComponent {
       nameform2: ['', Validators.required],
       nameform3: ['', Validators.required]
     },{ validator: this.checkIfInputsAreEqual });
-
+    this.admin=Roles.ADMIN_NAME;
+    this.dso=Roles.DISPATCHER_NAME;
+    this.prosumer=Roles.PROSUMER_NAME;
   }
 
   ngOnInit(): void {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 
@@ -9,33 +10,45 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
   styleUrls: ['./consumption-year-wattmeter.component.css']
 })
 export class ConsumptionYearWattmeterComponent implements OnInit {
-  value!: number;
+  value!:any;
+  valuekWh!: any;
+  valueMWh!: any;
+  valueGWh!: any;
   min: number = 0;
-  max: number = 1000;
+  max: number = 2400;
   markerConfig = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
-    "150": { color: '#57A75B', size: 4, type: 'line'},
-    "300": { color: '#57A75B', size: 8, label: '300', type: 'line'},
-    "400": { color: '#F9D435', size: 4, type: 'line'},
-    "500": { color: '#F9D435', size: 8, label: '500', type: 'line'},
-    "600": { color: '#F69E0B', size: 4, type: 'line'},
-    "700": { color: '#F69E0B', size: 8, label: '700', type: 'line'},
-    "850": { color: '#E0453A', size: 4, type: 'line'},
-    "1000": { color: '#E0453A', size: 8, label: '1000', type: 'line'},
+    "300": { color: '#57A75B', size: 4, type: 'line'},
+    "600": { color: '#57A75B', size: 8, label: '600', type: 'line'},
+    "900": { color: '#F9D435', size: 4, type: 'line'},
+    "1200": { color: '#F9D435', size: 8, label: '1200', type: 'line'},
+    "1500": { color: '#F69E0B', size: 4, type: 'line'},
+    "1800": { color: '#F69E0B', size: 8, label: '1800', type: 'line'},
+    "2100": { color: '#E0453A', size: 4, type: 'line'},
+    "2400": { color: '#E0453A', size: 8, label: '2400', type: 'line'},
   }
   thresholdConfig = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '400': { color: 'orange', "bgOpacity": 0.2 },
-    '750': { color: 'red', "bgOpacity": 0.2 }
+    '351': { color: 'blue', "bgOpacity": 0.2 },
+    '1601': { color: 'red', "bgOpacity": 0.2 }
   };
-  constructor(private todayConsumption:HistoryPredictionService){
+  constructor(private historyService:HistoryPredictionService,private authService:AuthService){
 
   }
-    async ngOnInit(): Promise<void> {
+    async ngOnInit(){
     let token=new JwtToken();
     
-    const result = await this.todayConsumption.getAverageConsumptionProductionCity("Electricity Producer","Kragujevac").pipe(first()).toPromise();
-  
-    this.value = result!;
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.historyService.getYearTotalConsumption(number,2).subscribe(data=>{
+          this.value= data;
+          this.valuekWh = this.value.toFixed(2);
+          this.valueMWh= (this.valuekWh*0.001).toFixed(2);
+          this.valueGWh= (this.valueMWh*0.001).toFixed(2);
+        })
+      })
+    })
+
+   
   }
 }

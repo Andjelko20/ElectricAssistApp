@@ -14,7 +14,7 @@ namespace Server.Utilities
         /// <returns>Password</returns>
         public static string GenerateRandomPassword(int length = 10)
         {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_";
             StringBuilder res = new StringBuilder();
             Random rnd = new Random();
             while (0 < length--)

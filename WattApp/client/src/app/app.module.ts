@@ -1,4 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
+import { DecimalPipe } from '@angular/common'; // import DecimalPipe
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -62,6 +63,26 @@ import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-
 import { HomeDevicesComponent } from './components/prosumers/devices/home-devices/home-devices.component';
 import { OneDeviceComponent } from './components/prosumers/devices/one-device/one-device.component';
 import { AllDevicesDsoComponent } from './components/dso/all-devices-dso/all-devices-dso.component';
+import { PageControlComponent } from './components/page-control/page-control.component';
+import { NgxPaginationModule } from "ngx-pagination";
+import { FooterComponent } from './components/footer/footer.component';
+import { TabelarViewComponent } from './components/dso/tabelar-views/tabelar-view-by-day/tabelar-view.component';
+import { TodayDsoComponent } from './components/weather/today-dso/today-dso.component';
+import { TabelarViewByMonthComponent } from "./components/dso/tabelar-views/tabelar-view-by-month/tabelar-view-by-month.component";
+import { TabelarViewByYearComponent } from './components/dso/tabelar-views/tabelar-view-by-year/tabelar-view-by-year.component';
+import { TabelarViewByWeekComponent } from './components/dso/tabelar-views/tabelar-view-by-week/tabelar-view-by-week.component';
+import { TodayTabelarProsumerComponent } from './components/dso/tabelar-view-prosumer/today-tabelar-prosumer/today-tabelar-prosumer.component';
+import { MonthTabelarProsumerComponent } from './components/dso/tabelar-view-prosumer/month-tabelar-prosumer/month-tabelar-prosumer.component';
+import { WeekTabelarProsumerComponent } from './components/dso/tabelar-view-prosumer/week-tabelar-prosumer/week-tabelar-prosumer.component';
+import { YearTabelarProsumerComponent } from './components/dso/tabelar-view-prosumer/year-tabelar-prosumer/year-tabelar-prosumer.component';
+import { BarMonthProsumerComponent } from './components/dso/charts-prosumer/bar-month-prosumer/bar-month-prosumer.component';
+import { BarYearProsumerComponent } from './components/dso/charts-prosumer/bar-year-prosumer/bar-year-prosumer.component';
+import { LineDayProsumerComponent } from './components/dso/charts-prosumer/line-day-prosumer/line-day-prosumer.component';
+import { LineWeekProsumerComponent } from './components/dso/charts-prosumer/line-week-prosumer/line-week-prosumer.component';
+import { PredictionProsumerComponent } from './components/dso/prediction/prediction-prosumer/prediction-prosumer.component';
+import { PredictionDeviceComponent } from './components/dso/prediction/prediction-device/prediction-device.component';
+import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
+import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
 
 
 @NgModule({
@@ -103,44 +124,68 @@ import { AllDevicesDsoComponent } from './components/dso/all-devices-dso/all-dev
     TodayConsumptionComponent,
     MonthConsumptionComponent,
     MonthProductionComponent,
-	AdminDsoComponent,
-	ProsumerTowerComponent,
-	ProsumerNavbarComponent,
-	ProsumerHomePageComponent,
-	ProsumerDevicePageComponent,
-	ProsumerFooterComponent,
-	ProsumerHouseComponent,
-	ProsumerSolarComponent,
-	ProsumerHomePageComponent,
-	HomePageComponent,
-	AdminDsoUpdateComponent,
-	AdminDsoPageComponent,
-  UpdateDeviceComponent,
-  AddDeviceComponent,
-  AllDevicesComponent,
-  FutureComponent,
-  DsoOneProsumerPageComponent,
-  DsoOneProsumerPageComponent,
-  TodayProductionComponent,
-  TodayConsumptionComponent,
-  ResetPasswordPageComponent,
-  ProsumerAccountPageComponent,
-  ProsumerAccountSettingsPageComponent,
-  HomeDevicesComponent,
-  OneDeviceComponent,
-  AllDevicesDsoComponent
-
+    AdminDsoComponent,
+    ProsumerTowerComponent,
+    ProsumerNavbarComponent,
+    ProsumerHomePageComponent,
+    ProsumerDevicePageComponent,
+    ProsumerFooterComponent,
+    ProsumerHouseComponent,
+    ProsumerSolarComponent,
+    ProsumerHomePageComponent,
+    HomePageComponent,
+    AdminDsoUpdateComponent,
+    AdminDsoPageComponent,
+    UpdateDeviceComponent,
+    AddDeviceComponent,
+    AllDevicesComponent,
+    FutureComponent,
+    DsoOneProsumerPageComponent,
+    TodayProductionComponent,
+    TodayConsumptionComponent,
+    ResetPasswordPageComponent,
+    ProsumerAccountPageComponent,
+    ProsumerAccountSettingsPageComponent,
+    HomeDevicesComponent,
+    OneDeviceComponent,
+    AllDevicesDsoComponent,
+    PageControlComponent,
+    FooterComponent,
+    TabelarViewComponent,
+    TodayDsoComponent,
+    TabelarViewByYearComponent,
+    TabelarViewByWeekComponent,
+    TabelarViewByMonthComponent,
+    TodayTabelarProsumerComponent,
+    MonthTabelarProsumerComponent,
+    WeekTabelarProsumerComponent,
+    YearTabelarProsumerComponent,
+    BarMonthProsumerComponent,
+    BarYearProsumerComponent,
+    LineDayProsumerComponent,
+    LineWeekProsumerComponent,
+    PredictionProsumerComponent,
+    PredictionDeviceComponent,
+    MonthTabelarProsumerComponent,
+    WeekTabelarProsumerComponent,
+    YearTabelarProsumerComponent,
+    TodayTabelarProsumerComponent,
+    EmailConfirmationPageComponent,
+    ChangeEmailConfirmationPageComponent
+    
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     NgxGaugeModule,
     LeafletModule,
     FormsModule,
+    BrowserModule,
+	  NgxPaginationModule,
+    
   ],
-  providers: [],
+  providers: [DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,9 +8,7 @@ ul {
 
 .main {
     top: 0;
-    width: 100%;
     min-height: 100vh;
-    position: absolute;
 }
 
 .homeimage {
@@ -32,6 +30,51 @@ ul {
 
 
 /* pravi problem kad se smanji na 320px */
+
+.row {
+    margin: 0;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
+.card {
+    background-color: #bce9e4;
+    margin: 5px;
+}
+
+.card-title {
+    font-size: 20px;
+}
+
+.card-text {
+    font-size: 25px;
+}
+
+.midle {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.midletree {
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid black; */
+    width: 100%;
+    height: auto;
+}
+
+.midletreeform {
+    margin: 1%;
+    float: left;
+    border: 1px solid black;
+    width: 50%;
+    /* visina je stavljena samo da bi se videlo da je tu taj div */
+    height: 50px;
+}
 
 
 /* Car and battery */
@@ -55,6 +98,9 @@ ul {
     align-items: center;
     justify-content: center;
     display: inline-block;
+    border-radius: 15px;
+    margin: 0.5%;
+    background-color: #eef2ff;
     transition: all .2s ease-out;
 }
 
@@ -66,6 +112,7 @@ ul {
 }
 
 #carbatteryh3 {
+    padding-top: 5px;
     font-size: 10px;
 }
 
@@ -80,7 +127,9 @@ ul {
     padding-top: 5px;
     background-color: white;
     padding-left: 5px;
-    font-size: 12px;
+    font-size: 20px;
+    margin: 15px;
+    border-radius: 5px;
 }
 
 .alldevice {
@@ -137,7 +186,18 @@ ul {
     display: inline-block;
 }
 
+.moredevices {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    color: black;
+    width: 100%;
+    margin-top: 15px;
+    padding-left: 5px;
+}
+
 .consumptionNow {
+    border: 1px solid black;
     /* display: flexbox;
     width: 10%;
     max-height: 20%;
@@ -152,7 +212,7 @@ ul {
 .prognosis {
     display: none;
     /* border: 1px solid black; */
-    width: 25%;
+    width: 50%;
     height: 7%;
     top: 12%;
     right: 2%;
@@ -174,17 +234,18 @@ ul {
 }
 
 .prodactionToday {
-    width: 70px;
+    min-width: 70px;
     height: 3%;
     position: absolute;
-    top: 12%;
+    top: 60px;
+    padding-left: 5px;
     transition: all 0.3s;
 }
 
 .prodactionToday h2,
 h1 {
     text-align: center;
-    font-size: 8px;
+    font-size: 15px;
     transition: all 0.3s;
 }
 
@@ -213,8 +274,44 @@ h1 {
 /* Responsiveness */
 
 @media (min-width: 768px) {
+    .main {
+        top: 0;
+        position: absolute;
+    }
+    .midle {
+        /* border: 1px solid black; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
+    .midletree {
+        display: flex;
+        justify-content: center;
+        /* border: 1px solid black; */
+        width: 100%;
+        height: auto;
+    }
+    .card-title {
+        font-size: 25px;
+    }
+    .card-text {
+        font-size: 35px;
+    }
+    .midletreeform {
+        margin: 1%;
+        float: left;
+        border: 1px solid black;
+        width: 50%;
+        /* visina je stavljena samo da bi se videlo da je tu taj div */
+        height: 50px;
+    }
+    .carbattery {
+        padding-left: 10%;
+    }
     #smarthomeh2 {
-        padding-left: 55px;
+        padding-left: 25px;
         font-size: 35px;
     }
     #deviceh3 {
@@ -230,21 +327,23 @@ h1 {
     .logo {
         font-size: 60px;
     }
+    .moredevices a {
+        font-size: 35px;
+    }
     #deviceh3 {
         font-size: 30px;
     }
-    .carbatterytree {
+    /* .carbatterytree {
         margin-left: 10%;
         margin-top: 1%;
         margin-bottom: 2%;
-    }
+    } */
     .prodactionToday {
         display: flexbox;
         width: 300px;
-        height: 100px;
+        top: 100px;
         position: absolute;
-        top: 19%;
-        right: 5px;
+        height: 100px;
         transition: all 0.3s;
     }
     .prodactionToday h2,
@@ -265,7 +364,7 @@ h1 {
     .consumptionNow {
         display: flexbox;
         width: 15%;
-        max-height: 20%;
+        height: 15%;
         top: 30%;
         display: inline-block;
         left: 32%;
@@ -275,10 +374,10 @@ h1 {
     .prognosis {
         display: flex;
         /* border: 1px solid black; */
-        width: 30%;
-        height: 15%;
+        width: 20%;
+        height: 20%;
         top: 8%;
-        right: -12%;
+        right: -2%;
         position: absolute;
         transition: all 0.3s;
     }

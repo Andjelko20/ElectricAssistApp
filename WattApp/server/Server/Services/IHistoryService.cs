@@ -26,12 +26,17 @@ namespace Server.Services
         // ZA PROSLEDJEN ID KORISNIKA POTROSNJA ZA GRAFIKE
         public List<MonthlyEnergyConsumptionLastYear> GetMonthlyEnergyUsageForPastYear(long userId, long deviceCategoryId);
         public List<DailyEnergyConsumptionPastMonth> UserHistoryForThePastWeek(long userId, long deviceCategoryId);
+        public List<EnergyToday> UserHistoryForThePastDayByHour(long userId, long deviceCategoryId);
+        public List<DailyEnergyConsumptionPastMonth> UserHistoryForThePastMonth(long userId, long deviceCategoryId);
         public List<DailyEnergyConsumptionPastMonth> SettlementHistoryForThePastWeek(long settlementName, long deviceCategoryName);
         public List<DailyEnergyConsumptionPastMonth> CityHistoryForThePastWeek(long cityId, long deviceCategoryId);
         public List<DailyEnergyConsumptionPastMonth> CityHistoryForThePastMonth(long cityId, long deviceCategoryId);
         public List<DailyEnergyConsumptionPastMonth> SettlementHistoryForThePastMonth(long cityId, long deviceCategoryId);
         public List<MonthlyEnergyConsumptionLastYear> CityHistoryForThePastYearByMonth(long cityId, long deviceCategoryId);
         public List<MonthlyEnergyConsumptionLastYear> SettlementHistoryForThePastYearByMonth(long settlementId, long deviceCategoryId);
-
+        public double GetUsageHistoryForDeviceInThisMonth(long deviceId);
+        public double GetUsageHistoryForDeviceToday(long deviceId);
+        public double GetUsageHistoryForDeviceThisYear(long deviceId);
+        public double GetUsageHistoryForDeviceForPreviousMonth(long deviceId);
     }
 }

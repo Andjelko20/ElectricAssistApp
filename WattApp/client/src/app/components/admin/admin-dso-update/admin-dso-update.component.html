@@ -1,5 +1,10 @@
+
 <div class="global">
+  
+
     <div class="global1">
+      <a [routerLink]='["/dashboard"]'><img id="turnback" src="assets/img/back.png" alt=""></a>
+ 
         <h1>Update</h1>
         <form #form="ngForm" (ngSubmit)="upDate()">
             <div class="form-row">
@@ -19,19 +24,21 @@
                     <label for="userName " class="form-label ">User name</label>
                     <input type="text " class="form-control " id="name " name="userName " [(ngModel)]="updateUserDetail.username "disabled>
                     <br> -->
+					<!--
                     <label for="role " class="form-label ">Role</label>
                     <select #teams id="role " class="form-control " name="role " [(ngModel)]="updateUserDetail.roleId ">
                             <option *ngFor="let role of roles " [value]="role?.id " >{{role?.name}}</option>
-                        </select>
+                        </select> -->
                     <br>
+					<!--
                     <form style="margin: 0;padding: 0;">
-                        <button type=" submit " class="btn btn-primary mr-5 " (click)="sendEmail()">Change password</button>
+                        <button type=" submit " class="btn btn-primary mr-5 " data-bs-toggle="modal" data-bs-target="#myModaChangePassword" (click)="sendEmail()">Change password</button>
                         <div *ngIf="errorMessage" style="margin: 0; padding: 0;">
                             {{ errorMessage }}
                         </div>
-                    </form>
+                    </form> 
                     <br>
-                    <br>
+                    <br>-->
                     <!-- <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" value="{{passwordGen}}" disabled>
                     <form style="margin: 0; padding: 0;">
@@ -41,7 +48,28 @@
                     
                 </div>
             </div>
-            <button type=" submit " class="btn btn-primary mr-5 ">Save</button>
+            <button type=" submit "id="subb" class="btn btn-primary mr-5 ">Save</button>
         </form>
     </div>
+</div>
+<div class="modal fade" id="myModaChangePassword" tabindex="-1" aria-labelledby="myModaChangePasswordLabel"  aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+      </div>
+      <div class="modal-body">
+        <h5 class="modal-title" id="myModaChangePasswordLabel" style="text-align: center;">Do you want to send user password change?</h5>
+        
+      </div>
+      <div class="modal-footer" >
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="change-pass-popup">Send</button>
+          
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+          Close
+        </button>
+        
+      </div>
+    </div>
+  </div>
 </div>

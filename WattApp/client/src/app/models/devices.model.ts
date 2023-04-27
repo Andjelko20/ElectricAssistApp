@@ -39,3 +39,26 @@ export interface DeviceType {
 };
 
 
+export interface WeekByDay {
+    day: number;
+    month: string;
+    year : number;
+    energyUsageResult: number;
+}
+
+export interface YearsByMonth {
+    month: string;
+    year : number;
+    energyUsageResult: number;
+}
+
+export interface DayByHour {
+    energyUsageResult: number;
+    hour:any;
+    day:any;
+    month: string;
+    year : number;
+}
+
+
+

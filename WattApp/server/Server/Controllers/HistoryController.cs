@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Server.Data;
 using Server.Models;
 using Server.Services;
+using System.Diagnostics;
 
 namespace Server.Controllers
 {
@@ -148,20 +149,8 @@ namespace Server.Controllers
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
-            if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
-                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
-
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
-            /*
-            if (!_sqliteDb.Devices.Any(u => u.DeviceCategoryId == deviceCategoryId))
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-			*/
-
-            if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
-            {
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-            }
 
             var HistoryForTotalConsumption = historyService.GetTotalEnergyConsumptionForUser(userId, deviceCategoryId);
             return Ok(HistoryForTotalConsumption);
@@ -178,20 +167,8 @@ namespace Server.Controllers
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
-            if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
-                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
-
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
-            /*
-            if (!_sqliteDb.Devices.Any(u => u.DeviceCategoryId == deviceCategoryId))
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-			*/
-
-            if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
-            {
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-            }
 
             var HistoryForPastDay = historyService.GetUserEnergyConsumptionForPastDay(userId, deviceCategoryId);
             return Ok(HistoryForPastDay);
@@ -208,20 +185,8 @@ namespace Server.Controllers
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
-            if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
-                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
-
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
-            /*
-            if (!_sqliteDb.Devices.Any(u => u.DeviceCategoryId == deviceCategoryId))
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-			*/
-
-            if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
-            {
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-            }
 
             var HistoryForPastWeek = historyService.GetUserEnergyConsumptionForPastWeek(userId, deviceCategoryId);
             return Ok(HistoryForPastWeek);
@@ -238,20 +203,8 @@ namespace Server.Controllers
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
-            if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
-                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
-
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
-            /*
-            if (!_sqliteDb.Devices.Any(u => u.DeviceCategoryId == deviceCategoryId))
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-			*/
-
-            if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
-            {
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-            }
 
             var HistoryForPastMonth = historyService.GetUserEnergyConsumptionForPastMonth(userId, deviceCategoryId);
             return Ok(HistoryForPastMonth);
@@ -268,20 +221,8 @@ namespace Server.Controllers
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
-            if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
-                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
-
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
-            /*
-            if (!_sqliteDb.Devices.Any(u => u.DeviceCategoryId == deviceCategoryId))
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-			*/
-
-            if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
-            {
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-            }
 
             var HistoryForPastYearConsumption = historyService.GetUserEnergyConsumptionForPastYear(userId, deviceCategoryId);
             return Ok(HistoryForPastYearConsumption);
@@ -295,11 +236,14 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetConsumptionByUserForYearByMonth([FromRoute] long userId, [FromRoute] long deviceCategoryId)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
-            if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
-                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
+            //if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
+            //    return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
 
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
@@ -308,13 +252,41 @@ namespace Server.Controllers
                 return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
 			*/
 
-            if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
-            {
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-            }
+            //if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
+            //    return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
 
             var HistoryForPastYearByMonthConsumption = historyService.GetMonthlyEnergyUsageForPastYear(userId, deviceCategoryId);
+
+            stopwatch.Stop();
+            TimeSpan elapsedTime = stopwatch.Elapsed;
+            Console.WriteLine("***************************** Elapsed time: " + elapsedTime.TotalSeconds + " seconds.");
+
+
             return Ok(HistoryForPastYearByMonthConsumption);
+        }
+
+        /// <summary>
+        /// Consumption/Production for all user`s devices for last month (by day)
+        /// </summary>
+        [HttpGet]
+        [Route("MonthByDay/User/{userId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetUserHistoryForPastMonthByDay([FromRoute] long userId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Users.Any(u => u.Id == userId))
+                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
+
+            //if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
+            //    return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            //if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
+            //    return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
+
+            var historyResult = historyService.UserHistoryForThePastMonth(userId, deviceCategoryId);
+            return Ok(historyResult);
         }
 
         /// <summary>
@@ -328,8 +300,8 @@ namespace Server.Controllers
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
-            if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
-                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+            //if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
+            //    return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
 
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
@@ -338,13 +310,35 @@ namespace Server.Controllers
                 return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
 			*/
 
-            if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
-            {
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-            }
+            //if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
+            //    return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
 
             var PredictionForNextWeek = historyService.UserHistoryForThePastWeek(userId, deviceCategoryId);
             return Ok(PredictionForNextWeek);
+        }
+
+        /// <summary>
+        /// Consumption/Production for user (yesterday by hour)
+        /// </summary>
+        [HttpGet]
+        [Route("DayByHour/User/{userId:long}/{deviceCategoryId:long}")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetUserHistoryForPastDayByHour([FromRoute] long userId, [FromRoute] long deviceCategoryId)
+        {
+            if (!_sqliteDb.Users.Any(u => u.Id == userId))
+                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
+
+            //if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
+            //    return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+            /*if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
+                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
+            */
+            var resultsPastDayByHour = historyService.UserHistoryForThePastDayByHour(userId, deviceCategoryId);
+            return Ok(resultsPastDayByHour);
         }
 
         /// <summary>
@@ -376,13 +370,22 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetCityHistoryForPastWeekByDay([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
                 return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
 
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
-            return Ok(historyService.CityHistoryForThePastWeek(cityId, deviceCategoryId));
+            var result = historyService.CityHistoryForThePastWeek(cityId, deviceCategoryId);
+
+            stopwatch.Stop();
+            TimeSpan elapsedTime = stopwatch.Elapsed;
+            Console.WriteLine("***************************** Elapsed time: " + stopwatch.Elapsed);
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -393,13 +396,23 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetSettlementHistoryForPastMonthByDay([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
                 return NotFound(new { message = "City with the ID: " + settlementId.ToString() + " does not exist." });
 
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
-            return Ok(historyService.SettlementHistoryForThePastMonth(settlementId, deviceCategoryId));
+            var result = historyService.SettlementHistoryForThePastMonth(settlementId, deviceCategoryId);
+
+            stopwatch.Stop();
+            TimeSpan elapsedTime = stopwatch.Elapsed;
+            Console.WriteLine("***************************** Elapsed time: " + stopwatch.Elapsed);
+
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -410,47 +423,144 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetCityHistoryForPastMonthByDay([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
                 return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
 
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
-            return Ok(historyService.CityHistoryForThePastMonth(cityId, deviceCategoryId));
+            var result = historyService.CityHistoryForThePastMonth(cityId, deviceCategoryId);
+
+            stopwatch.Stop();
+            TimeSpan elapsedTime = stopwatch.Elapsed;
+            Console.WriteLine("***************************** Elapsed time: " + stopwatch.Elapsed);
+
+
+            return Ok(result);
         }
 
         /// <summary>
         /// Consumption/Production for all users from city for last year (by month)
         /// </summary>
         [HttpGet]
-        [Route("YearByDay/City/{cityId:long}/{deviceCategoryId:long}")]
+        [Route("YearByMonth/City/{cityId:long}/{deviceCategoryId:long}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetCityHistoryForPastYearByMonth([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
                 return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
 
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
-            return Ok(historyService.CityHistoryForThePastYearByMonth(cityId, deviceCategoryId));
+            var result = historyService.CityHistoryForThePastYearByMonth(cityId, deviceCategoryId);
+
+
+            stopwatch.Stop();
+            TimeSpan elapsedTime = stopwatch.Elapsed;
+            Console.WriteLine("***************************** Elapsed time: " + stopwatch.Elapsed);
+
+            return Ok(result);
         }
 
         /// <summary>
         /// Consumption/Production for all users from settlement for last year (by month)
         /// </summary>
         [HttpGet]
-        [Route("YearByDay/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
+        [Route("YearByMonth/Settlement/{settlementId:long}/{deviceCategoryId:long}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetSettlementHistoryForPastYearByMonth([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
                 return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not exist." });
 
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
-            return Ok(historyService.SettlementHistoryForThePastYearByMonth(settlementId, deviceCategoryId));
+            var result = historyService.SettlementHistoryForThePastYearByMonth(settlementId, deviceCategoryId);
+
+            stopwatch.Stop();
+            TimeSpan elapsedTime = stopwatch.Elapsed;
+            Console.WriteLine("***************************** Elapsed time: " + stopwatch.Elapsed);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Total device Consumption/Production in this month
+        /// </summary>
+        [HttpGet]
+        [Route("Month")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDeviceInThisMonth([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceInThisMonth(deviceId);
+            return Ok(historyList);
+        }
+
+        /// <summary>
+        /// Total device Consumption/Production today
+        /// </summary>
+        [HttpGet]
+        [Route("Today")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDeviceToday([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceToday(deviceId);
+            return Ok(historyList);
+        }
+
+        /// <summary>
+        /// Total device Consumption/Production this year
+        /// </summary>
+        [HttpGet]
+        [Route("Year")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDeviceThisYear([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceThisYear(deviceId);
+            return Ok(historyList);
+        }
+
+        /// <summary>
+        /// Total device Consumption/Production this year
+        /// </summary>
+        [HttpGet]
+        [Route("PreviousMonth")]
+        //[Authorize(Roles = "dispecer, prosumer, guest")]
+        public async Task<IActionResult> GetHistoryForDevicePreviousMonth([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
+            {
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+            }
+
+            var historyList = historyService.GetUsageHistoryForDeviceForPreviousMonth(deviceId);
+            return Ok(historyList);
         }
     }
 }

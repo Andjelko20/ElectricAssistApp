@@ -1,7 +1,7 @@
 .global {
-    margin-left: 10px;
     width: 100%;
     display: flex;
+    margin-top: 190px;
     justify-content: center;
 }
 
@@ -12,6 +12,7 @@ input {
 .global1 {
     box-shadow: 2px 4px gray;
     background-color: white;
+    border-radius: 10px;
     padding: 20px;
     width: 50%;
     margin-bottom: 30px;
@@ -39,9 +40,69 @@ form {
     justify-content: center;
 }
 
-button {
+#subb {
     justify-content: center;
     margin-left: 25%;
     width: 160px;
     background-color: #1C315E;
+}
+#turnback {
+    margin-top: 5px;
+    width: 5%;
+    margin-left: 35px;
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .global {
+        width: 100%;
+        display: flex;
+        margin-top: 190px;
+        justify-content: center;
+    }
+    #turnback {
+        margin-top: 5px;
+        width: 5%;
+        margin-left: 35px;
+    }
+    input {
+        color: #1C315E;
+    }
+    
+    .global1 {
+        box-shadow: 2px 4px gray;
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        width: 80%;
+        margin-bottom: 130px;
+    }
+    
+    h1 {
+        color: #1C315E;
+        display: flex;
+        justify-content: center;
+        font-style: italic;
+    }
+    
+    label {
+        color: #1C315E;
+        font-style: italic;
+        font-size: 25px;
+    }
+    
+    form {
+        margin-top: 50px;
+    }
+    
+    .form-row {
+        display: flex;
+        justify-content: center;
+    }
+    
+    #subb {
+        justify-content: center;
+        margin-left: 25%;
+        width: 160px;
+        background-color: #1C315E;
+    }
+    
 }

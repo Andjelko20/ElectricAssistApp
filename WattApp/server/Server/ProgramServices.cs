@@ -42,6 +42,8 @@ namespace Server
             builder.Services.AddScoped<IHistoryService, HistoryServiceImpl>();
             builder.Services.AddScoped<IPredictionService, PredictionServiceImpl>();
             builder.Services.AddScoped<IProsumerService, ProsumerServiceImpl>();
+            builder.Services.AddScoped<IDSOService, DSOServiceImpl>();
+            builder.Services.AddScoped<ICurrentPeriodHistoryService, CurrentPeriodHistoryImpl>();
 
             builder.Services.Configure<ApiBehaviorOptions>(options
                 => options.SuppressModelStateInvalidFilter = true);

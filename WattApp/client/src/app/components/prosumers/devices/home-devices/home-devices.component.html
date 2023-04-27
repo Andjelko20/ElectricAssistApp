@@ -1,13 +1,12 @@
-
-
-        <div class="devices">
-            <div class="devices-item" id="slide-1" *ngFor="let device of devices">
-                <a  class="devices-device-item" *ngIf="device.turnOn===true" style="cursor: pointer;" (click)="turnOnOff(device.id)">
-                    <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
-                </a>
-                <a  class="devices-device-item1" *ngIf="device.turnOn===false" style="cursor: pointer;" (click)="turnOnOff(device.id)">
-                        <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
-                </a>
-                <h3 id="deviceh3">{{device.name}}</h3>
-            </div>
-        </div>
+<div class="devices" #myContainer  >
+    <div class="devices-item" id="slide-1" *ngFor="let device of devices">
+      <a class="devices-device-item" *ngIf="device.turnOn===true" style="cursor: pointer;" [routerLink]="['/device/'+device.id]" >
+        <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
+      </a>
+      <a class="devices-device-item1" *ngIf="device.turnOn===false" style="cursor: pointer;" [routerLink]="['/device/'+device.id]">
+        <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
+      </a>
+      <h3 id="deviceh3">{{device.name}}</h3>
+    </div>
+  </div>
+  

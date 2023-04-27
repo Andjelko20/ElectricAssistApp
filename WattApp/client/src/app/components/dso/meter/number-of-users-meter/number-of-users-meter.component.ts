@@ -1,24 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-number-of-users-meter',
   templateUrl: './number-of-users-meter.component.html',
   styleUrls: ['./number-of-users-meter.component.css']
 })
-export class NumberOfUsersMeterComponent {
+export class NumberOfUsersMeterComponent implements OnInit {
 
-
+  ngOnInit(): void {
+	  fetch(environment.serverUrl+"/api/ProsumersDetails/count",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+	  .then(res=>res.json())
+	  .then(res=>this.value=res);
+  }
 enableThresholds: boolean = false;
-value: number = 6222;
-thick: number = 25;
-size: number = 300;
+value!: number ;
+thick: number = 15;
 type: any = "full";
 cap: any = "round";
-label: string = "of 10 000 users";
+label: string = "Prosumers";
 prepend: any = '';
 append: any = '';
 min: number = 0;
-max: number = 10000;
+max: number = 50;
+
 foregroundColor: string = '#537FE7';
 backgroundColor: string = '#85CDFD';
 
@@ -54,10 +59,5 @@ showNewGauge = false;
 
 
 
-  ngOnInit(): void {
-    this.MeterChart();
-  }
-  MeterChart(){
-    
-  }
+
 }

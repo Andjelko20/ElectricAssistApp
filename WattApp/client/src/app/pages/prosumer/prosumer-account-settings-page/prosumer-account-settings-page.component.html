@@ -4,7 +4,8 @@
     <div class="centar">
         <div class="card">
             <div class="back">
-                <a href="prosumer-account-page"><img id="turnback" src="assets/img/turn-back.png" alt=""></a>
+                <a *ngIf="this.role==this.prosumer" [routerLink]='["/profile"]'><img id="turnback" src="assets/img/back.png" alt=""></a>
+                <a *ngIf="this.role==this.dso" [routerLink]='["/profile-dso"]'><img id="turnback" src="assets/img/back.png" alt=""></a>
             </div>
             <div>
                 <img id="imgdevice" src="assets/img/account.png" alt="">
@@ -28,7 +29,8 @@
                 </div>
 
                 <button type="submite" class="btn btn-primary">Save</button>
-                <button type="submite" class="btn btn-primary" id="giveupbutton" [routerLink]="['/prosumer-account-page']">Cancel</button>
+                <button type="submite" class="btn btn-primary" id="giveupbutton" *ngIf="this.role==this.prosumer"[routerLink]="['/profile']">Cancel</button>
+                <button type="submite" class="btn btn-primary" id="giveupbutton" *ngIf="this.role==this.dso" [routerLink]="['/profile-dso']">Cancel</button>
 
 
 
@@ -49,15 +51,15 @@
                         <input type="password" formControlName="nameform3" class="form-control" name="confirmPassword" placeholder="Confirm password" [(ngModel)]="confirmPassword">
                     </div>
                     <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Save</button>
-                    <button type="submit" class="btn btn-primary" id="giveupbutton" [routerLink]="['/prosumer-account-page']">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="giveupbutton" *ngIf="this.role==this.prosumer" [routerLink]="['/profile']">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="giveupbutton" *ngIf="this.role==this.dso" [routerLink]="['/profile-dso']">Cancel</button>
                 </div>
-
-
 
             </form>
 
         </div>
 
     </div>
+    <app-footer *ngIf="this.role==this.prosumer"></app-footer>
+    <app-prosumer-footer *ngIf="this.role==this.prosumer"></app-prosumer-footer>
 </div>
-<app-prosumer-footer></app-prosumer-footer>

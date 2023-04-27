@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Roles } from '../../utilities/role'
 import { JwtToken } from 'src/app/utilities/jwt-token';
@@ -14,17 +14,39 @@ export class SidebarComponent implements OnInit{
   superadmin?:string;
   dso?:string;
   prosumer?:string;
-  constructor(private router:Router,private usersService:AuthService,
-    private route:ActivatedRoute) { 
+  currentUrl: string = '';
+  constructor(public router:Router,private usersService:AuthService,
+    public route:ActivatedRoute) { 
 
       this.admin=Roles.ADMIN_NAME;
       this.dso=Roles.DISPATCHER_NAME;
       this.prosumer=Roles.PROSUMER_NAME;
       this.superadmin=Roles.SUPERADMIN_NAME;
+      
     }
   ngOnInit(): void {
     let token=new JwtToken();
     this.role=token.data.role as string;
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentUrl = event.url;
+      }
+    });
+    const dashboard = document.getElementById('dashboard');
+    const sidebar = document.getElementById('sidebar');
+    
+    if(sidebar && dashboard)
+    {
+      sidebar.style.height = dashboard.clientHeight + 'px';
+    }
+            window.addEventListener('resize', this.setSidebarHeight);
+    
+      }
+  showSidebarContent = false;
+
+  toggleSidebarContent() {
+    this.showSidebarContent = !this.showSidebarContent;
   }
   logout()
   {
@@ -32,4 +54,13 @@ export class SidebarComponent implements OnInit{
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }
+   setSidebarHeight() {
+    const dashboard = document.getElementById('dashboard');
+    const sidebar = document.getElementById('sidebar');
+    
+    if(sidebar && dashboard)
+    {
+      sidebar.style.height = dashboard.clientHeight + 'px';
+    }
+   }
 }

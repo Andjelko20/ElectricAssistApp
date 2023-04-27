@@ -12,8 +12,13 @@ namespace Server.Services
         Task<UserModel?> GetUserByUsername(string username);
         Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber, int itemsPerPage, Func<UserModel, bool> filter);
         Task<List<RoleModel>> GetAllRoles();
-
         Task<List<object>> GetAllProsumers();
+
+        Task<List<object>> GetAllProsumers(string zone,int city);
+        object CreatePendingUser(PendingUserModel pendingUser);
+        object ConfirmEmailAddress(string key);
+        object CreateChangeEmailRequest(ChangeEmailModel changeEmail);
+        object ConfirmChageOfEmailAddress(string key);
 
     }
 }

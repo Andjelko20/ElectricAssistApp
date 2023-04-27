@@ -1,1 +1,97 @@
-<p>prosumer-reports-page works!</p>
+<app-prosumer-navbar>
+</app-prosumer-navbar>
+<div class="main">
+    <div class="all">
+        <div class="toggle-container">
+            <div class="toggle-buttons">
+                <input type="radio" (click)="toggleDa()" name="toggle" id="dashboard-btn" checked>
+                <label id="dash" for="dashboard-btn">History</label>
+                <span class="divider"></span>
+                <input type="radio" (click)="toggleD()" name="toggle" id="devices-btn">
+                <label for="devices-btn">Prediction</label>
+            </div>
+        </div>
+        <div class="con" *ngIf="dashboard">
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Consumption this month</h5>
+                            <p class="card-text">9.24 kWh </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Production this month</h5>
+                            <p class="card-text">9.24 kWh </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Storage this month</h5>
+                            <p class="card-text">9.24 kWh </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="graf">
+                <div class="row"></div>
+            </div>
+            <div class="table">
+                <div class="row"></div>
+            </div>
+        </div>
+
+
+        <div class="con" *ngIf="devices">
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Consumption next 7 days</h5>
+                            <p class="card-text">9.24 kWh </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Production next 7 days</h5>
+                            <p class="card-text">9.24 kWh </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Storage next 7 days</h5>
+                            <p class="card-text">9.24 kWh </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="graf">
+                <div class="row"></div>
+            </div>
+            <div class="table">
+                <div class="row"></div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+        <app-prosumer-footer></app-prosumer-footer>
+
+    </div>
+    
+</div>

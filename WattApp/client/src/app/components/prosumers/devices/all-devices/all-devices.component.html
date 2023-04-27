@@ -1,76 +1,26 @@
-<!-- <div id="homewrepper" class="col-sm-9 ml-sm-auto col-md-12" style="margin-top: 150px;">
-    <div class="first">
-        <br>
-
-  
-        <table *ngIf="devices">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>userId</th>
-                    <th>deviceCategory</th>
-                    <th>deviceType</th>
-                    <th>deviceBrand</th>
-                    <th>deviceModel</th>
-                    <th>name</th>
-                    <th>energyInKwh</th>
-                    <th>standByKwh</th>
-                    <th>turnOn</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let device of devices ">
-                    <td>{{device.id}}</td>
-                    <td>{{device.userId}}</td>
-                    <td>{{device.deviceCategory}}</td>
-                    <td>{{device.deviceType}} </td>
-                    <td>{{device.deviceBrand}}</td>
-                    <td>{{device.deviceModel}} </td>
-                    <td>{{device.name}} </td>
-                    <td>{{device.energyInKwh}}</td>
-                    <td>{{device.standByKwh}} </td>
-                    <td>{{device.turnOn}}</td>
-                    <td>
-                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===true" (click)="turnOnOff(device.id)"> on</button>
-                      <button style="width: 84px; height:30px" *ngIf="device.turnOn===false" (click)="turnOnOff(device.id)"> off</button>
-                    </td>
-                    <td><a [routerLink]='["/device-update/"+device.id]'><button style="width: 84px; height:30px; " > UPDATE</button></a></td>
-                    <td><button style="width: 84px; height:30px; " (click)="delete(device.id)">DELETE</button></td>
-  
-                </tr>
-            </tbody>
-        </table>
-        <br>
-  
-    </div>
-    <button id="buttonAdd" [routerLink]='["/device-add"]'>ADD</button>
-  </div>
-   -->
-
-        <div class="adddevices">
-            <h1 id="allh1">All devices 
-            </h1>
-            <label for="deviceCategoryId">Filter by:</label>
-            <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>     
+<div class="adddevices">
+    <h1 id="allh1">All devices
+    </h1>
+    <label for="deviceCategoryId">Filter by:</label>
+    <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>     
                 <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
             </select>
-            
 
-            <a class="btn btn-primary" href="device-add" role="button">Add device</a>
-        </div>
-        <div class="devices"  *ngIf="devices.length!==0">
-            <div class="devices-item" id="slide-1" *ngFor="let device of devices" >
-                <a [routerLink]='["/device/"+device.id]' class="devices-device-item">
-                    <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
 
-                </a>
-                <h3 id="deviceh3">{{device.name}}</h3>
-            </div>
-        </div> 
-        <div class="devices"  *ngIf="devices.length===0">
-            <h1 id="nodevices">You don't have any devices</h1>
-        </div> 
- 
+    <a class="btn btn-primary" [routerLink]='["/device-add"]' role="button">Add device</a>
+</div>
+<div class="devices" *ngIf="devices.length!==0">
+    <div class="devices-item" id="slide-1" *ngFor="let device of devices | paginate: {itemsPerPage,totalItems,currentPage}">
+        <a *ngIf="device.turnOn===true" [routerLink]='["/device/"+device.id]' class="devices-device-item">
+            <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
+        </a>
+        <a *ngIf="device.turnOn===false" [routerLink]='["/device/"+device.id]' class="devices-device-item1">
+            <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
+        </a>
+        <h3 id="deviceh3">{{device.name}}</h3>
+    </div>
+    <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
+</div>
+<div class="devices" *ngIf="devices.length===0">
+    <h1 id="nodevices">You don't have any devices</h1>
+</div>

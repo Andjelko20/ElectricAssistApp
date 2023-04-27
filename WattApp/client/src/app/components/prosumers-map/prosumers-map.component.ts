@@ -1,52 +1,64 @@
-import { Component,OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component,OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import { environment } from 'src/environments/environment';
 import { NgModel } from '@angular/forms';
+import { Popover, Tooltip } from 'bootstrap';
+
+function escape(regex:string) {
+	return regex.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Koristi escape() funkciju da izbegne specijalne karaktere
+}
 
 @Component({
   selector: 'app-prosumers-map',
   templateUrl: './prosumers-map.component.html',
   styleUrls: ['./prosumers-map.component.css']
 })
-export class ProsumersMapComponent {
+export class ProsumersMapComponent implements OnInit,AfterViewInit {
+	popover: Popover | undefined;
+  	tooltip: Tooltip | undefined;
+	ngAfterViewInit(): void {
+		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+		const popoverList = Array.from(popoverTriggerList).map(function (popoverTriggerEl) {
+		  return new Popover(popoverTriggerEl)
+		});
+		this.popover = popoverList[0];
+		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+		const tooltipList = Array.from(tooltipTriggerList).map(function (tooltipTriggerEl) {
+		  return new Tooltip(tooltipTriggerEl)
+		});
+		this.tooltip = tooltipList[0];
+	}
 	
 	  private map!: Leaflet.Map;
+	  private markers:Leaflet.Marker[]=[];
+	  private greenIcon:any;
+	  private blueIcon:any;
+	  private redIcon:any;
 	  private searchUrl!:URL;
 	  public searchInput!:string;
 	  public locations:any[]=[];
-	  private prosumers!:any[];
-	  /*[
-		{
-			latitude:44.048325,
-			longitude:20.954041,
-			name:"Pera Peric",
-			consumption:100
-	  	},
-		{
-			latitude:44.01721187973950,
-			longitude:20.90732574462900,
-			name:"Mika Mikic",
-			consumption:100
-	  	},
-		{
-			latitude:44.02995805102632,
-			longitude:20.90509414672852,
-			name:"Laza Lazic",
-			consumption:100
-	  	}
-	];*/
+	  public prosumers:any[]=[];
+	  public filteredUsers:any[]=[];
+	  private mapLayer:Leaflet.LayerGroup<any>|null=null;
+	  public zone:any="0";
+	  public city:any="0";
+	  public cities:any[]=[];
+	  private prosumersUrl!:URL;
+	  public name:string="";
+	  public loading:boolean=true;
+	  public searchResultVisible:boolean=false;
 	public legend=[
 		{
-			color:"green",
+			color:"--green-square",
 			description:"Green zone - Consumption less than 350 kWh"
 		},
 		{
-			color:"blue",
+			color:"--blue-square",
 			description:"Blue zone - Consumption between 351 and 1600 kWh"
 		},
 		{
-			color:"red",
+			color:"--red-square",
 			description:"Red zone - Consumption more than 1601 kWh"
 		}
 	]
@@ -62,6 +74,13 @@ export class ProsumersMapComponent {
 		});
 	}
 	  ngOnInit(): void {
+		document.addEventListener('click', (event) => {
+			const searchResult = document.querySelector('.search-result');
+			if (searchResult && event.target !== searchResult && !searchResult.contains(event.target as Node)) {
+			  this.searchResultVisible = false;
+			}
+		  });
+
 		this.searchUrl=new URL(environment.mapSearchUrl);
 		this.searchUrl.searchParams.set("format","json");
 		this.searchUrl.searchParams.set("addressdetails","addressdetails");
@@ -78,11 +97,11 @@ export class ProsumersMapComponent {
 		  shadowSize: [41, 41]
 		});
 
-		const greenIcon = this.createMarker('assets/marker-green.png');
+		this.greenIcon = this.createMarker('assets/marker-green.png');
 
-		const redIcon = this.createMarker('assets/marker-red.png');
+		this.redIcon = this.createMarker('assets/marker-red.png');
 
-		const blueIcon=this.createMarker('assets/blue-marker.png');
+		this.blueIcon=this.createMarker('assets/blue-marker.png');
 	
 		Leaflet.Marker.prototype.options.icon = icon;
 	  
@@ -92,34 +111,45 @@ export class ProsumersMapComponent {
 		  attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
 		  maxZoom: 19,
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
-		
-		fetch(environment.serverUrl+"/api/ProsumersDetails",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+		this.prosumersUrl=new URL(environment.serverUrl+"/api/ProsumersDetails");
+		fetch(environment.serverUrl+"/cities?countryId=1")
 		.then(res=>res.json())
 		.then(res=>{
-			this.prosumers=res;
-			for(let prosumer of this.prosumers){
+			this.cities=res;
+		})
+		this.fetchMarkers();
+		
+	  }
+	  fetchMarkers(){
+		if(this.mapLayer!=null)
+			this.mapLayer.removeFrom(this.map);
+		this.markers=[];
+		this.loading=true;
+		fetch(this.prosumersUrl.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+		.then(res=>res.json())
+		.then(res=>{
+			this.loading=false;
+			this.prosumers=res.map((r:any,i:number)=>{
+				r.index=i;
+				return r;
+			});
+			let markers=[];
+			this.mapLayer=new Leaflet.LayerGroup<any>();
+			for(let prosumer of res){
 				if(prosumer.consumption==undefined)
 					prosumer.consumption=0;
 				let icon;
 				if(prosumer.consumption<=350)
-					icon=greenIcon;
-				else if(prosumer.consumption>=1600) icon=redIcon;
-				else icon=blueIcon;
-				let marker=Leaflet.marker([prosumer.latitude,prosumer.longitude],{icon}).addTo(this.map);
+					icon=this.greenIcon;
+				else if(prosumer.consumption>1600) icon=this.redIcon;
+				else icon=this.blueIcon;
+				
+				let marker=Leaflet.marker([prosumer.latitude,prosumer.longitude],{icon}).addTo(this.mapLayer);
+				markers.push(marker);
 				marker.bindPopup(`<b>${prosumer.name}</b><br><a href="prosumer/${prosumer.id}">Details</a>`);
 			}
-		});
-		
-	  }
-
-	  onSubmit(){
-		if(this.searchInput=="" || this.searchInput==undefined)
-			return;
-		this.searchUrl.searchParams.set("q",this.searchInput);
-		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
-		.then(res=>res.json())
-		.then(res=>{
-			this.locations=res;
+			this.mapLayer.addTo(this.map);
+			this.markers=markers;
 		});
 	  }
 	  changeFocus(location:any){
@@ -127,5 +157,41 @@ export class ProsumersMapComponent {
 			animate:true
 		};
 		this.map.setView([location.lat,location.lon],this.map.getZoom(),options);
+	  }
+	  changeZone(){
+		this.prosumersUrl.searchParams.set("zone",this.zone);
+		this.fetchMarkers();
+	  }
+	  changeCity(){
+		let city=this.cities.find(city=>city.id==this.city);
+		this.searchUrl.searchParams.set("q",city.name+",Serbia");
+		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
+		.then(res=>res.json())
+		.then(res=>{
+			this.changeFocus(res[0]);
+		});
+	  }
+	  changeName(){
+		console.log(this.name)
+		if(this.name=="" || this.name==undefined || this.name.length<2){
+			this.filteredUsers=[];
+			this.searchResultVisible=false;
+			return;
+		}
+		const regexObject = new RegExp(escape(this.name), "g"); // Kreiranje RegExp objekta sa ignorisanjem specijalnih karaktera
+		this.filteredUsers=this.prosumers.filter(prosumer=>{
+			if(this.city!=0 && prosumer.cityId!=this.city)
+				return false;
+			if(!regexObject.test(prosumer.name))
+				return false;
+			return true;
+		});
+		this.searchResultVisible=true;
+	  }
+	  focusUser(user:any){
+		this.name="";
+		this.changeFocus({lat:user.latitude,lon:user.longitude});
+		this.searchResultVisible=false;
+		this.markers[user.index].openPopup();
 	  }
 }

@@ -31,6 +31,8 @@ import { FutureComponent } from './components/weather/future/future.component';
 import { DsoOneProsumerPageComponent } from './pages/dso/dso-one-prosumer-page/dso-one-prosumer-page.component';
 import { ProsumerAccountPageComponent } from './pages/prosumer/prosumer-account-page/prosumer-account-page.component';
 import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-account-settings-page/prosumer-account-settings-page.component';
+import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
+import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -42,7 +44,7 @@ const routes: Routes = [
 	//home
 	{path:'dashboard',component:HomePageComponent,canActivate:[AuthenticatedGuard]},
 	//ADMIN
-	{path:'admin/1',component:AdminDsoComponent,canActivate:[AdminGuard]},
+	{path:'',component:AdminDsoComponent,canActivate:[AdminGuard]},
 	{path:'add-user',component:AdminDsoAddComponent,canActivate:[AdminGuard]},
 	{path:'update-user/:id',component:AdminDsoUpdateComponent,canActivate:[AdminGuard]},
 	//DSO
@@ -50,6 +52,8 @@ const routes: Routes = [
 	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumer/:id',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prediction',component:DsoPredictionPageComponent,canActivate:[DispatcherGuard]},
+	{path:"profile-dso",component:ProsumerAccountPageComponent,canActivate:[DispatcherGuard]},
+	{path:"profile-dso-update",component:ProsumerAccountSettingsPageComponent,canActivate:[DispatcherGuard]},
 	//PROSUMER
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
 	{path:'devices',component:ProsumerDevicesPageComponent,canActivate:[ProsumerGuard]},
@@ -57,14 +61,15 @@ const routes: Routes = [
 	{path:'reports',component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"device-update/:id",component:UpdateDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"device-add",component:AddDeviceComponent,canActivate:[ProsumerGuard]},
-
+	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard]},
+	{path:"profile-update",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
+	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 
 	//TEST
 	// {path:'register',component:RegisterComponent},
 	// {path:'change-password',component:ChangePasswordComponent},
 	//{path:'reset-password',component:ResetPasswordPageComponent},
-	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
-	{path:"map-input",component:MapInputComponent},
+	{path:"prosumer-map",component:ProsumersMapComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumer-home-page',component:ProsumerHomePageComponent},
 	{path:'prosumer-devices-page',component:ProsumerDevicesPageComponent},
 	{path:'prosumer-device-page',component:ProsumerDevicePageComponent},
@@ -72,9 +77,11 @@ const routes: Routes = [
 	{path:'prosumer-account-page',component:ProsumerAccountPageComponent},
 	{path:'prosumer-account-settings-page',component:ProsumerAccountSettingsPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
-	{path:"map-input",component:MapInputComponent},
+	//{path:"map-input",component:MapInputComponent},
 	{path:"future",component:TodayComponent},
 	{path:"future",component:FutureComponent},
+	{path:'email-confirmation',component:EmailConfirmationPageComponent},
+	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent},
 	{path:'**',redirectTo:"login"}
 ];
 
