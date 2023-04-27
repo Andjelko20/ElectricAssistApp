@@ -93,11 +93,6 @@ namespace Server.Controllers
                 return NotFound(new { message = "User with the id: " + userId.ToString() + " does not exist." });
             }
 
-            if (!_sqliteDb.Devices.Any(d => d.UserId == userId))
-            {
-                return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." });
-            }
-
             if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID: " + deviceCategoryId.ToString() + " does not exist." });
 
@@ -137,7 +132,7 @@ namespace Server.Controllers
                 return NotFound(new { message = "Device category with the ID: " + deviceCategoryId.ToString() + " does not exist." });
             
             if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
-                return NotFound(new { message = "Device category with the ID: " + deviceCategoryId.ToString() + " does not exist." });
+                return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
 
             var energy = prosumerService.GetTotalConsumptionInTheMomentForCity(deviceCategoryId, cityId);
             var averageEnergy = prosumerService.GetAverageConsumptionInTheMomentForCity(cityId, energy);
@@ -204,12 +199,8 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == doubleTodayUserId))
                     return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not exist." });
 
-                if (!_sqliteDb.Devices.Any(u => u.UserId == doubleTodayUserId))
-                    return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not have registered devices." });
-
                 if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
-
 
                 double energyUsageToday = prosumerService.GetUserEnergyConsumptionForToday(doubleTodayUserId, deviceCategoryId);
                 return Ok(energyUsageToday);
@@ -219,12 +210,8 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == TodayByHourUserId))
                     return NotFound(new { message = "User with the ID: " + TodayByHourUserId.ToString() + " does not exist." });
 
-                if (!_sqliteDb.Devices.Any(u => u.UserId == TodayByHourUserId))
-                    return NotFound(new { message = "User with the ID: " + TodayByHourUserId.ToString() + " does not have registered devices." });
-
                 if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
-
 
                 var energyUsageToday = prosumerService.ProsumerElectricityUsageForTodayByHour(TodayByHourUserId, deviceCategoryId);
                 return Ok(energyUsageToday);
@@ -242,12 +229,8 @@ namespace Server.Controllers
             if (!_sqliteDb.Users.Any(u => u.Id == doubleMonthUserId))
                 return NotFound(new { message = "User with the ID: " + doubleMonthUserId.ToString() + " does not exist." });
 
-            if (!_sqliteDb.Devices.Any(u => u.UserId == doubleMonthUserId))
-                return NotFound(new { message = "User with the ID: " + doubleMonthUserId.ToString() + " does not have registered devices." });
-
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
-
 
             double energyUsageMonth = prosumerService.GetUserEnergyConsumptionForThisMonth(doubleMonthUserId, deviceCategoryId);
             return Ok(energyUsageMonth);
@@ -257,6 +240,12 @@ namespace Server.Controllers
         [Route("year")]
         public async Task<IActionResult> GetProsumerEnergyForThisYear(long doubleYearUserId, long deviceCategoryId)
         {
+            if (!_sqliteDb.Users.Any(u => u.Id == doubleYearUserId))
+                return NotFound(new { message = "User with the ID: " + doubleYearUserId.ToString() + " does not exist." });
+
+            if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
+                return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
             double energyUsageYear = prosumerService.GetUserEnergyConsumptionForThisYear(doubleYearUserId, deviceCategoryId);
             return Ok(energyUsageYear);
         }

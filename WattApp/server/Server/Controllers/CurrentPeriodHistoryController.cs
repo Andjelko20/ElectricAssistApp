@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Data;
 using Server.Models.DropDowns.Devices;
+using Server.Models.DropDowns.Location;
 using Server.Services;
 
 namespace Server.Controllers
@@ -81,8 +82,8 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == dayByHourUserId))
                     return NotFound(new { message = "User with the ID: " + dayByHourUserId.ToString() + " does not exist." });
 
-                if (!_sqliteDb.Devices.Any(u => u.UserId == dayByHourUserId))
-                    return NotFound(new { message = "User with the ID: " + dayByHourUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+                //if (!_sqliteDb.Devices.Any(u => u.UserId == dayByHourUserId))
+                //    return NotFound(new { message = "User with the ID: " + dayByHourUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
 
                 if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
@@ -95,8 +96,8 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == monthByDayUserId))
                     return NotFound(new { message = "User with the ID: " + monthByDayUserId.ToString() + " does not exist." });
 
-                if (!_sqliteDb.Devices.Any(u => u.UserId == monthByDayUserId))
-                    return NotFound(new { message = "User with the ID: " + monthByDayUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+                //if (!_sqliteDb.Devices.Any(u => u.UserId == monthByDayUserId))
+                //   return NotFound(new { message = "User with the ID: " + monthByDayUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
 
                 if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
@@ -109,8 +110,8 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == yearByMonthUserId))
                     return NotFound(new { message = "User with the ID: " + yearByMonthUserId.ToString() + " does not exist." });
 
-                if (!_sqliteDb.Devices.Any(u => u.UserId == yearByMonthUserId))
-                    return NotFound(new { message = "User with the ID: " + yearByMonthUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+                //if (!_sqliteDb.Devices.Any(u => u.UserId == yearByMonthUserId))
+                //    return NotFound(new { message = "User with the ID: " + yearByMonthUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
 
                 if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
@@ -123,8 +124,8 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == doubleTodayUserId))
                     return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not exist." });
 
-                if (!_sqliteDb.Devices.Any(u => u.UserId == doubleTodayUserId))
-                    return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+                //if (!_sqliteDb.Devices.Any(u => u.UserId == doubleTodayUserId))
+                //    return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
 
                 if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
@@ -137,8 +138,8 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == doubleMonthUserId))
                     return NotFound(new { message = "User with the ID: " + doubleMonthUserId.ToString() + " does not exist." });
 
-                if (!_sqliteDb.Devices.Any(u => u.UserId == doubleMonthUserId))
-                    return NotFound(new { message = "User with the ID: " + doubleMonthUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+                //if (!_sqliteDb.Devices.Any(u => u.UserId == doubleMonthUserId))
+                //    return NotFound(new { message = "User with the ID: " + doubleMonthUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
 
                 if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
@@ -151,8 +152,8 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == doubleYearUserId))
                     return NotFound(new { message = "User with the ID: " + doubleYearUserId.ToString() + " does not exist." });
 
-                if (!_sqliteDb.Devices.Any(u => u.UserId == doubleYearUserId))
-                    return NotFound(new { message = "User with the ID: " + doubleYearUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
+                //if (!_sqliteDb.Devices.Any(u => u.UserId == doubleYearUserId))
+                //    return NotFound(new { message = "User with the ID: " + doubleYearUserId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
 
                 if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
