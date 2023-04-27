@@ -137,7 +137,7 @@ namespace Server.Controllers
                 return NotFound(new { message = "Device category with the ID: " + deviceCategoryId.ToString() + " does not exist." });
             
             if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
-                return NotFound(new { message = "Device category with the ID: " + deviceCategoryId.ToString() + " does not exist." });
+                return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
 
             var energy = prosumerService.GetTotalConsumptionInTheMomentForCity(deviceCategoryId, cityId);
             var averageEnergy = prosumerService.GetAverageConsumptionInTheMomentForCity(cityId, energy);
