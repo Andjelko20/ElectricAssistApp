@@ -24,19 +24,21 @@
                     <label for="userName " class="form-label ">User name</label>
                     <input type="text " class="form-control " id="name " name="userName " [(ngModel)]="updateUserDetail.username "disabled>
                     <br> -->
+					<!--
                     <label for="role " class="form-label ">Role</label>
                     <select #teams id="role " class="form-control " name="role " [(ngModel)]="updateUserDetail.roleId ">
                             <option *ngFor="let role of roles " [value]="role?.id " >{{role?.name}}</option>
-                        </select>
+                        </select> -->
                     <br>
+					<!--
                     <form style="margin: 0;padding: 0;">
                         <button type=" submit " class="btn btn-primary mr-5 " data-bs-toggle="modal" data-bs-target="#myModaChangePassword" (click)="sendEmail()">Change password</button>
                         <div *ngIf="errorMessage" style="margin: 0; padding: 0;">
                             {{ errorMessage }}
                         </div>
-                    </form>
+                    </form> 
                     <br>
-                    <br>
+                    <br>-->
                     <!-- <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" value="{{passwordGen}}" disabled>
                     <form style="margin: 0; padding: 0;">

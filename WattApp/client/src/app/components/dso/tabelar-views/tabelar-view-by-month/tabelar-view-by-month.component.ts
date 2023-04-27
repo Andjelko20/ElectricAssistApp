@@ -3,6 +3,7 @@ import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 
 @Component({
   selector: 'app-tabelar-view-by-month',
@@ -13,7 +14,7 @@ export class TabelarViewByMonthComponent implements OnInit{
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   settlements:Settlement[] = [];
-  constructor(private deviceService:DevicesService,private authService:AuthService){}
+  constructor(private deviceService:HistoryPredictionService,private authService:AuthService){}
 
 
   selectedOption: number = 0;
@@ -30,20 +31,16 @@ export class TabelarViewByMonthComponent implements OnInit{
         })
         if(this.selectedOption == 0){
           this.deviceService.monthByDay(number,2).subscribe((data:WeekByDay[])=>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.monthByDay(number,1).subscribe((data:WeekByDay[])=>{
-              console.log("Data => ", data);
               this.list2 = data;
             })
           })
         }
         else{
           this.deviceService.monthByDaySettlement(this.selectedOption,2).subscribe((data:WeekByDay[])=>{
-            console.log("Data => ", data);
             this.list1 = data;
             this.deviceService.monthByDaySettlement(this.selectedOption,1).subscribe((data:WeekByDay[])=>{
-              console.log("Data => ", data);
               this.list2 = data;
             })
           })

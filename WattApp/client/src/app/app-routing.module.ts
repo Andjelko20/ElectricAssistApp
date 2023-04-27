@@ -61,15 +61,13 @@ const routes: Routes = [
 	{path:"device-add",component:AddDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard]},
 	{path:"profile-update",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
-
-
+	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 
 	//TEST
 	// {path:'register',component:RegisterComponent},
 	// {path:'change-password',component:ChangePasswordComponent},
 	//{path:'reset-password',component:ResetPasswordPageComponent},
-	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
-	{path:"map-input",component:MapInputComponent},
+	{path:"prosumer-map",component:ProsumersMapComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumer-home-page',component:ProsumerHomePageComponent},
 	{path:'prosumer-devices-page',component:ProsumerDevicesPageComponent},
 	{path:'prosumer-device-page',component:ProsumerDevicePageComponent},
@@ -77,7 +75,7 @@ const routes: Routes = [
 	{path:'prosumer-account-page',component:ProsumerAccountPageComponent},
 	{path:'prosumer-account-settings-page',component:ProsumerAccountSettingsPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
-	{path:"map-input",component:MapInputComponent},
+	//{path:"map-input",component:MapInputComponent},
 	{path:"future",component:TodayComponent},
 	{path:"future",component:FutureComponent},
 	{path:'email-confirmation',component:EmailConfirmationPageComponent},

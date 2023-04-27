@@ -14,6 +14,7 @@ namespace Server.Services
         Task<List<RoleModel>> GetAllRoles();
         Task<List<object>> GetAllProsumers();
 
+        Task<List<object>> GetAllProsumers(string zone,int city);
         object CreatePendingUser(PendingUserModel pendingUser);
         object ConfirmEmailAddress(string key);
         object CreateChangeEmailRequest(ChangeEmailModel changeEmail);

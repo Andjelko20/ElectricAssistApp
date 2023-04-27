@@ -36,7 +36,7 @@ thresholdConfig = {
 constructor(private historyService:HistoryPredictionService,private authService:AuthService){
 
 }
-  async ngOnInit(): Promise<void> {
+  async ngOnInit(){
   let token=new JwtToken();
   
   this.authService.getlogInUser().subscribe(user=>{

@@ -12,7 +12,7 @@ declare var $: any;
 @Component({
   selector: 'app-dso-home-page',
   templateUrl: './dso-home-page.component.html',
-  styleUrls: ['./dso-home-page.component.css'],
+  styleUrls: ['./dso-home-page.component.css','./dso-css.css'],
 
 })
 export class DsoHomePageComponent implements AfterViewInit, OnInit{
@@ -57,7 +57,6 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
     let token=new JwtToken();
     this.idUser=token.data.id as number;
     this.role=token.data.role as string;
-    console.log(this.idUser);
     this.updateService.getlogInUser()
         .subscribe({
           next:(response)=>{
@@ -86,7 +85,6 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
     const result = await this.avgConsumption.getAverageConsumptionProductionCity(1,2).pipe(first()).toPromise();
   
     this.avgProduction = result!;
-    console.log(this.avgProduction);
     
   }
 

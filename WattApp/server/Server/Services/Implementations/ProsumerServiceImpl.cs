@@ -65,7 +65,7 @@ namespace Server.Services.Implementations
 
             // pronalazimo sve uredjaje koji koriste te modele uredjaja
             var devices = _context.Devices
-                .Where(d => deviceModelIds.Contains(d.DeviceModelId) && d.TurnOn==true)
+                .Where(d => deviceModelIds.Contains(d.DeviceModelId) && d.TurnOn == true)
                 .Select(d => d.Id)
                 .ToList();
 
@@ -98,7 +98,7 @@ namespace Server.Services.Implementations
                 totalUsage += deviceEnergyUsage * usageTime;
             }
 
-            return Math.Round(totalUsage,2 );
+            return Math.Round(totalUsage, 2);
         }
 
         public double GetTotalConsumptionInTheMomentForSettlement(long deviceCategoryId, long settlementId)
@@ -263,7 +263,7 @@ namespace Server.Services.Implementations
             var totalPopulation = _context.Users
                                     .Where(u => u.SettlementId == settlementId)
                                     .Count();
-             
+
             Console.WriteLine("++++++++++++++++Broj usera: " + totalPopulation);
 
             return totalPopulation;
@@ -361,7 +361,7 @@ namespace Server.Services.Implementations
                 .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date == DateTime.Today)
                 .ToList();
 
-            Console.WriteLine("::::::::::::::::::DateTime.Today = "+DateTime.Today);
+            Console.WriteLine("::::::::::::::::::DateTime.Today = " + DateTime.Today);
             Console.WriteLine("::::::::::::::::::DateTime.Now = " + DateTime.Now);
 
             // prolazimo kroz sve sate danasnjeg dana do ovog trenutka i racunamo potrosnju za svaki sat
@@ -370,10 +370,10 @@ namespace Server.Services.Implementations
                 var startTime = DateTime.Today.AddHours(hour);
                 var endTime = DateTime.Today.AddHours(hour + 1);
                 var energyUsageResult = 0.0;
-                Console.WriteLine("++++++++++++++++++++++ startTime="+startTime+" --- endTime="+endTime);
+                Console.WriteLine("++++++++++++++++++++++ startTime=" + startTime + " --- endTime=" + endTime);
                 foreach (var usage in deviceEnergyUsages)
                 {
-                    Console.WriteLine("********************************** DeviceId="+usage.DeviceId+" --- StartTime="+usage.StartTime+" --- EndTime="+usage.EndTime);
+                    Console.WriteLine("********************************** DeviceId=" + usage.DeviceId + " --- StartTime=" + usage.StartTime + " --- EndTime=" + usage.EndTime);
 
                     DateTime overlapStart;
                     if (usage.StartTime < startTime)
@@ -407,7 +407,7 @@ namespace Server.Services.Implementations
 
                 Result.Add(new EnergyToday
                 {
-                    EnergyUsageResult = energyUsageResult,
+                    EnergyUsageResult = Math.Round(energyUsageResult, 2),
                     Hour = startTime.Hour,
                     Day = DateTime.Now.Day,
                     Month = DateTime.Now.ToString("MMMM"),
@@ -416,6 +416,132 @@ namespace Server.Services.Implementations
             }
 
             return Result;
+        }
+
+        public int GetNumberOfDevicesOfOneProsumer(long userId)
+        {
+            var connection = _context.Database.GetDbConnection();
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = $"SELECT COUNT(*) FROM Devices WHERE UserId = {userId}";
+
+            int result = Convert.ToInt32(command.ExecuteScalar()); // ne dozvoljava int jer je 64b
+
+            connection.Close();
+
+            return result;
+        }
+
+        public double GetUserEnergyConsumptionForToday(long userId, long deviceCategoryId)
+        {
+            return SumEnergyConsumption(userId, DateTime.Today, deviceCategoryId);
+        }
+
+        public double GetUserEnergyConsumptionForThisMonth(long userId, long deviceCategoryId)
+        {
+            DateTime startOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
+            return SumEnergyConsumption(userId, startOfMonth, deviceCategoryId);
+        }
+
+        public double GetUserEnergyConsumptionForThisYear(long userId, long deviceCategoryId)
+        {
+            DateTime startOfYear = new DateTime(DateTime.Now.Year, 1, 1, 0, 0, 0);
+            return SumEnergyConsumption(userId, startOfYear, deviceCategoryId);
+        }
+
+        public double SumEnergyConsumption(long userId, DateTime StartDate, long deviceCategoryId)
+        {
+            var devicesForUser = _context.Devices
+                                .Include(d => d.DeviceModel)
+                                    .ThenInclude(dm => dm.DeviceType)
+                                    .ThenInclude(dt => dt.DeviceCategory)
+                                .Where(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId)
+                                .ToList();
+
+            if (devicesForUser.Count == 0)
+            {
+                return 0;
+            }
+
+            var deviceIds = devicesForUser.Select(d => d.Id).ToList();
+            var usageList = new List<DeviceEnergyUsage>();
+
+            //var StartDate = DateTime.Today;
+            var EndDate = DateTime.Now;
+
+            usageList = _context.DeviceEnergyUsages
+                        .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= StartDate/* && u.EndTime <= EndDate*/)
+                        .ToList();
+
+            var totalEnergyConsumption = 0.0;
+
+            foreach (var device in devicesForUser)
+            {
+                var deviceUsageList = usageList.Where(u => u.Device.Id == device.Id).ToList();
+
+                var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == device.DeviceModelId);
+                float EnergyInKwh = DeviceModel.EnergyKwh;
+
+                foreach (var usage in deviceUsageList)
+                {
+                    if (usage.EndTime == null)
+                        usage.EndTime = EndDate;
+
+                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// device.EnergyInKwh;
+                }
+            }
+
+            return Math.Round(totalEnergyConsumption, 2);
+        }
+
+        public List<EnergyToday> ProsumerElectricityUsageForTodayByHour(long userId, long deviceCategoryId)
+        {
+            var deviceIds = _context.Devices
+                .Include(d => d.DeviceModel)
+                .ThenInclude(dm => dm.DeviceType)
+                .ThenInclude(dt => dt.DeviceCategory)
+                .Where(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId)
+                .Select(d => d.Id)
+                .ToList();
+
+            DateTime startOfDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            DateTime currentTime = DateTime.Now;
+
+            List<DeviceEnergyUsage> UsageList = new List<DeviceEnergyUsage>();
+            var Results = new List<EnergyToday>();
+
+            UsageList = _context.DeviceEnergyUsages
+                        .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= startOfDay && (u.EndTime <= currentTime || u.EndTime == null))
+                        .ToList();
+
+            for (var hour = startOfDay.Hour; hour <= currentTime.Hour; hour = hour + 1)
+            {
+                var UsageForHour = UsageList.Where(u => u.StartTime.Hour == hour).ToList();
+
+                double EnergyUsage = 0.0;
+                foreach (var usage in UsageForHour)
+                {
+                    double EnergyInKwh = _context.Devices
+                                        .Where(d => d.Id == usage.DeviceId)
+                                        .Select(d => d.DeviceModel)
+                                        .FirstOrDefault()
+                                        .EnergyKwh;
+
+                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;
+                }
+
+                Results.Add(new EnergyToday
+                {
+                    EnergyUsageResult = Math.Round(EnergyUsage, 2),
+                    Hour = hour,
+                    Day = startOfDay.Day,
+                    Month = startOfDay.ToString("MMMM"),
+                    Year = startOfDay.Year
+                });
+            }
+
+            return Results;
         }
     }
 }

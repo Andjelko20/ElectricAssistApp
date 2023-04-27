@@ -1,12 +1,14 @@
 #container{
 	display: flex;
+	flex-direction: column;
 	margin: 40px;
 	height: auto;
-	gap:5px;
+	gap:15px;
 }
 #map-wrapper{
-	width: 80%;
+	width: 100%;
 	height: 70vh;
+	margin-bottom: 30px;
 }
 #prosumers-map{
 	margin-left: 5px;
@@ -15,26 +17,13 @@
 }
 .search-container{
 	flex-grow: 1;
-	width: 20%;
+	width: 100%;
 	text-align: center;
 	
-}
-
-input{
-	width: 80%;
-    margin-bottom: 5px;
 }
 button{
 	width: 60%;
     margin-left: 5px;
-}
-.search-result{
-	height: 70vh;
-	overflow-y: auto;
-	display: flex;
-	flex-direction: column;
-	gap:10px;
-	
 }
 .location{
 	background-color: white;
@@ -51,6 +40,9 @@ button{
 .legend{
 	margin-left: 300px;
 	margin-bottom: 10px;
+	--green-square:green;
+	--blue-square:blue;
+	--red-square:red;
 }
 .legend-item{
 	display: flex;
@@ -60,6 +52,7 @@ button{
 .legend-square{
 	width: 10px;
 	height: 10px;
+	background-color: var(--bg-color);
 }
 
 .search-container > form{
@@ -94,6 +87,120 @@ button{
     width: 17px; /* Set the width to your desired size */
     height: 17px; /* Set the height to the same value as the width to create a square shape */
     margin-left: 10px;
+  }
     
-    
+
+/*
+select[name="zone"] > option{
+	background-color: var(--bg-color);
+}
+*/
+.filter-select{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap:10px;
+}
+.filter-select select{
+	padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	outline:0;
+}
+.filter-select > label,.search-user label{
+	text-align: left;
+}
+
+.map-filters-container{
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	flex-wrap: wrap;
+	gap:40px;
+}
+.search-user{
+	flex-grow: 1;
+	min-width: 250px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	position: relative;
+}
+.search-user > :first-child{
+	margin-bottom: 10px;
+}
+.search-user .input-form-control{
+	width: 100%;
+	padding: 4px 5px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #212529;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: 0.375rem;
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.input-form-control:focus{
+	color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+.no-prosumers-map{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 30px;
+	font-size: 40px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.none{
+	display: none !important;
+}
+.search-result{
+	z-index: 1010;
+	background-color: #f6f6f6;
+	box-shadow: 0px 1px 4px 1px #b0a7a7;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap:10px;
+	max-height: 200px;
+	padding: 10px;
+	width: 100%;
+	position: relative;
+	bottom: 3px;
+	border-radius: 0 0 10px 10px;
+}
+.search-result > .no-results{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.search-result > .no-results > p{
+	font-size: 35px;
+	color: #a39d9d;
+	text-align: center;
+
+}
+.location{
+	padding: 3px;
+	border-radius: 2px;
+	background-color: #dddddd;
+	cursor: pointer;
+}
+.location:hover{
+	text-decoration: underline;
 }

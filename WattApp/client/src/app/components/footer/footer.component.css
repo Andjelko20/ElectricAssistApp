@@ -5,14 +5,17 @@
 @media (min-width: 768px) {
     /* #allfooter {
         bottom: 0;
+        right: 0;
+        position: absolute;
         display: block;
         width: 100%;
     } */ 
     footer {
         display: block;
         width: 100%;
-        z-index: 1;
-        position: relative;
+        position: absolute;
+        bottom: 0;
+        right: 0;
     }
     .c-grey-600, .cH-grey-600:hover {
         color: #7c8695 !important;

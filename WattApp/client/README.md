@@ -14,6 +14,17 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The appl
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
+## Configuration
+Before building the entire project, make sure to populate `src/environments/environment.prod.ts` by entering the URL of the server where the C# application is running.
+```ts
+export const environment = {
+  production: true,
+  serverUrl:"<your_server_url>",
+  mapSearchUrl:"https://nominatim.openstreetmap.org/"
+};
+
+```
+
 ## Build
 
 Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ShowDevices } from 'src/app/models/devices.model';
+import { DayByHour } from 'src/app/models/devices.model';
+import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { DevicesService } from 'src/app/services/devices.service';
-import { Categories } from 'src/app/utilities/categories';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+
 
 @Component({
   selector: 'app-tabelar-view',
@@ -11,105 +11,45 @@ import { Categories } from 'src/app/utilities/categories';
   styleUrls: ['./tabelar-view.component.css']
 })
 export class TabelarViewComponent implements OnInit{
-  devicesList:ShowDevices[] = []
-  deviceCategoryId!: number;
-  idDevice!: number;
-  constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute) {}
-  categories=[
 
-     {id:Categories.ELECTRICITY_PRODUCER_ID,name:Categories.ELECTRICITY_PRODUCER_NAME},
-    
-     {id:Categories.ELECTRICITY_CONSUMER_ID,name:Categories.ELECTRICITY_CONSUMER_NAME},
-    
-     {id:Categories.ELECTRICITY_STOCK_ID,name:Categories.ELECTRICITY_STOCK_NAME}
-    
-     ]
+  list1:DayByHour[] = [];
+  list2:DayByHour[] = [];
+  settlements:Settlement[] = [];
+  selectedOption: number = 0;
 
-  ngOnInit(): void {
-    this.deviceCategoryId = 2;
-    this.deviceService.getAllDevices(1,12,this.deviceCategoryId).subscribe(devices => {
-      this.devicesList=devices.data.map((u:any)=>({
-        id:u.id,
-        userId: u.userId,
-        deviceCategory:u.deviceCategory,
-        deviceType: u.deviceType ,
-        deviceBrand: u.deviceBrand ,
-        deviceModel: u.deviceModel ,
-        name: u.name ,
-        energyInKwh: u.energyInKwh,
-        standByKwh: u.standByKwh,
-        visibility: u.visibility,
-        controlability: u.controlability,
-        turnOn: u.turnOn,
-    
-    })as ShowDevices)
-    
-    }, (error: { status: number; }) => {
-    
-    if (error.status === 404) {
-    
-      this.devicesList=[]
-    
-      console.log('Devices not found in database');
-    
-    }}
-    
-    );
-    
+  onOptionSelected() {
+    console.log("List1 ="+this.list1);
+    console.log("List2 ="+this.list2);
+
+    this.ngOnInit();
   }
-
-  onSelectedCategory(event:any){
-
-    this.deviceCategoryId = event.target.value;
-    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,12,this.deviceCategoryId).subscribe(devices => {
-      this.devicesList=devices.data.map((u:any)=>({
-        id:u.id,
-        userId: u.userId,
-        deviceCategory:u.deviceCategory,
-        deviceType: u.deviceType ,
-        deviceBrand: u.deviceBrand ,
-        deviceModel: u.deviceModel ,
-        name: u.name ,
-        energyInKwh: u.energyInKwh,
-        standByKwh: u.standByKwh,
-        visibility: u.visibility,
-        controlability: u.controlability,
-        turnOn: u.turnOn,
-    
-    })as ShowDevices)
-    
-    }, (error: { status: number; }) => {
-    
-    if (error.status === 404) {
-    
-      this.devicesList=[]
-    
-      console.log('Devices not found in database');
-    
-    }}
-    
-    );
-    }
-    turnOnOff(id: number) {
-
-       console.log(id);
-      this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
-      this.deviceService.turnOnOff(id).subscribe({
-      next:()=>{
-        const userIndex = this.devicesList.findIndex(user => user.id === id);
+  constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {}
+  ngOnInit(): void {
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.settlements = settlement;
+        })
+        if(this.selectedOption == 0){
+          this.deviceService.dayByHour(number,2).subscribe((data: DayByHour[]) =>{
+            this.list1 = data;
+            this.deviceService.dayByHour(number,1).subscribe((data: DayByHour[]) =>{
+              this.list2 = data;
+            })
+      
+          })
+        }
+        else{
+          this.deviceService.dayByHourSettlement(this.selectedOption,2).subscribe((data: DayByHour[]) =>{
+            this.list1 = data;
+            this.deviceService.dayByHourSettlement(this.selectedOption,1).subscribe((data: DayByHour[]) =>{
+              this.list2 = data;
+            })
+      
+          })
+        }
         
-      if(this.devicesList[userIndex].turnOn == false)
-      {
-      this.devicesList[userIndex].turnOn = true;
-      } 
-      else if(this.devicesList[userIndex].turnOn == true)
-      {
-        this.devicesList[userIndex].turnOn = false;
-      }
-      
-      }
-      
-      });
-      
-       }
+      })
+    })
+  }
 }

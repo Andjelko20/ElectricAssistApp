@@ -1,0 +1,116 @@
+.main {
+    top: 0;
+    position: absolute;
+    min-height: 100vh;
+}
+
+.toggle-container {
+    margin: 11px;
+    border-radius: 5px;
+    background-color: #bce9e4;
+}
+
+.row {
+    margin: 0;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
+label {
+    font-size: 20px;
+}
+
+.all {
+    margin-top: 52px;
+    margin-bottom: 0px;
+}
+
+.con {
+    margin-bottom: 55px;
+}
+
+
+/* #dash {
+    padding-right: 2px;
+    border-right: 2px solid black;
+} */
+
+.row {
+    margin-top: 15px;
+}
+
+input {
+    border: 1px solid black;
+    width: 20%;
+}
+
+.card-title {
+    font-size: 20px;
+}
+
+.card-text {
+    font-size: 25px;
+}
+
+.card {
+    margin-bottom: 10px;
+    background-color: #bce9e4;
+}
+
+.graf {
+    border: 1px solid black;
+    width: 100%;
+}
+
+.table {
+    margin-top: 15px;
+    border: 1px solid black;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .main {
+        top: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
+    }
+    .all {
+        margin-top: 85px;
+        margin-left: 80px;
+        margin-bottom: 50px;
+        top: 83px;
+    }
+    input {
+        border: 1px solid black;
+        width: 30%;
+    }
+    label {
+        font-size: 35px;
+    }
+    .con {
+        margin: 10px;
+        margin-bottom: 0px;
+    }
+    .card {
+        background-color: #bce9e4;
+    }
+    .card-title {
+        font-size: 35px;
+    }
+    .card-text {
+        font-size: 45px;
+    }
+    .row {
+        width: 100%;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .table {
+        margin-top: 15px;
+    }
+    .toggle-container {
+        margin: 22px;
+    }
+}
