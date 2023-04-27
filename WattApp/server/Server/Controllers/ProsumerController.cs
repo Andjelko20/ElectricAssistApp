@@ -219,8 +219,8 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == TodayByHourUserId))
                     return NotFound(new { message = "User with the ID: " + TodayByHourUserId.ToString() + " does not exist." });
 
-                if (!_sqliteDb.Devices.Any(u => u.UserId == TodayByHourUserId))
-                    return NotFound(new { message = "User with the ID: " + TodayByHourUserId.ToString() + " does not have registered devices." });
+                //if (!_sqliteDb.Devices.Any(u => u.UserId == TodayByHourUserId))
+                //    return NotFound(new { message = "User with the ID: " + TodayByHourUserId.ToString() + " does not have registered devices." });
 
                 if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
