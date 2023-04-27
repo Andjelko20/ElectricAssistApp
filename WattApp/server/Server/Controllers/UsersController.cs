@@ -166,7 +166,7 @@ namespace Server.Controllers
         {
             try
             {
-
+                string password = PasswordGenerator.GenerateRandomPassword();
                 PendingUserModel user = new PendingUserModel
                 {
                     Username = requestBody.Username,
