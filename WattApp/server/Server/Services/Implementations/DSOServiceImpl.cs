@@ -120,7 +120,7 @@ namespace Server.Services.Implementations
                         energyUsage += reader.GetDouble(0);
                     }
                 }
-                return energyUsage;
+                return Math.Round(energyUsage, 2);
             }
         }
 
@@ -152,7 +152,7 @@ namespace Server.Services.Implementations
                         energyUsage += reader.GetDouble(0);
                     }
                 }
-                return energyUsage;
+                return Math.Round(energyUsage, 2);
             }
         }
 

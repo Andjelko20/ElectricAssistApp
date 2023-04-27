@@ -557,7 +557,7 @@ namespace Server.Services.Implementations
                             Day = day,
                             Month = month,
                             Year = year,
-                            EnergyUsageResult = energyUsage
+                            EnergyUsageResult = Math.Round(energyUsage, 2)
                         };
 
                         energyUsages.Add(dailyEnergyUsage);
@@ -610,7 +610,7 @@ namespace Server.Services.Implementations
                             Day = day,
                             Month = month,
                             Year = year,
-                            EnergyUsageResult = energyUsage
+                            EnergyUsageResult = Math.Round(energyUsage, 2)
                         };
 
                         energyUsages.Add(dailyEnergyUsage);
@@ -662,7 +662,7 @@ namespace Server.Services.Implementations
                             Day = day,
                             Month = month,
                             Year = year,
-                            EnergyUsageResult = energyUsage
+                            EnergyUsageResult = Math.Round(energyUsage, 2)
                         };
 
                         energyUsages.Add(dailyEnergyUsage);
@@ -715,7 +715,7 @@ namespace Server.Services.Implementations
                             Day = day,
                             Month = month,
                             Year = year,
-                            EnergyUsageResult = energyUsage
+                            EnergyUsageResult = Math.Round(energyUsage, 2)
                         };
 
                         energyUsages.Add(dailyEnergyUsage);
@@ -764,7 +764,7 @@ namespace Server.Services.Implementations
                         {
                             Month = month,
                             Year = year,
-                            EnergyUsageResult = energyUsage
+                            EnergyUsageResult = Math.Round(energyUsage, 2)
                         };
                         energyUsages.Add(dailyEnergyUsage);
                     }
@@ -811,7 +811,7 @@ namespace Server.Services.Implementations
                         {
                             Month = month,
                             Year = year,
-                            EnergyUsageResult = energyUsage
+                            EnergyUsageResult = Math.Round(energyUsage, 2)
                         };
                         energyUsages.Add(dailyEnergyUsage);
                     }
