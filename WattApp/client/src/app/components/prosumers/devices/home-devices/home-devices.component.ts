@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit , ViewChild, ElementRef, Renderer2, AfterViewInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
@@ -10,6 +10,8 @@ import { Categories } from 'src/app/utilities/categories';
   styleUrls: ['./home-devices.component.css']
 })
 export class HomeDevicesComponent implements OnInit {
+
+  
   devices:ShowDevices[] = [];
   pageNumber?:number;
   pageSize?:number;
@@ -19,11 +21,13 @@ export class HomeDevicesComponent implements OnInit {
     {id:Categories.ELECTRICITY_CONSUMER_ID,name:Categories.ELECTRICITY_CONSUMER_NAME},
     {id:Categories.ELECTRICITY_STOCK_ID,name:Categories.ELECTRICITY_STOCK_NAME}
   ]
-  constructor(private router:Router,private deviceService:DevicesService,
-    private route:ActivatedRoute) { }
-
+  constructor(private router:Router,private deviceService:DevicesService,private renderer: Renderer2,private route:ActivatedRoute) { }
+  
   ngOnInit(): void {
     
+
+
+
     this.deviceService.getAllDevices(1,12,2).subscribe(devices => {
      this.devices=devices.data.map((u:any)=>({
       id:u.id,
@@ -74,5 +78,8 @@ export class HomeDevicesComponent implements OnInit {
       
       
     }
-  
+    
+
 }
+ 
+

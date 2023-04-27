@@ -1,6 +1,7 @@
 
         <div class="glavni"  *ngIf="device">
             <div class="updatedelete">
+                <span id="typedev">{{device.deviceType}}</span>
                 <button id="del" class="btn btn-primary"data-bs-toggle="modal" data-bs-target="#myModalDelete" (click)="delete(device.id)" >Delete</button>
                 <a id="del"class="btn btn-primary" [routerLink]='["/device-update/"+idDevice]' role="button">Update</a>
             </div>

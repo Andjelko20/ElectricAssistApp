@@ -104,8 +104,13 @@ ul {
     display: flex;
     overflow-x: auto;
     position: relative;
-}
-
+    cursor: grab;
+  }
+  
+  .devices.grabbing {
+    cursor: grabbing;
+  }
+  
 .devices-item {
     position: sticky;
     background-size: cover;
@@ -323,7 +328,30 @@ h1 {
     }
     .moredevices a {
         font-size: 35px;
+        border-bottom: 3px solid #bce9e4;
     }
+    .moredevices a:hover{
+        border-bottom: 3px solid dodgerblue;
+    }
+    .devices {
+        position: sticky;
+        align-items: stretch;
+        width: 100%;
+        height: auto;
+        text-align: center;
+        transition: all 0.3s;
+        display: flex;
+        overflow-x: scroll;
+        position: relative;
+        cursor: grab;
+      }
+      
+      .devices.grabbing {
+        cursor: grabbing;
+      }
+      
+    
+    
 }
 
 

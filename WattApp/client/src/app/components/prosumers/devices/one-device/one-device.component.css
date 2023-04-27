@@ -192,6 +192,13 @@ p {
   .slider.round:before {
     border-radius: 50%;
   }
+  #typedev
+    {
+      
+      font-size: 25px;
+      padding-left: 20px;
+      color: white;
+    }
 @media (min-width: 768px) {
    
     .device {
@@ -238,7 +245,7 @@ p {
         float: left;
         /* margin-top: 15px; */
         /* float: left; */
-        left: 15%;
+        left: 22%;
         padding-top: 15px;
         position: absolute;
         width: 20%;
@@ -316,5 +323,10 @@ p {
     .slider.round:before {
       border-radius: 50%;
     }
-    
+    #typedev
+    {
+      font-size: 40px;
+      padding-left: 30px;
+      color: white;
+    }
 }
