@@ -10,7 +10,7 @@
     padding-top: 0;
     margin-bottom: 0;
     padding-bottom: 0;
-    min-height: 98vh;
+    min-height: 100vh;
 }
 app-footer {
     position: absolute;
@@ -266,7 +266,7 @@ ul ul a {
         width: 100%;
       }
     #dashboard {
-        padding-left: 80px;
+        padding-left: 95px;
         height: auto;
         width: 100%;
         position: relative;

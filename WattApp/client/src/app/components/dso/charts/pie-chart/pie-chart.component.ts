@@ -67,25 +67,9 @@ export class PieChartComponent implements OnInit {
         "#696969 ",
         "#483D8B ",
         "#4B0082 ",
-
-       
-       
-        
-        
           ],
       borderWidth: 1,
-      borderColor: "#00000"
-  //   },{label: 'Percentage of Production in kWh',
-  //   data: [30, 20, 15, 15, 14, 6],
-  //   // backgroundColor: [
-  //   //         "#4b77a9",
-  //   //         "#5f255f",
-  //   //         "#d21243",
-  //   //         "#B27200",
-  //   //         "#00000"
-  //   //     ],
-  //   borderWidth: 1,
-  //   borderColor: "#00000"
+      borderColor: "#00000",
   },]
     var ctx = "piechart";
     var myChart = new Chart(ctx, {

@@ -29,8 +29,16 @@
                     <td *ngIf="show.block===true" style="text-align: center;padding-left: 25px;"><span class="yellow-circle"></span> Inactive</td>
                     <td *ngIf="show.block===false" style="text-align: center;"><span class="green-circle"></span> Active</td>
                     <td style="padding: 1px;">
-                      <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalUnblockAdmin" *ngIf="show.block===true" (click)="unblockUser (show.id)">UNBLOCK </button>
-                      <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalBlockAdmin" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button>
+                      <!-- <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalUnblockAdmin" *ngIf="show.block===true" (click)="unblockUser (show.id)">UNBLOCK </button>
+                      <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalBlockAdmin" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button> -->
+                      <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalBlockAdmin" *ngIf="show.block===false" (click)="blockUser(show.id)">
+                        <input type="checkbox" [disabled]="!confirmBlock">
+                        <span class="slider round"></span>
+                      </label>
+                      <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalUnblockAdmin" *ngIf="show.block===true"  (click)="unblockUser (show.id)">
+                        <input type="checkbox" checked [disabled]="!confirmBlock">
+                        <span class="slider round"></span>
+                      </label>
                     </td>
                     
                     <td><a [routerLink]='["/update-user/",show.id]' style="text-decoration: none; padding-right: 20px; color: #2199e8;"><i class="fas fa-cog" style="color: #2199e8"> </i> Edit</a>
@@ -43,8 +51,6 @@
         </table>
 		<app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
     </div>
-    <!-- <a [routerLink]='["/add-user"]'><button id="buttonAdd">ADD</button></a> -->
-
   <!-- Modal Unblock -->
   <div class="modal fade" id="myModalUnblockAdmin" tabindex="-1" aria-labelledby="myModalUnblockAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
     <div class="modal-dialog modal-dialog-centered">

@@ -1,19 +1,16 @@
 .weather-container {
-    height: 150px;
-    display: flex;
     background: #ffffff;
     margin-top: 10px;
     text-align: center;
     justify-content: center;
     border-radius: 30px;
-    margin-right: 15px;
+    width: 100%;
   }
   
   .weather-container .flex-column {
-    display: flex;
-    margin-left: 5%;
+    display: inline-block;
     margin-top: 10px;
-    flex-direction: column;
+    margin-left: 0px;
     align-items: center;
     }
   
@@ -56,7 +53,8 @@
     }
     
     .weather-container .flex-column {
-      margin-left: 10%;
+      margin-left: 10px;
+      margin-right: 10px;
       margin-top: 20px;
     }
     

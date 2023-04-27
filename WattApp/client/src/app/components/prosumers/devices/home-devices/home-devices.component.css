@@ -25,15 +25,6 @@ ul {
     min-height: 280px;
 }
 
-
-/* Logo */
-
-
-/* pravi problem kad se smanji na 320px */
-
-
-/* Car and battery */
-
 .carbattery {
     position: sticky;
     background-color: white;
@@ -153,7 +144,6 @@ ul {
     background-color: white;
     display: inline-block;
 }
-
 .devices-device-item1 {
     border: 3px solid rgb(236, 7, 41);
     border-radius: 100px;

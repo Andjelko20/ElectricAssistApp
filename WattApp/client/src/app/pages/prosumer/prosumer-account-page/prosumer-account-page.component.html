@@ -2,9 +2,9 @@
 <div class="main">
     <div class="centar">
         <div class="card">
-            <div class="back">
+            <!-- <div class="back">
                 <a href="prosumer-home-page"><img id="turnback" src="assets/img/back.png" alt=""></a>
-            </div>
+            </div> -->
             <div class="userimg">
                 <img id="imgdevice" src="assets/img/account.png" alt="">
             </div>
@@ -14,16 +14,16 @@
                     <li>Username: {{name}}</li>
                     <li>E-mail: {{email}}</li>
                     <li>Adress:{{adres}}</li>
-                    <li id="number">Number of devices: 25</li>
-
-                    <li class="aa"><a href="prosumer-account-settings-page">Edit profile</a></li>
-                    <li class="aa"><a href="#" (click)="logout()">Logout</a></li>
+                    <li  *ngIf="this.role==this.prosumer" id="number">Number of devices: {{numOfDevices}}</li>
+                    <li class="aa" *ngIf="this.role==this.prosumer"><a [routerLink]='["/profile-update"]'>Edit profile</a></li>
+                    <li class="aa" *ngIf="this.role==this.dso"><a [routerLink]='["/profile-dso-update"]'>Edit profile</a></li>
+                    <li class="aa"><a (click)="logout()">Logout</a></li>
                 </ul>
             </div>
 
         </div>
     </div>
 
-    <app-footer></app-footer>
-    <app-prosumer-footer></app-prosumer-footer>
+    <app-footer *ngIf="this.role==this.prosumer"></app-footer>
+    <app-prosumer-footer *ngIf="this.role==this.prosumer"></app-prosumer-footer>
 </div>

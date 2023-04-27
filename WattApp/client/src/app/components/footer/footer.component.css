@@ -1,15 +1,9 @@
-#allfooter {
+
+footer{
     display: none;
 }
-
 @media (min-width: 768px) {
-    /* #allfooter {
-        bottom: 0;
-        right: 0;
-        position: absolute;
-        display: block;
-        width: 100%;
-    } */ 
+    
     footer {
         display: block;
         width: 100%;

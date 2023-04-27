@@ -114,12 +114,13 @@ export class LineDayChartComponent {
       }
       ,
       options: {
+        responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             position: "left",
@@ -128,7 +129,7 @@ export class LineDayChartComponent {
               text: " kWh",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
@@ -137,7 +138,7 @@ export class LineDayChartComponent {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             title:{
@@ -145,13 +146,13 @@ export class LineDayChartComponent {
               text: "Hours in a day",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
           ,
         },
-        responsive: true,
+        
         plugins: {
           datalabels:{display: false},
           legend: {
@@ -166,7 +167,7 @@ export class LineDayChartComponent {
               usePointStyle: true,
               color:'#000',
               font:{
-                size:20
+                size:15
               } 
            
             }
