@@ -117,7 +117,7 @@ namespace Server.Services.Implementations
                 {
                     while (reader.Read())
                     {
-                        energyUsage += reader.GetDouble(0);
+                        energyUsage += double.Parse(reader["EnergyUsageKwh"].ToString());
                     }
                 }
                 return Math.Round(energyUsage, 2);
@@ -149,7 +149,7 @@ namespace Server.Services.Implementations
                 {
                     while (reader.Read())
                     {
-                        energyUsage += reader.GetDouble(0);
+                        energyUsage += double.Parse(reader["EnergyUsageKwh"].ToString());
                     }
                 }
                 return Math.Round(energyUsage, 2);
@@ -286,13 +286,13 @@ namespace Server.Services.Implementations
                     while (reader.Read())
                     {
                         DateTimeFormatInfo dateFormatInfo = CultureInfo.CurrentCulture.DateTimeFormat;
-                        string monthName = dateFormatInfo.GetMonthName(Convert.ToInt32(reader.GetString(2)));
+                        string monthName = dateFormatInfo.GetMonthName(int.Parse(reader["Month"].ToString()));
 
-                        var hour = Convert.ToInt32(reader.GetString(0));
-                        var day = Convert.ToInt32(reader.GetString(1));
+                        var hour = int.Parse(reader["Hour"].ToString());
+                        var day = int.Parse(reader["Day"].ToString());
                         var month = monthName;
-                        var year = Convert.ToInt32(reader.GetString(3));
-                        var energyUsage = Convert.ToDouble(reader.GetString(4));
+                        var year = int.Parse(reader["Year"].ToString());
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
                         var dailyEnergyUsage = new EnergyToday
                         {
