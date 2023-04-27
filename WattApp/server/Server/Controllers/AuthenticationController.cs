@@ -16,6 +16,7 @@ using System.Text;
 using Server.DTOs.Responses;
 using Server.Services.Implementations;
 using Server.DTOs.Requests;
+using Microsoft.Extensions.Configuration;
 
 namespace Server.Controllers
 {
@@ -29,12 +30,14 @@ namespace Server.Controllers
         public readonly ILogger<AuthenticationController> logger;
         public readonly IEmailService emailService;
         public readonly IUserService userService;
+        public readonly IConfiguration configuration;
         public AuthenticationController(
             SqliteDbContext _sqliteDb,
             ITokenService tokenService,
             ILogger<AuthenticationController> logger,
             IEmailService emailService,
-            IUserService userService
+            IUserService userService,
+            IConfiguration configuration
             )
         {
             this.tokenService = tokenService;
@@ -42,6 +45,7 @@ namespace Server.Controllers
             this.logger = logger;
             this.emailService = emailService;
             this.userService = userService;
+            this.configuration = configuration;
         }
         /// <summary>Login</summary>
         [Produces("application/json")]
@@ -131,11 +135,11 @@ namespace Server.Controllers
                 };
             }else if (resetPassword.ExpireAt > DateTime.Now)
                 return BadRequest(new MessageResponseDTO("Reset key is already submited on your email"));
-            resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(10);
+            resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(15);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
             try
             {
-                emailService.SendEmail(requestBody.Email, "Reset password", "Click on this link to reset your password:<a href='http://localhost:4200/reset-password/"+resetPassword.ResetKey+"'>" + resetPassword.ResetKey + "</a>", true);
+                emailService.SendEmail(requestBody.Email, "Reset password", "Click on this link to reset your password:<a href='"+ configuration.GetValue<string>("frontUrl") + "/reset-password/"+resetPassword.ResetKey+"'>" + resetPassword.ResetKey + "</a>", true);
             }
             catch
             {

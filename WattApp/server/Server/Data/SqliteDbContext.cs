@@ -24,17 +24,14 @@ namespace Server.Data
         public DbSet<City> Cities { get; set; }
         public DbSet<Settlement> Settlements { get; set; }
         public DbSet<DeviceBrand> DeviceBrands { get; set; }
-        //public DbSet<Price> Price { get; set; }
-        //public DbSet<ChargingScheduler> ChargingSchedulers { get; set; }
         public DbSet<InclusionScheduler> InclusionSchedulers { get; set; }
         public DbSet<UserEnergyUsage> UserEnergyUsages { get; set; }
         public DbSet<DeviceEnergyUsage> DeviceEnergyUsages { get; set; }
-        //public DbSet<DeviceDefaultSettings> DeviceDefaultSettings { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<DeviceModel> DeviceModels { get; set; }
-        //public DbSet<TypeBrand> TypeBrands { get; set; }
-        //public DbSet<TypeBrandModel> TypeBrandModels { get; set; }
 
+        public DbSet<ChangeEmailModel> ChangeEmailModels { get; set; }
+        public DbSet<PendingUserModel> PendingUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

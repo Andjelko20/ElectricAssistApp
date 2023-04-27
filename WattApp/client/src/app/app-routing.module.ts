@@ -32,6 +32,7 @@ import { DsoOneProsumerPageComponent } from './pages/dso/dso-one-prosumer-page/d
 import { ProsumerAccountPageComponent } from './pages/prosumer/prosumer-account-page/prosumer-account-page.component';
 import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-account-settings-page/prosumer-account-settings-page.component';
 import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
+import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -80,6 +81,7 @@ const routes: Routes = [
 	{path:"future",component:TodayComponent},
 	{path:"future",component:FutureComponent},
 	{path:'email-confirmation',component:EmailConfirmationPageComponent},
+	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent},
 	{path:'**',redirectTo:"login"}
 ];
 
