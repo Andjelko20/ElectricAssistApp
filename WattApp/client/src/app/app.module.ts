@@ -82,6 +82,7 @@ import { LineWeekProsumerComponent } from './components/dso/charts-prosumer/line
 import { PredictionProsumerComponent } from './components/dso/prediction/prediction-prosumer/prediction-prosumer.component';
 import { PredictionDeviceComponent } from './components/dso/prediction/prediction-device/prediction-device.component';
 import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
+import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
 
 
 @NgModule({
@@ -169,7 +170,8 @@ import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/
     WeekTabelarProsumerComponent,
     YearTabelarProsumerComponent,
     TodayTabelarProsumerComponent,
-    EmailConfirmationPageComponent
+    EmailConfirmationPageComponent,
+    ChangeEmailConfirmationPageComponent
     
   ],
   imports: [

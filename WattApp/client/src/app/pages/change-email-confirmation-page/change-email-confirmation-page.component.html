@@ -1,0 +1,37 @@
+
+<div class="container">
+    <div *ngIf="isConfirmed;">
+        
+    <div class="left-container">
+        <img src="assets/emailConfirmation/success.png" alt="Email confirmed successfully.">
+    </div>
+    <div class="right-container">
+        <h3 class="title">Your email address has been successfully confirmed.</h3>
+        <br>
+        You can now <a (click)="goToLogin()" style="color:blue">login</a> to our app and take control of your energy usage.
+        Start tracking and managing your household electricity 
+        consumption to help reduce your environmental impact.<br>
+        <br>
+        <b>Welcome aboard!</b><br><br>
+        <button class="login-button">Login</button>
+    </div>
+    </div>
+
+    <div *ngIf="!isConfirmed;">
+        <div class="container">
+            <div class="left-container">
+                <img src="assets/emailConfirmation/not_confirmed.png" alt="Email confirmation failed.">
+            </div>
+            <div class="right-container">
+                <h3 class="title">Mail confirmation failed</h3>
+                <br>
+                You can try <a (click)="goToLogin()">login</a> to our app and take control of your energy usage
+                because it seems you have already have account with this email address.
+                <br>
+                <b>Welcome aboard!</b><br><br>
+                <button class="login-button">Login</button>
+            </div>
+        </div>
+    </div>
+    
+</div>
