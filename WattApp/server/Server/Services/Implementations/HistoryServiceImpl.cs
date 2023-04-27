@@ -383,12 +383,12 @@ namespace Server.Services.Implementations
                     {
                         while (reader.Read())
                         {
-                            DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                            DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
                             var day = date.Day;
                             var month = date.ToString("MMMM");
                             var year = date.Year;
-                            var energyUsage = Convert.ToDouble(reader.GetString(1));
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
                             var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                             {
@@ -452,12 +452,12 @@ namespace Server.Services.Implementations
                     {
                         while (reader.Read())
                         {
-                            DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                            DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
                             var day = date.Day;
                             var month = date.ToString("MMMM");
                             var year = date.Year;
-                            var energyUsage = Convert.ToDouble(reader.GetString(1));
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
                             var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                             {
@@ -550,9 +550,9 @@ namespace Server.Services.Implementations
                 _connection.Open();
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
-                                        SELECT DATE(deu.StartTime) AS Day, 
-                                               strftime('%m', deu.StartTime) AS Month,
-                                               strftime('%Y', deu.StartTime) AS Year,
+                                        SELECT DATE(deu.StartTime) AS YYMMDD, 
+                                               /*strftime('%m', deu.StartTime) AS Month,
+                                               strftime('%Y', deu.StartTime) AS Year,*/
                                                SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id
@@ -572,12 +572,12 @@ namespace Server.Services.Implementations
                 {
                     while (reader.Read())
                     {
-                        DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = Convert.ToDouble(reader.GetString(3));
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
                         var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                         {
@@ -602,9 +602,9 @@ namespace Server.Services.Implementations
                 _connection.Open();
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
-                                        SELECT DATE(deu.StartTime) AS Day, 
-                                               strftime('%m', deu.StartTime) AS Month,
-                                               strftime('%Y', deu.StartTime) AS Year,
+                                        SELECT DATE(deu.StartTime) AS YYMMDD, 
+                                               /*strftime('%m', deu.StartTime) AS Month,
+                                               strftime('%Y', deu.StartTime) AS Year,*/
                                                SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id
@@ -625,12 +625,12 @@ namespace Server.Services.Implementations
                 {
                     while (reader.Read())
                     {
-                        DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = Convert.ToDouble(reader.GetString(3));
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
                         var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                         {
@@ -655,9 +655,9 @@ namespace Server.Services.Implementations
                 _connection.Open();
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
-                                        SELECT DATE(deu.StartTime) AS Day, 
-                                               strftime('%m', deu.StartTime) AS Month,
-                                               strftime('%Y', deu.StartTime) AS Year,
+                                        SELECT DATE(deu.StartTime) AS YYMMDD, 
+                                               /*strftime('%m', deu.StartTime) AS Month,
+                                               strftime('%Y', deu.StartTime) AS Year,*/
                                                SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id
@@ -677,12 +677,12 @@ namespace Server.Services.Implementations
                 {
                     while (reader.Read())
                     {
-                        DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = Convert.ToDouble(reader.GetString(3));
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
                         var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                         {
@@ -707,9 +707,9 @@ namespace Server.Services.Implementations
                 _connection.Open();
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
-                                        SELECT DATE(deu.StartTime) AS Day, 
-                                               strftime('%m', deu.StartTime) AS Month,
-                                               strftime('%Y', deu.StartTime) AS Year,
+                                        SELECT DATE(deu.StartTime) AS YYMMDD, 
+                                               /*strftime('%m', deu.StartTime) AS Month,
+                                               strftime('%Y', deu.StartTime) AS Year,*/
                                                SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id
@@ -730,12 +730,12 @@ namespace Server.Services.Implementations
                 {
                     while (reader.Read())
                     {
-                        DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                        DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = Convert.ToDouble(reader.GetString(3));
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
                         var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                         {
@@ -781,11 +781,11 @@ namespace Server.Services.Implementations
                 {
                     while (reader.Read())
                     {
-                        DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM", CultureInfo.InvariantCulture);
+                        DateTime date = DateTime.ParseExact(reader["MonthYear"].ToString(), "yyyy-MM", CultureInfo.InvariantCulture);
 
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = reader.GetDouble(1);
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
                         var dailyEnergyUsage = new MonthlyEnergyConsumptionLastYear
                         {
@@ -828,11 +828,11 @@ namespace Server.Services.Implementations
                 {
                     while (reader.Read())
                     {
-                        DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM", CultureInfo.InvariantCulture);
+                        DateTime date = DateTime.ParseExact(reader["MonthYear"].ToString(), "yyyy-MM", CultureInfo.InvariantCulture);
 
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = reader.GetDouble(1);
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
                         var dailyEnergyUsage = new MonthlyEnergyConsumptionLastYear
                         {

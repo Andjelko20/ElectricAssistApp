@@ -246,12 +246,12 @@ namespace Server.Services.Implementations
                     {
                         while (reader.Read())
                         {
-                            DateTime date = DateTime.ParseExact(reader.GetString(0), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                            DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
                             var day = date.Day;
                             var month = date.ToString("MMMM");
                             var year = date.Year;
-                            var energyUsage = Convert.ToDouble(reader.GetString(1));
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
                             var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                             {
