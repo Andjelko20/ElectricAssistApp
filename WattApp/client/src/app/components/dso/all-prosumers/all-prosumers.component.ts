@@ -25,20 +25,7 @@ i: any;
   ) {}
 
   ngOnInit(): void {
-    this.getUsers();
-  }
-
-  getUsers(): void {
-    this.authService.getAllProsumers().subscribe((prosumers) => {
-      this.data = prosumers.data.map((u: any) => ({
-        id: u.id,
-        name: u.name,
-        settlement: u.settlement,
-        city: u.city,
-        country: u.country
-      } as Prosumers));
-      this.getProsumerValues();
-    });
+    this.getProsumerValues();
   }
 
   getProsumerValues(): void {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Chart,registerables } from 'node_modules/chart.js'
+import { forkJoin } from 'rxjs';
 import { WeekByDay, YearsByMonth } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,14 +23,15 @@ export class BarYearProsumerComponent {
     
   }
   ngOnInit(): void {
-
-    this.deviceService.yearByMonthUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data:YearsByMonth[])=>{
-      this.list1 = data;
-      this.deviceService.yearByMonthUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data:YearsByMonth[])=>{
-        this.list2 = data;
-        this.BarPlot();
-      })
-    })
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    forkJoin([
+      this.deviceService.yearByMonthUser(id, 2),
+      this.deviceService.yearByMonthUser(id, 1)
+    ]).subscribe(([list1, list2]) => {
+      this.list1 = list1;
+      this.list2 = list2;
+      this.BarPlot();
+    });
   }
   BarPlot(){
 
@@ -116,7 +118,9 @@ export class BarYearProsumerComponent {
           },
           responsive: true,
           plugins: {
-            
+            datalabels: {
+              display: false
+            },
             legend: {
               onHover: function (event, legendItem, legend) {
                 document.body.style.cursor = 'pointer';
@@ -132,9 +136,6 @@ export class BarYearProsumerComponent {
                 font:{
                   size:20
                 } 
-                // ,
-                // boxHeight:100,
-                // boxWidth:100
               }
             },
             title: {

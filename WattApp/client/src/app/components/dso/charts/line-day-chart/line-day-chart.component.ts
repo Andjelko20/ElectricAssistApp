@@ -25,34 +25,30 @@ export class LineDayChartComponent {
     this.ngOnInit();
   }
   ngOnInit(): void {
-    this.authService.getlogInUser().subscribe(user=>{
-      this.authService.getCityId(user.city).subscribe(number=>{
-        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+    this.authService.getlogInUser().subscribe(user => {
+      this.authService.getCityId(user.city).subscribe(number => {
+        this.authService.getSettlement(number).subscribe((settlement: Settlement[]) => {
           this.settlements = settlement;
-        })
-        if(this.selectedOption == 0){
-          this.deviceService.dayByHour(number,2).subscribe((data: DayByHour[]) =>{
+        });
+        if (this.selectedOption == 0) {
+          this.deviceService.dayByHour(number, 2).subscribe((data: DayByHour[]) => {
             this.list1 = data;
-            this.deviceService.dayByHour(number,1).subscribe((data: DayByHour[]) =>{
+            this.deviceService.dayByHour(number, 1).subscribe((data: DayByHour[]) => {
               this.list2 = data;
               this.LineChart();
-            })
-      
-          })
-        }
-        else{
-          this.deviceService.dayByHourSettlement(this.selectedOption,2).subscribe((data: DayByHour[]) =>{
+            });
+          });
+        } else {
+          this.deviceService.dayByHourSettlement(this.selectedOption, 2).subscribe((data: DayByHour[]) => {
             this.list1 = data;
-            this.deviceService.dayByHourSettlement(this.selectedOption,1).subscribe((data: DayByHour[]) =>{
+            this.deviceService.dayByHourSettlement(this.selectedOption, 1).subscribe((data: DayByHour[]) => {
               this.list2 = data;
               this.LineChart();
-            })
-      
-          })
+            });
+          });
         }
-        
-      })
-    })
+      });
+    });
   }
   LineChart(){
 

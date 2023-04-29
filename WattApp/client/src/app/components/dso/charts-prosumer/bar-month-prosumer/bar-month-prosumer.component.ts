@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { forkJoin, switchMap } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -25,17 +26,18 @@ export class BarMonthProsumerComponent {
   }
   
   ngOnInit(): void {
-
-
-    this.deviceService.monthByDayUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data:WeekByDay[])=>{
-      this.list1 = data;
-      this.deviceService.monthByDayUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data:WeekByDay[])=>{
-        this.list2 = data;
+    const userId = Number(this.route.snapshot.paramMap.get('id'));
+    const month1$ = this.deviceService.monthByDayUser(userId, 2);
+    const month2$ = this.deviceService.monthByDayUser(userId, 1);
+  
+    forkJoin([month1$, month2$]).pipe(
+      switchMap(([data1, data2]) => {
+        this.list1 = data1;
+        this.list2 = data2;
         this.BarPlot();
+        return [];
       })
-    })
-
-    
+    ).subscribe();
   }
   BarPlot(){
     
@@ -117,6 +119,9 @@ export class BarMonthProsumerComponent {
           },
           responsive: true,
           plugins: {
+            datalabels: {
+              display: false
+            },
             legend: {
               onHover: function (event, legendItem, legend) {
                 document.body.style.cursor = 'pointer';

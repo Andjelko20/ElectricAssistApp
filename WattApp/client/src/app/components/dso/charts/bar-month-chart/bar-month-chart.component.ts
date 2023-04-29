@@ -150,7 +150,9 @@ export class BarMonthChartComponent {
           },
          
           plugins: {
-            
+            datalabels: {
+              display: false
+            },
             legend: {
               onHover: function (event, legendItem, legend) {
                 document.body.style.cursor = 'pointer';

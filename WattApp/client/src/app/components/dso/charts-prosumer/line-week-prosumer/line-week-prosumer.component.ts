@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,13 +23,16 @@ export class LineWeekProsumerComponent {
   }
 
   ngOnInit(): void {
-    this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data: WeekByDay[]) =>{
-      this.list1 = data;
-      this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data: WeekByDay[]) =>{
-        this.list2 = data;
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    forkJoin([
+        this.deviceService.weekByDayUser(id, 2),
+        this.deviceService.weekByDayUser(id, 1),
+      ]).subscribe(([list1, list2]) => {
+        this.list1 = list1;
+        this.list2 = list2;
         this.LineChart();
-      })
-    })
+    });
     
   }
   LineChart(){

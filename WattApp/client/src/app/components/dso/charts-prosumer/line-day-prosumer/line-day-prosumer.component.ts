@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { combineLatest } from 'rxjs';
 import { DayByHour } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,13 +22,16 @@ export class LineDayProsumerComponent{
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   ngOnInit(): void {
-    this.deviceService.dayByHourUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data: DayByHour[]) =>{
-      this.list1 = data;
-      this.deviceService.dayByHourUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data: DayByHour[]) =>{
-        this.list2 = data;
-        this.LineChart();
-      })
-    })
+    const userId = Number(this.route.snapshot.paramMap.get('id'));
+  
+    combineLatest([
+      this.deviceService.dayByHourUser(userId, 2),
+      this.deviceService.dayByHourUser(userId, 1)
+    ]).subscribe(([list1, list2]) => {
+      this.list1 = list1;
+      this.list2 = list2;
+      this.LineChart();
+    });
   }
   LineChart(){
 
