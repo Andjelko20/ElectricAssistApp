@@ -30,7 +30,7 @@ export class MapInputComponent {
 	  constructor(){
 		document.onclick=(event:any)=>{
 			let searchResult=document.getElementsByClassName("search-result")[0];
-			if(event.target!==searchResult && !searchResult.contains(event.target)){
+			if(searchResult && event.target !== searchResult && !searchResult.contains(event.target as Node)){
 				this.searchResultVisible=false;
 			}
 		}

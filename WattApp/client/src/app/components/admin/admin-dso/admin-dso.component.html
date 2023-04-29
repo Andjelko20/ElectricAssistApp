@@ -22,87 +22,37 @@
                     <td>{{show.address}}</td>
                     <td>{{show.settlement}}</td>
                     <td>{{show.city}}</td>
-                    <td style="padding: 1px;">
-                      <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalBlockAdmin" *ngIf="show.block===false" (click)="blockUser(show.id)">
+                    <td>
+                      <label class="switch" *ngIf="show.block===false" (click)="blockUser(show.id)">
                         <input type="checkbox" [disabled]="!confirmBlock">
                         <span class="slider round"></span>
                       </label>
-                      <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalUnblockAdmin" *ngIf="show.block===true"  (click)="unblockUser (show.id)">
+                      <label class="switch" *ngIf="show.block===true"  (click)="unblockUser (show.id)">
                         <input type="checkbox" checked [disabled]="!confirmBlock">
                         <span class="slider round"></span>
                       </label>
                     </td>
                     <td>
                       <a [routerLink]='["/update-user/",show.id]' style="text-decoration: none; color: #2199e8;"><i class="fas fa-cog" style="color: #2199e8"></i> Edit</a>&nbsp;&nbsp;
-                      <a data-bs-toggle="modal" data-bs-target="#myModalDeleteAdmin" (click)="delete(show.id)" style="cursor: pointer; color: red;"><i class="fas fa-trash" style="color: red"></i> DELETE</a>
+                      <a  (click)="delete(show.id)" style="cursor: pointer; color: red;"><i class="fas fa-trash" style="color: red"></i> Delete</a>
                   </td>
                 </tr>
             </tbody>
         </table>
 		    <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
     </div>
-  <!-- Modal Unblock -->
-  <div class="modal fade" id="myModalUnblockAdmin" tabindex="-1" aria-labelledby="myModalUnblockAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-            </div>
-            <div class="modal-body">
-              <h5 class="modal-title" id="myModalUnblockAdminLabel" style="text-align: center;">Do you want to unblock this user?</h5>
-            
-            </div>
-            <div class="modal-footer" >
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="unblock-popup">Unblock</button>
-                
-            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                Close
-            </button>
-            
-            </div>
-        </div>
-    </div>
-</div>
-   <!-- Modal Block -->
-   <div class="modal fade" id="myModalBlockAdmin" tabindex="-1" aria-labelledby="myModalBlockAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-        </div>
-        <div class="modal-body">
-          <h5 class="modal-title" id="myModalBlockAdminLabel" style="text-align: center;">Do you want to block this user?</h5>
-        </div>
-        <div class="modal-footer" >
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="block-popup">Block</button>
-            
-          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-            Close
-          </button>
-          
-        </div>
+    <ng-template #modalContent let-modal >
+      <div class="modal-header">
+        <!-- <h5 class="modal-title" id="modalTitle">{{ title }}</h5> -->
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
-    </div>
-  </div>
-
-  <!-- Modal delete -->
-  <div class="modal fade" id="myModalDeleteAdmin" tabindex="-1" aria-labelledby="myModalDeleteAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-    <div class="modal-dialog  modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-        </div>
-        <div class="modal-body">
-          <h5 class="modal-title" id="myModalDeleteAdminLabel" style="text-align: center;">Do you want to delete this user?</h5>
-        </div>
-        <div class="modal-footer" >
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="delete-admin-popup">Delete</button>
-            
-          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-            Close
-          </button>
-        </div>
+      <div class="modal-body">
+        <h5 class="modal-title" style="text-align: center;">{{body}}</h5>
       </div>
-    </div>
-  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>
+        <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+      </div>
+    </ng-template>
+    
+    
