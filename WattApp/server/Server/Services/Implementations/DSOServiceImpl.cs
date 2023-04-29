@@ -257,10 +257,13 @@ namespace Server.Services.Implementations
                                             strftime('%d', deu.StartTime) AS Day,
                                             strftime('%m', deu.StartTime) AS Month,
                                             strftime('%Y', deu.StartTime) AS Year,
-                                            SUM(CAST((strftime('%s', CASE WHEN deu.EndTime >= strftime('%Y-%m-%d %H:%M:%S', 'now')
+                                            SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', 'localtime')
                                                                           THEN datetime('now', 'localtime')
                                                                           ELSE deu.EndTime
-                                                                     END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                                                     END) - strftime('%s', CASE WHEN deu.StartTime < datetime('now', 'start of day', 'localtime')
+                                                                                               THEN datetime('now', 'start of day', 'localtime')
+                                                                                               ELSE deu.StartTime
+                                                                                          END)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
                                             DeviceEnergyUsages deu
                                             JOIN Devices d ON deu.DeviceId = d.Id
@@ -269,7 +272,8 @@ namespace Server.Services.Implementations
                                             JOIN Users u ON d.UserId = u.Id
                                             JOIN Settlements s ON s.Id = u.SettlementId AND s.CityId = @cityId
                                         WHERE
-                                            deu.StartTime >= date('now', 'start of day') AND deu.StartTime <= datetime('now', 'localtime', '+0.2 hour')
+                                            deu.StartTime >= datetime('now', 'start of day', 'localtime')
+                                            AND deu.StartTime <= datetime('now', 'localtime')
                                         GROUP BY
                                             strftime('%H', deu.StartTime),
                                             strftime('%d', deu.StartTime),
