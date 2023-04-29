@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   serverUrl:"https://localhost:7146",
-  mapSearchUrl:"https://nominatim.openstreetmap.org/"
+  mapSearchUrl:"https://nominatim.openstreetmap.org/",
+  openWeatherMapApiKey: '7dd14e5b21a93d6be27ec87a0694756b'
 };
 
 

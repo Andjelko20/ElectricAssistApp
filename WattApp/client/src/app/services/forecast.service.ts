@@ -1,60 +1,34 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-
+import { from } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ForecastService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getWeatherForecast(){
-    return new Observable((observer)=>{
-      navigator.geolocation.getCurrentPosition((position)=>{
-        observer.next(position)
-      },
-      (error)=>{
-        observer.next(error)
-      }
-      )
-    }).pipe(
-      map((value:any)=>{
+  getWeatherForecast() {
+    return from(new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    })).pipe(
+      map((position: any) => {
         return new HttpParams()
-          .set('lon', value.coords.longitude)
-          .set('lat', value.coords.latitude)
-          .set('units',"metric")
-          .set('appid', '7dd14e5b21a93d6be27ec87a0694756b')
+          .set('lon', position.coords.longitude)
+          .set('lat', position.coords.latitude)
+          .set('units', "metric")
+          .set('appid', environment.openWeatherMapApiKey)
       }),
-      switchMap((values)=>{
-        return this.http.get('https://api.openweathermap.org/data/2.5/forecast', { params : values })
-      })
-    )
-  }
-
-  getWeatherForecastF(){
-    return new Observable((observer)=>{
-      navigator.geolocation.getCurrentPosition((position)=>{
-        observer.next(position)
-      },
-      (error)=>{
-        observer.next(error)
-      }
-      )
-    }).pipe(
-      map((value:any)=>{
-        return new HttpParams()
-          .set('lon', value.coords.longitude)
-          .set('lat', value.coords.latitude)
-          .set('units',"imperial")
-          .set('appid', '7dd14e5b21a93d6be27ec87a0694756b')
+      switchMap((params: HttpParams) => {
+        return this.http.get('https://api.openweathermap.org/data/2.5/forecast', { params })
       }),
-      switchMap((values)=>{
-        return this.http.get('https://api.openweathermap.org/data/2.5/forecast', { params : values })
+      catchError((error: any) => {
+        return from(Promise.reject(error));
       })
-    )
+    );
   }
 
 }
