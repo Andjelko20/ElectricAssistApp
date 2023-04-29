@@ -1,5 +1,5 @@
 header {
-    background-color: #1C315E;
+    background-color: #354871;
     box-shadow: 1px 1px 5px 0px grey;
     position: fixed;
     top: 0;
@@ -40,7 +40,7 @@ ul {
     width: 100%;
     height: 100%;
     position: fixed;
-    background-color: #1C315E;
+    background-color: #354871;
     overflow: hidden;
 }
 
@@ -147,7 +147,7 @@ ul {
     }
     .menu a:hover {
         background-color: transparent;
-        color: #3E5483;
+        color: #354871;
     }
     .hamb {
         display: none;

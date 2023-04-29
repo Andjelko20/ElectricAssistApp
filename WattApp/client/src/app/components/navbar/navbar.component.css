@@ -25,54 +25,41 @@
       font-size: 26px
     }
     .navbar {
-      background-color: #1C315E;
-      /* background-color: #285b86; */
-      /* background-color: #0F759B; */
-      
-      
+      background-color: #354871;
     }
-    
     .container-fluid {
       margin: 0;
       float: left;
     }
-    
     .navbar-brand {
       margin-top: -40px;
       margin-right: auto;
       height: 100px;
     }
-    
     .user {
       margin-top: -10px;
       padding-right: 30px;
     }
-    
     .nav-link {
       font-size: 20px;
     }
-    
     .logo {
       width: 60px;
     }
-    
     a {
       color: white;
     }
-    
     #sidebarCollapse {
-      background-color: #1C315E;
-      border: #1C315E;
+      background-color: #354871;
+      border: #354871;
       width: 60px;
       float: left;
     }
-    
     .dropdown {
       position: relative;
       display: inline-block;
       margin-top: 15px;
     }
-    
     .dropbtn {
       color: white;
       padding: 20px;
@@ -80,11 +67,9 @@
       border: none;
       cursor: pointer;
     }
-    
     .dropdown.show .dropdown-content {
       display: block;
     }
-    
     .dropdown-content {
       border-radius: 5px;
       width: 150px;
@@ -100,29 +85,23 @@
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 1;
     }
-    
     .dropdown-content a {
-      color: #1C315E;
+      color: #354871;
       padding: 20px 20px;
       text-decoration: none;
       display: block;
     }
-    
     .dropdown-content a:hover {
-      background-color: #1C315E;
+      background-color: #354871;
       color: #f9f9f9;
     }
-    
     .dropdown:focus .dropdown-content {
       display: block;
     }
-    
     .dropdown-content:hover .dropbtn {
-      background-color: #1C315E;
+      background-color: #354871;
     }
-    
     .dropbtn a:hover {
       background-color: #f9f9f9;
     }
-    
   }

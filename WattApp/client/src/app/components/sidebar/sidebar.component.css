@@ -73,7 +73,7 @@ app-footer {
 }
 
 .nav-link {
-    color: #1C315E;
+    color: #354871;
 }
 ul ul a {
     font-size: 0.9em !important;
@@ -85,7 +85,7 @@ ul ul a {
 }
 
  ul li a:hover {
-    background-color: #1C315E;
+    background-color: #354871;
     color: white;
 }
 #sidebar ul.components {
@@ -231,7 +231,7 @@ ul ul a {
     
 }
 .list-unstyled.components li.active a {
-    background-color:  #1C315E;
+    background-color:  #354871;
     color: white; 
   }
 
@@ -315,7 +315,7 @@ ul ul a {
         position: relative;
     }
     .nav-link {
-        color: #1C315E;
+        color: #354871;
     }
     ul ul a {
         font-size: 0.9em !important;
@@ -326,7 +326,7 @@ ul ul a {
         background-color: white !important;
     }
     ul li a:hover {
-        background-color: #1C315E;
+        background-color: #354871;
         color: white;
     }
     #sidebar ul.components {
@@ -448,7 +448,7 @@ ul ul a {
     }
     ul #role-li a:hover {
         background-color: white;
-        color: #1C315E;
+        color: #354871;
     }
     #sidebar ul li a .role-line {
         display: none;
@@ -457,7 +457,7 @@ ul ul a {
         display: block;
     }
     .list-unstyled.components li.active a {
-        background-color:  #1C315E;
+        background-color:  #354871;
         color: white; 
       }
     
