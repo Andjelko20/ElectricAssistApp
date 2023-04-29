@@ -11,20 +11,16 @@ import { ProsumerHomePageComponent } from './pages/prosumer/prosumer-home-page/p
 import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso.component';
 import { AdminDsoUpdateComponent } from './components/admin/admin-dso-update/admin-dso-update.component';
 import { AdminDsoAddComponent } from './components/admin/admin-dso-add/admin-dso-add.component';
-
 import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
 import { DispatcherGuard } from './guards/dispatcher.guard';
-import { MapInputComponent } from './components/map-input/map-input.component';
 import { AdminGuard } from './guards/admin.guard';
 import { ProsumerGuard } from './guards/prosumer.guard';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-prediction-page.component';
 import { ProsumerDevicesPageComponent } from './pages/prosumer/prosumer-devices-page/prosumer-devices-page.component';
 import { ProsumerReportsPageComponent } from './pages/prosumer/prosumer-reports-page/prosumer-reports-page.component';
-import { OneProsumerComponent } from './components/dso/one-prosumer/one-prosumer.component';
 import { TodayComponent } from './components/weather/today/today.component';
 import { ProsumerDevicePageComponent } from './pages/prosumer/prosumer-device-page/prosumer-device-page.component';
-import { AllDevicesComponent } from './components/prosumers/devices/all-devices/all-devices.component';
 import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
 import { FutureComponent } from './components/weather/future/future.component';
@@ -40,7 +36,6 @@ const routes: Routes = [
 	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
-	
 	//home
 	{path:'dashboard',component:HomePageComponent,canActivate:[AuthenticatedGuard]},
 	//ADMIN
