@@ -294,25 +294,36 @@ namespace Server.Controllers
                     return NotFound(new { message = "User doesn't exists" });
                 if (user.RoleId == Roles.SuperadminId)
                     return Forbid();
-                if ((requestBody.RoleId==Roles.AdminId && user.RoleId==Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId&& user.RoleId == Roles.AdminId))
+                if ((requestBody.RoleId == Roles.AdminId && user.RoleId == Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId && user.RoleId == Roles.AdminId))
                     user.RoleId = requestBody.RoleId;
                 user.Blocked = requestBody.Blocked;
-                if (user.Email != requestBody.Email)
+                if (user.Email == requestBody.Email)
+                {
+                    _sqliteDb.Users.Update(user);
+                    _sqliteDb.SaveChanges();
+                    return Ok(new { message = "User updated successfully." });
+                }
+                else
                 {
                     ChangeEmailModel changeEmailModel = new ChangeEmailModel
                     {
-                        UserId = id,
+                        UserId = user.Id,
                         OldEmail = user.Email,
                         NewEmail = requestBody.Email,
                         ExpireAt = DateTime.Now.AddDays(1),
-                        ChangeEmailKey = PasswordGenerator.GenerateRandomPassword(15)//ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
+                        ChangeEmailKey = ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
                     };
 
-                    userService.CreateChangeEmailRequest(changeEmailModel);
-
-                    try
+                    object o = userService.CreateChangeEmailRequest(changeEmailModel);
+                    if (o is HttpRequestException)
                     {
-                        emailService.SendEmail(changeEmailModel.NewEmail,
+                        return Ok(new { message = ((HttpRequestException)o).Message });
+                    }
+                    else
+                    {
+                        try
+                        {
+                            emailService.SendEmail(changeEmailModel.NewEmail,
                                 "Confirm Your Email Address Change",
                                  "Hello " + user.Name + ", <br><br>" +
                                 "Thank you for using our service.<br>" +
@@ -325,19 +336,17 @@ namespace Server.Controllers
                                 "Thank you, <br>" +
                                 "<i><b>ElectricAssist Team</b></i>"
                             , true);
+                            return Ok(new { message = "Email sent successfully." });
+                        }
+                        catch
+                        {
+                            return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+                        }
 
                     }
-                    catch
-                    {
-                        return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
-                    }
                 }
-                _sqliteDb.Users.Update(user);   
-                await _sqliteDb.SaveChangesAsync();
-                return Ok(new { message = "User is updated successfully" });
-                //Dobijam sifru i nov mail, ako je sifra dobra menjam mail za novog korisnika
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, new { message = "Internal Server Error" });
             }
@@ -412,11 +421,11 @@ namespace Server.Controllers
         }
 
         [HttpPost("changeEmailConfirmation/{key}")]
-        public IActionResult changeEmailAddressConfirmation([FromRoute]string key)
+        public ConfirmEmailResponseDTO changeEmailAddressConfirmation([FromRoute]string key)
         {
             object response = userService.ConfirmChageOfEmailAddress(key);
             ConfirmEmailResponseDTO responseDTO = new ConfirmEmailResponseDTO();
-            if (response is HttpRequestException)
+            if(response is HttpRequestException)
             {
                 responseDTO.error = ((HttpRequestException)response).Message;
             }
@@ -424,7 +433,8 @@ namespace Server.Controllers
             {
                 responseDTO.isConfirmed = true;
             }
-            return Ok(responseDTO);
+
+            return responseDTO;
         }
 
         /// <summary>

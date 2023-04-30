@@ -224,26 +224,73 @@ namespace Server.Services.Implementations
 
         public object CreateChangeEmailRequest(ChangeEmailModel changeEmail)
         {
-            var user = context.Users.Where(src => src.Email == changeEmail.NewEmail).FirstOrDefault();
-            if (user != null)
+            UserModel user = null;
+            user = context.Users.Where(src => src.Email == changeEmail.NewEmail).FirstOrDefault();
+            if(user != null)
+            {
                 return new HttpRequestException("User with that email address already exists.");
+            }
 
-            ChangeEmailModel changeEmailRequest = context.ChangeEmailModels.Where(src => src.OldEmail == changeEmail.OldEmail).FirstOrDefault();
-            if (changeEmailRequest != null && changeEmailRequest.ExpireAt > DateTime.Now)
-                return new HttpRequestException("You've already created request to change email address. Check your email inbox.");
-            else if (changeEmailRequest != null && changeEmailRequest.ExpireAt > DateTime.Now)
-                context.ChangeEmailModels.Remove(changeEmailRequest);
+            ChangeEmailModel changeEmailModel = null;
+            changeEmailModel = context.ChangeEmailModels.Where(src => src.OldEmail == changeEmail.OldEmail).FirstOrDefault();
+            if(changeEmailModel != null)
+            {
+                if(changeEmailModel.ExpireAt > DateTime.Now)
+                {
+                    return new HttpRequestException("You've already created request to change email address. Check your email inbox.");
+                }
+                else
+                {
+                    context.ChangeEmailModels.Remove(changeEmailModel);
+                }
+            }
 
-            var response = context.ChangeEmailModels.Add(changeEmail);
+            ChangeEmailModel model = context.ChangeEmailModels.Add(changeEmail).Entity;
             context.SaveChanges();
-            if (response == null)
-                return null;
-            return response;
+            return model;
         }
 
         public object ConfirmChageOfEmailAddress(string key)
         {
-            var changeEmail = context.ChangeEmailModels.FirstOrDefault(src => src.ChangeEmailKey == key);
+            ChangeEmailModel changeEmailModel = context.ChangeEmailModels.FirstOrDefault(src => src.ChangeEmailKey == key);
+
+            if(changeEmailModel == null)
+            {
+                return new HttpRequestException("Sorry! But there is no request with that key.");
+            }
+            else
+            {
+                if(changeEmailModel.ExpireAt < DateTime.Now)
+                {
+                    context.ChangeEmailModels.Remove(changeEmailModel);
+                    context.SaveChanges();
+                    return new HttpRequestException("Sorry! But link has been expired");
+                }
+
+                UserModel user = null;
+                user = context.Users.Where(src => src.Email == changeEmailModel.NewEmail).FirstOrDefault();
+                if(user != null)
+                {
+                    context.ChangeEmailModels.Remove(changeEmailModel);
+                    context.SaveChanges();
+                    return new HttpRequestException("Someone is already using that email address.");
+                }
+
+                user = context.Users.Where(src => src.Email == changeEmailModel.OldEmail).FirstOrDefault();
+                user.Email = changeEmailModel.NewEmail;
+                UserModel response = context.Users.Update(user).Entity;
+                context.ChangeEmailModels.Remove(changeEmailModel);
+                context.SaveChanges();
+
+                return response;
+            }
+
+
+
+
+
+
+            /*var changeEmail = context.ChangeEmailModels.FirstOrDefault(src => src.ChangeEmailKey == key);
             if(changeEmail == null)
             {
                 return new HttpRequestException("There is no request with such a key.");
@@ -266,7 +313,7 @@ namespace Server.Services.Implementations
             context.ChangeEmailModels.Remove(model);
 
             context.SaveChanges();
-            return new OkResult();
+            return new OkResult();*/
         }
     }
 }
