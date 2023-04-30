@@ -33,7 +33,7 @@
                       </label>
                     </td>
                     <td>
-                      <a [routerLink]='["/update-user/",show.id]' style="text-decoration: none; color: #2199e8;"><i class="fas fa-cog" style="color: #2199e8"></i> Edit</a>&nbsp;&nbsp;
+                      <a (click)="updatePage(show.id)" style="cursor: pointer;text-decoration: none; color: #2199e8;"><i class="fas fa-cog" style="color: #2199e8"></i> Edit</a>&nbsp;&nbsp;
                       <a  (click)="delete(show.id)" style="cursor: pointer; color: red;"><i class="fas fa-trash" style="color: red"></i> Delete</a>
                   </td>
                 </tr>
@@ -41,17 +41,46 @@
         </table>
 		    <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
     </div>
+    <!-- Modal -->
     <ng-template #modalContent let-modal >
       <div class="modal-header">
         <!-- <h5 class="modal-title" id="modalTitle">{{ title }}</h5> -->
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
       <div class="modal-body">
-        <h5 class="modal-title" style="text-align: center;">{{body}}</h5>
+        <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+        <div id="subb">
+          <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+        </div>
       </div>
-      <div class="modal-footer">
+      <!-- <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>
         <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+      </div> -->
+    </ng-template>
+    <!-- Update Modal -->
+    <ng-template #modalContent1 let-modal >
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Update {{oneUser}}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <form #form="ngForm" (ngSubmit)="upDate()">
+          <div class="form-row">
+              <div class="form-group col-md-6 ">
+                  <br>
+                  <label for="email " class="form-label ">Email</label>
+                  <input type="text " class="form-control " id="id " name="email " [(ngModel)]="updateUserDetail.email ">
+                  <br>
+              </div>
+          </div>
+          <div id="subb">
+            <button type=" submit " class="btn btn-primary mr-5 " id="change-pass-popup"(click)="modal.close('Save click')">Save</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+          </div>
+        </form>
+     
       </div>
     </ng-template>
     

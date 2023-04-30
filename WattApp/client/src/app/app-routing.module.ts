@@ -29,6 +29,7 @@ import { ProsumerAccountPageComponent } from './pages/prosumer/prosumer-account-
 import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-account-settings-page/prosumer-account-settings-page.component';
 import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
 import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
+import { AccountPageComponent } from './pages/account-page/account-page.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -41,14 +42,14 @@ const routes: Routes = [
 	//ADMIN
 	{path:'',component:AdminDsoComponent,canActivate:[AdminGuard]},
 	{path:'add-user',component:AdminDsoAddComponent,canActivate:[AdminGuard]},
-	{path:'update-user/:id',component:AdminDsoUpdateComponent,canActivate:[AdminGuard]},
+	// {path:'update-user/:id',component:AdminDsoUpdateComponent,canActivate:[AdminGuard]},
+	{path:"profile-admin",component:AccountPageComponent,canActivate:[AdminGuard]},
 	//DSO
 	{path:'',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumer/:id',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prediction',component:DsoPredictionPageComponent,canActivate:[DispatcherGuard]},
-	{path:"profile-dso",component:ProsumerAccountPageComponent,canActivate:[DispatcherGuard]},
-	{path:"profile-dso-update",component:ProsumerAccountSettingsPageComponent,canActivate:[DispatcherGuard]},
+	{path:"profile-dso",component:AccountPageComponent,canActivate:[DispatcherGuard]},
 	//PROSUMER
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
 	{path:'devices',component:ProsumerDevicesPageComponent,canActivate:[ProsumerGuard]},
@@ -57,7 +58,7 @@ const routes: Routes = [
 	{path:"device-update/:id",component:UpdateDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"device-add",component:AddDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard]},
-	{path:"profile-update",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
+	{path:"profile-edit",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 
 	//TEST

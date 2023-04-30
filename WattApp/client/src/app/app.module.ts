@@ -84,6 +84,7 @@ import { PredictionDeviceComponent } from './components/dso/prediction/predictio
 import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
 import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
 import { NgbModalModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { AccountPageComponent } from './pages/account-page/account-page.component';
 
 
 
@@ -173,7 +174,8 @@ import { NgbModalModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
     YearTabelarProsumerComponent,
     TodayTabelarProsumerComponent,
     EmailConfirmationPageComponent,
-    ChangeEmailConfirmationPageComponent
+    ChangeEmailConfirmationPageComponent,
+    AccountPageComponent
     
   ],
   imports: [

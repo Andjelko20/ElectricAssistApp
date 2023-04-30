@@ -1,8 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShowUsers, Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-admin-dso',
@@ -11,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AdminDsoComponent {
   @ViewChild('modalContent') modalContent!: TemplateRef<any>;
+  @ViewChild('modalContent1') modalContent1!: TemplateRef<any>;
   body: string = ''; 
   btnAction:string='';
 
@@ -23,7 +26,27 @@ export class AdminDsoComponent {
 
   onBlockClick!: (this: HTMLElement, ev: MouseEvent) => any;
   onUnblockClick!: (this: HTMLElement, ev: MouseEvent) => any;
-  
+  oneUser?:string;
+  roles!:any[];
+  updateUserDetail:Users={
+
+  id: 0,
+  name: '',
+  username: '',
+  email: '',
+  roleId: 0,
+  block: false,
+  settlement: '',
+  city: '',
+  country: '',
+  address: '',
+  password: ''
+  }
+  public emailErrorMessage:string="";
+	public errorMessage:string="";
+	public success:boolean=false;
+  public passwordGen='';
+  public emailUp='';
   constructor(private router:Router,private usersService:AuthService,
     private route:ActivatedRoute,private modalService: NgbModal) { }
 
@@ -43,7 +66,8 @@ export class AdminDsoComponent {
           country:u.country
         } as ShowUsers));
         });
-
+      
+      
   }
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
@@ -145,7 +169,45 @@ export class AdminDsoComponent {
         });
       }
   }
- 
+  updatePage(id:number)
+  {
+    this.modalService.open(this.modalContent1);
+    fetch(environment.serverUrl+"/api/users/roles",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+		.then(res=>res.json())
+		.then(res=>{
+		this.roles=res;
+    
+        this.usersService.getUser( id )
+        .subscribe({
+          next:(response)=>{
+            this.oneUser=response.name;
+            this.updateUserDetail={
+              id:id,
+              name:response.name,
+              username:response.username,
+              password:"",
+              email:response.email,
+              block:response.blocked,
+              roleId:this.roles.find(r=>r.name==response.role)?.id,
+              settlement: response.settlement,
+              city: response.city,
+              country: response.country,
+              address: response.address
+              };
+            }
+          });
+		});
+
+  }
+  upDate()
+  {
+    this.usersService.upDate(this.updateUserDetail.id,this.updateUserDetail)
+    .subscribe({
+      next:()=>{
+        this.router.navigate(['dashboard']);
+      }
+    });
+  }
   logout()
   {
     localStorage.removeItem('token');

@@ -16,12 +16,20 @@
     background-color: #2199e8;
     color: white;
 }
-
+table {
+  border-collapse: collapse;
+  width: 100%;
+  
+}
 table,
 td,
 th {
     border-bottom: 1px solid gray;
     text-align: left;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    padding-left: 2px;
+    padding-right:2px;
 }
 
 th {
@@ -30,10 +38,7 @@ th {
     color: white;
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
+
 
 td {
     color: #1C315E;
@@ -145,30 +150,32 @@ li a {
     justify-content: center;
     align-items: center;
   }
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    align-items: center;
+  }
+  #subb{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    text-align: right;
+    align-items: right;
+    
+  }
+@media only screen and (min-width: 768px) and (max-width: 1280px) {
     
 
 .first {
     padding: 0;
-    justify-content: center;
-    margin-bottom: 60px;
-    margin-top: 90px;
 }
 
-#buttonAdd {
-    width: 100px;
-    height: 50px;
-}
-
-#buttonAdd:hover {
-    background-color: #2199e8;
-    color: white;
-}
 table {
-    border-collapse: collapse;
+   width: 100%;
     overflow-x: auto;
     display: block;
-    
 }
 table,
 td,
@@ -182,6 +189,7 @@ th {
 }
 
 th {
+  
     text-align: left;
     background-color: #2199e8;
     color: white;
