@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./change-email-confirmation-page.component.css']
 })
 export class ChangeEmailConfirmationPageComponent {
-  isConfirmed : boolean | null = null;
+  isConfirmed : boolean = false;
   message : string = "";
   constructor(private http : HttpClient, private route : ActivatedRoute, private router : Router){
 
@@ -23,7 +23,7 @@ export class ChangeEmailConfirmationPageComponent {
     this.route.queryParams.subscribe(params => {
       const key = encodeURIComponent(params['key']);
       console.log(key);
-      this.http.get<ConfirmEmailResponseDTO>(`${environment.serverUrl}/api/Users/changeEmailConfirmation/${key}`).subscribe((response) => {
+      this.http.post<ConfirmEmailResponseDTO>(`${environment.serverUrl}/api/Users/changeEmailConfirmation/${key}`, null).subscribe((response) => {
         console.log(response);
         if(response && response.isConfirmed){
           this.isConfirmed = true;
