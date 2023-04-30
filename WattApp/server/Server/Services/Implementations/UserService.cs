@@ -55,6 +55,7 @@ namespace Server.Services.Implementations
                 .Take(itemsPerPage)
                 .Select(user => new UserDetailsDTO(user))
                 .ToList();
+           
             page.Data = users;
             page.PreviousPage = (pageNumber == 1) ? null : pageNumber - 1;
             page.NextPage = (pageNumber == page.NumberOfPages) ? null : pageNumber + 1;
