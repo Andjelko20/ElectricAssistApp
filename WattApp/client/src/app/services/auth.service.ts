@@ -72,10 +72,11 @@ export class AuthService {
   {
     return this.http.get<any>(environment.serverUrl+"/api/users/my_data",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
-  upDateProsumer(updateRequest:Prosumers):Observable<Prosumers>
+  upDateLogedIn(updateRequest:Prosumers):Observable<Prosumers>
   {
     return this.http.put<Prosumers>(environment.serverUrl+'/api/users',updateRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
+  
   delete(id:number):Observable<Users>
   {
     return this.http.delete<Users>(environment.serverUrl+"/api/users/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 

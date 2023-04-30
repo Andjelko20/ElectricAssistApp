@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-account-page',
   templateUrl: './account-page.component.html',
@@ -26,14 +26,16 @@ export class AccountPageComponent implements OnInit {
   }
   public idUser!:number;
   public role!:string;
-  constructor(private route:ActivatedRoute,private router:Router,private updateService:AuthService) { }
+  public name!:string;
+
+  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,private router:Router,private updateService:AuthService) { }
+
   ngOnInit(): void {
     let token=new JwtToken();
     this.idUser=token.data.id as number;
     this.role=token.data.role as string;
 
-    this.updateService.getlogInUser()
-        .subscribe({
+    this.updateService.getlogInUser().subscribe({
           next:(response)=>{
             this.updateUserDetail={
               id:this.idUser,
@@ -48,9 +50,18 @@ export class AccountPageComponent implements OnInit {
               address:response.address
               
               };
-              
             },
 			
           });
+  }
+  upDateUser()
+  {
+    this.updateService.upDateLogedIn(this.updateUserDetail)
+    .subscribe({
+      next:()=>{
+        if(this.role==='admin')
+            this.router.navigate(['/profile-admin']);
+      }
+    });
   }
 }
