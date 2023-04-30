@@ -51,7 +51,7 @@ namespace Server.Services.Implementations
                         energyUsageResult = double.Parse(reader["EnergyUsageKwh"].ToString());
                 }
 
-                return energyUsageResult;
+                return Math.Round(energyUsageResult, 2);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Server.Services.Implementations
                         energyUsageResult = double.Parse(reader["EnergyUsageKwh"].ToString());
                 }
 
-                return energyUsageResult;
+                return Math.Round(energyUsageResult, 2);
             }
         }
 

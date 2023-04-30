@@ -22,7 +22,7 @@ namespace Server.Controllers
         /// Histroy - From To
         /// </summary>
         [HttpGet]
-        [Route("FromTo")]
+        [Route("")]
         public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, long deviceCategoryId, long cityId, long settlementId, long byDayCityId, long byDaySettlementId, long byHourSettlementId, long byHourCityId)
         {
             if(cityId!=0)
