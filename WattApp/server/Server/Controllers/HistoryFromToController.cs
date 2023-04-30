@@ -23,7 +23,7 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("FromTo")]
-        public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, long deviceCategoryId, long cityId, long settlementId, long byDayCityId, long byDaySettlementId)
+        public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, long deviceCategoryId, long cityId, long settlementId, long byDayCityId, long byDaySettlementId, long byHourSettlementId)
         {
             if(cityId!=0)
             {
@@ -57,7 +57,7 @@ namespace Server.Controllers
                 List<DailyEnergyConsumptionPastMonth> result = historyFromToService.GetCityHistoryByDayFromTo(fromDate, toDate, deviceCategoryId, byDayCityId);
                 return Ok(result);
             }
-            else //if (byDaySettlementId != 0)
+            else if (byDaySettlementId != 0)
             {
                 if (!_sqliteDb.Settlements.Any(s => s.Id == byDaySettlementId))
                     return NotFound(new { message = "Settlement with the ID: " + byDaySettlementId.ToString() + " does not exist." });
@@ -66,6 +66,17 @@ namespace Server.Controllers
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
                 List<DailyEnergyConsumptionPastMonth> result = historyFromToService.GetSettlementHistoryByDayFromTo(fromDate, toDate, deviceCategoryId, byDaySettlementId);
+                return Ok(result);
+            }
+            else //if (byHourSettlementId != 0)
+            {
+                if (!_sqliteDb.Settlements.Any(s => s.Id == byHourSettlementId))
+                    return NotFound(new { message = "Settlement with the ID: " + byHourSettlementId.ToString() + " does not exist." });
+
+                if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
+                    return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
+
+                List<EnergyToday> result = historyFromToService.GetSettlementHistoryByHourFromTo(fromDate, toDate, deviceCategoryId, byHourSettlementId);
                 return Ok(result);
             }
         }
