@@ -284,36 +284,6 @@ namespace Server.Services.Implementations
 
                 return response;
             }
-
-
-
-
-
-
-            /*var changeEmail = context.ChangeEmailModels.FirstOrDefault(src => src.ChangeEmailKey == key);
-            if(changeEmail == null)
-            {
-                return new HttpRequestException("There is no request with such a key.");
-            }
-            else if(changeEmail != null && changeEmail.ExpireAt < DateTime.Now)
-            {
-                context.ChangeEmailModels.Remove(changeEmail);
-                return new HttpRequestException("Confirmation link has been expired. Please create new request.");
-            }
-            ChangeEmailModel model = (ChangeEmailModel)changeEmail;
-            UserModel user = context.Users.Find(model.UserId);
-            if(user == null)
-            {
-                context.ChangeEmailModels.Remove(changeEmail);
-                return new HttpRequestException("There is no user with that username");
-            }
-            user.Email = model.NewEmail;
-
-            context.Users.Update(user);
-            context.ChangeEmailModels.Remove(model);
-
-            context.SaveChanges();
-            return new OkResult();*/
         }
     }
 }

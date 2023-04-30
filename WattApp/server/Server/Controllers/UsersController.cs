@@ -180,7 +180,7 @@ namespace Server.Controllers
                     Longitude = requestBody.Longitude,
                     SettlementId = requestBody.SettlementId, 
                     ExpireAt = DateTime.Now.AddDays(1),
-                    ConfirmKey = PasswordGenerator.GenerateRandomPassword(15)//ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
+                    ConfirmKey = ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()//ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
                 };
 
                 var pendingUser = userService.CreatePendingUser(user);
