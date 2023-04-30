@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs';
 import { YearsByMonth } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 
@@ -12,17 +13,20 @@ export class YearTabelarProsumerComponent {
 
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
-  itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     
   }
   ngOnInit(): void {
-          this.deviceService.yearByMonthUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data:YearsByMonth[])=>{
-            this.list1 = data;
-            this.deviceService.yearByMonthUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data:YearsByMonth[])=>{
-              console.log("Data => ", data);
-              this.list2 = data;
-            })
-          })
+    const userId = Number(this.route.snapshot.paramMap.get('id'));
+  
+    this.deviceService.yearByMonthUser(userId, 2).pipe(
+      switchMap((data1: YearsByMonth[]) => {
+        this.list1 = data1;
+        return this.deviceService.yearByMonthUser(userId, 1);
+      })
+    ).subscribe((data2: YearsByMonth[]) => {
+      console.log("Data => ", data2);
+      this.list2 = data2;
+    });
   }
 }

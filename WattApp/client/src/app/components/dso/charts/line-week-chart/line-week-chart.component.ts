@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -34,24 +35,24 @@ export class LineWeekChartComponent {
           this.settlements = settlement;
         })
         if(this.selectedOption == 0){
-          this.deviceService.weekByDay(number,2).subscribe((data: WeekByDay[]) =>{
-            this.list1 = data;
-            this.deviceService.weekByDay(number,1).subscribe((data: WeekByDay[]) =>{
-              this.list2 = data;
-              this.LineChart();
-            })
-      
-          })
+          forkJoin([
+            this.deviceService.weekByDay(number, 2),
+            this.deviceService.weekByDay(number, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
         }
         else{
-          this.deviceService.weekByDaySettlement(this.selectedOption,2).subscribe((data: WeekByDay[]) =>{
-            this.list1 = data;
-            this.deviceService.weekByDaySettlement(this.selectedOption,1).subscribe((data: WeekByDay[]) =>{
-              this.list2 = data;
-              this.LineChart();
-            })
-      
-          })
+          forkJoin([
+            this.deviceService.weekByDaySettlement(this.selectedOption, 2),
+            this.deviceService.weekByDaySettlement(this.selectedOption, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
         }
         
       })

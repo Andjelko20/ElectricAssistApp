@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
@@ -13,20 +14,17 @@ export class WeekTabelarProsumerComponent implements OnInit{
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService,private route:ActivatedRoute) {}
-    ngOnInit(): void {
-
-            this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data: WeekByDay[]) =>{
-              console.log("Data => ", data);
-              this.list1 = data;
-              this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data: WeekByDay[]) =>{
-                console.log("Data => ", data);
-                this.list2 = data;
-              })
-            })
-
-      
-      
-
-      
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+  
+    forkJoin([
+      this.deviceService.weekByDayUser(id, 2),
+      this.deviceService.weekByDayUser(id, 1)
+    ]).subscribe(([list1, list2]) => {
+      console.log('List 1 =>', list1);
+      console.log('List 2 =>', list2);
+      this.list1 = list1;
+      this.list2 = list2;
+    });
   }
 }

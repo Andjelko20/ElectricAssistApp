@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Chart,registerables } from 'node_modules/chart.js'
+import { forkJoin } from 'rxjs';
 import { WeekByDay, YearsByMonth } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -41,22 +42,24 @@ export class BarYearChartComponent {
           this.settlements = settlement;
         })
         if(this.selectedOption == 0){
-          this.deviceService.yearByMonth(number,2).subscribe((data:YearsByMonth[])=>{
-            this.list1 = data;
-            this.deviceService.yearByMonth(number,1).subscribe((data:YearsByMonth[])=>{
-              this.list2 = data;
-              this.BarPlot();
-            })
-          })
+          forkJoin([
+            this.deviceService.yearByMonth(number, 2),
+            this.deviceService.yearByMonth(number, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.BarPlot();
+          });
         }
         else{
-          this.deviceService.yearByMonthSettlement(this.selectedOption,2).subscribe((data:YearsByMonth[])=>{
-            this.list1 = data;
-            this.deviceService.yearByMonthSettlement(this.selectedOption,1).subscribe((data:YearsByMonth[])=>{
-              this.list2 = data;
-              this.BarPlot();
-            })
-          })
+          forkJoin([
+            this.deviceService.yearByMonthSettlement(this.selectedOption, 2),
+            this.deviceService.yearByMonthSettlement(this.selectedOption, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.BarPlot();
+          });
         }
         
       })

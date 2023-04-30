@@ -183,7 +183,6 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
     FormsModule,
     BrowserModule,
 	  NgxPaginationModule,
-    
   ],
   providers: [DecimalPipe],
   bootstrap: [AppComponent]

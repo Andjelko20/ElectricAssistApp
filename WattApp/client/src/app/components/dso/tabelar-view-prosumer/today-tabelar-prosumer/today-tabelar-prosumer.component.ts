@@ -14,31 +14,23 @@ export class TodayTabelarProsumerComponent implements OnInit{
   
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
-  settlements:Settlement[] = [];
-  selectedOption: number = 0;
-
-  onOptionSelected() {
-    console.log("List1 ="+this.list1);
-    console.log("List2 ="+this.list2);
-
-    this.ngOnInit();
-  }
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {}
+  
   ngOnInit(): void {
-      
-          this.deviceService.dayByHourUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data: DayByHour[]) =>{
-            this.list1 = data.map(value=>{
-              value.day = value.day.toString().padStart(2,'0');
-              value.hour = value.hour.toString().padStart(2,'0');
-
-              return value;
-            });
-            this.deviceService.dayByHourUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data: DayByHour[]) =>{
-              this.list2 = data;
-            })
-          })
-        
-       
-    }
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const padNumber = (num: number) => num.toString().padStart(2, '0');
+  
+    this.deviceService.dayByHourUser(id, 2).subscribe((data: DayByHour[]) => {
+      this.list1 = data.map(value => ({
+        ...value,
+        day: padNumber(value.day),
+        hour: padNumber(value.hour)
+      }));
+    });
+  
+    this.deviceService.dayByHourUser(id, 1).subscribe((data: DayByHour[]) => {
+      this.list2 = data;
+    });
+  }
   }
 

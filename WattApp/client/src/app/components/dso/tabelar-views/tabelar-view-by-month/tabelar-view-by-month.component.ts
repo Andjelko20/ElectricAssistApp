@@ -4,6 +4,9 @@ import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { saveAs } from 'file-saver';
+import { ExportToCsv } from 'export-to-csv';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-tabelar-view-by-month',
@@ -14,6 +17,7 @@ export class TabelarViewByMonthComponent implements OnInit{
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   settlements:Settlement[] = [];
+  mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService){}
 
 
@@ -30,26 +34,57 @@ export class TabelarViewByMonthComponent implements OnInit{
           this.settlements = settlement;
         })
         if(this.selectedOption == 0){
-          this.deviceService.monthByDay(number,2).subscribe((data:WeekByDay[])=>{
-            this.list1 = data;
-            this.deviceService.monthByDay(number,1).subscribe((data:WeekByDay[])=>{
-              this.list2 = data;
-            })
-          })
+          forkJoin([
+            this.deviceService.monthByDay(number, 2),
+            this.deviceService.monthByDay(number, 1)
+          ]).subscribe(([data1, data2]) => {
+            this.list1 = data1;
+            this.list2 = data2;
+          });
         }
         else{
-          this.deviceService.monthByDaySettlement(this.selectedOption,2).subscribe((data:WeekByDay[])=>{
-            this.list1 = data;
-            this.deviceService.monthByDaySettlement(this.selectedOption,1).subscribe((data:WeekByDay[])=>{
-              this.list2 = data;
-            })
-          })
+          forkJoin([
+            this.deviceService.monthByDaySettlement(this.selectedOption, 2),
+            this.deviceService.monthByDaySettlement(this.selectedOption, 1)
+          ]).subscribe(([data1, data2]) => {
+            this.list1 = data1;
+            this.list2 = data2;
+          });
         }
-        
       })
     })
   }
+  downloadCSV(): void {
+    this.mergedList = [];
+    for (let i = 0; i < this.list1.length; i++) {
+      for (let j = 0; j < this.list2.length; j++) {
+        if (this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
+          this.mergedList.push({
+            day: this.list1[i].day,
+            month: this.list1[i].month,
+            year: this.list1[i].year,
+            consumption: this.list1[i].energyUsageResult,
+            production: this.list2[j].energyUsageResult
+          });
+          break;
+        }
+      }
+  }
+  const options = {
+    fieldSeparator: ',',
+    filename: 'consumption/production-month.csv',
+    quoteStrings: '"',
+    useBom : true,
+    decimalSeparator: '.',
+    showLabels: true,
+    useTextFile: false,
+    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production']
+  };
 
+  const csvExporter = new ExportToCsv(options);
+  const csvData = csvExporter.generateCsv(this.mergedList);
+
+  }
   
 
 }
