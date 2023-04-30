@@ -3,6 +3,8 @@
     }
     
     .background-image {
+        background-size: cover;
+        background-position: center;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -172,6 +174,7 @@
         }
         .login-form-wrapper {
             height: 530px;
+            width: 500px;
             background-color: #002e64;
             line-height: none;
         }
@@ -188,7 +191,6 @@
             transition: all 0.3s;
         }
         .form-control {
-            width: 90%;
             margin-left: 30px;
             font-size: 20px;
         }
