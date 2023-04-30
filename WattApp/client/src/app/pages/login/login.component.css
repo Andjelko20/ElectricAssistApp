@@ -26,7 +26,7 @@ main {
     color: #D9D9D9;
     /* margin-left: 35px; */
     width: 100%;
-    height: auto;
+    height: 450px;
     margin-bottom: 20px;
     background: rgba(15, 15, 15, 0.2);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 10px 10px rgba(0, 0, 0, 0.25);
@@ -40,19 +40,17 @@ main {
 }
 
 .logo {
-    background: #0F759B;
-}
-
-.logo {
+    background-color: #0f617f;
     width: 100%;
     max-height: 200px;
     text-align: center;
 }
 
 .logo>img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
-    display: none;
+    border-radius: 15px;
+    margin-top: -20px;
 }
 
 
@@ -113,7 +111,6 @@ main {
 
 .btn-container>.btn {
     width: 200px;
-    height: 60px;
     background: linear-gradient(0deg, #2EA0E6, #2EA0E6), linear-gradient(270deg, #FFFFFF 0%, rgba(239, 239, 239, 0.5) 34.37%, #F5F4FB 100%);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
@@ -123,6 +120,7 @@ main {
     font-size: 20px;
     letter-spacing: 0.08em;
     color: #D9D9D9;
+    margin-top: 30px;
 }
 
 .btn-container>.link {
@@ -163,7 +161,7 @@ main {
         height: 400px;
     }
     .login-form-wrapper {
-        height: auto;
+        height: 520px;
         line-height: none;
     }
     /* .form-group {
@@ -183,17 +181,25 @@ main {
     }
     .btn-container>button {
         max-width: 200px;
-        max-height: 50px;
+    }
+    .btn-container>.btn {
+        font-size: 30px;
     }
     .error-message {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: -30px;
+    }
+    .logo {
+        display: flex;
+        justify-content: center;
     }
     .logo>img {
-        max-width: 100%;
+        border-radius: 15px;
         height: auto;
         display: block;
+    }
+    label {
+        font-size: 25px;
     }
 }
