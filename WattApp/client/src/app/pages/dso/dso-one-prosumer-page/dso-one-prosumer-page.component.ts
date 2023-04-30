@@ -60,36 +60,32 @@ export class DsoOneProsumerPageComponent implements AfterViewInit,OnInit{
     this.currentTime = new Date();
   }
   onSelectedCategory(event:any){
-
-this.deviceCategoryId = event.target.value;
-this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,12,this.deviceCategoryId).subscribe(devices => {
-  this.devicesList=devices.data.map((u:any)=>({
-    id:u.id,
-    userId: u.userId,
-    deviceCategory:u.deviceCategory,
-    deviceType: u.deviceType ,
-    deviceBrand: u.deviceBrand ,
-    deviceModel: u.deviceModel ,
-    name: u.name ,
-    energyInKwh: u.energyInKwh,
-    standByKwh: u.standByKwh,
-    visibility: u.visibility,
-    controlability: u.controlability,
-    turnOn: u.turnOn,
-
-})as ShowDevices)
-
-}, (error: { status: number; }) => {
-
-if (error.status === 404) {
-
-  this.devicesList=[]
-
-  console.log('Devices not found in database');
-
-}}
-
-);
+    this.deviceCategoryId = event.target.value;
+    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')), 1, 12, this.deviceCategoryId)
+      .subscribe(
+        devices => {
+          this.devicesList = devices.data.map((u: { id: any; userId: any; deviceCategory: any; deviceType: any; deviceBrand: any; deviceModel: any; name: any; energyInKwh: any; standByKwh: any; visibility: any; controlability: any; turnOn: any; }) => ({
+            id: u.id,
+            userId: u.userId,
+            deviceCategory: u.deviceCategory,
+            deviceType: u.deviceType,
+            deviceBrand: u.deviceBrand,
+            deviceModel: u.deviceModel,
+            name: u.name,
+            energyInKwh: u.energyInKwh,
+            standByKwh: u.standByKwh,
+            visibility: u.visibility,
+            controlability: u.controlability,
+            turnOn: u.turnOn,
+          }));
+        },
+        error => {
+          if (error.status === 404) {
+            this.devicesList = [];
+            console.log('Devices not found in database');
+          }
+        }
+      );
 }
 
 graph:boolean = true;

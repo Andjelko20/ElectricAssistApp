@@ -115,4 +115,11 @@ export class HistoryPredictionService {
     return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/Prediction/WeekByDay/Device/"+deviceId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
 
   }
+
+  todayConsumptionUser(userId:number,deviceCategoryId:number): Observable<number>{
+    return this.http.get<number>(environment.serverUrl+"/api/CurrentPeriodHistory/user?deviceCategoryId="+deviceCategoryId+"&doubleTodayUserId="+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  monthConsumptionUser(userId:number,deviceCategoryId:number): Observable<number>{
+    return this.http.get<number>(environment.serverUrl+"/api/CurrentPeriodHistory/user?deviceCategoryId="+deviceCategoryId+"&doubleMonthUserId="+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
 }

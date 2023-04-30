@@ -54,8 +54,6 @@ export class ProsumerAccountPageComponent {
       }
     })
     this.role=token.data.role as string;
-    console.log(this.role);
-	
         this.updateService.getlogInUser()
         .subscribe({
           next:(response)=>{
@@ -85,8 +83,6 @@ export class ProsumerAccountPageComponent {
   
   upDateProsumer()
   {
-    // this.onSelectedBlock(this.updateUserDetail.block);
-    // console.log("Azuriran objekat: ",this.updateUserDetail);
     this.updateService.upDateProsumer(this.updateUserDetail)
     .subscribe({
       next:()=>{

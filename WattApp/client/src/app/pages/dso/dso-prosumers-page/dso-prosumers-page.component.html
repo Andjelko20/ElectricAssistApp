@@ -11,15 +11,9 @@
           </div>
         </div>
         <div class="tabel-body" *ngIf="componentShown">
-			<!--<app-page-control [url]="pageUrl" [(itemsPerPage)]="itemsPerPage" [(totalItems)]="totalItems" [(items)]="items" [(currentPage)]="currentPage">
-            	<app-all-prosumers [data]="items" [currentPage]="currentPage" [itemsPerPage]="itemsPerPage" [totalItems]="totalItems"></app-all-prosumers>
-			</app-page-control>-->
 			<app-all-prosumers></app-all-prosumers>
         </div>
         <div class="map" *ngIf="componentShown1">
             <app-prosumers-map ></app-prosumers-map>
         </div>
 </div>
-
-<!-- <div style="height: 20px;"></div> -->
-<!--<app-maps *ngIf="componentShown1"></app-maps>-->

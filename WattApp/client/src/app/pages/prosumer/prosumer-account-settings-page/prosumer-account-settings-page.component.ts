@@ -100,8 +100,6 @@ export class ProsumerAccountSettingsPageComponent {
   
   upDateProsumer()
   {
-    // this.onSelectedBlock(this.updateUserDetail.block);
-    // console.log("Azuriran objekat: ",this.updateUserDetail);
     this.updateService.upDateProsumer(this.updateUserDetail)
     .subscribe({
       next:()=>{
@@ -132,10 +130,6 @@ export class ProsumerAccountSettingsPageComponent {
     const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
     const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
     const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
-    console.log(oldpass);
-    console.log(newpass);
-    console.log(confpass);
-
     if(newpass==confpass)
     {
       this.updateService.changePassword(oldpass,newpass).subscribe( 
@@ -144,11 +138,6 @@ export class ProsumerAccountSettingsPageComponent {
             
      }} );
     }
-    
-   
-    // localStorage.removeItem('token');
-    // this.updateService.isLoginSubject.next(false)
-    // this.router.navigate(['/login']);
     
   }
   checkIfInputsAreEqual(group: FormGroup) {

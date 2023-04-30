@@ -54,36 +54,39 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
    
   }
   async ngOnInit(): Promise<void> {
-    let token=new JwtToken();
-    this.idUser=token.data.id as number;
-    this.role=token.data.role as string;
-    this.updateService.getlogInUser()
-        .subscribe({
-          next:(response)=>{
-            this.updateUserDetail={
-              id:this.idUser,
-              name:response.name,
-              username:response.username,
-              email:response.email,
-              blocked:response.blocked,
-              role:this.role,
-              settlement:response.settlement,
-              city:response.city,
-              country: response.country,
-              address:response.address
-              
-              };
-            
-            },
-			error:(response)=>{
-				this.router.navigate(["prosumer-account-page"]);
-			}
-          });
-    fetch(environment.serverUrl+"/api/ProsumersDetails/count",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
-	  .then(res=>res.json())
-	  .then(res=>this.numberOfProsumers=res);
-    const result = await this.avgConsumption.getAverageConsumptionProductionCity(1,2).pipe(first()).toPromise();
-  
+    const { id, role } = new JwtToken().data;
+    this.idUser = id as number;
+    this.role = role as string;
+
+    try {
+      const response = await this.updateService.getlogInUser().toPromise();
+      this.updateUserDetail = {
+        id: this.idUser,
+        name: response.name,
+        username: response.username,
+        email: response.email,
+        blocked: response.blocked,
+        role: this.role,
+        settlement: response.settlement,
+        city: response.city,
+        country: response.country,
+        address: response.address
+      };
+    } catch (error) {
+      this.router.navigate(["prosumer-account-page"]);
+    }
+
+    const res = await fetch(environment.serverUrl + "/api/ProsumersDetails/count", {
+      headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+    }).then(res => res.json());
+
+    this.numberOfProsumers = res;
+
+    const result = await this.avgConsumption
+      .getAverageConsumptionProductionCity(1, 2)
+      .pipe(first())
+      .toPromise();
+
     this.avgProduction = result!;
     
   }

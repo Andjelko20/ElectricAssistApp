@@ -46,7 +46,6 @@ export class ResetPasswordPageComponent {
 		return false;
 	}
 	resetPassword(){
-		// validate
 		if(!this.validatePassword() || !this.validateConfirmedPassword())
 			return;
 		this.authService.resetPasswordWithResetCode(this.resetKey,this.newPassword).subscribe(

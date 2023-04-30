@@ -25,8 +25,8 @@ export class OneProsumerComponent implements OnInit{
     this.authService.getProsumer(prosumerId).pipe(
       switchMap(user => {
         this.prosumer = user;
-        const productionObs = this.historyService.currentUserProductionConsumption(prosumerId, 2);
-        const consumptionObs = this.historyService.currentUserProductionConsumption(prosumerId, 1);
+        const productionObs = this.historyService.currentUserProductionConsumption(prosumerId, 1);
+        const consumptionObs = this.historyService.currentUserProductionConsumption(prosumerId, 2);
         return forkJoin([productionObs, consumptionObs]);
       })
     ).subscribe(([productionData, consumptionData]) => {
