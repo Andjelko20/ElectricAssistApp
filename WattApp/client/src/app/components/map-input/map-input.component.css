@@ -1,22 +1,29 @@
 #container{
 	display: flex;
-	flex-direction: column;
+	width: 90%;
+}
+#all{
+	display: inline-block;
+	width: 30%;
+
 }
 #map-wrapper{
-	height: 100vh;
-	margin-top: -180px;
+	height: 100%;
+	display: inline-block;
+	width: 70%;
 }
 #prosumers-map{
-	width: 100%;
-	height: 100%;
+	width:100%;
+	height: 30vh;
 }
 .search-container{
-	flex-grow: 1;
+
 }
 .address-container{
 	position: relative;
 }
 .search-result{
+	position: absolute;
 	z-index: 1010;
 	background-color: #f6f6f6;
 	box-shadow: 0px 1px 4px 1px #b0a7a7;
@@ -24,11 +31,8 @@
 	display: flex;
 	flex-direction: column;
 	gap:10px;
-	height: 200px;
-	padding: 10px;
-	width: 100%;
-	position: relative;
-	bottom: 30px;
+	height: 100px;
+	width: 80%;
 	border-radius: 0 0 10px 10px;
 }
 .search-result > .no-results{
@@ -39,13 +43,12 @@
 	align-items: center;
 }
 .search-result > .no-results > p{
-	font-size: 35px;
+	font-size: 15px;
 	color: #a39d9d;
 	text-align: center;
 
 }
 .location{
-	padding: 3px;
 	border-radius: 2px;
 	background-color: #dddddd;
 	cursor: pointer;
@@ -62,8 +65,8 @@ label {
 	visibility:hidden !important;
 }
 .select-form-control{
-    width: 100%;
-    padding: 0.375rem 0.75rem;
+    width: 80%;
+    padding: 0.525rem 0.75rem;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -74,4 +77,20 @@ label {
     border-radius: 0.375rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 	outline: 0;
+}
+.form-control {
+    display: block;
+    width: 80%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
