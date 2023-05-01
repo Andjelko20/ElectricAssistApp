@@ -1,48 +1,44 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart,registerables } from 'node_modules/chart.js'
-import { forkJoin, switchMap } from 'rxjs';
-import { WeekByDay } from 'src/app/models/devices.model';
+import { forkJoin } from 'rxjs';
+import { YearsByMonth } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 Chart.register(...registerables)
-
 @Component({
-  selector: 'app-bar-month-prosumer',
-  templateUrl: './bar-month-prosumer.component.html',
-  styleUrls: ['./bar-month-prosumer.component.css']
+  selector: 'app-prosumer-year-graph',
+  templateUrl: './prosumer-year-graph.component.html',
+  styleUrls: ['./prosumer-year-graph.component.css']
 })
-export class BarMonthProsumerComponent {
+export class ProsumerYearGraphComponent {
 
-  
-  list1:WeekByDay[]=[];
-  list2:WeekByDay[]=[];
-  itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
-  ,'20','21','22','23','24','25','26','27','28','29','30'];
+  list1:YearsByMonth[]=[];
+  list2:YearsByMonth[]=[];
+  itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     
   }
-  
   ngOnInit(): void {
-    const userId = Number(this.route.snapshot.paramMap.get('id'));
-    const month1$ = this.deviceService.monthByDayUser(userId, 2);
-    const month2$ = this.deviceService.monthByDayUser(userId, 1);
-  
-    forkJoin([month1$, month2$]).pipe(
-      switchMap(([data1, data2]) => {
-        this.list1 = data1;
-        this.list2 = data2;
-        this.BarPlot();
-        return [];
-      })
-    ).subscribe();
+    let token=new JwtToken();
+    const id = token.data.id as number;
+    forkJoin([
+      this.deviceService.yearByMonthUser(id, 2),
+      this.deviceService.yearByMonthUser(id, 1)
+    ]).subscribe(([list1, list2]) => {
+      this.list1 = list1;
+      this.list2 = list2;
+      this.BarPlot();
+    });
   }
   BarPlot(){
-    
+
     const chartId = 'barplot';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
+
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
@@ -58,6 +54,7 @@ export class BarMonthProsumerComponent {
               data: energyUsageResults1,
               borderColor: 'rgb(128, 0, 128)',
               backgroundColor: 'rgb(128, 0, 128)',
+              
             },
             {
               label: 'Production',
@@ -66,7 +63,6 @@ export class BarMonthProsumerComponent {
               backgroundColor: 'rgb(255, 165, 0)'
             },
            
-            
           ]
           
         },
@@ -81,6 +77,8 @@ export class BarMonthProsumerComponent {
                 }
               },
               position: "left",
+              suggestedMin: 5,
+              suggestedMax: 140,
               title:{
                 display:true,
                 text: "kWh",
@@ -88,6 +86,7 @@ export class BarMonthProsumerComponent {
                 font:{
                   size:20
                 }
+                
               }
             }
             ,
@@ -101,18 +100,14 @@ export class BarMonthProsumerComponent {
               },
               title:{
                 display:true,
-                text: "Days in a month",
+                text: "Months in a Year",
                 color: '#000',
                 font:{
                   size:20
                 }
               }
             }
-            
-              
-            
-            
-            
+
           },
           responsive: true,
           plugins: {
@@ -138,7 +133,7 @@ export class BarMonthProsumerComponent {
             },
             title: {
               display: true,
-              text: 'Consumption and production in a month',
+              text: 'Consumption and production in a year',
               color: '#000',
               font:{
                 size:20

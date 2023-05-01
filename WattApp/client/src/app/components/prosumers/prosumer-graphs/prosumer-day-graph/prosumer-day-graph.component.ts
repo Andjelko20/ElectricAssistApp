@@ -4,15 +4,15 @@ import { Chart,registerables } from 'node_modules/chart.js'
 import { combineLatest } from 'rxjs';
 import { DayByHour } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 Chart.register(...registerables)
-
 @Component({
-  selector: 'app-line-day-prosumer',
-  templateUrl: './line-day-prosumer.component.html',
-  styleUrls: ['./line-day-prosumer.component.css']
+  selector: 'app-prosumer-day-graph',
+  templateUrl: './prosumer-day-graph.component.html',
+  styleUrls: ['./prosumer-day-graph.component.css']
 })
-export class LineDayProsumerComponent{
-
+export class ProsumerDayGraphComponent {
+  
 
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     
@@ -20,7 +20,8 @@ export class LineDayProsumerComponent{
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   ngOnInit(): void {
-    const userId = Number(this.route.snapshot.paramMap.get('id'));
+    let token=new JwtToken();
+    const userId = token.data.id as number;
   
     combineLatest([
       this.deviceService.dayByHourUser(userId, 2),

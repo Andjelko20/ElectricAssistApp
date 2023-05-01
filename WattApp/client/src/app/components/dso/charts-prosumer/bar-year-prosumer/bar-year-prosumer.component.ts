@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
-import { WeekByDay, YearsByMonth } from 'src/app/models/devices.model';
-import { Settlement } from 'src/app/models/users.model';
-import { AuthService } from 'src/app/services/auth.service';
-import { DevicesService } from 'src/app/services/devices.service';
+import { YearsByMonth } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 Chart.register(...registerables)
 @Component({

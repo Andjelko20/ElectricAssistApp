@@ -4,14 +4,15 @@ import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin, switchMap } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 Chart.register(...registerables)
 
 @Component({
-  selector: 'app-bar-month-prosumer',
-  templateUrl: './bar-month-prosumer.component.html',
-  styleUrls: ['./bar-month-prosumer.component.css']
+  selector: 'app-prosumer-month-graph',
+  templateUrl: './prosumer-month-graph.component.html',
+  styleUrls: ['./prosumer-month-graph.component.css']
 })
-export class BarMonthProsumerComponent {
+export class ProsumerMonthGraphComponent {
 
   
   list1:WeekByDay[]=[];
@@ -23,7 +24,8 @@ export class BarMonthProsumerComponent {
   }
   
   ngOnInit(): void {
-    const userId = Number(this.route.snapshot.paramMap.get('id'));
+    let token=new JwtToken();
+    const userId = token.data.id as number;
     const month1$ = this.deviceService.monthByDayUser(userId, 2);
     const month2$ = this.deviceService.monthByDayUser(userId, 1);
   

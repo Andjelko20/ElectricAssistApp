@@ -25,7 +25,11 @@ export class LineDayChartComponent {
   onOptionSelected() {
     this.ngOnInit();
   }
+
+  
+
   ngOnInit(): void {
+    
     this.authService.getlogInUser().subscribe(user => {
       this.authService.getCityId(user.city).subscribe(number => {
         this.authService.getSettlement(number).subscribe((settlement: Settlement[]) => {

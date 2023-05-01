@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DayByHour } from 'src/app/models/devices.model';
-import { Settlement } from 'src/app/models/users.model';
-import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 
 @Component({

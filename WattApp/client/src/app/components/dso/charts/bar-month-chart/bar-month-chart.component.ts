@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import {MatDatepicker, MatDatepickerModule} from '@angular/material/datepicker';
+import { FormControl, FormGroup } from '@angular/forms';
 Chart.register(...registerables)
-
-
 
 Chart.defaults.color = "#fff";
 Chart.defaults.color = "#fff";
@@ -21,7 +20,9 @@ Chart.defaults.color = "#fff";
 })
 export class BarMonthChartComponent {
 
-  
+  @ViewChild('startPicker') startPicker!: MatDatepicker<Date>;
+  @ViewChild('endPicker') endPicker!: MatDatepicker<Date>;
+
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   settlements:Settlement[] = [];
@@ -36,10 +37,17 @@ export class BarMonthChartComponent {
   onOptionSelected() {
     this.ngOnInit();
   }
-  
+
+  monthRange: FormGroup = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
+
   ngOnInit(): void {
-
-
+    this.monthRange.valueChanges.subscribe((value) => {
+      console.log('Form group value changed:', value);
+      // do something with the updated start and end dates
+    });
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{

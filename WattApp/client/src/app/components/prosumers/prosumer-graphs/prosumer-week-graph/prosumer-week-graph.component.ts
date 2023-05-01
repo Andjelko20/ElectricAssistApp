@@ -1,35 +1,38 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart,registerables } from 'node_modules/chart.js'
-import { combineLatest } from 'rxjs';
-import { DayByHour } from 'src/app/models/devices.model';
+import { forkJoin } from 'rxjs';
+import { WeekByDay } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 Chart.register(...registerables)
-
 @Component({
-  selector: 'app-line-day-prosumer',
-  templateUrl: './line-day-prosumer.component.html',
-  styleUrls: ['./line-day-prosumer.component.css']
+  selector: 'app-prosumer-week-graph',
+  templateUrl: './prosumer-week-graph.component.html',
+  styleUrls: ['./prosumer-week-graph.component.css']
 })
-export class LineDayProsumerComponent{
+export class ProsumerWeekGraphComponent {
 
 
-  constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
+  list1:WeekByDay[] = [];
+  list2:WeekByDay[] = [];
+  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     
   }
-  list1:DayByHour[] = [];
-  list2:DayByHour[] = [];
+
   ngOnInit(): void {
-    const userId = Number(this.route.snapshot.paramMap.get('id'));
-  
-    combineLatest([
-      this.deviceService.dayByHourUser(userId, 2),
-      this.deviceService.dayByHourUser(userId, 1)
-    ]).subscribe(([list1, list2]) => {
-      this.list1 = list1;
-      this.list2 = list2;
-      this.LineChart();
+    let token=new JwtToken();
+    const id = token.data.id as number;
+
+    forkJoin([
+        this.deviceService.weekByDayUser(id, 2),
+        this.deviceService.weekByDayUser(id, 1),
+      ]).subscribe(([list1, list2]) => {
+        this.list1 = list1;
+        this.list2 = list2;
+        this.LineChart();
     });
+    
   }
   LineChart(){
 
@@ -38,14 +41,16 @@ export class LineDayProsumerComponent{
     if (chartExists) {
         chartExists.destroy();
     }
+
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const Linechart =new Chart("linechart", {
+
+    const Linechart = new Chart("linechart", {
       type: 'line',
       data : {
-        labels: ['0','4','8','12','16','20',''],
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
         
-        datasets: [
+        datasets:  [
           {
             label: 'consumption',
             data: energyUsageResults1,
@@ -102,7 +107,7 @@ export class LineDayProsumerComponent{
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "kWh",
               color:'#000',
               font:{
                 size:20
@@ -119,7 +124,7 @@ export class LineDayProsumerComponent{
             },
             title:{
               display:true,
-              text: "Hours in a day",
+              text: "Days in a week",
               color:'#000',
               font:{
                 size:20
@@ -151,10 +156,9 @@ export class LineDayProsumerComponent{
             align: "center"
           },
           title: {
-            
             display: true,
-            text: 'Consumption and production in one day',
-            color: '#000',
+            text: ' Consumption and production in a week',
+            color:'#000',
             font:{
               size:20
             }

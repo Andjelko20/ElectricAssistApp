@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
@@ -28,7 +29,18 @@ export class LineWeekChartComponent {
     this.ngOnInit();
   }
 
+  campaignOne: FormGroup = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
+
   ngOnInit(): void {
+    this.campaignOne.valueChanges.subscribe((value) => {
+      const startDay = new Date(value.start).getDate();
+      const startMonth = new Date(value.start).getMonth()
+      console.log(startDay,startMonth)
+      
+    });
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{

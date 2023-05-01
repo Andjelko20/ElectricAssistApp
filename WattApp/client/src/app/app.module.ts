@@ -83,7 +83,16 @@ import { PredictionProsumerComponent } from './components/dso/prediction/predict
 import { PredictionDeviceComponent } from './components/dso/prediction/prediction-device/prediction-device.component';
 import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
 import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ProsumerDayGraphComponent } from './components/prosumers/prosumer-graphs/prosumer-day-graph/prosumer-day-graph.component';
+import { ProsumerWeekGraphComponent } from './components/prosumers/prosumer-graphs/prosumer-week-graph/prosumer-week-graph.component';
+import { ProsumerYearTableComponent } from './components/prosumers/prosumer-tables/prosumer-year-table/prosumer-year-table.component';
+import { ProsumerMonthTableComponent } from './components/prosumers/prosumer-tables/prosumer-month-table/prosumer-month-table.component';
+import { ProsumerWeekTableComponent } from './components/prosumers/prosumer-tables/prosumer-week-table/prosumer-week-table.component';
+import { ProsumerDayTableComponent } from './components/prosumers/prosumer-tables/prosumer-day-table/prosumer-day-table.component';
 
 @NgModule({
   declarations: [
@@ -171,7 +180,13 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
     YearTabelarProsumerComponent,
     TodayTabelarProsumerComponent,
     EmailConfirmationPageComponent,
-    ChangeEmailConfirmationPageComponent
+    ChangeEmailConfirmationPageComponent,
+    ProsumerDayGraphComponent,
+    ProsumerWeekGraphComponent,
+    ProsumerYearTableComponent,
+    ProsumerMonthTableComponent,
+    ProsumerWeekTableComponent,
+    ProsumerDayTableComponent
     
   ],
   imports: [
@@ -183,6 +198,10 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
     FormsModule,
     BrowserModule,
 	  NgxPaginationModule,
+    MatDatepickerModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
+    MatFormFieldModule
   ],
   providers: [DecimalPipe],
   bootstrap: [AppComponent]
