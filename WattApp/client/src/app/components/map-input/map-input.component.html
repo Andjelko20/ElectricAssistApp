@@ -6,17 +6,20 @@
 			<option [value]="stringify({id:1,name:'Serbia'})" >Serbia</option>
 		</select>
 		<br>
+		<br>
 		<label for="city">City</label>
 		<br>
 		<select id="city" class="select-form-control" name="city" (change)="onSelectedCity($event)">     
 			<option *ngFor="let city of cities" [value]="stringify(city)" >{{city.name}}</option>
 		</select>
 		<br>
+		<br>
 		<label for="settlement">Settlement</label>
 		<br>
 		<select id="settlement" class="select-form-control" name="settlement" [(ngModel)]="settlementId" (change)="sendData()">     
 			<option *ngFor="let settlement of settlements" [value]="settlement.id"  >{{settlement.name}}</option>
 		</select>
+		<br>
 		<br>
 		<div class="address-container">
 			<label for="Address">Address</label>
