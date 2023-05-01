@@ -1,4 +1,8 @@
-﻿using Server.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Polly;
+using Server.Data;
+using Server.DTOs.Responses;
+using Server.Models;
 
 namespace Server.Filters
 {
@@ -6,10 +10,13 @@ namespace Server.Filters
     {
         public static IQueryable<UserModel> ApplyFilter(IQueryable<UserModel> users, UserFilterModel userFilterModel)
         {
-            if (userFilterModel == null)
-                return users;
 
-            if(userFilterModel.Blocked != null)
+            if (userFilterModel == null)
+            {
+                return users;
+            }
+
+            if (userFilterModel.Blocked != null)
             {
                 users = users.Where(src => src.Blocked == userFilterModel.Blocked);
             }

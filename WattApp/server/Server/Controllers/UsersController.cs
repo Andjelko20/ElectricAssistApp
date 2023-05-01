@@ -17,6 +17,7 @@ using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Org.BouncyCastle.Asn1.Ocsp;
+using Server.Filters;
 
 namespace Server.Controllers
 {
@@ -59,14 +60,17 @@ namespace Server.Controllers
         [HttpGet]
         [Route("page")]
         [Authorize(Roles = Roles.AdminOperaterPermission)]
-        public async Task<IActionResult> GetPage([FromQuery]int pageNumber, [FromQuery] int pageSize=20)
+        public async Task<IActionResult> GetPage([FromQuery] UserFilterModel userFilterModel, [FromQuery]int pageNumber, [FromQuery] int pageSize=20)
         {
             try
             {
                 long myId = long.Parse(tokenService.GetClaim(HttpContext,"id"));
                 if (User.IsInRole(Roles.Operater))
-                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId && user.RoleId!=Roles.SuperadminId && user.Id!=myId));
-                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId != Roles.SuperadminId && user.Id!=myId));
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, Roles.OperaterId, myId, userFilterModel));
+                else if(User.IsInRole(Roles.Admin))
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, Roles.AdminId, myId, userFilterModel));
+                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, Roles.SuperadminId, myId, userFilterModel));
+
             }
             catch(HttpRequestException ex)
             {

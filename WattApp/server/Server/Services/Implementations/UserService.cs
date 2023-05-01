@@ -6,6 +6,7 @@ using Polly;
 using Server.Data;
 using Server.DTOs;
 using Server.DTOs.Responses;
+using Server.Filters;
 using Server.Models;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
@@ -15,6 +16,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Principal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Server.Services.Implementations
 {
@@ -36,6 +38,7 @@ namespace Server.Services.Implementations
                 return numberOfItems / itemsPerPage;
             return numberOfItems / itemsPerPage + 1;
         }
+
         public async Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber, int itemsPerPage, Func<UserModel, bool> filter)
         {
             DataPage<UserDetailsDTO> page = new();
@@ -55,8 +58,45 @@ namespace Server.Services.Implementations
                 .Take(itemsPerPage)
                 .Select(user => new UserDetailsDTO(user))
                 .ToList();
-           
+
             page.Data = users;
+            page.PreviousPage = (pageNumber == 1) ? null : pageNumber - 1;
+            page.NextPage = (pageNumber == page.NumberOfPages) ? null : pageNumber + 1;
+            return page;
+        }
+
+        public async Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber, int itemsPerPage, long roleId, long myId, UserFilterModel userFilterModel)
+        {
+            DataPage<UserDetailsDTO> page = new();
+
+            IQueryable<UserModel> users = context.Users.Where(src => src.RoleId == Roles.ProsumerId && src.RoleId != Roles.SuperadminId && src.Id != myId);
+            if(users == null)
+                throw new HttpRequestException("No items found in database.", null, HttpStatusCode.NotFound);
+
+            Console.WriteLine(users);
+            //users = UserFilter.ApplyFilter(users, userFilterModel);
+            Console.WriteLine(users);
+
+            if (!users.Any()) throw new HttpRequestException("There is no devices!", null, System.Net.HttpStatusCode.NotFound);
+
+            int maxPageNumber;
+            if (users.Count() % itemsPerPage == 0) maxPageNumber = users.Count() / itemsPerPage;
+            else maxPageNumber = users.Count() / itemsPerPage + 1;
+
+            if (pageNumber < 1 || pageNumber > maxPageNumber) throw new HttpRequestException("Invalid page number!", null, System.Net.HttpStatusCode.BadRequest);
+            if (itemsPerPage < 1) throw new HttpRequestException("Invalid page size number!", null, System.Net.HttpStatusCode.BadRequest);
+
+            users = users.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
+
+            List<UserModel> userModels = users.ToList();
+            List<UserDetailsDTO> userDetailsDTOs = new List<UserDetailsDTO>();
+            foreach(UserModel user in userModels)
+            {
+                UserDetailsDTO detailsDTO = new UserDetailsDTO(user);
+                userDetailsDTOs.Add(detailsDTO);
+            }
+            
+            page.Data = userDetailsDTOs;
             page.PreviousPage = (pageNumber == 1) ? null : pageNumber - 1;
             page.NextPage = (pageNumber == page.NumberOfPages) ? null : pageNumber + 1;
             return page;
