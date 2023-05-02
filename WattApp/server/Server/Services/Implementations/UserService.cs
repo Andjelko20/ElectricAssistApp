@@ -104,7 +104,7 @@ namespace Server.Services.Implementations
 
             users = UserFilter.applyFilters(users, userFilterModel);
 
-            if (!users.Any()) throw new HttpRequestException("There is no devices!", null, System.Net.HttpStatusCode.NotFound);
+            if (!users.Any()) throw new HttpRequestException("There is no users!", null, System.Net.HttpStatusCode.NotFound);
 
             int maxPageNumber;
             if (users.Count() % itemsPerPage == 0) maxPageNumber = users.Count() / itemsPerPage;
@@ -124,6 +124,7 @@ namespace Server.Services.Implementations
             }
             
             page.Data = userDetailsDTOs;
+            page.NumberOfPages = maxPageNumber;
             page.PreviousPage = (pageNumber == 1) ? null : pageNumber - 1;
             page.NextPage = (pageNumber == page.NumberOfPages) ? null : pageNumber + 1;
             return page;
