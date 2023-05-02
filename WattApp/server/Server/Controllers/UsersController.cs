@@ -541,5 +541,14 @@ namespace Server.Controllers
             _sqliteDb.SaveChangesAsync();
             return Ok();
         }
+        [HttpGet]
+        [Route("my_location")]
+        [Authorize]
+        public async Task<IActionResult> GetMyLocation()
+        {
+            var id = long.Parse(tokenService.GetClaim(HttpContext, "id"));
+            var user = await userService.GetUserById(id);
+            return Ok(new {lat=user.Latitude,lon=user.Longitude});
+        }
     }
 }
