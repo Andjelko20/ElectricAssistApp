@@ -17,6 +17,11 @@ namespace Server.Filters
             if (filter.RoleId != null)
                 users = users.Where(src => src.RoleId == filter.RoleId);
 
+            if (filter.SortByNameAscending == true)
+                users = users.OrderBy(src => src.Name);
+            else
+                users = users.OrderByDescending(src => src.Name);
+
 
             return users;
         }
