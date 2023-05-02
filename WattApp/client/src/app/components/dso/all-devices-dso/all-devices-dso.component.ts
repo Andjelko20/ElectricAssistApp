@@ -1,16 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShowDevices } from 'src/app/models/devices.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { Categories } from 'src/app/utilities/categories';
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-all-devices-dso',
   templateUrl: './all-devices-dso.component.html',
   styleUrls: ['./all-devices-dso.component.css']
 })
 export class AllDevicesDsoComponent implements OnInit{
+  @ViewChild('modalContent') modalContent!: TemplateRef<any>;
+  @ViewChild('modalContent1') modalContent1!: TemplateRef<any>;
+ 
+  body: string = ''; 
+  btnAction:string='';
+  confirmTurnOnOff?:boolean=false;
+
   currentPage:number=1;
   itemsPerPage:number=12;
   totalItems:number=10;
@@ -20,7 +27,7 @@ export class AllDevicesDsoComponent implements OnInit{
   devicesList:ShowDevices[] = [];
   deviceCategoryId!: number;
   idDevice!: number;
-  constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute) {}
+  constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute,private modalService: NgbModal) {}
   categories=[
 
      {id:Categories.ELECTRICITY_PRODUCER_ID,name:Categories.ELECTRICITY_PRODUCER_NAME},
@@ -134,22 +141,25 @@ export class AllDevicesDsoComponent implements OnInit{
     );
     }
     
-       turnOnOff(id: number) {
-        //console.log(id);
-        
-        const turnOn= document.getElementById('turn-on-popup');
-        const turnOff= document.getElementById('turn-off-popup');
+       turnOn(id: number) {
+        this.modalService.open(this.modalContent);
+        this.confirmTurnOnOff=false;
+        const turnOn= document.getElementById('popup');
+       
         console.log(turnOn);
        if(turnOn!=null)
        {
+        this.body = 'Do you want to turn on this device?';
+        this.btnAction="Turn On";
             turnOn.removeEventListener('click', this.onClick);
             this.onClick=() => {
               this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
-              this.deviceService.turnOnOff(id).subscribe({
+              this.deviceService.turnOn(id).subscribe({
               next:()=>{
                 const userIndex = this.devicesList.findIndex(user => user.id === id);
                 
                   this.devicesList[userIndex].turnOn = true;
+                  this.confirmTurnOnOff=true;
               }
               
               });
@@ -157,24 +167,42 @@ export class AllDevicesDsoComponent implements OnInit{
           };
           turnOn.addEventListener('click', this.onClick);
        }
-       if(turnOff!=null)
-       {
-        turnOff.removeEventListener('click', this.offClick);
-            this.offClick=() => {
-              this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
-              this.deviceService.turnOnOff(id).subscribe({
-              next:()=>{
-                const userIndex = this.devicesList.findIndex(user => user.id === id);
-                
-                  this.devicesList[userIndex].turnOn = false;
-              }
-              
-              });
-              turnOff.removeEventListener('click', this.offClick);
-          };
-          turnOff.addEventListener('click', this.offClick);
-       }
+      
        
+      }
+      turnOff(id: number){
+        this.modalService.open(this.modalContent);
+        this.confirmTurnOnOff=false;
+        
+        const turnOff= document.getElementById('popup');
+        if(turnOff!=null)
+       {
+          this.body = 'Do you want to turn off this device?';
+          this.btnAction="Turn Off";
+          turnOff.removeEventListener('click', this.offClick);
+              this.offClick=() => {
+                this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
+                this.deviceService.turnOff(id).subscribe({
+                next:()=>{
+                  const userIndex = this.devicesList.findIndex(user => user.id === id);
+                  
+                    this.devicesList[userIndex].turnOn = false;
+                    this.confirmTurnOnOff=true;
+                }
+                
+                });
+                turnOff.removeEventListener('click', this.offClick);
+            };
+            turnOff.addEventListener('click', this.offClick);
+        }
+       
+      }
+      noControl()
+      {
+        this.modalService.open(this.modalContent1);
+        this.body = 'You dont have permission to turn on or off this device!';
+        
+
       }
 
 }

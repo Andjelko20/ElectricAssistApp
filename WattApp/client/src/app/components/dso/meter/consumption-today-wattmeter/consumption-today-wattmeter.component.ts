@@ -16,7 +16,9 @@ export class ConsumptionTodayWattmeterComponent implements OnInit{
   valueMWh!: any;
   valueGWh!: any;
   min: number = 0;
-  max: number = 2400;
+  maxkwh: number = 2400;
+  maxmwh: number = this.maxkwh*0.001;
+  maxgwh: number = this.maxmwh*0.001;
   markerConfig = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
     "300": { color: '#57A75B', size: 4, type: 'line'},

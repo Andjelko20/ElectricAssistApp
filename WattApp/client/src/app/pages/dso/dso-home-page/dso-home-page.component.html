@@ -66,26 +66,22 @@
             </div>
             
         </div>
+        <div class="weather">
+            <div class="weather-body">
+                <app-today></app-today>
+                <app-future></app-future>
+            </div>
+        </div> 
         <div id="pie">
             
-            <span style="margin: 0; padding: 0;"><b>Current production in stettlements </b> </span>
+            <span><b>Current production in stettlements </b> <hr></span>
             
             <div id="chart">
                 <app-pie-chart></app-pie-chart>
             </div>
         </div>
    
- 
-        
-    </div>
-    <div class="card-group">
-        <div class="weather">
-            <div class="weather-body">
-                <app-today></app-today>
-                <app-future></app-future>
-            </div>
-        </div>
-       <div class="history-charts">
+        <div class="history-charts">
             <div class="toggle-container">
                 <div class="toggle-buttons">
                   <input type="radio" (click)="showGraph()" name="toggle" id="dashboard-btn" checked >
@@ -144,6 +140,74 @@
                 </div>
             </ng-container>
         </div>
+        
     </div>
+    <!-- <div class="card-group">
+        <div class="weather">
+            <div class="weather-body">
+                <app-today></app-today>
+                <app-future></app-future>
+            </div>
+        </div> -->
+       <!-- <div class="history-charts">
+            <div class="toggle-container">
+                <div class="toggle-buttons">
+                  <input type="radio" (click)="showGraph()" name="toggle" id="dashboard-btn" checked >
+                  <label for="dashboard-btn">Graphical view</label>
+                  <span class="divider"></span>
+                  <input type="radio" (click)="showTable()" name="toggle" id="devices-btn">
+                  <label for="devices-btn">Tabelar view</label>
+                </div>
+            </div>
+            <div class="csv-body">
+                <span>Power and Energy</span>
+                <button class="csv-button">CSV</button>
+              </div>
+            <ng-container *ngIf="graph">
+                <div class="chart-body">
+                    <div class="chart-buttons">
+                      <button (click)="showComponentGraph()" class="chart-button">Day</button>
+                      <button (click)="showComponentGraph1()" class="chart-button">Week</button>
+                      <button (click)="showComponentGraph2()" class="chart-button">Month</button>
+                      <button (click)="showComponentGraph3()" class="chart-button">Year</button>
+                    </div>
+                  </div>
+                <div class="history-charts-body" *ngIf="compGraph">
+                    <app-line-day-chart></app-line-day-chart>
+                </div>
+                <div class="history-charts-body" *ngIf="compGraph1">
+                    <app-line-week-chart></app-line-week-chart>
+                </div>
+                <div class="history-charts-body" *ngIf="compGraph2">
+                    <app-bar-month-chart></app-bar-month-chart>
+                </div>
+                <div class="history-charts-body" *ngIf="compGraph3">
+                    <app-bar-year-chart></app-bar-year-chart>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="tabelar">
+                <div class="chart-body">
+                    <div class="chart-buttons">
+                      <button (click)="showComponentTable()" class="chart-button">Day</button>
+                      <button (click)="showComponentTable1()" class="chart-button">Week</button>
+                      <button (click)="showComponentTable2()" class="chart-button">Month</button>
+                      <button (click)="showComponentTable3()" class="chart-button">Year</button>
+                    </div>
+                  </div>
+                <div class="history-charts-body" *ngIf="compTable">
+                    <app-tabelar-view></app-tabelar-view>
+                </div>
+                <div class="history-charts-body" *ngIf="compTable1">
+                    <app-tabelar-view-by-week></app-tabelar-view-by-week>
+                </div>
+                <div class="history-charts-body" *ngIf="compTable2">
+                    <app-tabelar-view-by-month></app-tabelar-view-by-month>
+                </div>
+                <div class="history-charts-body" *ngIf="compTable3">
+                    <app-tabelar-view-by-year></app-tabelar-view-by-year>
+                </div>
+            </ng-container>
+        </div> -->
+    <!-- </div> -->
 
 </div>

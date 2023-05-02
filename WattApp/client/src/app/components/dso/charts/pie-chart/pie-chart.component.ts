@@ -94,7 +94,7 @@ export class PieChartComponent implements OnInit {
               },
                 color: '#fff',
                 font:{
-                  size:10
+                  size:11
                 }
             },
             legend: {
@@ -116,15 +116,15 @@ export class PieChartComponent implements OnInit {
               
               
             },
-            // title: {
-            //   display: true,
-            //   text: 'Current production in settlements',
-            //   color:'#727272',
-            //   font:{
-            //     size:15
-            //   }
+            title: {
+              display: true,
+              text: 'Current production in settlements',
+              color:'#727272',
+              font:{
+                size:25
+              }
               
-            // }
+            }
             
         }}
       

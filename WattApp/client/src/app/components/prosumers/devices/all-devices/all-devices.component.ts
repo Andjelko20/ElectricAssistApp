@@ -123,23 +123,6 @@ export class AllDevicesComponent implements OnInit {
     }
   }
   
-  turnOnOff(id: number) {
-    console.log(id);
-    
-      this.deviceService.turnOnOff(id).subscribe({
-        next:()=>{
-          const userIndex = this.devices.findIndex(device => device.id === id);
-          if(this.devices[userIndex].turnOn==false)
-          {
-            this.devices[userIndex].turnOn = true;
-          }   
-          else if(this.devices[userIndex].turnOn==true)
-          {
-            this.devices[userIndex].turnOn = false;
-          }
-        }
-      });
-  }
   
   
 }
