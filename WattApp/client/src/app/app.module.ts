@@ -85,6 +85,7 @@ import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/
 import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
 import { NgbModalModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AccountPageComponent } from './pages/account-page/account-page.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 
@@ -175,7 +176,8 @@ import { AccountPageComponent } from './pages/account-page/account-page.componen
     TodayTabelarProsumerComponent,
     EmailConfirmationPageComponent,
     ChangeEmailConfirmationPageComponent,
-    AccountPageComponent
+    AccountPageComponent,
+    LoaderComponent
     
   ],
   imports: [

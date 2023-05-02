@@ -15,6 +15,7 @@ export class ConsumptionTodayWattmeterComponent implements OnInit{
   valuekWh!: any;
   valueMWh!: any;
   valueGWh!: any;
+  loader:boolean=false;
   min: number = 0;
   maxkwh: number = 60000;
   maxmwh: number = this.maxkwh*0.001;
@@ -75,11 +76,11 @@ export class ConsumptionTodayWattmeterComponent implements OnInit{
   }
     async ngOnInit(){
     let token=new JwtToken();
-    
+    this.loader=true;
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.historyService.getTodayTotalConsumption(number,2).subscribe(data=>{
-          
+          this.loader=false;
           this.value = data;
           this.valuekWh = this.value.toFixed(2);
           this.valueMWh= (this.valuekWh*0.001).toFixed(2);

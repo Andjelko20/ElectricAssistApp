@@ -30,6 +30,7 @@ import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-
 import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
 import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
 import { AccountPageComponent } from './pages/account-page/account-page.component';
+import { LoaderComponent } from './components/loader/loader.component';
  
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -60,7 +61,7 @@ const routes: Routes = [
 	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard]},
 	{path:"profile-edit",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
-
+	{path:"loader",component:LoaderComponent},
 	//TEST
 	// {path:'register',component:RegisterComponent},
 	// {path:'change-password',component:ChangePasswordComponent},
