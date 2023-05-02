@@ -27,7 +27,8 @@ namespace Server.Controllers
                                                                        long cityId, long settlementId, long byDayCityId, 
                                                                        long byDaySettlementId, long byHourSettlementId, 
                                                                        long byHourCityId, long byHourUserId, long byDayUserId,
-                                                                       long doubleUserId, long doubleDeviceId, long byDayDeviceId)
+                                                                       long doubleUserId, long doubleDeviceId, long byHourDeviceId,
+                                                                       long byDayDeviceId)
         {
             if(cityId!=0)
             {
@@ -126,12 +127,20 @@ namespace Server.Controllers
                 var result = historyFromToService.GetDeviceDoubleHistoryFromTo(fromDate, toDate, doubleDeviceId);
                 return Ok(result);
             }
-            else // if (byDayDeviceId != 0)
+            else if (byDayDeviceId != 0)
             {
                 if (!_sqliteDb.Devices.Any(d => d.Id == byDayDeviceId))
                     return NotFound(new { message = "Device with ID: " + byDayDeviceId.ToString() + " does not exist." });
 
                 var result = historyFromToService.GetDeviceHistoryByDayFromTo(fromDate, toDate, byDayDeviceId);
+                return Ok(result);
+            }
+            else // if (byHourDeviceId != 0)
+            {
+                if (!_sqliteDb.Devices.Any(d => d.Id == byHourDeviceId))
+                    return NotFound(new { message = "Device with ID: " + byHourDeviceId.ToString() + " does not exist." });
+
+                var result = historyFromToService.GetDeviceHistoryByHourFromTo(fromDate, toDate, byHourDeviceId);
                 return Ok(result);
             }
         }
