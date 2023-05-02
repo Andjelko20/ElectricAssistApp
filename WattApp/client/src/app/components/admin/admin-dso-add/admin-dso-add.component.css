@@ -110,7 +110,7 @@ button {
         margin-bottom: 30px;
     }
     .add-user-form{
-        width:90%;
+        width:66%;
     }
     h1 {
         color: #1C315E;
@@ -140,4 +140,27 @@ button {
         width: 160px;
         background-color: #1C315E;
     }
+    .form-control {
+        
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        
+    }
+    .select-form-control{
+        width: 100%;
+        padding: 0.525rem 0.75rem;
+       
+    }
+    .form-row {
+
+        padding-bottom: 50px;
+        padding-top: 50px;
+    
+    }
+    .select-form-control{
+        width: 100%;
+        padding: 0.525rem 0.75rem;
+       
+    }
+    
 }

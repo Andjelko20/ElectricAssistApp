@@ -99,16 +99,16 @@ export class AdminDsoComponent {
       this.body="Do you want to block this user?"
       this.btnAction="Block";
 
-      block.removeEventListener('click', this.onBlockClick); // remove previous event listener
-      this.onBlockClick = () => { // create new event listener function
+      block.removeEventListener('click', this.onBlockClick); 
+      this.onBlockClick = () => { 
         this.usersService.blockUser(id).subscribe(() => {
             const userIndex = this.showUsers.findIndex(user => user.id === id);
             this.showUsers[userIndex].block = true;
             this.confirmBlock=true;
         });
-        block.removeEventListener('click', this.onBlockClick); // remove event listener after execution
+        block.removeEventListener('click', this.onBlockClick); 
       };
-      block.addEventListener('click', this.onBlockClick); // add new event listener
+      block.addEventListener('click', this.onBlockClick); 
     }
   }
   
@@ -122,16 +122,16 @@ export class AdminDsoComponent {
       this.body="Do you want to unblock this user?"
       this.btnAction="Unblock";
 
-      unblock.removeEventListener('click', this.onUnblockClick); // remove previous event listener
-      this.onUnblockClick = () => { // create new event listener function
+      unblock.removeEventListener('click', this.onUnblockClick); 
+      this.onUnblockClick = () => { 
         this.usersService.unblockUser(id).subscribe(() => {
           const userIndex = this.showUsers.findIndex(user => user.id === id);
           this.showUsers[userIndex].block = false;
           this.confirmBlock=true;
         });
-        unblock.removeEventListener('click', this.onUnblockClick); // remove event listener after execution
+        unblock.removeEventListener('click', this.onUnblockClick); 
       };
-      unblock.addEventListener('click', this.onUnblockClick); // add new event listener
+      unblock.addEventListener('click', this.onUnblockClick); 
     }
   }
   
@@ -149,7 +149,7 @@ export class AdminDsoComponent {
         deletePopup.addEventListener('click', () => {
           this.usersService.delete(id)
           .subscribe(()=>{
-              this.router.navigate(['dashboard']);
+              this.router.navigate(['/dashboard']);
               this.usersService.getAllUsers(1).subscribe(users => {
                 this.totalItems=users.numberOfPages*this.itemsPerPage;
                   this.showUsers=users.data.map((u:any)=>({

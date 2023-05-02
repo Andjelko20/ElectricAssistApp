@@ -12,6 +12,8 @@
     margin-top: 10px;
     margin-left: 0px;
     align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
     }
   
   .weather-container .small {

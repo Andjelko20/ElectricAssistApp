@@ -89,7 +89,7 @@ export class PieChartComponent implements OnInit {
                   sum += data;
                 });
                 
-                let percentage = value + "kWh";
+                let percentage = value;
                 return percentage;
               },
                 color: '#fff',
@@ -106,7 +106,7 @@ export class PieChartComponent implements OnInit {
                 
               },
               
-              position: 'right',
+              position: 'bottom',
               onHover: function (event, legendItem, legend) {
                 document.body.style.cursor = 'pointer';
               },
@@ -116,15 +116,15 @@ export class PieChartComponent implements OnInit {
               
               
             },
-            title: {
-              display: true,
-              text: 'Current production in settlements',
-              color:'#727272',
-              font:{
-                size:25
-              }
+            // title: {
+            //   display: true,
+            //   text: 'Production in Kwh',
+            //   color:'#727272',
+            //   font:{
+            //     size:25
+            //   }
               
-            }
+            // }
             
         }}
       

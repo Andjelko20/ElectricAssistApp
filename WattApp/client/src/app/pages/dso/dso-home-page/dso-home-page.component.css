@@ -125,15 +125,13 @@
     border-radius: 10px;
     box-shadow: 2px 4px grey;
     width: 70%;
-    /* height: 700px; */
 }
 .history-charts-body {
     margin-top: 15px;
-    /* left: -80px;
-    right: -120px; */
+
     bottom: 0px;
     top: 0px;
-    /* margin-right: 15px; */
+
 }
 .csv-body {
   display: flex;
@@ -240,6 +238,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+#titlePie
+{
+  font-size: 25px;
+  margin-bottom: 80px;
+  
 }
 #chart{
   margin-top: 0 ;
