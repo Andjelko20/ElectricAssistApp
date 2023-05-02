@@ -11,6 +11,9 @@
         //Sortiranje 
         public bool SortByNameAscending { get; set; } = true;
 
+        //Search za name + username + address
+        public string? SearchValue { get; set; }
+
 
     }
 }

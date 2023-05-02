@@ -22,6 +22,12 @@ namespace Server.Filters
             else
                 users = users.OrderByDescending(src => src.Name);
 
+            if(filter.SearchValue != null)
+            {
+                users = users.Where(src => src.Name.ToUpper().StartsWith(filter.SearchValue.ToUpper()) || src.Username.ToUpper().StartsWith(filter.SearchValue.ToUpper()) || src.Address.ToUpper().StartsWith(filter.SearchValue.ToUpper()));
+               
+            }
+
 
             return users;
         }
