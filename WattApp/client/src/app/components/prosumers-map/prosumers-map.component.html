@@ -23,6 +23,7 @@
 					<option value="3">Red zone</option>
 				</select>
 			</div>
+			<!--
 			<div class="filter-select">
 				<label>Filter by city</label>
 				<select name="city" [(ngModel)]="city" (change)="changeCity()">
@@ -30,15 +31,16 @@
 					<option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
 				</select>
 			</div>
+			-->
 			<div class="search-user">
-				<label>Search by name of user</label>
-				<input class="input-form-control" type="text" name="user" [(ngModel)]="name" (keydown)="changeName()">
-				<div class="search-result" [class.none]="!searchResultVisible">
+				<label>Search user by name or address</label>
+				<input class="input-form-control" type="text" name="user" [(ngModel)]="name" (ngModelChange)="changeName()">
+				<div class="search-result" [class.hidden]="!searchResultVisible">
 					<div *ngIf="filteredUsers.length==0" class="no-results">
 						<p>There are no results</p>
 					</div>	
 					<div *ngFor="let user of filteredUsers" (click)="focusUser(user)" class="location">
-						{{user.name}},{{cities[user.cityId-1].name}},{{user.address}}
+						{{user?.name}},<!--{{cities[user.cityId-1].name}}-->,{{user.address}}
 					</div>
 				</div>
 			</div>

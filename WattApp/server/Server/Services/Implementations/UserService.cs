@@ -109,6 +109,7 @@ namespace Server.Services.Implementations
             List<UserModel> allUsers = await context
                 .Users
                 .Include(user=>user.Settlement)
+                .Include(user=>user.Settlement.City)
                 .Where(user => user.RoleId == Roles.ProsumerId)
                 .ToListAsync();
             List<object> lista = new List<object>();
@@ -130,7 +131,8 @@ namespace Server.Services.Implementations
                     Latitude = user.Latitude,
                     Longitude = user.Longitude,
                     Consumption = cons,
-                    CityId=user.Settlement.CityId,
+                    City=user.Settlement.City.Name,
+                    //CityId=user.Settlement.CityId,
                     Address=user.Address
                 });
             }
