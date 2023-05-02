@@ -26,7 +26,7 @@ namespace Server.Controllers
         public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, long deviceCategoryId, 
                                                                        long cityId, long settlementId, long byDayCityId, 
                                                                        long byDaySettlementId, long byHourSettlementId, 
-                                                                       long byHourCityId, long byHourUserId)
+                                                                       long byHourCityId, long byHourUserId, long byDayUserId)
         {
             if(cityId!=0)
             {
@@ -93,12 +93,20 @@ namespace Server.Controllers
                 List<EnergyToday> result = historyFromToService.GetSettlementHistoryByHourFromTo(fromDate, toDate, deviceCategoryId, byHourSettlementId);
                 return Ok(result);
             }
-            else // if(byHourUserId != 0)
+            else if(byHourUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == byHourUserId))
                     return NotFound(new { message = "User with ID: " + byHourUserId.ToString() + " does not exist." });
                 
                 List<EnergyToday> result = historyFromToService.GetProsumerHistoryByHourFromTo(fromDate, toDate, byHourUserId);
+                return Ok(result);
+            }
+            else // if(byDayUserId != 0)
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == byDayUserId))
+                    return NotFound(new { message = "User with ID: " + byDayUserId.ToString() + " does not exist." });
+
+                var result = historyFromToService.GetProsumerHistoryByDayFromTo(fromDate, toDate, byDayUserId);
                 return Ok(result);
             }
         }

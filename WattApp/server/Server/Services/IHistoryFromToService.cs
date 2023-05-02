@@ -12,6 +12,8 @@ namespace Server.Services
         public List<EnergyToday> GetSettlementHistoryByHourFromTo(string fromDate, string toDate, long deviceCategoryId, long settlementId);
         public List<EnergyToday> GetCityHistoryByHourFromTo(string fromDate, string toDate, long deviceCategoryId, long cityId);
         public List<EnergyToday> GetProsumerHistoryByHourFromTo(string fromDate, string toDate, long userId);
+        public List<DailyEnergyConsumptionPastMonth> GetProsumerHistoryByDayFromTo(string fromDate, string toDate, long userId);
+
 
 
 
