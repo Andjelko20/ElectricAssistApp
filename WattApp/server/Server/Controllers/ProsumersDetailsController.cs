@@ -50,11 +50,13 @@ namespace Server.Controllers
         [HttpGet]
         [Route("page")]
         [Authorize(Roles=Roles.Dispatcher)]
-        public async Task<IActionResult> GetPage([FromQuery] int pageNumber, [FromQuery] int pageSize=20)
+        public async Task<IActionResult> GetPage([FromQuery] int pageNumber,[FromQuery] long cityId=0, [FromQuery] int pageSize=20)
         {
             try
             {
-                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId));
+                if(cityId!=0)
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId && user.Settlement.CityId==cityId));
+                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId == Roles.ProsumerId));
             }
             catch (HttpRequestException ex)
             {
