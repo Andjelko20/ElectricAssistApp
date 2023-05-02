@@ -47,6 +47,7 @@
 }
 .toggle-buttons input[type="radio"]:checked + label {
   font-weight: bold;
+  color: black;
 }
 .toggle-buttons input[type="radio"]:not(:checked) + label {
   color: gray;
