@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Org.BouncyCastle.Asn1.Ocsp;
 using Server.Filters;
+using System.IO;
 
 namespace Server.Controllers
 {
@@ -64,23 +65,23 @@ namespace Server.Controllers
         {
             try
             {
-                long myId = long.Parse(tokenService.GetClaim(HttpContext,"id"));
+                long myId = long.Parse(tokenService.GetClaim(HttpContext, "id"));
                 if (User.IsInRole(Roles.Operater))
                     return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, Roles.OperaterId, myId, userFilterModel));
-                else if(User.IsInRole(Roles.Admin))
+                else if (User.IsInRole(Roles.Admin))
                     return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, Roles.AdminId, myId, userFilterModel));
-                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, Roles.SuperadminId, myId, userFilterModel));
-
+                else
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, Roles.SuperadminId, myId, userFilterModel));
             }
-            catch(HttpRequestException ex)
+            catch (HttpRequestException ex)
             {
                 return StatusCode((int)ex.StatusCode.Value, new MessageResponseDTO(ex.Message));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                //logger.LogInformation(ex.Message);
-                return StatusCode(500, new {message="Internal server error"});
+                return StatusCode(500, new { message = "Internal server error" });
             }
+
         }
         /// <summary>
         /// Get single user

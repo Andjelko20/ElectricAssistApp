@@ -68,14 +68,41 @@ namespace Server.Services.Implementations
         public async Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber, int itemsPerPage, long roleId, long myId, UserFilterModel userFilterModel)
         {
             DataPage<UserDetailsDTO> page = new();
+            IQueryable<UserModel> users = null;
 
-            IQueryable<UserModel> users = context.Users.Where(src => src.RoleId == Roles.ProsumerId && src.RoleId != Roles.SuperadminId && src.Id != myId);
+            if(roleId == Roles.OperaterId)
+            {
+                users = (IQueryable<UserModel>)context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
+                .Where((user) => user.RoleId == Roles.ProsumerId && user.RoleId != Roles.SuperadminId && user.Id != myId);
+            }
+            else if(roleId == Roles.AdminId)
+            {
+                users = (IQueryable<UserModel>)context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
+                .Where((user) => user.RoleId != Roles.SuperadminId && user.Id != myId);
+            }
+            else
+            {
+                users = (IQueryable<UserModel>)context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
+                .Where((user) => user.Id != myId);
+            }
+            
+
             if(users == null)
                 throw new HttpRequestException("No items found in database.", null, HttpStatusCode.NotFound);
 
-            Console.WriteLine(users);
-            //users = UserFilter.ApplyFilter(users, userFilterModel);
-            Console.WriteLine(users);
+            users = UserFilter.applyFilters(users, userFilterModel);
 
             if (!users.Any()) throw new HttpRequestException("There is no devices!", null, System.Net.HttpStatusCode.NotFound);
 
