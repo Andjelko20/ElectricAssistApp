@@ -3,6 +3,7 @@
     }
     
     .background-image {
+        /* filter: blur(2px); */
         background-size: cover;
         background-position: center;
         position: absolute;
@@ -153,7 +154,7 @@
         color: red;
         align-items: center;
         justify-content: center;
-        margin-top: -20px;
+        margin-top: -28px;
     }
     
     @media(min-width:768px) {
