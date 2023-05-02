@@ -122,4 +122,26 @@ export class HistoryPredictionService {
   monthConsumptionUser(userId:number,deviceCategoryId:number): Observable<number>{
     return this.http.get<number>(environment.serverUrl+"/api/CurrentPeriodHistory/user?deviceCategoryId="+deviceCategoryId+"&doubleMonthUserId="+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
+
+  dayByHourCityFilter(fromDate:string,toDate:string,cityId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/HistoryFromTo?fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byHourCityId="+cityId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  dayByHourSettlementFilter(fromDate:string,toDate:string,settlementId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/HistoryFromTo?fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byHourSettlementId="+settlementId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  weekByDayCityFilter(fromDate:string,toDate:string,cityId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/HistoryFromTo?fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byDayCityId="+cityId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  weekByDaySettlementFilter(fromDate:string,toDate:string,settlementId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/HistoryFromTo?fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byDaySettlementId="+settlementId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  weekByDayUserFilter(fromDate:string,toDate:string,userId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/HistoryFromTo?fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byDayUserId="+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  dayByHourUserFilter(fromDate:string,toDate:string,userId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/HistoryFromTo?fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byHourUserId="+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  
 }

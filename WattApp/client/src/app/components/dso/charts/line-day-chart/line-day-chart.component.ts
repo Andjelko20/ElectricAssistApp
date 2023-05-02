@@ -35,13 +35,12 @@ export class LineDayChartComponent {
   }
 
   ngOnInit(): void {
-    console.log("OvdE  "+ this.selectedDate )
     this.authService.getlogInUser().subscribe(user => {
       this.authService.getCityId(user.city).subscribe(number => {
         this.authService.getSettlement(number).subscribe((settlement: Settlement[]) => {
           this.settlements = settlement;
         });
-        if (this.selectedOption == 0) {
+        if (this.selectedOption == 0 && this.selectedDate === undefined) {
           forkJoin([
             this.deviceService.dayByHour(number, 2),
             this.deviceService.dayByHour(number, 1)
@@ -50,7 +49,84 @@ export class LineDayChartComponent {
             this.list2 = list2;
             this.LineChart();
           });
-        } else {
+        } 
+        else if(this.selectedOption == 0 && this.selectedDate !== undefined){
+          const day = this.selectedDate.getDate();
+          const month = this.selectedDate.getMonth()+1;
+          const year = this.selectedDate.getFullYear();
+          let string1 = '';
+          let string2 = '';
+          if(day == 1 || month == 1){
+            if(month == 1 && day == 1){
+              
+              string1 = year+'-'+12+'-'+31
+              string2 = year+'-'+month+'-'+day
+            }
+            else if(month != 1 && day == 1){
+              if(month % 2 == 0){
+                string1 = year+'-'+(month-1)+'-'+31
+                string2 = year+'-'+month+'-'+day
+              }
+              else{
+                string1 = year+'-'+(month-1)+'-'+30
+                string2 = year+'-'+month+'-'+day
+              }
+             
+            }
+          }
+          else{
+            string1 = year+'-'+month+'-'+(day-1)
+            string2 = year+'-'+month+'-'+day
+          }
+
+          forkJoin([
+            this.deviceService.dayByHourCityFilter(string1,string2,number, 2),
+            this.deviceService.dayByHourCityFilter(string1,string2,number, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
+        }
+        else if(this.selectedOption != 0 && this.selectedDate !== undefined){
+          const day = this.selectedDate.getDate();
+          const month = this.selectedDate.getMonth()+1;
+          const year = this.selectedDate.getFullYear();
+          let string1 = '';
+          let string2 = '';
+          if(day == 1 || month == 1){
+            if(month == 1 && day == 1){
+              
+              string1 = year+'-'+12+'-'+31
+              string2 = year+'-'+month+'-'+day
+            }
+            else if(month != 1 && day == 1){
+              if(month % 2 == 0){
+                string1 = year+'-'+(month-1)+'-'+31
+                string2 = year+'-'+month+'-'+day
+              }
+              else{
+                string1 = year+'-'+(month-1)+'-'+30
+                string2 = year+'-'+month+'-'+day
+              }
+             
+            }
+          }
+          else{
+            string1 = year+'-'+month+'-'+(day-1)
+            string2 = year+'-'+month+'-'+day
+          }
+
+          forkJoin([
+            this.deviceService.dayByHourSettlementFilter(string1,string2,number, this.selectedOption),
+            this.deviceService.dayByHourSettlementFilter(string1,string2,number, this.selectedOption)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
+        }
+        else {
           forkJoin([
             this.deviceService.dayByHourSettlement(this.selectedOption, 2),
             this.deviceService.dayByHourSettlement(this.selectedOption, 1)

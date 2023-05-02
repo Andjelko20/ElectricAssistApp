@@ -1,16 +1,17 @@
 <div class="chart">
-  <mat-form-field class="example-form-field" appearance="fill">
-    <mat-label>First campaign</mat-label>
-    <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker" [max]="maxDate">
-      <input matStartDate placeholder="Start date" formControlName="start">
-      <input matEndDate placeholder="End date"  formControlName="end">
-    </mat-date-range-input>
-    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+  <mat-form-field appearance="fill">
+    <mat-label>Month and Year</mat-label>
+    <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
+    <mat-hint>MM/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="dp" ></mat-datepicker-toggle>
+    <mat-datepicker #dp
+                    startView="multi-year"
+                    (monthSelected)="setMonthAndYear($event, dp)"
+                    panelClass="example-month-picker">
+    </mat-datepicker>
   </mat-form-field>
   <select style="padding: 10px; text-align: center;" [(ngModel)]="selectedOption" (change)="onOptionSelected()">
-    <option value="0">Ukupno</option>
+    <option value="0">Total</option>
     <option *ngFor="let item of settlements" value="{{item.id}}">{{item.name}}</option>
   </select>
     <canvas id="barplot"></canvas>
