@@ -14,6 +14,8 @@ namespace Server.Services
         public List<EnergyToday> GetProsumerHistoryByHourFromTo(string fromDate, string toDate, long userId);
         public List<DailyEnergyConsumptionPastMonth> GetProsumerHistoryByDayFromTo(string fromDate, string toDate, long userId);
         public double GetProsumerDoubleHistoryFromTo(string fromDate, string toDate, long userId);
+        public double GetDeviceDoubleHistoryFromTo(string fromDate, string toDate, long deviceId);
+
 
 
 

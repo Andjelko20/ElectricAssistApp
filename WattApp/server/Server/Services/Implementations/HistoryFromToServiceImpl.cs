@@ -496,5 +496,40 @@ namespace Server.Services.Implementations
                 return Math.Round(energyUsageResult, 2);
             }
         }
+
+        public double GetDeviceDoubleHistoryFromTo(string fromDate, string toDate, long deviceId)
+        {
+            DateTime FromDate = DateTime.Parse(fromDate);
+            DateTime ToDate = DateTime.Parse(toDate);
+
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT
+	                                        SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM
+	                                        DeviceEnergyUsages deu
+	                                        JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
+	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                        WHERE
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate";
+
+                command.Parameters.Add(new SqliteParameter("@deviceId", deviceId));
+                command.Parameters.Add(new SqliteParameter("@fromDate", FromDate));
+                command.Parameters.Add(new SqliteParameter("@toDate", ToDate));
+
+                double energyUsageResult = 0;
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                        energyUsageResult = double.Parse(reader["EnergyUsageKwh"].ToString());
+                }
+
+                return Math.Round(energyUsageResult, 2);
+            }
+        }
     }
 }
