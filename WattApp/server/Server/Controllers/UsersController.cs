@@ -376,7 +376,11 @@ namespace Server.Controllers
                 var user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == userId);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
+                var uniqueUsername = userService.GetUserByUsername(requestBody.Username);
+                if(uniqueUsername != null)
+                    return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("This username is already taken."));
                 user.Username = requestBody.Username;
+
                 user.Name = requestBody.Name;
                 if (user.Email  != requestBody.Email)
                 {
