@@ -20,9 +20,11 @@ Chart.defaults.color = "#fff";
 })
 export class BarMonthChartComponent {
 
-  @ViewChild('startPicker') startPicker!: MatDatepicker<Date>;
-  @ViewChild('endPicker') endPicker!: MatDatepicker<Date>;
-
+  campaignOne: FormGroup = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
+  maxDate = new Date();
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   settlements:Settlement[] = [];
@@ -38,16 +40,14 @@ export class BarMonthChartComponent {
     this.ngOnInit();
   }
 
-  monthRange: FormGroup = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl()
-  });
-
   ngOnInit(): void {
-    this.monthRange.valueChanges.subscribe((value) => {
-      console.log('Form group value changed:', value);
-      // do something with the updated start and end dates
+
+    this.campaignOne.valueChanges.subscribe((value) => {
+      const sdate = value.start;
+      const send = value.end;
+      console.log(sdate+"eee"+send);
     });
+
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{

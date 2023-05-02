@@ -7,6 +7,7 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
 import { saveAs } from 'file-saver';
 import { ExportToCsv } from 'export-to-csv';
 import { forkJoin } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-tabelar-view-by-month',
@@ -20,6 +21,12 @@ export class TabelarViewByMonthComponent implements OnInit{
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService){}
 
+
+  campaignOne: FormGroup = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
+  maxDate = new Date();
 
   selectedOption: number = 0;
 

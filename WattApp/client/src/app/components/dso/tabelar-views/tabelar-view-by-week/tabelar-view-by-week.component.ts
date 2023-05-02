@@ -13,6 +13,8 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./tabelar-view-by-week.component.css']
 })
 export class TabelarViewByWeekComponent implements OnInit {
+
+  maxDate = new Date();
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   settlements:Settlement[] = [];

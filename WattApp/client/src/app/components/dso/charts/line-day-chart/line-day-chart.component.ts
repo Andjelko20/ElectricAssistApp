@@ -17,6 +17,7 @@ export class LineDayChartComponent {
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {
     
   }
+  maxDate = new Date();
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
@@ -26,10 +27,15 @@ export class LineDayChartComponent {
     this.ngOnInit();
   }
 
-  
+  selectedDate!: Date;
+
+  onDateSelected(event: { value: Date; }) {
+    this.selectedDate = event.value;
+    this.ngOnInit();
+  }
 
   ngOnInit(): void {
-    
+    console.log("OvdE  "+ this.selectedDate )
     this.authService.getlogInUser().subscribe(user => {
       this.authService.getCityId(user.city).subscribe(number => {
         this.authService.getSettlement(number).subscribe((settlement: Settlement[]) => {

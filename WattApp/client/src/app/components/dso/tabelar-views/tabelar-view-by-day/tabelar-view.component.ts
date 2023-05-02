@@ -14,6 +14,7 @@ import { forkJoin } from 'rxjs';
 })
 export class TabelarViewComponent implements OnInit{
 
+  maxDate = new Date();
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];

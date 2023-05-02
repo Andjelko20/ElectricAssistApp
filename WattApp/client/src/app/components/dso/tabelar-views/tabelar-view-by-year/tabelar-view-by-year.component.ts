@@ -7,10 +7,41 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
 import { saveAs } from 'file-saver';
 import { ExportToCsv } from 'export-to-csv';
 import { forkJoin } from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatDatepicker} from '@angular/material/datepicker';
+
+import * as _moment from 'moment';
+import {default as _rollupMoment, Moment} from 'moment';
+
+const moment = _rollupMoment || _moment;
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 @Component({
   selector: 'app-tabelar-view-by-year',
   templateUrl: './tabelar-view-by-year.component.html',
-  styleUrls: ['./tabelar-view-by-year.component.css']
+  styleUrls: ['./tabelar-view-by-year.component.css'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class TabelarViewByYearComponent implements OnInit{
   list1:YearsByMonth[]=[];
@@ -21,11 +52,21 @@ export class TabelarViewByYearComponent implements OnInit{
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
     
   }
-
+  maxYear = new Date();
   selectedOption: number = 0;
 
   onOptionSelected() {
     this.ngOnInit();
+  }
+
+  date = new FormControl(moment());
+
+  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value!;
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
   }
 
   ngOnInit(): void {

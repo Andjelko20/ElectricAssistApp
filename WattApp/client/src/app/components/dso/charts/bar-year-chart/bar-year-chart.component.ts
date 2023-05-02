@@ -1,25 +1,54 @@
-import { Component } from '@angular/core';
-
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
 import { WeekByDay, YearsByMonth } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatDatepicker} from '@angular/material/datepicker';
 Chart.register(...registerables)
 
 
+import * as _moment from 'moment';
+import {default as _rollupMoment, Moment} from 'moment';
 
+const moment = _rollupMoment || _moment;
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 Chart.defaults.color = "#fff";
 Chart.defaults.color = "#fff";
 @Component({
   selector: 'app-bar-year-chart',
   templateUrl: './bar-year-chart.component.html',
-  styleUrls: ['./bar-year-chart.component.css']
+  styleUrls: ['./bar-year-chart.component.css'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
+
+
 export class BarYearChartComponent {
 
+  maxYear = new Date();
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   settlements:Settlement[] = [];
@@ -28,14 +57,30 @@ export class BarYearChartComponent {
     
   }
 
-  selectedOption: number = 0;
+  date = new FormControl(moment());
 
+  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value!;
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+
+  }
+
+  selectedOption: number = 0;
+  selectedDate : Date | undefined;
   onOptionSelected() {
     this.ngOnInit();
   }
 
   ngOnInit(): void {
-
+    this.date.valueChanges.subscribe((selectedDate : any) => {
+      const arr1: any[] = [];
+    arr1.push(Object.values(selectedDate)[4]);
+    this.selectedDate=arr1[0];
+    console.log(this.selectedDate)
+    });
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{

@@ -1,13 +1,13 @@
 <div class="chart">
   <mat-form-field class="example-form-field" appearance="fill">
-    <mat-label>Select a range of months</mat-label>
-    <mat-date-range-input [formGroup]="monthRange" [rangePicker]="picker">
-      <input matStartDate placeholder="Start month" formControlName="start" [matDatepicker]="startPicker">
-      <input matEndDate placeholder="End month" formControlName="end" [matDatepicker]="endPicker">
+    <mat-label>First campaign</mat-label>
+    <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker" [max]="maxDate">
+      <input matStartDate placeholder="Start date" formControlName="start">
+      <input matEndDate placeholder="End date"  formControlName="end">
     </mat-date-range-input>
-    <mat-hint>MM/YYYY – MM/YYYY</mat-hint>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker mat-calendar="month"></mat-date-range-picker>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
   </mat-form-field>
   <select style="padding: 10px; text-align: center;" [(ngModel)]="selectedOption" (change)="onOptionSelected()">
     <option value="0">Ukupno</option>

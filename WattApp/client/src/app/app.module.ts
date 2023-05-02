@@ -93,7 +93,8 @@ import { ProsumerYearTableComponent } from './components/prosumers/prosumer-tabl
 import { ProsumerMonthTableComponent } from './components/prosumers/prosumer-tables/prosumer-month-table/prosumer-month-table.component';
 import { ProsumerWeekTableComponent } from './components/prosumers/prosumer-tables/prosumer-week-table/prosumer-week-table.component';
 import { ProsumerDayTableComponent } from './components/prosumers/prosumer-tables/prosumer-day-table/prosumer-day-table.component';
-
+import { MatFormFieldControl } from "@angular/material/form-field";
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -186,7 +187,7 @@ import { ProsumerDayTableComponent } from './components/prosumers/prosumer-table
     ProsumerYearTableComponent,
     ProsumerMonthTableComponent,
     ProsumerWeekTableComponent,
-    ProsumerDayTableComponent
+    ProsumerDayTableComponent,
     
   ],
   imports: [
@@ -201,7 +202,8 @@ import { ProsumerDayTableComponent } from './components/prosumers/prosumer-table
     MatDatepickerModule,
     BrowserAnimationsModule,
     MatNativeDateModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [DecimalPipe],
   bootstrap: [AppComponent]

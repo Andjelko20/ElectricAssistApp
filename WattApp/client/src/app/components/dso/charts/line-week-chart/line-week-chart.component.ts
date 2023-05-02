@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
@@ -7,20 +7,55 @@ import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import {DateAdapter} from '@angular/material/core';
+import {
+  MatDateRangeSelectionStrategy,
+  DateRange,
+  MAT_DATE_RANGE_SELECTION_STRATEGY,
+} from '@angular/material/datepicker';
+
+@Injectable()
+export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionStrategy<D> {
+  constructor(private _dateAdapter: DateAdapter<D>) {}
+
+  selectionFinished(date: D | null): DateRange<D> {
+    return this._createFiveDayRange(date);
+  }
+
+  createPreview(activeDate: D | null): DateRange<D> {
+    return this._createFiveDayRange(activeDate);
+  }
+
+  private _createFiveDayRange(date: D | null): DateRange<D> {
+    if (date) {
+      const start = this._dateAdapter.addCalendarDays(date, -2);
+      const end = this._dateAdapter.addCalendarDays(date, 2);
+      return new DateRange<D>(start, end);
+    }
+
+    return new DateRange<D>(null, null);
+  }
+}
 Chart.register(...registerables)
 @Component({
   selector: 'app-line-week-chart',
   templateUrl: './line-week-chart.component.html',
-  styleUrls: ['./line-week-chart.component.css']
+  styleUrls: ['./line-week-chart.component.css'],
+  providers: [
+    {
+      provide: MAT_DATE_RANGE_SELECTION_STRATEGY,
+      useClass: FiveDayRangeSelectionStrategy,
+    },
+  ],
 })
 export class LineWeekChartComponent {
 
-
+  maxDate: Date;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   settlements:Settlement[] = [];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
-    
+    this.maxDate = new Date();
   }
 
   selectedOption: number = 0;
@@ -29,18 +64,8 @@ export class LineWeekChartComponent {
     this.ngOnInit();
   }
 
-  campaignOne: FormGroup = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl()
-  });
 
   ngOnInit(): void {
-    this.campaignOne.valueChanges.subscribe((value) => {
-      const startDay = new Date(value.start).getDate();
-      const startMonth = new Date(value.start).getMonth()
-      console.log(startDay,startMonth)
-      
-    });
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
