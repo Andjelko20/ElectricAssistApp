@@ -23,7 +23,10 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, long deviceCategoryId, long cityId, long settlementId, long byDayCityId, long byDaySettlementId, long byHourSettlementId, long byHourCityId)
+        public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, long deviceCategoryId, 
+                                                                       long cityId, long settlementId, long byDayCityId, 
+                                                                       long byDaySettlementId, long byHourSettlementId, 
+                                                                       long byHourCityId, long byHourUserId)
         {
             if(cityId!=0)
             {
@@ -79,7 +82,7 @@ namespace Server.Controllers
                 List<EnergyToday> result = historyFromToService.GetCityHistoryByHourFromTo(fromDate, toDate, deviceCategoryId, byHourCityId);
                 return Ok(result);
             }
-            else //if (byHourSettlementId != 0)
+            else if (byHourSettlementId != 0)
             {
                 if (!_sqliteDb.Settlements.Any(s => s.Id == byHourSettlementId))
                     return NotFound(new { message = "Settlement with the ID: " + byHourSettlementId.ToString() + " does not exist." });
@@ -88,6 +91,14 @@ namespace Server.Controllers
                     return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
                 List<EnergyToday> result = historyFromToService.GetSettlementHistoryByHourFromTo(fromDate, toDate, deviceCategoryId, byHourSettlementId);
+                return Ok(result);
+            }
+            else // if(byHourUserId != 0)
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == byHourUserId))
+                    return NotFound(new { message = "User with ID: " + byHourUserId.ToString() + " does not exist." });
+                
+                List<EnergyToday> result = historyFromToService.GetProsumerHistoryByHourFromTo(fromDate, toDate, byHourUserId);
                 return Ok(result);
             }
         }
