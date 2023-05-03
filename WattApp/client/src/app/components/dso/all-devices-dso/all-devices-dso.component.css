@@ -37,31 +37,31 @@
     cursor: pointer;
   }
   
-  .table {
+  table {
     width: 100%;
-    margin: 0 auto;
     border-collapse: collapse;
+    font-size: 16px;
+    align-items: center;
+    justify-content: center;
   }
   
-  .table th,
-  .table td {
-    width: 20%;
-    text-align: left;
-    padding: 8px;
+  table th,
+  table td {
+    
+    text-align: center;
+    padding: 5px;
     border-bottom: 1px solid #ddd;
   }
   
-  .table th {
+  table th {
     background-color: #0077cc;
     color: white;
     font-weight: normal;
-    padding: 10px;
-    text-align: left;
+    padding: 5px;
+    text-align: center;
   }
+
   
-  .table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
   
   .on-off {
     text-align: center;

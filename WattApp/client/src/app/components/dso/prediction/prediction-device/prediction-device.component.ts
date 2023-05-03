@@ -22,27 +22,11 @@ export class PredictionDeviceComponent {
   }
 
   ngOnInit(): void {
-    this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data: WeekByDay[]) =>{
+    //treba da se uradi dobijanje deviceid
+  
+    this.deviceService.predictionDevice(Number(this.route.snapshot.paramMap.get('deviceid'))).subscribe((data: WeekByDay[]) =>{
       this.list1 = data;
-      this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data: WeekByDay[]) =>{
-        this.list2 = data;
-        this.LineChart();
-      })
     })
-    
-    // this.deviceService.weekByDay(1,2).subscribe((data: WeekByDay[]) =>{
-    //   console.log("Data => ", data);
-    //   this.list1 = data;
-    //   this.deviceService.weekByDay(1,1).subscribe((data: WeekByDay[]) =>{
-    //     console.log("Data => ", data);
-    //     this.list2 = data;
-    //     this.LineChart();
-    //   })
-
-    // })
-    
-    // console.log(this.list);
-    
     
   }
   LineChart(){
@@ -54,7 +38,6 @@ export class PredictionDeviceComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
 
     const Linechart = new Chart("linechart", {
       type: 'line',
@@ -87,20 +70,6 @@ export class PredictionDeviceComponent {
           borderWidth: 2,
           fill: true
           },
-          {
-            label: 'production',
-            data: energyUsageResults2,
-            tension:0.5,
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-            pointBorderColor: 'rgba(0, 255, 0, 1)',
-            pointBorderWidth: 7,
-            pointRadius: 5,
-            pointHoverRadius: 6,
-            fill:true
-          }
           
         ]
         

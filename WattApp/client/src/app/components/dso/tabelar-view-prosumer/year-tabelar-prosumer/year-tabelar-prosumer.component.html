@@ -2,6 +2,21 @@
     <div class="row">
       <div class="col-md-12">
         <h1>Energy Usage</h1>
+        <mat-form-field appearance="fill">
+          <mat-label>Year</mat-label>
+          <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
+          <mat-hint>YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp
+                          startView="multi-year"
+                          (yearSelected)="setYear($event, dp)"
+                          panelClass="example-year-picker">
+            <mat-multi-year-view [selected]="date.value" (yearSelected)="dp.close()"></mat-multi-year-view>
+            <mat-year-view [activeDate]="date.value" (yearSelected)="dp.close()"></mat-year-view>
+            <mat-month-view></mat-month-view>
+          </mat-datepicker>
+        </mat-form-field>
+        <button class="btn" (click)="downloadCSV()">Export to CSV</button>
         <div class="table-container">
           <div class="table-wrapper">
             <h2 class="table-title">Consumption/Production</h2>
@@ -29,26 +44,6 @@
               </tbody>
             </table>
           </div>
-  
-          <!-- <div class="table-wrapper">
-            <h2 class="table-title">Production</h2>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Year</th>
-                  <th>Month</th>
-                  <th>Energy</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of list2">
-                  <td>{{ item.year }}</td>
-                  <td>{{ item.month }}</td>
-                  <td>{{ item.energyUsageResult }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div> -->
         </div>
       </div>
     </div>

@@ -86,6 +86,21 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
 import { NgbModalModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldControl } from "@angular/material/form-field";
+import { MatInputModule } from '@angular/material/input';
+import { ProsumerDayGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-day-graph/prosumer-day-graph.component";
+import { ProsumerMonthGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-month-graph/prosumer-month-graph.component";
+import { ProsumerWeekGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-week-graph/prosumer-week-graph.component";
+import { ProsumerYearGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-year-graph/prosumer-year-graph.component";
+import { ProsumerDayTableComponent } from "./components/prosumers/prosumer-tables/prosumer-day-table/prosumer-day-table.component";
+import { ProsumerWeekTableComponent } from "./components/prosumers/prosumer-tables/prosumer-week-table/prosumer-week-table.component";
+import { ProsumerMonthTableComponent } from "./components/prosumers/prosumer-tables/prosumer-month-table/prosumer-month-table.component";
+import { ProsumerYearTableComponent } from "./components/prosumers/prosumer-tables/prosumer-year-table/prosumer-year-table.component";
+
 
 
 
@@ -177,7 +192,17 @@ import { LoaderComponent } from './components/loader/loader.component';
     EmailConfirmationPageComponent,
     ChangeEmailConfirmationPageComponent,
     AccountPageComponent,
-    LoaderComponent
+    LoaderComponent,
+    ProsumerDayGraphComponent,
+    ProsumerWeekGraphComponent,
+    ProsumerMonthGraphComponent,
+    ProsumerYearGraphComponent,
+    ProsumerDayTableComponent,
+    ProsumerWeekTableComponent,
+    ProsumerMonthTableComponent,
+    ProsumerYearTableComponent,
+    
+
     
   ],
   imports: [
@@ -189,8 +214,13 @@ import { LoaderComponent } from './components/loader/loader.component';
     FormsModule,
     BrowserModule,
 	  NgxPaginationModule,
-    NgbModalModule
-    
+    NgbModalModule,
+    MatDatepickerModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule
+
   ],
   providers: [DecimalPipe],
   bootstrap: [AppComponent]

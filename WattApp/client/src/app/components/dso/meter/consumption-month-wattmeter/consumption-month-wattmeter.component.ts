@@ -18,7 +18,7 @@ export class ConsumptionMonthWattmeterComponent implements OnInit {
   maxkwh: number = 1500000;
   maxmwh: number = this.maxkwh*0.001;
   maxgwh: number = this.maxmwh*0.001;
-  markerConfig = {
+  markerConfigKWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
     "187500": { color: '#57A75B', size: 4, type: 'line'},
     "375000": { color: '#57A75B', size: 8, label: '375000', type: 'line'},
@@ -29,14 +29,12 @@ export class ConsumptionMonthWattmeterComponent implements OnInit {
     "1312500": { color: '#E0453A', size: 4, type: 'line'},
     "1500000": { color: '#E0453A', size: 8, label: '1500000', type: 'line'},
   }
-  thresholdConfig = {
+  thresholdConfigKWh = {
     '0': { color: 'green', "bgOpacity": 0.2 },
     '666668': { color: 'blue', "bgOpacity": 0.2 },
     '1333334': { color: 'red', "bgOpacity": 0.2 }
   };
-  constructor(private historyService:HistoryPredictionService,private authService:AuthService){
-
-  } 
+  
   markerConfigMWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
     "187.5": { color: '#57A75B', size: 4, type: 'line'},
@@ -70,6 +68,9 @@ export class ConsumptionMonthWattmeterComponent implements OnInit {
     '0.66666': { color: 'blue', "bgOpacity": 0.2 },
     '1.33333': { color: 'red', "bgOpacity": 0.2 }
   };
+  constructor(private historyService:HistoryPredictionService,private authService:AuthService){
+
+  } 
     async ngOnInit(): Promise<void> {
     
     let token=new JwtToken();
