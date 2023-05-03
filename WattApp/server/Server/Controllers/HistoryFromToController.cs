@@ -26,9 +26,9 @@ namespace Server.Controllers
         public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, long deviceCategoryId, 
                                                                        long cityId, long settlementId, long byDayCityId, 
                                                                        long byDaySettlementId, long byHourSettlementId, 
-                                                                       long byHourCityId, long byHourUserId, long byDayUserId,
-                                                                       long doubleUserId, long doubleDeviceId, long byMonthDeviceId, 
-                                                                       long byHourDeviceId, long byDayDeviceId)
+                                                                       long byHourCityId, long byMonthUserId, long byDayUserId, 
+                                                                       long byHourUserId, long doubleUserId, long doubleDeviceId, 
+                                                                       long byMonthDeviceId, long byHourDeviceId, long byDayDeviceId)
         {
             if(cityId!=0)
             {
@@ -143,12 +143,20 @@ namespace Server.Controllers
                 var result = historyFromToService.GetDeviceHistoryByHourFromTo(fromDate, toDate, byHourDeviceId);
                 return Ok(result);
             }
-            else // if (byMonthDeviceId != 0)
+            else if (byMonthDeviceId != 0)
             {
                 if (!_sqliteDb.Devices.Any(d => d.Id == byMonthDeviceId))
                     return NotFound(new { message = "Device with ID: " + byMonthDeviceId.ToString() + " does not exist." });
 
                 var result = historyFromToService.GetDeviceHistoryByMonthFromTo(fromDate, toDate, byMonthDeviceId);
+                return Ok(result);
+            }
+            else // if (byMonthUserId != 0)
+            {
+                if (!_sqliteDb.Users.Any(d => d.Id == byMonthUserId))
+                    return NotFound(new { message = "User with ID: " + byMonthUserId.ToString() + " does not exist." });
+
+                var result = historyFromToService.GetProsumerHistoryByMonthFromTo(fromDate, toDate, byMonthUserId, deviceCategoryId);
                 return Ok(result);
             }
         }
