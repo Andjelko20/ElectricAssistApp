@@ -1,9 +1,10 @@
 import { Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, catchError, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { Prosumers, Settlement, Users } from '../models/users.model';
 import { JwtToken } from '../utilities/jwt-token';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -116,5 +117,20 @@ export class AuthService {
     return this.http.get<any>(environment.serverUrl+'/api/Prosumer/numberOfDevices/'+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
 
   }
+  getMyLocation(): Observable<{ latitude: number, longitude: number }> {
+    const url = `${environment.serverUrl}/api/Users/my_location`;
+    const headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
   
+    return this.http.get<{ lat: number, lon: number }>(url, { headers }).pipe(
+      catchError((error: any) => {
+        console.error('Error getting user location: ', error);
+        const defaultLocation = { lat: 0, lon: 0 };
+        return of(defaultLocation);
+      }),
+      map((response: { lat: number, lon: number }) => {
+        return { latitude: response.lat, longitude: response.lon };
+      })
+    );
+    }
+
 }

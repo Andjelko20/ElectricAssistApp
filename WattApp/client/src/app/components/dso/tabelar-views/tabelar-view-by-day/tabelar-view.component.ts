@@ -3,7 +3,9 @@ import { DayByHour } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-
+import { saveAs } from 'file-saver';
+import { ExportToCsv } from 'export-to-csv';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-tabelar-view',
@@ -12,44 +14,154 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
 })
 export class TabelarViewComponent implements OnInit{
 
+  maxDate = new Date();
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
   selectedOption: number = 0;
-
+  mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number }[] = [];
   onOptionSelected() {
-    console.log("List1 ="+this.list1);
-    console.log("List2 ="+this.list2);
-
     this.ngOnInit();
   }
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {}
+
+  selectedDate!: Date;
+
+  onDateSelected(event: { value: Date; }) {
+    this.selectedDate = event.value;
+    this.ngOnInit();
+  }
+
   ngOnInit(): void {
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
           this.settlements = settlement;
         })
-        if(this.selectedOption == 0){
-          this.deviceService.dayByHour(number,2).subscribe((data: DayByHour[]) =>{
-            this.list1 = data;
-            this.deviceService.dayByHour(number,1).subscribe((data: DayByHour[]) =>{
-              this.list2 = data;
-            })
-      
-          })
+        if(this.selectedOption == 0 && this.selectedDate == undefined){
+          forkJoin([
+            this.deviceService.dayByHour(number, 2),
+            this.deviceService.dayByHour(number, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+          });
+        }
+        else if(this.selectedOption == 0 && this.selectedDate !== undefined){
+          const day = this.selectedDate.getDate();
+          const month = this.selectedDate.getMonth()+1;
+          const year = this.selectedDate.getFullYear();
+          let string1 = '';
+          let string2 = '';
+          if(month % 2 )
+          {
+            if(day == 30 || (month == 2 && day == 28)){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
+          }
+          else if(month % 2 == 1){
+            if(day == 31 || (month == 6 || month == 7) ){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
+          }
+
+          forkJoin([
+            this.deviceService.dayByHourCityFilter(string1,string2,number, 2),
+            this.deviceService.dayByHourCityFilter(string1,string2,number, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+          });
+        }
+        else if(this.selectedOption != 0 && this.selectedDate !== undefined){
+          const day = this.selectedDate.getDate();
+          const month = this.selectedDate.getMonth()+1;
+          const year = this.selectedDate.getFullYear();
+          let string1 = '';
+          let string2 = '';
+          if(month % 2 )
+          {
+            if(day == 30 || (month == 2 && day == 28)){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
+          }
+          else if(month % 2 == 1){
+            if(day == 31 || (month == 6 || month == 7) ){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
+          }
+
+          forkJoin([
+            this.deviceService.dayByHourSettlementFilter(string1,string2,number, this.selectedOption),
+            this.deviceService.dayByHourSettlementFilter(string1,string2,number, this.selectedOption)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+          });
         }
         else{
-          this.deviceService.dayByHourSettlement(this.selectedOption,2).subscribe((data: DayByHour[]) =>{
-            this.list1 = data;
-            this.deviceService.dayByHourSettlement(this.selectedOption,1).subscribe((data: DayByHour[]) =>{
-              this.list2 = data;
-            })
-      
-          })
+          forkJoin([
+            this.deviceService.dayByHourSettlement(this.selectedOption, 2),
+            this.deviceService.dayByHourSettlement(this.selectedOption, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+          });
         }
-        
       })
     })
+    
+  }
+  downloadCSV(): void {
+    this.mergedList = [];
+    for (let i = 0; i < this.list1.length; i++) {
+      for (let j = 0; j < this.list2.length; j++) {
+        if (this.list1[i].hour === this.list2[j].hour && this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
+          this.mergedList.push({
+            hour: this.list1[i].hour,
+            day: this.list1[i].day,
+            month: this.list1[i].month,
+            year: this.list1[i].year,
+            consumption: this.list1[i].energyUsageResult,
+            production: this.list2[j].energyUsageResult
+          });
+          break;
+        }
+      }
+  }
+  const options = {
+    fieldSeparator: ',',
+    filename: 'consumption/production-day.csv',
+    quoteStrings: '"',
+    useBom : true,
+    decimalSeparator: '.',
+    showLabels: true,
+    useTextFile: false,
+    headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption', 'Production']
+  };
+
+  const csvExporter = new ExportToCsv(options);
+  const csvData = csvExporter.generateCsv(this.mergedList);
+
   }
 }

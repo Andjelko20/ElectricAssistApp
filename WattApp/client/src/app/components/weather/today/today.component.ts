@@ -59,7 +59,7 @@ export class TodayComponent implements OnInit{
       this.cels = !this.cels;
       this.fer = !this.fer;
       if(this.fer){
-        this.forecastService.getWeatherForecastF().subscribe(data=>{
+        this.forecastService.getWeatherForecast().subscribe(data=>{
           this.getTodayForecastF(data)
       })
       }

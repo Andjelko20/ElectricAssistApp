@@ -3,6 +3,17 @@
     <div class="col-md-12">
       <h1>Energy Usage</h1>
       <div class="form-group">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="picker" [max]="maxDate">
+            <input matStartDate placeholder="Start date" formControlName="start">
+            <input matEndDate placeholder="End date" formControlName="end">
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <button class="btn" (click)="downloadCSV()">Export to CSV</button>
         <label>Select Settlement:</label>
         <select style="padding: 10px; text-align: center;" [(ngModel)]="selectedOption" (change)="onOptionSelected()">
           <option value="0">Ukupno</option>
@@ -37,28 +48,6 @@
             </tbody>
           </table>
         </div>
-
-        <!-- <div class="table-wrapper">
-          <h2 class="table-title">Production</h2>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Year</th>
-                <th>Month</th>
-                <th>Day</th>
-                <th>Energy</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of list2">
-                <td>{{ item.year }}</td>
-                <td>{{ item.month }}</td>
-                <td>{{ item.day }}</td>
-                <td>{{ item.energyUsageResult }} kWh</td>
-              </tr>
-            </tbody>
-          </table>
-        </div> -->
       </div>
     </div>
   </div>
