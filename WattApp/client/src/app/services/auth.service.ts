@@ -1,7 +1,7 @@
 import { Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, catchError, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, filter, Observable } from 'rxjs';
 import { Prosumers, Settlement, Users } from '../models/users.model';
 import { JwtToken } from '../utilities/jwt-token';
 @Injectable({
@@ -37,11 +37,22 @@ export class AuthService {
     return this.http.get(environment.serverUrl );
   }
 
-  getAllUsers(pageNumber:number,pageSize:number=10):Observable<any>
+  getAllUsers(pageNumber:number,pageSize:number=10,filters?:any):Observable<any>
   {
 	let url=new URL(environment.serverUrl+'/api/users/page');
 	url.searchParams.set("pageNumber",pageNumber.toString());
 	url.searchParams.set("pageSize",pageSize.toString());
+	if(filters?.role>0)
+		url.searchParams.set("RoleId",filters.role);
+	if(filters?.city>0)
+		url.searchParams.set("CityId",filters.city);
+	if(filters?.settlement>0)
+		url.searchParams.set("SettlementId",filters.settlement);
+	if(filters?.name!==undefined && filters.name.trim()!=='')
+		url.searchParams.set("SearchValue",filters.name);
+	if(filters?.blocked>-1)
+		url.searchParams.set("Blocked",filters.blocked?"true":"false");
+	url.searchParams.set("SortByNameAscending","true");
     return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   getAllProsumers():Observable<any>

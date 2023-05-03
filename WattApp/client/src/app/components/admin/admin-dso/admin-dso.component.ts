@@ -23,6 +23,15 @@ export class AdminDsoComponent {
 
   confirmBlock?:boolean=false;
   showUsers:ShowUsers[]=[];
+  cities:any[]=[];
+  settlements:any[]=[];
+  public filters={
+	blocked:-1,
+	role:0,
+	settlement:0,
+	city:0,
+	name:''
+  };
 
   onBlockClick!: (this: HTMLElement, ev: MouseEvent) => any;
   onUnblockClick!: (this: HTMLElement, ev: MouseEvent) => any;
@@ -50,7 +59,21 @@ export class AdminDsoComponent {
   constructor(private router:Router,private usersService:AuthService,
     private route:ActivatedRoute,private modalService: NgbModal) { }
 
+	getSettlements(){
+		
+		fetch(environment.serverUrl+"/settlements?cityId="+this.filters.city)
+		.then(res=>res.json())
+		.then(res=>{
+	  		this.settlements=res;
+		});
+	}
   ngOnInit(): void {
+	fetch(environment.serverUrl+"/cities?countryId=1")
+	.then(res=>res.json())
+	.then(res=>{
+		this.cities=res
+  	});
+	
     this.usersService.getAllUsers(1).subscribe(users => {
       this.totalItems=users.numberOfPages*this.itemsPerPage;
         this.showUsers=users.data.map((u:any)=>({
@@ -72,7 +95,7 @@ export class AdminDsoComponent {
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
 
-		this.usersService.getAllUsers(pageNumber,this.itemsPerPage).subscribe(users => {
+		this.usersService.getAllUsers(pageNumber,this.itemsPerPage,this.filters).subscribe(users => {
 			this.totalItems=users.numberOfPages*this.itemsPerPage;
 			this.showUsers=users.data.map((u:any)=>({
 			  id: u.id,
