@@ -31,7 +31,7 @@ namespace Server.Services.Implementations
         }
         public int GetNumberOfPages(int itemsPerPage, Func<UserModel, bool> filter)
         {
-            int numberOfItems = context.Users.Count(filter);
+            int numberOfItems = context.Users.Include(user=>user.Settlement).Count(filter);
             if (numberOfItems % itemsPerPage == 0)
                 return numberOfItems / itemsPerPage;
             return numberOfItems / itemsPerPage + 1;

@@ -88,6 +88,7 @@ export class AllProsumersComponent implements OnInit{
 	let url=new URL(this.url);
 		url.searchParams.set("pageNumber",pageNumber.toString());
 		url.searchParams.set("pageSize",this.itemsPerPage.toString());
+		url.searchParams.set("cityId","-1");
 		let controller=new AbortController();
 		setTimeout(()=>{
 			controller.abort();

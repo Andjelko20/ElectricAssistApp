@@ -48,7 +48,7 @@
 	</div>
 	<div class="no-prosumers-map" *ngIf="loading">Loading ...</div>
 	<div class="no-prosumers-map" *ngIf="!loading && prosumers.length==0">There are no prosumers to show</div>
-	<div id="map-wrapper" [class.none]="prosumers.length==0">
+	<div id="map-wrapper" [class.none]="loading || prosumers.length==0">
 		<div id="prosumers-map"></div>
 	</div>
 </div>
