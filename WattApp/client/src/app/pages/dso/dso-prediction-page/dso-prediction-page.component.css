@@ -1,0 +1,26 @@
+#wrapper{
+    background-color: white;
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+#pred{
+    display: flex;
+    text-align: center;
+    align-items: right;
+    justify-content: right;
+    border-bottom: 2px solid gray;
+
+
+}
+.date-time{
+    margin-top: 15px;
+    font-size: 20px;
+    margin-left: 400px;
+    margin-right: 10px;
+    
+}
