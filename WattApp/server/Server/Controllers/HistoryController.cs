@@ -510,5 +510,19 @@ namespace Server.Controllers
             var historyList = historyService.GetUsageHistoryForDeviceForPreviousMonth(deviceId);
             return Ok(historyList);
         }
+
+        [HttpGet]
+        [Route("Pagination/{pageNumber:int}/{itemsPerPage:int}")]
+        public async Task<IActionResult> GetHistoryResultsPagination([FromRoute] int pageNumber, [FromRoute] int itemsPerPage, [FromQuery] long PastMonthByDayDeviceId)
+        {
+            //if(PastMonthByDayDeviceId != 0)
+            //{
+                if (!_sqliteDb.Devices.Any(d => d.Id == PastMonthByDayDeviceId))
+                    return NotFound(new {message = "Device with the ID: " + PastMonthByDayDeviceId.ToString() + " does not exist."});
+
+                var result = historyService.GetDailyEnergyUsageForPastMonthPagination(PastMonthByDayDeviceId, pageNumber, itemsPerPage);
+                return Ok(result);
+            //}
+        }
     }
 }

@@ -38,5 +38,9 @@ namespace Server.Services
         public double GetUsageHistoryForDeviceToday(long deviceId);
         public double GetUsageHistoryForDeviceThisYear(long deviceId);
         public double GetUsageHistoryForDeviceForPreviousMonth(long deviceId);
+        // PAGINACIJA
+        public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastMonthPagination(long deviceId, int pageNumber, int itemsPerPage);
+
+
     }
 }

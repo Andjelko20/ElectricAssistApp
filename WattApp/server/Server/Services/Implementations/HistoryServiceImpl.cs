@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Polly;
 using Server.Data;
 using Server.DTOs;
 using Server.Models;
@@ -110,14 +111,14 @@ namespace Server.Services.Implementations
             var Results = new List<MonthlyEnergyConsumptionLastYear>();
             for (int i = 0; i < 12; i++)
             {
-                 var StartDate = DateTime.Now.AddMonths(-i).Date;
-                 var EndDate = StartDate.AddMonths(1).AddDays(-1).Date.AddDays(1).AddSeconds(-1);
-                 DateTime TheTime = DateTime.Now;
+                var StartDate = DateTime.Now.AddMonths(-i).Date;
+                var EndDate = StartDate.AddMonths(1).AddDays(-1).Date.AddDays(1).AddSeconds(-1);
+                DateTime TheTime = DateTime.Now;
 
-                 var UsageList = _context.DeviceEnergyUsages
-                                 .Where(u => u.DeviceId == deviceId && u.StartTime >= StartDate && u.EndTime <= EndDate && u.EndTime <= TheTime)
-                                 .OrderBy(u => u.StartTime)
-                                 .ToList();
+                var UsageList = _context.DeviceEnergyUsages
+                                .Where(u => u.DeviceId == deviceId && u.StartTime >= StartDate && u.EndTime <= EndDate && u.EndTime <= TheTime)
+                                .OrderBy(u => u.StartTime)
+                                .ToList();
 
                 double UsageInHours = 0.0;
                 double UsageInKwh = 0.0;
@@ -260,7 +261,7 @@ namespace Server.Services.Implementations
                                 .ThenInclude(dm => dm.DeviceType)
                                 .ThenInclude(dt => dt.DeviceCategory)
                                 .Where(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId).ToList();
-            
+
             if (devicesForUser.Count == 0)
             {
                 return 0;
@@ -499,8 +500,8 @@ namespace Server.Services.Implementations
                 .Select(d => d.Id)
                 .ToList();
 
-            DateTime startOfDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 0, 0, 0);
-            DateTime endOfDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 23, 59, 59);
+            DateTime startOfDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 0, 0, 0);
+            DateTime endOfDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 23, 59, 59);
 
             List<DeviceEnergyUsage> UsageList = new List<DeviceEnergyUsage>();
             var Results = new List<EnergyToday>();
@@ -898,7 +899,7 @@ namespace Server.Services.Implementations
 
         public double GetUsageHistoryForDeviceForPreviousMonth(long deviceId)
         {
-            DateTime startOfThePreviousMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month-1, 1);
+            DateTime startOfThePreviousMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
             DateTime startOfTheCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             DateTime endOfThePreviousMonth = startOfTheCurrentMonth.AddSeconds(-1);
             // za trazeni uredjaj, samo kada je radio od pocetka do kraja prethodnog meseca
@@ -906,14 +907,72 @@ namespace Server.Services.Implementations
                 .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date >= startOfThePreviousMonth && usage.EndTime <= endOfThePreviousMonth)
                 .ToList();
 
-           // foreach (var usage in deviceEnergyUsages)
-           // {
-                // od 01. u prethodnom mesecu od 00:00:00h do 23:59:59h poslednjeg dana u mesecu
-                /*if (usage.EndTime > endOfThePreviousMonth)
-                    usage.EndTime = endOfThePreviousMonth;*/
-           // }
+            // foreach (var usage in deviceEnergyUsages)
+            // {
+            // od 01. u prethodnom mesecu od 00:00:00h do 23:59:59h poslednjeg dana u mesecu
+            /*if (usage.EndTime > endOfThePreviousMonth)
+                usage.EndTime = endOfThePreviousMonth;*/
+            // }
 
             return GetConsumptionForForwardedList(deviceId, deviceEnergyUsages);
+        }
+
+        // PAGINACIJA
+        public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastMonthPagination(long deviceId, int pageNumber, int itemsPerPage)
+        {
+            int skipCount = (pageNumber - 1) * itemsPerPage;
+
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT Datum, EnergyUsageKwh
+                                        FROM (
+                                            SELECT DATE(deu.StartTime) AS Datum, 
+                                                   SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh,
+                                                   ROW_NUMBER() OVER (ORDER BY DATE(deu.StartTime)) AS RowNumber
+                                            FROM DeviceEnergyUsages deu 
+                                            JOIN Devices d ON deu.DeviceId = d.Id AND d.Id = @deviceId
+                                            JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                            WHERE deu.StartTime >= date('now', '-1 month') 
+                                                AND (deu.EndTime <= date('now') OR deu.EndTime IS NULL)
+                                            GROUP BY DATE(deu.StartTime)
+                                        ) AS T
+                                        WHERE RowNumber > @skipCount
+                                        LIMIT @itemsPerPage";
+
+                command.Parameters.Add(new SqliteParameter("@deviceId", deviceId));
+                command.Parameters.Add(new SqliteParameter("@skipCount", skipCount));
+                command.Parameters.Add(new SqliteParameter("@itemsPerPage", itemsPerPage));
+
+                var energyUsages = new List<DailyEnergyConsumptionPastMonth>();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                        var day = date.Day;
+                        var month = date.ToString("MMMM");
+                        var year = date.Year;
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                        var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                        {
+                            Day = day,
+                            Month = month,
+                            Year = year,
+                            EnergyUsageResult = Math.Round(energyUsage, 2)
+                        };
+
+                        energyUsages.Add(dailyEnergyUsage);
+                    }
+                }
+
+                return energyUsages;
+            }
         }
     }
 }
