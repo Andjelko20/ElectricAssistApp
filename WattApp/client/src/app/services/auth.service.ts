@@ -1,7 +1,7 @@
 import { Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, catchError, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, filter, Observable } from 'rxjs';
 import { Prosumers, Settlement, Users } from '../models/users.model';
 import { JwtToken } from '../utilities/jwt-token';
 @Injectable({
@@ -37,16 +37,27 @@ export class AuthService {
     return this.http.get(environment.serverUrl );
   }
 
-  getAllUsers(pageNumber:number,pageSize:number=10):Observable<any>
+  getAllUsers(pageNumber:number,pageSize:number=10,filters?:any):Observable<any>
   {
 	let url=new URL(environment.serverUrl+'/api/users/page');
 	url.searchParams.set("pageNumber",pageNumber.toString());
 	url.searchParams.set("pageSize",pageSize.toString());
+	if(filters?.role>0)
+		url.searchParams.set("RoleId",filters.role);
+	if(filters?.city>0)
+		url.searchParams.set("CityId",filters.city);
+	if(filters?.settlement>0)
+		url.searchParams.set("SettlmentId",filters.settlement);
+	if(filters?.name!==undefined && filters.name.trim()!=='')
+		url.searchParams.set("SearchValue",filters.name);
+	if(filters?.blocked>-1)
+		url.searchParams.set("Blocked",filters.blocked?"true":"false");
+	url.searchParams.set("SortByNameAscending","true");
     return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   getAllProsumers():Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+'/api/ProsumersDetails/page/1',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.get<any>(environment.serverUrl+'/api/ProsumersDetails/page/?pageNumber=1&cityId=-1&pageSize=10',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   addUsers(addUserRequest:any):Observable<any>
   {
@@ -72,10 +83,11 @@ export class AuthService {
   {
     return this.http.get<any>(environment.serverUrl+"/api/users/my_data",{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
-  upDateProsumer(updateRequest:Prosumers):Observable<Prosumers>
+  upDateLogedIn(updateRequest:Prosumers):Observable<Prosumers>
   {
     return this.http.put<Prosumers>(environment.serverUrl+'/api/users',updateRequest,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
+  
   delete(id:number):Observable<Users>
   {
     return this.http.delete<Users>(environment.serverUrl+"/api/users/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 

@@ -15,7 +15,7 @@
               <div class="dropdown-content">
                 <a *ngIf="this.role===this.dso"[routerLink]='["/profile-dso"]'><i class="fas fa-address-card" style="font-size: 25px;"></i> Settings</a>
                 <a *ngIf="this.role===this.prosumer" [routerLink]='["/profile"]'><i class="fas fa-address-card" style="font-size: 25px;"></i> Settings</a>
-                <a *ngIf="this.role===this.admin || this.role===this.superadmin" [routerLink]='["/"]'><i class="fas fa-address-card" style="font-size: 25px;"></i> Settings</a>
+                <a *ngIf="this.role===this.admin || this.role===this.superadmin" [routerLink]='["/profile-admin"]'><i class="fas fa-address-card" style="font-size: 25px;"></i> Settings</a>
                 <a id="logouta" (click)="logout()"><i class="fas fa-sign-out-alt" style="font-size: 25px;"></i> Logout</a>
               </div>
             </div>

@@ -48,7 +48,6 @@ export class MapsComponent implements OnInit {
 
   onSubmit(): void {
     const latLng = this.marker.getLatLng();
-    console.log('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
     this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng)
     // slanje podataka na server
   }

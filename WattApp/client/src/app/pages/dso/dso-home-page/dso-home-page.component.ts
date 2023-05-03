@@ -70,10 +70,8 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
               settlement:response.settlement,
               city:response.city,
               country: response.country,
-              address:response.address
-              
+              address:response.address 
               };
-            
             },
 			error:(response)=>{
 				this.router.navigate(["prosumer-account-page"]);
@@ -85,6 +83,7 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
     const result = await this.avgConsumption.getAverageConsumptionProductionCity(1,2).pipe(first()).toPromise();
   
     this.avgProduction = result!;
+    
     
   }
 

@@ -16,10 +16,10 @@ export class WeekTabelarProsumerComponent implements OnInit{
     ngOnInit(): void {
 
             this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data: WeekByDay[]) =>{
-              console.log("Data => ", data);
+              //console.log("Data => ", data);
               this.list1 = data;
               this.deviceService.weekByDayUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data: WeekByDay[]) =>{
-                console.log("Data => ", data);
+                //console.log("Data => ", data);
                 this.list2 = data;
               })
             })

@@ -1,7 +1,47 @@
-
-
     <div class="first">
-        <table *ngIf="showUsers">
+		<div class="filter">
+			<div class="form-group">
+				<label>Filter by role</label>
+				<select name="role" [(ngModel)]="filters.role" (ngModelChange)="pageChanged(1)">
+					<option value="0">All roles</option>
+					<option value="1">Admin</option>
+					<option value="2">Dispatcher</option>
+					<option value="3">Prosumer</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Filter by blocked status</label>
+				<select name="role" [(ngModel)]="filters.blocked" (ngModelChange)="pageChanged(1)">
+					<option value="-1">Select status</option>
+					<option value="1">Blocked</option>
+					<option value="0">Active</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Filter by city</label>
+				<select name="role" [(ngModel)]="filters.city" (ngModelChange)="cityChanged()">
+					<option value="0">All cities</option>
+					<option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Filter by settlement</label>
+				<p *ngIf="filters.city==0" class="settlement-text">Select city first</p>
+				<select name="role" *ngIf="filters.city!=0" [(ngModel)]="filters.settlement" (ngModelChange)="pageChanged(1)">
+					<option value="0">All settlements</option>
+					<option *ngFor="let settlement of settlements" [value]="settlement.id">{{settlement.name}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Search user by name, username or address</label>
+				<input type="text" name="search" [(ngModel)]="filters.name" class="search" (ngModelChange)="pageChanged(1)">
+			</div>
+		</div>
+		<app-loader *ngIf="loading"></app-loader>
+		<div *ngIf="!loading && showUsers?.length==0" class="no-users">
+			There are no users to be shown.
+		</div>
+        <table *ngIf="!loading && showUsers?.length!=0">
             <thead>
                 <tr>
                     <th>#</th>
@@ -11,10 +51,8 @@
                     <th>Address</th>
                     <th>Settlement</th>
                     <th>City</th>
-                    <th>Status</th>
-                    <th>Block</th>
-                    <th>Actions</th>
-                    
+                    <th>Blocked</th>
+                    <th>Actions</th>  
                 </tr>
             </thead>
             <tbody>
@@ -26,95 +64,66 @@
                     <td>{{show.address}}</td>
                     <td>{{show.settlement}}</td>
                     <td>{{show.city}}</td>
-                    <td *ngIf="show.block===true" style="text-align: center;padding-left: 25px;"><span class="yellow-circle"></span> Inactive</td>
-                    <td *ngIf="show.block===false" style="text-align: center;"><span class="green-circle"></span> Active</td>
-                    <td style="padding: 1px;">
-                      <!-- <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalUnblockAdmin" *ngIf="show.block===true" (click)="unblockUser (show.id)">UNBLOCK </button>
-                      <button style="width: 84px; height:30px" data-bs-toggle="modal" data-bs-target="#myModalBlockAdmin" *ngIf="show.block===false" (click)="blockUser(show.id)"> BLOCK</button> -->
-                      <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalBlockAdmin" *ngIf="show.block===false" (click)="blockUser(show.id)">
+                    <td>
+                      <label class="switch" *ngIf="show.block===false" (click)="blockUser(show.id)">
                         <input type="checkbox" [disabled]="!confirmBlock">
                         <span class="slider round"></span>
                       </label>
-                      <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalUnblockAdmin" *ngIf="show.block===true"  (click)="unblockUser (show.id)">
+                      <label class="switch" *ngIf="show.block===true"  (click)="unblockUser (show.id)">
                         <input type="checkbox" checked [disabled]="!confirmBlock">
                         <span class="slider round"></span>
                       </label>
                     </td>
-                    
-                    <td><a [routerLink]='["/update-user/",show.id]' style="text-decoration: none; padding-right: 20px; color: #2199e8;"><i class="fas fa-cog" style="color: #2199e8"> </i> Edit</a>
-                   
-                    <a data-bs-toggle="modal" data-bs-target="#myModalDeleteAdmin" (click)="delete(show.id)" style="cursor: pointer; color: red;"><i class="fas fa-trash" style="color: red"> </i> DELETE</a>
+                    <td>
+                      <a (click)="updatePage(show.id)" style="cursor: pointer;text-decoration: none; color: #2199e8;"><i class="fas fa-cog" style="color: #2199e8"></i> Edit</a>&nbsp;&nbsp;
+                      <a  (click)="delete(show.id)" style="cursor: pointer; color: red;"><i class="fas fa-trash" style="color: red"></i> Delete</a>
                   </td>
-
                 </tr>
             </tbody>
         </table>
-		<app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
+		    <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
     </div>
-  <!-- Modal Unblock -->
-  <div class="modal fade" id="myModalUnblockAdmin" tabindex="-1" aria-labelledby="myModalUnblockAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-            </div>
-            <div class="modal-body">
-              <h5 class="modal-title" id="myModalUnblockAdminLabel" style="text-align: center;">Do you want to unblock this user?</h5>
-            
-            </div>
-            <div class="modal-footer" >
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="unblock-popup">Unblock</button>
-                
-            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                Close
-            </button>
-            
-            </div>
-        </div>
-    </div>
-</div>
-
-   <!-- Modal Block -->
-   <div class="modal fade" id="myModalBlockAdmin" tabindex="-1" aria-labelledby="myModalBlockAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-        </div>
-        <div class="modal-body">
-          <h5 class="modal-title" id="myModalBlockAdminLabel" style="text-align: center;">Do you want to block this user?</h5>
-        </div>
-        <div class="modal-footer" >
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="block-popup">Block</button>
-            
-          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-            Close
-          </button>
-          
+    <!-- Modal -->
+    <ng-template #modalContent let-modal >
+      <div class="modal-header">
+        <!-- <h5 class="modal-title" id="modalTitle">{{ title }}</h5> -->
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+        <div id="subb">
+          <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>&nbsp;&nbsp;
+          <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Modal delete -->
-  <div class="modal fade" id="myModalDeleteAdmin" tabindex="-1" aria-labelledby="myModalDeleteAdminLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-    <div class="modal-dialog  modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-        </div>
-        <div class="modal-body">
-          <h5 class="modal-title" id="myModalDeleteAdminLabel" style="text-align: center;">Do you want to delete this user?</h5>
-        </div>
-        <div class="modal-footer" >
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="delete-admin-popup">Delete</button>
-            
-          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-            Close
-          </button>
-          
-        </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>
+        <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+      </div> -->
+    </ng-template>
+    <!-- Update Modal -->
+    <ng-template #modalContent1 let-modal >
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Update {{oneUser}}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
-    </div>
-  </div>
+      <div class="modal-body">
+        <form #form="ngForm" (ngSubmit)="upDate()">
+          <div class="form-row">
+              <div class="form-group col-md-6 ">
+                  <br>
+                  <label for="email " class="form-label ">Email</label>
+                  <input type="text " class="form-control " id="id " name="email " [(ngModel)]="updateUserDetail.email ">
+                  <br>
+              </div>
+          </div>
+          <div id="subb">
+            <button type=" submit " class="btn btn-primary mr-5 " id="change-pass-popup"(click)="modal.close('Save click')">Save</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+          </div>
+        </form>
+     
+      </div>
+    </ng-template>
+    
+    

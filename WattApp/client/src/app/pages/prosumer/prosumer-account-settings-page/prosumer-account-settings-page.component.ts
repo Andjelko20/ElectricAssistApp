@@ -68,10 +68,6 @@ export class ProsumerAccountSettingsPageComponent {
 
     this.role=token.data.role as string;
     this.pass = token.data.password as string;
-    console.log(this.pass);
-    
-    console.log(this.idUser);
-    console.log(this.role);
 
         this.updateService.getlogInUser()
         .subscribe({
@@ -87,46 +83,21 @@ export class ProsumerAccountSettingsPageComponent {
               city:response.city,
               country: response.country,
               address:response.address
-              
               };
               this.name=response.name;
-            },
-			error:(response)=>{
-				this.router.navigate(["prosumer-account-page"]);
-			}
+            }
           });
   }
   
-  
   upDateProsumer()
   {
-    // this.onSelectedBlock(this.updateUserDetail.block);
-    // console.log("Azuriran objekat: ",this.updateUserDetail);
-    this.updateService.upDateProsumer(this.updateUserDetail)
+    this.updateService.upDateLogedIn(this.updateUserDetail)
     .subscribe({
       next:()=>{
         this.router.navigate(['prosumer-account-page']);
       }
     });
   }
-  generatePassword() {
-    this.passwordGen=Array(10).
-    fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").
-    map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
-  }
-  sendEmail(){
-		this.emailUp=this.updateUserDetail.email;
-		this.updateService.adminChangePasswordEmail(this.emailUp).subscribe({
-			next:()=>{
-				this.success=true;
-			},
-			error:(response:HttpErrorResponse)=>{
-				this.success=false;
-				this.errorMessage=response.error.message;
-			}
-		})
-	}
-
   updatePasswordProsumer()
   {
     const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;

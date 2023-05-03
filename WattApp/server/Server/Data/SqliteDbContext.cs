@@ -205,8 +205,8 @@ namespace Server.Data
                             Password=HashGenerator.Hash("dsodso"),
                             SettlementId=2,
                             Address="Adresa",
-                            Latitude=44.1234547f,
-                            Longitude=36.789023f
+                            Latitude=44.01721187973962f,
+                            Longitude=20.90732574462891f
                         },
                         new UserModel() // 4
                         {

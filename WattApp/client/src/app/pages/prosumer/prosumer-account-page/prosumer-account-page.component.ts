@@ -87,7 +87,7 @@ export class ProsumerAccountPageComponent {
   {
     // this.onSelectedBlock(this.updateUserDetail.block);
     // console.log("Azuriran objekat: ",this.updateUserDetail);
-    this.updateService.upDateProsumer(this.updateUserDetail)
+    this.updateService.upDateLogedIn(this.updateUserDetail)
     .subscribe({
       next:()=>{
         this.router.navigate(['prosumer-account-page']);

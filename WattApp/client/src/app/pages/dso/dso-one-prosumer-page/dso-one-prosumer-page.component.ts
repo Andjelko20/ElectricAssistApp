@@ -15,6 +15,7 @@ import { Popover, Tooltip } from 'bootstrap';
 })
 export class DsoOneProsumerPageComponent implements AfterViewInit,OnInit{
 
+  name!:string;
   popover: Popover | undefined;
   tooltip: Tooltip | undefined;
   currentTime!: Date;
@@ -44,6 +45,11 @@ export class DsoOneProsumerPageComponent implements AfterViewInit,OnInit{
     setInterval(() => {
       this.updateTime();
     }, 1000);
+
+    this.authService.getProsumer(Number(this.route.snapshot.paramMap.get('id'))).subscribe(user=>{
+        this.name=user.name;
+    })
+
   }
 
   toggleD()
