@@ -1,7 +1,9 @@
 <app-prosumer-navbar></app-prosumer-navbar>
 <div class="main">
     <div class="centar">
+
         <div class="card">
+            <!-- <div class="borderTop"></div> -->
             <!-- <div class="back">
                 <a href="prosumer-home-page"><img id="turnback" src="assets/img/back.png" alt=""></a>
             </div> -->
@@ -14,10 +16,12 @@
                     <li>Username: {{name}}</li>
                     <li>E-mail: {{email}}</li>
                     <li>Adress:{{adres}}</li>
-                    <li  *ngIf="this.role==this.prosumer" id="number">Number of devices: {{numOfDevices}}</li>
-                    <li class="aa" *ngIf="this.role==this.prosumer"><a [routerLink]='["/profile-update"]'>Edit profile</a></li>
-                    <li class="aa" *ngIf="this.role==this.dso"><a [routerLink]='["/profile-dso-update"]'>Edit profile</a></li>
-                    <li class="aa"><a (click)="logout()">Logout</a></li>
+                    <li *ngIf="this.role==this.prosumer" id="number">Number of devices: {{numOfDevices}}</li>
+                    <li class="aa" *ngIf="this.role==this.prosumer"> <img id="imgdevice1" src="assets/userSetting.png" alt=""><a [routerLink]='["/profile-update"]'>Edit Profile</a></li>
+                    <li class="aa" *ngIf="this.role==this.dso"><a [routerLink]='["/profile-dso-update"]'>Edit Profile</a></li>
+                    <li class="aa"> <img id="imgdevice111" src="assets/key.png" alt=""><a id="pass" [routerLink]='["/prosumer-account-settings"]'>Change Password</a></li>
+                    <li class="aa"> <img id="imgdevice11" src="assets/exit.png" alt=""><a id="logout" (click)="logout()">Log out</a></li>
+
                 </ul>
             </div>
 

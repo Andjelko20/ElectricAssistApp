@@ -24,7 +24,7 @@
 
 h1 {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 27px;
     font-size: 20px;
 }
 
@@ -50,7 +50,6 @@ a {
 }
 
 .aa a {
-    border: 2px solid #b8dcff;
     border-radius: 5px;
     margin-top: 15px;
     padding: 5px;
@@ -64,9 +63,38 @@ a:hover {
 }
 
 .card {
-    padding-top: 14%;
-    margin-bottom: 50px;
+    padding-top: 20%;
+    padding-bottom: 61px;
+    min-height: 100vh;
     border-radius: 0px;
+}
+
+#imgdevice1 {
+    width: 30px;
+}
+
+#imgdevice11 {
+    width: 30px;
+    margin-left: -4px;
+}
+
+#imgdevice111 {
+    width: 28px;
+}
+
+#pass {
+    margin-left: 2px;
+}
+
+#logout {
+    margin-left: 6px;
+}
+
+.borderTop {
+    border: 1px solid black;
+    background-color: red;
+    height: 200px;
+    border-radius: 25px bottom left;
 }
 
 #number {

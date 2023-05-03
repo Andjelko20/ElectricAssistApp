@@ -152,6 +152,10 @@ input {
     .table {
         margin-top: 15px;
     }
+    .toggle-container {
+        margin-left: 23px;
+        margin-right: 23px;
+    }
     .toggle-buttons label {
         font-size: 35px;
     }
