@@ -8,27 +8,75 @@ import { saveAs } from 'file-saver';
 import { ExportToCsv } from 'export-to-csv';
 import { forkJoin } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatDatepicker} from '@angular/material/datepicker';
+import * as _moment from 'moment';
+import {default as _rollupMoment, Moment} from 'moment';
+
+const moment = _rollupMoment || _moment;
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-tabelar-view-by-month',
   templateUrl: './tabelar-view-by-month.component.html',
-  styleUrls: ['./tabelar-view-by-month.component.css']
+  styleUrls: ['./tabelar-view-by-month.component.css'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class TabelarViewByMonthComponent implements OnInit{
+
+  currentDate = new Date();
+  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   settlements:Settlement[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
-  constructor(private deviceService:HistoryPredictionService,private authService:AuthService){}
+  constructor(private deviceService:HistoryPredictionService,private authService:AuthService){
+    this.date.valueChanges.subscribe((selectedDate : any) => {
+      const arr1: any[] = [];
+    arr1.push(Object.values(selectedDate)[4]);
+    this.selectedDate=arr1[0];
+    this.ngOnInit();
+    });
+  }
 
 
   campaignOne: FormGroup = new FormGroup({
     start: new FormControl(),
     end: new FormControl()
   });
-  maxDate = new Date();
-
+  selectedDate : Date | undefined;
   selectedOption: number = 0;
+
+  date = new FormControl(moment());
+
+  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value!;
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+
+  }
 
   onOptionSelected() {
     this.ngOnInit();
@@ -40,13 +88,46 @@ export class TabelarViewByMonthComponent implements OnInit{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
           this.settlements = settlement;
         })
-        if(this.selectedOption == 0){
+        if(this.selectedOption == 0 && this.selectedDate === undefined){
           forkJoin([
             this.deviceService.monthByDay(number, 2),
             this.deviceService.monthByDay(number, 1)
           ]).subscribe(([data1, data2]) => {
             this.list1 = data1;
             this.list2 = data2;
+          });
+        }
+        else if(this.selectedOption == 0 && this.selectedDate != undefined){
+          const month = this.selectedDate!.getMonth()+1;
+          const year = this.selectedDate!.getFullYear();
+          let string1 = year+'-'+month+'-'+1;
+          let string2 = year+'-'+(month+1)+'-'+1;
+          if(month == 12){
+            string2 = (year+1)+'-'+1+'-'+1
+          }
+          forkJoin([
+            this.deviceService.weekByDayCityFilter(string1,string2,number, 2),
+            this.deviceService.weekByDayCityFilter(string1,string2,number, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+          });
+        }
+        else if(this.selectedOption != 0 && this.selectedDate != undefined){
+          let month = this.selectedDate!.getMonth()+1;
+          let year = this.selectedDate!.getFullYear();
+          let string1 = year+'-'+month+'-'+1;
+          let string2 = year+'-'+(month+1)+'-'+1;
+          if(month == 12){
+            string2 = (year+1)+'-'+1+'-'+1
+          }
+
+          forkJoin([
+            this.deviceService.weekByDaySettlementFilter(string1,string2,number, this.selectedOption),
+            this.deviceService.weekByDaySettlementFilter(string1,string2,number, this.selectedOption)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
           });
         }
         else{

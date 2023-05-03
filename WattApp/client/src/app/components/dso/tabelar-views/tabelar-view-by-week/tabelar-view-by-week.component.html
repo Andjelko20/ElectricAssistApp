@@ -5,14 +5,15 @@
       <div class="form-group">
         <mat-form-field appearance="fill">
           <mat-label>Enter a date range</mat-label>
-          <mat-date-range-input [rangePicker]="picker" [max]="maxDate">
-            <input matStartDate placeholder="Start date">
-            <input matEndDate placeholder="End date">
+          <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="picker" [max]="maxDate">
+            <input matStartDate placeholder="Start date" formControlName="start">
+            <input matEndDate placeholder="End date" formControlName="end">
           </mat-date-range-input>
           <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
+        <button class="btn" (click)="downloadCSV()">Export to CSV</button>
         <label>Select Settlement:</label>
         <select style="padding: 10px; text-align: center;" [(ngModel)]="selectedOption" (change)="onOptionSelected()">
           <option value="0">Ukupno</option>

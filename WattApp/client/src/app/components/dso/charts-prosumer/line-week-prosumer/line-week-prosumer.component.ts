@@ -75,7 +75,7 @@ export class LineWeekProsumerComponent {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    if(this.sdate == null && this.send == null){
+    if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
       forkJoin([
         this.deviceService.weekByDayUser(id, 2),
         this.deviceService.weekByDayUser(id, 1),
@@ -104,7 +104,6 @@ export class LineWeekProsumerComponent {
             this.LineChart();
           });
     }
-    
     
   }
   LineChart(){

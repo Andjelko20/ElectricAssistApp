@@ -46,28 +46,27 @@ export class LineDayProsumerComponent{
       const year = this.selectedDate.getFullYear();
       let string1 = '';
       let string2 = '';
-      if(day == 1 || month == 1){
-        if(month == 1 && day == 1){
-          
-          string1 = year+'-'+12+'-'+31
-          string2 = year+'-'+month+'-'+day
-        }
-        else if(month != 1 && day == 1){
-          if(month % 2 == 0){
-            string1 = year+'-'+(month-1)+'-'+31
-            string2 = year+'-'+month+'-'+day
+      if(month % 2 )
+          {
+            if(day == 30 || (month == 2 && day == 28)){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
           }
-          else{
-            string1 = year+'-'+(month-1)+'-'+30
-            string2 = year+'-'+month+'-'+day
+          else if(month % 2 == 1){
+            if(day == 31 || (month == 6 || month == 7) ){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
           }
-         
-        }
-      }
-      else{
-        string1 = year+'-'+month+'-'+(day-1)
-        string2 = year+'-'+month+'-'+day
-      }
 
       forkJoin([
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 2),

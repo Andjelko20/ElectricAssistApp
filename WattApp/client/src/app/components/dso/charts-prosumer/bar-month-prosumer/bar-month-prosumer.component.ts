@@ -72,17 +72,15 @@ export class BarMonthProsumerComponent {
   
   ngOnInit(): void {
     const userId = Number(this.route.snapshot.paramMap.get('id'));
-    const month1$ = this.deviceService.monthByDayUser(userId, 2);
-    const month2$ = this.deviceService.monthByDayUser(userId, 1);
     if(this.selectedDate == undefined){
-      forkJoin([month1$, month2$]).pipe(
-        switchMap(([data1, data2]) => {
-          this.list1 = data1;
-          this.list2 = data2;
-          this.BarPlot();
-          return [];
-        })
-      ).subscribe();
+      forkJoin({
+        list1: this.deviceService.monthByDayUser(userId, 2),
+        list2: this.deviceService.monthByDayUser(userId, 1)
+      }).subscribe(({ list1, list2 }) => {
+        this.list1 = list1;
+        this.list2 = list2;
+        this.BarPlot();
+      });
     }
     else{
       const month = this.selectedDate!.getMonth()+1;

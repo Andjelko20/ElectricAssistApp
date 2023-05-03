@@ -90,7 +90,7 @@ export class LineWeekChartComponent {
           this.settlements = settlement;
         })
         
-        if(this.selectedOption == 0 && this.sdate == null && this.send == null){
+        if(this.selectedOption == 0 || (this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
           forkJoin([
             this.deviceService.weekByDay(number, 2),
             this.deviceService.weekByDay(number, 1)
