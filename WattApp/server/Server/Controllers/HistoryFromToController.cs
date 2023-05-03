@@ -27,8 +27,8 @@ namespace Server.Controllers
                                                                        long cityId, long settlementId, long byDayCityId, 
                                                                        long byDaySettlementId, long byHourSettlementId, 
                                                                        long byHourCityId, long byHourUserId, long byDayUserId,
-                                                                       long doubleUserId, long doubleDeviceId, long byHourDeviceId,
-                                                                       long byDayDeviceId)
+                                                                       long doubleUserId, long doubleDeviceId, long byMonthDeviceId, 
+                                                                       long byHourDeviceId, long byDayDeviceId)
         {
             if(cityId!=0)
             {
@@ -135,12 +135,20 @@ namespace Server.Controllers
                 var result = historyFromToService.GetDeviceHistoryByDayFromTo(fromDate, toDate, byDayDeviceId);
                 return Ok(result);
             }
-            else // if (byHourDeviceId != 0)
+            else if (byHourDeviceId != 0)
             {
                 if (!_sqliteDb.Devices.Any(d => d.Id == byHourDeviceId))
                     return NotFound(new { message = "Device with ID: " + byHourDeviceId.ToString() + " does not exist." });
 
                 var result = historyFromToService.GetDeviceHistoryByHourFromTo(fromDate, toDate, byHourDeviceId);
+                return Ok(result);
+            }
+            else // if (byMonthDeviceId != 0)
+            {
+                if (!_sqliteDb.Devices.Any(d => d.Id == byMonthDeviceId))
+                    return NotFound(new { message = "Device with ID: " + byMonthDeviceId.ToString() + " does not exist." });
+
+                var result = historyFromToService.GetDeviceHistoryByMonthFromTo(fromDate, toDate, byMonthDeviceId);
                 return Ok(result);
             }
         }
