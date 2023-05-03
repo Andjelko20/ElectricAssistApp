@@ -3,48 +3,38 @@ import { Injectable } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ForecastService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private authService:AuthService) { }
 
   getWeatherForecast(): Observable<any> {
-    const defaultLocation = {
-      latitude: 51.5074,
-      longitude: -0.1278
+    let defaultLocation = {
+      lat: 51.5074,
+      lon: -0.1278
     };
-
-    if (navigator.geolocation) {
-      return from(new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      })).pipe(
-        map((position: any) => {
-          return {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          };
-        }),
-        switchMap((location: any) => {
-          return this.makeWeatherApiCall(location);
-        }),
-        catchError((error: any) => {
-          console.error('Error getting user location: ', error);
-          return this.makeWeatherApiCall(defaultLocation);
-        })
-      );
-    } else {
-      console.error('Geolocation is not supported by this browser.');
-      return this.makeWeatherApiCall(defaultLocation);
-    }
+    
+    return this.authService.getMyLocation().pipe(
+      switchMap((location: { latitude: number, longitude: number }) => {
+        const apiLocation = { lat: location.latitude, lon: location.longitude };
+        console.log(apiLocation)
+        return this.makeWeatherApiCall(apiLocation);
+      }),
+      catchError((error: any) => {
+        console.error('Error getting weather forecast: ', error);
+        return this.makeWeatherApiCall(defaultLocation);
+      })
+    );
   }
 
   private makeWeatherApiCall(location: any): Observable<any> {
     const params = new HttpParams()
-      .set('lon', location.longitude)
-      .set('lat', location.latitude)
+      .set('lon', location.lon)
+      .set('lat', location.lat)
       .set('units', "metric")
       .set('appid', environment.openWeatherMapApiKey);
 
