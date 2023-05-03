@@ -236,9 +236,6 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetConsumptionByUserForYearByMonth([FromRoute] long userId, [FromRoute] long deviceCategoryId)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
@@ -256,12 +253,6 @@ namespace Server.Controllers
             //    return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
 
             var HistoryForPastYearByMonthConsumption = historyService.GetMonthlyEnergyUsageForPastYear(userId, deviceCategoryId);
-
-            stopwatch.Stop();
-            TimeSpan elapsedTime = stopwatch.Elapsed;
-            Console.WriteLine("***************************** Elapsed time: " + elapsedTime.TotalSeconds + " seconds.");
-
-
             return Ok(HistoryForPastYearByMonthConsumption);
         }
 
@@ -370,9 +361,6 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetCityHistoryForPastWeekByDay([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
                 return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
 
@@ -380,11 +368,6 @@ namespace Server.Controllers
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
             var result = historyService.CityHistoryForThePastWeek(cityId, deviceCategoryId);
-
-            stopwatch.Stop();
-            TimeSpan elapsedTime = stopwatch.Elapsed;
-            Console.WriteLine("***************************** Elapsed time: " + stopwatch.Elapsed);
-
             return Ok(result);
         }
 
@@ -396,9 +379,6 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetSettlementHistoryForPastMonthByDay([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
                 return NotFound(new { message = "City with the ID: " + settlementId.ToString() + " does not exist." });
 
@@ -406,12 +386,6 @@ namespace Server.Controllers
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
             var result = historyService.SettlementHistoryForThePastMonth(settlementId, deviceCategoryId);
-
-            stopwatch.Stop();
-            TimeSpan elapsedTime = stopwatch.Elapsed;
-            Console.WriteLine("***************************** Elapsed time: " + stopwatch.Elapsed);
-
-
             return Ok(result);
         }
 
@@ -423,9 +397,6 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetCityHistoryForPastMonthByDay([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
                 return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
 
@@ -433,12 +404,6 @@ namespace Server.Controllers
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
             var result = historyService.CityHistoryForThePastMonth(cityId, deviceCategoryId);
-
-            stopwatch.Stop();
-            TimeSpan elapsedTime = stopwatch.Elapsed;
-            Console.WriteLine("***************************** Elapsed time: " + stopwatch.Elapsed);
-
-
             return Ok(result);
         }
 
@@ -450,9 +415,6 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetCityHistoryForPastYearByMonth([FromRoute] long cityId, [FromRoute] long deviceCategoryId)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
                 return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
 
@@ -460,12 +422,6 @@ namespace Server.Controllers
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
             var result = historyService.CityHistoryForThePastYearByMonth(cityId, deviceCategoryId);
-
-
-            stopwatch.Stop();
-            TimeSpan elapsedTime = stopwatch.Elapsed;
-            Console.WriteLine("***************************** Elapsed time: " + stopwatch.Elapsed);
-
             return Ok(result);
         }
 
@@ -477,9 +433,6 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetSettlementHistoryForPastYearByMonth([FromRoute] long settlementId, [FromRoute] long deviceCategoryId)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
             if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
                 return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not exist." });
 
@@ -487,11 +440,6 @@ namespace Server.Controllers
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
             var result = historyService.SettlementHistoryForThePastYearByMonth(settlementId, deviceCategoryId);
-
-            stopwatch.Stop();
-            TimeSpan elapsedTime = stopwatch.Elapsed;
-            Console.WriteLine("***************************** Elapsed time: " + stopwatch.Elapsed);
-
             return Ok(result);
         }
 
@@ -561,6 +509,44 @@ namespace Server.Controllers
 
             var historyList = historyService.GetUsageHistoryForDeviceForPreviousMonth(deviceId);
             return Ok(historyList);
+        }
+
+        [HttpGet]
+        [Route("Pagination/{pageNumber:int}/{itemsPerPage:int}")]
+        public async Task<IActionResult> GetHistoryResultsPagination([FromRoute] int pageNumber, [FromRoute] int itemsPerPage, [FromQuery] long PastMonthByDayDeviceId, long PastMonthByDayUserId, long deviceCategoryId, long PastMonthByDaySettlementId, long PastMonthByDayCityId)
+        {
+            if(PastMonthByDayDeviceId != 0)
+            {
+                if (!_sqliteDb.Devices.Any(d => d.Id == PastMonthByDayDeviceId))
+                    return NotFound(new {message = "Device with the ID: " + PastMonthByDayDeviceId.ToString() + " does not exist."});
+
+                var result = historyService.GetDailyEnergyUsageForPastMonthPagination(PastMonthByDayDeviceId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
+            else if(PastMonthByDayUserId != 0)
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == PastMonthByDayUserId))
+                    return NotFound(new { message = "User with the ID: " + PastMonthByDayUserId.ToString() + " does not exist." });
+
+                var result = historyService.GetProsumerDailyEnergyUsageForPastMonthPagination(PastMonthByDayUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
+            else if (PastMonthByDaySettlementId != 0)
+            {
+                if (!_sqliteDb.Settlements.Any(s => s.Id == PastMonthByDaySettlementId))
+                    return NotFound(new { message = "Settlement with the ID: " + PastMonthByDaySettlementId.ToString() + " does not exist." });
+
+                var result = historyService.GetSettlementDailyEnergyUsageForPastMonthPagination(PastMonthByDaySettlementId, deviceCategoryId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
+            else // if (PastMonthByDayCityId != 0)
+            {
+                if (!_sqliteDb.Cities.Any(s => s.Id == PastMonthByDayCityId))
+                    return NotFound(new { message = "City with the ID: " + PastMonthByDayCityId.ToString() + " does not exist." });
+
+                var result = historyService.GetCityDailyEnergyUsageForPastMonthPagination(PastMonthByDayCityId, deviceCategoryId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
         }
     }
 }

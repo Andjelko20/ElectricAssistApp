@@ -31,14 +31,9 @@ namespace Server.Services.Implementations
                 var DeviceUsages = _context.DeviceEnergyUsages
                     .Where(u => u.DeviceId == Device.Id && u.StartTime <= DateTime.Now.AddHours(-1) && u.EndTime <= DateTime.Now)
                     .ToList();
-                if(DeviceUsages == null)
-                    Console.WriteLine("*****************NULL"+DeviceUsages.Count);
-                else
-                    Console.WriteLine("***************NOTNULL" + DeviceUsages.Count);
 
                 foreach (var usage in DeviceUsages)
                 {
-                    Console.WriteLine("***************sadadsadasd " + usage.DeviceId + " " + usage.StartTime + " " + usage.EndTime);
                     TotalEnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * Device.EnergyInKwh;
                 }
             }
@@ -128,8 +123,6 @@ namespace Server.Services.Implementations
             var usages = _context.DeviceEnergyUsages
                 .Where(u => devices.Contains(u.DeviceId) && u.StartTime <= now && (u.EndTime >= now || u.EndTime == null) && _context.Devices.Any(d => d.Id == u.DeviceId && _context.Users.Any(u => u.Id == d.UserId && u.SettlementId == settlementId)))
                 .ToList();
-
-            Console.WriteLine("******************************** COUNT: " + usages.Count);
 
             foreach (var usage in usages)
             {
@@ -264,8 +257,6 @@ namespace Server.Services.Implementations
                                     .Where(u => u.SettlementId == settlementId)
                                     .Count();
 
-            Console.WriteLine("++++++++++++++++Broj usera: " + totalPopulation);
-
             return totalPopulation;
         }
 
@@ -274,8 +265,6 @@ namespace Server.Services.Implementations
             var totalPopulation = _context.Users
                                         .Where(u => u.Settlement.City.Id == cityId)
                                         .Count();
-
-            Console.WriteLine("++++++++++++++++Broj usera city: " + totalPopulation);
 
             return totalPopulation;
         }
@@ -299,8 +288,6 @@ namespace Server.Services.Implementations
         public double GetAverageConsumptionProductionInTheMomentForAllProsumers(double totalEnergyUsage)
         {
             var totalPopulation = _context.Users.Count();
-
-            Console.WriteLine("++++++++++++++++Broj usera country: " + totalPopulation);
 
             if (totalPopulation == 0)
                 return 0;
@@ -352,7 +339,6 @@ namespace Server.Services.Implementations
                 return null;
 
             var energyKwh = device.DeviceModel.EnergyKwh;
-            //Console.WriteLine("+++++++++++++++++++++++++++++++++ device ID:"+device.Id);
 
             var Result = new List<EnergyToday>();
 
@@ -361,20 +347,14 @@ namespace Server.Services.Implementations
                 .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date == DateTime.Today)
                 .ToList();
 
-            Console.WriteLine("::::::::::::::::::DateTime.Today = " + DateTime.Today);
-            Console.WriteLine("::::::::::::::::::DateTime.Now = " + DateTime.Now);
-
             // prolazimo kroz sve sate danasnjeg dana do ovog trenutka i racunamo potrosnju za svaki sat
             for (int hour = 0; hour <= DateTime.Now.Hour; hour++)
             {
                 var startTime = DateTime.Today.AddHours(hour);
                 var endTime = DateTime.Today.AddHours(hour + 1);
                 var energyUsageResult = 0.0;
-                Console.WriteLine("++++++++++++++++++++++ startTime=" + startTime + " --- endTime=" + endTime);
                 foreach (var usage in deviceEnergyUsages)
                 {
-                    Console.WriteLine("********************************** DeviceId=" + usage.DeviceId + " --- StartTime=" + usage.StartTime + " --- EndTime=" + usage.EndTime);
-
                     DateTime overlapStart;
                     if (usage.StartTime < startTime)
                     {
