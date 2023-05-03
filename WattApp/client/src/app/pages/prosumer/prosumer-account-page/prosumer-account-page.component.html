@@ -14,9 +14,8 @@
                     <li>Username: {{name}}</li>
                     <li>E-mail: {{email}}</li>
                     <li>Adress:{{adres}}</li>
-                    <li  *ngIf="this.role==this.prosumer" id="number">Number of devices: {{numOfDevices}}</li>
-                    <li class="aa" *ngIf="this.role==this.prosumer"><a [routerLink]='["/profile-update"]'>Edit profile</a></li>
-                    <li class="aa" *ngIf="this.role==this.dso"><a [routerLink]='["/profile-dso-update"]'>Edit profile</a></li>
+                    <li  id="number">Number of devices: {{numOfDevices}}</li>
+                    <li class="aa" ><a [routerLink]='["/profile-edit"]'>Edit profile</a></li>
                     <li class="aa"><a (click)="logout()">Logout</a></li>
                 </ul>
             </div>
@@ -24,6 +23,6 @@
         </div>
     </div>
 
-    <app-footer *ngIf="this.role==this.prosumer"></app-footer>
-    <app-prosumer-footer *ngIf="this.role==this.prosumer"></app-prosumer-footer>
+    <app-footer ></app-footer>
+    <app-prosumer-footer ></app-prosumer-footer>
 </div>

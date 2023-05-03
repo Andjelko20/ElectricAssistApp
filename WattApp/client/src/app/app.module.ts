@@ -83,6 +83,10 @@ import { PredictionProsumerComponent } from './components/dso/prediction/predict
 import { PredictionDeviceComponent } from './components/dso/prediction/prediction-device/prediction-device.component';
 import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
 import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
+import { NgbModalModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { AccountPageComponent } from './pages/account-page/account-page.component';
+import { LoaderComponent } from './components/loader/loader.component';
+
 
 
 @NgModule({
@@ -171,7 +175,9 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
     YearTabelarProsumerComponent,
     TodayTabelarProsumerComponent,
     EmailConfirmationPageComponent,
-    ChangeEmailConfirmationPageComponent
+    ChangeEmailConfirmationPageComponent,
+    AccountPageComponent,
+    LoaderComponent
     
   ],
   imports: [
@@ -183,6 +189,7 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
     FormsModule,
     BrowserModule,
 	  NgxPaginationModule,
+    NgbModalModule
     
   ],
   providers: [DecimalPipe],

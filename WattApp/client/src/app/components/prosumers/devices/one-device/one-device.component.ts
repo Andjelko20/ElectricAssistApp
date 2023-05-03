@@ -55,7 +55,7 @@ export class OneDeviceComponent implements OnInit{
    {
     turnOn.removeEventListener('click',  this.onClick)
       this.onClick=()=> {
-        this.deviceService.turnOnOff(id).subscribe({
+        this.deviceService.turnOn(id).subscribe({
           next:()=>{
           
             
@@ -73,7 +73,7 @@ export class OneDeviceComponent implements OnInit{
         
         turnOff.removeEventListener('click',  this.offClick)
         this.offClick=()=> {
-          this.deviceService.turnOnOff(id).subscribe({
+          this.deviceService.turnOff(id).subscribe({
             next:()=>{
             
               

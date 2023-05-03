@@ -38,9 +38,13 @@ export class DevicesService {
     return this.http.delete<updateDevices>(environment.serverUrl+"/api/device/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
   //samo id saljem
-  turnOnOff(id: number): Observable<any> {
+  turnOn(id: number): Observable<any> {
       
-    return this.http.put(environment.serverUrl+"/api/device/turnOn"+id,{turnOn:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+    return this.http.put<any>(environment.serverUrl+"/api/device/turnOn"+id,{turnOn:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+  }
+  turnOff(id: number): Observable<any> {
+      
+    return this.http.put<any>(environment.serverUrl+"/api/device/turnOn"+id,{turnOn:false},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
   visibility(id: number): Observable<any> {
       

@@ -19,7 +19,6 @@ body {
     background-color: rgb(238, 238, 238);
     color: #727272;
     min-height: 100%;
-    -webkit-text-size-adjust: 100%;
     overflow: auto !important;
 
 }
@@ -28,4 +27,7 @@ button{
 }
 .modal-open{
     padding-right: 0px!important;
+}
+.modal{
+    --bs-modal-margin: 15.75rem!important;
 }

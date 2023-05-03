@@ -35,7 +35,7 @@
                 </a>
             </li>
             <li *ngIf="role==admin || role==superadmin" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/"]'>
+                <a class="nav-link" [routerLink]='["/profile-admin"]'>
                 <span class="icon-holder"><i class="fa fa-cog"></i></span>
                 <span class="title" >Settings</span>
                 </a>

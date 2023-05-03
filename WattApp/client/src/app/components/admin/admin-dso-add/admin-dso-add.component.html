@@ -1,40 +1,37 @@
 <div class="global">
     <div class="global1">
-        <h1>Add</h1>
+        <h1>Add User</h1>
 
         <form  (ngSubmit)="addUsers()">
-            <div class="form-row">
-                <div class="form-group add-user-form">
+            <div class="form-row row">
+                <div class="form-group add-user-form col-md-3">
                     <label for="name">Name</label>
+                    <br>
                     <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addUserRequest.name">
                     <br>
                     <label for="email">Email</label>
+                    <br>
                     <input type="text" class="form-control" id="email" name="email" [(ngModel)]="addUserRequest.email">
                     <br>
                     <label for="username">Username</label>
+                    <br>
                     <input type="text" class="form-control" id="userName" name="username" [(ngModel)]="addUserRequest.username">
                     <br>
-                    <!-- <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" [(ngModel)]="addUserRequest.password"> -->
-
-                    <!--<label for="password" class="form-label">Password</label>
-                    <input type="text" class="form-control" id="password" name="password" value="{{passwordGen}}" disabled >
-                    <form style="margin: 0; padding: 0;">
-                        <button class="btn btn-primary" type="submit" (click)="generatePassword()">Generate password</button>
-                    </form>-->
                     <label for="role">Role</label>
-
+                    <br>
                     <select id="role" class="select-form-control" name="role" [(ngModel)]="addUserRequest.roleId">     
-                        <!--<option *ngFor="let role of roles" [value]="role.id" (change)="onSelectedRole($event)" >{{role.name}}</option>-->
-						<option [value]="roles.ADMIN_ID">{{roles.ADMIN_NAME}}</option>
-						<option [value]="roles.DISPATCHER_ID">{{roles.DISPATCHER_NAME}}</option>
-						<option [value]="roles.PROSUMER_ID">{{roles.PROSUMER_NAME}}</option>
+                        <option class="optionRole" [value]="roles.ADMIN_ID">{{roles.ADMIN_NAME}}</option>
+                        <option class="optionRole" [value]="roles.DISPATCHER_ID">{{roles.DISPATCHER_NAME}}</option>
+                        <option class="optionRole" [value]="roles.PROSUMER_ID">{{roles.PROSUMER_NAME}}</option>
                     </select>
                     <br>
-					<map-input (locationChanged)="locationChanged($event)" (settlementChanged)="settlementChanged($event)"></map-input>
+                    <br>
+                </div>
+                <div class="form-group col-md-8 ">
+                    <map-input (locationChanged)="locationChanged($event)" (settlementChanged)="settlementChanged($event)"></map-input>
                 </div>
             </div>
-            <button (click)="addUsers()" class="btn btn-primary add-button">ADD</button>
+            <button (click)="addUsers()" class="btn btn-primary ">ADD</button>
         </form>
         
     </div>
