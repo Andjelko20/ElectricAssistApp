@@ -4,14 +4,17 @@
       <h1>Energy Usage</h1>
       <div class="form-group">
         <mat-form-field appearance="fill">
-          <mat-label>Month and Year</mat-label>
+          <mat-label>Year</mat-label>
           <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
-          <mat-hint>MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="dp" ></mat-datepicker-toggle>
+          <mat-hint>YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
           <mat-datepicker #dp
                           startView="multi-year"
-                          (monthSelected)="setMonthAndYear($event, dp)"
-                          panelClass="example-month-picker">
+                          (yearSelected)="setYear($event, dp)"
+                          panelClass="example-year-picker">
+            <mat-multi-year-view [selected]="date.value" (yearSelected)="dp.close()"></mat-multi-year-view>
+            <mat-year-view [activeDate]="date.value" (yearSelected)="dp.close()"></mat-year-view>
+            <mat-month-view></mat-month-view>
           </mat-datepicker>
         </mat-form-field>
         <label>Select Settlement:</label>

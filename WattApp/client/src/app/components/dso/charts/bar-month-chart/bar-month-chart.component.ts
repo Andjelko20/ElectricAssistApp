@@ -126,8 +126,8 @@ export class BarMonthChartComponent {
           }
 
           forkJoin([
-            this.deviceService.weekByDaySettlementFilter(string1,string2,number, this.selectedOption),
-            this.deviceService.weekByDaySettlementFilter(string1,string2,number, this.selectedOption)
+            this.deviceService.weekByDaySettlementFilter(string1,string2, this.selectedOption,2),
+            this.deviceService.weekByDaySettlementFilter(string1,string2, this.selectedOption,1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;

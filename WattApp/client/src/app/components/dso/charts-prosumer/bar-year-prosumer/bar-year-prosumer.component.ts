@@ -4,31 +4,93 @@ import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
 import { YearsByMonth } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatDatepicker} from '@angular/material/datepicker';
+import moment, { Moment } from 'moment';
+import { FormControl } from '@angular/forms';
 Chart.register(...registerables)
+Chart.register(...registerables)
+
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'YYYY',
+  },
+  display: {
+    dateInput: 'YYYY',
+    monthYearLabel: 'YYYY',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
+
 @Component({
   selector: 'app-bar-year-prosumer',
   templateUrl: './bar-year-prosumer.component.html',
-  styleUrls: ['./bar-year-prosumer.component.css']
+  styleUrls: ['./bar-year-prosumer.component.css'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    { 
+     provide: MAT_DATE_FORMATS, useValue: MY_FORMATS
+    },
+   ]
 })
 export class BarYearProsumerComponent {
 
+  currentDate = new Date();
+  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
-    
-  }
-  ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    forkJoin([
-      this.deviceService.yearByMonthUser(id, 2),
-      this.deviceService.yearByMonthUser(id, 1)
-    ]).subscribe(([list1, list2]) => {
-      this.list1 = list1;
-      this.list2 = list2;
-      this.BarPlot();
+    this.date.valueChanges.subscribe((selectedDate : any) => {
+      const arr1: any[] = [];
+    arr1.push(Object.values(selectedDate)[4]);
+    this.selectedDate=arr1[0];
+    this.ngOnInit();
     });
   }
+
+  date = new FormControl(moment());
+  selectedDate : Date | undefined;
+  setYear(year: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value!;
+    ctrlValue.year(year.year());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
+  }
+
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if(this.selectedDate == undefined){
+      forkJoin([
+        this.deviceService.yearByMonthUser(id, 2),
+        this.deviceService.yearByMonthUser(id, 1)
+      ]).subscribe(([list1, list2]) => {
+        this.list1 = list1;
+        this.list2 = list2;
+        this.BarPlot();
+      });
+    }
+    else{
+      const year = this.selectedDate.getFullYear();
+      let string1 = year-1+'-'+1+'-'+1;
+      let string2 = year+'-'+1+'-'+1;
+      forkJoin([
+        this.deviceService.monthbyDayUserFilter(string1,string2,id, 2),
+        this.deviceService.monthbyDayUserFilter(string1,string2,id, 1)
+      ]).subscribe(([list1, list2]) => {
+        this.list1 = list1;
+        this.list2 = list2;
+        this.BarPlot();
+      });
+    }
+    }
+    
   BarPlot(){
 
     const chartId = 'barplot';

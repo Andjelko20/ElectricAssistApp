@@ -1,33 +1,58 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Injectable, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-Chart.register(...registerables)
 @Component({
-  selector: 'app-prediction-device',
-  templateUrl: './prediction-device.component.html',
-  styleUrls: ['./prediction-device.component.css']
+  selector: 'app-prediction-dso',
+  templateUrl: './prediction-dso.component.html',
+  styleUrls: ['./prediction-dso.component.css']
 })
-export class PredictionDeviceComponent {
-
-
+export class PredictionDsoComponent {
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
-  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
-    
-  }
+  settlements:Settlement[] = [];
 
-  ngOnInit(): void {
-    //treba da se uradi dobijanje deviceid
-  
-    this.deviceService.predictionDevice(Number(this.route.snapshot.paramMap.get('deviceid'))).subscribe((data: WeekByDay[]) =>{
-      this.list1 = data;
+  constructor(private authService:AuthService,private deviceService:HistoryPredictionService){}
+
+  selectedOption: number = 0;
+
+  onOptionSelected() {
+    this.ngOnInit();
+  }
+  ngOnInit() {
+    this.authService.getlogInUser().subscribe(user=>{
+      this.authService.getCityId(user.city).subscribe(number=>{
+        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.settlements = settlement;
+        })
+        
+        if(this.selectedOption == 0){
+          forkJoin([
+            this.deviceService.weekByDay(number, 2),
+            this.deviceService.weekByDay(number, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
+          
+        }
+        else{
+          forkJoin([
+            this.deviceService.weekByDaySettlement(this.selectedOption, 2),
+            this.deviceService.weekByDaySettlement(this.selectedOption, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
+        }
+      })
     })
-    
   }
   LineChart(){
 
@@ -38,6 +63,7 @@ export class PredictionDeviceComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
 
     const Linechart = new Chart("linechart", {
       type: 'line',
@@ -70,18 +96,33 @@ export class PredictionDeviceComponent {
           borderWidth: 2,
           fill: true
           },
+          {
+            label: 'production',
+            data: energyUsageResults2,
+            tension:0.5,
+            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+            borderColor: 'rgba(0, 255, 0, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
+            pointBorderColor: 'rgba(0, 255, 0, 1)',
+            pointBorderWidth: 7,
+            pointRadius: 5,
+            pointHoverRadius: 6,
+            fill:true
+          }
           
         ]
         
       }
       ,
       options: {
+        responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             position: "left",
@@ -90,7 +131,7 @@ export class PredictionDeviceComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
@@ -99,7 +140,7 @@ export class PredictionDeviceComponent {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             title:{
@@ -107,13 +148,13 @@ export class PredictionDeviceComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
           ,
         },
-        responsive: true,
+        
         plugins: {
           datalabels:{display: false},
           legend: {

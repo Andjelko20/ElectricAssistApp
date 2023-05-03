@@ -97,6 +97,7 @@ import { MatFormFieldControl } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import { ProsumerMonthGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-month-graph/prosumer-month-graph.component";
 import { ProsumerYearGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-year-graph/prosumer-year-graph.component";
+import { PredictionDsoComponent } from './components/dso/prediction/prediction-dso/prediction-dso.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -191,7 +192,8 @@ import { ProsumerYearGraphComponent } from "./components/prosumers/prosumer-grap
     ProsumerWeekTableComponent,
     ProsumerDayTableComponent,
     ProsumerMonthGraphComponent,
-    ProsumerYearGraphComponent
+    ProsumerYearGraphComponent,
+    PredictionDsoComponent
   ],
   imports: [
     AppRoutingModule,
