@@ -513,7 +513,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("Pagination/{pageNumber:int}/{itemsPerPage:int}")]
-        public async Task<IActionResult> GetHistoryResultsPagination([FromRoute] int pageNumber, [FromRoute] int itemsPerPage, [FromQuery] long PastMonthByDayDeviceId, long PastMonthByDayUserId, long deviceCategoryId)
+        public async Task<IActionResult> GetHistoryResultsPagination([FromRoute] int pageNumber, [FromRoute] int itemsPerPage, [FromQuery] long PastMonthByDayDeviceId, long PastMonthByDayUserId, long deviceCategoryId, long PastMonthByDaySettlementId)
         {
             if(PastMonthByDayDeviceId != 0)
             {
@@ -523,12 +523,20 @@ namespace Server.Controllers
                 var result = historyService.GetDailyEnergyUsageForPastMonthPagination(PastMonthByDayDeviceId, pageNumber, itemsPerPage);
                 return Ok(result);
             }
-            else // if(PastMonthByDayUserId != 0)
+            else if(PastMonthByDayUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == PastMonthByDayUserId))
                     return NotFound(new { message = "User with the ID: " + PastMonthByDayUserId.ToString() + " does not exist." });
 
                 var result = historyService.GetProsumerDailyEnergyUsageForPastMonthPagination(PastMonthByDayUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
+            else // if (PastMonthByDaySettlementId != 0)
+            {
+                if (!_sqliteDb.Settlements.Any(s => s.Id == PastMonthByDaySettlementId))
+                    return NotFound(new { message = "User with the ID: " + PastMonthByDaySettlementId.ToString() + " does not exist." });
+
+                var result = historyService.GetSettlementDailyEnergyUsageForPastMonthPagination(PastMonthByDaySettlementId, deviceCategoryId, pageNumber, itemsPerPage);
                 return Ok(result);
             }
         }
