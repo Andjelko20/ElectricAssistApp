@@ -100,7 +100,7 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == byHourUserId))
                     return NotFound(new { message = "User with ID: " + byHourUserId.ToString() + " does not exist." });
                 
-                List<EnergyToday> result = historyFromToService.GetProsumerHistoryByHourFromTo(fromDate, toDate, byHourUserId);
+                List<EnergyToday> result = historyFromToService.GetProsumerHistoryByHourFromTo(fromDate, toDate, byHourUserId, deviceCategoryId);
                 return Ok(result);
             }
             else  if(byDayUserId != 0)
@@ -108,7 +108,7 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == byDayUserId))
                     return NotFound(new { message = "User with ID: " + byDayUserId.ToString() + " does not exist." });
 
-                var result = historyFromToService.GetProsumerHistoryByDayFromTo(fromDate, toDate, byDayUserId);
+                var result = historyFromToService.GetProsumerHistoryByDayFromTo(fromDate, toDate, byDayUserId, deviceCategoryId);
                 return Ok(result);
             }
             else if(doubleUserId != 0)
@@ -116,7 +116,7 @@ namespace Server.Controllers
                 if (!_sqliteDb.Users.Any(u => u.Id == doubleUserId))
                     return NotFound(new { message = "User with ID: " + doubleUserId.ToString() + " does not exist." });
 
-                var result = historyFromToService.GetProsumerDoubleHistoryFromTo(fromDate, toDate, doubleUserId);
+                var result = historyFromToService.GetProsumerDoubleHistoryFromTo(fromDate, toDate, doubleUserId, deviceCategoryId);
                 return Ok(result);
             }
             else if (doubleDeviceId != 0)

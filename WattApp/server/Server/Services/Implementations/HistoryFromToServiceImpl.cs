@@ -19,7 +19,6 @@ namespace Server.Services.Implementations
         {
             DateTime FromDate = DateTime.Parse(fromDate);
             DateTime ToDate = DateTime.Parse(toDate);
-            Console.WriteLine("/******************** from=" + fromDate + " --- " + toDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -344,7 +343,7 @@ namespace Server.Services.Implementations
         }
 
         // PROSUMER
-        public List<EnergyToday> GetProsumerHistoryByHourFromTo(string fromDate, string toDate, long userId)
+        public List<EnergyToday> GetProsumerHistoryByHourFromTo(string fromDate, string toDate, long userId, long categoryId)
         {
             DateTime FromDate = DateTime.Parse(fromDate);
             DateTime ToDate = DateTime.Parse(toDate);
@@ -363,13 +362,15 @@ namespace Server.Services.Implementations
                                         FROM
 	                                        DeviceEnergyUsages deu
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
-	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                            JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
                                         WHERE
 	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
                                         GROUP BY
 	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime)";
 
                 command.Parameters.Add(new SqliteParameter("@userId", userId));
+                command.Parameters.Add(new SqliteParameter("@categoryId", categoryId));
                 command.Parameters.Add(new SqliteParameter("@fromDate", FromDate));
                 command.Parameters.Add(new SqliteParameter("@toDate", ToDate));
 
@@ -404,7 +405,7 @@ namespace Server.Services.Implementations
             }
         }
 
-        public List<DailyEnergyConsumptionPastMonth> GetProsumerHistoryByDayFromTo(string fromDate, string toDate, long userId)
+        public List<DailyEnergyConsumptionPastMonth> GetProsumerHistoryByDayFromTo(string fromDate, string toDate, long userId, long categoryId)
         {
             DateTime FromDate = DateTime.Parse(fromDate);
             DateTime ToDate = DateTime.Parse(toDate);
@@ -423,13 +424,15 @@ namespace Server.Services.Implementations
                                         FROM
 	                                        DeviceEnergyUsages deu
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
-	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                            JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
                                         WHERE
 	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
                                         GROUP BY
 	                                        DATE(deu.StartTime)";
 
                 command.Parameters.Add(new SqliteParameter("@userId", userId));
+                command.Parameters.Add(new SqliteParameter("@categoryId", categoryId));
                 command.Parameters.Add(new SqliteParameter("@fromDate", FromDate));
                 command.Parameters.Add(new SqliteParameter("@toDate", ToDate));
 
@@ -462,7 +465,7 @@ namespace Server.Services.Implementations
             }
         }
 
-        public double GetProsumerDoubleHistoryFromTo(string fromDate, string toDate, long userId)
+        public double GetProsumerDoubleHistoryFromTo(string fromDate, string toDate, long userId, long categoryId)
         {
             DateTime FromDate = DateTime.Parse(fromDate);
             DateTime ToDate = DateTime.Parse(toDate);
@@ -477,11 +480,13 @@ namespace Server.Services.Implementations
                                         FROM
 	                                        DeviceEnergyUsages deu
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
-	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                            JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
                                         WHERE
 	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate";
 
                 command.Parameters.Add(new SqliteParameter("@userId", userId));
+                command.Parameters.Add(new SqliteParameter("@categoryId", categoryId));
                 command.Parameters.Add(new SqliteParameter("@fromDate", FromDate));
                 command.Parameters.Add(new SqliteParameter("@toDate", ToDate));
 

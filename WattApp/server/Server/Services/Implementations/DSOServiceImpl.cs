@@ -169,15 +169,11 @@ namespace Server.Services.Implementations
                 .Select(d => d.Id)
                 .ToList();
 
-            Console.WriteLine("************************ devices count = " + deviceIds.Count());
-
             // Pronadji sve zapise potrosnje iz tabele DeviceEnergyUsages za sve uredjaje koji su radili u zadatom vremenskom intervalu
             var energyUsages = _context.DeviceEnergyUsages
                 .Where(usage => usage.StartTime >= startDateTime && usage.StartTime <= endDateTime
                     && deviceIds.Contains(usage.DeviceId))
                 .ToList();
-
-            Console.WriteLine("************************ energyUsages count = " + energyUsages.Count());
 
             // Sumiraj potrošnju svih uređaja po satu u zadatom vremenskom intervalu
             for (int hour = 0; hour <= endDateTime.Hour; hour++)
@@ -191,7 +187,6 @@ namespace Server.Services.Implementations
 
                 foreach (var usage in energyUsages)
                 {
-                    Console.WriteLine("*********************** usage.DeviceId="+usage.DeviceId+" --- usage.StartTime="+usage.StartTime+" --- usage.EndTime="+usage.EndTime);
                     double energyKwh = _context.DeviceEnergyUsages
                                         .Join(
                                             _context.Devices,

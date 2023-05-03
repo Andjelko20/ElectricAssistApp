@@ -88,15 +88,12 @@ namespace Server.Services.Implementations
             var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
             var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
             float EnergyInKwh = DeviceModel.EnergyKwh; // da li je null proverava se u kontroleru i vraca NotFound
-            Console.WriteLine("''''''''''''''''''''''''' EnergyInKwh="+EnergyInKwh);
             double Consumption = 0.0;
             double Hours = -1;
             foreach (var item in deviceEnergyUsageLista)
             {
                 Hours = Math.Abs((item.EndTime - item.StartTime).TotalHours);
-                Console.WriteLine("'''''''''''''''''' Hours="+Hours);
                 Consumption += (double)(EnergyInKwh * Hours);
-                Console.WriteLine("''''''''''''''''''Consumption="+Consumption);
             }
 
             return Math.Round(Consumption, 2);
@@ -143,7 +140,6 @@ namespace Server.Services.Implementations
                         UsageInHours = (item.EndTime - item.StartTime).TotalHours;
                         UsageInKwh += UsageInHours * EnergyInKwh; //Device.EnergyInKwh;
                     }
-                    //Console.WriteLine("****** " + StartDate + " - " + UsageInKwh);
                     Results.Insert(0, new MonthlyEnergyConsumptionLastYear
                     {
                         Month = StartDate.ToString("MMMM"),
@@ -326,7 +322,6 @@ namespace Server.Services.Implementations
             for (var i = 0; i < 12; i++)
             {
                 var monthStartDate = startDate.AddMonths(i);
-                //Console.WriteLine("***** monthStartDate: " + monthStartDate);
                 var monthEndDate = monthStartDate.AddMonths(1).AddDays(-1).AddSeconds(1);
                 var monthlyEnergyUsage = 0.0;
 
@@ -861,8 +856,6 @@ namespace Server.Services.Implementations
             {
                 if (usage.EndTime > endTime)
                     usage.EndTime = endTime;
-
-                Console.WriteLine("-------------++++++++++++++++++---------- deviceId="+usage.DeviceId+" --- startTime="+usage.StartTime+" --- endTime="+usage.EndTime);
             }
 
             return GetConsumptionForForwardedList(deviceId, deviceEnergyUsageList);
@@ -880,8 +873,6 @@ namespace Server.Services.Implementations
                 // od 00:00h do ovog trenutka, danasnjeg dana
                 if (usage.EndTime > DateTime.Now)
                     usage.EndTime = DateTime.Now;
-
-                Console.WriteLine("-------------++++++++++++++++++---------- deviceId=" + usage.DeviceId + " --- startTime=" + usage.StartTime + " --- endTime=" + usage.EndTime);
             }
 
             return GetConsumptionForForwardedList(deviceId, deviceEnergyUsages);
@@ -890,7 +881,6 @@ namespace Server.Services.Implementations
         public double GetUsageHistoryForDeviceThisYear(long deviceId)
         {
             DateTime startOfTheYear = new DateTime(DateTime.Now.Year, 1, 1);
-            Console.WriteLine("----------------------- startOfTheYear="+startOfTheYear);
             // za trazeni uredjaj, samo kada je radio od pocetka ove godine
             var deviceEnergyUsages = _context.DeviceEnergyUsages
                 .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date >= startOfTheYear && usage.StartTime <= DateTime.Now)
@@ -901,8 +891,6 @@ namespace Server.Services.Implementations
                 // od 01.01.2023.(trenutne godine) 00:00:00h do ovog trenutka, danasnjeg dana
                 if (usage.EndTime > DateTime.Now)
                     usage.EndTime = DateTime.Now;
-
-                Console.WriteLine("-------------++++++++++++++++++---------- deviceId=" + usage.DeviceId + " --- startTime=" + usage.StartTime + " --- endTime=" + usage.EndTime);
             }
 
             return GetConsumptionForForwardedList(deviceId, deviceEnergyUsages);
@@ -913,21 +901,17 @@ namespace Server.Services.Implementations
             DateTime startOfThePreviousMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month-1, 1);
             DateTime startOfTheCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             DateTime endOfThePreviousMonth = startOfTheCurrentMonth.AddSeconds(-1);
-            Console.WriteLine("----------------------- startOfThePreviousMonth=" + startOfThePreviousMonth);
-            Console.WriteLine("----------------------- startOfThePreviousMonth=" + endOfThePreviousMonth);
             // za trazeni uredjaj, samo kada je radio od pocetka do kraja prethodnog meseca
             var deviceEnergyUsages = _context.DeviceEnergyUsages
                 .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date >= startOfThePreviousMonth && usage.EndTime <= endOfThePreviousMonth)
                 .ToList();
 
-            foreach (var usage in deviceEnergyUsages)
-            {
+           // foreach (var usage in deviceEnergyUsages)
+           // {
                 // od 01. u prethodnom mesecu od 00:00:00h do 23:59:59h poslednjeg dana u mesecu
                 /*if (usage.EndTime > endOfThePreviousMonth)
                     usage.EndTime = endOfThePreviousMonth;*/
-
-                Console.WriteLine("-------------++++++++++++++++++---------- deviceId=" + usage.DeviceId + " --- startTime=" + usage.StartTime + " --- endTime=" + usage.EndTime);
-            }
+           // }
 
             return GetConsumptionForForwardedList(deviceId, deviceEnergyUsages);
         }
