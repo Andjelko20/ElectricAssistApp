@@ -7,6 +7,14 @@
     display: inline-block;
     
 }
+.example-month-picker .mat-calendar-period-button {
+    pointer-events: none;
+  }
+  
+  .example-month-picker .mat-calendar-arrow {
+    display: none;
+  }
+
 @media only screen and (min-width: 768px) and (max-width: 1280px) {
     .chart {
         display: inline-block;

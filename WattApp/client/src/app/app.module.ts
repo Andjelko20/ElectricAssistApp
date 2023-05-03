@@ -86,6 +86,13 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
 import { NgbModalModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldControl } from "@angular/material/form-field";
+import { MatInputModule } from '@angular/material/input';
+
 
 
 
@@ -189,8 +196,13 @@ import { LoaderComponent } from './components/loader/loader.component';
     FormsModule,
     BrowserModule,
 	  NgxPaginationModule,
-    NgbModalModule
-    
+    NgbModalModule,
+    MatDatepickerModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule
+
   ],
   providers: [DecimalPipe],
   bootstrap: [AppComponent]
