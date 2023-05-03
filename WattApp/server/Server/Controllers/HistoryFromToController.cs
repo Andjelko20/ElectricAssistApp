@@ -25,12 +25,13 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, long deviceCategoryId, 
-                                                                       long cityId, long settlementId, long byMonthCityId, long byDayCityId, 
-                                                                       long byDaySettlementId, long byHourSettlementId, 
-                                                                       long byHourCityId, long byMonthUserId, long byDayUserId, 
-                                                                       long byHourUserId, long doubleUserId, long doubleDeviceId, 
-                                                                       long byMonthDeviceId, long byHourDeviceId, long byDayDeviceId)
+        public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, 
+                                                                       long deviceCategoryId,
+                                                                       long cityId, long settlementId, 
+                                                                       long byMonthCityId, long byDayCityId, long byHourCityId,
+                                                                       long byMonthSettlementId, long byDaySettlementId, long byHourSettlementId, 
+                                                                       long byMonthUserId, long byDayUserId, long byHourUserId, long doubleUserId,
+                                                                       long doubleDeviceId, long byMonthDeviceId, long byHourDeviceId, long byDayDeviceId)
         {
             if(cityId!=0)
             {
@@ -161,14 +162,22 @@ namespace Server.Controllers
                 var result = historyFromToService.GetProsumerHistoryByMonthFromTo(fromDate, toDate, byMonthUserId, deviceCategoryId);
                 return Ok(result);
             }
-            else // if (byMonthCityId != 0)
+            else if (byMonthCityId != 0)
             {
-                if (!_sqliteDb.Cities.Any(d => d.Id == byMonthCityId))
+                if (!_sqliteDb.Cities.Any(c => c.Id == byMonthCityId))
                     return NotFound(new { message = "City with ID: " + byMonthCityId.ToString() + " does not exist." });
 
                 var result = historyFromToService.GetCityHistoryByMonthFromTo(fromDate, toDate, deviceCategoryId, byMonthCityId);
                 return Ok(result);
-}
+            }
+            else // if (byMonthSettlementId != 0)
+            {
+                if (!_sqliteDb.Settlements.Any(s => s.Id == byMonthSettlementId))
+                    return NotFound(new { message = "Settlement with ID: " + byMonthSettlementId.ToString() + " does not exist." });
+
+                var result = historyFromToService.GetSettlementHistoryByMonthFromTo(fromDate, toDate, deviceCategoryId, byMonthSettlementId);
+                return Ok(result);
+            }
         }
     }
 }
