@@ -47,7 +47,7 @@ export class AuthService {
 	if(filters?.city>0)
 		url.searchParams.set("CityId",filters.city);
 	if(filters?.settlement>0)
-		url.searchParams.set("SettlementId",filters.settlement);
+		url.searchParams.set("SettlmentId",filters.settlement);
 	if(filters?.name!==undefined && filters.name.trim()!=='')
 		url.searchParams.set("SearchValue",filters.name);
 	if(filters?.blocked>-1)

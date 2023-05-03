@@ -37,7 +37,6 @@ markerConfig = {
 }
 
 onClick() {
-  console.log(this.foregroundColor, this.backgroundColor);
   this.foregroundColor = 'red';
 }
 

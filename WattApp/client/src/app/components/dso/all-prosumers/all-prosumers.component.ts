@@ -106,7 +106,6 @@ export class AllProsumersComponent implements OnInit{
 				let res=JSON.parse(ress);
 				if(res?.data==undefined)
 					return;
-				console.log(res);
 				this.data=res?.data;
 				this.currentPage=pageNumber;
 				this.totalItems=res.numberOfPages*this.itemsPerPage;

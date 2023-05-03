@@ -18,8 +18,8 @@ export class TodayTabelarProsumerComponent implements OnInit{
   selectedOption: number = 0;
 
   onOptionSelected() {
-    console.log("List1 ="+this.list1);
-    console.log("List2 ="+this.list2);
+    //console.log("List1 ="+this.list1);
+    //console.log("List2 ="+this.list2);
 
     this.ngOnInit();
   }

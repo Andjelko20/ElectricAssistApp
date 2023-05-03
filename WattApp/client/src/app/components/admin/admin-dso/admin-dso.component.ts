@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShowUsers, Users } from 'src/app/models/users.model';
@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './admin-dso.component.html',
   styleUrls: ['./admin-dso.component.css']
 })
-export class AdminDsoComponent {
+export class AdminDsoComponent implements OnInit {
   @ViewChild('modalContent') modalContent!: TemplateRef<any>;
   @ViewChild('modalContent1') modalContent1!: TemplateRef<any>;
   body: string = ''; 
@@ -25,6 +25,7 @@ export class AdminDsoComponent {
   showUsers:ShowUsers[]=[];
   cities:any[]=[];
   settlements:any[]=[];
+  loading:boolean=true;
   public filters={
 	blocked:-1,
 	role:0,
@@ -60,42 +61,33 @@ export class AdminDsoComponent {
     private route:ActivatedRoute,private modalService: NgbModal) { }
 
 	getSettlements(){
-		
+
 		fetch(environment.serverUrl+"/settlements?cityId="+this.filters.city)
 		.then(res=>res.json())
 		.then(res=>{
 	  		this.settlements=res;
 		});
 	}
-  ngOnInit(): void {
+	cityChanged(){
+		this.getSettlements();
+		this.filters.settlement=0;
+		this.pageChanged(1);
+	}
+  ngOnInit(){
+	this.pageChanged(1);
 	fetch(environment.serverUrl+"/cities?countryId=1")
 	.then(res=>res.json())
 	.then(res=>{
 		this.cities=res
   	});
-	
-    this.usersService.getAllUsers(1).subscribe(users => {
-      this.totalItems=users.numberOfPages*this.itemsPerPage;
-        this.showUsers=users.data.map((u:any)=>({
-          id: u.id,
-          name: u.name,
-          username: u.username,
-          block: u.blocked,
-          email: u.email,
-          role: u.role,
-          settlement:u.settlement,
-          city:u.city,
-          address:u.address,
-          country:u.country
-        } as ShowUsers));
-        });
-      
-      
   }
+  
+  
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
-
-		this.usersService.getAllUsers(pageNumber,this.itemsPerPage,this.filters).subscribe(users => {
+		this.loading=true;
+		this.usersService.getAllUsers(pageNumber,this.itemsPerPage,this.filters).subscribe(
+			{ next:users => {
 			this.totalItems=users.numberOfPages*this.itemsPerPage;
 			this.showUsers=users.data.map((u:any)=>({
 			  id: u.id,
@@ -109,8 +101,18 @@ export class AdminDsoComponent {
        address:u.address,
        country:u.country
 			} as ShowUsers));
-		   });
-	}
+			setTimeout(()=>{
+				this.loading=false;
+			},0);
+			
+		   },
+		   error:err=>{
+			this.showUsers=[];
+			setTimeout(()=>{
+				this.loading=false;
+			},0);
+		}});
+		}
 
   blockUser(id: number) {
     

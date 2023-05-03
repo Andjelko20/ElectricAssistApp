@@ -20,7 +20,7 @@ export class YearTabelarProsumerComponent {
           this.deviceService.yearByMonthUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data:YearsByMonth[])=>{
             this.list1 = data;
             this.deviceService.yearByMonthUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data:YearsByMonth[])=>{
-              console.log("Data => ", data);
+              //console.log("Data => ", data);
               this.list2 = data;
             })
           })

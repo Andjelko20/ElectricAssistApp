@@ -1,16 +1,32 @@
 .form-group{
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 }
 .form-group select{
-	border-radius: 3px;
-	cursor: pointer;
+	border-radius: 4px;
+	/*cursor: pointer;*/
+	height: 24px;
+}
+.no-users{
+	text-align: center;
+    font-size: 30px;
 }
 .filter{
 	display: flex;
 	flex-wrap: wrap;
 	padding: 10px;
 	gap:10px;
+}
+.settlement-text{
+	color:black;
+	margin: 0;
+}
+.search{
+	border-radius: 4px;
+	outline:none;
+	border: 1px solid black;
+	padding: 2px 3px;
 }
 .first {
     padding: 15px;

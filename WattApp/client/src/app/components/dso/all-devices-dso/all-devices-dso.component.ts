@@ -66,7 +66,7 @@ export class AllDevicesDsoComponent implements OnInit{
     
       this.devicesList=[]
     
-      console.log('Devices not found in database');
+      //console.log('Devices not found in database');
     
     }}
     
@@ -100,7 +100,7 @@ export class AllDevicesDsoComponent implements OnInit{
 	  
 		this.devicesList=[]
 	  
-		console.log('Devices not found in database');
+		//console.log('Devices not found in database');
 	  
 	  }}
 	  
@@ -134,7 +134,7 @@ export class AllDevicesDsoComponent implements OnInit{
     
       this.devicesList=[]
     
-      console.log('Devices not found in database');
+      //console.log('Devices not found in database');
     
     }}
     
@@ -146,7 +146,7 @@ export class AllDevicesDsoComponent implements OnInit{
         this.confirmTurnOnOff=false;
         const turnOn= document.getElementById('popup');
        
-        console.log(turnOn);
+        //console.log(turnOn);
        if(turnOn!=null)
        {
         this.body = 'Do you want to turn on this device?';
