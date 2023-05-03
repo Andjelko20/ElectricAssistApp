@@ -513,16 +513,24 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("Pagination/{pageNumber:int}/{itemsPerPage:int}")]
-        public async Task<IActionResult> GetHistoryResultsPagination([FromRoute] int pageNumber, [FromRoute] int itemsPerPage, [FromQuery] long PastMonthByDayDeviceId)
+        public async Task<IActionResult> GetHistoryResultsPagination([FromRoute] int pageNumber, [FromRoute] int itemsPerPage, [FromQuery] long PastMonthByDayDeviceId, long PastMonthByDayUserId, long deviceCategoryId)
         {
-            //if(PastMonthByDayDeviceId != 0)
-            //{
+            if(PastMonthByDayDeviceId != 0)
+            {
                 if (!_sqliteDb.Devices.Any(d => d.Id == PastMonthByDayDeviceId))
                     return NotFound(new {message = "Device with the ID: " + PastMonthByDayDeviceId.ToString() + " does not exist."});
 
                 var result = historyService.GetDailyEnergyUsageForPastMonthPagination(PastMonthByDayDeviceId, pageNumber, itemsPerPage);
                 return Ok(result);
-            //}
+            }
+            else // if(PastMonthByDayUserId != 0)
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == PastMonthByDayUserId))
+                    return NotFound(new { message = "User with the ID: " + PastMonthByDayUserId.ToString() + " does not exist." });
+
+                var result = historyService.GetProsumerDailyEnergyUsageForPastMonthPagination(PastMonthByDayUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
         }
     }
 }
