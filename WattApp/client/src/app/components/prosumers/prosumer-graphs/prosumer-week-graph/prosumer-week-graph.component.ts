@@ -1,30 +1,82 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
+import {DateAdapter} from '@angular/material/core';
+import {
+  MatDateRangeSelectionStrategy,
+  DateRange,
+  MAT_DATE_RANGE_SELECTION_STRATEGY,
+  MatDatepickerInputEvent,
+} from '@angular/material/datepicker';
 Chart.register(...registerables)
+
+@Injectable()
+export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionStrategy<D> {
+  constructor(private _dateAdapter: DateAdapter<D>) {}
+
+  selectionFinished(date: D | null): DateRange<D> {
+    return this._createFiveDayRange(date);
+  }
+
+  createPreview(activeDate: D | null): DateRange<D> {
+    return this._createFiveDayRange(activeDate);
+  }
+
+  private _createFiveDayRange(date: D | null): DateRange<D> {
+    if (date) {
+      const start = this._dateAdapter.addCalendarDays(date, -4);
+      const end = this._dateAdapter.addCalendarDays(date, 3);
+      return new DateRange<D>(start, end);
+    }
+
+    return new DateRange<D>(null, null);
+  }
+}
 @Component({
   selector: 'app-prosumer-week-graph',
   templateUrl: './prosumer-week-graph.component.html',
-  styleUrls: ['./prosumer-week-graph.component.css']
+  styleUrls: ['./prosumer-week-graph.component.css'],
+  providers: [
+    {
+      provide: MAT_DATE_RANGE_SELECTION_STRATEGY,
+      useClass: FiveDayRangeSelectionStrategy,
+    },
+  ],
 })
 export class ProsumerWeekGraphComponent {
-
-
+  maxDate: Date;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
-    
+    this.maxDate = new Date();
+    this.campaignOne.valueChanges.subscribe((value) => {
+      this.sdate = value.start;
+      this.send = value.end;
+      if(this.send > this.maxDate){
+        this.send = null;
+      }
+      this.ngOnInit();
+    });
   }
+  campaignOne: FormGroup = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
+
+  sdate = this.campaignOne.value.start;
+  send = this.campaignOne.value.end;
 
   ngOnInit(): void {
     let token=new JwtToken();
     const id = token.data.id as number;
 
-    forkJoin([
+    if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
+      forkJoin([
         this.deviceService.weekByDayUser(id, 2),
         this.deviceService.weekByDayUser(id, 1),
       ]).subscribe(([list1, list2]) => {
@@ -32,7 +84,26 @@ export class ProsumerWeekGraphComponent {
         this.list2 = list2;
         this.LineChart();
     });
-    
+    }
+    else{
+      const day1 = this.sdate.getDate();
+          const month1 = this.sdate.getMonth()+1;
+          const year1 = this.sdate.getFullYear();
+          const day2 = this.send.getDate();
+          const month2 = this.send.getMonth()+1;
+          const year2 = this.send.getFullYear();
+          let string1 = year1+'-'+month1+'-'+day1;
+          let string2 = year2+'-'+month2+'-'+day2;
+
+          forkJoin([
+            this.deviceService.weekByDayUserFilter(string1,string2,id, 2),
+            this.deviceService.weekByDayUserFilter(string1,string2,id, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
+    }
   }
   LineChart(){
 

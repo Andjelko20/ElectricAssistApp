@@ -2,6 +2,14 @@
     <div class="row">
       <div class="col-md-12">
         <h1>Energy Usage</h1>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter a date</mat-label>
+          <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button class="btn" (click)="downloadCSV()">Export to CSV</button>
         <div class="table-container">
           <div class="table-wrapper">
             <h2 class="table-title">Consumption/Production</h2>

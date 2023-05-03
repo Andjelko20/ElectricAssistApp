@@ -95,6 +95,8 @@ import { ProsumerWeekTableComponent } from './components/prosumers/prosumer-tabl
 import { ProsumerDayTableComponent } from './components/prosumers/prosumer-tables/prosumer-day-table/prosumer-day-table.component';
 import { MatFormFieldControl } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
+import { ProsumerMonthGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-month-graph/prosumer-month-graph.component";
+import { ProsumerYearGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-year-graph/prosumer-year-graph.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -188,7 +190,8 @@ import { MatInputModule } from '@angular/material/input';
     ProsumerMonthTableComponent,
     ProsumerWeekTableComponent,
     ProsumerDayTableComponent,
-    
+    ProsumerMonthGraphComponent,
+    ProsumerYearGraphComponent
   ],
   imports: [
     AppRoutingModule,

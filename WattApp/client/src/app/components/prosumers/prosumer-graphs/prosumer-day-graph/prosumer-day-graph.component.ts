@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart,registerables } from 'node_modules/chart.js'
-import { combineLatest } from 'rxjs';
+import { combineLatest, forkJoin } from 'rxjs';
 import { DayByHour } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
@@ -13,24 +13,73 @@ Chart.register(...registerables)
 })
 export class ProsumerDayGraphComponent {
   
-
+  maxDate = new Date();
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     
   }
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
+
+  selectedDate!: Date;
+
+  onDateSelected(event: { value: Date; }) {
+    this.selectedDate = event.value;
+    this.ngOnInit();
+  }
+
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
   
-    combineLatest([
-      this.deviceService.dayByHourUser(userId, 2),
-      this.deviceService.dayByHourUser(userId, 1)
-    ]).subscribe(([list1, list2]) => {
-      this.list1 = list1;
-      this.list2 = list2;
-      this.LineChart();
-    });
+    if(this.selectedDate == undefined){
+      combineLatest([
+        this.deviceService.dayByHourUser(userId, 2),
+        this.deviceService.dayByHourUser(userId, 1)
+      ]).subscribe(([list1, list2]) => {
+        this.list1 = list1;
+        this.list2 = list2;
+        this.LineChart();
+      });
+    }
+    else if(this.selectedDate !== undefined){
+      const day = this.selectedDate.getDate();
+      const month = this.selectedDate.getMonth()+1;
+      const year = this.selectedDate.getFullYear();
+      let string1 = '';
+      let string2 = '';
+      if(month % 2 )
+          {
+            if(day == 30 || (month == 2 && day == 28)){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
+          }
+          else if(month % 2 == 1){
+            if(day == 31 || (month == 6 || month == 7) ){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
+          }
+
+      forkJoin([
+        this.deviceService.dayByHourUserFilter(string1,string2,userId, 2),
+        this.deviceService.dayByHourUserFilter(string1,string2,userId, 1)
+      ]).subscribe(([list1, list2]) => {
+        this.list1 = list1;
+        this.list2 = list2;
+        this.LineChart();
+      });
+    }
+    
+  
   }
   LineChart(){
 
