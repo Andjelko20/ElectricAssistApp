@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Data;
 using Server.DTOs;
+using Server.Models.DropDowns.Devices;
 using Server.Services;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Server.Controllers
 {
@@ -24,7 +26,7 @@ namespace Server.Controllers
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, long deviceCategoryId, 
-                                                                       long cityId, long settlementId, long byDayCityId, 
+                                                                       long cityId, long settlementId, long byMonthCityId, long byDayCityId, 
                                                                        long byDaySettlementId, long byHourSettlementId, 
                                                                        long byHourCityId, long byMonthUserId, long byDayUserId, 
                                                                        long byHourUserId, long doubleUserId, long doubleDeviceId, 
@@ -151,7 +153,7 @@ namespace Server.Controllers
                 var result = historyFromToService.GetDeviceHistoryByMonthFromTo(fromDate, toDate, byMonthDeviceId);
                 return Ok(result);
             }
-            else // if (byMonthUserId != 0)
+            else if (byMonthUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(d => d.Id == byMonthUserId))
                     return NotFound(new { message = "User with ID: " + byMonthUserId.ToString() + " does not exist." });
@@ -159,6 +161,14 @@ namespace Server.Controllers
                 var result = historyFromToService.GetProsumerHistoryByMonthFromTo(fromDate, toDate, byMonthUserId, deviceCategoryId);
                 return Ok(result);
             }
+            else // if (byMonthCityId != 0)
+            {
+                if (!_sqliteDb.Cities.Any(d => d.Id == byMonthCityId))
+                    return NotFound(new { message = "City with ID: " + byMonthCityId.ToString() + " does not exist." });
+
+                var result = historyFromToService.GetCityHistoryByMonthFromTo(fromDate, toDate, deviceCategoryId, byMonthCityId);
+                return Ok(result);
+}
         }
     }
 }
