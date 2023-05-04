@@ -15,6 +15,7 @@ export class CurrentPowerWattmeterComponent implements OnInit{
   valuekWh!: any;
   valueMWh!: any;
   valueGWh!: any;
+  loader:boolean=false;
   min: number = 0;
   max: number = 2400;
   markerConfig = {
@@ -38,10 +39,11 @@ constructor(private historyService:HistoryPredictionService,private authService:
 }
   async ngOnInit(){
   let token=new JwtToken();
-  
+  this.loader=true;
   this.authService.getlogInUser().subscribe(user=>{
     this.authService.getCityId(user.city).subscribe(number=>{
       this.historyService.getCurrentConsumptionProductionCity(2,number).subscribe(data=>{
+        this.loader=false;
         this.value=data;
         this.valuekWh = this.value.toFixed(2);
         this.valueMWh= (this.valuekWh*0.001).toFixed(2);

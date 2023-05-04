@@ -185,7 +185,7 @@ export class PredictionDsoComponent {
           },
           title: {
             display: true,
-            text: ' Consumption and production in a week',
+            text: ' Prediction of consumption and production for next week',
             color:'#000',
             font:{
               size:20

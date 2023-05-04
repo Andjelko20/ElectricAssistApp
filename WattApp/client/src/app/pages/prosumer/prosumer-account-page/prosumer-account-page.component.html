@@ -13,9 +13,8 @@
                     <li class="li1">Username: {{name}}</li>
                     <li class="li1">E-mail: {{email}}</li>
                     <li class="li1">Adress:{{adres}}</li>
-                    <li class="li1" *ngIf="this.role==this.prosumer" id="number">Number of devices: {{numOfDevices}}</li>
-                    <li class="aa" *ngIf="this.role==this.prosumer"> <img id="imgdevice1" src="assets/userSetting.png" alt=""><a [routerLink]='["/profile-update"]'>Edit Profile</a></li>
-                    <li class="aa" *ngIf="this.role==this.dso"><a [routerLink]='["/profile-dso-update"]'>Edit Profile</a></li>
+                    <li class="li1" id="number">Number of devices: {{numOfDevices}}</li>
+                    <li class="aa" > <img id="imgdevice1" src="assets/userSetting.png" alt=""><a [routerLink]='["/profile-edit"]'>Edit Profile</a></li>
                     <li class="aa"> <img id="imgdevice111" src="assets/key.png" alt=""><a id="pass" [routerLink]='["/prosumer-change-password"]'>Change Password</a></li>
                     <li class="aa"> <img id="imgdevice11" src="assets/exit.png" alt=""><a id="logout" (click)="logout()">Log out</a></li>
 

@@ -99,20 +99,15 @@ export class ProsumerChangePasswordComponent {
   
   upDateProsumer()
   {
-    // this.onSelectedBlock(this.updateUserDetail.block);
-    // console.log("Azuriran objekat: ",this.updateUserDetail);
-    this.updateService.upDateProsumer(this.updateUserDetail)
+   
+    this.updateService.upDateLogedIn(this.updateUserDetail)
     .subscribe({
       next:()=>{
         this.router.navigate(['prosumer-account-page']);
       }
     });
   }
-  generatePassword() {
-    this.passwordGen=Array(10).
-    fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").
-    map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
-  }
+ 
   sendEmail(){
 		this.emailUp=this.updateUserDetail.email;
 		this.updateService.adminChangePasswordEmail(this.emailUp).subscribe({

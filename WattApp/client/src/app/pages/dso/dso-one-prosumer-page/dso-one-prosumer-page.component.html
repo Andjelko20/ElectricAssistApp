@@ -7,9 +7,6 @@
       <input type="radio" (click)="toggleD()" name="toggle" id="devices-btn">
       <label for="devices-btn">Devices</label>
     </div>
-    <!-- <div class="date-time">
-      <p>{{ currentTime | date: 'dd.MM.yyyy HH:mm' }}</p>
-    </div> -->
   </div>
 <div class="container" *ngIf="dashboard">
   <div class="card-group">
@@ -71,16 +68,12 @@
     <div class="history-charts">
       <div class="tgl-container">
           <div class="tgl-btn">
-            <input type="radio" (click)="showGraph()" name="toggle" id="graphic-btn" checked >
+            <input type="radio" (click)="showGraph()" name="toggle1" id="graphic-btn" checked >
             <label for="graphic-btn">Graphical view</label>
             <span class="divider"></span>
-            <input type="radio" (click)="showTable()" name="toggle" id="tabelar-btn">
+            <input type="radio" (click)="showTable()" name="toggle1" id="tabelar-btn">
             <label for="tabelar-btn">Tabelar view</label>
           </div>
-      </div>
-      <div class="csv-body">
-          <span>Power and Energy</span>
-          <button class="csv-button">CSV</button>
       </div>
       <ng-container *ngIf="graph">
           <div class="chart-body">
