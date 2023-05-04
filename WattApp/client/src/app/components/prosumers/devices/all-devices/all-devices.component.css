@@ -60,7 +60,7 @@
 
 #deviceh3 {
     padding-top: 10px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 #imgdevice {
@@ -81,6 +81,7 @@
     position: relative;
     margin: 5px;
 }
+
 .devices-device-item1 {
     border: 3px solid rgb(236, 7, 41);
     border-radius: 100px;
