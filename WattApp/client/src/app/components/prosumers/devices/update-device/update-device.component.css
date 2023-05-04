@@ -133,6 +133,19 @@ input.ng-touched {
   .slider.round:before {
     border-radius: 50%;
   }
+  #modalContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #subb{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    text-align: right;
+    align-items: right;
+    
+  }
 @media(min-width:768px) {
     .main {
         top: 0;

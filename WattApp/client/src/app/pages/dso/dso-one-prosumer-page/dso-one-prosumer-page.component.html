@@ -78,10 +78,10 @@
       <ng-container *ngIf="graph">
           <div class="chart-body">
               <div class="chart-buttons">
-                <button (click)="showComponentGraph()" class="chart-button">Day</button>
-                <button (click)="showComponentGraph1()" class="chart-button">Week</button>
-                <button (click)="showComponentGraph2()" class="chart-button">Month</button>
-                <button (click)="showComponentGraph3()" class="chart-button">Year</button>
+                <button (click)="showComponentGraph()" class="chart-button" [class.active]="compGraph">Day</button>
+                <button (click)="showComponentGraph1()" class="chart-button" [class.active]="compGraph1">Week</button>
+                <button (click)="showComponentGraph2()" class="chart-button" [class.active]="compGraph2">Month</button>
+                <button (click)="showComponentGraph3()" class="chart-button" [class.active]="compGraph3">Year</button>
               </div>
             </div>
           <div class="history-charts-body" *ngIf="compGraph">
