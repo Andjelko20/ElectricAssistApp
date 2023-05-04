@@ -21,6 +21,7 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
   tooltip: Tooltip | undefined;
   numberOfProsumers=0;
   avgProduction?:number;
+  totalProduction?:number;
   idUser!:number;
   role!:string;
   updateUserDetail:Prosumers={
@@ -83,13 +84,17 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
     this.numberOfProsumers = res;
 
     const result = await this.avgConsumption
-      .getAverageConsumptionProductionCity(1, 2)
+      .getAverageConsumptionProductionCity(1, this.idUser)
       .pipe(first())
       .toPromise();
 
     this.avgProduction = result!;
-    
-    
+    const result1 = await this.avgConsumption
+      .getCurrentConsumptionProductionCity(1, this.idUser)
+      .pipe(first())
+      .toPromise();
+
+    this.totalProduction = result1!;
   }
 
   graph:boolean = true;

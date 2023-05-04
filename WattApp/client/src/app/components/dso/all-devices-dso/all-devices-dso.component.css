@@ -145,3 +145,6 @@ input:checked + .slider:before {
   align-items: right;
   
 }
+#deviceCategoryId{
+  border: 1px solid gray;
+}

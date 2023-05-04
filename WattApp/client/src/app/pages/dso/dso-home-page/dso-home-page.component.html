@@ -54,7 +54,7 @@
             <hr style="margin: 0;">
             <div class="col-md-2 col-sm-4  tile_stats_count">
                 <span class="count_top"><i style="font-size: 15px; margin-right: 5px;"class="fa fa-sun"></i>Total Production in {{updateUserDetail.city}}</span>
-                <div class="count"> 20 kWh </div>
+                <div class="count"> {{totalProduction}} kWh </div>
                 <span class="count_bottom"><i class="green">2% </i> From last Week</span>
             </div>
             
@@ -96,10 +96,10 @@
             <ng-container *ngIf="graph">
                 <div class="chart-body">
                     <div class="chart-buttons">
-                      <button (click)="showComponentGraph()" class="chart-button">Day</button>
-                      <button (click)="showComponentGraph1()" class="chart-button">Week</button>
-                      <button (click)="showComponentGraph2()" class="chart-button">Month</button>
-                      <button (click)="showComponentGraph3()" class="chart-button">Year</button>
+                      <button (click)="showComponentGraph()" class="chart-button" [class.active]="compGraph">Day</button>
+                      <button (click)="showComponentGraph1()" class="chart-button"[class.active]="compGraph1">Week</button>
+                      <button (click)="showComponentGraph2()" class="chart-button"[class.active]="compGraph2">Month</button>
+                      <button (click)="showComponentGraph3()" class="chart-button"[class.active]="compGraph3">Year</button>
                     </div>
                   </div>
                 <div class="history-charts-body" *ngIf="compGraph">

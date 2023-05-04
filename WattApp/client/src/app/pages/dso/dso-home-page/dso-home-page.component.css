@@ -189,6 +189,12 @@
   color: white;
   box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
+
+button.active {
+  background-color: #2199e8;
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+}
 .numpro {
   margin-right: 10px;
   background-color: white;
