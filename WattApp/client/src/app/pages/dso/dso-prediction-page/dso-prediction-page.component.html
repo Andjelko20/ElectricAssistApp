@@ -6,12 +6,29 @@
 </div> -->
 <div id="wrapper">
     <div id="pred">
+        
         <h1>Prediction for 7 days for Kragujevac</h1>
         <div class="date-time">
             <p>Date: {{ currentTime | date: 'dd.MM.yyyy HH:mm' }}</p>
         </div>
     </div>
+    
     <div id="graf">
+        <div class="toggle-container">
+            <div class="toggle-buttons">
+              <input type="radio" (click)="showGraph()" name="toggle" id="dashboard-btn" checked >
+              <label for="dashboard-btn">Graphical view</label>
+              <span class="divider"></span>
+              <input type="radio" (click)="showTable()" name="toggle" id="devices-btn">
+              <label for="devices-btn">Tabelar view</label>
+            </div>
+        </div>
+        <div class="graphId" *ngIf="graph">
+            <app-prediction-dso></app-prediction-dso>
+        </div>
+        <div class="tabelarId" *ngIf="tabelar">
+            <app-prediction-tabelar-dso></app-prediction-tabelar-dso>
+        </div>
         
     </div>
 </div>

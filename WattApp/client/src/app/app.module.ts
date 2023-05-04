@@ -100,7 +100,8 @@ import { ProsumerDayTableComponent } from "./components/prosumers/prosumer-table
 import { ProsumerWeekTableComponent } from "./components/prosumers/prosumer-tables/prosumer-week-table/prosumer-week-table.component";
 import { ProsumerMonthTableComponent } from "./components/prosumers/prosumer-tables/prosumer-month-table/prosumer-month-table.component";
 import { ProsumerYearTableComponent } from "./components/prosumers/prosumer-tables/prosumer-year-table/prosumer-year-table.component";
-
+import { PredictionDsoComponent } from "./components/dso/prediction/prediction-dso/prediction-dso.component";
+import { PredictionTabelarDsoComponent } from './components/dso/prediction/prediction-tabelar-dso/prediction-tabelar-dso.component';
 
 
 
@@ -201,7 +202,8 @@ import { ProsumerYearTableComponent } from "./components/prosumers/prosumer-tabl
     ProsumerWeekTableComponent,
     ProsumerMonthTableComponent,
     ProsumerYearTableComponent,
-    
+    PredictionDsoComponent,
+    PredictionTabelarDsoComponent
 
     
   ],

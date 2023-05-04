@@ -18,7 +18,8 @@ export class LineDayChartComponent {
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {
     this.selectedOption = 0;
   }
-  maxDate = new Date();
+  currentDate = new Date();
+  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1,this.currentDate.getDate()-1);
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
@@ -43,7 +44,8 @@ export class LineDayChartComponent {
         this.authService.getSettlement(number).subscribe((settlement: Settlement[]) => {
           this.settlements = settlement;
           if(this.selectedOption != 0){
-            this.selectedOption = this.settlements[(this.selectedOption-1)].id;
+            
+            this.selectedOption = this.settlements[(this.settlements.length-this.selectedOption)].id;
           }
           else{
             this.selectedOption = 0;

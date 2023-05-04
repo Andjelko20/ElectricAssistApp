@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DsoPredictionPageComponent implements OnInit{
   
-  
+  graph:boolean = true;
+  tabelar:boolean = false;
   currentTime!: Date;
   
   ngOnInit(): void {
@@ -18,6 +19,14 @@ export class DsoPredictionPageComponent implements OnInit{
   }
   updateTime() {
     this.currentTime = new Date();
+  }
+  showGraph(){
+    this.graph = true;
+    this.tabelar = false;
+  }
+  showTable(){
+    this.graph = false;
+    this.tabelar = true;
   }
 
   

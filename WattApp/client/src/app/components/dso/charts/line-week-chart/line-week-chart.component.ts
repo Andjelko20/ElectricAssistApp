@@ -53,7 +53,8 @@ Chart.register(...registerables)
 export class LineWeekChartComponent {
 
 
-  maxDate: Date;
+  currentDate = new Date();
+  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1,this.currentDate.getDate()-1);
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   settlements:Settlement[] = [];
