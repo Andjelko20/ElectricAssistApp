@@ -83,6 +83,7 @@ import { PredictionProsumerComponent } from './components/dso/prediction/predict
 import { PredictionDeviceComponent } from './components/dso/prediction/prediction-device/prediction-device.component';
 import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
 import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
+import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-change-password/prosumer-change-password.component';
 
 
 @NgModule({
@@ -171,7 +172,8 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
     YearTabelarProsumerComponent,
     TodayTabelarProsumerComponent,
     EmailConfirmationPageComponent,
-    ChangeEmailConfirmationPageComponent
+    ChangeEmailConfirmationPageComponent,
+    ProsumerChangePasswordComponent
     
   ],
   imports: [

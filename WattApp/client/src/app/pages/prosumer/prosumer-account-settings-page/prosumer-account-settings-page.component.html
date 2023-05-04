@@ -29,34 +29,12 @@
                 </div>
 
                 <button type="submite" class="btn btn-primary">Save</button>
-                <button type="submite" class="btn btn-primary" id="giveupbutton" *ngIf="this.role==this.prosumer"[routerLink]="['/profile']">Cancel</button>
+                <button type="submite" class="btn btn-primary" id="giveupbutton" *ngIf="this.role==this.prosumer" [routerLink]="['/profile']">Cancel</button>
                 <button type="submite" class="btn btn-primary" id="giveupbutton" *ngIf="this.role==this.dso" [routerLink]="['/profile-dso']">Cancel</button>
 
 
 
             </form>
-            <form #form="ngForm" (ngSubmit)="updatePasswordProsumer()" [formGroup]="myForm">
-                <div class="changepass">
-                    <div class="form-group">
-                        <label for="oldpass" id="oldpas">Old Password</label>
-                        <input type="password" formControlName="nameform1" class="form-control" name="oldPassword" placeholder="Old password" [(ngModel)]="oldPassword">
-
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">New Password</label>
-                        <input type="password" formControlName="nameform2" class="form-control" name="newPassword" placeholder="New password" [(ngModel)]="newPassword">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Confirm Password</label>
-                        <input type="password" formControlName="nameform3" class="form-control" name="confirmPassword" placeholder="Confirm password" [(ngModel)]="confirmPassword">
-                    </div>
-                    <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Save</button>
-                    <button type="submit" class="btn btn-primary" id="giveupbutton" *ngIf="this.role==this.prosumer" [routerLink]="['/profile']">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="giveupbutton" *ngIf="this.role==this.dso" [routerLink]="['/profile-dso']">Cancel</button>
-                </div>
-
-            </form>
-
         </div>
 
     </div>
