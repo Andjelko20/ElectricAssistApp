@@ -50,7 +50,6 @@ export class TodayDsoComponent implements OnInit {
       const apiDate = new Date(forecast.dt_txt).getTime();
       if(this.dateRange().start.getTime() <= apiDate && this.dateRange().to.getTime() >= apiDate){
         this.weatherNow = forecast;
-        console.log(this.weatherNow)
       }
     }
   }
@@ -81,7 +80,6 @@ export class TodayDsoComponent implements OnInit {
       const apiDate = new Date(forecast.dt_txt).getTime();
       if(this.dateRange().start.getTime() <= apiDate && this.dateRange().to.getTime() >= apiDate){
         this.weatherNow = forecast;
-        console.log(this.weatherNow)
       }
     }
   }
