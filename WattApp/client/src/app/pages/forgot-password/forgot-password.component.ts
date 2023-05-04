@@ -14,11 +14,14 @@ export class ForgotPasswordPageComponent {
 	public success:boolean=false;
 
 	@ViewChild("emailElement") emailDiv!:ElementRef<HTMLInputElement>;
-
+	public backgroundImage = 'assets/images/background.jpg';
 	constructor(public authService:AuthService) {
 		
 	}
-
+	ngOnInit()
+	{
+		this.backgroundImage = 'assets/img/smart.jpg';
+	}
 	validateEmail(){
 		let regex=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 		if(regex.test(this.email)){

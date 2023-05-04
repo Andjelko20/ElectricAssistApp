@@ -103,6 +103,7 @@ import { ProsumerYearTableComponent } from "./components/prosumers/prosumer-tabl
 import { PredictionDsoComponent } from "./components/dso/prediction/prediction-dso/prediction-dso.component";
 import { PredictionTabelarDsoComponent } from './components/dso/prediction/prediction-tabelar-dso/prediction-tabelar-dso.component';
 
+import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-change-password/prosumer-change-password.component';
 
 
 @NgModule({
@@ -203,8 +204,9 @@ import { PredictionTabelarDsoComponent } from './components/dso/prediction/predi
     ProsumerMonthTableComponent,
     ProsumerYearTableComponent,
     PredictionDsoComponent,
-    PredictionTabelarDsoComponent
+    PredictionTabelarDsoComponent,
 
+    ProsumerChangePasswordComponent
     
   ],
   imports: [

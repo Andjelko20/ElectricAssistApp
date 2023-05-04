@@ -24,7 +24,7 @@
 
 h1 {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 27px;
     font-size: 20px;
 }
 
@@ -50,7 +50,6 @@ a {
 }
 
 .aa a {
-    border: 2px solid #b8dcff;
     border-radius: 5px;
     margin-top: 15px;
     padding: 5px;
@@ -64,9 +63,31 @@ a:hover {
 }
 
 .card {
-    padding-top: 14%;
-    margin-bottom: 50px;
+    padding-top: 20%;
+    padding-bottom: 61px;
+    min-height: 100vh;
     border-radius: 0px;
+}
+
+#imgdevice1 {
+    width: 30px;
+}
+
+#imgdevice11 {
+    width: 30px;
+    margin-left: -4px;
+}
+
+#imgdevice111 {
+    width: 28px;
+}
+
+#pass {
+    margin-left: 2px;
+}
+
+#logout {
+    margin-left: 6px;
 }
 
 #number {
@@ -84,6 +105,7 @@ a:hover {
         min-height: 100vh;
     }
     .centar {
+        display: flex;
         min-height: 100vh;
         width: 100%;
     }
@@ -92,14 +114,20 @@ a:hover {
         margin-left: 15px;
     }
     #imgdevice {
-        width: 20%;
+        width: 15%;
+        margin-top: -43%;
     }
     form {
         margin-left: 200px;
         margin-right: 200px;
     }
+    #number {
+        max-width: 436px;
+        border-bottom: 0px;
+    }
     h1 {
-        font-size: 30px;
+        margin-top: -11%;
+        font-size: 40px;
     }
     label {
         font-size: 20px !important;
@@ -111,26 +139,51 @@ a:hover {
         border-radius: 15px;
         width: auto;
         margin: 15px;
+        display: flex;
+        justify-content: center;
         background-color: rgb(208 233 255);
     }
     ul {
         display: inline-block;
         text-align: center;
         list-style: none;
+        margin-top: 38px;
     }
-    ul li {
-        width: 100%;
+    ul>.li1 {
+        margin: 10px;
+        width: 689px;
         text-align: left;
-        font-size: 25px;
+        font-size: 35px;
+    }
+    .aa {
+        text-align: left;
+        font-size: 20px;
+        font-size: 80px;
+        width: 400px;
+    }
+    ul>.aa {
+        margin-top: 27px;
+        font-size: 30px;
     }
     .card {
-        padding: 0;
+        min-height: 200px;
+        margin-top: 7%;
+        margin-bottom: 4%;
+        border-radius: 15px;
+        width: 100%;
+        margin-left: 20%;
+        margin-right: 20%;
+        float: left;
+        /* padding: 0;
         margin-top: 155px;
         margin-left: 80px;
         width: 60%;
         display: inline-block;
         border-radius: 15px;
-        background-color: #b8dcff;
+        background-color: #b8dcff; */
+    }
+    #userimg {
+        border: 1px solid black;
     }
     app-footer {
         width: 100%;

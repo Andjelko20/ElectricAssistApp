@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordPageComponent {
+	showPassword = false;
+
 	resetKey:string="";
 	success:boolean=false;
 	errorMessage:string="";
@@ -19,9 +21,26 @@ export class ResetPasswordPageComponent {
 	public errorNewPassword:string="";
 	public errorConfirmedPassword:string="";
 
+	public backgroundImage = 'assets/images/background.jpg';
 	constructor(private route:ActivatedRoute,private router:Router,private authService:AuthService){
 		this.resetKey=this.route.snapshot.paramMap.get('id') ?? "";
 	}
+	ngOnInit(){
+		this.backgroundImage = 'assets/img/smart.jpg';
+	}
+	
+	  togglePassword() {
+		const passwordInput = document.querySelector('.password-input') as HTMLInputElement;
+		const passwordToggleIcon = document.querySelector('.password-toggle-icon') as HTMLElement;
+		
+		if (passwordInput.type === 'password') {
+		  passwordInput.type = 'text';
+		  passwordToggleIcon.classList.add('show-password');
+		} else {
+		  passwordInput.type = 'password';
+		  passwordToggleIcon.classList.remove('show-password');
+		}
+	  }
 	validatePassword():boolean{
 		let input=document.getElementsByName("new_password")[0] as HTMLInputElement;
 		if(this.newPassword!=""){

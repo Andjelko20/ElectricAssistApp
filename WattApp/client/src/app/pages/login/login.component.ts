@@ -17,11 +17,11 @@ export class LoginComponent implements OnInit {
 	password='';
 	errorMsg='';
 	
-
+	public backgroundImage = 'assets/images/background.jpg';
 	constructor(private authService: AuthService,private router:Router) { }
 
 	ngOnInit(): void {
-		
+		this.backgroundImage = 'assets/img/smart.jpg';
 		const storedUsername = localStorage.getItem("username");
 		const storedPassword = localStorage.getItem("password");
 		if (storedUsername && storedPassword) {
