@@ -78,6 +78,12 @@ export class TabelarViewByYearComponent implements OnInit{
     this.authService.getCityId(user.city).subscribe(number=>{
       this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
         this.settlements = settlement;
+        if(this.selectedOption != 0){
+          this.selectedOption = this.settlements[(this.selectedOption-1)].id;
+        }
+        else{
+          this.selectedOption = 0;
+        }
       })
       if(this.selectedOption == 0 && this.selectedDate == undefined){
         forkJoin([

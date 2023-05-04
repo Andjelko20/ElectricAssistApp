@@ -10,21 +10,23 @@ Chart.register(...registerables)
 @Component({
   selector: 'app-line-day-chart',
   templateUrl: './line-day-chart.component.html',
-  styleUrls: ['./line-day-chart.component.css']
+  styleUrls: ['./line-day-chart.component.css'],
 })
 export class LineDayChartComponent {
 
+  selectedOption: number;
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {
-    
+    this.selectedOption = 0;
   }
   maxDate = new Date();
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
-  selectedOption: number = 0;
+  
 
-  onOptionSelected() {
-    this.ngOnInit();
+  onOptionSelected(event: any) {
+    this.selectedOption = event.target.value;
+    this.ngOnInit()
   }
 
   selectedDate!: Date;
@@ -33,14 +35,22 @@ export class LineDayChartComponent {
     this.selectedDate = event.value;
     this.ngOnInit();
   }
+  
 
   ngOnInit(): void {
     this.authService.getlogInUser().subscribe(user => {
       this.authService.getCityId(user.city).subscribe(number => {
         this.authService.getSettlement(number).subscribe((settlement: Settlement[]) => {
           this.settlements = settlement;
+          if(this.selectedOption != 0){
+            this.selectedOption = this.settlements[(this.selectedOption-1)].id;
+          }
+          else{
+            this.selectedOption = 0;
+          }
+            
         });
-        if (this.selectedOption == 0 && this.selectedDate === undefined) {
+        if (this.selectedOption == 0 && this.selectedDate == undefined) {
           forkJoin([
             this.deviceService.dayByHour(number, 2),
             this.deviceService.dayByHour(number, 1)
@@ -116,8 +126,8 @@ export class LineDayChartComponent {
           }
 
           forkJoin([
-            this.deviceService.dayByHourSettlementFilter(string1,string2,number, this.selectedOption),
-            this.deviceService.dayByHourSettlementFilter(string1,string2,number, this.selectedOption)
+            this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,2 ),
+            this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;

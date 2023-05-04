@@ -88,9 +88,15 @@ export class LineWeekChartComponent {
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
           this.settlements = settlement;
+          if(this.selectedOption != 0){
+            this.selectedOption = this.settlements[(this.selectedOption-1)].id;
+          }
+          else{
+            this.selectedOption = 0;
+          }
         })
         
-        if(this.selectedOption == 0 || (this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
+        if(this.selectedOption == 0 && (this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
           forkJoin([
             this.deviceService.weekByDay(number, 2),
             this.deviceService.weekByDay(number, 1)
@@ -101,7 +107,7 @@ export class LineWeekChartComponent {
           });
           
         }
-        else if(this.selectedOption == 0 && this.sdate != null && this.send != null){
+        else if(this.selectedOption == 0 && (this.sdate != null && this.send != null)){
           const day1 = this.sdate.getDate();
           const month1 = this.sdate.getMonth()+1;
           const year1 = this.sdate.getFullYear();
@@ -120,7 +126,7 @@ export class LineWeekChartComponent {
             this.LineChart();
           });
         }
-        else if(this.selectedOption != 0 && this.sdate != null && this.send != null){
+        else if(this.selectedOption != 0 && (this.sdate != null && this.send != null)){
           const day1 = this.sdate.getDate();
           const month1 = this.sdate.getMonth()+1;
           const year1 = this.sdate.getFullYear();

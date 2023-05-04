@@ -90,8 +90,14 @@ export class TabelarViewByWeekComponent implements OnInit {
         this.authService.getCityId(user.city).subscribe(number=>{
           this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
             this.settlements = settlement;
+            if(this.selectedOption != 0){
+              this.selectedOption = this.settlements[(this.selectedOption-1)].id;
+            }
+            else{
+              this.selectedOption = 0;
+            }
           })
-          if(this.selectedOption == 0 || (this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
+          if(this.selectedOption == 0 && (this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
             forkJoin([
               this.deviceService.weekByDay(number, 2),
               this.deviceService.weekByDay(number, 1)

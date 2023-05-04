@@ -21,7 +21,6 @@ export class ForecastService {
     return this.authService.getMyLocation().pipe(
       switchMap((location: { latitude: number, longitude: number }) => {
         const apiLocation = { lat: location.latitude, lon: location.longitude };
-        console.log(apiLocation)
         return this.makeWeatherApiCall(apiLocation);
       }),
       catchError((error: any) => {
