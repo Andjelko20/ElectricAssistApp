@@ -34,9 +34,6 @@ export class NavbarComponent implements OnInit {
       this.user=user
       this.name=user.name
     });
-
-    
-    
   }
   logout()
   {
@@ -44,8 +41,6 @@ export class NavbarComponent implements OnInit {
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }
-
-
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
   }
@@ -58,6 +53,4 @@ export class NavbarComponent implements OnInit {
       this.showDropdown = false;
     }
   }
-
-
 }

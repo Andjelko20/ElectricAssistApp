@@ -35,21 +35,6 @@ app-footer {
     /* min-height: 100vh; */
     transition: all 0.3s;
 }
-/* #sidebar {
-    background-color: white;
-    bottom: 0;
-    overflow: hidden;
-    position: fixed;
-    top: 75px;
-    -webkit-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-    width: 280px;
-    z-index: 1;
-    min-width: 40px;
-    max-width: 80px;
-    display: block;
-} */
 #sidebar.active {
     min-width: 180px;
     max-width: 100px;
@@ -83,19 +68,15 @@ app-footer {
     display: none;
     font-size: 1.8em;
 }
-
-
-
 .nav {
     position: relative;
 }
 
 .nav-link {
-    color: #1C315E;
+    color: #354871;
 }
 ul ul a {
     font-size: 0.9em !important;
-    /* padding-left: 30px !important; */
     background: #6d7fcc;
 }
 
@@ -104,7 +85,7 @@ ul ul a {
 }
 
  ul li a:hover {
-    background-color: #1C315E;
+    background-color: #354871;
     color: white;
 }
 #sidebar ul.components {
@@ -128,11 +109,8 @@ ul ul a {
     padding: 5px 15px;
     position: relative;
     white-space: nowrap;
-    
-    
 }
 #sidebar ul li a .icon-holder{
-    
     border-radius: 6px;
     display: inline-block;
     font-size: 30px;
@@ -146,7 +124,6 @@ ul ul a {
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
     width: 52px;
-    
 }
 
 #sidebar ul li a .title{
@@ -254,7 +231,7 @@ ul ul a {
     
 }
 .list-unstyled.components li.active a {
-    background-color:  #1C315E;
+    background-color:  #354871;
     color: white; 
   }
 
@@ -289,7 +266,6 @@ ul ul a {
         display: flex;
         align-items: stretch;
         width: 100%;
-        
         transition: all 0.3s;
     }
     #sidebar {
@@ -339,7 +315,7 @@ ul ul a {
         position: relative;
     }
     .nav-link {
-        color: #1C315E;
+        color: #354871;
     }
     ul ul a {
         font-size: 0.9em !important;
@@ -350,7 +326,7 @@ ul ul a {
         background-color: white !important;
     }
     ul li a:hover {
-        background-color: #1C315E;
+        background-color: #354871;
         color: white;
     }
     #sidebar ul.components {
@@ -472,7 +448,7 @@ ul ul a {
     }
     ul #role-li a:hover {
         background-color: white;
-        color: #1C315E;
+        color: #354871;
     }
     #sidebar ul li a .role-line {
         display: none;
@@ -481,7 +457,7 @@ ul ul a {
         display: block;
     }
     .list-unstyled.components li.active a {
-        background-color:  #1C315E;
+        background-color:  #354871;
         color: white; 
       }
     

@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using Server.Services.Implementations;
 using Server.Mappers;
+using Server.Controllers;
 
 namespace Server
 {
@@ -44,6 +45,7 @@ namespace Server
             builder.Services.AddScoped<IProsumerService, ProsumerServiceImpl>();
             builder.Services.AddScoped<IDSOService, DSOServiceImpl>();
             builder.Services.AddScoped<ICurrentPeriodHistoryService, CurrentPeriodHistoryImpl>();
+            builder.Services.AddScoped<IHistoryFromToService, HistoryFromToServiceImpl>();
 
             builder.Services.Configure<ApiBehaviorOptions>(options
                 => options.SuppressModelStateInvalidFilter = true);

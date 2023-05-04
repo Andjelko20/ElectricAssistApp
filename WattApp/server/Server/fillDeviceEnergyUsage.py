@@ -14,7 +14,7 @@ def uredjajiKategorije1(DeviceId):
     StartTime = datetime.datetime.now().replace(microsecond=0)
     StartTime = StartTime.replace(year=StartTime.year-1)
     time = datetime.datetime.now().replace(microsecond=0)
-    time = time + datetime.timedelta(days=7)
+    time = time + datetime.timedelta(days=90)
     for i in range(20000):
         StartTime = StartTime + datetime.timedelta(hours=randHours, minutes=randMinutes, seconds=randSeconds)
         EndTime = StartTime + datetime.timedelta(hours=randHours, minutes=randMinutes, seconds=randSeconds)
@@ -26,7 +26,7 @@ def uredjajiKategorije2(DeviceId):
     time = datetime.datetime.now().replace(microsecond=0)
     StartTime = datetime.datetime.now().replace(microsecond=0)
     StartTime = StartTime.replace(year=StartTime.year-1)
-    time = time + datetime.timedelta(days=7)
+    time = time + datetime.timedelta(days=90)
     for i in range(20000):
         randHoursStart = random.randint(5, 7)
         randHoursEnd = random.randint(8, 12)

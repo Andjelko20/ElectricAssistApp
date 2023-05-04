@@ -2,7 +2,7 @@
     <div class="card-group">
         <div class="bgc-white p-20 bd">
             <div class="c-grey-900 text-center"  >
-                <div style="display: inline-block;"><h4 style=" font-weight: bolder;">Overview of {{updateUserDetail.city}}</h4></div>
+                <div style="display: inline-block;"><h1 style=" font-weight: bolder;">Overview of {{updateUserDetail.city}}</h1></div>
                 <hr style="margin-bottom: 0;padding-bottom: 0;">
             </div>
             <div class="peers mT-20 fxw-nw@lg+ jc-sb ta-c gap-10">
@@ -54,7 +54,7 @@
             <hr style="margin: 0;">
             <div class="col-md-2 col-sm-4  tile_stats_count">
                 <span class="count_top"><i style="font-size: 15px; margin-right: 5px;"class="fa fa-sun"></i>Total Production in {{updateUserDetail.city}}</span>
-                <div class="count">20</div>
+                <div class="count"> {{totalProduction}} kWh </div>
                 <span class="count_bottom"><i class="green">2% </i> From last Week</span>
             </div>
             
@@ -66,26 +66,24 @@
             </div>
             
         </div>
+        <div class="weather">
+            <div class="weather-body">
+                <app-today></app-today>
+                <app-future></app-future>
+            </div>
+        </div> 
         <div id="pie">
             
-            <span style="margin: 0; padding: 0;"><b>Current production in stettlements </b> </span>
+            
+            <div id="titlePie"><span><b>Current production in stettlements </b> <hr></span>
+            </div>
             
             <div id="chart">
                 <app-pie-chart></app-pie-chart>
             </div>
         </div>
    
- 
-        
-    </div>
-    <div class="card-group">
-        <div class="weather">
-            <div class="weather-body">
-                <app-today></app-today>
-                <app-future></app-future>
-            </div>
-        </div>
-       <div class="history-charts">
+        <div class="history-charts">
             <div class="toggle-container">
                 <div class="toggle-buttons">
                   <input type="radio" (click)="showGraph()" name="toggle" id="dashboard-btn" checked >
@@ -95,17 +93,13 @@
                   <label for="devices-btn">Tabelar view</label>
                 </div>
             </div>
-            <div class="csv-body">
-                <span>Power and Energy</span>
-                <button class="csv-button">CSV</button>
-              </div>
             <ng-container *ngIf="graph">
                 <div class="chart-body">
                     <div class="chart-buttons">
-                      <button (click)="showComponentGraph()" class="chart-button">Day</button>
-                      <button (click)="showComponentGraph1()" class="chart-button">Week</button>
-                      <button (click)="showComponentGraph2()" class="chart-button">Month</button>
-                      <button (click)="showComponentGraph3()" class="chart-button">Year</button>
+                      <button (click)="showComponentGraph()" class="chart-button" [class.active]="compGraph">Day</button>
+                      <button (click)="showComponentGraph1()" class="chart-button"[class.active]="compGraph1">Week</button>
+                      <button (click)="showComponentGraph2()" class="chart-button"[class.active]="compGraph2">Month</button>
+                      <button (click)="showComponentGraph3()" class="chart-button"[class.active]="compGraph3">Year</button>
                     </div>
                   </div>
                 <div class="history-charts-body" *ngIf="compGraph">
@@ -144,6 +138,7 @@
                 </div>
             </ng-container>
         </div>
+        
     </div>
-
+   
 </div>

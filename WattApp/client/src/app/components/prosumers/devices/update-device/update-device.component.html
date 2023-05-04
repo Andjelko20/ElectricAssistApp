@@ -23,23 +23,23 @@
                             <br>
   
                           <label for="visibilityOnOff" class="form-label " *ngIf="updateDevice.visibility==false" style="margin-right: 10px;">Visibility</label>
-                          <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalVisibilityOn" *ngIf="updateDevice.visibility==false" (click)="visibilityOnOff()">
+                          <label class="switch"  *ngIf="updateDevice.visibility==false" (click)="visibilityOn()">
                             <input type="checkbox" [disabled]="!confirmVisibility">
                             <span class="slider round"></span>
                           </label>
                           <label for="visibilityOnOff" class="form-label " *ngIf="updateDevice.visibility==true" style="margin-right: 10px;">Visibility</label>
-                          <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalVisibilityOff" *ngIf="updateDevice.visibility==true" (click)="visibilityOnOff()">
+                          <label class="switch"  *ngIf="updateDevice.visibility==true" (click)="visibilityOff()">
                             <input type="checkbox" checked [disabled]="!confirmVisibility">
                             <span class="slider round"></span>
                           </label>
-                        
+                          
                           <label for="controlabilityOnOff" class="form-label " *ngIf="updateDevice.controlability==false" style=" margin-left: 10px;margin-right: 10px;" >Controlability</label>
-                          <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalControlabilityOn" *ngIf="updateDevice.controlability==false"  (click)="controlabilityOnOff()">
+                          <label class="switch"  *ngIf="updateDevice.controlability==false"  (click)="controlabilityOn()">
                             <input type="checkbox"  [disabled]="!confirmControlability">
                             <span class="slider round"></span>
                           </label>
                           <label for="controlabilityOnOff" class="form-label " *ngIf="updateDevice.controlability==true" style=" margin-left: 10px;margin-right: 10px;">Controlability</label>
-                          <label class="switch" data-bs-toggle="modal" data-bs-target="#myModalControlabilityOff" *ngIf="updateDevice.controlability==true"  (click)="controlabilityOnOff()">
+                          <label class="switch" *ngIf="updateDevice.controlability==true"  (click)="controlabilityOff()">
                             <input type="checkbox" checked  [disabled]="!confirmControlability">
                             <span class="slider round"></span>
                           </label>
@@ -59,93 +59,27 @@
     <app-prosumer-footer></app-prosumer-footer>
 </div>
 
-<!-- Modal Visibility On -->
-<div class="modal fade" id="myModalVisibilityOn" tabindex="-1" aria-labelledby="myModalVisibilityOnLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-<div class="modal-dialog modal-dialog modal-dialog-centered">
-<div class="modal-content">
+<ng-template #modalContent let-modal >
   <div class="modal-header">
-    
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-     <h5 class="modal-title" id="myModalVisibilityOnLabel" style="text-align: center;">Do you want to turn on Visibility?</h5>
+    <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+    <div id="subb">
+      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>&nbsp;&nbsp;
+      <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
     </div>
-  <div class="modal-footer" >
-      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="visibility-on-popup">Turn on</button>
-    <button type="button" class="btn btn-outline-danger"  data-bs-dismiss="modal" >
-      Close
-    </button>
-    
   </div>
-</div>
-</div>
-</div>
-<!-- Modal Visibility Off -->
-<div class="modal fade" id="myModalVisibilityOff" tabindex="-1" aria-labelledby="myModalVisibilityOffLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-<div class="modal-dialog  modal-dialog modal-dialog-centered">
-<div class="modal-content">
+</ng-template>
+<ng-template #modalContent1 let-modal >
   <div class="modal-header">
-   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     <h5 class="modal-title" id="modalTitle" >Warning!!!</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-     <h5 class="modal-title" id="myModalVisibilityOffLabel" style="text-align: center;">Do you want to turn off Visibility?</h5>
+    <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">You need to turn on visibility first!!!</h5>
+    <div id="subb">
+      <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+    </div>
   </div>
-  <div class="modal-footer" >
-      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="visibility-off-popup">Turn off</button>
-      
-      
-    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-      Close
-    </button>
-    
-  </div>
-</div>
-</div>
-</div>
-
-
-<!-- Modal Controlability On -->
-<div class="modal fade" id="myModalControlabilityOn" tabindex="-1" aria-labelledby="myModalControlabilityOnLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-<div class="modal-dialog  modal-dialog modal-dialog-centered">
-<div class="modal-content">
-  <div class="modal-header">
-    
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-  </div>
-  <div class="modal-body">
-    <h5 class="modal-title" id="myModalControlabilityOnLabel" style="text-align: center;" *ngIf="updateDevice.visibility==false" >You need to turn visibility on first!</h5>
-    
-    <h5 class="modal-title" id="myModalControlabilityOnLabel" style="text-align: center;" *ngIf="updateDevice.visibility==true">Do you want to turn on Controlability?</h5>
-  </div>
-  <div class="modal-footer" >
-      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="controlability-on-popup" *ngIf="updateDevice.visibility==true">Turn on</button>
-    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-      Close
-    </button>
-    
-  </div>
-</div>
-</div>
-</div>
-<!-- Modal Controlability Off -->
-<div class="modal fade" id="myModalControlabilityOff" tabindex="-1" aria-labelledby="myModalControlabilityOffLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-<div class="modal-dialog  modal-dialog modal-dialog-centered">
-<div class="modal-content">
-  <div class="modal-header">
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
-  <div class="modal-body"> 
-    <h5 class="modal-title" id="myModalControlabilityOffLabel" style="text-align: center;">Do you want to turn off Controlability?</h5>
-  </div>
-  <div class="modal-footer" >
-      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="controlability-off-popup">Turn off</button>
-      
-      
-    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-      Close
-    </button>
-    
-  </div>
-</div>
-</div>
-</div>
+</ng-template>

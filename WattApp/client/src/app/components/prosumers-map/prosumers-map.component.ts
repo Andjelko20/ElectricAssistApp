@@ -104,19 +104,26 @@ export class ProsumersMapComponent implements OnInit,AfterViewInit {
 		this.blueIcon=this.createMarker('assets/blue-marker.png');
 	
 		Leaflet.Marker.prototype.options.icon = icon;
-	  
 		this.map = Leaflet.map('prosumers-map').setView([44.01721187973962, 20.90732574462891], 13); // postavljanje mape i početni prikaz
+		fetch(environment.serverUrl+"/api/users/my_location",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+		.then(res=>{
+			if(res.ok)
+				return res.json();
+			return Promise.reject();
+		})
+		.then(res=>{this.map.setView([res.lat, res.lon], 13);})
+		.catch(_=>{this.map.setView([44.01721187973962, 20.90732574462891], 13);})
 	
 		Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		  attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
 		  maxZoom: 19,
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
 		this.prosumersUrl=new URL(environment.serverUrl+"/api/ProsumersDetails");
-		fetch(environment.serverUrl+"/cities?countryId=1")
+		/*fetch(environment.serverUrl+"/cities?countryId=1")
 		.then(res=>res.json())
 		.then(res=>{
 			this.cities=res;
-		})
+		})*/
 		this.fetchMarkers();
 		
 	  }
@@ -156,7 +163,8 @@ export class ProsumersMapComponent implements OnInit,AfterViewInit {
 		let options:Leaflet.ZoomPanOptions={
 			animate:true
 		};
-		this.map.setView([location.lat,location.lon],this.map.getZoom(),options);
+		this.map.flyTo([location.lat,location.lon],this.map.getZoom(),options);
+		//this.map.setView([location.lat,location.lon],13,options);
 	  }
 	  changeZone(){
 		this.prosumersUrl.searchParams.set("zone",this.zone);
@@ -172,17 +180,14 @@ export class ProsumersMapComponent implements OnInit,AfterViewInit {
 		});
 	  }
 	  changeName(){
-		console.log(this.name)
 		if(this.name=="" || this.name==undefined || this.name.length<2){
 			this.filteredUsers=[];
 			this.searchResultVisible=false;
 			return;
 		}
-		const regexObject = new RegExp(escape(this.name), "g"); // Kreiranje RegExp objekta sa ignorisanjem specijalnih karaktera
+		const regexObject = new RegExp(escape(this.name), "gi"); // Kreiranje RegExp objekta sa ignorisanjem specijalnih karaktera
 		this.filteredUsers=this.prosumers.filter(prosumer=>{
-			if(this.city!=0 && prosumer.cityId!=this.city)
-				return false;
-			if(!regexObject.test(prosumer.name))
+			if(!regexObject.test(prosumer.name) && !regexObject.test(prosumer.address))
 				return false;
 			return true;
 		});

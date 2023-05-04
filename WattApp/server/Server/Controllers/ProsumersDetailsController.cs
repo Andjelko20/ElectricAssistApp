@@ -18,12 +18,14 @@ namespace Server.Controllers
         public readonly IUserService userService;
         public readonly SqliteDbContext _sqliteDb;
         public readonly IProsumerService prosumerService;
+        public readonly ITokenService tokenService;
 
-        public ProsumersDetailsController(IUserService userService,SqliteDbContext sqliteDb,IProsumerService prosumerService)
+        public ProsumersDetailsController(IUserService userService,SqliteDbContext sqliteDb,IProsumerService prosumerService,ITokenService tokenService)
         {
             this.userService = userService;
             _sqliteDb = sqliteDb;
             this.prosumerService = prosumerService;
+            this.tokenService = tokenService;
         }
 
         ///<summary>Get all prosumers for map</summary>
@@ -36,7 +38,9 @@ namespace Server.Controllers
         [Authorize(Roles = Roles.Dispatcher)]
         public async Task<IActionResult> GetAllProsumers([FromQuery] string? zone = "0", [FromQuery] int? city=0)
         {
-            return Ok(await userService.GetAllProsumers(zone, (int)((city==null)?0:city)));
+            var id = long.Parse(tokenService.GetClaim(HttpContext, "id"));
+            var grad = (int)(await userService.GetUserById(id)).Settlement.CityId;
+            return Ok(await userService.GetAllProsumers(zone, grad));
         }
 
         /// <summary>
@@ -50,11 +54,22 @@ namespace Server.Controllers
         [HttpGet]
         [Route("page")]
         [Authorize(Roles=Roles.Dispatcher)]
-        public async Task<IActionResult> GetPage([FromQuery] int pageNumber, [FromQuery] int pageSize=20)
+        public async Task<IActionResult> GetPage([FromQuery] int pageNumber,[FromQuery] long cityId=0, [FromQuery] int pageSize=20)
         {
             try
             {
-                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId));
+                if (cityId == 0)
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId == Roles.ProsumerId));
+
+                if (cityId == -1)
+                {
+                    var id = long.Parse(tokenService.GetClaim(HttpContext, "id"));
+                    var loggedInUser = await userService.GetUserById(id);
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId == Roles.ProsumerId && loggedInUser.Settlement.CityId == user.Settlement.CityId));
+                }
+
+                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId == Roles.ProsumerId && user.Settlement.CityId == cityId));
+
             }
             catch (HttpRequestException ex)
             {
@@ -85,9 +100,11 @@ namespace Server.Controllers
         [HttpGet]
         [Route("count")]
         [Authorize(Roles = Roles.Dispatcher)]
-        public async Task<IActionResult> GetCount([FromRoute] long id)
+        public async Task<IActionResult> GetCount()
         {
-            return Ok(_sqliteDb.Users.ToList().Count(user => user.RoleId == Roles.ProsumerId));
+            var id = long.Parse(tokenService.GetClaim(HttpContext, "id"));
+            var loggedInUser = await userService.GetUserById(id);
+            return Ok(_sqliteDb.Users.Include(user=>user.Settlement).Count(user => user.RoleId == Roles.ProsumerId && loggedInUser.Settlement.CityId==user.Settlement.CityId ));
         }
     }
 }

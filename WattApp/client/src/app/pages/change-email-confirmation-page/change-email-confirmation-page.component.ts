@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -8,9 +9,10 @@ import { environment } from 'src/environments/environment';
   templateUrl: './change-email-confirmation-page.component.html',
   styleUrls: ['./change-email-confirmation-page.component.css']
 })
-export class ChangeEmailConfirmationPageComponent {
-  isConfirmed : boolean | null = null;
+export class ChangeEmailConfirmationPageComponent implements OnInit, OnDestroy{
+  isConfirmed : boolean = false;
   message : string = "";
+  private mySubscription : Subscription = new Subscription();
   constructor(private http : HttpClient, private route : ActivatedRoute, private router : Router){
 
   }
@@ -20,10 +22,10 @@ export class ChangeEmailConfirmationPageComponent {
   }
 
   ngOnInit(){
-    this.route.queryParams.subscribe(params => {
+    this.mySubscription = this.route.queryParams.subscribe(params => {
       const key = encodeURIComponent(params['key']);
       console.log(key);
-      this.http.get<ConfirmEmailResponseDTO>(`${environment.serverUrl}/api/Users/changeEmailConfirmation/${key}`).subscribe((response) => {
+      this.http.post<ConfirmEmailResponseDTO>(`${environment.serverUrl}/api/Users/changeEmailConfirmation/${key}`, null).subscribe((response) => {
         console.log(response);
         if(response && response.isConfirmed){
           this.isConfirmed = true;
@@ -34,6 +36,10 @@ export class ChangeEmailConfirmationPageComponent {
       });
     });
   }
+
+  ngOnDestroy(): void {
+    this.mySubscription.unsubscribe();
+}
   
 }
 

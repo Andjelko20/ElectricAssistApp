@@ -1,0 +1,63 @@
+#wrapper{
+    background-color: white;
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+#pred{
+    display: flex;
+    text-align: center;
+    align-items: right;
+    justify-content: right;
+    border-bottom: 2px solid gray;
+
+
+}
+.date-time{
+    margin-top: 15px;
+    font-size: 20px;
+    margin-left: 400px;
+    margin-right: 10px;
+    
+}
+.toggle-container {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .toggle-buttons {
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+  }
+  .toggle-buttons label {
+    display: inline-block;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .toggle-buttons input[type="radio"] {
+    display: none;
+  }
+  .toggle-buttons span.divider {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    margin: 0 10px;
+    background-color: gray;
+  }
+  .toggle-buttons input[type="radio"]:checked + label {
+    font-weight: bold;
+    color: black;
+  }
+  .toggle-buttons input[type="radio"]:not(:checked) + label {
+    color: gray;
+  }

@@ -9,11 +9,6 @@
 			<span class="location">{{ location.name }}</span>
 		</div>
 		<div class="currentWeather" >
-            <label class="toggle">
-                <input type="checkbox" (click)="showF()">
-                <span class="slider"></span>
-                <span class="labels" data-on="°F" data-off="°C"></span>
-              </label>
 			<span class="conditions"><img src="assets/img/{{weatherNow.weather[0].icon}}.png" alt="">
             </span>
 			<div class="info" *ngIf="cels">

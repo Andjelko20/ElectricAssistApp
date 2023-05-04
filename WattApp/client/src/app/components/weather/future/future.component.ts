@@ -26,7 +26,6 @@ export class FutureComponent implements OnInit{
       pluck('list')
     )
     .subscribe((data: unknown) => {
-      console.log(data);
       this.futureForecast(data);
     });
   }
@@ -39,23 +38,5 @@ export class FutureComponent implements OnInit{
     for(let i = 0 ; i < data.length ; i += 8) {
       this.weatherData.push(data[i]);
     }
-    console.log(this.weatherData);
-  }
-
-  toggle(data:any,index:number){
-    this.primaryDisplay = !this.primaryDisplay;
-    this.secondaryDisplay = !this.secondaryDisplay;
-
-    this.forecastDetails = data;
-    this.selectedIndex = index;
-  }
-  toggles(){
-    this.primaryDisplay = !this.primaryDisplay;
-    this.secondaryDisplay = !this.secondaryDisplay;
-  }
-
-  showDetails(data:any,i:number){
-    this.forecastDetails = data;
-    this.selectedIndex = i;
   }
 }

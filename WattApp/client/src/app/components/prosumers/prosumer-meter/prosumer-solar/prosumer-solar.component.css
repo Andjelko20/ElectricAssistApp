@@ -1,0 +1,25 @@
+div {
+    position: absolute;
+    top: 26%;
+    right: 15%;
+}
+
+@media (max-width: 768px) {
+    div {
+        top: 30%;
+        right: 10%;
+    }
+}
+
+@media (max-width: 480px) {
+    div {
+        top: 35%;
+        right: 5%;
+    }
+    ngx-gauge {
+        size: 20vh;
+    }
+}
+
+
+/* promenite vrednosti u zavisnosti od vaših potreba */

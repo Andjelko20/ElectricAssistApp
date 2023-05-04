@@ -1,14 +1,12 @@
-
-
 <div class="containers">
   <!-- <div class="search">
     <input type="text" placeholder="Search...">
-  </div>
+  </div> -->
   <div class="sort-by">
       <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>
           <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
       </select>
-    <select>
+    <!-- <select>
       <option value="asc">Ascending</option>
       <option value="desc">Descending</option>
     </select>
@@ -16,119 +14,95 @@
       <option value="10">10 per page</option>
       <option value="20">20 per page</option>
       <option value="50">50 per page</option>
-    </select>
-  </div> -->
+    </select> -->
+  </div>
   <div class="table">
-      <div class="table">
           <table>
             <thead>
               <tr>
+                <th>#</th>
                 <th>Device Type</th>
                 <th>Device Brand</th>
                 <th>Device Model</th>
                 <th>Device Name</th>
-                <th>Peak Power</th>
+                <th>Device Consumption</th>
                 <th>On/Off</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let dev of devicesList | paginate: {currentPage,itemsPerPage,totalItems}">
-                  <ng-container *ngIf="dev.visibility">
-                    <ng-container *ngIf="dev.controlability">
-                      <td>{{dev.deviceType}}</td>
-                      <td>{{dev.deviceBrand}}</td>
-                      <td>{{dev.deviceModel}}</td>
-                      <td>{{dev.name}}</td>
-                      <td>{{dev.energyInKwh}}</td>
-                      <td class="on-off">
-                        <a class="btn" id="startbutton" role="button" data-bs-toggle="modal" data-bs-target="#myModalOff" *ngIf="dev.turnOn === true" (click)="turnOnOff(dev.id)">On</a>
-                        <a class="btn" id="startbutton" role="button" data-bs-toggle="modal" data-bs-target="#myModalOn" *ngIf="dev.turnOn === false" (click)="turnOnOff(dev.id)">Off</a>
-                      </td>
-                    </ng-container>
-                    <ng-container *ngIf="!dev.controlability">
-                      <td>{{dev.deviceType}}</td>
-                      <td>{{dev.deviceBrand}}</td>
-                      <td>{{dev.deviceModel}}</td>
-                      <td>{{dev.name}}</td>
-                      <td>{{dev.energyInKwh}}</td>
-                      <td class="on-off">
-                        <a class="btn " id="startbutton" role="button" data-bs-toggle="modal" data-bs-target="#myModalNoControl" *ngIf="dev.turnOn === true" >On</a>
-                        <a class="btn " id="startbutton" role="button" data-bs-toggle="modal" data-bs-target="#myModalNoControl"*ngIf="dev.turnOn === false" >Off</a>
-                      </td>
-                    </ng-container>
+              <tr *ngFor="let dev of devicesList | paginate: {currentPage,itemsPerPage,totalItems} let i = index ">
+                <ng-container *ngIf="dev.visibility">
+                  <td [ngStyle]="{'background-color': dev.controlability? 'white' : '#f2f2f2'}">{{ (currentPage - 1) * itemsPerPage + i +1  }}</td>
+                  <ng-container *ngIf="dev.controlability">
+                    <td>{{dev.deviceType}}</td>
+                    <td>{{dev.deviceBrand}}</td>
+                    <td>{{dev.deviceModel}}</td>
+                    <td>{{dev.name}}</td>
+                    <td>{{dev.energyInKwh}}</td>
+                    <td class="on-off">
+                     <label class="switch" *ngIf="dev.turnOn===false" (click)="turnOn(dev.id)">
+                      <input type="checkbox" [disabled]="!confirmTurnOnOff">
+                      <span class="slider round"></span>
+                    </label>
+                    <label class="switch" *ngIf="dev.turnOn===true"  (click)="turnOff(dev.id)">
+                      <input type="checkbox" checked [disabled]="!confirmTurnOnOff">
+                      <span class="slider round"></span>
+                    </label>
+                    </td>
                   </ng-container>
-                </tr>
+                  <ng-container *ngIf="!dev.controlability" >
+                    <td style="background-color: #f2f2f2;">{{dev.deviceType}}</td>
+                    <td style="background-color: #f2f2f2;">{{dev.deviceBrand}}</td>
+                    <td style="background-color: #f2f2f2;">{{dev.deviceModel}}</td>
+                    <td style="background-color: #f2f2f2;">{{dev.name}}</td>
+                    <td style="background-color: #f2f2f2;">{{dev.energyInKwh}}</td>
+                    <td style="background-color: #f2f2f2;" class="on-off">
+                     <label class="switch" *ngIf="dev.turnOn===false" (click)="noControl()">
+                      <input type="checkbox"   disabled="true">
+                      <span class="slider round"></span>
+                    </label>
+                    <label class="switch" *ngIf="dev.turnOn===true"(click)="noControl()"  >
+                      <input type="checkbox" checked   disabled="true">
+                      <span class="slider round"></span>
+                    </label>
+                    </td>
+                  </ng-container>
+                </ng-container>
+              </tr>
+              
                 
                 </tbody>
           </table>
-<app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
+        <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
       </div>
   </div>
-</div>
-
- <!-- Modal On -->
-<div class="modal fade" id="myModalOn" tabindex="-1" aria-labelledby="myModalOnLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-<div class="modal-dialog  modal-dialog modal-dialog-centered">
-  <div class="modal-content">
-    <div class="modal-header">      
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-    </div>
-    <div class="modal-body">
-      <h5 class="modal-title" id="myModalOnLabel" style="text-align: center;">Do you want to turn on this device?</h5>
-    </div>
-    <div class="modal-footer" >
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="turn-on-popup">Turn On</button>
-        
-      <button type="button" class="btn btn-outline-danger " data-bs-dismiss="modal">
-        Close
-      </button>
-     
+<ng-template #modalContent let-modal >
+  <div class="modal-header">
+    <!-- <h5 class="modal-title" id="modalTitle">{{ title }}</h5> -->
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+    <div id="subb">
+      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>&nbsp;&nbsp;
+      <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+    
     </div>
   </div>
-</div>
-</div>
-<!-- Modal Off -->
-<div class="modal fade" id="myModalOff" tabindex="-1" aria-labelledby="myModalOffLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-<div class="modal-dialog  modal-dialog modal-dialog-centered">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-      <h5 class="modal-title" id="myModalOffLabel" style="text-align: center;">Do you want to turn off this device?</h5>
-      
-    </div>
-    <div class="modal-footer" >
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="turn-off-popup">Turn Off</button>
-        
-      <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-        Close
-      </button>
-      
+  <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>
+    <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+  </div> -->
+</ng-template>
+<ng-template #modalContent1 let-modal >
+  <div class="modal-header">
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+    <div id="subb">
+       <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+    
     </div>
   </div>
-</div>
-</div>
-
-   <!-- Modal No Control -->
-   <div class="modal fade" id="myModalNoControl" tabindex="-1" aria-labelledby="myModalNoControlLabel" aria-hidden="true" data-bs-backdrop="true" data-bs-keyboard="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-        </div>
-        <div class="modal-body">
-          <h5 class="modal-title" id="myModalNoControlLabel" style="text-align: center;">Cant control this device!</h5>
-          
-        </div>
-        <div class="modal-footer" >
-            
-            
-          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-            Close
-          </button>
-          
-        </div>
-      </div>
-    </div>
-  </div>
+</ng-template>

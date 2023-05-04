@@ -5,14 +5,15 @@
   display: inline-block;
 }
 .weatherCard {
-  height: 150px;
+  
   font-family: 'Open Sans';
   position: relative;
   background-color: white;
   border-radius: 30px;
+  height: 30px;
 }
 .currentTemp {
-  height: 150px;
+
   /* background: #ffffff; */
   position: absolute;
   top: 0;
@@ -23,7 +24,7 @@
 }
 .currentWeather {
   width: 40%;
-  height: 150px;
+
   /* background: #2ab2ea; */
   margin: 0;
   position: absolute;
@@ -56,11 +57,10 @@
 }
 
 .conditions>img{
-  margin-top: -20px;
+  margin-bottom: 20px;
 }
 .info {
   width: 130px;
-  height: 50px;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -176,7 +176,7 @@
 }
 @media only screen and (min-width: 768px) {
   .weatherCard {
-  height: 120px;
+  
   border-radius: 20px;
   }
   .currentTemp {
@@ -185,7 +185,7 @@
   }
   .currentWeather {
   width: 35%;
-  height: 120px;
+  
   border-radius: 5px;
   }
   .temp {
@@ -200,7 +200,6 @@
   }
   .info {
   width: 110px;
-  height: 40px;
   margin-top: 10px;
   margin-bottom: 10px;
   }

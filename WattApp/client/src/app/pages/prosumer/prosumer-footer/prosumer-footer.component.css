@@ -1,7 +1,7 @@
 /* Footer */
 
 #pros {
-    background-color: #1C315E;
+    background-color: #354871;
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -35,12 +35,12 @@ a {
 
 .active {
     margin: 5px;
-    background-color: #1C315E !important;
+    background-color: #354871 !important;
     color: rgb(0, 0, 0);
 }
 
 a:hover {
-    background-color: #1C315E;
+    background-color: #354871;
     color: white;
 }
 

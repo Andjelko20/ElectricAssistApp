@@ -141,9 +141,6 @@ namespace Server.Services.Implementations
             DateTime StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             DateTime EndDate = StartDate.AddMonths(1).AddDays(-1).Date.AddDays(1).AddSeconds(-1);
 
-            Console.WriteLine("**************** StartDate = " + StartDate);
-            Console.WriteLine("**************** EndDate = " + EndDate);
-
             var UsageList = _context.DeviceEnergyUsages
                             .Where(u => u.DeviceId == deviceId && u.StartTime >= StartDate && u.EndTime <= EndDate)
                             .ToList();

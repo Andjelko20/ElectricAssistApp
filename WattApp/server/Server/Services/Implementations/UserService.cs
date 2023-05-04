@@ -6,6 +6,7 @@ using Polly;
 using Server.Data;
 using Server.DTOs;
 using Server.DTOs.Responses;
+using Server.Filters;
 using Server.Models;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
@@ -15,6 +16,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Principal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Server.Services.Implementations
 {
@@ -31,11 +33,12 @@ namespace Server.Services.Implementations
         }
         public int GetNumberOfPages(int itemsPerPage, Func<UserModel, bool> filter)
         {
-            int numberOfItems = context.Users.Count(filter);
+            int numberOfItems = context.Users.Include(user=>user.Settlement).Count(filter);
             if (numberOfItems % itemsPerPage == 0)
                 return numberOfItems / itemsPerPage;
             return numberOfItems / itemsPerPage + 1;
         }
+
         public async Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber, int itemsPerPage, Func<UserModel, bool> filter)
         {
             DataPage<UserDetailsDTO> page = new();
@@ -55,7 +58,73 @@ namespace Server.Services.Implementations
                 .Take(itemsPerPage)
                 .Select(user => new UserDetailsDTO(user))
                 .ToList();
+
             page.Data = users;
+            page.PreviousPage = (pageNumber == 1) ? null : pageNumber - 1;
+            page.NextPage = (pageNumber == page.NumberOfPages) ? null : pageNumber + 1;
+            return page;
+        }
+
+        public async Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber, int itemsPerPage, long roleId, long myId, UserFilterModel userFilterModel)
+        {
+            DataPage<UserDetailsDTO> page = new();
+            IQueryable<UserModel> users = null;
+
+            if(roleId == Roles.OperaterId)
+            {
+                users = (IQueryable<UserModel>)context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
+                .Where((user) => user.RoleId == Roles.ProsumerId && user.RoleId != Roles.SuperadminId && user.Id != myId);
+            }
+            else if(roleId == Roles.AdminId)
+            {
+                users = (IQueryable<UserModel>)context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
+                .Where((user) => user.RoleId != Roles.SuperadminId && user.Id != myId);
+            }
+            else
+            {
+                users = (IQueryable<UserModel>)context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
+                .Where((user) => user.Id != myId);
+            }
+            
+
+            if(users == null)
+                throw new HttpRequestException("No items found in database.", null, HttpStatusCode.NotFound);
+
+            users = UserFilter.applyFilters(users, userFilterModel);
+
+            if (!users.Any()) throw new HttpRequestException("There is no users!", null, System.Net.HttpStatusCode.NotFound);
+
+            int maxPageNumber;
+            if (users.Count() % itemsPerPage == 0) maxPageNumber = users.Count() / itemsPerPage;
+            else maxPageNumber = users.Count() / itemsPerPage + 1;
+
+            if (pageNumber < 1 || pageNumber > maxPageNumber) throw new HttpRequestException("Invalid page number!", null, System.Net.HttpStatusCode.BadRequest);
+            if (itemsPerPage < 1) throw new HttpRequestException("Invalid page size number!", null, System.Net.HttpStatusCode.BadRequest);
+
+            users = users.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
+
+            List<UserModel> userModels = users.ToList();
+            List<UserDetailsDTO> userDetailsDTOs = new List<UserDetailsDTO>();
+            foreach(UserModel user in userModels)
+            {
+                UserDetailsDTO detailsDTO = new UserDetailsDTO(user);
+                userDetailsDTOs.Add(detailsDTO);
+            }
+            
+            page.Data = userDetailsDTOs;
+            page.NumberOfPages = maxPageNumber;
             page.PreviousPage = (pageNumber == 1) ? null : pageNumber - 1;
             page.NextPage = (pageNumber == page.NumberOfPages) ? null : pageNumber + 1;
             return page;
@@ -109,6 +178,7 @@ namespace Server.Services.Implementations
             List<UserModel> allUsers = await context
                 .Users
                 .Include(user=>user.Settlement)
+                .Include(user=>user.Settlement.City)
                 .Where(user => user.RoleId == Roles.ProsumerId)
                 .ToListAsync();
             List<object> lista = new List<object>();
@@ -130,7 +200,8 @@ namespace Server.Services.Implementations
                     Latitude = user.Latitude,
                     Longitude = user.Longitude,
                     Consumption = cons,
-                    CityId=user.Settlement.CityId,
+                    City=user.Settlement.City.Name,
+                    //CityId=user.Settlement.CityId,
                     Address=user.Address
                 });
             }
@@ -224,49 +295,66 @@ namespace Server.Services.Implementations
 
         public object CreateChangeEmailRequest(ChangeEmailModel changeEmail)
         {
-            var user = context.Users.Where(src => src.Email == changeEmail.NewEmail).FirstOrDefault();
-            if (user != null)
+            UserModel user = null;
+            user = context.Users.Where(src => src.Email == changeEmail.NewEmail).FirstOrDefault();
+            if(user != null)
+            {
                 return new HttpRequestException("User with that email address already exists.");
+            }
 
-            ChangeEmailModel changeEmailRequest = context.ChangeEmailModels.Where(src => src.OldEmail == changeEmail.OldEmail).FirstOrDefault();
-            if (changeEmailRequest != null && changeEmailRequest.ExpireAt > DateTime.Now)
-                return new HttpRequestException("You've already created request to change email address. Check your email inbox.");
-            else if (changeEmailRequest != null && changeEmailRequest.ExpireAt > DateTime.Now)
-                context.ChangeEmailModels.Remove(changeEmailRequest);
+            ChangeEmailModel changeEmailModel = null;
+            changeEmailModel = context.ChangeEmailModels.Where(src => src.OldEmail == changeEmail.OldEmail).FirstOrDefault();
+            if(changeEmailModel != null)
+            {
+                if(changeEmailModel.ExpireAt > DateTime.Now)
+                {
+                    return new HttpRequestException("You've already created request to change email address. Check your email inbox.");
+                }
+                else
+                {
+                    context.ChangeEmailModels.Remove(changeEmailModel);
+                }
+            }
 
-            var response = context.ChangeEmailModels.Add(changeEmail);
+            ChangeEmailModel model = context.ChangeEmailModels.Add(changeEmail).Entity;
             context.SaveChanges();
-            if (response == null)
-                return null;
-            return response;
+            return model;
         }
 
         public object ConfirmChageOfEmailAddress(string key)
         {
-            var changeEmail = context.ChangeEmailModels.FirstOrDefault(src => src.ChangeEmailKey == key);
-            if(changeEmail == null)
-            {
-                return new HttpRequestException("There is no request with such a key.");
-            }
-            else if(changeEmail != null && changeEmail.ExpireAt < DateTime.Now)
-            {
-                context.ChangeEmailModels.Remove(changeEmail);
-                return new HttpRequestException("Confirmation link has been expired. Please create new request.");
-            }
-            ChangeEmailModel model = (ChangeEmailModel)changeEmail;
-            UserModel user = context.Users.Find(model.UserId);
-            if(user == null)
-            {
-                context.ChangeEmailModels.Remove(changeEmail);
-                return new HttpRequestException("There is no user with that username");
-            }
-            user.Email = model.NewEmail;
+            ChangeEmailModel changeEmailModel = context.ChangeEmailModels.FirstOrDefault(src => src.ChangeEmailKey == key);
 
-            context.Users.Update(user);
-            context.ChangeEmailModels.Remove(model);
+            if(changeEmailModel == null)
+            {
+                return new HttpRequestException("Sorry! But there is no request with that key.");
+            }
+            else
+            {
+                if(changeEmailModel.ExpireAt < DateTime.Now)
+                {
+                    context.ChangeEmailModels.Remove(changeEmailModel);
+                    context.SaveChanges();
+                    return new HttpRequestException("Sorry! But link has been expired");
+                }
 
-            context.SaveChanges();
-            return new OkResult();
+                UserModel user = null;
+                user = context.Users.Where(src => src.Email == changeEmailModel.NewEmail).FirstOrDefault();
+                if(user != null)
+                {
+                    context.ChangeEmailModels.Remove(changeEmailModel);
+                    context.SaveChanges();
+                    return new HttpRequestException("Someone is already using that email address.");
+                }
+
+                user = context.Users.Where(src => src.Email == changeEmailModel.OldEmail).FirstOrDefault();
+                user.Email = changeEmailModel.NewEmail;
+                UserModel response = context.Users.Update(user).Entity;
+                context.ChangeEmailModels.Remove(changeEmailModel);
+                context.SaveChanges();
+
+                return response;
+            }
         }
     }
 }

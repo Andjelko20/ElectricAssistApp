@@ -22,7 +22,7 @@ ul {
     padding-top: 45px;
     position: relative;
     width: 100%;
-    min-height: 280px;
+    min-height: 258px;
 }
 
 
@@ -245,7 +245,7 @@ ul {
 .prodactionToday h2,
 h1 {
     text-align: center;
-    font-size: 15px;
+    font-size: 17px;
     transition: all 0.3s;
 }
 
@@ -333,6 +333,15 @@ h1 {
     #deviceh3 {
         font-size: 30px;
     }
+    /* .prodactionNow {
+        border: 1px solid black;
+        width: 200px;
+        max-height: 200px;
+        position: absolute;
+        top: 27%;
+        left: 66%;
+        transform: translate(-50%, -50%);
+    } */
     /* .carbatterytree {
         margin-left: 10%;
         margin-top: 1%;

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { forkJoin } from 'rxjs';
 import { DayByHour } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,50 +10,144 @@ Chart.register(...registerables)
 @Component({
   selector: 'app-line-day-chart',
   templateUrl: './line-day-chart.component.html',
-  styleUrls: ['./line-day-chart.component.css']
+  styleUrls: ['./line-day-chart.component.css'],
 })
 export class LineDayChartComponent {
 
+  selectedOption: number;
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {
-    
+    this.selectedOption = 0;
   }
+  currentDate = new Date();
+  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1,this.currentDate.getDate()-1);
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
-  selectedOption: number = 0;
+  
 
-  onOptionSelected() {
+  onOptionSelected(event: any) {
+    this.selectedOption = event.target.value;
+    this.ngOnInit()
+  }
+
+  selectedDate!: Date;
+
+  onDateSelected(event: { value: Date; }) {
+    this.selectedDate = event.value;
     this.ngOnInit();
   }
+  
+
   ngOnInit(): void {
-    this.authService.getlogInUser().subscribe(user=>{
-      this.authService.getCityId(user.city).subscribe(number=>{
-        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+    this.authService.getlogInUser().subscribe(user => {
+      this.authService.getCityId(user.city).subscribe(number => {
+        this.authService.getSettlement(number).subscribe((settlement: Settlement[]) => {
           this.settlements = settlement;
-        })
-        if(this.selectedOption == 0){
-          this.deviceService.dayByHour(number,2).subscribe((data: DayByHour[]) =>{
-            this.list1 = data;
-            this.deviceService.dayByHour(number,1).subscribe((data: DayByHour[]) =>{
-              this.list2 = data;
-              this.LineChart();
-            })
-      
-          })
+          if(this.selectedOption != 0){
+            
+            this.selectedOption = this.settlements[(this.settlements.length-this.selectedOption)].id;
+          }
+          else{
+            this.selectedOption = 0;
+          }
+            
+        });
+        if (this.selectedOption == 0 && this.selectedDate == undefined) {
+          forkJoin([
+            this.deviceService.dayByHour(number, 2),
+            this.deviceService.dayByHour(number, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
+        } 
+        else if(this.selectedOption == 0 && this.selectedDate !== undefined){
+          const day = this.selectedDate.getDate();
+          const month = this.selectedDate.getMonth()+1;
+          const year = this.selectedDate.getFullYear();
+          let string1 = '';
+          let string2 = '';
+          if(month % 2 )
+          {
+            if(day == 30 || (month == 2 && day == 28)){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
+          }
+          else if(month % 2 == 1){
+            if(day == 31 || (month == 6 || month == 7) ){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
+          }
+
+          forkJoin([
+            this.deviceService.dayByHourCityFilter(string1,string2,number, 2),
+            this.deviceService.dayByHourCityFilter(string1,string2,number, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
         }
-        else{
-          this.deviceService.dayByHourSettlement(this.selectedOption,2).subscribe((data: DayByHour[]) =>{
-            this.list1 = data;
-            this.deviceService.dayByHourSettlement(this.selectedOption,1).subscribe((data: DayByHour[]) =>{
-              this.list2 = data;
-              this.LineChart();
-            })
-      
-          })
+        else if(this.selectedOption != 0 && this.selectedDate !== undefined){
+          const day = this.selectedDate.getDate();
+          const month = this.selectedDate.getMonth()+1;
+          const year = this.selectedDate.getFullYear();
+          let string1 = '';
+          let string2 = '';
+          if(month % 2 )
+          {
+            if(day == 30 || (month == 2 && day == 28)){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
+          }
+          else if(month % 2 == 1){
+            if(day == 31 || (month == 6 || month == 7) ){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
+            else{
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+month+'-'+(day+1)
+            }
+          }
+
+          forkJoin([
+            this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,2 ),
+            this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
         }
-        
-      })
-    })
+        else {
+          forkJoin([
+            this.deviceService.dayByHourSettlement(this.selectedOption, 2),
+            this.deviceService.dayByHourSettlement(this.selectedOption, 1)
+          ]).subscribe(([list1, list2]) => {
+            this.list1 = list1;
+            this.list2 = list2;
+            this.LineChart();
+          });
+        }
+      });
+    });
   }
   LineChart(){
 

@@ -17,6 +17,8 @@ using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Org.BouncyCastle.Asn1.Ocsp;
+using Server.Filters;
+using System.IO;
 
 namespace Server.Controllers
 {
@@ -59,24 +61,27 @@ namespace Server.Controllers
         [HttpGet]
         [Route("page")]
         [Authorize(Roles = Roles.AdminOperaterPermission)]
-        public async Task<IActionResult> GetPage([FromQuery]int pageNumber, [FromQuery] int pageSize=20)
+        public async Task<IActionResult> GetPage([FromQuery] UserFilterModel userFilterModel, [FromQuery]int pageNumber, [FromQuery] int pageSize=20)
         {
             try
             {
-                long myId = long.Parse(tokenService.GetClaim(HttpContext,"id"));
+                long myId = long.Parse(tokenService.GetClaim(HttpContext, "id"));
                 if (User.IsInRole(Roles.Operater))
-                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId==Roles.ProsumerId && user.RoleId!=Roles.SuperadminId && user.Id!=myId));
-                return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId != Roles.SuperadminId && user.Id!=myId));
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, Roles.OperaterId, myId, userFilterModel));
+                else if (User.IsInRole(Roles.Admin))
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, Roles.AdminId, myId, userFilterModel));
+                else
+                    return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, Roles.SuperadminId, myId, userFilterModel));
             }
-            catch(HttpRequestException ex)
+            catch (HttpRequestException ex)
             {
                 return StatusCode((int)ex.StatusCode.Value, new MessageResponseDTO(ex.Message));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                //logger.LogInformation(ex.Message);
-                return StatusCode(500, new {message="Internal server error"});
+                return StatusCode(500, new { message = "Internal server error" });
             }
+
         }
         /// <summary>
         /// Get single user
@@ -180,7 +185,7 @@ namespace Server.Controllers
                     Longitude = requestBody.Longitude,
                     SettlementId = requestBody.SettlementId, 
                     ExpireAt = DateTime.Now.AddDays(1),
-                    ConfirmKey = PasswordGenerator.GenerateRandomPassword(15)//ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
+                    ConfirmKey = ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()//ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
                 };
 
                 var pendingUser = userService.CreatePendingUser(user);
@@ -294,25 +299,36 @@ namespace Server.Controllers
                     return NotFound(new { message = "User doesn't exists" });
                 if (user.RoleId == Roles.SuperadminId)
                     return Forbid();
-                if ((requestBody.RoleId==Roles.AdminId && user.RoleId==Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId&& user.RoleId == Roles.AdminId))
+                if ((requestBody.RoleId == Roles.AdminId && user.RoleId == Roles.DispatcherId) || (requestBody.RoleId == Roles.DispatcherId && user.RoleId == Roles.AdminId))
                     user.RoleId = requestBody.RoleId;
                 user.Blocked = requestBody.Blocked;
-                if (user.Email != requestBody.Email)
+                if (user.Email == requestBody.Email)
+                {
+                    _sqliteDb.Users.Update(user);
+                    _sqliteDb.SaveChanges();
+                    return Ok(new { message = "User updated successfully." });
+                }
+                else
                 {
                     ChangeEmailModel changeEmailModel = new ChangeEmailModel
                     {
-                        UserId = id,
+                        UserId = user.Id,
                         OldEmail = user.Email,
                         NewEmail = requestBody.Email,
                         ExpireAt = DateTime.Now.AddDays(1),
-                        ChangeEmailKey = PasswordGenerator.GenerateRandomPassword(15)//ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
+                        ChangeEmailKey = ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
                     };
 
-                    userService.CreateChangeEmailRequest(changeEmailModel);
-
-                    try
+                    object o = userService.CreateChangeEmailRequest(changeEmailModel);
+                    if (o is HttpRequestException)
                     {
-                        emailService.SendEmail(changeEmailModel.NewEmail,
+                        return Ok(new { message = ((HttpRequestException)o).Message });
+                    }
+                    else
+                    {
+                        try
+                        {
+                            emailService.SendEmail(changeEmailModel.NewEmail,
                                 "Confirm Your Email Address Change",
                                  "Hello " + user.Name + ", <br><br>" +
                                 "Thank you for using our service.<br>" +
@@ -325,19 +341,17 @@ namespace Server.Controllers
                                 "Thank you, <br>" +
                                 "<i><b>ElectricAssist Team</b></i>"
                             , true);
+                            return Ok(new { message = "Email sent successfully." });
+                        }
+                        catch
+                        {
+                            return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+                        }
 
                     }
-                    catch
-                    {
-                        return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
-                    }
                 }
-                _sqliteDb.Users.Update(user);   
-                await _sqliteDb.SaveChangesAsync();
-                return Ok(new { message = "User is updated successfully" });
-                //Dobijam sifru i nov mail, ako je sifra dobra menjam mail za novog korisnika
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, new { message = "Internal Server Error" });
             }
@@ -362,7 +376,11 @@ namespace Server.Controllers
                 var user = await _sqliteDb.Users.FirstOrDefaultAsync(user => user.Id == userId);
                 if (user == null)
                     return NotFound(new { message = "User doesn't exists" });
+                var uniqueUsername = userService.GetUserByUsername(requestBody.Username);
+                if(uniqueUsername != null)
+                    return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("This username is already taken."));
                 user.Username = requestBody.Username;
+
                 user.Name = requestBody.Name;
                 if (user.Email  != requestBody.Email)
                 {
@@ -412,11 +430,11 @@ namespace Server.Controllers
         }
 
         [HttpPost("changeEmailConfirmation/{key}")]
-        public IActionResult changeEmailAddressConfirmation([FromRoute]string key)
+        public ConfirmEmailResponseDTO changeEmailAddressConfirmation([FromRoute]string key)
         {
             object response = userService.ConfirmChageOfEmailAddress(key);
             ConfirmEmailResponseDTO responseDTO = new ConfirmEmailResponseDTO();
-            if (response is HttpRequestException)
+            if(response is HttpRequestException)
             {
                 responseDTO.error = ((HttpRequestException)response).Message;
             }
@@ -424,7 +442,8 @@ namespace Server.Controllers
             {
                 responseDTO.isConfirmed = true;
             }
-            return Ok(responseDTO);
+
+            return responseDTO;
         }
 
         /// <summary>
@@ -540,6 +559,15 @@ namespace Server.Controllers
                 _sqliteDb.ResetPassword.Add(resetPassword);
             _sqliteDb.SaveChangesAsync();
             return Ok();
+        }
+        [HttpGet]
+        [Route("my_location")]
+        [Authorize]
+        public async Task<IActionResult> GetMyLocation()
+        {
+            var id = long.Parse(tokenService.GetClaim(HttpContext, "id"));
+            var user = await userService.GetUserById(id);
+            return Ok(new {lat=user.Latitude,lon=user.Longitude});
         }
     }
 }

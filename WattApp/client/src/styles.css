@@ -9,23 +9,27 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  
 }
+
 .main {
     background-color: rgb(224 249 254);
 }
+
 body {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: rgb(238, 238, 238);
     color: #727272;
     min-height: 100%;
-    -webkit-text-size-adjust: 100%;
     overflow: auto !important;
+}
 
+button {
+    cursor: pointer;
 }
-button{
-	cursor: pointer;
-}
-.modal-open{
+
+.modal-open {
     padding-right: 0px!important;
+}
+.modal{
+    --bs-modal-margin: 15.75rem!important;
 }

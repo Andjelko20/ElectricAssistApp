@@ -1,60 +1,48 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-
+import { Observable, from, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ForecastService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient,private authService:AuthService) { }
 
-  getWeatherForecast(){
-    return new Observable((observer)=>{
-      navigator.geolocation.getCurrentPosition((position)=>{
-        observer.next(position)
-      },
-      (error)=>{
-        observer.next(error)
-      }
-      )
-    }).pipe(
-      map((value:any)=>{
-        return new HttpParams()
-          .set('lon', value.coords.longitude)
-          .set('lat', value.coords.latitude)
-          .set('units',"metric")
-          .set('appid', '7dd14e5b21a93d6be27ec87a0694756b')
+  getWeatherForecast(): Observable<any> {
+    let defaultLocation = {
+      lat: 51.5074,
+      lon: -0.1278
+    };
+    
+    return this.authService.getMyLocation().pipe(
+      switchMap((location: { latitude: number, longitude: number }) => {
+        const apiLocation = { lat: location.latitude, lon: location.longitude };
+        return this.makeWeatherApiCall(apiLocation);
       }),
-      switchMap((values)=>{
-        return this.http.get('https://api.openweathermap.org/data/2.5/forecast', { params : values })
+      catchError((error: any) => {
+        console.error('Error getting weather forecast: ', error);
+        return this.makeWeatherApiCall(defaultLocation);
       })
-    )
+    );
   }
 
-  getWeatherForecastF(){
-    return new Observable((observer)=>{
-      navigator.geolocation.getCurrentPosition((position)=>{
-        observer.next(position)
-      },
-      (error)=>{
-        observer.next(error)
-      }
-      )
-    }).pipe(
-      map((value:any)=>{
-        return new HttpParams()
-          .set('lon', value.coords.longitude)
-          .set('lat', value.coords.latitude)
-          .set('units',"imperial")
-          .set('appid', '7dd14e5b21a93d6be27ec87a0694756b')
-      }),
-      switchMap((values)=>{
-        return this.http.get('https://api.openweathermap.org/data/2.5/forecast', { params : values })
-      })
-    )
-  }
+  private makeWeatherApiCall(location: any): Observable<any> {
+    const params = new HttpParams()
+      .set('lon', location.lon)
+      .set('lat', location.lat)
+      .set('units', "metric")
+      .set('appid', environment.openWeatherMapApiKey);
 
+    return this.http.get('https://api.openweathermap.org/data/2.5/forecast', { params })
+      .pipe(
+        catchError((error: any) => {
+          console.error('Error retrieving weather data: ', error);
+          return throwError(error);
+        })
+      );
+  }
 }

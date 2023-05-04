@@ -199,6 +199,19 @@ p {
       padding-left: 20px;
       color: white;
     }
+    #modalContent {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #subb{
+      display: flex;
+      flex-direction: row;
+      justify-content: right;
+      text-align: right;
+      align-items: right;
+      
+    }
 @media (min-width: 768px) {
    
     .device {

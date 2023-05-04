@@ -54,10 +54,7 @@ export class AdminDsoUpdateComponent implements OnInit {
               country: response.country,
               address: response.address
               };
-            },
-			error:(response)=>{
-				this.router.navigate(["home"]);
-			}
+            }
           });
 		});
   }
@@ -65,19 +62,12 @@ export class AdminDsoUpdateComponent implements OnInit {
   
   upDate()
   {
-    // this.onSelectedBlock(this.updateUserDetail.block);
-    // console.log("Azuriran objekat: ",this.updateUserDetail);
     this.updateService.upDate(this.updateUserDetail.id,this.updateUserDetail)
     .subscribe({
       next:()=>{
         this.router.navigate(['dashboard']);
       }
     });
-  }
-  generatePassword() {
-    this.passwordGen=Array(10).
-    fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").
-    map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
   }
   sendEmail(){
     const changepass= document.getElementById('change-pass-popup');

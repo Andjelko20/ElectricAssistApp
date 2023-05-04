@@ -1,21 +1,18 @@
 <div class="wrapper">
   <div class="toggle-container">
-  <div class="toggle-buttons">
-    <input type="radio" (click)="toggleDa()" name="toggle" id="dashboard-btn" checked >
-    <label for="dashboard-btn">Dashboard</label>
-    <span class="divider"></span>
-    <input type="radio" (click)="toggleD()" name="toggle" id="devices-btn">
-    <label for="devices-btn">Devices</label>
+    <div class="toggle-buttons">
+      <input type="radio" (click)="toggleDa()" name="toggle" id="dashboard-btn" checked >
+      <label for="dashboard-btn">Dashboard</label>
+      <span class="divider"></span>
+      <input type="radio" (click)="toggleD()" name="toggle" id="devices-btn">
+      <label for="devices-btn">Devices</label>
+    </div>
   </div>
-  <div class="date-time">
-    <p>{{ currentTime | date: 'dd.MM.yyyy HH:mm' }}</p>
-  </div>
-</div>
 <div class="container" *ngIf="dashboard">
   <div class="card-group">
     <div class="bgc-white p-20 bd">
         <div class="c-grey-900 text-center"  >
-            <div style="display: inline-block;"><h4 style=" font-weight: bolder;">Overview of Prosumer energy </h4></div>
+            <div style="display: inline-block;"><h4 style=" font-weight: bolder;">Overview of {{name}} energy </h4></div>
             <hr style="margin-bottom: 0;padding-bottom: 0;">
         </div>
         <div class="peers mT-20 fxw-nw@lg+ jc-sb ta-c gap-10">
@@ -71,24 +68,20 @@
     <div class="history-charts">
       <div class="tgl-container">
           <div class="tgl-btn">
-            <input type="radio" (click)="showGraph()" name="toggle" id="graphic-btn" checked >
+            <input type="radio" (click)="showGraph()" name="toggle1" id="graphic-btn" checked >
             <label for="graphic-btn">Graphical view</label>
             <span class="divider"></span>
-            <input type="radio" (click)="showTable()" name="toggle" id="tabelar-btn">
+            <input type="radio" (click)="showTable()" name="toggle1" id="tabelar-btn">
             <label for="tabelar-btn">Tabelar view</label>
           </div>
-      </div>
-      <div class="csv-body">
-          <span>Power and Energy</span>
-          <button class="csv-button">CSV</button>
       </div>
       <ng-container *ngIf="graph">
           <div class="chart-body">
               <div class="chart-buttons">
-                <button (click)="showComponentGraph()" class="chart-button">Day</button>
-                <button (click)="showComponentGraph1()" class="chart-button">Week</button>
-                <button (click)="showComponentGraph2()" class="chart-button">Month</button>
-                <button (click)="showComponentGraph3()" class="chart-button">Year</button>
+                <button (click)="showComponentGraph()" class="chart-button" [class.active]="compGraph">Day</button>
+                <button (click)="showComponentGraph1()" class="chart-button" [class.active]="compGraph1">Week</button>
+                <button (click)="showComponentGraph2()" class="chart-button" [class.active]="compGraph2">Month</button>
+                <button (click)="showComponentGraph3()" class="chart-button" [class.active]="compGraph3">Year</button>
               </div>
             </div>
           <div class="history-charts-body" *ngIf="compGraph">
