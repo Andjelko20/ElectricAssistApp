@@ -1,25 +1,19 @@
 <app-prosumer-navbar>
 </app-prosumer-navbar>
-
-<!-- Main content -->
 <div class="main">
 
     <img id="homeimg" src="assets/img/prosumerHome.png" alt="">
 
     <div class="prodactionToday">
         <h2>Production today</h2>
-        <h1><strong>24.56 kWh</strong></h1>
+        <h1><strong>{{todayProduction}} kWh</strong></h1>
     </div>
-    <!-- <div class="consumptionNow">
-
-    </div> -->
-
     <div class="row">
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">22.5 </p>
+                    <h5 class="card-title">Current consumption</h5>
+                    <p class="card-text">{{currentConsumption}} kWh</p>
 
                 </div>
             </div>
@@ -27,8 +21,8 @@
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With </p>
+                    <h5 class="card-title">Today consumption</h5>
+                    <p class="card-text">{{todayConsumption}} kWh</p>
 
                 </div>
             </div>
@@ -36,8 +30,8 @@
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With </p>
+                    <h5 class="card-title">Month consumption</h5>
+                    <p class="card-text">{{monthConsumption}} kWh</p>
                 </div>
             </div>
         </div>

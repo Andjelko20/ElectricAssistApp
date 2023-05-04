@@ -1,19 +1,19 @@
-<div class="prosumer-info">
+<div *ngIf="prosumer" class="prosumer-info">
   <div class="info-cell">
     <div class="cell-label">Name:</div>
-    <div class="cell-value">{{dso.name}}</div>
+    <div class="cell-value">{{prosumer.name}}</div>
   </div>
   <div class="info-cell">
     <div class="cell-label">City:</div>
-    <div class="cell-value">{{dso.city}}</div>
+    <div class="cell-value">{{prosumer.city}}</div>
   </div>
   <div class="info-cell">
     <div class="cell-label">Communities:</div>
-    <div class="cell-value">{{dso.settlement}}</div>
+    <div class="cell-value">{{prosumer.settlement}}</div>
   </div>
   <div class="info-cell">
     <div class="cell-label">Address:</div>
-    <div class="cell-value">{{dso.address}}</div>
+    <div class="cell-value">{{prosumer.address}}</div>
   </div>
   <div class="info-cell">
     <div class="cell-label">Current Consumption:</div>
@@ -24,4 +24,3 @@
     <div class="cell-value">{{cP}} kWh</div>
   </div>
 </div>
-

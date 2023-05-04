@@ -39,21 +39,4 @@ export class FutureComponent implements OnInit{
       this.weatherData.push(data[i]);
     }
   }
-
-  toggle(data:any,index:number){
-    this.primaryDisplay = !this.primaryDisplay;
-    this.secondaryDisplay = !this.secondaryDisplay;
-
-    this.forecastDetails = data;
-    this.selectedIndex = index;
-  }
-  toggles(){
-    this.primaryDisplay = !this.primaryDisplay;
-    this.secondaryDisplay = !this.secondaryDisplay;
-  }
-
-  showDetails(data:any,i:number){
-    this.forecastDetails = data;
-    this.selectedIndex = i;
-  }
 }

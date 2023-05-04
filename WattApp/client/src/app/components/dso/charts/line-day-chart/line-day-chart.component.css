@@ -1,36 +1,3 @@
- /* .chart canvas {
-    width: 1200px; 
-    max-height: 400px; 
-    
-}
-
-.chart {
-    display: inline-block;
-
-    
-}
-@media only screen and (min-width: 768px) and (max-width: 1280px) {
-    .chart {
-        display: inline-block;
-        
-    }
-    .chart canvas {
-        max-width: 700px; 
-        max-height: 300px; 
-      }
-    
-    
-}
-@media only screen and (min-width: 768px)and (max-width: 769px)and (min-height: 1024px) {
-    .chart {
-        display: inline-block;
-        
-    }
-    .chart canvas {
-        max-width: 450px; 
-        max-height: 300px; 
-      }
-}  */
 
 .chart canvas {
     width: 100%; /* Set the width to 100% of the parent element */
@@ -41,6 +8,7 @@
     display: inline-block;
     
 }
+
 @media only screen and (min-width: 768px) and (max-width: 1280px) {
     .chart {
         display: inline-block;

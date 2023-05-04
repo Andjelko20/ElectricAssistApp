@@ -4,7 +4,7 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
 import { Prosumers } from 'src/app/models/users.model'
 import { ActivatedRoute } from '@angular/router';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-import { first } from 'rxjs';
+import { first, forkJoin, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-one-prosumer',
@@ -13,29 +13,25 @@ import { first } from 'rxjs';
 })
 export class OneProsumerComponent implements OnInit{
 
-  id?:number;
-  dso!: Prosumers;
+  prosumer!: Prosumers;
   cC!: number;
   cP!:number;
   constructor(private authService:AuthService,private route:ActivatedRoute,private historyService:HistoryPredictionService) {
-    
+
   }
-  async ngOnInit(){
-    let token=new JwtToken();
-    this.id=token.data.id as number;
-
-    this.authService.getProsumer(Number(this.route.snapshot.paramMap.get('id'))).subscribe(user=>{
-
-      this.dso = user; 
-      this.historyService.currentUserProductionConsumption(Number(this.route.snapshot.paramMap.get('id')),2).subscribe(data1=>{
-        this.cC = data1;
-        this.historyService.currentUserProductionConsumption(Number(this.route.snapshot.paramMap.get('id')),1).subscribe(data2=>{
-          this.cP = data2;
-        })
+  ngOnInit() {
+    const prosumerId = Number(this.route.snapshot.paramMap.get('id'));
+  
+    this.authService.getProsumer(prosumerId).pipe(
+      switchMap(user => {
+        this.prosumer = user;
+        const productionObs = this.historyService.currentUserProductionConsumption(prosumerId, 1);
+        const consumptionObs = this.historyService.currentUserProductionConsumption(prosumerId, 2);
+        return forkJoin([productionObs, consumptionObs]);
       })
-    })
-
-    
-
+    ).subscribe(([productionData, consumptionData]) => {
+      this.cC = consumptionData;
+      this.cP = productionData;
+    });
   }
 }

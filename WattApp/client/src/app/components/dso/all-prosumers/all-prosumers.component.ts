@@ -61,7 +61,6 @@ i: any;
 		fetch(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem("token")},signal:controller.signal})
 		.then(res=>{
 			if(res.status==401 || res.status==403){
-				//alert('aaa');
 				return Promise.reject("aaa");
 			}
 			return res.text();
@@ -100,10 +99,6 @@ i: any;
 			}
 			
 		})
-		// .catch(err=>{
-		// 	localStorage.removeItem("token");
-		// 	//this.router.navigate(["login"]);
-		// });
     
   }
 }

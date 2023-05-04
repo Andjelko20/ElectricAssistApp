@@ -220,7 +220,6 @@ import { ProsumerYearTableComponent } from "./components/prosumers/prosumer-tabl
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule
-
   ],
   providers: [DecimalPipe],
   bootstrap: [AppComponent]
