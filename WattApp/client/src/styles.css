@@ -33,3 +33,11 @@ button {
 .modal{
     --bs-modal-margin: 15.75rem!important;
 }
+
+@media (min-width: 300px) {
+    .modal{
+        margin-top: 150px;
+        --bs-modal-margin: 3rem!important;
+    }
+    
+}
