@@ -456,5 +456,79 @@ namespace Server.Services.Implementations
                 return energyUsages;
             }
         }
+
+        public List<DailyEnergyConsumptionPastMonth> DevicePredictionForThePastWeek(long deviceId)
+        {
+            Random random = new Random();
+            double minValue = 0.0;
+            double maxValue = 3.0;
+
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT DATE(deu.StartTime) AS YYMMDD,
+                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM DeviceEnergyUsages deu 
+                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.Id = @deviceId
+                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                        WHERE deu.StartTime >= date('now', '-7 day') 
+                                            AND (deu.EndTime <= date('now') OR deu.EndTime IS NULL)
+                                        GROUP BY DATE(deu.StartTime)";
+
+                command.Parameters.Add(new SqliteParameter("@deviceId", deviceId));
+
+                var energyUsages = new List<DailyEnergyConsumptionPastMonth>();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            double randomNumber = random.NextDouble() * (maxValue - minValue) + minValue;
+
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage + randomNumber, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
+                    }
+                    else
+                    {
+                        var startDate = DateTime.Now.Date.AddDays(-7);
+                        var endDate = DateTime.Now.Date;
+
+                        for (var date = startDate; date < endDate; date = date.AddDays(1))
+                        {
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = date.Day,
+                                Month = date.ToString("MMMM"),
+                                Year = date.Year,
+                                EnergyUsageResult = 0
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
+                    }
+                }
+
+                return energyUsages;
+            }
+        }
     }
 }
