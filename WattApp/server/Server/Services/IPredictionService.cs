@@ -10,6 +10,8 @@ namespace Server.Services
         public List<DailyEnergyConsumptionPastMonth> SettlementPredictionForTheNextWeek(long settlementId, long deviceCategoryId);
         public List<DailyEnergyConsumptionPastMonth> CityPredictionForThePastWeek(long cityId, long deviceCategoryId);
         public List<DailyEnergyConsumptionPastMonth> SettlementPredictionForThePastWeek(long settlementId, long deviceCategoryId);
+        public List<DailyEnergyConsumptionPastMonth> ProsumerPredictionForThePastWeek(long userId, long deviceCategoryId);
+
 
 
 

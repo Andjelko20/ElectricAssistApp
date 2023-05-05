@@ -60,7 +60,7 @@ namespace Server.Controllers
         [HttpGet]
         [Route("WeekByDay/")]
         public async Task<IActionResult> GetCityOrSettlementPredictionForNextWeekByDay([FromQuery] long cityId, long settlementId, long deviceCategoryId,
-                                                                                                   long previousCityId, long previousSettlementId)
+                                                                                                   long previousCityId, long previousSettlementId, long previousProsumerId)
         {
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
@@ -86,16 +86,24 @@ namespace Server.Controllers
                 if (!_sqliteDb.Cities.Any(s => s.Id == previousCityId))
                     return NotFound(new { message = "City with the ID: " + previousCityId.ToString() + " does not exist." });
 
-                var PredictionForNextWeek = predictionService.CityPredictionForThePastWeek(previousCityId, deviceCategoryId);
-                return Ok(PredictionForNextWeek);
+                var PredictionForPastWeek = predictionService.CityPredictionForThePastWeek(previousCityId, deviceCategoryId);
+                return Ok(PredictionForPastWeek);
             }
-            else //if (previousSettlementId != 0)
+            else if (previousSettlementId != 0)
             {
                 if (!_sqliteDb.Settlements.Any(s => s.Id == previousSettlementId))
                     return NotFound(new { message = "Settlement with the ID: " + previousSettlementId.ToString() + " does not exist." });
 
-                var PredictionForNextWeek = predictionService.SettlementPredictionForThePastWeek(previousSettlementId, deviceCategoryId);
-                return Ok(PredictionForNextWeek);
+                var PredictionForPastWeek = predictionService.SettlementPredictionForThePastWeek(previousSettlementId, deviceCategoryId);
+                return Ok(PredictionForPastWeek);
+            }
+            else // if (previousProsumerId != 0)
+            {
+                if (!_sqliteDb.Users.Any(s => s.Id == previousProsumerId))
+                    return NotFound(new { message = "User with the ID: " + previousProsumerId.ToString() + " does not exist." });
+
+                var PredictionForPastWeek = predictionService.ProsumerPredictionForThePastWeek(previousProsumerId, deviceCategoryId);
+                return Ok(PredictionForPastWeek);
             }
         }
     }

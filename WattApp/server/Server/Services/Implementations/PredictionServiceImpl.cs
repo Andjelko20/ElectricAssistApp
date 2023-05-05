@@ -5,6 +5,7 @@ using Server.DTOs;
 using Server.Models;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
+using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 
 namespace Server.Services.Implementations
@@ -373,6 +374,82 @@ namespace Server.Services.Implementations
                         };
 
                         energyUsages.Add(dailyEnergyUsage);
+                    }
+                }
+
+                return energyUsages;
+            }
+        }
+
+        public List<DailyEnergyConsumptionPastMonth> ProsumerPredictionForThePastWeek(long userId, long deviceCategoryId)
+        {
+            Random random = new Random();
+            double minValue = -5.0;
+            double maxValue = 50.0;
+
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT DATE(deu.StartTime) AS YYMMDD,
+                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM DeviceEnergyUsages deu 
+                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
+                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
+                                        WHERE deu.StartTime >= date('now', '-7 day') 
+                                            AND (deu.EndTime <= date('now') OR deu.EndTime IS NULL)
+                                        GROUP BY DATE(deu.StartTime)";
+
+                command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
+                command.Parameters.Add(new SqliteParameter("@userId", userId));
+
+                var energyUsages = new List<DailyEnergyConsumptionPastMonth>();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            double randomNumber = random.NextDouble() * (maxValue - minValue) + minValue;
+
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage + randomNumber, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
+                    }
+                    else
+                    {
+                        var startDate = DateTime.Now.Date.AddDays(-7);
+                        var endDate = DateTime.Now.Date;
+
+                        for (var date = startDate; date < endDate; date = date.AddDays(1))
+                        {
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = date.Day,
+                                Month = date.ToString("MMMM"),
+                                Year = date.Year,
+                                EnergyUsageResult = 0
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
                     }
                 }
 
