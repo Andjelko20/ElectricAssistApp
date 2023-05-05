@@ -267,6 +267,11 @@ namespace Server.Services.Implementations
             Random random = new Random();
             double minValue = -1000.0;
             double maxValue = 1000.0;
+            if (deviceCategoryId == 1)
+            {
+                minValue = 0.0;
+                maxValue = 500.0;
+            }
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -287,6 +292,62 @@ namespace Server.Services.Implementations
 
                 command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
                 command.Parameters.Add(new SqliteParameter("@cityId", cityId));
+
+                var energyUsages = new List<DailyEnergyConsumptionPastMonth>();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                        var day = date.Day;
+                        var month = date.ToString("MMMM");
+                        var year = date.Year;
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                        double randomNumber = random.NextDouble() * (maxValue - minValue) + minValue;
+
+                        var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                        {
+                            Day = day,
+                            Month = month,
+                            Year = year,
+                            EnergyUsageResult = Math.Round(energyUsage + randomNumber, 2)
+                        };
+
+                        energyUsages.Add(dailyEnergyUsage);
+                    }
+                }
+
+                return energyUsages;
+            }
+        }
+
+        public List<DailyEnergyConsumptionPastMonth> SettlementPredictionForThePastWeek(long settlementId, long deviceCategoryId)
+        {
+            Random random = new Random();
+            double minValue = -50.0;
+            double maxValue = 500.0;
+
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT DATE(deu.StartTime) AS YYMMDD,
+                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM DeviceEnergyUsages deu 
+                                        JOIN Devices d ON deu.DeviceId = d.Id
+                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
+                                        JOIN Users u ON d.UserId = u.Id AND u.SettlementId = @settlementId
+                                        WHERE deu.StartTime >= date('now', '-7 day') 
+                                            AND (deu.EndTime <= date('now') OR deu.EndTime IS NULL)
+                                        GROUP BY DATE(deu.StartTime)";
+
+                command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
+                command.Parameters.Add(new SqliteParameter("@settlementId", settlementId));
 
                 var energyUsages = new List<DailyEnergyConsumptionPastMonth>();
 
