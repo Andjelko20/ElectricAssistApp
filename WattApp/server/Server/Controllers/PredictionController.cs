@@ -55,11 +55,12 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// City|Settlement prediction for next week (by day)
+        /// City|Settlement prediction for next/previous week (by day)
         /// </summary>
         [HttpGet]
         [Route("WeekByDay/")]
-        public async Task<IActionResult> GetCityOrSettlementPredictionForNextWeekByDay([FromQuery] long cityId, long settlementId, long deviceCategoryId)
+        public async Task<IActionResult> GetCityOrSettlementPredictionForNextWeekByDay([FromQuery] long cityId, long settlementId, long deviceCategoryId,
+                                                                                                   long previousCityId)
         {
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
@@ -72,12 +73,20 @@ namespace Server.Controllers
                 var PredictionForNextWeek = predictionService.CityPredictionForTheNextWeek(cityId, deviceCategoryId);
                 return Ok(PredictionForNextWeek);
             }
-            else //if (settlementId != 0)
+            else if (settlementId != 0)
             {
                 if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
                     return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not exist." });
 
                 var PredictionForNextWeek = predictionService.SettlementPredictionForTheNextWeek(settlementId, deviceCategoryId);
+                return Ok(PredictionForNextWeek);
+            }
+            else //if (previousCityId != 0)
+            {
+                if (!_sqliteDb.Cities.Any(s => s.Id == previousCityId))
+                    return NotFound(new { message = "City with the ID: " + previousCityId.ToString() + " does not exist." });
+
+                var PredictionForNextWeek = predictionService.CityPredictionForThePastWeek(previousCityId, deviceCategoryId);
                 return Ok(PredictionForNextWeek);
             }
         }
