@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component,  OnDestroy,  OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { EmailConfirmationServiceService } from 'src/app/services/email-confirmation-service.service';
 
 @Component({
   selector: 'app-email-confirmation-page',
@@ -12,44 +11,43 @@ import { environment } from 'src/environments/environment';
 export class EmailConfirmationPageComponent implements OnInit, OnDestroy {
   isConfirmed: boolean | null = null;
   message: string | null = null;
-  private routeSubscription: Subscription | null = null;
+  loading : boolean = true;
+  subscription : Subscription = new Subscription();
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route : ActivatedRoute,
+    private emaileConfirmationService : EmailConfirmationServiceService)
+    {}
 
-  goToLogin() {
-    this.router.navigate(['login']);
-  }
-
-  ngOnInit() {
-    console.log("ngOnInit called");
-    this.routeSubscription?.unsubscribe();
-    this.subscribeToRoute();
-  }
-
-  private subscribeToRoute() {
-    this.routeSubscription = this.route.queryParams.subscribe(params => {
-      const key = encodeURIComponent(params['key']);
+  
+  ngOnInit(): void {
+    this.loading = true;
+    this.route.queryParams.subscribe(params => {
+      const key = encodeURIComponent(params['key']) ;
       console.log(key);
-      this.http.post<ConfirmEmailResponseDTO>(`${environment.serverUrl}/api/Users/emailConfirmation/${key}`, null)
-        .subscribe((response) => {
-          console.log(response);
-          console.log(response.isConfirmed);
-          console.log(response.error);
-          if (response.isConfirmed) {
+
+      this.emaileConfirmationService.confirmEmailAddress(key).subscribe((response : ConfirmEmailResponseDTO) => {
+        if(response != null){
+          if(response.isConfirmed){
             this.isConfirmed = true;
-          } else {
+            console.log("Uspesno potvrdjen mail.");
+          }
+          else{
             this.isConfirmed = false;
             this.message = response.error;
+            console.log("Neuspesno potvrdjivanje");
           }
-        });
+        }
+        this.loading = false;
+      });
     });
   }
 
   ngOnDestroy(): void {
-    console.log("ngOnDestroy called");
-    if (this.routeSubscription) {
-      this.routeSubscription.unsubscribe();
-    }
+    this.subscription.unsubscribe();
+    this.isConfirmed = null;
+    this.message = null;
+    this.loading = true;
   }
 }
 
