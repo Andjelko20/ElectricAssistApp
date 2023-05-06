@@ -6,6 +6,7 @@ import { Component, ElementRef, ViewChildren, QueryList, ViewChild} from '@angul
   styleUrls: ['./prosumer-reports-page.component.css']
 })
 export class ProsumerReportsPageComponent {
+  
   @ViewChildren('collapsibleButton') collapsibleButtons!: QueryList<ElementRef>;
   dashboard:boolean = true;
   devices:boolean = false;

@@ -36,67 +36,108 @@
             </div>
 
             <div class="graf">
-                <div class="row">
-                    <div class="toggle-container">
-                        <div class="toggle-buttons">
-                            <input type="radio" (click)="toogleDay()" name="toggle" id="day-btn" checked [class.active]="day">
-                            <label id="dash" for="day-btn">Day</label>
-                            <span class="divider"></span>
-                            <input type="radio" (click)="toogleWeek()" name="toggle" id="week-btn" [class.active]="week">
-                            <label for="week-btn">Week</label>
-                            <span class="divider"></span>
-                            <input type="radio" (click)="toogleMonth()" name="toggle" id="month-btn" [class.active]="month">
-                            <label for="month-btn">Month</label>
-                            <span class="divider"></span>
-                            <input type="radio" (click)="toogleYear()" name="toggle" id="year-btn" [class.active]="year">
-                            <label for="year-btn">Year</label>
+                <button type="button" class="collapsible dropdown-toggle " #collapsibleButton>Consumption</button>
+                <div class="contentng-start-inserted">
+                    <div class="row">
+                        <div class="toggle-container">
+                            <div class="toggle-buttons">
+                                <input type="radio" (click)="toogleDay()" name="toggle" id="day-btn" checked [class.active]="day">
+                                <label id="dash" for="day-btn">Day</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="toogleWeek()" name="toggle" id="week-btn" [class.active]="week">
+                                <label for="week-btn">Week</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="toogleMonth()" name="toggle" id="month-btn" [class.active]="month">
+                                <label for="month-btn">Month</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="toogleYear()" name="toggle" id="year-btn" [class.active]="year">
+                                <label for="year-btn">Year</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="history-charts-body" *ngIf="day">
-                        <app-prosumer-day-graph></app-prosumer-day-graph>
-                    </div>
-                    <div class="history-charts-body" *ngIf="week">
-                        <app-prosumer-week-graph></app-prosumer-week-graph>
-                    </div>
-                    <div class="history-charts-body" *ngIf="month">
-                        <app-prosumer-month-graph></app-prosumer-month-graph>
-                    </div>
-                    <div class="history-charts-body" *ngIf="year">
-                        <app-prosumer-year-graph></app-prosumer-year-graph>
-                    </div>
+                        <div class="history-charts-body" *ngIf="day">
+                            <app-prosumer-day-graph></app-prosumer-day-graph>
+                        </div>
+                        <div class="history-charts-body" *ngIf="week">
+                            <app-prosumer-week-graph></app-prosumer-week-graph>
+                        </div>
+                        <div class="history-charts-body" *ngIf="month">
+                            <app-prosumer-month-graph></app-prosumer-month-graph>
+                        </div>
+                        <div class="history-charts-body" *ngIf="year">
+                            <app-prosumer-year-graph></app-prosumer-year-graph>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+            <div class="graf1">
+                <button type="button" class="collapsible dropdown-toggle " #collapsibleButton>Prodaction</button>
+                <div class="content">
+                    <div class="row">
+                        <div class="toggle-container">
+                            <div class="toggle-buttons">
+                                <input type="radio" (click)="toogleDay()" name="toggle" id="day-btn" checked [class.active]="day">
+                                <label id="dash" for="day-btn">Day</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="toogleWeek()" name="toggle" id="week-btn" [class.active]="week">
+                                <label for="week-btn">Week</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="toogleMonth()" name="toggle" id="month-btn" [class.active]="month">
+                                <label for="month-btn">Month</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="toogleYear()" name="toggle" id="year-btn" [class.active]="year">
+                                <label for="year-btn">Year</label>
+                            </div>
+                        </div>
+                        <div class="history-charts-body" *ngIf="day">
+                            <app-prosumer-day-graph></app-prosumer-day-graph>
+                        </div>
+                        <div class="history-charts-body" *ngIf="week">
+                            <app-prosumer-week-graph></app-prosumer-week-graph>
+                        </div>
+                        <div class="history-charts-body" *ngIf="month">
+                            <app-prosumer-month-graph></app-prosumer-month-graph>
+                        </div>
+                        <div class="history-charts-body" *ngIf="year">
+                            <app-prosumer-year-graph></app-prosumer-year-graph>
+                        </div>
+
+                    </div>
                 </div>
             </div>
             <div class="table">
-                <div class="row">
-                    <div class="toggle-container">
-                        <div class="toggle-buttons">
-                            <input type="radio" (click)="toogledayTable()" name="toggle" id="dayTable-btn" checked [class.active]="dayTable">
-                            <label id="dash" for="dayTable-btn">Day</label>
-                            <span class="divider"></span>
-                            <input type="radio" (click)="toogleweekTable()" name="toggle" id="weekTable-btn" [class.active]="weekTable">
-                            <label for="weekTable-btn">Week</label>
-                            <span class="divider"></span>
-                            <input type="radio" (click)="tooglemonthTable()" name="toggle" id="monthTable-btn" [class.active]="monthTable">
-                            <label for="monthTable-btn">Month</label>
-                            <span class="divider"></span>
-                            <input type="radio" (click)="toogleyearTable()" name="toggle" id="yearTable-btn" [class.active]="yearTable">
-                            <label for="yearTable-btn">Year</label>
+                <button type="button" class="collapsible dropdown-toggle " #collapsibleButton>Table of production/consumption</button>
+                <div class="content">
+                    <div class="row">
+                        <div class="toggle-container">
+                            <div class="toggle-buttons">
+                                <input type="radio" (click)="toogledayTable()" name="toggle" id="dayTable-btn" checked [class.active]="dayTable">
+                                <label id="dash" for="dayTable-btn">Day</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="toogleweekTable()" name="toggle" id="weekTable-btn" [class.active]="weekTable">
+                                <label for="weekTable-btn">Week</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="tooglemonthTable()" name="toggle" id="monthTable-btn" [class.active]="monthTable">
+                                <label for="monthTable-btn">Month</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="toogleyearTable()" name="toggle" id="yearTable-btn" [class.active]="yearTable">
+                                <label for="yearTable-btn">Year</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="history-charts-body" *ngIf="dayTable">
-                        <app-prosumer-day-table></app-prosumer-day-table>
-                    </div>
-                    <div class="history-charts-body" *ngIf="weekTable">
-                        <app-prosumer-week-table></app-prosumer-week-table>
-                    </div>
-                    <div class="history-charts-body" *ngIf="monthTable">
-                        <app-prosumer-month-table></app-prosumer-month-table>
-                    </div>
-                    <div class="history-charts-body" *ngIf="yearTable">
-                        <app-prosumer-year-table></app-prosumer-year-table>
-                    </div>
+                        <div class="history-charts-body" *ngIf="dayTable">
+                            <app-prosumer-day-table></app-prosumer-day-table>
+                        </div>
+                        <div class="history-charts-body" *ngIf="weekTable">
+                            <app-prosumer-week-table></app-prosumer-week-table>
+                        </div>
+                        <div class="history-charts-body" *ngIf="monthTable">
+                            <app-prosumer-month-table></app-prosumer-month-table>
+                        </div>
+                        <div class="history-charts-body" *ngIf="yearTable">
+                            <app-prosumer-year-table></app-prosumer-year-table>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>

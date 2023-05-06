@@ -49,13 +49,16 @@ input {
 }
 
 .graf {
-    border: 1px solid black;
+    width: 100%;
+}
+
+.graf1 {
+    margin-top: 15px;
     width: 100%;
 }
 
 .table {
     margin-top: 15px;
-    border: 1px solid black;
     width: 100%;
 }
 
@@ -101,6 +104,31 @@ input {
     color: gray;
 }
 
+.collapsible {
+    background-color: #bce9e4;
+    color: grey;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 9px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+}
+
+.active,
+.collapsible:hover {
+    background-color: #bce9e4;
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
 @media (min-width: 768px) {
     .main {
         top: 0;
@@ -136,7 +164,6 @@ input {
     }
     .row {
         width: 100%;
-        margin-top: 15px;
         margin-bottom: 15px;
     }
     .table {
@@ -148,5 +175,19 @@ input {
     }
     .toggle-buttons label {
         font-size: 35px;
+    }
+    .collapsible {
+        padding: 18px;
+        font-size: 35px;
+    }
+    .active,
+    .collapsible:hover {
+        background-color: #bce9e4;
+    }
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
     }
 }
