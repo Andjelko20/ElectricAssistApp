@@ -160,7 +160,7 @@ export class AdminDsoComponent implements OnInit {
     }
   }
   
-  delete(id:number)
+  deleteUser(id:number)
   {
       this.modalService.open(this.modalContent);
       const deletePopup= document.getElementById('popup');
@@ -174,8 +174,9 @@ export class AdminDsoComponent implements OnInit {
         deletePopup.addEventListener('click', () => {
           this.usersService.delete(id)
           .subscribe(()=>{
-              this.router.navigate(['/dashboard']);
-              this.usersService.getAllUsers(1).subscribe(users => {
+              //this.router.navigate(['/dashboard']);
+              this.usersService.getAllUsers(this.currentPage).subscribe({
+				next:users => {
                 this.totalItems=users.numberOfPages*this.itemsPerPage;
                   this.showUsers=users.data.map((u:any)=>({
                     id: u.id,
@@ -189,10 +190,36 @@ export class AdminDsoComponent implements OnInit {
                     address:u.address,
                     country:u.country
                   } as ShowUsers));
-              });
-          });
-        });
-      }
+              },
+			  error:(_)=>{
+				let page=this.currentPage-1;
+				if(page<=0)
+					page=1;
+				this.usersService.getAllUsers(page).subscribe({next:users => {
+					this.totalItems=users.numberOfPages*this.itemsPerPage;
+					this.currentPage=page;
+					  this.showUsers=users.data.map((u:any)=>({
+						id: u.id,
+						name: u.name,
+						username: u.username,
+						block: u.blocked,
+						email: u.email,
+						role: u.role,
+						settlement:u.settlement,
+						city:u.city,
+						address:u.address,
+						country:u.country
+					  } as ShowUsers));
+			  },error:()=>{
+				this.currentPage=0;
+				this.totalItems=0;
+				this.showUsers=[];
+			  }});
+          }
+		});
+      });
+	});
+	}
   }
   updatePage(id:number)
   {
