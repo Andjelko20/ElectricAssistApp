@@ -1290,5 +1290,71 @@ namespace Server.Services.Implementations
                 return energyUsages.OrderBy(x => DateTime.ParseExact(x.Month, "MMMM", CultureInfo.InvariantCulture).Month).ToList();
             }
         }
+
+        public List<MonthlyEnergyConsumptionLastYear> UserHistoryForYearByMonth(long userId, long deviceCategoryId, int yearNumber)
+        {
+            DateTime fromDate = new DateTime(yearNumber, 1, 1);
+            DateTime toDate = new DateTime(yearNumber, 12, 31);
+
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT strftime('%Y-%m', deu.StartTime) AS MonthYear, 
+                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM DeviceEnergyUsages deu 
+                                        JOIN Devices d ON deu.DeviceId=d.Id AND d.UserId = @userId
+							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
+							            JOIN DeviceTypes dt ON dm.DeviceTypeId=dt.Id AND dt.CategoryId = @categoryId
+                                        WHERE deu.StartTime >= @fromDate AND deu.StartTime < @toDate
+                                            AND (deu.EndTime <= @toDate OR deu.EndTime IS NULL)
+                                        GROUP BY strftime('%Y-%m', deu.StartTime)";
+
+                command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
+                command.Parameters.Add(new SqliteParameter("@userId", userId));
+                command.Parameters.Add(new SqliteParameter("@fromDate", fromDate));
+                command.Parameters.Add(new SqliteParameter("@toDate", toDate));
+
+                var energyUsages = new List<MonthlyEnergyConsumptionLastYear>();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DateTime date = DateTime.ParseExact(reader["MonthYear"].ToString(), "yyyy-MM", CultureInfo.InvariantCulture);
+
+                        var month = date.ToString("MMMM");
+                        var year = date.Year;
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                        var dailyEnergyUsage = new MonthlyEnergyConsumptionLastYear
+                        {
+                            Month = month,
+                            Year = year,
+                            EnergyUsageResult = Math.Round(energyUsage, 2)
+                        };
+                        energyUsages.Add(dailyEnergyUsage);
+                    }
+                }
+
+                for (int i = 1; i <= 12; i++)
+                {
+                    if (!energyUsages.Any(x => DateTime.ParseExact(x.Month, "MMMM", CultureInfo.InvariantCulture).Month == i))
+                    {
+                        var emptyMonth = new DateTime(yearNumber, i, 1).ToString("MMMM");
+                        var monthlyEnergyUsage = new MonthlyEnergyConsumptionLastYear
+                        {
+                            Month = emptyMonth,
+                            Year = yearNumber,
+                            EnergyUsageResult = 0
+                        };
+                        energyUsages.Add(monthlyEnergyUsage);
+                    }
+                }
+
+                return energyUsages.OrderBy(x => DateTime.ParseExact(x.Month, "MMMM", CultureInfo.InvariantCulture).Month).ToList();
+            }
+        }
     }
 }
