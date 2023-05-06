@@ -9,6 +9,10 @@ export class ProsumerReportsPageComponent {
   @ViewChildren('collapsibleButton') collapsibleButtons!: QueryList<ElementRef>;
   dashboard:boolean = true;
   devices:boolean = false;
+  day:boolean = true;
+  week:boolean = false;
+  month:boolean = false;
+  year:boolean = false;
   constructor(private elementRef: ElementRef) {}
 
   toggleD()
@@ -20,7 +24,34 @@ export class ProsumerReportsPageComponent {
     this.dashboard = true;
     this.devices = false;
   }
- 
+  toogleDay()
+  {
+    this.day = true;
+    this.week = false;
+    this.month = false;
+    this.year = false;
+  }
+  toogleWeek()
+  {
+    this.day = false;
+    this.week = true;
+    this.month = false;
+    this.year = false;
+  }
+  toogleMonth()
+  {
+    this.day = false;
+    this.week = false;
+    this.month = true;
+    this.year = false;
+  }
+  toogleYear()
+  {
+    this.day = false;
+    this.week = false;
+    this.month = false;
+    this.year = true;
+  }
   ngAfterViewInit() {
     this.collapsibleButtons.forEach(button => {
       button.nativeElement.addEventListener('click', () => {

@@ -32,18 +32,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Storage this month</h5>
-                            <p class="card-text">9.24 kWh </p>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <div class="graf">
-                <div class="row"></div>
+                <div class="row">
+                    <div class="toggle-container">
+                        <div class="toggle-buttons">
+                            <input type="radio" (click)="toogleDay()" name="toggle" id="day-btn" checked>
+                            <label id="dash" for="day-btn">Day</label>
+                            <span class="divider"></span>
+                            <input type="radio" (click)="toogleWeek()" name="toggle" id="week-btn">
+                            <label for="week-btn">Week</label>
+                            <span class="divider"></span>
+                            <input type="radio" (click)="toogleMonth()" name="toggle" id="month-btn">
+                            <label for="month-btn">Month</label>
+                            <span class="divider"></span>
+                            <input type="radio" (click)="toogleYear()" name="toggle" id="year-btn">
+                            <label for="year-btn">Year</label>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <div class="table">
                 <div class="row"></div>
@@ -72,18 +82,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Storage next 7 days</h5>
-                            <p class="card-text">9.24 kWh </p>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
             <div class="graf">
-                <div class="row"></div>
+                <div class="row">
+                    <div class="toggle-container">
+                        <div class="toggle-buttons">
+                            <input type="radio" (click)="toogleDay()" name="toggle" id="day-btn" checked>
+                            <label id="dash" for="day-btn">Day</label>
+                            <span class="divider"></span>
+                            <input type="radio" (click)="toogleWeek()" name="toggle" id="week-btn">
+                            <label for="week-btn">Week</label>
+                            <span class="divider"></span>
+                            <input type="radio" (click)="toogleMonth()" name="toggle" id="month-btn">
+                            <label for="month-btn">Month</label>
+                            <span class="divider"></span>
+                            <input type="radio" (click)="toogleYear()" name="toggle" id="year-btn">
+                            <label for="year-btn">Year</label>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <div class="table">
                 <div class="row"></div>
@@ -93,5 +113,5 @@
         <app-prosumer-footer></app-prosumer-footer>
 
     </div>
-    
+
 </div>
