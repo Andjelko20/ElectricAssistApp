@@ -1,10 +1,13 @@
 <div class="global">
     <div class="global1">
-        <h1>Add User</h1>
-
+        
+        <div class="header">
+            <h3>Add user</h3>
+        </div>
+        
         <form  (ngSubmit)="addUsers()">
             <div class="form-row row">
-                <div class="form-group add-user-form col-md-3">
+                <div class="form-group add-user-form col-md-3" >
                     <label for="name">Name</label>
                     <br>
                     <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addUserRequest.name">
