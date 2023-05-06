@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Server.Data;
 using Server.Models;
+using Server.Models.DropDowns.Location;
 using Server.Services;
 using System.Diagnostics;
 
@@ -547,6 +548,20 @@ namespace Server.Controllers
                 var result = historyService.GetCityDailyEnergyUsageForPastMonthPagination(PastMonthByDayCityId, deviceCategoryId, pageNumber, itemsPerPage);
                 return Ok(result);
             }
+        }
+
+        [HttpGet]
+        [Route("ThatYear/{yearNumber:int}")]
+        public async Task<IActionResult> GetHistoryResultsForYear([FromRoute] int yearNumber, [FromQuery] long deviceCategoryId, long cityId)
+        {
+            //if (cityId != 0)
+            //{
+            if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+                    return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
+
+                var result = historyService.CityHistoryForYearByMonth(cityId, deviceCategoryId, yearNumber);
+                return Ok(result);
+            //}
         }
     }
 }
