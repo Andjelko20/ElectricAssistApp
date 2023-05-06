@@ -552,16 +552,24 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("ThatYear/{yearNumber:int}")]
-        public async Task<IActionResult> GetHistoryResultsForYear([FromRoute] int yearNumber, [FromQuery] long deviceCategoryId, long cityId)
+        public async Task<IActionResult> GetHistoryResultsForYear([FromRoute] int yearNumber, [FromQuery] long deviceCategoryId, long cityId, long settlementId)
         {
-            //if (cityId != 0)
-            //{
-            if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+            if (cityId != 0)
+            {
+                if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
                     return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
 
                 var result = historyService.CityHistoryForYearByMonth(cityId, deviceCategoryId, yearNumber);
                 return Ok(result);
-            //}
+            }
+            else // if (settlementId != 0)
+            {
+                if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
+                    return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not exist." });
+
+                var result = historyService.SettlementHistoryForYearByMonth(settlementId, deviceCategoryId, yearNumber);
+                return Ok(result);
+            }
         }
     }
 }
