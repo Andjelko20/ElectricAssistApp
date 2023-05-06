@@ -14,7 +14,10 @@ export class ProsumerReportsPageComponent {
   month:boolean = false;
   year:boolean = false;
   constructor(private elementRef: ElementRef) {}
-
+  dayTable:boolean = true;
+  weekTable:boolean = false;
+  monthTable:boolean = false;
+  yearTable:boolean = false;
   toggleD()
   {
     this.dashboard = false;
@@ -51,6 +54,35 @@ export class ProsumerReportsPageComponent {
     this.week = false;
     this.month = false;
     this.year = true;
+  }
+  toogledayTable()
+  {
+    this.dayTable = true;
+    this.weekTable = false;
+    this.monthTable = false;
+    this.yearTable = false;
+
+  }
+  toogleweekTable()
+  {
+    this.dayTable=false;
+    this.weekTable=true;
+    this.monthTable = false;
+    this.yearTable = false;
+  }
+  tooglemonthTable()
+  {
+    this.dayTable=false;
+    this.weekTable=false;
+    this.monthTable=true;
+    this.yearTable = false;
+  }
+  toogleyearTable()
+  {
+    this.dayTable=false;
+    this.weekTable=false;
+    this.monthTable=false;
+    this.yearTable = true;
   }
   ngAfterViewInit() {
     this.collapsibleButtons.forEach(button => {
