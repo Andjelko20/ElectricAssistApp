@@ -552,7 +552,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("ThatYear/{yearNumber:int}")]
-        public async Task<IActionResult> GetHistoryResultsForYear([FromRoute] int yearNumber, [FromQuery] long deviceCategoryId, long cityId, long settlementId, long userId)
+        public async Task<IActionResult> GetHistoryResultsForYear([FromRoute] int yearNumber, [FromQuery] long deviceCategoryId, long cityId, long settlementId, long userId, long deviceId)
         {
             if (cityId != 0)
             {
@@ -570,12 +570,20 @@ namespace Server.Controllers
                 var result = historyService.SettlementHistoryForYearByMonth(settlementId, deviceCategoryId, yearNumber);
                 return Ok(result);
             }
-            else // if (userId != 0)
+            else if (userId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == userId))
                     return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
                 var result = historyService.UserHistoryForYearByMonth(userId, deviceCategoryId, yearNumber);
+                return Ok(result);
+            }
+            else
+            {
+                if (!_sqliteDb.Devices.Any(d => d.Id == deviceId))
+                    return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+
+                var result = historyService.DeviceHistoryForYearByMonth(deviceId, yearNumber);
                 return Ok(result);
             }
         }

@@ -42,6 +42,7 @@ namespace Server.Services
         public List<MonthlyEnergyConsumptionLastYear> CityHistoryForYearByMonth(long cityId, long deviceCategoryId, int yearNumber);
         public List<MonthlyEnergyConsumptionLastYear> SettlementHistoryForYearByMonth(long settlementId, long deviceCategoryId, int yearNumber);
         public List<MonthlyEnergyConsumptionLastYear> UserHistoryForYearByMonth(long userId, long deviceCategoryId, int yearNumber);
+        public List<MonthlyEnergyConsumptionLastYear> DeviceHistoryForYearByMonth(long deviceId, int yearNumber);
         // PAGINACIJA
         public List<DailyEnergyConsumptionPastMonth> GetDailyEnergyUsageForPastMonthPagination(long deviceId, int pageNumber, int itemsPerPage);
         public List<DailyEnergyConsumptionPastMonth> GetProsumerDailyEnergyUsageForPastMonthPagination(long userId, long deviceCategoryId, int pageNumber, int itemsPerPage);
