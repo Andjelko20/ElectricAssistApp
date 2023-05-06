@@ -248,7 +248,7 @@ namespace Server.Services.Implementations
             PendingUserModel pendingUser = context.PendingUsers.FirstOrDefault(src => src.ConfirmKey == key);
             if (pendingUser == null)
             {
-                return new HttpRequestException("There is no pending request with such a key");
+                return new HttpRequestException("there is no pending request with such a key");
             }
             else
             {
@@ -256,14 +256,14 @@ namespace Server.Services.Implementations
                 {
                     context.PendingUsers.Remove(pendingUser);
                     context.SaveChanges();
-                    return new HttpRequestException("Confirmation link has been expired");
+                    return new HttpRequestException("confirmation link has been expired");
                 }
                 else
                 {
                     UserModel userModel = context.Users.FirstOrDefault(src => src.Username == pendingUser.Username || src.Email == pendingUser.Email);
                     if (userModel != null)
                     {
-                        return new HttpRequestException("Ooops... Looks like there is a user with such username or email.");
+                        return new HttpRequestException("there is a user with such username or email.");
                     }
                     else
                     {
