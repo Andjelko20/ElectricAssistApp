@@ -39,18 +39,30 @@
                 <div class="row">
                     <div class="toggle-container">
                         <div class="toggle-buttons">
-                            <input type="radio" (click)="toogleDay()" name="toggle" id="day-btn" checked>
+                            <input type="radio" (click)="toogleDay()" name="toggle" id="day-btn" checked [class.active]="day">
                             <label id="dash" for="day-btn">Day</label>
                             <span class="divider"></span>
-                            <input type="radio" (click)="toogleWeek()" name="toggle" id="week-btn">
+                            <input type="radio" (click)="toogleWeek()" name="toggle" id="week-btn" [class.active]="week">
                             <label for="week-btn">Week</label>
                             <span class="divider"></span>
-                            <input type="radio" (click)="toogleMonth()" name="toggle" id="month-btn">
+                            <input type="radio" (click)="toogleMonth()" name="toggle" id="month-btn" [class.active]="month">
                             <label for="month-btn">Month</label>
                             <span class="divider"></span>
-                            <input type="radio" (click)="toogleYear()" name="toggle" id="year-btn">
+                            <input type="radio" (click)="toogleYear()" name="toggle" id="year-btn" [class.active]="year">
                             <label for="year-btn">Year</label>
                         </div>
+                    </div>
+                    <div class="history-charts-body" *ngIf="day">
+                        <app-line-day-chart></app-line-day-chart>
+                    </div>
+                    <div class="history-charts-body" *ngIf="week">
+                        <app-line-week-chart></app-line-week-chart>
+                    </div>
+                    <div class="history-charts-body" *ngIf="month">
+                        <app-bar-month-chart></app-bar-month-chart>
+                    </div>
+                    <div class="history-charts-body" *ngIf="year">
+                        <app-bar-year-chart></app-bar-year-chart>
                     </div>
 
                 </div>
