@@ -1,5 +1,5 @@
 
-.container{
+/*.container{
   display: flex;
   flex-grow: 1;
   width: 80%;
@@ -113,9 +113,141 @@
     justify-content: center;
     margin: 0 auto;
  }
+}*/
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 5% auto;
 }
 
+.image-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.image-container > img{
+  width: 40%;
+  height: min-content;
+}
+
+.title-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3% auto;
+}
+
+.title-container > h2{
+  color: #023420;
+  font-style: italic;
+  font-size: 30px;
+  letter-spacing: 2.3px;
+}
+
+.message-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+}
+
+.message-container > p{
+  color: #023420;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+  line-height: 24px;
+}
+
+.button-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3% auto;
+}
+
+.button-container > button{
+  width: 20%;
+  height: 45px;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: none;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  transition: box-shadow .15s,transform .15s;
+  color: #fff;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow,transform;
+  font-size: 24px;
+  letter-spacing: 4px;
+}
+
+.button-container > button:hover{
+  width: 20%;
+  height: 45px;
+  background-color:  rgb(238, 239, 238);
+  border: 1px solid #150347;
+  border-radius: 4px;
+  color: #fff;
+  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-container > button:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+@media (max-width : 768px) {
+  .container{
+    margin: 30% auto;
+  }
+
+  .title-container{
+    margin: 7% auto;
+    justify-content: baseline;
+    text-align: center;
+  }
+
+  .title-container > h2{
+    vertical-align: middle;
+  }
+
+  .message-container{
+    width: 100%;
+  }
+
+  .message-container > p{
+    color: #023420;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: justify;
+  }
+
+  .button-container{
+    margin: 10% auto;
+  }
+
+  .button-container > button{
+    width: 70%;
+  }
+
+  .button-container > button:hover{
+    width: 70%;
+  }
+
+  .button-container > button:active{
+    width: 70%;
+  }
+}
 
 
 
