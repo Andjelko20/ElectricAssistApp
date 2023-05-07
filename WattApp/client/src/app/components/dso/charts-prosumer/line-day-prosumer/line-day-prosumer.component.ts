@@ -37,7 +37,8 @@ export class LineDayProsumerComponent{
       ]).subscribe(([list1, list2]) => {
         this.list1 = list1;
         this.list2 = list2;
-        this.LineChart();
+        this.LineChartProduction();
+        this.LineChartConsumption();
       });
     }
     else if(this.selectedDate !== undefined){
@@ -74,24 +75,136 @@ export class LineDayProsumerComponent{
       ]).subscribe(([list1, list2]) => {
         this.list1 = list1;
         this.list2 = list2;
-        this.LineChart();
+        this.LineChartProduction();
+        this.LineChartConsumption();
       });
     }
     
   }
-  LineChart(){
+  LineChartProduction(){
 
-    const chartId = 'linechart';
+    const chartId = 'linechart1';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
+    const hours = this.list2.map(day => day.hour);
+
+    const Linechart =new Chart("linechart1", {
+      type: 'line',
+      data : {
+        labels: hours,
+        
+        datasets: [
+          {
+            label: 'production',
+            data: energyUsageResults2,
+            tension:0.5,
+            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+            borderColor: 'rgba(0, 255, 0, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
+            pointBorderColor: 'rgba(0, 255, 0, 1)',
+            pointBorderWidth: 7,
+            pointRadius: 5,
+            pointHoverRadius: 6,
+            fill:true
+          }
+          
+        ]
+        
+      }
+      ,
+      options: {
+        responsive: true,
+        scales:{
+          y: {
+            ticks:{
+              color:'#000',
+              font:{
+                size:15
+              }
+            },
+            position: "left",
+            title:{
+              display:true,
+              text: " kWh",
+              color:'#000',
+              font:{
+                size:15
+              }
+            }
+          }
+          ,
+          x:{
+            ticks:{
+              color:'#000',
+              font:{
+                size:15
+              }
+            },
+            title:{
+              display:true,
+              text: "Hours in a day",
+              color:'#000',
+              font:{
+                size:15
+              }
+            }
+          }
+          ,
+        },
+        
+        plugins: {
+          datalabels:{display: false},
+          legend: {
+            position: 'bottom',
+            onHover: function (event, legendItem, legend) {
+              document.body.style.cursor = 'pointer';
+            },
+            onLeave: function (event, legendItem, legend) {
+                document.body.style.cursor = 'default';
+            },
+            labels:{
+              usePointStyle: true,
+              color:'#000',
+              font:{
+                size:15
+              } 
+           
+            }
+            ,
+            align: "center"
+          },
+          title: {
+            
+            display: true,
+            text: 'Production in one day',
+            color: '#000',
+            font:{
+              size:20
+            }
+          }
+        }
+      }
+    });
+
+  }
+  LineChartConsumption(){
+
+    const chartId = 'linechart2';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const Linechart =new Chart("linechart", {
+    const hours = this.list1.map(day => day.hour);
+
+    const Linechart =new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: ['0','4','8','12','16','20',''],
+        labels: hours,
         
         datasets: [
           {
@@ -119,32 +232,18 @@ export class LineDayProsumerComponent{
           borderWidth: 2,
           fill: true
           },
-          {
-            label: 'production',
-            data: energyUsageResults2,
-            tension:0.5,
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-            pointBorderColor: 'rgba(0, 255, 0, 1)',
-            pointBorderWidth: 7,
-            pointRadius: 5,
-            pointHoverRadius: 6,
-            fill:true
-          }
-          
         ]
         
       }
       ,
       options: {
+        responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             position: "left",
@@ -153,7 +252,7 @@ export class LineDayProsumerComponent{
               text: " kWh",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
@@ -162,7 +261,7 @@ export class LineDayProsumerComponent{
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             title:{
@@ -170,13 +269,13 @@ export class LineDayProsumerComponent{
               text: "Hours in a day",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
           ,
         },
-        responsive: true,
+        
         plugins: {
           datalabels:{display: false},
           legend: {
@@ -191,7 +290,7 @@ export class LineDayProsumerComponent{
               usePointStyle: true,
               color:'#000',
               font:{
-                size:20
+                size:15
               } 
            
             }
@@ -201,7 +300,7 @@ export class LineDayProsumerComponent{
           title: {
             
             display: true,
-            text: 'Consumption and production in one day',
+            text: 'Consumption in one day',
             color: '#000',
             font:{
               size:20

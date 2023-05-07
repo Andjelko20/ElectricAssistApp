@@ -90,7 +90,7 @@ export class YearTabelarProsumerComponent {
   }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-year.csv',
+    filename: 'consumption/production-year',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
