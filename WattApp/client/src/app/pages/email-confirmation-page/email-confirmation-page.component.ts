@@ -9,21 +9,23 @@ import { EmailConfirmationServiceService } from 'src/app/services/email-confirma
   styleUrls: ['./email-confirmation-page.component.css']
 })
 export class EmailConfirmationPageComponent implements OnInit, OnDestroy {
-  isConfirmed: boolean | null = null;
-  message: string | null = null;
+  isConfirmed! : boolean;
+  message!: string;
   loading : boolean = true;
   subscription : Subscription = new Subscription();
 
   constructor(
     private route : ActivatedRoute,
     private emaileConfirmationService : EmailConfirmationServiceService)
-    {}
+    {
+
+    }
 
   
   ngOnInit(): void {
     this.loading = true;
     this.route.queryParams.subscribe(params => {
-      const key = encodeURIComponent(params['key']) ;
+      const key = params['key'] ;
       console.log(key);
 
       this.emaileConfirmationService.confirmEmailAddress(key).subscribe((response : ConfirmEmailResponseDTO) => {
@@ -45,8 +47,6 @@ export class EmailConfirmationPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-    this.isConfirmed = null;
-    this.message = null;
     this.loading = true;
   }
 }

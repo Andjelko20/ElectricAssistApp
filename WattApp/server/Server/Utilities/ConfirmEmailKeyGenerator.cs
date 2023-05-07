@@ -8,7 +8,7 @@ namespace Server.Utilities
     {
         public static string GenerateConfirmEmailKey(int length = 20)
         {
-            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}\\|;:'\",.<>/?`~";
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_~%.";
 
             using (var rng = new RNGCryptoServiceProvider())
             {

@@ -245,7 +245,7 @@ namespace Server.Services.Implementations
 
         public object ConfirmEmailAddress(string key)
         {
-            PendingUserModel pendingUser = context.PendingUsers.FirstOrDefault(src => src.ConfirmKey == key);
+            PendingUserModel pendingUser = context.PendingUsers.Where(src => src.ConfirmKey == key).FirstOrDefault();
             if (pendingUser == null)
             {
                 return new HttpRequestException("there is no pending request with such a key");
