@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="table">
-                    <button type="button" class="collapsible1 dropdown-toggle " #collapsibleButton>Table of production/consumption</button>
+                    <button type="button" class="collapsible dropdown-toggle " id="collaprsible1" #collapsibleButton>Table of production/consumption</button>
                     <div class="content">
                         <div class="history-table-body" *ngIf="dayTable">
                             <app-prosumer-day-table></app-prosumer-day-table>
@@ -123,31 +123,9 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
-
-            <div class="graf">
-                <div class="row">
-                    <div class="toggle-container">
-                        <div class="toggle-buttons">
-                            <input type="radio" (click)="toogleDay()" name="toggle" id="day-btn" checked>
-                            <label id="dash" for="day-btn">Day</label>
-                            <span class="divider"></span>
-                            <input type="radio" (click)="toogleWeek()" name="toggle" id="week-btn">
-                            <label for="week-btn">Week</label>
-                            <span class="divider"></span>
-                            <input type="radio" (click)="toogleMonth()" name="toggle" id="month-btn">
-                            <label for="month-btn">Month</label>
-                            <span class="divider"></span>
-                            <input type="radio" (click)="toogleYear()" name="toggle" id="year-btn">
-                            <label for="year-btn">Year</label>
-                        </div>
-                    </div>
-
+                <div class="graf">
+                    <app-prediction-prosumer></app-prediction-prosumer>
                 </div>
-            </div>
-            <div class="table">
-                <div class="row"></div>
             </div>
         </div>
         <app-footer></app-footer>
