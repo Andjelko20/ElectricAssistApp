@@ -16,11 +16,13 @@ export class EmailConfirmationPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route : ActivatedRoute,
+    private router : Router,
     private emaileConfirmationService : EmailConfirmationServiceService)
-    {
+    {}
 
-    }
-
+  goToLoginPage(){
+    this.router.navigate(['login']);
+  }
   
   ngOnInit(): void {
     this.loading = true;
