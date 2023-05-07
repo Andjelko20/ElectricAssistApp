@@ -1123,24 +1123,45 @@ namespace Server.Services.Implementations
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-                        var day = date.Day;
-                        var month = date.ToString("MMMM");
-                        var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
-
-                        var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                        while (reader.Read())
                         {
-                            Day = day,
-                            Month = month,
-                            Year = year,
-                            EnergyUsageResult = Math.Round(energyUsage, 2)
-                        };
+                            DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
-                        energyUsages.Add(dailyEnergyUsage);
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
+                    }
+                    else
+                    {
+                        var endDate = DateTime.Now.Date;
+                        var startDate = endDate.AddMonths(-1);
+
+                        for (var date = startDate; date <= endDate; date = date.AddDays(1))
+                        {
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = date.Day,
+                                Month = date.ToString("MMMM"),
+                                Year = date.Year,
+                                EnergyUsageResult = 0
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
                     }
                 }
 
@@ -1260,24 +1281,45 @@ namespace Server.Services.Implementations
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-                        var day = date.Day;
-                        var month = date.ToString("MMMM");
-                        var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
-
-                        var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                        while (reader.Read())
                         {
-                            Day = day,
-                            Month = month,
-                            Year = year,
-                            EnergyUsageResult = Math.Round(energyUsage, 2)
-                        };
+                            DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
-                        energyUsages.Add(dailyEnergyUsage);
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
+                    }
+                    else
+                    {
+                        var endDate = DateTime.Now.Date;
+                        var startDate = endDate.AddMonths(-1);
+
+                        for (var date = startDate; date <= endDate; date = date.AddDays(1))
+                        {
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = date.Day,
+                                Month = date.ToString("MMMM"),
+                                Year = date.Year,
+                                EnergyUsageResult = 0
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
                     }
                 }
 
