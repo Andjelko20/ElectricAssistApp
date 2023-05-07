@@ -327,7 +327,7 @@ namespace Server.Services.Implementations
 
             if(changeEmailModel == null)
             {
-                return new HttpRequestException("Sorry! But there is no request with that key.");
+                return new HttpRequestException("there is no request with that key.");
             }
             else
             {
@@ -335,7 +335,7 @@ namespace Server.Services.Implementations
                 {
                     context.ChangeEmailModels.Remove(changeEmailModel);
                     context.SaveChanges();
-                    return new HttpRequestException("Sorry! But link has been expired");
+                    return new HttpRequestException("link has been expired");
                 }
 
                 UserModel user = null;
@@ -344,7 +344,7 @@ namespace Server.Services.Implementations
                 {
                     context.ChangeEmailModels.Remove(changeEmailModel);
                     context.SaveChanges();
-                    return new HttpRequestException("Someone is already using that email address.");
+                    return new HttpRequestException("someone is already using that email address.");
                 }
 
                 user = context.Users.Where(src => src.Email == changeEmailModel.OldEmail).FirstOrDefault();

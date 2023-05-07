@@ -316,7 +316,7 @@ namespace Server.Controllers
                         OldEmail = user.Email,
                         NewEmail = requestBody.Email,
                         ExpireAt = DateTime.Now.AddDays(1),
-                        ChangeEmailKey = ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
+                        ChangeEmailKey = ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
                     };
 
                     object o = userService.CreateChangeEmailRequest(changeEmailModel);
@@ -336,7 +336,7 @@ namespace Server.Controllers
                                 "<br>To complete this process, please confirm the change by clicking on the link below:<br><br>" +
                                 "<a href='" + configuration.GetValue<string>("frontUrl") + "/change-email-confirmation?key=" + changeEmailModel.ChangeEmailKey + "'>" + changeEmailModel.NewEmail + "</a><br><br>" +
                                 "If you did not initiate this email address change request, please contact" +
-                                "our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
+                                " our administrator immediately so we can investigate and take appropriate action to protect your account.<br><br>" +
 
                                 "Thank you, <br>" +
                                 "<i><b>ElectricAssist Team</b></i>"
