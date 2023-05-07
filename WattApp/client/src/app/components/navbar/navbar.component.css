@@ -20,7 +20,8 @@
       font-size: 20px
     }
     #sidebarCollapse:hover {
-      color: rgb(48, 98, 204);
+      /* color: rgb(48, 98, 204); */
+      color: white;
       transition: all 0.2s ease-in-out;
       font-size: 26px
     }
@@ -35,6 +36,11 @@
       margin-top: -40px;
       margin-right: auto;
       height: 100px;
+    }
+    .navbar-brand:hover {
+      color: white;
+      font-size: 25px;
+      transition: all 0.2s ease-in-out;
     }
     .user {
       margin-top: -10px;

@@ -5,7 +5,6 @@
 }
 .form-group select{
 	border-radius: 4px;
-	/*cursor: pointer;*/
 	height: 24px;
 }
 .no-users{
@@ -13,9 +12,9 @@
     font-size: 30px;
 }
 .filter{
+  padding: 10px;
 	display: flex;
 	flex-wrap: wrap;
-	padding: 10px;
 	gap:10px;
 }
 .settlement-text{
@@ -29,10 +28,12 @@
 	padding: 2px 3px;
 }
 .first {
-    padding: 15px;
+   
     margin-bottom: 60px;
     margin-top: 90px;
     justify-content: center;
+    border: 1px solid #D2D2D2;
+    border-radius: 10px;
 }
 
 #buttonAdd {
@@ -49,11 +50,11 @@ table {
   width: 100%;
   
 }
-table,
+
 td,
 th {
     border-bottom: 1px solid gray;
-    text-align: left;
+    text-align: center;
     padding-top: 35px;
     padding-bottom: 35px;
     padding-left: 2px;
@@ -61,7 +62,7 @@ th {
 }
 
 th {
-    text-align: left;
+    text-align: center;
     background-color: #2199e8;
     color: white;
 }
@@ -75,7 +76,7 @@ td {
 th,
 td {
     padding: 10px;
-    text-align: center;
+    text-align: left;
 }
 
 
@@ -94,7 +95,7 @@ li {
 li a {
     display: block;
     color: #1C315E;
-    text-align: center;
+    text-align: left;
     padding: 14px 16px;
     text-decoration: none;
 }
@@ -163,8 +164,6 @@ li a {
     -ms-transform: translateX(26px);
     transform: translateX(26px);
   }
-  
-  /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
     
@@ -193,6 +192,16 @@ li a {
     align-items: right;
     
   }
+  .header{
+    background-color: #F7F7F7;
+    border-radius: 10px 10px 00px 0px;
+    border-bottom: 1px solid #D2D2D2;
+    text-align: center;
+    padding: 10px;   
+}
+#tableres{
+  padding: 15px;
+}
 @media only screen and (min-width: 768px) and (max-width: 1280px) {
     
 
@@ -213,12 +222,12 @@ th {
     padding-left: 2px;
     padding-right:2px;
     border-bottom: 1px solid gray;
-    text-align: left;
+    text-align: center;
 }
 
 th {
   
-    text-align: left;
+    text-align: center;
     background-color: #2199e8;
     color: white;
 }

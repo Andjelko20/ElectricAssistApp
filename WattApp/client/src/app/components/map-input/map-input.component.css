@@ -19,6 +19,7 @@
 	width:100%;
 	height: 48vh;
 	border-radius: 10px;
+	border: 1px solid #D2D2D2;
 }
 
 .address-container{

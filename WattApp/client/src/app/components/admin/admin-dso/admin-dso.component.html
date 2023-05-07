@@ -1,4 +1,7 @@
     <div class="first">
+      <div class="header">
+        <h3>All Users</h3>
+      </div>
 		<div class="filter">
 			<div class="form-group">
 				<label>Filter by role</label>
@@ -41,6 +44,7 @@
 		<div *ngIf="!loading && showUsers?.length==0" class="no-users">
 			There are no users to be shown.
 		</div>
+    <div id="tableres">
         <table *ngIf="!loading && showUsers?.length!=0">
             <thead>
                 <tr>
@@ -83,10 +87,10 @@
         </table>
 		    <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
     </div>
+  </div>
     <!-- Modal -->
     <ng-template #modalContent let-modal >
       <div class="modal-header">
-        <!-- <h5 class="modal-title" id="modalTitle">{{ title }}</h5> -->
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
       <div class="modal-body">
@@ -96,10 +100,6 @@
           <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
         </div>
       </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>
-        <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
-      </div> -->
     </ng-template>
     <!-- Update Modal -->
     <ng-template #modalContent1 let-modal >
@@ -114,6 +114,9 @@
                   <br>
                   <label for="email " class="form-label ">Email</label>
                   <input type="text " class="form-control " id="id " name="email " [(ngModel)]="updateUserDetail.email ">
+                  <br>
+                  <label for="password " class="form-label ">Enter your password</label>
+                  <input type="password " class="form-control " id="id " name="password "  >
                   <br>
               </div>
           </div>
