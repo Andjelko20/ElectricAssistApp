@@ -81,8 +81,8 @@ const routes: Routes = [
 	//{path:"map-input",component:MapInputComponent},
 	{path:"future",component:TodayComponent},
 	{path:"future",component:FutureComponent},
-	{path:'email-confirmation',component:EmailConfirmationPageComponent},
-	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent},
+	{path:'email-confirmation',component:EmailConfirmationPageComponent,canActivate:[UnauthenticatedGuard]},
+	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'**',redirectTo:"login"}
 ];
 
