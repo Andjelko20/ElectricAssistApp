@@ -66,14 +66,27 @@ export class ProsumerYearGraphComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const id = token.data.id as number;
-    forkJoin([
-      this.deviceService.yearByMonthUser(id, 2),
-      this.deviceService.yearByMonthUser(id, 1)
-    ]).subscribe(([list1, list2]) => {
-      this.list1 = list1;
-      this.list2 = list2;
-      this.BarPlot();
-    });
+    if(this.selectedDate == undefined){
+      forkJoin([
+        this.deviceService.yearByMonthUser(id, 2),
+        this.deviceService.yearByMonthUser(id, 1)
+      ]).subscribe(([list1, list2]) => {
+        this.list1 = list1;
+        this.list2 = list2;
+        this.BarPlot();
+      });
+    }
+    else{
+      const year = this.selectedDate.getFullYear();
+      forkJoin([
+        this.deviceService.monthbyDayUserFilter(year,id, 2),
+        this.deviceService.monthbyDayUserFilter(year,id, 1)
+      ]).subscribe(([list1, list2]) => {
+        this.list1 = list1;
+        this.list2 = list2;
+      });
+    }
+    
   }
   BarPlot(){
 

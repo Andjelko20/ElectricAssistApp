@@ -12,6 +12,7 @@ import {
 } from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 Chart.register(...registerables)
 
 @Injectable()
@@ -38,9 +39,9 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
 }
 
 @Component({
-  selector: 'app-line-week-prosumer',
-  templateUrl: './line-week-prosumer.component.html',
-  styleUrls: ['./line-week-prosumer.component.css'],
+  selector: 'app-device-week',
+  templateUrl: './device-week.component.html',
+  styleUrls: ['./device-week.component.css'],
   providers: [
     {
       provide: MAT_DATE_RANGE_SELECTION_STRATEGY,
@@ -48,12 +49,12 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
     },
   ],
 })
-export class LineWeekProsumerComponent {
+export class DeviceWeekComponent {
 
   maxDate: Date;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
-  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
+  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.maxDate = new Date();
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
@@ -74,19 +75,28 @@ export class LineWeekProsumerComponent {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-
+    this.authService.getDevice(id).subscribe(data=>{
     if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
-      forkJoin([
-        this.deviceService.weekByDayUser(id, 2),
-        this.deviceService.weekByDayUser(id, 1),
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.LineChartProduction();
-        this.LineChartConsumption();
-    });
+      
+        if(data.deviceCategory == "Electricity Consumer")
+        {
+          this.deviceService.weekByDayDevice(id).subscribe(consumption =>{
+            this.list1 = consumption;
+            this.LineChartConsumption()
+          })
+          
+        }
+        else{
+          this.deviceService.weekByDayDevice(id).subscribe(production =>{
+            this.list2 = production;
+            this.LineChartProduction();
+          })
+        }
+      
+      
     }
     else{
+      
       const day1 = this.sdate.getDate();
           const month1 = this.sdate.getMonth()+1;
           const year1 = this.sdate.getFullYear();
@@ -95,18 +105,21 @@ export class LineWeekProsumerComponent {
           const year2 = this.send.getFullYear();
           let string1 = year1+'-'+month1+'-'+day1;
           let string2 = year2+'-'+month2+'-'+day2;
-
           forkJoin([
-            this.deviceService.weekByDayUserFilter(string1,string2,id, 2),
-            this.deviceService.weekByDayUserFilter(string1,string2,id, 1)
+            this.deviceService.weekByDayDeviceFilter(string1,string2,id, 2),
+            this.deviceService.weekByDayDeviceFilter(string1,string2,id, 1)
           ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.LineChartProduction();
-            this.LineChartConsumption();
+            if(data.deviceCategory == "Electricity Consumer"){
+              this.list1 = list1;
+              this.LineChartConsumption();
+            }
+            else{
+              this.list2 = list2;
+              this.LineChartProduction();
+            }
           });
     }
-    
+  })
   }
   LineChartProduction(){
 
@@ -117,13 +130,11 @@ export class LineWeekProsumerComponent {
     }
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month = this.list2.map(day => day.day);
-
-
+    const month1 = this.list2.map(day => day.day);
     const Linechart = new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: month,
+        labels: month1,
         
         datasets:  [
           
@@ -229,11 +240,12 @@ export class LineWeekProsumerComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month = this.list1.map(day => day.day);
+    const month2 = this.list1.map(day => day.day);
+    console.log(month2)
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: month,
+        labels: month2,
         
         datasets:  [
           {

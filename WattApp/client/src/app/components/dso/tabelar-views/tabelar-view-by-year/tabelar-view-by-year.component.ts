@@ -102,11 +102,9 @@ export class TabelarViewByYearComponent implements OnInit{
       }
       else if(this.selectedOption == 0 && this.selectedDate != undefined){
         const year = this.selectedDate!.getFullYear();
-        let string1 = year-1+'-'+1+'-'+1;
-        let string2 = year+'-'+1+'-'+1;
         forkJoin([
-          this.deviceService.monthbyDayCityFilter(string1,string2,number, 2),
-          this.deviceService.monthbyDayCityFilter(string1,string2,number, 1)
+          this.deviceService.monthbyDayCityFilter(year,number, 2),
+          this.deviceService.monthbyDayCityFilter(year,number, 1)
         ]).subscribe(([list1, list2]) => {
           this.list1 = list1;
           this.list2 = list2;
@@ -115,12 +113,10 @@ export class TabelarViewByYearComponent implements OnInit{
       }
       else if(this.selectedOption != 0 && this.selectedDate != undefined){
         let year = this.selectedDate!.getFullYear();
-        let string1 = year-1+'-'+1+'-'+1;
-        let string2 = year+'-'+1+'-'+1;
 
         forkJoin([
-          this.deviceService.monthbySettlementCityFilter(string1,string2, this.selectedOption,2),
-          this.deviceService.monthbySettlementCityFilter(string1,string2, this.selectedOption,1)
+          this.deviceService.monthbySettlementCityFilter(year, this.selectedOption,2),
+          this.deviceService.monthbySettlementCityFilter(year, this.selectedOption,1)
         ]).subscribe(([list1, list2]) => {
           this.list1 = list1;
           this.list2 = list2;

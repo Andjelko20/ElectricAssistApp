@@ -1,111 +1,96 @@
-import { Component, Injectable, ViewChild } from '@angular/core';
-import { Chart,registerables } from 'node_modules/chart.js'
-import { forkJoin } from 'rxjs';
-import { WeekByDay } from 'src/app/models/devices.model';
-import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-import {DateAdapter} from '@angular/material/core';
-import {
-  MatDateRangeSelectionStrategy,
-  DateRange,
-  MAT_DATE_RANGE_SELECTION_STRATEGY,
-  MatDatepickerInputEvent,
-} from '@angular/material/datepicker';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Chart,registerables } from 'node_modules/chart.js'
+import { combineLatest, forkJoin } from 'rxjs';
+import { DayByHour } from 'src/app/models/devices.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 Chart.register(...registerables)
 
-@Injectable()
-export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionStrategy<D> {
-  constructor(private _dateAdapter: DateAdapter<D>) {}
-
-  selectionFinished(date: D | null): DateRange<D> {
-    return this._createFiveDayRange(date);
-  }
-
-  createPreview(activeDate: D | null): DateRange<D> {
-    return this._createFiveDayRange(activeDate);
-  }
-
-  private _createFiveDayRange(date: D | null): DateRange<D> {
-    if (date) {
-      const start = this._dateAdapter.addCalendarDays(date, 0);
-      const end = this._dateAdapter.addCalendarDays(date, 8);
-      return new DateRange<D>(start, end);
-    }
-
-    return new DateRange<D>(null, null);
-  }
-}
-
 @Component({
-  selector: 'app-line-week-prosumer',
-  templateUrl: './line-week-prosumer.component.html',
-  styleUrls: ['./line-week-prosumer.component.css'],
-  providers: [
-    {
-      provide: MAT_DATE_RANGE_SELECTION_STRATEGY,
-      useClass: FiveDayRangeSelectionStrategy,
-    },
-  ],
+  selector: 'app-device-today',
+  templateUrl: './device-today.component.html',
+  styleUrls: ['./device-today.component.css']
 })
-export class LineWeekProsumerComponent {
-
+export class DeviceTodayComponent {
   maxDate: Date;
-  list1:WeekByDay[] = [];
-  list2:WeekByDay[] = [];
-  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
-    this.maxDate = new Date();
-    this.campaignOne.valueChanges.subscribe((value) => {
-      this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.maxDate){
-        this.send = null;
-      }
-      this.ngOnInit();
-    });
-  }
-  campaignOne: FormGroup = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl()
-  });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService,private authService:AuthService) {
+    this.maxDate = new Date();
+  }
+  list1:DayByHour[] = [];
+  list2:DayByHour[] = [];
+  
+  selectedDate!: Date;
+
+  onDateSelected(event: { value: Date; }) {
+    this.selectedDate = event.value;
+    this.ngOnInit();
+  }
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-
-    if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
-      forkJoin([
-        this.deviceService.weekByDayUser(id, 2),
-        this.deviceService.weekByDayUser(id, 1),
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.LineChartProduction();
-        this.LineChartConsumption();
-    });
-    }
-    else{
-      const day1 = this.sdate.getDate();
-          const month1 = this.sdate.getMonth()+1;
-          const year1 = this.sdate.getFullYear();
-          const day2 = this.send.getDate();
-          const month2 = this.send.getMonth()+1;
-          const year2 = this.send.getFullYear();
-          let string1 = year1+'-'+month1+'-'+day1;
-          let string2 = year2+'-'+month2+'-'+day2;
-
-          forkJoin([
-            this.deviceService.weekByDayUserFilter(string1,string2,id, 2),
-            this.deviceService.weekByDayUserFilter(string1,string2,id, 1)
-          ]).subscribe(([list1, list2]) => {
+    const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(deviceId).subscribe(data=>{
+      if(this.selectedDate == undefined){
+        if(data.deviceCategory == "Electricity Consumer")
+        {
+          this.deviceService.dayByHourDevice(deviceId).subscribe(consumption=>{
+            this.list1 = consumption;
+            this.LineChartConsumption();
+          })
+          
+        }
+        else{
+          this.deviceService.dayByHourDevice(deviceId).subscribe(production=>{
+            this.list2 = production;
+            this.LineChartProduction();
+          })
+        }
+      }
+      else if(this.selectedDate !== undefined){
+        const day = this.selectedDate.getDate();
+        const month = this.selectedDate.getMonth()+1;
+        const year = this.selectedDate.getFullYear();
+        let string1 = '';
+        let string2 = '';
+        if(month % 2 )
+            {
+              if(day == 30 || (month == 2 && day == 28)){
+                string1 = year+'-'+month+'-'+day
+                string2 = year+'-'+(month+1)+'-'+1
+              }
+              else{
+                string1 = year+'-'+month+'-'+day
+                string2 = year+'-'+month+'-'+(day+1)
+              }
+            }
+            else if(month % 2 == 1){
+              if(day == 31 || (month == 6 || month == 7) ){
+                string1 = year+'-'+month+'-'+day
+                string2 = year+'-'+(month+1)+'-'+1
+              }
+              else{
+                string1 = year+'-'+month+'-'+day
+                string2 = year+'-'+month+'-'+(day+1)
+              }
+            }
+  
+        forkJoin([
+          this.deviceService.dayByHourDeviceFilter(string1,string2,deviceId, 2),
+          this.deviceService.dayByHourDeviceFilter(string1,string2,deviceId, 1)
+        ]).subscribe(([list1, list2]) => {
+          if(data.deviceCategory == "Electricity Consumer"){
             this.list1 = list1;
+            this.LineChartConsumption();
+          }
+          else{
             this.list2 = list2;
             this.LineChartProduction();
-            this.LineChartConsumption();
-          });
-    }
+          }
+        });
+      }
+    })
+    
     
   }
   LineChartProduction(){
@@ -115,18 +100,15 @@ export class LineWeekProsumerComponent {
     if (chartExists) {
         chartExists.destroy();
     }
-
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month = this.list2.map(day => day.day);
+    const hours = this.list2.map(day => day.hour);
 
-
-    const Linechart = new Chart("linechart1", {
+    const Linechart =new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: month,
+        labels: hours,
         
-        datasets:  [
-          
+        datasets: [
           {
             label: 'production',
             data: energyUsageResults2,
@@ -159,7 +141,7 @@ export class LineWeekProsumerComponent {
             position: "left",
             title:{
               display:true,
-              text: "kWh",
+              text: " kWh",
               color:'#000',
               font:{
                 size:15
@@ -176,7 +158,7 @@ export class LineWeekProsumerComponent {
             },
             title:{
               display:true,
-              text: "Days in a week",
+              text: "Hours in a day",
               color:'#000',
               font:{
                 size:15
@@ -200,7 +182,7 @@ export class LineWeekProsumerComponent {
               usePointStyle: true,
               color:'#000',
               font:{
-                size:20
+                size:15
               } 
            
             }
@@ -208,9 +190,10 @@ export class LineWeekProsumerComponent {
             align: "center"
           },
           title: {
+            
             display: true,
-            text: 'Production in a week',
-            color:'#000',
+            text: 'Production in one day',
+            color: '#000',
             font:{
               size:20
             }
@@ -227,15 +210,15 @@ export class LineWeekProsumerComponent {
     if (chartExists) {
         chartExists.destroy();
     }
-
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month = this.list1.map(day => day.day);
-    const Linechart = new Chart("linechart2", {
+    const hours = this.list1.map(day => day.hour);
+
+    const Linechart =new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: month,
+        labels: hours,
         
-        datasets:  [
+        datasets: [
           {
             label: 'consumption',
             data: energyUsageResults1,
@@ -261,7 +244,6 @@ export class LineWeekProsumerComponent {
           borderWidth: 2,
           fill: true
           },
-          
         ]
         
       }
@@ -279,7 +261,7 @@ export class LineWeekProsumerComponent {
             position: "left",
             title:{
               display:true,
-              text: "kWh",
+              text: " kWh",
               color:'#000',
               font:{
                 size:15
@@ -296,7 +278,7 @@ export class LineWeekProsumerComponent {
             },
             title:{
               display:true,
-              text: "Days in a week",
+              text: "Hours in a day",
               color:'#000',
               font:{
                 size:15
@@ -320,7 +302,7 @@ export class LineWeekProsumerComponent {
               usePointStyle: true,
               color:'#000',
               font:{
-                size:20
+                size:15
               } 
            
             }
@@ -328,9 +310,10 @@ export class LineWeekProsumerComponent {
             align: "center"
           },
           title: {
+            
             display: true,
-            text: ' Consumption in a week',
-            color:'#000',
+            text: 'Consumption in one day',
+            color: '#000',
             font:{
               size:20
             }

@@ -9,6 +9,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MatDatepicker} from '@angular/material/datepicker';
 import moment, { Moment } from 'moment';
 import { FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 Chart.register(...registerables)
 Chart.register(...registerables)
 
@@ -25,9 +26,9 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-bar-year-prosumer',
-  templateUrl: './bar-year-prosumer.component.html',
-  styleUrls: ['./bar-year-prosumer.component.css'],
+  selector: 'app-device-year',
+  templateUrl: './device-year.component.html',
+  styleUrls: ['./device-year.component.css'],
   providers: [
     {
       provide: DateAdapter,
@@ -39,14 +40,14 @@ export const MY_FORMATS = {
     },
    ]
 })
-export class BarYearProsumerComponent {
+export class DeviceYearComponent {
 
   currentDate = new Date();
   maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
-  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
+  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
     arr1.push(Object.values(selectedDate)[4]);
@@ -66,29 +67,43 @@ export class BarYearProsumerComponent {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(id).subscribe(data=>{
     if(this.selectedDate == undefined){
-      forkJoin([
-        this.deviceService.yearByMonthUser(id, 2),
-        this.deviceService.yearByMonthUser(id, 1)
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.BarPlotProduction();
-        this.BarPlotConsumption();
-      });
+      
+        if(data.deviceCategory == "Electricity Consumer")
+        {
+          this.deviceService.monthbyDayDevice(id).subscribe(consumption =>{
+            this.list1 = consumption
+            this.BarPlotConsumption();
+          })
+          
+        }
+        else{
+          this.deviceService.monthbyDayDevice(id).subscribe(production =>{
+            this.list2 = production
+            this.BarPlotProduction();
+          })
+          
+        }
+      
     }
     else{
       const year = this.selectedDate.getFullYear();
       forkJoin([
-        this.deviceService.monthbyDayUserFilter(year,id, 2),
-        this.deviceService.monthbyDayUserFilter(year,id, 1)
+        this.deviceService.monthbyDayDeviceFilter(year,id, 2),
+        this.deviceService.monthbyDayDeviceFilter(year,id, 1)
       ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.BarPlotProduction();
-        this.BarPlotConsumption();
+        if(data.deviceCategory == "Electricity Consumer"){
+          this.list1 = list1;
+          this.BarPlotConsumption();
+        }
+        else{
+          this.list2 = list2;
+          this.BarPlotProduction();
+        }
       });
     }
+     })
     }
     
     BarPlotProduction(){

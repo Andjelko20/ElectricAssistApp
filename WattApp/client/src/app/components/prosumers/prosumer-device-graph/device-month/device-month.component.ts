@@ -1,56 +1,57 @@
+import { Component, ViewChild } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
-import { forkJoin } from 'rxjs';
-import { WeekByDay, YearsByMonth } from 'src/app/models/devices.model';
-import { Settlement } from 'src/app/models/users.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { forkJoin, switchMap } from 'rxjs';
+import { WeekByDay } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-import {Component, ViewEncapsulation} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { FormControl, FormGroup } from '@angular/forms';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
-import moment, { Moment } from 'moment';
 Chart.register(...registerables)
+
+import * as _moment from 'moment';
+import {default as _rollupMoment, Moment} from 'moment';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+
+const moment = _rollupMoment || _moment;
 
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'YYYY',
+    dateInput: 'MM/YYYY',
   },
   display: {
-    dateInput: 'YYYY',
-    monthYearLabel: 'YYYY',
-    monthYearA11yLabel: 'YYYY',
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
   },
 };
 
-Chart.defaults.color = "#fff";
-Chart.defaults.color = "#fff";
 @Component({
-  selector: 'app-bar-year-chart',
-  templateUrl: './bar-year-chart.component.html',
-  styleUrls: ['./bar-year-chart.component.css'],
+  selector: 'app-device-month',
+  templateUrl: './device-month.component.html',
+  styleUrls: ['./device-month.component.css'],
   providers: [
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
     },
-    { 
-     provide: MAT_DATE_FORMATS, useValue: MY_FORMATS
-    },
-   ]
+
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
-
-
-export class BarYearChartComponent {
+export class DeviceMonthComponent {
 
   currentDate = new Date();
   maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
-  list1:YearsByMonth[]=[];
-  list2:YearsByMonth[]=[];
-  settlements:Settlement[] = [];
-  itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
-  constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
+  list1:WeekByDay[]=[];
+  list2:WeekByDay[]=[];
+  itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
+  ,'20','21','22','23','24','25','26','27','28','29','30'];
+  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
     arr1.push(Object.values(selectedDate)[4]);
@@ -58,106 +59,82 @@ export class BarYearChartComponent {
     this.ngOnInit();
     });
   }
-  selectedOption: number = 0;
-  onOptionSelected() {
-    this.ngOnInit();
-  }
-
-  date = new FormControl(moment());
   selectedDate : Date | undefined;
-  setYear(year: Moment, datepicker: MatDatepicker<Moment>) {
+  date = new FormControl(moment());
+
+  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value!;
-    ctrlValue.year(year.year());
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
     this.date.setValue(ctrlValue);
     datepicker.close();
+
   }
-
+  
   ngOnInit(): void {
-    this.authService.getlogInUser().subscribe(user=>{
-      this.authService.getCityId(user.city).subscribe(number=>{
-        this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
-          this.settlements = settlement;
-          const selectElement = document.getElementById('dropdown') as HTMLSelectElement
-          const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;
-
-          if (selectedOptionName === 'Total') {
-            this.selectedOption = 0;
-          } else {
-            const selectedItem = this.settlements.find(item => item.name === selectedOptionName);
-            if (selectedItem) {
-              this.selectedOption = selectedItem.id;
-            }
-          }
-        })
-        if(this.selectedOption == 0 && this.selectedDate == undefined){
-          forkJoin([
-            this.deviceService.yearByMonth(number, 2),
-            this.deviceService.yearByMonth(number, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.BarPlotProduction();
+    const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(deviceId).subscribe(data=>{
+    if(this.selectedDate == undefined){
+      
+        if(data.deviceCategory == "Electricity Consumer")
+        {
+          this.deviceService.monthbyDayDevice(deviceId).subscribe(consumption=>{
+            this.list1 = consumption;
             this.BarPlotConsumption();
-          });
-        }
-        else if(this.selectedOption == 0 && this.selectedDate != undefined){
-          const year = this.selectedDate!.getFullYear();
-          forkJoin([
-            this.deviceService.monthbyDayCityFilter(year,number, 2),
-            this.deviceService.monthbyDayCityFilter(year,number, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.BarPlotProduction();
-            this.BarPlotConsumption();
-          });
-        }
-        else if(this.selectedOption != 0 && this.selectedDate != undefined){
-          let year = this.selectedDate!.getFullYear();
-          forkJoin([
-            this.deviceService.monthbySettlementCityFilter(year, this.selectedOption,2),
-            this.deviceService.monthbySettlementCityFilter(year, this.selectedOption,1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.BarPlotProduction();
-            this.BarPlotConsumption();
-          });
+          })
+          
         }
         else{
-          forkJoin([
-            this.deviceService.yearByMonthSettlement(this.selectedOption, 2),
-            this.deviceService.yearByMonthSettlement(this.selectedOption, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
+          this.deviceService.monthbyDayDevice(deviceId).subscribe(production=>{
+            this.list2 = production;
             this.BarPlotProduction();
-            this.BarPlotConsumption();
-          });
+          })
         }
-        
-      })
-    })
+      
+    }
+    else{
+          const month = this.selectedDate!.getMonth()+1;
+          const year = this.selectedDate!.getFullYear();
+          let string1 = year+'-'+month+'-'+1;
+          let string2 = year+'-'+(month+1)+'-'+1;
+          if(month == 12){
+            string2 = (year+1)+'-'+1+'-'+1
+          }
+          forkJoin([
+            this.deviceService.weekByDayDeviceFilter(string1,string2,deviceId, 2),
+            this.deviceService.weekByDayDeviceFilter(string1,string2,deviceId, 1)
+          ]).subscribe(([list1, list2]) => {
+            if(data.deviceCategory == "Electricity Consumer"){
+              this.list1 = list1;
+              this.BarPlotConsumption();
+            }
+            else{
+              this.list2 = list2;
+              this.BarPlotProduction();
+            }
+          });
+    }
+  })
   }
   BarPlotProduction(){
-
+    
     const chartId = 'barplot1';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
+
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month = this.list2.map(day => day.month);
+    const monthbyday = this.list2.map(day => day.day);
 
     const Linechart =new Chart("barplot1", {
         type: 'bar',
        
         data : {
-          labels: month,
+          labels: monthbyday,
           
           datasets: [
-
             {
               label: 'Production',
               data: energyUsageResults2,
@@ -170,7 +147,10 @@ export class BarYearChartComponent {
           
         },
         options: 
-        {responsive: true,
+        {
+
+          responsive: true, // Enable responsiveness
+          
           scales:{
             y: {
               ticks:{
@@ -180,8 +160,6 @@ export class BarYearChartComponent {
                 }
               },
               position: "left",
-              suggestedMin: 5,
-              suggestedMax: 140,
               title:{
                 display:true,
                 text: "kWh",
@@ -189,7 +167,6 @@ export class BarYearChartComponent {
                 font:{
                   size:15
                 }
-                
               }
             }
             ,
@@ -203,20 +180,15 @@ export class BarYearChartComponent {
               },
               title:{
                 display:true,
-                text: "Months in a Year",
+                text: "Days in a month",
                 color: '#000',
                 font:{
                   size:15
                 }
               }
             }
-            
-              
-            
-            
-            
           },
-          
+         
           plugins: {
             datalabels: {
               display: false
@@ -234,7 +206,7 @@ export class BarYearChartComponent {
                 usePointStyle: true,
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 } 
                 // ,
                 // boxHeight:100,
@@ -243,7 +215,7 @@ export class BarYearChartComponent {
             },
             title: {
               display: true,
-              text: 'Production in a year',
+              text: 'Production in a month',
               color: '#000',
               font:{
                 size:20
@@ -254,7 +226,7 @@ export class BarYearChartComponent {
       });
   }
   BarPlotConsumption(){
-
+    
     const chartId = 'barplot2';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
@@ -262,13 +234,13 @@ export class BarYearChartComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month = this.list1.map(day => day.month);
+    const monthbyday = this.list1.map(day => day.day);
 
     const Linechart =new Chart("barplot2", {
         type: 'bar',
        
         data : {
-          labels: month,
+          labels: monthbyday,
           
           datasets: [
             {
@@ -278,13 +250,15 @@ export class BarYearChartComponent {
               backgroundColor: 'rgb(128, 0, 128)',
               
             },
-           
             
           ]
           
         },
         options: 
-        {responsive: true,
+        {
+
+          responsive: true, // Enable responsiveness
+          
           scales:{
             y: {
               ticks:{
@@ -294,8 +268,6 @@ export class BarYearChartComponent {
                 }
               },
               position: "left",
-              suggestedMin: 5,
-              suggestedMax: 140,
               title:{
                 display:true,
                 text: "kWh",
@@ -303,7 +275,6 @@ export class BarYearChartComponent {
                 font:{
                   size:15
                 }
-                
               }
             }
             ,
@@ -317,20 +288,15 @@ export class BarYearChartComponent {
               },
               title:{
                 display:true,
-                text: "Months in a Year",
+                text: "Days in a month",
                 color: '#000',
                 font:{
                   size:15
                 }
               }
             }
-            
-              
-            
-            
-            
           },
-          
+         
           plugins: {
             datalabels: {
               display: false
@@ -348,16 +314,13 @@ export class BarYearChartComponent {
                 usePointStyle: true,
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 } 
-                // ,
-                // boxHeight:100,
-                // boxWidth:100
               }
             },
             title: {
               display: true,
-              text: 'Consumption in a year',
+              text: 'Consumption in a month',
               color: '#000',
               font:{
                 size:20

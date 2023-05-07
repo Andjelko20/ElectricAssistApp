@@ -104,6 +104,12 @@ import { PredictionDsoComponent } from "./components/dso/prediction/prediction-d
 import { PredictionTabelarDsoComponent } from './components/dso/prediction/prediction-tabelar-dso/prediction-tabelar-dso.component';
 
 import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-change-password/prosumer-change-password.component';
+import { DeviceTodayComponent } from './components/prosumers/prosumer-device-graph/device-today/device-today.component';
+import { DeviceWeekComponent } from './components/prosumers/prosumer-device-graph/device-week/device-week.component';
+import { DeviceMonthComponent } from './components/prosumers/prosumer-device-graph/device-month/device-month.component';
+import { DeviceYearComponent } from './components/prosumers/prosumer-device-graph/device-year/device-year.component';
+import { PredictionTabularProsumerComponent } from './components/dso/prediction/prediction-tabular-prosumer/prediction-tabular-prosumer.component';
+import { PredictionTabularDeviceComponent } from './components/dso/prediction/prediction-tabular-device/prediction-tabular-device.component';
 
 
 @NgModule({
@@ -206,7 +212,13 @@ import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-chang
     PredictionDsoComponent,
     PredictionTabelarDsoComponent,
 
-    ProsumerChangePasswordComponent
+    ProsumerChangePasswordComponent,
+      DeviceTodayComponent,
+      DeviceWeekComponent,
+      DeviceMonthComponent,
+      DeviceYearComponent,
+      PredictionTabularProsumerComponent,
+      PredictionTabularDeviceComponent,
     
   ],
   imports: [

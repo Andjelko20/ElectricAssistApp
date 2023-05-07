@@ -22,9 +22,8 @@ export class PredictionDeviceComponent {
   }
 
   ngOnInit(): void {
-    //treba da se uradi dobijanje deviceid
   
-    this.deviceService.predictionDevice(Number(this.route.snapshot.paramMap.get('deviceid'))).subscribe((data: WeekByDay[]) =>{
+    this.deviceService.predictionDevice(Number(this.route.snapshot.paramMap.get('id'))).subscribe((data: WeekByDay[]) =>{
       this.list1 = data;
     })
     
