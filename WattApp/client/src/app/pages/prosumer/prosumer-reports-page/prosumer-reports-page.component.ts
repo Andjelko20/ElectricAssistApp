@@ -14,11 +14,12 @@ export class ProsumerReportsPageComponent {
   week:boolean = false;
   month:boolean = false;
   year:boolean = false;
-  constructor(private elementRef: ElementRef) {}
   dayTable:boolean = true;
   weekTable:boolean = false;
   monthTable:boolean = false;
   yearTable:boolean = false;
+  constructor(private elementRef: ElementRef) {}
+  
   toggleD()
   {
     this.dashboard = false;
