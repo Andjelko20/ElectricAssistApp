@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.DTOs;
 using Server.Models;
+using System.Globalization;
 using System.Linq;
 
 namespace Server.Services.Implementations
@@ -522,6 +524,70 @@ namespace Server.Services.Implementations
             }
 
             return Results;
+        }
+
+        // Device
+        public DeviceTimeDTO FromWhenToWhenDeviceWorks(long deviceId)
+        {
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT deu.StartTime, 
+	                                           CASE 
+			                                        WHEN deu.EndTime LIKE 'null' THEN datetime('now', '+2 hours')
+			                                        ELSE deu.EndTime
+	                                           END AS EndTime,
+	                                           (julianday(CASE WHEN deu.EndTime LIKE 'null' THEN datetime('now', '+2 hours') ELSE deu.EndTime END) - julianday(deu.StartTime)) * 24.0 * 60 * 60 AS SecondsWorked
+                                        FROM DeviceEnergyUsages deu 
+                                        JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
+                                        WHERE deu.StartTime <= datetime('now', '+2 hours')
+                                        ORDER BY deu.StartTime DESC
+                                        LIMIT 1;";
+
+                command.Parameters.Add(new SqliteParameter("@deviceId", deviceId));
+
+                DeviceTimeDTO StartEndDuration = null;
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DateTime startDate = DateTime.ParseExact(reader["StartTime"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture); 
+                        DateTime endDate = DateTime.ParseExact(reader["EndTime"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+
+                        double inTotalWorked = double.Parse(reader["SecondsWorked"].ToString());
+                        int hoursWorked = (int)inTotalWorked / 3600;
+                        inTotalWorked -= hoursWorked * 3600;
+                        int minutesWorked = (int)inTotalWorked / 60;
+                        inTotalWorked -= minutesWorked * 60;
+                        int secondsWorked = (int)inTotalWorked;
+
+                        var startDay = startDate.Day;
+                        var startMonth = startDate.ToString("MMMM");
+                        var startYear = startDate.Year;
+                        var endDay = endDate.Day;
+                        var endMonth = endDate.ToString("MMMM");
+                        var endYear = endDate.Year;
+
+                        StartEndDuration = new DeviceTimeDTO
+                        {
+                            StartDay = startDay,
+                            StartMonth = startMonth,
+                            StartYear = startYear,
+                            EndDay = endDay,
+                            EndMonth = endMonth,
+                            EndYear = endYear,
+                            HoursWorked = hoursWorked,
+                            MinutesWorked = minutesWorked,
+                            SecondsWorked = secondsWorked
+                        };
+                    }
+                }
+
+                return StartEndDuration;
+            }
         }
     }
 }

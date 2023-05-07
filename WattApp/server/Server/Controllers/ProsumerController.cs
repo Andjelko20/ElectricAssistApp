@@ -262,5 +262,18 @@ namespace Server.Controllers
 
             return Ok(prosumerService.GetNumberOfDevicesOfOneProsumer(userId));
         }
+
+        /// <summary>
+        /// How much device worked
+        /// </summary>
+        [HttpGet]
+        [Route("device")]
+        public async Task<IActionResult> HowMuchDeviceWorked([FromQuery] long deviceId)
+        {
+            if (!_sqliteDb.Devices.Any(d => d.Id == deviceId))
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+
+            return Ok(prosumerService.FromWhenToWhenDeviceWorks(deviceId));
+        }
     }
 }
