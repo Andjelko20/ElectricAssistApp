@@ -70,7 +70,6 @@ input {
 
 .history-table-body {
     margin-left: 0;
-    border: 1px solid black;
     width: 100%;
 }
 
@@ -235,7 +234,13 @@ button.active {
         margin-left: 23px;
         margin-right: 23px;
     }
+    .toggle-containerr {
+        width: 98%;
+    }
     .toggle-buttons label {
+        font-size: 35px;
+    }
+    .toggle-buttonss label {
         font-size: 35px;
     }
     .collapsible {

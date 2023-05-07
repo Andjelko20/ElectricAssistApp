@@ -1,6 +1,5 @@
 .table-container {
     overflow-x: auto;
-    margin: 0;
 }
 
 .responsive {
@@ -54,17 +53,26 @@
 } */
 
 @media (min-width: 320px) {
-    /* h1 {
+    h1 {
         font-size: 20px;
-    } */
+    }
     .table {
         font-size: 14px;
     }
-    /* .table td,
+    .table td,
     .table th {
-        padding: 8px;
-    } */
+        padding: 4px;
+    }
     .table-container {
         overflow-x: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    h1 {
+        font-size: 37px;
+    }
+    .table {
+        font-size: 25px;
     }
 }
