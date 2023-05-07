@@ -5,7 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShowUsers, Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
-
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @Component({
   selector: 'app-admin-dso',
   templateUrl: './admin-dso.component.html',
@@ -233,6 +234,19 @@ export class AdminDsoComponent implements OnInit {
       }
     });
   }
+  // countChecked(): number {
+  //   let count = 0;
+  //   for (let prop in this.filters) {
+  //     if (this.filters.hasOwnProperty(prop)) {
+  //       if (Array.isArray(this.filters[prop])) {
+  //         count += this.filters[prop].filter(val => val).length;
+  //       } else {
+  //         count += this.filters[prop] ? 1 : 0;
+  //       }
+  //     }
+  //   }
+  //   return count;
+  // }
   logout()
   {
     localStorage.removeItem('token');

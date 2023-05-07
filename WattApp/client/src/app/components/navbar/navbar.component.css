@@ -25,6 +25,10 @@
       transition: all 0.2s ease-in-out;
       font-size: 26px
     }
+    #sidebarCollapse:active {
+      /* color: rgb(48, 98, 204); */
+      color: white;
+    }
     .navbar {
       background-color: #354871;
     }
@@ -53,6 +57,9 @@
       width: 60px;
     }
     a {
+      color: white;
+    }
+    a.navbar-brand {
       color: white;
     }
     #sidebarCollapse {

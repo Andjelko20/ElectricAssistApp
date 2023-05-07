@@ -50,7 +50,7 @@ button {
     /* background-color: #1C315E; */
 }
 .select-form-control{
-    width: 70%;
+    width: 88%;
     padding: 0.525rem 0.75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -68,7 +68,7 @@ button {
 }
 .form-control {
     display: block;
-    width: 70%;
+    width: 88%;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -107,7 +107,7 @@ button {
     .global1 {
         background-color: white;
         border-radius: 10px;
-        padding: 10px;
+        
         width: 98%;
         margin-bottom: 30px;
     }
@@ -136,20 +136,15 @@ button {
         justify-content: center;
     }
     
-    button {
-        justify-content: center;
-        margin-left: 25%;
-        width: 160px;
-        background-color: #1C315E;
-    }
+   
     .form-control {
         
-        width: 100%;
+        width: 91%;
         padding: 0.375rem 0.75rem;
         
     }
     .select-form-control{
-        width: 100%;
+        width: 91%;
         padding: 0.525rem 0.75rem;
        
     }
@@ -160,7 +155,7 @@ button {
     
     }
     .select-form-control{
-        width: 100%;
+        width: 91%;
         padding: 0.525rem 0.75rem;
        
     }

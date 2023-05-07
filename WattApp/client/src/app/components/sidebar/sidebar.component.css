@@ -234,7 +234,14 @@ ul ul a {
     background-color:  #354871;
     color: white; 
   }
-
+  #subb{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    text-align: right;
+    align-items: right;
+    
+  }
 @media (min-width: 768px){
     app-footer {
         position: absolute;
