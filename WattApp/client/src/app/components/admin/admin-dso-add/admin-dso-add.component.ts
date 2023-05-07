@@ -22,8 +22,8 @@ export class AdminDsoAddComponent implements OnInit{
     roleId: 1,
 	settlementId:0,
 	address:'',
-	latitude:0,
-	longitude:0
+	latitude:44.01721187973962,
+	longitude:20.90732574462891
   }
   public emailErrorMessage:string="";
   public errorMessage:string=""; 

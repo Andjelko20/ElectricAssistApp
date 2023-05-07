@@ -185,7 +185,7 @@ namespace Server.Controllers
                     Longitude = requestBody.Longitude,
                     SettlementId = requestBody.SettlementId, 
                     ExpireAt = DateTime.Now.AddDays(1),
-                    ConfirmKey = ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()//ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
+                    ConfirmKey = PasswordGenerator.GenerateRandomPassword(15)//ConfirmEmailKeyGenerator.GenerateConfirmEmailKey()
                 };
 
                 var pendingUser = userService.CreatePendingUser(user);
@@ -316,7 +316,7 @@ namespace Server.Controllers
                         OldEmail = user.Email,
                         NewEmail = requestBody.Email,
                         ExpireAt = DateTime.Now.AddDays(1),
-                        ChangeEmailKey = ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
+                        ChangeEmailKey = PasswordGenerator.GenerateRandomPassword(15)
                     };
 
                     object o = userService.CreateChangeEmailRequest(changeEmailModel);

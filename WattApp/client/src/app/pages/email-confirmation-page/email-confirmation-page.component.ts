@@ -28,13 +28,9 @@ export class EmailConfirmationPageComponent implements OnInit, OnDestroy {
 
   private subscribeToRoute() {
     this.routeSubscription = this.route.queryParams.subscribe(params => {
-      const key = encodeURIComponent(params['key']);
-      console.log(key);
+      const key = params['key'];
       this.http.post<ConfirmEmailResponseDTO>(`${environment.serverUrl}/api/Users/emailConfirmation/${key}`, null)
         .subscribe((response) => {
-          console.log(response);
-          console.log(response.isConfirmed);
-          console.log(response.error);
           if (response.isConfirmed) {
             this.isConfirmed = true;
           } else {
