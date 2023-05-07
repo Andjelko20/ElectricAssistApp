@@ -50,7 +50,7 @@
 
                 <div class="graf">
                     <button type="button" class="collapsible dropdown-toggle " #collapsibleButton>Consumption</button>
-                    <div class="contentng-start-inserted">
+                    <div class="contentng-start-inserted" id="contentng">
                         <div class="history-charts-body" *ngIf="day">
                             <app-prosumer-day-graph></app-prosumer-day-graph>
                         </div>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="table">
-                    <button type="button" class="collapsible dropdown-toggle " #collapsibleButton>Table of production/consumption</button>
+                    <button type="button" class="collapsible1 dropdown-toggle " #collapsibleButton>Table of production/consumption</button>
                     <div class="content">
                         <div class="history-table-body" *ngIf="dayTable">
                             <app-prosumer-day-table></app-prosumer-day-table>

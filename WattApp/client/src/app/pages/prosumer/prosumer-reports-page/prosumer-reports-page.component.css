@@ -66,6 +66,7 @@ input {
 
 .table {
     margin-top: 15px;
+    padding: 0;
 }
 
 .history-table-body {
@@ -132,6 +133,7 @@ input {
 
 .history-charts-body {
     margin-top: 15px;
+    width: 100%;
 }
 
 .toggle-buttonss label {
@@ -174,8 +176,26 @@ input {
     font-size: 18px;
 }
 
+.collapsible1 {
+    background-color: #bce9e4;
+    color: grey;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 9px;
+    width: 93%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+}
+
 .active,
 .collapsible:hover {
+    background-color: #bce9e4;
+}
+
+.active,
+.collapsible1:hover {
     background-color: #bce9e4;
 }
 
@@ -211,7 +231,7 @@ button.active {
         font-size: 35px;
     }
     .con {
-        margin: 10px;
+        margin: 21px;
         margin-bottom: 0px;
     }
     .card {
@@ -235,7 +255,7 @@ button.active {
         margin-right: 23px;
     }
     .toggle-containerr {
-        width: 98%;
+        width: 100%;
     }
     .toggle-buttons label {
         font-size: 35px;
@@ -247,14 +267,37 @@ button.active {
         padding: 18px;
         font-size: 35px;
     }
+    .collapsible1 {
+        padding: 18px;
+        width: 100%;
+        font-size: 35px;
+    }
     .active,
     .collapsible:hover {
         background-color: #bce9e4;
     }
+    .active,
+    .collapsible1:hover {
+        background-color: #bce9e4;
+    }
     .content {
-        padding: 0 18px;
+        padding: 0 140px;
         display: none;
+        display: flex;
+        justify-content: center;
         overflow: hidden;
         background-color: #f1f1f1;
+    }
+    #contentng {
+        padding: 0 140px;
+    }
+    .graf {
+        padding: 0;
+    }
+    .graf1 {
+        padding: 0;
+    }
+    .table {
+        padding: 0;
     }
 }
