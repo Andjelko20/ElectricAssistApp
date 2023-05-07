@@ -85,7 +85,8 @@ namespace Server.Services.Implementations
                     usageEnd = now;
                 }
 
-                var usageTime = (usageEnd - usageStart).TotalHours;
+                TimeSpan timeDifference = (TimeSpan)(usageEnd - usage.StartTime);
+                double usageTime = Math.Abs(timeDifference.TotalHours);
                 var deviceEnergyUsage = _context.Devices
                     .Include(d => d.DeviceModel)
                     .Where(d => d.Id == usage.DeviceId)
@@ -140,7 +141,8 @@ namespace Server.Services.Implementations
                     usageEnd = now;
                 }
 
-                var usageTime = (usageEnd - usageStart).TotalHours;
+                TimeSpan timeDifference = (TimeSpan)(usageEnd - usage.StartTime);
+                double usageTime = Math.Abs(timeDifference.TotalHours);
                 var deviceEnergyUsage = _context.Devices
                     .Include(d => d.DeviceModel)
                     .Where(d => d.Id == usage.DeviceId)
@@ -190,7 +192,8 @@ namespace Server.Services.Implementations
                     usageEnd = now;
                 }
 
-                var usageTime = (usageEnd - usageStart).TotalHours;
+                TimeSpan timeDifference = (TimeSpan)(usageEnd - usage.StartTime);
+                double usageTime = Math.Abs(timeDifference.TotalHours);
                 var deviceEnergyUsage = _context.Devices
                     .Include(d => d.DeviceModel)
                     .Where(d => d.Id == usage.DeviceId)
@@ -240,7 +243,8 @@ namespace Server.Services.Implementations
                     usageEnd = now;
                 }
 
-                var usageTime = (usageEnd - usageStart).TotalHours;
+                TimeSpan timeDifference = (TimeSpan)(usageEnd - usage.StartTime);
+                double usageTime = Math.Abs(timeDifference.TotalHours);
                 var deviceEnergyUsage = _context.Devices
                     .Include(d => d.DeviceModel)
                     .Where(d => d.Id == usage.DeviceId)
@@ -377,7 +381,7 @@ namespace Server.Services.Implementations
                         if (usage.EndTime > DateTime.Now)
                             overlapEnd = DateTime.Now;
                         else
-                            overlapEnd = usage.EndTime;
+                            overlapEnd = (DateTime)usage.EndTime;
                     }
 
                     if (overlapStart < overlapEnd)
@@ -453,7 +457,7 @@ namespace Server.Services.Implementations
             var EndDate = DateTime.Now;
 
             usageList = _context.DeviceEnergyUsages
-                        .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= StartDate/* && u.EndTime <= EndDate*/)
+                        .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= StartDate && u.StartTime < EndDate/* && u.EndTime <= EndDate*/)
                         .ToList();
 
             var totalEnergyConsumption = 0.0;
@@ -467,10 +471,12 @@ namespace Server.Services.Implementations
 
                 foreach (var usage in deviceUsageList)
                 {
-                    if (usage.EndTime == null)
+                    if (usage.EndTime == null || usage.EndTime > EndDate)
                         usage.EndTime = EndDate;
 
-                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// device.EnergyInKwh;
+                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
+                    double hours = Math.Abs(timeDifference.TotalHours);
+                    totalEnergyConsumption += hours * EnergyInKwh;
                 }
             }
 
@@ -510,7 +516,12 @@ namespace Server.Services.Implementations
                                         .FirstOrDefault()
                                         .EnergyKwh;
 
-                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;
+                    if (usage.EndTime == null)
+                        usage.EndTime = DateTime.Now;
+
+                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
+                    double hours = Math.Abs(timeDifference.TotalHours);
+                    EnergyUsage += hours * EnergyInKwh;
                 }
 
                 Results.Add(new EnergyToday

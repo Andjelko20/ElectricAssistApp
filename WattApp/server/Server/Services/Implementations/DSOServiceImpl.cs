@@ -78,7 +78,8 @@ namespace Server.Services.Implementations
                     usageEnd = now;
                 }
 
-                var usageTime = (usageEnd - usageStart).TotalHours;
+                TimeSpan timeDifference = (TimeSpan)(usageEnd - usage.StartTime);
+                double usageTime = Math.Abs(timeDifference.TotalHours);
                 var deviceEnergyUsage = _context.Devices
                     .Include(d => d.DeviceModel)
                     .Where(d => d.Id == usage.DeviceId)
@@ -217,7 +218,7 @@ namespace Server.Services.Implementations
                         if (usage.EndTime > DateTime.Now)
                             overlapEnd = DateTime.Now;
                         else
-                            overlapEnd = usage.EndTime;
+                            overlapEnd = (DateTime)usage.EndTime;
                     }
 
                     if (overlapStart < overlapEnd)

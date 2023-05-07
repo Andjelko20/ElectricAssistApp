@@ -26,7 +26,11 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT
-	                                        SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
+								                                          ELSE deu.EndTime
+							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
 	                                        DeviceEnergyUsages deu
 	                                        JOIN Devices d ON deu.DeviceId = d.Id
@@ -47,7 +51,8 @@ namespace Server.Services.Implementations
                 using (var reader = command.ExecuteReader())
                 {
                     if (reader.Read())
-                        energyUsageResult = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                            energyUsageResult = energyUsage;
                 }
 
                 return Math.Round(energyUsageResult, 2);
@@ -65,7 +70,11 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                     SELECT
-	                                    SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+	                                    SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
+								                                          ELSE deu.EndTime
+							                                     END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                     FROM
 	                                    DeviceEnergyUsages deu
 	                                    JOIN Devices d ON deu.DeviceId = d.Id
@@ -85,7 +94,8 @@ namespace Server.Services.Implementations
                 using (var reader = command.ExecuteReader())
                 {
                     if (reader.Read())
-                        energyUsageResult = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                            energyUsageResult = energyUsage;
                 }
 
                 return Math.Round(energyUsageResult, 2);
@@ -104,8 +114,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        strftime('%Y-%m', deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -135,7 +146,11 @@ namespace Server.Services.Implementations
 
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new MonthlyEnergyConsumptionLastYear
                         {
@@ -164,8 +179,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        DATE(deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -196,7 +212,11 @@ namespace Server.Services.Implementations
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                         {
@@ -226,8 +246,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        strftime('%Y-%m', deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -256,7 +277,11 @@ namespace Server.Services.Implementations
 
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new MonthlyEnergyConsumptionLastYear
                         {
@@ -285,8 +310,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        DATE(deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -316,7 +342,11 @@ namespace Server.Services.Implementations
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                         {
@@ -346,8 +376,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -379,7 +410,11 @@ namespace Server.Services.Implementations
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new EnergyToday
                         {
@@ -410,8 +445,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -442,7 +478,11 @@ namespace Server.Services.Implementations
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new EnergyToday
                         {
@@ -474,8 +514,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -505,7 +546,11 @@ namespace Server.Services.Implementations
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new EnergyToday
                         {
@@ -536,8 +581,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        strftime('%Y-%m', deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -565,7 +611,11 @@ namespace Server.Services.Implementations
 
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new MonthlyEnergyConsumptionLastYear
                         {
@@ -594,8 +644,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        DATE(deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -624,7 +675,11 @@ namespace Server.Services.Implementations
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                         {
@@ -644,6 +699,9 @@ namespace Server.Services.Implementations
 
         public double GetProsumerDoubleHistoryFromTo(string fromDate, string toDate, long userId, long categoryId)
         {
+            if(!_context.Devices.Any(d => d.UserId == userId))
+                return 0.0;
+
             DateTime FromDate = DateTime.Parse(fromDate);
             DateTime ToDate = DateTime.Parse(toDate);
 
@@ -653,7 +711,11 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT
-	                                        SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
+								                                          ELSE deu.EndTime
+							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
 	                                        DeviceEnergyUsages deu
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
@@ -672,7 +734,12 @@ namespace Server.Services.Implementations
                 using (var reader = command.ExecuteReader())
                 {
                     if (reader.Read())
-                        energyUsageResult = double.Parse(reader["EnergyUsageKwh"].ToString());
+                    {
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
+                    }
                 }
 
                 return Math.Round(energyUsageResult, 2);
@@ -690,7 +757,11 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT
-	                                        SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
+								                                          ELSE deu.EndTime
+							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
 	                                        DeviceEnergyUsages deu
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
@@ -707,7 +778,8 @@ namespace Server.Services.Implementations
                 using (var reader = command.ExecuteReader())
                 {
                     if (reader.Read())
-                        energyUsageResult = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                            energyUsageResult = energyUsage;
                 }
 
                 return Math.Round(energyUsageResult, 2);
@@ -726,8 +798,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        strftime('%Y-%m', deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -753,7 +826,11 @@ namespace Server.Services.Implementations
 
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new MonthlyEnergyConsumptionLastYear
                         {
@@ -782,8 +859,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        DATE(deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -810,7 +888,11 @@ namespace Server.Services.Implementations
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
                         {
@@ -840,8 +922,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now')
-								                                          THEN datetime('now')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -869,7 +952,11 @@ namespace Server.Services.Implementations
                         var day = date.Day;
                         var month = date.ToString("MMMM");
                         var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        double energyUsageResult = 0.0;
+                        if (double.TryParse(reader["EnergyUsageKwh"]?.ToString(), out double energyUsage))
+                        {
+                            energyUsageResult = energyUsage;
+                        }
 
                         var dailyEnergyUsage = new EnergyToday
                         {

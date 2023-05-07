@@ -38,7 +38,11 @@ namespace Server.Services.Implementations
 
             foreach (var energyUsage in energyUsages)
             {
-                var hours = Math.Abs((energyUsage.EndTime - energyUsage.StartTime).TotalHours);
+                if (energyUsage.EndTime == null)
+                    energyUsage.EndTime = DateTime.Now;
+
+                TimeSpan timeDifference = (TimeSpan)(energyUsage.EndTime - energyUsage.StartTime);
+                double hours = Math.Abs(timeDifference.TotalHours);
                 consumption += (double)(deviceModelEnergyKwh * hours);
             }
 
@@ -93,7 +97,11 @@ namespace Server.Services.Implementations
             double Hours = -1;
             foreach (var item in deviceEnergyUsageLista)
             {
-                Hours = Math.Abs((item.EndTime - item.StartTime).TotalHours);
+                if (item.EndTime == null)
+                    item.EndTime = DateTime.Now;
+
+                TimeSpan timeDifference = (TimeSpan)(item.EndTime - item.StartTime);
+                Hours = Math.Abs(timeDifference.TotalHours);
                 Consumption += (double)(EnergyInKwh * Hours);
             }
 
@@ -137,9 +145,12 @@ namespace Server.Services.Implementations
                     {
                         //var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
                         //float EnergyInKwh = DeviceModel.EnergyKwh;
+                        if (item.EndTime == null)
+                            item.EndTime = DateTime.Now;
 
-                        UsageInHours = (item.EndTime - item.StartTime).TotalHours;
-                        UsageInKwh += UsageInHours * EnergyInKwh; //Device.EnergyInKwh;
+                        TimeSpan timeDifference = (TimeSpan)(item.EndTime - item.StartTime);
+                        UsageInHours = Math.Abs(timeDifference.TotalHours);
+                        UsageInKwh += UsageInHours * EnergyInKwh;
                     }
                     Results.Insert(0, new MonthlyEnergyConsumptionLastYear
                     {
@@ -172,8 +183,14 @@ namespace Server.Services.Implementations
 
                 double EnergyUsage = 0.0;
                 foreach (var usage in UsageForDate)
-                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// Device.EnergyInKwh;
+                {
+                    if (usage.EndTime == null)
+                        usage.EndTime = DateTime.Now;
 
+                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
+                    double hours = Math.Abs(timeDifference.TotalHours);
+                    EnergyUsage += hours * EnergyInKwh;
+                }
                 Results.Add(new DailyEnergyConsumptionPastMonth
                 {
                     Day = date.Day,
@@ -206,7 +223,14 @@ namespace Server.Services.Implementations
 
                 double EnergyUsage = 0.0;
                 foreach (var usage in UsageForDate)
-                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// Device.EnergyInKwh;
+                {
+                    if (usage.EndTime == null)
+                        usage.EndTime = DateTime.Now;
+
+                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
+                    double hours = Math.Abs(timeDifference.TotalHours);
+                    EnergyUsage += hours * EnergyInKwh;
+                }
 
                 Results.Add(new DailyEnergyConsumptionPastMonth
                 {
@@ -297,7 +321,12 @@ namespace Server.Services.Implementations
 
                 foreach (var usage in deviceUsageList)
                 {
-                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// device.EnergyInKwh;
+                    if (usage.EndTime == null)
+                        usage.EndTime = DateTime.Now;
+
+                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
+                    double hours = Math.Abs(timeDifference.TotalHours);
+                    totalEnergyConsumption += hours * EnergyInKwh;
                 }
             }
 
@@ -337,7 +366,11 @@ namespace Server.Services.Implementations
 
                     foreach (var usage in deviceUsages)
                     {
-                        monthlyEnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// device.EnergyInKwh;
+                        if (usage.EndTime == null)
+                            usage.EndTime = DateTime.Now;
+                        TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
+                        double hours = Math.Abs(timeDifference.TotalHours);
+                        monthlyEnergyUsage += hours * EnergyInKwh;
                     }
                 }
 
@@ -359,7 +392,15 @@ namespace Server.Services.Implementations
                 _connection.Open();
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
-                                        SELECT DATE(deu.StartTime) AS YYMMDD, SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        SELECT DATE(deu.StartTime) AS YYMMDD, SUM(CAST(
+                                                                                        (strftime('%s', 
+                                                                                            CASE 
+                                                                                                WHEN deu.EndTime IS NULL 
+                                                                                                THEN datetime('now', '+2 hour')
+                                                                                                ELSE deu.EndTime 
+                                                                                            END
+                                                                                        ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                                                    ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu JOIN Devices d ON deu.DeviceId=d.Id
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
 							            JOIN DeviceTypes dt ON dm.DeviceTypeId=dt.Id AND dt.CategoryId=@deviceCategoryId
@@ -428,7 +469,15 @@ namespace Server.Services.Implementations
                 _connection.Open();
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
-                                        SELECT DATE(deu.StartTime) AS YYMMDD, SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        SELECT DATE(deu.StartTime) AS YYMMDD, SUM(CAST(
+                                                                                        (strftime('%s', 
+                                                                                            CASE 
+                                                                                                WHEN deu.EndTime IS NULL 
+                                                                                                THEN datetime('now', '+2 hour')
+                                                                                                ELSE deu.EndTime 
+                                                                                            END
+                                                                                        ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                                                    ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu JOIN Devices d ON deu.DeviceId=d.Id
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
 							            JOIN DeviceTypes dt ON dm.DeviceTypeId=dt.Id AND dt.CategoryId=@deviceCategoryId
@@ -523,7 +572,12 @@ namespace Server.Services.Implementations
                                         .FirstOrDefault()
                                         .EnergyKwh;
 
-                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;
+                    if (usage.EndTime == null)
+                        usage.EndTime = DateTime.Now;
+
+                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
+                    double hours = Math.Abs(timeDifference.TotalHours);
+                    EnergyUsage += hours * EnergyInKwh;
                 }
 
                 Results.Add(new EnergyToday
@@ -549,7 +603,15 @@ namespace Server.Services.Implementations
                                         SELECT DATE(deu.StartTime) AS YYMMDD, 
                                                /*strftime('%m', deu.StartTime) AS Month,
                                                strftime('%Y', deu.StartTime) AS Year,*/
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST(
+                                                    (strftime('%s', 
+                                                        CASE 
+                                                            WHEN deu.EndTime IS NULL 
+                                                            THEN datetime('now', '+2 hour')
+                                                            ELSE deu.EndTime 
+                                                        END
+                                                    ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id
                                         JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
@@ -601,7 +663,15 @@ namespace Server.Services.Implementations
                                         SELECT DATE(deu.StartTime) AS YYMMDD, 
                                                /*strftime('%m', deu.StartTime) AS Month,
                                                strftime('%Y', deu.StartTime) AS Year,*/
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST(
+                                                    (strftime('%s', 
+                                                        CASE 
+                                                            WHEN deu.EndTime IS NULL 
+                                                            THEN datetime('now', '+2 hour')
+                                                            ELSE deu.EndTime 
+                                                        END
+                                                    ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id
                                         JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
@@ -652,9 +722,15 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT DATE(deu.StartTime) AS YYMMDD, 
-                                               /*strftime('%m', deu.StartTime) AS Month,
-                                               strftime('%Y', deu.StartTime) AS Year,*/
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST(
+                                                    (strftime('%s', 
+                                                        CASE 
+                                                            WHEN deu.EndTime IS NULL 
+                                                            THEN datetime('now', '+2 hour')
+                                                            ELSE deu.EndTime 
+                                                        END
+                                                    ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id
                                         JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
@@ -704,9 +780,15 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT DATE(deu.StartTime) AS YYMMDD, 
-                                               /*strftime('%m', deu.StartTime) AS Month,
-                                               strftime('%Y', deu.StartTime) AS Year,*/
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST(
+                                                    (strftime('%s', 
+                                                        CASE 
+                                                            WHEN deu.EndTime IS NULL 
+                                                            THEN datetime('now', '+2 hour')
+                                                            ELSE deu.EndTime 
+                                                        END
+                                                    ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id
                                         JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
@@ -757,7 +839,15 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT strftime('%Y-%m', deu.StartTime) AS MonthYear, 
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST(
+                                                    (strftime('%s', 
+                                                        CASE 
+                                                            WHEN deu.EndTime IS NULL 
+                                                            THEN datetime('now', '+2 hour')
+                                                            ELSE deu.EndTime 
+                                                        END
+                                                    ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId=d.Id
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
@@ -805,7 +895,15 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT strftime('%Y-%m', deu.StartTime) AS MonthYear, 
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST(
+                                                    (strftime('%s', 
+                                                        CASE 
+                                                            WHEN deu.EndTime IS NULL 
+                                                            THEN datetime('now', '+2 hour')
+                                                            ELSE deu.EndTime 
+                                                        END
+                                                    ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId=d.Id
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
@@ -930,7 +1028,15 @@ namespace Server.Services.Implementations
                                         SELECT Datum, EnergyUsageKwh
                                         FROM (
                                             SELECT DATE(deu.StartTime) AS Datum, 
-                                                   SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh,
+                                                   SUM(CAST(
+                                                        (strftime('%s', 
+                                                            CASE 
+                                                                WHEN deu.EndTime IS NULL 
+                                                                THEN datetime('now', '+2 hour')
+                                                                ELSE deu.EndTime 
+                                                            END
+                                                        ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                    ) AS EnergyUsageKwh,
                                                    ROW_NUMBER() OVER (ORDER BY DATE(deu.StartTime)) AS RowNumber
                                             FROM DeviceEnergyUsages deu 
                                             JOIN Devices d ON deu.DeviceId = d.Id AND d.Id = @deviceId
@@ -987,7 +1093,15 @@ namespace Server.Services.Implementations
                                         SELECT Datum, EnergyUsageKwh
                                         FROM (
                                             SELECT DATE(deu.StartTime) AS Datum, 
-                                                   SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh,
+                                                   SUM(CAST(
+                                                        (strftime('%s', 
+                                                            CASE 
+                                                                WHEN deu.EndTime IS NULL 
+                                                                THEN datetime('now', '+2 hour')
+                                                                ELSE deu.EndTime 
+                                                            END
+                                                        ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                    ) AS EnergyUsageKwh,
                                                    ROW_NUMBER() OVER (ORDER BY DATE(deu.StartTime)) AS RowNumber
                                             FROM DeviceEnergyUsages deu 
                                             JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
@@ -1046,7 +1160,15 @@ namespace Server.Services.Implementations
                                         SELECT Datum, EnergyUsageKwh
                                         FROM (
                                             SELECT DATE(deu.StartTime) AS Datum, 
-                                                   SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh,
+                                                   SUM(CAST(
+                                                        (strftime('%s', 
+                                                            CASE 
+                                                                WHEN deu.EndTime IS NULL 
+                                                                THEN datetime('now', '+2 hour')
+                                                                ELSE deu.EndTime 
+                                                            END
+                                                        ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                    ) AS EnergyUsageKwh,
                                                    ROW_NUMBER() OVER (ORDER BY DATE(deu.StartTime)) AS RowNumber
                                             FROM DeviceEnergyUsages deu 
                                             JOIN Devices d ON deu.DeviceId = d.Id
@@ -1106,7 +1228,15 @@ namespace Server.Services.Implementations
                                         SELECT Datum, EnergyUsageKwh
                                         FROM (
                                             SELECT DATE(deu.StartTime) AS Datum, 
-                                                   SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh,
+                                                   SUM(CAST(
+                                                        (strftime('%s', 
+                                                            CASE 
+                                                                WHEN deu.EndTime IS NULL 
+                                                                THEN datetime('now', '+2 hour')
+                                                                ELSE deu.EndTime 
+                                                            END
+                                                        ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                    ) AS EnergyUsageKwh,
                                                    ROW_NUMBER() OVER (ORDER BY DATE(deu.StartTime)) AS RowNumber
                                             FROM DeviceEnergyUsages deu 
                                             JOIN Devices d ON deu.DeviceId = d.Id
@@ -1167,7 +1297,15 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT strftime('%Y-%m', deu.StartTime) AS MonthYear, 
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST(
+                                                    (strftime('%s', 
+                                                        CASE 
+                                                            WHEN deu.EndTime IS NULL 
+                                                            THEN datetime('now', '+2 hour')
+                                                            ELSE deu.EndTime 
+                                                        END
+                                                    ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId=d.Id
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
@@ -1235,7 +1373,15 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT strftime('%Y-%m', deu.StartTime) AS MonthYear, 
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST(
+                                                    (strftime('%s', 
+                                                        CASE 
+                                                            WHEN deu.EndTime IS NULL 
+                                                            THEN datetime('now', '+2 hour')
+                                                            ELSE deu.EndTime 
+                                                        END
+                                                    ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId=d.Id
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
@@ -1302,7 +1448,15 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT strftime('%Y-%m', deu.StartTime) AS MonthYear, 
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST(
+                                                    (strftime('%s', 
+                                                        CASE 
+                                                            WHEN deu.EndTime IS NULL 
+                                                            THEN datetime('now', '+2 hour')
+                                                            ELSE deu.EndTime 
+                                                        END
+                                                    ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId=d.Id AND d.UserId = @userId
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
@@ -1368,7 +1522,15 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT strftime('%Y-%m', deu.StartTime) AS MonthYear, 
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST(
+                                                    (strftime('%s', 
+                                                        CASE 
+                                                            WHEN deu.EndTime IS NULL 
+                                                            THEN datetime('now', '+2 hour')
+                                                            ELSE deu.EndTime 
+                                                        END
+                                                    ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
+                                                ) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId=d.Id AND deu.DeviceId = @deviceId
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id

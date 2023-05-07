@@ -39,7 +39,9 @@ namespace Server.Services.Implementations
                 {
                     var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
                     var EnergyKwh = DeviceModel.EnergyKwh;
-                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyKwh;// Device.EnergyInKwh; // za svaki period kada je radio izracunaj koliko je trosio
+                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
+                    double hours = Math.Abs(timeDifference.TotalHours);
+                    EnergyUsage += hours * EnergyKwh; // za svaki period kada je radio izracunaj koliko je trosio
                 }
 
                 Results.Add(new DailyEnergyConsumptionPastMonth // klasa moze i za week
@@ -266,7 +268,7 @@ namespace Server.Services.Implementations
         public List<DailyEnergyConsumptionPastMonth> CityPredictionForThePastWeek(long cityId, long deviceCategoryId)
         {
             Random random = new Random();
-            double minValue = -1000.0;
+            double minValue = -50.0;
             double maxValue = 1000.0;
             if (deviceCategoryId == 1)
             {
@@ -280,7 +282,12 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT DATE(deu.StartTime) AS YYMMDD,
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                             WHEN deu.EndTime IS NULL
+                                                                          THEN datetime('now', '+2 hours')
+								                                          ELSE deu.EndTime
+							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id
                                         JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
@@ -328,7 +335,7 @@ namespace Server.Services.Implementations
         public List<DailyEnergyConsumptionPastMonth> SettlementPredictionForThePastWeek(long settlementId, long deviceCategoryId)
         {
             Random random = new Random();
-            double minValue = -50.0;
+            double minValue = -10.0;
             double maxValue = 500.0;
 
             using (var _connection = _context.Database.GetDbConnection())
@@ -337,7 +344,12 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT DATE(deu.StartTime) AS YYMMDD,
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                             WHEN deu.EndTime IS NULL
+                                                                          THEN datetime('now', '+2 hours')
+								                                          ELSE deu.EndTime
+							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id
                                         JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
@@ -393,7 +405,11 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT DATE(deu.StartTime) AS YYMMDD,
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
+								                                          ELSE deu.EndTime
+							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
                                         JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
@@ -469,7 +485,11 @@ namespace Server.Services.Implementations
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
                                         SELECT DATE(deu.StartTime) AS YYMMDD,
-                                               SUM(CAST((strftime('%s', deu.EndTime) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                               SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
+								                                          THEN datetime('now', '+2 hours')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
+								                                          ELSE deu.EndTime
+							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id AND d.Id = @deviceId
                                         JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
