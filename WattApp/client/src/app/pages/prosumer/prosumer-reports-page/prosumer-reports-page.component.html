@@ -34,16 +34,16 @@
                 </div>
                 <div class="toggle-containerr">
                     <div class="toggle-buttonss">
-                        <input type="radio" (click)="toogleDay()" name="toggle1" id="day-btn" checked [class.active]="day" [class.active]="dayTable">
+                        <input type="radio" (click)="toogleDay()" (click)="toogledayTable()" name="toggle1" id="day-btn" checked [class.active]="day" [class.active]="dayTable">
                         <label id="dash" for="day-btn">Day</label>
                         <span class="divider"></span>
-                        <input type="radio" (click)="toogleWeek()" name="toggle1" id="week-btn" [class.active]="week">
+                        <input type="radio" (click)="toogleWeek()" (click)="toogleweekTable()" name="toggle1" id="week-btn" [class.active]="week">
                         <label for="week-btn">Week</label>
                         <span class="divider"></span>
-                        <input type="radio" (click)="toogleMonth()" name="toggle1" id="month-btn" [class.active]="month">
+                        <input type="radio" (click)="toogleMonth()" (click)="tooglemonthTable()" name="toggle1" id="month-btn" [class.active]="month">
                         <label for="month-btn">Month</label>
                         <span class="divider"></span>
-                        <input type="radio" (click)="toogleYear()" name="toggle1" id="year-btn" [class.active]="year">
+                        <input type="radio" (click)="toogleYear()" (click)="toogleyearTable()" name="toggle1" id="year-btn" [class.active]="year">
                         <label for="year-btn">Year</label>
                     </div>
                 </div>
@@ -83,8 +83,8 @@
                     </div>
                 </div>
                 <div class="table">
-                    <button type="button" class="collapsible dropdown-toggle " id="collaprsible1" #collapsibleButton>Table of production/consumption</button>
-                    <div class="content">
+                    <button type="button" class="collapsible dropdown-toggle " id="collapsible1" #collapsibleButton>Table of production/consumption</button>
+                    <div class="content1">
                         <div class="history-table-body" *ngIf="dayTable">
                             <app-prosumer-day-table></app-prosumer-day-table>
                         </div>
@@ -117,14 +117,21 @@
                 <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Production next 7 days</h5>
+                            <h5 class="card-title">Prediction next 7 days</h5>
                             <p class="card-text">9.24 kWh </p>
 
                         </div>
                     </div>
                 </div>
                 <div class="graf">
-                    <app-prediction-prosumer></app-prediction-prosumer>
+                    <button type="button" class="collapsible dropdown-toggle " id="collapsible" #collapsibleButton>Graph view</button>
+                    <div class="contentng-start-inserted" id="contentng">
+                        <app-prediction-prosumer></app-prediction-prosumer>
+                    </div>
+                    <button type="button" class="collapsible dropdown-toggle " id="collapsible" #collapsibleButton>Tabular view</button>
+                    <div class="content">
+                        <app-prediction-tabular-prosumer></app-prediction-tabular-prosumer>
+                    </div>
                 </div>
             </div>
         </div>

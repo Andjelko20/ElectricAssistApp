@@ -93,6 +93,7 @@ export class ProsumerDayGraphComponent {
     
   
   }
+
   LineChartProduction(){
 
     const chartId = 'linechart1';
@@ -255,7 +256,7 @@ export class ProsumerDayGraphComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -264,7 +265,7 @@ export class ProsumerDayGraphComponent {
               text: " kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -273,7 +274,7 @@ export class ProsumerDayGraphComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -281,41 +282,43 @@ export class ProsumerDayGraphComponent {
               text: "Hours in a day",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
           ,
         },
-        
+        maintainAspectRatio: false,
+        responsive: true,
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
+          legend:{display:false},
+          // legend: {
+          //   position: 'bottom',
+          //   onHover: function (event, legendItem, legend) {
+          //     document.body.style.cursor = 'pointer';
+          //   },
+          //   onLeave: function (event, legendItem, legend) {
+          //       document.body.style.cursor = 'default';
+          //   },
+          //   labels:{
+          //     usePointStyle: true,
+          //     color:'#000',
+          //     font:{
+          //       size:5
+          //     } 
            
-            }
-            ,
-            align: "center"
-          },
+          //   }
+          //   ,
+          //   align: "center"
+          // }
           title: {
             
             display: true,
             text: 'Consumption in one day',
             color: '#000',
             font:{
-              size:20
+              size:15
             }
           }
         }

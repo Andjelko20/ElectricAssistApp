@@ -82,7 +82,7 @@ export class PredictionProsumerComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -91,7 +91,7 @@ export class PredictionProsumerComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -100,7 +100,7 @@ export class PredictionProsumerComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -108,7 +108,7 @@ export class PredictionProsumerComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -129,7 +129,7 @@ export class PredictionProsumerComponent {
               usePointStyle: true,
               color:'#000',
               font:{
-                size:20
+                size:13
               } 
            
             }
@@ -138,10 +138,10 @@ export class PredictionProsumerComponent {
           },
           title: {
             display: true,
-            text: 'Production in a week',
+            text: 'Prediction in a week',
             color:'#000',
             font:{
-              size:20
+              size:15
             }
           }
         }
@@ -197,13 +197,14 @@ export class PredictionProsumerComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -212,7 +213,7 @@ export class PredictionProsumerComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -221,7 +222,7 @@ export class PredictionProsumerComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -229,7 +230,7 @@ export class PredictionProsumerComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -250,7 +251,7 @@ export class PredictionProsumerComponent {
               usePointStyle: true,
               color:'#000',
               font:{
-                size:20
+                size:13
               } 
            
             }
@@ -262,7 +263,7 @@ export class PredictionProsumerComponent {
             text: ' Consumption in a week',
             color:'#000',
             font:{
-              size:20
+              size:15
             }
           }
         }
