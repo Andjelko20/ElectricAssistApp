@@ -72,14 +72,14 @@ export class DeviceYearComponent {
       
         if(data.deviceCategory == "Electricity Consumer")
         {
-          this.deviceService.monthbyDayDevice(id).subscribe(consumption =>{
+          this.deviceService.yearByMonthDevice(id).subscribe(consumption =>{
             this.list1 = consumption
             this.BarPlotConsumption();
           })
           
         }
         else{
-          this.deviceService.monthbyDayDevice(id).subscribe(production =>{
+          this.deviceService.yearByMonthDevice(id).subscribe(production =>{
             this.list2 = production
             this.BarPlotProduction();
           })

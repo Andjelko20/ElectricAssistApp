@@ -81,7 +81,7 @@ export class PredictionTabelarDsoComponent {
   }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-week',
+    filename: 'prediction-week',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',

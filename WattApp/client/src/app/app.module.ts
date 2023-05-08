@@ -110,6 +110,10 @@ import { DeviceMonthComponent } from './components/prosumers/prosumer-device-gra
 import { DeviceYearComponent } from './components/prosumers/prosumer-device-graph/device-year/device-year.component';
 import { PredictionTabularProsumerComponent } from './components/dso/prediction/prediction-tabular-prosumer/prediction-tabular-prosumer.component';
 import { PredictionTabularDeviceComponent } from './components/dso/prediction/prediction-tabular-device/prediction-tabular-device.component';
+import { DeviceTodayTabularComponent } from './components/prosumers/prosumer-device-tabular/device-today-tabular/device-today-tabular.component';
+import { DeviceWeekTabularComponent } from './components/prosumers/prosumer-device-tabular/device-week-tabular/device-week-tabular.component';
+import { DeviceMonthTabularComponent } from './components/prosumers/prosumer-device-tabular/device-month-tabular/device-month-tabular.component';
+import { DeviceYearTabularComponent } from './components/prosumers/prosumer-device-tabular/device-year-tabular/device-year-tabular.component';
 
 
 @NgModule({
@@ -219,6 +223,10 @@ import { PredictionTabularDeviceComponent } from './components/dso/prediction/pr
       DeviceYearComponent,
       PredictionTabularProsumerComponent,
       PredictionTabularDeviceComponent,
+      DeviceTodayTabularComponent,
+      DeviceWeekTabularComponent,
+      DeviceMonthTabularComponent,
+      DeviceYearTabularComponent,
     
   ],
   imports: [

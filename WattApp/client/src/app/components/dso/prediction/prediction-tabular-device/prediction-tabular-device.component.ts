@@ -14,52 +14,70 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
 })
 export class PredictionTabularDeviceComponent {
 
-
+  consumptionGraph:boolean = false;
+  productionGraph:boolean = false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
 
-  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
+  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     
   }
 
   ngOnInit(): void {
-  
-    this.deviceService.predictionDevice(Number(this.route.snapshot.paramMap.get('id'))).subscribe((data: WeekByDay[]) =>{
-      this.list1 = data;
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(id).subscribe(data=>{
+      if(data.deviceCategory == "Electricity Consumer")
+      {
+        this.deviceService.predictionDevice(id).subscribe(consumption =>{
+          this.list1 = consumption;
+          this.consumptionGraph = true;
+        })
+        
+      }
+      else{
+        this.deviceService.predictionDevice(id).subscribe(production =>{
+          this.list2 = production;
+          this.productionGraph = true;
+        })
+      }
     })
+    
     
   }
 
   downloadCSV(): void {
-    this.mergedList = [];
-    for (let i = 0; i < this.list1.length; i++) {
-      for (let j = 0; j < this.list2.length; j++) {
-        if (this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
-          this.mergedList.push({
-            day: this.list1[i].day,
-            month: this.list1[i].month,
-            year: this.list1[i].year,
-            consumption: this.list1[i].energyUsageResult,
-            production: this.list2[j].energyUsageResult
-          });
-          break;
-        }
+    const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+    
+    this.authService.getDevice(deviceId).subscribe(data=>{
+      if(data.deviceCategory == "Electricity Consumer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'prediction-consumption-week',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption', 'Production']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list1);
       }
-  }
-  const options = {
-    fieldSeparator: ',',
-    filename: 'consumption/production-week',
-    quoteStrings: '"',
-    useBom : true,
-    decimalSeparator: '.',
-    showLabels: true,
-    useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production']
-  };
-
-  const csvExporter = new ExportToCsv(options);
-  const csvData = csvExporter.generateCsv(this.mergedList);
-
-  }
+      else{
+          const options = {
+          fieldSeparator: ',',
+          filename: 'prediction-production-week',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Month', 'Year', 'Consumption', 'Production']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list2);
+      }
+    })
+    } 
 }
