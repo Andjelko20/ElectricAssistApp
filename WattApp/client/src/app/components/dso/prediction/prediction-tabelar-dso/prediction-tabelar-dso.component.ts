@@ -28,12 +28,16 @@ export class PredictionTabelarDsoComponent {
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
           this.settlements = settlement;
-          if(this.selectedOption != 0){
-            
-            this.selectedOption = this.settlements[(this.settlements.length-this.selectedOption)].id;
-          }
-          else{
+          const selectElement = document.getElementById('dropdown') as HTMLSelectElement
+          const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;
+
+          if (selectedOptionName === 'Total') {
             this.selectedOption = 0;
+          } else {
+            const selectedItem = this.settlements.find(item => item.name === selectedOptionName);
+            if (selectedItem) {
+              this.selectedOption = selectedItem.id;
+            }
           }
         })
         
@@ -77,7 +81,7 @@ export class PredictionTabelarDsoComponent {
   }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-week.csv',
+    filename: 'prediction-week',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',

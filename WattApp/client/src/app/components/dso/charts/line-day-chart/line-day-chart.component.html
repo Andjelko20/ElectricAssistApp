@@ -9,11 +9,12 @@
     </mat-form-field>
     
     
-    <select style="padding: 10px; text-align: center;" id="selekt" [(ngModel)]="selectedOption" (change)="onOptionSelected($event)">
+    <select style="padding: 10px; text-align: center;" id="dropdown" [(ngModel)]="selectedOption" (change)="onOptionSelected($event)">
       <option [value]="0">Total</option>
       <option *ngFor="let item of settlements" [value]="item.id">{{item.name}}</option>
     </select>
-      <canvas  id="linechart">
+      <canvas  id="linechart2">
       </canvas>
-      
+      <canvas  id="linechart1">
+      </canvas>
   </div>

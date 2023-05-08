@@ -122,7 +122,7 @@ export class WeekTabelarProsumerComponent implements OnInit{
   }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-week.csv',
+    filename: 'consumption/production-week',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',

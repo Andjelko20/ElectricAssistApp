@@ -174,7 +174,7 @@
             height: 400px;
         }
         .login-form-wrapper {
-            height: 530px;
+            height: 570px;
             width: 500px;
             background-color: #002e64;
             line-height: none;
@@ -220,7 +220,7 @@
         }
         label {
             margin-left: 32px;
-            font-size: 25px;
+            font-size: 32px;
         }
         .checkbox {
             margin-left: 35px;

@@ -95,7 +95,7 @@ export class TodayTabelarProsumerComponent implements OnInit{
     }
     const options = {
       fieldSeparator: ',',
-      filename: 'consumption/production-day.csv',
+      filename: 'consumption/production-day',
       quoteStrings: '"',
       useBom : true,
       decimalSeparator: '.',

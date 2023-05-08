@@ -90,11 +90,16 @@ export class TabelarViewByWeekComponent implements OnInit {
         this.authService.getCityId(user.city).subscribe(number=>{
           this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
             this.settlements = settlement;
-            if(this.selectedOption != 0){
-              this.selectedOption = this.settlements[(this.selectedOption-1)].id;
-            }
-            else{
+            const selectElement = document.getElementById('dropdown') as HTMLSelectElement
+            const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;
+
+            if (selectedOptionName === 'Total') {
               this.selectedOption = 0;
+            } else {
+              const selectedItem = this.settlements.find(item => item.name === selectedOptionName);
+              if (selectedItem) {
+                this.selectedOption = selectedItem.id;
+              }
             }
           })
           if(this.selectedOption == 0 && (this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
@@ -173,7 +178,7 @@ export class TabelarViewByWeekComponent implements OnInit {
   }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-week.csv',
+    filename: 'consumption/production-week',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',

@@ -112,6 +112,11 @@ export class MapInputComponent {
 			this.searchResultVisible=false;
 			return;
 		}
+		/*
+		this.searchUrl.searchParams.set("country",JSON.parse(this.countryElement.value).name);
+		this.searchUrl.searchParams.set("city",JSON.parse(this.cityElement.value).name);
+		this.searchUrl.searchParams.set("street",this.address);
+		*/
 		this.searchResultVisible=true;
 		this.searchUrl.searchParams.set("q",this.address+","+JSON.parse(this.cityElement.value).name+","+JSON.parse(this.countryElement.value).name);
 		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})

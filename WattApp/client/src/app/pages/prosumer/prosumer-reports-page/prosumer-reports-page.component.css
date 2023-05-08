@@ -10,6 +10,13 @@
     background-color: #bce9e4;
 }
 
+.toggle-containerr {
+    margin: 11px;
+    border-radius: 5px;
+    width: 95%;
+    background-color: #bce9e4;
+}
+
 .row {
     margin: 0;
     width: 100%;
@@ -28,16 +35,6 @@ label {
 
 .con {
     margin-bottom: 55px;
-}
-
-
-/* #dash {
-    padding-right: 2px;
-    border-right: 2px solid black;
-} */
-
-.row {
-    margin-top: 15px;
 }
 
 input {
@@ -59,13 +56,21 @@ input {
 }
 
 .graf {
-    border: 1px solid black;
+    width: 100%;
+}
+
+.graf1 {
+    margin-top: 15px;
     width: 100%;
 }
 
 .table {
     margin-top: 15px;
-    border: 1px solid black;
+    padding: 0;
+}
+
+.history-table-body {
+    margin-left: 0;
     width: 100%;
 }
 
@@ -74,11 +79,26 @@ input {
     justify-content: center;
     align-items: center;
     background-color: #bce9e4;
-    padding: 10px;
+    padding: 7px;
+    border-radius: 10px;
+}
+
+.toggle-containerr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #bce9e4;
+    padding: 7px;
     border-radius: 10px;
 }
 
 .toggle-buttons {
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-buttonss {
     margin-left: 15px;
     display: flex;
     align-items: center;
@@ -111,6 +131,85 @@ input {
     color: gray;
 }
 
+.history-charts-body {
+    margin-top: 15px;
+    width: 100%;
+}
+
+.toggle-buttonss label {
+    display: inline-block;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.toggle-buttonss input[type="radio"] {
+    display: none;
+}
+
+.toggle-buttonss span.divider {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    margin: 0 10px;
+    background-color: gray;
+}
+
+.toggle-buttonss input[type="radio"]:checked+label {
+    font-weight: bold;
+}
+
+.toggle-buttonss input[type="radio"]:not(:checked)+label {
+    color: gray;
+}
+
+.collapsible {
+    background-color: #bce9e4;
+    color: grey;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 9px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+}
+
+#collapsible1 {
+    background-color: #bce9e4;
+    color: grey;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 9px;
+    width: 93%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+}
+
+.active,
+.collapsible:hover {
+    background-color: #bce9e4;
+}
+
+.active,
+#collapsible1:hover {
+    background-color: #bce9e4;
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+button.active {
+    box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+}
+
 @media (min-width: 768px) {
     .main {
         top: 0;
@@ -121,7 +220,7 @@ input {
     .all {
         margin-top: 85px;
         margin-left: 80px;
-        margin-bottom: 50px;
+        margin-bottom: 79px;
         top: 83px;
     }
     input {
@@ -132,7 +231,7 @@ input {
         font-size: 35px;
     }
     .con {
-        margin: 10px;
+        margin: 21px;
         margin-bottom: 0px;
     }
     .card {
@@ -145,8 +244,6 @@ input {
         font-size: 45px;
     }
     .row {
-        width: 100%;
-        margin-top: 15px;
         margin-bottom: 15px;
     }
     .table {
@@ -156,7 +253,50 @@ input {
         margin-left: 23px;
         margin-right: 23px;
     }
+    .toggle-containerr {
+        width: 100%;
+    }
     .toggle-buttons label {
         font-size: 35px;
+    }
+    .toggle-buttonss label {
+        font-size: 35px;
+    }
+    .collapsible {
+        padding: 18px;
+        font-size: 35px;
+    }
+    #collapsible1 {
+        padding: 18px;
+        width: 100%;
+        font-size: 35px;
+    }
+    .active,
+    .collapsible:hover {
+        background-color: #bce9e4;
+    }
+    .active,
+    #collapsible1:hover {
+        background-color: #bce9e4;
+    }
+    .content {
+        padding: 0 140px;
+        display: none;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    #contentng {
+        padding: 0 140px;
+    }
+    .graf {
+        padding: 0;
+    }
+    .graf1 {
+        padding: 0;
+    }
+    .table {
+        padding: 0;
     }
 }

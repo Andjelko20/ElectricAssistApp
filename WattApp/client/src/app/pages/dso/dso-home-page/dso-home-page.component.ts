@@ -83,22 +83,18 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
 
     this.numberOfProsumers = res;
 
-   
-    
-    
-    this.updateService.getCityId(this.updateUserDetail.city).subscribe(id=>{
-      this.avgConsumption.getAverageConsumptionProductionCity(1, id).subscribe(result=>{
-        this.avgProduction = result;
-      })
-    })
-    this.updateService.getCityId(this.updateUserDetail.city).subscribe(id=>{
-      this.avgConsumption.getCurrentConsumptionProductionCity(1, id).subscribe(result=>{
-        this.totalProduction = result;
-      })     
-    })
+    const result = await this.avgConsumption
+      .getAverageConsumptionProductionCity(1, this.idUser)
+      .pipe(first())
+      .toPromise();
 
-    
-    
+    this.avgProduction = result!;
+    const result1 = await this.avgConsumption
+      .getCurrentConsumptionProductionCity(1, this.idUser)
+      .pipe(first())
+      .toPromise();
+
+    this.totalProduction = result1!;
   }
 
   graph:boolean = true;

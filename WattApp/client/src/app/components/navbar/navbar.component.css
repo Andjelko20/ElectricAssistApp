@@ -20,14 +20,9 @@
       font-size: 20px
     }
     #sidebarCollapse:hover {
-      /* color: rgb(48, 98, 204); */
-      color: white;
+      color: rgb(48, 98, 204);
       transition: all 0.2s ease-in-out;
       font-size: 26px
-    }
-    #sidebarCollapse:active {
-      /* color: rgb(48, 98, 204); */
-      color: white;
     }
     .navbar {
       background-color: #354871;
@@ -41,11 +36,6 @@
       margin-right: auto;
       height: 100px;
     }
-    .navbar-brand:hover {
-      color: white;
-      font-size: 25px;
-      transition: all 0.2s ease-in-out;
-    }
     .user {
       margin-top: -10px;
       padding-right: 30px;
@@ -57,9 +47,6 @@
       width: 60px;
     }
     a {
-      color: white;
-    }
-    a.navbar-brand {
       color: white;
     }
     #sidebarCollapse {

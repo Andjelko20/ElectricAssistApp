@@ -3,15 +3,12 @@
     <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
     <mat-hint>YYYY</mat-hint>
     <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-    <mat-datepicker #dp
-                    startView="multi-year"
-                    (yearSelected)="setYear($event, dp)"
-                    panelClass="example-year-picker">
-      <mat-multi-year-view [selected]="date.value" (yearSelected)="dp.close()"></mat-multi-year-view>
-      <mat-year-view [activeDate]="date.value" (yearSelected)="dp.close()"></mat-year-view>
-      <mat-month-view></mat-month-view>
+    <mat-datepicker #dp startView="multi-year" (yearSelected)="setYear($event, dp)" panelClass="example-year-picker">
+        <mat-multi-year-view [selected]="date.value" (yearSelected)="dp.close()"></mat-multi-year-view>
+        <mat-year-view [activeDate]="date.value" (yearSelected)="dp.close()"></mat-year-view>
+        <mat-month-view></mat-month-view>
     </mat-datepicker>
-  </mat-form-field>
+</mat-form-field>
 <div class="chart">
-    <canvas height="490px" width="1500px" id="barplot"></canvas>
+    <canvas min-width="auto" id="barplot"></canvas>
 </div>

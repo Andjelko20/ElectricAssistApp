@@ -33,26 +33,137 @@ export class PredictionProsumerComponent {
       this.list1 = data;
       this.deviceService.predictionUser(this.idProsumer,1).subscribe((data: WeekByDay[]) =>{
         this.list2 = data;
-        this.LineChart();
+        this.LineChartProduction();
+        this.LineChartConsumption();
       })
     })
     
   }
-  LineChart(){
+  LineChartProduction(){
 
-    const chartId = 'linechart';
+    const chartId = 'linechart1';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
+    const month1 = this.list2.map(day => day.day);
+    const Linechart = new Chart("linechart1", {
+      type: 'line',
+      data : {
+        labels: month1,
+        
+        datasets:  [
+          
+          {
+            label: 'production',
+            data: energyUsageResults2,
+            tension:0.5,
+            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+            borderColor: 'rgba(0, 255, 0, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
+            pointBorderColor: 'rgba(0, 255, 0, 1)',
+            pointBorderWidth: 7,
+            pointRadius: 5,
+            pointHoverRadius: 6,
+            fill:true
+          }
+          
+        ]
+        
+      }
+      ,
+      options: {
+        responsive: true,
+        scales:{
+          y: {
+            ticks:{
+              color:'#000',
+              font:{
+                size:15
+              }
+            },
+            position: "left",
+            title:{
+              display:true,
+              text: "kWh",
+              color:'#000',
+              font:{
+                size:15
+              }
+            }
+          }
+          ,
+          x:{
+            ticks:{
+              color:'#000',
+              font:{
+                size:15
+              }
+            },
+            title:{
+              display:true,
+              text: "Days in a week",
+              color:'#000',
+              font:{
+                size:15
+              }
+            }
+          }
+          ,
+        },
+        
+        plugins: {
+          datalabels:{display: false},
+          legend: {
+            position: 'bottom',
+            onHover: function (event, legendItem, legend) {
+              document.body.style.cursor = 'pointer';
+            },
+            onLeave: function (event, legendItem, legend) {
+                document.body.style.cursor = 'default';
+            },
+            labels:{
+              usePointStyle: true,
+              color:'#000',
+              font:{
+                size:20
+              } 
+           
+            }
+            ,
+            align: "center"
+          },
+          title: {
+            display: true,
+            text: 'Production in a week',
+            color:'#000',
+            font:{
+              size:20
+            }
+          }
+        }
+      }
+    });
+
+  }
+  LineChartConsumption(){
+
+    const chartId = 'linechart2';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-
-    const Linechart = new Chart("linechart", {
+    const month2 = this.list1.map(day => day.day);
+    console.log(month2)
+    const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        labels: month2,
         
         datasets:  [
           {
@@ -80,32 +191,19 @@ export class PredictionProsumerComponent {
           borderWidth: 2,
           fill: true
           },
-          {
-            label: 'production',
-            data: energyUsageResults2,
-            tension:0.5,
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-            pointBorderColor: 'rgba(0, 255, 0, 1)',
-            pointBorderWidth: 7,
-            pointRadius: 5,
-            pointHoverRadius: 6,
-            fill:true
-          }
           
         ]
         
       }
       ,
       options: {
+        responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             position: "left",
@@ -114,7 +212,7 @@ export class PredictionProsumerComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
@@ -123,7 +221,7 @@ export class PredictionProsumerComponent {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             },
             title:{
@@ -131,13 +229,13 @@ export class PredictionProsumerComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
           ,
         },
-        responsive: true,
+        
         plugins: {
           datalabels:{display: false},
           legend: {
@@ -161,7 +259,7 @@ export class PredictionProsumerComponent {
           },
           title: {
             display: true,
-            text: ' Consumption and production in a week',
+            text: ' Consumption in a week',
             color:'#000',
             font:{
               size:20
@@ -170,6 +268,5 @@ export class PredictionProsumerComponent {
         }
       }
     });
-
   }
 }

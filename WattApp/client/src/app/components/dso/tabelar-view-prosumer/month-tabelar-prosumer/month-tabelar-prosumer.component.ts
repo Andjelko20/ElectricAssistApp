@@ -113,7 +113,7 @@ export class MonthTabelarProsumerComponent implements OnInit{
   }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-month.csv',
+    filename: 'consumption/production-month',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
