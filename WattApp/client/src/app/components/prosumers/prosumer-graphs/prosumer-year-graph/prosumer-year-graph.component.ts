@@ -130,7 +130,7 @@ export class ProsumerYearGraphComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:13
                 }
               },
               position: "left",
@@ -141,7 +141,7 @@ export class ProsumerYearGraphComponent {
                 text: "kWh",
                 color: '#000',
                 font:{
-                  size:20
+                  size:13
                 }
                 
               }
@@ -151,7 +151,7 @@ export class ProsumerYearGraphComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:13
                 }
                 
               },
@@ -160,40 +160,44 @@ export class ProsumerYearGraphComponent {
                 text: "Months in a Year",
                 color: '#000',
                 font:{
-                  size:20
+                  size:13
                 }
               }
             }
 
           },
+          maintainAspectRatio: false,
           responsive: true,
           plugins: {
             datalabels: {
               display: false
             },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:20
-                } 
-              }
+            legend:{
+              display:false
             },
+            // legend: {
+            //   onHover: function (event, legendItem, legend) {
+            //     document.body.style.cursor = 'pointer';
+            //   },
+            //   onLeave: function (event, legendItem, legend) {
+            //       document.body.style.cursor = 'default';
+            //   },
+              
+            //   position: 'bottom',
+            //   labels: {
+            //     usePointStyle: true,
+            //     color: '#000',
+            //     font:{
+            //       size:13
+            //     } 
+            //   }
+            // },
             title: {
               display: true,
-              text: 'Consumption and production in a year',
+              text: 'Consumption in a year',
               color: '#000',
               font:{
-                size:20
+                size:15
               }
             }
           }

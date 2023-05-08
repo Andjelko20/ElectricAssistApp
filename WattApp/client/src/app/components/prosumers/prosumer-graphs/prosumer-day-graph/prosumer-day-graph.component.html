@@ -1,11 +1,13 @@
-<mat-form-field appearance="fill">
-    <mat-label>Enter a date</mat-label>
-    <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)">
-    <mat-hint>MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
 <div class="chart">
-    <canvas min-width="auto" id="linechart">
+    <mat-form-field appearance="fill">
+        <mat-label>Enter a date</mat-label>
+        <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div class="chart-container">
+        <canvas id="linechart">
     </canvas>
+    </div>
 </div>

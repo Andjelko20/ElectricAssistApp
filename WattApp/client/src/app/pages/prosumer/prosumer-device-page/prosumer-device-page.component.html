@@ -11,22 +11,22 @@
             <div class="history-charts">
                 <div class="toggle-container">
                     <div class="toggle-buttons">
-                      <input type="radio" (click)="showGraph()" name="toggle" id="dashboard-btn" checked >
-                      <label for="dashboard-btn">Graphical view</label>
-                      <span class="divider"></span>
-                      <input type="radio" (click)="showTable()" name="toggle" id="devices-btn">
-                      <label for="devices-btn">Tabelar view</label>
+                        <input type="radio" (click)="showGraph()" name="toggle" id="dashboard-btn" checked>
+                        <label for="dashboard-btn">Graphical view</label>
+                        <span class="divider"></span>
+                        <input type="radio" (click)="showTable()" name="toggle" id="devices-btn">
+                        <label for="devices-btn">Tabelar view</label>
                     </div>
                 </div>
                 <ng-container *ngIf="graph">
                     <div class="chart-body">
                         <div class="chart-buttons">
-                          <button (click)="showComponentGraph()" class="chart-button" [class.active]="compGraph">Day</button>
-                          <button (click)="showComponentGraph1()" class="chart-button"[class.active]="compGraph1">Week</button>
-                          <button (click)="showComponentGraph2()" class="chart-button"[class.active]="compGraph2">Month</button>
-                          <button (click)="showComponentGraph3()" class="chart-button"[class.active]="compGraph3">Year</button>
+                            <button (click)="showComponentGraph()" class="chart-button" [class.active]="compGraph">Day</button>
+                            <button (click)="showComponentGraph1()" class="chart-button" [class.active]="compGraph1">Week</button>
+                            <button (click)="showComponentGraph2()" class="chart-button" [class.active]="compGraph2">Month</button>
+                            <button (click)="showComponentGraph3()" class="chart-button" [class.active]="compGraph3">Year</button>
                         </div>
-                      </div>
+                    </div>
                     <div class="history-charts-body" *ngIf="compGraph">
                         <app-device-today></app-device-today>
                     </div>
@@ -43,14 +43,14 @@
                 <ng-container *ngIf="tabelar">
                     <div class="chart-body">
                         <div class="chart-buttons">
-                          <button (click)="showComponentTable()" class="chart-button">Day</button>
-                          <button (click)="showComponentTable1()" class="chart-button">Week</button>
-                          <button (click)="showComponentTable2()" class="chart-button">Month</button>
-                          <button (click)="showComponentTable3()" class="chart-button">Year</button>
+                            <button (click)="showComponentTable()" class="chart-button">Day</button>
+                            <button (click)="showComponentTable1()" class="chart-button">Week</button>
+                            <button (click)="showComponentTable2()" class="chart-button">Month</button>
+                            <button (click)="showComponentTable3()" class="chart-button">Year</button>
                         </div>
-                      </div>
+                    </div>
                     <div class="history-charts-body" *ngIf="compTable">
-                        <app-device-today-tabular></app-device-today-tabular>>
+                        <app-device-today-tabular></app-device-today-tabular>
                     </div>
                     <div class="history-charts-body" *ngIf="compTable1">
                         <app-device-week-tabular></app-device-week-tabular>
@@ -64,7 +64,7 @@
                 </ng-container>
             </div>
             <div class="contentng-start-inserted">
-                
+
             </div>
 
             <br><br>
