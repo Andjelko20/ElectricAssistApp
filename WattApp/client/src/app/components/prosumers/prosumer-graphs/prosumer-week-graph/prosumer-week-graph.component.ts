@@ -271,6 +271,7 @@ export class ProsumerWeekGraphComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
@@ -309,8 +310,8 @@ export class ProsumerWeekGraphComponent {
           }
           ,
         },
-        maintainAspectRatio: false,
-        responsive: true,
+        
+      
         plugins: {
           datalabels:{display: false},
           legend:{

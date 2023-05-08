@@ -122,7 +122,9 @@ export class ProsumerYearGraphComponent {
           
         },
         options: 
-        {responsive: true,
+        {
+          maintainAspectRatio: false,
+          responsive: true,
           scales:{
             y: {
               ticks:{
@@ -168,8 +170,8 @@ export class ProsumerYearGraphComponent {
             
             
           },
-          maintainAspectRatio: false,
-          responsive: true,
+          
+         
           plugins: {
             datalabels: {
               display: false

@@ -250,6 +250,7 @@ export class ProsumerDayGraphComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
@@ -288,8 +289,8 @@ export class ProsumerDayGraphComponent {
           }
           ,
         },
-        maintainAspectRatio: false,
-        responsive: true,
+       
+      
         plugins: {
           datalabels:{display: false},
           legend:{display:false},

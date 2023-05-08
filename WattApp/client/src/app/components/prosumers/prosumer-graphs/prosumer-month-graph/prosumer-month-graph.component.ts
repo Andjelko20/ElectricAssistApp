@@ -137,7 +137,7 @@ export class ProsumerMonthGraphComponent {
         },
         options: 
         {
-
+          maintainAspectRatio: false,
           responsive: true, // Enable responsiveness
           
           scales:{
@@ -177,8 +177,8 @@ export class ProsumerMonthGraphComponent {
               }
             }
           },
-          maintainAspectRatio: false,
-          responsive: true,
+          
+          
           plugins: {
             datalabels: {
               display: false
