@@ -63,8 +63,10 @@ namespace Server.Services.Implementations
 
         public double GetSettlementDoubleHistoryFromTo(string fromDate, string toDate, long deviceCategoryId, long settlementId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -106,8 +108,10 @@ namespace Server.Services.Implementations
 
         public List<MonthlyEnergyConsumptionLastYear> GetCityHistoryByMonthFromTo(string fromDate, string toDate, long deviceCategoryId, long cityId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -171,8 +175,10 @@ namespace Server.Services.Implementations
 
         public List<DailyEnergyConsumptionPastMonth> GetCityHistoryByDayFromTo(string fromDate, string toDate, long deviceCategoryId, long cityId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -238,8 +244,10 @@ namespace Server.Services.Implementations
 
         public List<MonthlyEnergyConsumptionLastYear> GetSettlementHistoryByMonthFromTo(string fromDate, string toDate, long deviceCategoryId, long settlementId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -302,8 +310,10 @@ namespace Server.Services.Implementations
 
         public List<DailyEnergyConsumptionPastMonth> GetSettlementHistoryByDayFromTo(string fromDate, string toDate, long deviceCategoryId, long settlementId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -368,8 +378,10 @@ namespace Server.Services.Implementations
 
         public List<EnergyToday> GetCityHistoryByHourFromTo(string fromDate, string toDate, long deviceCategoryId, long cityId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -437,8 +449,10 @@ namespace Server.Services.Implementations
 
         public List<EnergyToday> GetSettlementHistoryByHourFromTo(string fromDate, string toDate, long deviceCategoryId, long settlementId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -506,8 +520,10 @@ namespace Server.Services.Implementations
         // PROSUMER
         public List<EnergyToday> GetProsumerHistoryByHourFromTo(string fromDate, string toDate, long userId, long categoryId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -573,8 +589,10 @@ namespace Server.Services.Implementations
 
         public List<MonthlyEnergyConsumptionLastYear> GetProsumerHistoryByMonthFromTo(string fromDate, string toDate, long userId, long categoryId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -636,8 +654,10 @@ namespace Server.Services.Implementations
 
         public List<DailyEnergyConsumptionPastMonth> GetProsumerHistoryByDayFromTo(string fromDate, string toDate, long userId, long categoryId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -704,8 +724,10 @@ namespace Server.Services.Implementations
             if(!_context.Devices.Any(d => d.UserId == userId))
                 return 0.0;
 
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -750,8 +772,10 @@ namespace Server.Services.Implementations
 
         public double GetDeviceDoubleHistoryFromTo(string fromDate, string toDate, long deviceId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -790,8 +814,10 @@ namespace Server.Services.Implementations
 
         public List<MonthlyEnergyConsumptionLastYear> GetDeviceHistoryByMonthFromTo(string fromDate, string toDate, long deviceId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -851,8 +877,10 @@ namespace Server.Services.Implementations
 
         public List<DailyEnergyConsumptionPastMonth> GetDeviceHistoryByDayFromTo(string fromDate, string toDate, long deviceId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
@@ -914,8 +942,10 @@ namespace Server.Services.Implementations
 
         public List<EnergyToday> GetDeviceHistoryByHourFromTo(string fromDate, string toDate, long deviceId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {

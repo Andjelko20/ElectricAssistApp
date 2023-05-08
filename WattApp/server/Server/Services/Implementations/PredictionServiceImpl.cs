@@ -84,7 +84,7 @@ namespace Server.Services.Implementations
                         while (reader.Read())
                         {
                             DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
-                            
+
                             var day = date.Day;
                             var month = date.ToString("MMMM");
                             var year = date.Year;
