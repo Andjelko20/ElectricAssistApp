@@ -46,6 +46,8 @@ export class DeviceMonthComponent {
 
   currentDate = new Date();
   maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
+  consumptionGraph:boolean = false;
+  productionGraph:boolean = false;
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
@@ -77,6 +79,7 @@ export class DeviceMonthComponent {
       
         if(data.deviceCategory == "Electricity Consumer")
         {
+          this.consumptionGraph = true;
           this.deviceService.monthbyDayDevice(deviceId).subscribe(consumption=>{
             this.list1 = consumption;
             this.BarPlotConsumption();
@@ -84,6 +87,7 @@ export class DeviceMonthComponent {
           
         }
         else{
+          this.productionGraph = true;
           this.deviceService.monthbyDayDevice(deviceId).subscribe(production=>{
             this.list2 = production;
             this.BarPlotProduction();
@@ -92,12 +96,14 @@ export class DeviceMonthComponent {
       
     }
     else{
-          const month = this.selectedDate!.getMonth()+1;
-          const year = this.selectedDate!.getFullYear();
-          let string1 = year+'-'+month+'-'+1;
-          let string2 = year+'-'+(month+1)+'-'+1;
+          let month = this.selectedDate!.getMonth()+1;
+          let monthString = String(month).padStart(2, '0');
+          let year = this.selectedDate!.getFullYear();
+          let string1 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
+          monthString = String(month+1).padStart(2, '0');
+          let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-'+1+'-'+1
+            string2 = (year+1)+'-0'+1+'-0'+1
           }
           forkJoin([
             this.deviceService.weekByDayDeviceFilter(string1,string2,deviceId, 2),
@@ -105,10 +111,12 @@ export class DeviceMonthComponent {
           ]).subscribe(([list1, list2]) => {
             if(data.deviceCategory == "Electricity Consumer"){
               this.list1 = list1;
+              this.consumptionGraph = true;
               this.BarPlotConsumption();
             }
             else{
               this.list2 = list2;
+              this.productionGraph = true;
               this.BarPlotProduction();
             }
           });
