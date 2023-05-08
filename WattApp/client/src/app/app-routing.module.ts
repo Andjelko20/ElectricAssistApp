@@ -79,8 +79,8 @@ const routes: Routes = [
 	{path:'prosumer-account-settings-page',component:ProsumerAccountSettingsPageComponent},
 	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
 	//{path:"map-input",component:MapInputComponent},
-	{path:"future",component:TodayComponent},
-	{path:"future",component:FutureComponent},
+	{path:"todaytest",component:TodayComponent},
+	{path:"futuretest",component:FutureComponent},
 	{path:'email-confirmation',component:EmailConfirmationPageComponent},
 	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent},
 	{path:'**',redirectTo:"login"}
