@@ -187,7 +187,7 @@ namespace Server.Controllers
         [Route("Pagination")]
         public async Task<IActionResult> GetHistoryFromDateToDatePagination([FromQuery] int pageNumber, int itemsPerPage, string fromDate, string toDate,
                                                                                         long byHourDeviceId, long deviceCategoryId, long byHourUserId,
-                                                                                        long byHourSettlementId)
+                                                                                        long byHourSettlementId, long byHourCityId)
         {
             if (pageNumber > 0 && itemsPerPage > 0)
             {
@@ -207,12 +207,20 @@ namespace Server.Controllers
                     var result = historyFromToService.GetUserHistoryByHourFromToPagination(fromDate, toDate, byHourUserId, deviceCategoryId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
-                else //if (byHourSettlementId != 0)
+                else if (byHourSettlementId != 0)
                 {
                     if (!_sqliteDb.Settlements.Any(s => s.Id == byHourSettlementId))
                         return NotFound(new { message = "Settlement with ID: " + byHourSettlementId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetSettlementHistoryByHourFromToPagination(fromDate, toDate, byHourSettlementId, deviceCategoryId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+                else //if (byHourCityId != 0)
+                {
+                    if (!_sqliteDb.Cities.Any(c => c.Id == byHourCityId))
+                        return NotFound(new { message = "City with ID: " + byHourCityId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetCityHistoryByHourFromToPagination(fromDate, toDate, byHourCityId, deviceCategoryId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
             }
