@@ -239,6 +239,7 @@ export class LineDayChartComponent {
           datalabels:{display: false},
           legend: {
             position: 'bottom',
+            onClick: function() {},
             onHover: function (event, legendItem, legend) {
               document.body.style.cursor = 'pointer';
             },
@@ -359,6 +360,7 @@ export class LineDayChartComponent {
           datalabels:{display: false},
           legend: {
             position: 'bottom',
+            onClick: function() {},
             onHover: function (event, legendItem, legend) {
               document.body.style.cursor = 'pointer';
             },

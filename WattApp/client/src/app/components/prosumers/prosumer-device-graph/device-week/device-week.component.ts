@@ -220,7 +220,7 @@ export class DeviceWeekComponent {
           },
           title: {
             display: true,
-            text: 'Production in a week',
+            text: 'Production in a week for ',
             color:'#000',
             font:{
               size:20
