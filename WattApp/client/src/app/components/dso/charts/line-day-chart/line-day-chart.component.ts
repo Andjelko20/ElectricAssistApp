@@ -86,6 +86,10 @@ export class LineDayChartComponent {
               string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
               string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
             }
+            else if( month == 6){
+              string1 = year+'-'+month+'-'+day
+              string2 = year+'-'+(month+1)+'-'+1
+            }
             else{
               string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
               dayString = String(day+1).padStart(2, '0');
