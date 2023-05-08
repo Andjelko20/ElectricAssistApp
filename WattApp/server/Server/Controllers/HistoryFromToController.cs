@@ -179,5 +179,26 @@ namespace Server.Controllers
                 return Ok(result);
             }
         }
+
+        /// <summary>
+        /// Histroy - From To
+        /// </summary>
+        [HttpGet]
+        [Route("Pagination")]
+        public async Task<IActionResult> GetHistoryFromDateToDatePagination([FromQuery] int pageNumber, int itemsPerPage, string fromDate, string toDate, long byHourDeviceId)
+        {
+            if (byHourDeviceId != 0)
+            {
+                if (!_sqliteDb.Devices.Any(d => d.Id == byHourDeviceId))
+                    return NotFound(new { message = "Device with ID: " + byHourDeviceId.ToString() + " does not exist." });
+
+                var result = historyFromToService.GetDeviceHistoryByHourFromToPagination(fromDate, toDate, byHourDeviceId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
