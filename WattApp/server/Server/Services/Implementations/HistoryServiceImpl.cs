@@ -1333,6 +1333,12 @@ namespace Server.Services.Implementations
             DateTime fromDate = new DateTime(yearNumber, 1, 1);
             DateTime toDate = new DateTime(yearNumber, 12, 31);
 
+            string fromDateStr = fromDate.ToString("yyyy-MM-dd HH:mm:ss");
+            string toDateStr = toDate.ToString("yyyy-MM-dd HH:mm:ss");
+
+            DateTime.TryParseExact(fromDateStr, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out fromDate);
+            DateTime.TryParseExact(toDateStr, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out toDate);
+
             using (var _connection = _context.Database.GetDbConnection())
             {
                 _connection.Open();
