@@ -186,7 +186,8 @@ namespace Server.Controllers
         [HttpGet]
         [Route("Pagination")]
         public async Task<IActionResult> GetHistoryFromDateToDatePagination([FromQuery] int pageNumber, int itemsPerPage, string fromDate, string toDate,
-                                                                                        long byHourDeviceId, long deviceCategoryId, long byHourUserId)
+                                                                                        long byHourDeviceId, long deviceCategoryId, long byHourUserId,
+                                                                                        long byHourSettlementId)
         {
             if (pageNumber > 0 && itemsPerPage > 0)
             {
@@ -198,12 +199,20 @@ namespace Server.Controllers
                     var result = historyFromToService.GetDeviceHistoryByHourFromToPagination(fromDate, toDate, byHourDeviceId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
-                else // if (byHourUserId != 0)
+                else if (byHourUserId != 0)
                 {
                     if (!_sqliteDb.Users.Any(u => u.Id == byHourUserId))
                         return NotFound(new { message = "User with ID: " + byHourUserId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetUserHistoryByHourFromToPagination(fromDate, toDate, byHourUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+                else //if (byHourSettlementId != 0)
+                {
+                    if (!_sqliteDb.Settlements.Any(s => s.Id == byHourSettlementId))
+                        return NotFound(new { message = "Settlement with ID: " + byHourSettlementId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetSettlementHistoryByHourFromToPagination(fromDate, toDate, byHourSettlementId, deviceCategoryId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
             }
