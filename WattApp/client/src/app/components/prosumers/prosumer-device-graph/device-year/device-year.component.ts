@@ -55,7 +55,8 @@ export class DeviceYearComponent {
     this.ngOnInit();
     });
   }
-
+  consumptionGraph:boolean = false;
+  productionGraph:boolean = false;
   date = new FormControl(moment());
   selectedDate : Date | undefined;
   setYear(year: Moment, datepicker: MatDatepicker<Moment>) {
@@ -72,6 +73,7 @@ export class DeviceYearComponent {
       
         if(data.deviceCategory == "Electricity Consumer")
         {
+          this.consumptionGraph = true;
           this.deviceService.yearByMonthDevice(id).subscribe(consumption =>{
             this.list1 = consumption
             this.BarPlotConsumption();
@@ -79,6 +81,7 @@ export class DeviceYearComponent {
           
         }
         else{
+          this.productionGraph = true;
           this.deviceService.yearByMonthDevice(id).subscribe(production =>{
             this.list2 = production
             this.BarPlotProduction();
@@ -95,10 +98,12 @@ export class DeviceYearComponent {
       ]).subscribe(([list1, list2]) => {
         if(data.deviceCategory == "Electricity Consumer"){
           this.list1 = list1;
+          this.consumptionGraph = true;
           this.BarPlotConsumption();
         }
         else{
           this.list2 = list2;
+          this.productionGraph = true;
           this.BarPlotProduction();
         }
       });

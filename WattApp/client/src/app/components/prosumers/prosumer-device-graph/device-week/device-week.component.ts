@@ -51,11 +51,13 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
 })
 export class DeviceWeekComponent {
 
-  maxDate: Date;
+  currentDate = new Date();
+  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
+  consumptionGraph:boolean = false;
+  productionGraph:boolean = false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
-    this.maxDate = new Date();
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
       this.send = value.end;
@@ -80,6 +82,7 @@ export class DeviceWeekComponent {
       
         if(data.deviceCategory == "Electricity Consumer")
         {
+          this.consumptionGraph = true;
           this.deviceService.weekByDayDevice(id).subscribe(consumption =>{
             this.list1 = consumption;
             this.LineChartConsumption()
@@ -87,6 +90,7 @@ export class DeviceWeekComponent {
           
         }
         else{
+          this.productionGraph = true;
           this.deviceService.weekByDayDevice(id).subscribe(production =>{
             this.list2 = production;
             this.LineChartProduction();
@@ -111,10 +115,12 @@ export class DeviceWeekComponent {
           ]).subscribe(([list1, list2]) => {
             if(data.deviceCategory == "Electricity Consumer"){
               this.list1 = list1;
+              this.consumptionGraph = true;
               this.LineChartConsumption();
             }
             else{
               this.list2 = list2;
+              this.productionGraph = true;
               this.LineChartProduction();
             }
           });

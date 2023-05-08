@@ -13,10 +13,12 @@ Chart.register(...registerables)
   styleUrls: ['./device-today.component.css']
 })
 export class DeviceTodayComponent {
-  maxDate: Date;
 
+  currentDate = new Date();
+  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-1);
+  consumptionGraph:boolean = false;
+  productionGraph:boolean = false;  
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService,private authService:AuthService) {
-    this.maxDate = new Date();
   }
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
@@ -34,6 +36,7 @@ export class DeviceTodayComponent {
       if(this.selectedDate == undefined){
         if(data.deviceCategory == "Electricity Consumer")
         {
+          this.consumptionGraph = true;
           this.deviceService.dayByHourDevice(deviceId).subscribe(consumption=>{
             this.list1 = consumption;
             this.LineChartConsumption();
@@ -41,6 +44,7 @@ export class DeviceTodayComponent {
           
         }
         else{
+          this.productionGraph = true;
           this.deviceService.dayByHourDevice(deviceId).subscribe(production=>{
             this.list2 = production;
             this.LineChartProduction();
@@ -81,10 +85,12 @@ export class DeviceTodayComponent {
         ]).subscribe(([list1, list2]) => {
           if(data.deviceCategory == "Electricity Consumer"){
             this.list1 = list1;
+            this.consumptionGraph = true;
             this.LineChartConsumption();
           }
           else{
             this.list2 = list2;
+            this.productionGraph = true;
             this.LineChartProduction();
           }
         });

@@ -80,7 +80,8 @@ export class ProsumerMonthGraphComponent {
       }).subscribe(({ list1, list2 }) => {
         this.list1 = list1;
         this.list2 = list2;
-        this.BarPlot();
+        this.BarPlotProduction();
+        this.BarPlotConsumption();
       });
     }
     else{
@@ -97,33 +98,30 @@ export class ProsumerMonthGraphComponent {
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.BarPlot();
+            this.BarPlotProduction();
+            this.BarPlotConsumption();
           });
     }
   }
-  BarPlot(){
+  BarPlotProduction(){
     
-    const chartId = 'barplot';
+    const chartId = 'barplot1';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
-    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const Linechart =new Chart("barplot", {
+    const monthbyday = this.list2.map(day => day.day);
+
+    const Linechart =new Chart("barplot1", {
         type: 'bar',
        
         data : {
-          labels: this.itemList,
+          labels: monthbyday,
           
           datasets: [
-            {
-              label: 'Consumption',
-              data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
-            },
             {
               label: 'Production',
               data: energyUsageResults2,
@@ -137,12 +135,15 @@ export class ProsumerMonthGraphComponent {
         },
         options: 
         {
+
+          responsive: true, // Enable responsiveness
+          
           scales:{
             y: {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:15
                 }
               },
               position: "left",
@@ -151,7 +152,7 @@ export class ProsumerMonthGraphComponent {
                 text: "kWh",
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 }
               }
             }
@@ -160,7 +161,7 @@ export class ProsumerMonthGraphComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:15
                 }
                 
               },
@@ -169,17 +170,12 @@ export class ProsumerMonthGraphComponent {
                 text: "Days in a month",
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 }
               }
             }
-            
-              
-            
-            
-            
           },
-          responsive: true,
+         
           plugins: {
             datalabels: {
               display: false
@@ -197,13 +193,121 @@ export class ProsumerMonthGraphComponent {
                 usePointStyle: true,
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
+                } 
+                // ,
+                // boxHeight:100,
+                // boxWidth:100
+              }
+            },
+            title: {
+              display: true,
+              text: 'Production in a month',
+              color: '#000',
+              font:{
+                size:20
+              }
+            }
+          }
+        }
+      });
+  }
+  BarPlotConsumption(){
+    
+    const chartId = 'barplot2';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const monthbyday = this.list1.map(day => day.day);
+
+    const Linechart =new Chart("barplot2", {
+        type: 'bar',
+       
+        data : {
+          labels: monthbyday,
+          
+          datasets: [
+            {
+              label: 'Consumption',
+              data: energyUsageResults1,
+              borderColor: 'rgb(128, 0, 128)',
+              backgroundColor: 'rgb(128, 0, 128)',
+              
+            },
+            
+          ]
+          
+        },
+        options: 
+        {
+
+          responsive: true, // Enable responsiveness
+          
+          scales:{
+            y: {
+              ticks:{
+                color:'#000',
+                font:{
+                  size:15
+                }
+              },
+              position: "left",
+              title:{
+                display:true,
+                text: "kWh",
+                color: '#000',
+                font:{
+                  size:15
+                }
+              }
+            }
+            ,
+            x:{
+              ticks:{
+                color:'#000',
+                font:{
+                  size:15
+                }
+                
+              },
+              title:{
+                display:true,
+                text: "Days in a month",
+                color: '#000',
+                font:{
+                  size:15
+                }
+              }
+            }
+          },
+         
+          plugins: {
+            datalabels: {
+              display: false
+            },
+            legend: {
+              onHover: function (event, legendItem, legend) {
+                document.body.style.cursor = 'pointer';
+              },
+              onLeave: function (event, legendItem, legend) {
+                  document.body.style.cursor = 'default';
+              },
+              
+              position: 'bottom',
+              labels: {
+                usePointStyle: true,
+                color: '#000',
+                font:{
+                  size:15
                 } 
               }
             },
             title: {
               display: true,
-              text: 'Consumption and production in a month',
+              text: 'Consumption in a month',
               color: '#000',
               font:{
                 size:20

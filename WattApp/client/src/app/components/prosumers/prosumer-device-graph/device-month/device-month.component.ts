@@ -46,6 +46,8 @@ export class DeviceMonthComponent {
 
   currentDate = new Date();
   maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
+  consumptionGraph:boolean = false;
+  productionGraph:boolean = false;
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
@@ -77,6 +79,7 @@ export class DeviceMonthComponent {
       
         if(data.deviceCategory == "Electricity Consumer")
         {
+          this.consumptionGraph = true;
           this.deviceService.monthbyDayDevice(deviceId).subscribe(consumption=>{
             this.list1 = consumption;
             this.BarPlotConsumption();
@@ -84,6 +87,7 @@ export class DeviceMonthComponent {
           
         }
         else{
+          this.productionGraph = true;
           this.deviceService.monthbyDayDevice(deviceId).subscribe(production=>{
             this.list2 = production;
             this.BarPlotProduction();
@@ -105,10 +109,12 @@ export class DeviceMonthComponent {
           ]).subscribe(([list1, list2]) => {
             if(data.deviceCategory == "Electricity Consumer"){
               this.list1 = list1;
+              this.consumptionGraph = true;
               this.BarPlotConsumption();
             }
             else{
               this.list2 = list2;
+              this.productionGraph = true;
               this.BarPlotProduction();
             }
           });

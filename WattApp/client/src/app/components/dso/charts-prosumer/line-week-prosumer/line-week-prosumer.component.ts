@@ -50,11 +50,11 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
 })
 export class LineWeekProsumerComponent {
 
-  maxDate: Date;
+  currentDate = new Date();
+  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
-    this.maxDate = new Date();
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
       this.send = value.end;
