@@ -185,19 +185,31 @@ namespace Server.Controllers
         /// </summary>
         [HttpGet]
         [Route("Pagination")]
-        public async Task<IActionResult> GetHistoryFromDateToDatePagination([FromQuery] int pageNumber, int itemsPerPage, string fromDate, string toDate, long byHourDeviceId)
+        public async Task<IActionResult> GetHistoryFromDateToDatePagination([FromQuery] int pageNumber, int itemsPerPage, string fromDate, string toDate,
+                                                                                        long byHourDeviceId, long deviceCategoryId, long byHourUserId)
         {
-            if (byHourDeviceId != 0)
+            if (pageNumber > 0 && itemsPerPage > 0)
             {
-                if (!_sqliteDb.Devices.Any(d => d.Id == byHourDeviceId))
-                    return NotFound(new { message = "Device with ID: " + byHourDeviceId.ToString() + " does not exist." });
+                if (byHourDeviceId != 0)
+                {
+                    if (!_sqliteDb.Devices.Any(d => d.Id == byHourDeviceId))
+                        return NotFound(new { message = "Device with ID: " + byHourDeviceId.ToString() + " does not exist." });
 
-                var result = historyFromToService.GetDeviceHistoryByHourFromToPagination(fromDate, toDate, byHourDeviceId, pageNumber, itemsPerPage);
-                return Ok(result);
+                    var result = historyFromToService.GetDeviceHistoryByHourFromToPagination(fromDate, toDate, byHourDeviceId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+                else // if (byHourUserId != 0)
+                {
+                    if (!_sqliteDb.Users.Any(u => u.Id == byHourUserId))
+                        return NotFound(new { message = "User with ID: " + byHourUserId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetUserHistoryByHourFromToPagination(fromDate, toDate, byHourUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
             }
             else
             {
-                return null;
+                return NotFound(new { message = "Value for pageNumber and itemsPerPage must be greater then 0."});
             }
         }
     }

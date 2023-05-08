@@ -24,5 +24,6 @@ namespace Server.Services
 
         // PAGINACIJA
         public List<EnergyToday> GetDeviceHistoryByHourFromToPagination(string fromDate, string toDate, long deviceId, int pageNumber, int itemsPerPage);
+        public List<EnergyToday> GetUserHistoryByHourFromToPagination(string fromDate, string toDate, long userId, long deviceCategoryId, int pageNumber, int itemsPerPage);
     }
 }
