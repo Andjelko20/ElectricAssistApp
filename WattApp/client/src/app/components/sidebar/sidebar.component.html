@@ -22,24 +22,24 @@
                     <hr class="role-line">
                 </a>
             </li>
-            <li *ngIf="role==admin || role==superadmin" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/dashboard"]'>
-                    <span class="icon-holder"><i class="fas fa-home"></i> </span>
-                    <span class="title">Home</span>
+            <li *ngIf="role == 'admin' || role == 'superadmin'" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link" [routerLink]="['/dashboard']" (click)="clickSidebar($event,'/dashboard')">
+                  <span class="icon-holder"><i class="fas fa-home"></i> </span>
+                  <span class="title">Home</span>
                 </a>
-            </li>
-            <li *ngIf="role==admin || role==superadmin" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/add-user"]'>
-                    <span class="icon-holder"><i class="fas fa-user-plus"></i> </span>
-                    <span class="title" >Add User</span>
+              </li>
+              <li *ngIf="role == 'admin' || role == 'superadmin'" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link" [routerLink]="['/add-user']" (click)="clickSidebar($event,'/add-user') " >
+                  <span class="icon-holder"><i class="fas fa-user-plus"></i> </span>
+                  <span class="title">Add User</span>
                 </a>
-            </li>
-            <li *ngIf="role==admin || role==superadmin" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/profile-admin"]'>
-                <span class="icon-holder"><i class="fa fa-cog"></i></span>
-                <span class="title" >Settings</span>
+              </li>
+              <li *ngIf="role == 'admin' || role == 'superadmin'" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link"  [routerLink]="['/profile-admin']" (click)="clickSidebar($event,'/profile-admin')" >
+                  <span class="icon-holder"><i class="fa fa-cog"></i></span>
+                  <span class="title">Settings</span>
                 </a>
-            </li>
+              </li>
             <li *ngIf="role==dso " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" >
                 
                 <a class="nav-link" [routerLink]='["/dashboard"]' >
@@ -98,4 +98,16 @@
         <app-footer *ngIf="role==dso ||role==admin || role==superadmin"></app-footer>
     </div>
 </div>
-
+<ng-template #modalContent let-modal >
+    <div class="modal-header">
+      <h5 class="modal-title" id="modalTitle" >  Are you sure you want to leave?</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">All of your unsaved changes will be lost. </h5>
+      <div id="subb">
+        <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">Leave</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+      </div>
+    </div>
+  </ng-template>

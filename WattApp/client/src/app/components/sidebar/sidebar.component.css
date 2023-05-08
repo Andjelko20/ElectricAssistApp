@@ -234,7 +234,14 @@ ul ul a {
     background-color:  #354871;
     color: white; 
   }
-
+  #subb{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    text-align: right;
+    align-items: right;
+    
+  }
 @media (min-width: 768px){
     app-footer {
         position: absolute;
@@ -281,7 +288,7 @@ ul ul a {
         min-width: 40px;
         max-width: 80px;
         display: block;
-        
+        border-right: 1px solid #D2D2D2;
     }
     #sidebar.active {
         min-width: 180px;
