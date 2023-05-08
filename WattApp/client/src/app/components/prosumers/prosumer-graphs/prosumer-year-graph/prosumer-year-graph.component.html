@@ -1,3 +1,4 @@
+<div class="chart">
 <mat-form-field appearance="fill">
     <mat-label>Year</mat-label>
     <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
@@ -9,6 +10,11 @@
         <mat-month-view></mat-month-view>
     </mat-datepicker>
 </mat-form-field>
-<div class="chart">
-    <canvas min-width="auto" id="barplot"></canvas>
+
+    <div class="chart-container">
+        <canvas  id="barplot2"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas  id="barplot1"></canvas>
+    </div>
 </div>

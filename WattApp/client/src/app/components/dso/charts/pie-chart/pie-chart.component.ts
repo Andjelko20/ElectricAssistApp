@@ -32,7 +32,6 @@ export class PieChartComponent implements OnInit {
               this.settlementsValue.push(value);
               this.PieChart();
             })
-            
           })
         })
       })

@@ -13,6 +13,6 @@
           <mat-month-view></mat-month-view>
         </mat-datepicker>
       </mat-form-field>
-      <canvas  id="barplot2"></canvas>
-      <canvas  id="barplot1"></canvas>
+      <canvas  id="barplot2" *ngIf="consumptionGraph"></canvas>
+      <canvas  id="barplot1" *ngIf="productionGraph"></canvas>
   </div>

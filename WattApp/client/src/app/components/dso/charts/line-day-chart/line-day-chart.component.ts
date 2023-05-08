@@ -19,7 +19,7 @@ export class LineDayChartComponent {
     this.selectedOption = 0;
   }
   currentDate = new Date();
-  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1,this.currentDate.getDate()-1);
+  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-1);
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
@@ -67,35 +67,45 @@ export class LineDayChartComponent {
             this.LineChartConsumption();
           });
         } 
-        else if(this.selectedOption == 0 && this.selectedDate !== undefined){
+        else if(this.selectedOption == 0 && this.selectedDate != undefined){
           const day = this.selectedDate.getDate();
+          let dayString = String(day).padStart(2, '0');
           const month = this.selectedDate.getMonth()+1;
+          let monthString = String(month).padStart(2, '0');
           const year = this.selectedDate.getFullYear();
           let string1 = '';
           let string2 = '';
           if(month % 2 == 0)
           {
             if(day == 30 || (month == 2 && day == 28)){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
+              string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+              monthString = String(month+1).padStart(2, '0');
+              string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00'
+            }
+            else if( month == 12){
+              string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+              string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
             }
             else if( month == 6){
               string1 = year+'-'+month+'-'+day
               string2 = year+'-'+(month+1)+'-'+1
             }
             else{
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+month+'-'+day+1
+              string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+              dayString = String(day+1).padStart(2, '0');
+              string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
             }
           }
           else{
             if(day == 31){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
+              string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+              monthString = String(month+1).padStart(2, '0');
+              string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00'
             }
             else{
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+month+'-'+(day+1)
+              string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+              dayString = String(day+1).padStart(2, '0');
+              string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
             }
           }
           forkJoin([
@@ -108,36 +118,45 @@ export class LineDayChartComponent {
             this.LineChartConsumption();
           });
         }
-        else if(this.selectedOption != 0 && this.selectedDate !== undefined){
+        else if(this.selectedOption != 0 && this.selectedDate != undefined){
           const day = this.selectedDate.getDate();
+          let dayString = String(day).padStart(2, '0');
           const month = this.selectedDate.getMonth()+1;
+          let monthString = String(month).padStart(2, '0');
           const year = this.selectedDate.getFullYear();
           let string1 = '';
           let string2 = '';
-          if(month % 2 )
+          if(month % 2 == 0)
           {
             if(day == 30 || (month == 2 && day == 28)){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
+              string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+              monthString = String(month+1).padStart(2, '0');
+              string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00'
+            }
+            else if( month == 12){
+              string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+              string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
             }
             else{
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+month+'-'+(day+1)
+              string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+              dayString = String(day+1).padStart(2, '0');
+              string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
             }
           }
-          else if(month % 2 == 1){
-            if(day == 31 || (month == 6 || month == 7) ){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
+          else{
+            if(day == 31){
+              string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+              monthString = String(month+1).padStart(2, '0');
+              string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00'
             }
             else{
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+month+'-'+(day+1)
+              string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+              dayString = String(day+1).padStart(2, '0');
+              string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
             }
           }
-
           forkJoin([
-            this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,2 ),
+            this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,2),
             this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
@@ -239,6 +258,7 @@ export class LineDayChartComponent {
           datalabels:{display: false},
           legend: {
             position: 'bottom',
+            onClick: function() {},
             onHover: function (event, legendItem, legend) {
               document.body.style.cursor = 'pointer';
             },
@@ -359,6 +379,7 @@ export class LineDayChartComponent {
           datalabels:{display: false},
           legend: {
             position: 'bottom',
+            onClick: function() {},
             onHover: function (event, legendItem, legend) {
               document.body.style.cursor = 'pointer';
             },

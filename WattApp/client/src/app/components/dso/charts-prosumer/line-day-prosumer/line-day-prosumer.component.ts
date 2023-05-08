@@ -43,32 +43,41 @@ export class LineDayProsumerComponent{
     }
     else if(this.selectedDate !== undefined){
       const day = this.selectedDate.getDate();
+      let dayString = String(day).padStart(2, '0');
       const month = this.selectedDate.getMonth()+1;
+      let monthString = String(month).padStart(2, '0');
       const year = this.selectedDate.getFullYear();
       let string1 = '';
       let string2 = '';
-      if(month % 2 )
-          {
-            if(day == 30 || (month == 2 && day == 28)){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
-            }
-            else{
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+month+'-'+(day+1)
-            }
-          }
-          else if(month % 2 == 1){
-            if(day == 31 || (month == 6 || month == 7) ){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
-            }
-            else{
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+month+'-'+(day+1)
-            }
-          }
-
+      if(month % 2 == 0)
+      {
+        if(day == 30 || (month == 2 && day == 28)){
+          string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+          monthString = String(month+1).padStart(2, '0');
+          string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00'
+        }
+        else if( month == 12){
+          string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+          string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
+        }
+        else{
+          string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+          dayString = String(day+1).padStart(2, '0');
+          string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+        }
+      }
+      else{
+        if(day == 31){
+          string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+          monthString = String(month+1).padStart(2, '0');
+          string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00'
+        }
+        else{
+          string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+          dayString = String(day+1).padStart(2, '0');
+          string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+        }
+      }
       forkJoin([
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 2),
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 1)

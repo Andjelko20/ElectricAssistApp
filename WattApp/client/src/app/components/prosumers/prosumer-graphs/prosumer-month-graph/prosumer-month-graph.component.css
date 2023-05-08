@@ -1,10 +1,14 @@
-#barplot {
-    color: white;
-    border: 1px solid black;
-}
-
 .chart {
     background-color: white;
     border-radius: 5px;
+    width: 100%;
+}
+
+.chart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    min-height: 30vh;
     width: 100%;
 }

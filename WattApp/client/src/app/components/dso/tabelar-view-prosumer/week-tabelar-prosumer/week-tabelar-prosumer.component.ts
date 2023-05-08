@@ -29,8 +29,8 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
 
   private _createFiveDayRange(date: D | null): DateRange<D> {
     if (date) {
-      const start = this._dateAdapter.addCalendarDays(date, -4);
-      const end = this._dateAdapter.addCalendarDays(date, 3);
+      const start = this._dateAdapter.addCalendarDays(date, 0);
+      const end = this._dateAdapter.addCalendarDays(date, 7);
       return new DateRange<D>(start, end);
     }
 
@@ -49,12 +49,13 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
   ],
 })
 export class WeekTabelarProsumerComponent implements OnInit{
-  maxDate:Date;
+
+  currentDate = new Date();
+  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService,private route:ActivatedRoute) {
-    this.maxDate = new Date();
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
       this.send = value.end;
@@ -88,12 +89,16 @@ export class WeekTabelarProsumerComponent implements OnInit{
     else{
       const day1 = this.sdate.getDate();
           const month1 = this.sdate.getMonth()+1;
+          let dayString1 = String(day1).padStart(2, '0');
+          let monthString1 = String(month1).padStart(2, '0');
           const year1 = this.sdate.getFullYear();
           const day2 = this.send.getDate();
           const month2 = this.send.getMonth()+1;
+          let dayString2 = String(day2).padStart(2, '0');
+          let monthString2 = String(month2).padStart(2, '0');
           const year2 = this.send.getFullYear();
-          let string1 = year1+'-'+month1+'-'+day1;
-          let string2 = year2+'-'+month2+'-'+day2;
+          let string1 = year1+'-'+monthString1+'-'+dayString1+' '+'00:00:00';
+          let string2 = year2+'-'+monthString2+'-'+dayString2+' '+'00:00:00';
 
           forkJoin([
             this.deviceService.weekByDayUserFilter(string1,string2,id, 2),
@@ -128,7 +133,7 @@ export class WeekTabelarProsumerComponent implements OnInit{
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production']
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);
