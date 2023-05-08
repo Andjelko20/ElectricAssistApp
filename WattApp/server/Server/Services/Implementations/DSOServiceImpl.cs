@@ -268,7 +268,7 @@ namespace Server.Services.Implementations
                                             JOIN Users u ON d.UserId = u.Id
                                             JOIN Settlements s ON s.Id = u.SettlementId AND s.CityId = @cityId
                                         WHERE
-                                            deu.StartTime >= datetime('now', 'start of day', 'localtime')
+                                            deu.StartTime >= datetime('now', 'start of day')
                                             AND deu.StartTime <= datetime('now', 'localtime')
                                         GROUP BY
                                             strftime('%H', deu.StartTime),
