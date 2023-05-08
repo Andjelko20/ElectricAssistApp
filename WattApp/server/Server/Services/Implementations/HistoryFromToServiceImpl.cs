@@ -17,8 +17,10 @@ namespace Server.Services.Implementations
 
         public double GetCityDoubleHistoryFromTo(string fromDate, string toDate, long deviceCategoryId, long cityId)
         {
-            DateTime FromDate = DateTime.Parse(fromDate);
-            DateTime ToDate = DateTime.Parse(toDate);
+            DateTime FromDate;
+            DateTime.TryParseExact(fromDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out FromDate);
+            DateTime ToDate;
+            DateTime.TryParseExact(toDate, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out ToDate);
 
             using (var _connection = _context.Database.GetDbConnection())
             {
