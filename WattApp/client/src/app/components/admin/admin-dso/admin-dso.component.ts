@@ -86,8 +86,8 @@ export class AdminDsoComponent implements OnInit {
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
 		this.loading=true;
-		this.usersService.getAllUsers(pageNumber,this.itemsPerPage,this.filters).subscribe(
-			{ next:users => {
+		this.usersService.getAllUsers(pageNumber,this.itemsPerPage,this.filters).subscribe({
+			next:(users:any) => {
 			this.totalItems=users.numberOfPages*this.itemsPerPage;
 			this.showUsers=users.data.map((u:any)=>({
 			  id: u.id,
@@ -108,10 +108,12 @@ export class AdminDsoComponent implements OnInit {
 		   },
 		   error:err=>{
 			this.showUsers=[];
+			this.totalItems=0;
 			setTimeout(()=>{
 				this.loading=false;
 			},0);
-		}});
+			}
+		});
 		}
 
   blockUser(id: number) {
@@ -175,7 +177,7 @@ export class AdminDsoComponent implements OnInit {
           this.usersService.delete(id)
           .subscribe(()=>{
               //this.router.navigate(['/dashboard']);
-              this.usersService.getAllUsers(this.currentPage).subscribe({
+              this.usersService.getAllUsers(this.currentPage,this.itemsPerPage,this.filters).subscribe({
 				next:users => {
                 this.totalItems=users.numberOfPages*this.itemsPerPage;
                   this.showUsers=users.data.map((u:any)=>({
@@ -195,7 +197,7 @@ export class AdminDsoComponent implements OnInit {
 				let page=this.currentPage-1;
 				if(page<=0)
 					page=1;
-				this.usersService.getAllUsers(page).subscribe({next:users => {
+				this.usersService.getAllUsers(page,this.itemsPerPage,this.filters).subscribe({next:users => {
 					this.totalItems=users.numberOfPages*this.itemsPerPage;
 					this.currentPage=page;
 					  this.showUsers=users.data.map((u:any)=>({
@@ -211,9 +213,9 @@ export class AdminDsoComponent implements OnInit {
 						country:u.country
 					  } as ShowUsers));
 			  },error:()=>{
-				this.currentPage=0;
-				this.totalItems=0;
 				this.showUsers=[];
+				this.currentPage=1;
+				this.totalItems=0;
 			  }});
           }
 		});

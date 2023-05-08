@@ -51,8 +51,9 @@ export class AuthService {
 		url.searchParams.set("SettlmentId",filters.settlement);
 	if(filters?.name!==undefined && filters.name.trim()!=='')
 		url.searchParams.set("SearchValue",filters.name);
-	if(filters?.blocked>-1)
-		url.searchParams.set("Blocked",filters.blocked?"true":"false");
+	let blocked=Number(filters?.blocked);
+	if(!isNaN(blocked) && blocked>-1)
+		url.searchParams.set("Blocked",blocked?"true":"false");
 	url.searchParams.set("SortByNameAscending","true");
     return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
