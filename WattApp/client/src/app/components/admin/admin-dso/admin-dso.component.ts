@@ -82,7 +82,15 @@ export class AdminDsoComponent implements OnInit {
 		this.cities=res
   	});
   }
-  
+  isOpen = false;
+
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
+  }
+
+  closeDropdown() {
+    this.isOpen = false;
+  }
   
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;

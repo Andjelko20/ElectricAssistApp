@@ -202,6 +202,55 @@ li a {
 #tableres{
   padding: 15px;
 }
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown .dropdown-toggle {
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropdown .dropdown-toggle:focus {
+  outline: none;
+}
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+
+.dropdown .dropdown-menu .dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
+
+.dropdown .dropdown-menu .dropdown-item:hover,
+.dropdown .dropdown-menu .dropdown-item:focus {
+  background-color: #f5f5f5;
+}
 @media only screen and (min-width: 768px) and (max-width: 1280px) {
     
 

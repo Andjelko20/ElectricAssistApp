@@ -44,13 +44,5 @@ export class NavbarComponent implements OnInit {
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
   }
-  @HostListener('document:click', ['$event'])
-  onClick(event: MouseEvent) {
-    const clickedElement = event.target as HTMLElement;
-    const dropdownElement = this.elementRef.nativeElement;
-    const navbarElement = dropdownElement.querySelector('.dropbtn') as HTMLElement;
-    if (!dropdownElement.contains(clickedElement) || !navbarElement.contains(clickedElement)) {
-      this.showDropdown = false;
-    }
-  }
+  
 }

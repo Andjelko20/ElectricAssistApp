@@ -1,46 +1,68 @@
+    
     <div class="first">
       <div class="header">
         <h3>All Users</h3>
       </div>
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Filters <span class="badge badge-pill">0</span>
+        <button class="dropdown-toggle" type="button" id="filterDropdown" aria-haspopup="true" aria-expanded="false"(click)="toggleDropdown()">
+          Filters
         </button>
         <div class="dropdown-menu" aria-labelledby="filterDropdown">
-          <div class="dropdown-item">
-            <h6>Filter by role</h6>
-            <select name="role" [(ngModel)]="filters.role" (ngModelChange)="pageChanged(1)">
-              <option value="0">All roles</option>
-              <option value="1">Admin</option>
-              <option value="2">Dispatcher</option>
-              <option value="3">Prosumer</option>
-            </select>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="role" id="filterByRole">
+            <label class="form-check-label" for="filterByRole">
+              Filter by role
+            </label>
+            <div class="collapsible">
+              <select name="role" [(ngModel)]="filters.role" (ngModelChange)="pageChanged(1)">
+                <option value="0">All roles</option>
+                <option value="1">Admin</option>
+                <option value="2">Dispatcher</option>
+                <option value="3">Prosumer</option>
+              </select>
+            </div>
           </div>
-          <div class="dropdown-item">
-            <h6>Filter by blocked status</h6>
-            <select name="role" [(ngModel)]="filters.blocked" (ngModelChange)="pageChanged(1)">
-              <option value="-1">Select status</option>
-              <option value="1">Blocked</option>
-              <option value="0">Active</option>
-            </select>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="blocked" id="filterByBlocked">
+            <label class="form-check-label" for="filterByBlocked">
+              Filter by blocked status
+            </label>
+            <div class="collapsible">
+              <select name="role" [(ngModel)]="filters.blocked" (ngModelChange)="pageChanged(1)">
+                <option value="-1">Select status</option>
+                <option value="1">Blocked</option>
+                <option value="0">Active</option>
+              </select>
+            </div>
           </div>
-          <div class="dropdown-item">
-            <h6>Filter by city</h6>
-            <select name="role" [(ngModel)]="filters.city" (ngModelChange)="cityChanged()">
-              <option value="0">All cities</option>
-              <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
-            </select>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="city" id="filterByCity">
+            <label class="form-check-label" for="filterByCity">
+              Filter by city
+            </label>
+            <div class="collapsible">
+              <select name="role" [(ngModel)]="filters.city" (ngModelChange)="cityChanged()">
+                <option value="0">All cities</option>
+                <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
+              </select>
+            </div>
           </div>
-          <div class="dropdown-item">
-            <h6>Filter by settlement</h6>
-            <p *ngIf="filters.city==0" class="settlement-text">Select city first</p>
-            <select name="role" *ngIf="filters.city!=0" [(ngModel)]="filters.settlement" (ngModelChange)="pageChanged(1)">
-              <option value="0">All settlements</option>
-              <option *ngFor="let settlement of settlements" [value]="settlement.id">{{settlement.name}}</option>
-            </select>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="settlement" id="filterBySettlement">
+            <label class="form-check-label" for="filterBySettlement">
+              Filter by settlement
+            </label>
+            <div class="collapsible">
+              <p *ngIf="filters.city==0" class="settlement-text">Select city first</p>
+              <select name="role" *ngIf="filters.city!=0" [(ngModel)]="filters.settlement" (ngModelChange)="pageChanged(1)">
+                <option value="0">All settlements</option>
+                <option *ngFor="let settlement of settlements" [value]="settlement.id">{{settlement.name}}</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
+      
       
 		<!-- <div class="filter">
 			<div class="form-group">
