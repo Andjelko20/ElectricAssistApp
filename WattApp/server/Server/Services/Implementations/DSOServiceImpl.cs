@@ -157,88 +157,73 @@ namespace Server.Services.Implementations
             }
         }
 
-        public List<EnergyToday> CalculateEnergyUsageForToday(long settlementId, long deviceCategoryId)
+        public List<EnergyToday> CalculateSettlementEnergyUsageForToday(long settlementId, long deviceCategoryId)
         {
-            var Result = new List<EnergyToday>();
-            var startDateTime = DateTime.Today;
-            var endDateTime = DateTime.Now;
-
-            // Pronađi sve uređaje iz datog naselja koji pripadaju datoj kategoriji uređaja
-            var deviceIds = _context.Devices
-                .Where(d => d.User.SettlementId == settlementId
-                    && d.DeviceModel.DeviceType.CategoryId == deviceCategoryId)
-                .Select(d => d.Id)
-                .ToList();
-
-            // Pronadji sve zapise potrosnje iz tabele DeviceEnergyUsages za sve uredjaje koji su radili u zadatom vremenskom intervalu
-            var energyUsages = _context.DeviceEnergyUsages
-                .Where(usage => usage.StartTime >= startDateTime && usage.StartTime <= endDateTime
-                    && deviceIds.Contains(usage.DeviceId))
-                .ToList();
-
-            // Sumiraj potrošnju svih uređaja po satu u zadatom vremenskom intervalu
-            for (int hour = 0; hour <= endDateTime.Hour; hour++)
+            using (var _connection = _context.Database.GetDbConnection())
             {
-                var startTime = startDateTime.AddHours(hour);
-                var endTime = startDateTime.AddHours(hour + 1);
-                double energyUsage = 0.0;
-                //var energyUsageResult = energyUsages
-                //    .Where(usage => usage.StartTime < endTime && (usage.EndTime == null || usage.EndTime > startTime))
-                //    .Sum(usage => (endTime - (usage.StartTime < startTime ? startTime : usage.StartTime)).TotalHours * (usage.Device != null ? usage.Device.DeviceModel.EnergyKwh : 0));
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT
+                                            strftime('%H', deu.StartTime) AS Hour,
+                                            strftime('%d', deu.StartTime) AS Day,
+                                            strftime('%m', deu.StartTime) AS Month,
+                                            strftime('%Y', deu.StartTime) AS Year,
+                                            SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', 'localtime')
+                                                                          THEN datetime('now', 'localtime')
+                                                                          ELSE deu.EndTime
+                                                                     END) - strftime('%s', CASE WHEN deu.StartTime < datetime('now', 'start of day')
+                                                                                               THEN datetime('now', 'start of day')
+                                                                                               ELSE deu.StartTime
+                                                                                          END)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM
+                                            DeviceEnergyUsages deu
+                                            JOIN Devices d ON deu.DeviceId = d.Id
+                                            JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                            JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
+                                            JOIN Users u ON d.UserId = u.Id AND u.SettlementId = @settlementId
+                                        WHERE
+                                            deu.StartTime >= datetime('now', 'start of day')
+                                            AND deu.StartTime <= datetime('now', 'localtime')
+                                        GROUP BY
+                                            strftime('%H', deu.StartTime),
+                                            strftime('%d', deu.StartTime),
+                                            strftime('%m', deu.StartTime),
+                                            strftime('%Y', deu.StartTime)";
 
-                foreach (var usage in energyUsages)
+                command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
+                command.Parameters.Add(new SqliteParameter("@settlementId", settlementId));
+
+                var energyUsages = new List<EnergyToday>();
+
+                using (var reader = command.ExecuteReader())
                 {
-                    double energyKwh = _context.DeviceEnergyUsages
-                                        .Join(
-                                            _context.Devices,
-                                            usage => usage.DeviceId,
-                                            device => device.Id,
-                                            (usage, device) => new { Usage = usage, Device = device })
-                                        .Where(joinResult => joinResult.Usage.DeviceId == usage.DeviceId)
-                                        .Select(joinResult => joinResult.Device.DeviceModel.EnergyKwh)
-                                        .FirstOrDefault();
+                    while (reader.Read())
+                    {
+                        DateTimeFormatInfo dateFormatInfo = CultureInfo.CurrentCulture.DateTimeFormat;
+                        string monthName = dateFormatInfo.GetMonthName(int.Parse(reader["Month"].ToString()));
 
-                    DateTime overlapStart;
-                    if (usage.StartTime < startTime)
-                    {
-                        overlapStart = startTime;
-                    }
-                    else
-                    {
-                        overlapStart = usage.StartTime;
-                    }
+                        var hour = int.Parse(reader["Hour"].ToString());
+                        var day = int.Parse(reader["Day"].ToString());
+                        var month = monthName;
+                        var year = int.Parse(reader["Year"].ToString());
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
-                    DateTime overlapEnd;
-                    if (usage.EndTime == null || usage.EndTime > endTime)
-                    {
-                        overlapEnd = endTime;
-                    }
-                    else
-                    {
-                        if (usage.EndTime > DateTime.Now)
-                            overlapEnd = DateTime.Now;
-                        else
-                            overlapEnd = (DateTime)usage.EndTime;
-                    }
+                        var dailyEnergyUsage = new EnergyToday
+                        {
+                            EnergyUsageResult = Math.Round(energyUsage, 2),
+                            Hour = hour,
+                            Day = day,
+                            Month = month,
+                            Year = year
+                        };
 
-                    if (overlapStart < overlapEnd)
-                    {
-                        var durationInHours = (overlapEnd - overlapStart).TotalHours;
-                        energyUsage += durationInHours * energyKwh;
+                        energyUsages.Add(dailyEnergyUsage);
                     }
                 }
 
-                Result.Add(new EnergyToday
-                {
-                    EnergyUsageResult = Math.Round(energyUsage, 2),
-                    Hour = startTime.Hour,
-                    Day = DateTime.Now.Day,
-                    Month = DateTime.Now.ToString("MMMM"),
-                    Year = DateTime.Now.Year
-                });
+                return energyUsages;
             }
-
-            return Result;
         }
 
         public List<EnergyToday> CalculateEnergyUsageForTodayInCity(long cityId, long deviceCategoryId)
@@ -346,6 +331,75 @@ namespace Server.Services.Implementations
                                         LIMIT @itemsPerPage";
 
                 command.Parameters.Add(new SqliteParameter("@cityId", cityId));
+                command.Parameters.Add(new SqliteParameter("@deviceCategoryId", deviceCategoryId));
+                command.Parameters.Add(new SqliteParameter("@skipCount", skipCount));
+                command.Parameters.Add(new SqliteParameter("@itemsPerPage", itemsPerPage));
+
+                var energyUsages = new List<EnergyToday>();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+
+                        var hour = date.Hour;
+                        var day = date.Day;
+                        var month = date.ToString("MMMM");
+                        var year = date.Year;
+                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                        var dailyEnergyUsage = new EnergyToday
+                        {
+                            Hour = hour,
+                            Day = day,
+                            Month = month,
+                            Year = year,
+                            EnergyUsageResult = Math.Round(energyUsage, 2)
+                        };
+
+                        energyUsages.Add(dailyEnergyUsage);
+                    }
+                }
+
+                return energyUsages;
+            }
+        }
+
+        public List<EnergyToday> GetSettlementHistoryTodayByHourPagination(long settlementId, long deviceCategoryId, int pageNumber, int itemsPerPage)
+        {
+            int skipCount = (pageNumber - 1) * itemsPerPage;
+
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT Datum, EnergyUsageKwh
+                                        FROM (
+                                            SELECT
+	                                            strftime('%Y-%m-%d %H:00:00', deu.StartTime) AS Datum,
+	                                            SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', 'localtime')
+								                                              THEN datetime('now', 'localtime')
+                                                                              WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
+								                                              ELSE deu.EndTime
+							                                             END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh,
+                                                ROW_NUMBER() OVER (ORDER BY DATE(deu.StartTime)) AS RowNumber
+                                            FROM
+	                                            DeviceEnergyUsages deu
+	                                            JOIN Devices d ON deu.DeviceId = d.Id
+	                                            JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                                JOIN DeviceTypes dt ON dt.Id = dm.DeviceTypeId AND dt.CategoryId = @deviceCategoryId
+                                                JOIN Users u ON d.UserId = u.Id AND u.SettlementId = @settlementId
+                                            WHERE
+	                                            deu.StartTime >= datetime('now', 'start of day') AND deu.StartTime <= datetime('now', 'localtime')
+                                            GROUP BY
+	                                            strftime('%Y-%m-%d %H:00:00', deu.StartTime)
+                                        ) AS T
+                                        WHERE RowNumber > @skipCount
+                                        LIMIT @itemsPerPage";
+
+                command.Parameters.Add(new SqliteParameter("@settlementId", settlementId));
                 command.Parameters.Add(new SqliteParameter("@deviceCategoryId", deviceCategoryId));
                 command.Parameters.Add(new SqliteParameter("@skipCount", skipCount));
                 command.Parameters.Add(new SqliteParameter("@itemsPerPage", itemsPerPage));
