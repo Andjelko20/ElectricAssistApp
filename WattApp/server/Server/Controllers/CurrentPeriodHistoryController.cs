@@ -77,8 +77,8 @@ namespace Server.Controllers
         public async Task<IActionResult> GetHistoryForProsumerFromCurrentYear([FromQuery] long deviceCategoryId, long dayByHourUserId, long monthByDayUserId, long yearByMonthUserId,
                                                                                           long doubleTodayUserId, long doubleMonthUserId, long doubleYearUserId)
         {
-            if(dayByHourUserId!=0)
-            { 
+            if (dayByHourUserId != 0)
+            {
                 if (!_sqliteDb.Users.Any(u => u.Id == dayByHourUserId))
                     return NotFound(new { message = "User with the ID: " + dayByHourUserId.ToString() + " does not exist." });
 
@@ -91,7 +91,7 @@ namespace Server.Controllers
                 var resultsPastDayByHour = currentPeriodHistoryService.GetUsageHistoryForProsumerFromCurrentDayByHour(dayByHourUserId, deviceCategoryId);
                 return Ok(resultsPastDayByHour);
             }
-            else if(monthByDayUserId != 0)
+            else if (monthByDayUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == monthByDayUserId))
                     return NotFound(new { message = "User with the ID: " + monthByDayUserId.ToString() + " does not exist." });
@@ -105,7 +105,7 @@ namespace Server.Controllers
                 var results = currentPeriodHistoryService.GetUsageHistoryForProsumerFromCurrentMonthByDay(monthByDayUserId, deviceCategoryId);
                 return Ok(results);
             }
-            else if(yearByMonthUserId != 0)
+            else if (yearByMonthUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == yearByMonthUserId))
                     return NotFound(new { message = "User with the ID: " + yearByMonthUserId.ToString() + " does not exist." });
@@ -119,7 +119,7 @@ namespace Server.Controllers
                 var results = currentPeriodHistoryService.GetUsageHistoryForProsumerFromCurrentYearByMonth(yearByMonthUserId, deviceCategoryId);
                 return Ok(results);
             }
-            else if(doubleTodayUserId != 0)
+            else if (doubleTodayUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == doubleTodayUserId))
                     return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not exist." });
@@ -161,6 +161,36 @@ namespace Server.Controllers
                 var results = currentPeriodHistoryService.GetUsageHistoryForProsumerFromCurrentYear(doubleYearUserId, deviceCategoryId);
                 return Ok(results);
             }
+        }
+
+        /// <summary>
+        /// Pagination
+        /// </summary>
+        [HttpGet]
+        [Route("Pagination")]
+        public async Task<IActionResult> GetCurrentHistoryPeriodPagination([FromQuery] int pageNumber, int itemsPerPage, long deviceCategoryId, long dayByHourUserId, long monthByDayUserId, long monthByDayDeviceId)
+        {
+            if (dayByHourUserId != 0)
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == dayByHourUserId))
+                    return NotFound(new { message = "User with the ID: " + dayByHourUserId.ToString() + " does not exist." });
+
+                if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
+                    return NotFound(new { message = "Device category with the ID: " + deviceCategoryId.ToString() + " does not exist." });
+
+                var result = currentPeriodHistoryService.GetProsumerTodayByHourEnergyUsagePagination(dayByHourUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
+            return null;
+
+            /*if (monthByDayDeviceId != 0)
+            {
+                if (!_sqliteDb.Devices.Any(u => u.Id == monthByDayDeviceId))
+                    return NotFound(new { message = "Device with the ID: " + monthByDayDeviceId.ToString() + " does not exist." });
+
+                var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentMonthByDay(monthByDayDeviceId);
+                return Ok(result);
+            }*/
         }
     }
 }

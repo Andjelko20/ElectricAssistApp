@@ -15,5 +15,6 @@ namespace Server.Services
         public double GetUsageHistoryForProsumerFromCurrentDay(long userId, long deviceCategoryId);
         public double GetUsageHistoryForProsumerFromCurrentMonth(long userId, long deviceCategoryId);
         public double GetUsageHistoryForProsumerFromCurrentYear(long userId, long deviceCategoryId);
+        public List<EnergyToday> GetProsumerTodayByHourEnergyUsagePagination(long userId, long deviceCategoryId, int pageNumber, int itemsPerPage);
     }
 }
