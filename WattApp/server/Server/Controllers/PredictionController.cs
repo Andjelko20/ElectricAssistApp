@@ -29,9 +29,6 @@ namespace Server.Controllers
             if (!_sqliteDb.Devices.Any(u => u.Id == deviceId))
                 return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
 
-            if (!_sqliteDb.DeviceEnergyUsages.Any(u => u.DeviceId == deviceId))
-                return Ok(0.0); // njemu je predikcija potrosnje 0 jer nije bio ukljucen nijednom, tj. nije trosio struju
-
             var PredictionForNextWeek = predictionService.ConsumptionPredictionForTheNextWeek(deviceId);
             return Ok(PredictionForNextWeek);
         }
