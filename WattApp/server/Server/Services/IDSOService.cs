@@ -11,5 +11,6 @@ namespace Server.Services
         public double GetUsageHistoryForDeviceInThisYear(long cityId, long deviceCategoryId);
         public List<EnergyToday> CalculateEnergyUsageForToday(long settlementId, long deviceCategoryId);
         public List<EnergyToday> CalculateEnergyUsageForTodayInCity(long cityId, long deviceCategoryId);
+        public List<EnergyToday> GetCityHistoryTodayByHourPagination(long cityId, long deviceCategoryId, int pageNumber, int itemsPerPage);
     }
 }

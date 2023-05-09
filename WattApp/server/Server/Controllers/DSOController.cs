@@ -112,6 +112,30 @@ namespace Server.Controllers
             return BadRequest("Input parameters are empty.");
         }
 
-       
+        /// <summary>
+        /// Pagination for table
+        /// </summary>
+        [HttpGet]
+        [Route("Pagination/")]
+        public async Task<IActionResult> GetCityPagination([FromQuery] int pageNumber, int itemsPerPage, long deviceCategoryId, long todayByHourCityId)
+        {
+            if (pageNumber > 0 && itemsPerPage > 0)
+            {
+                if (todayByHourCityId != 0)
+                {
+                    if (!_sqliteDb.Cities.Any(c => c.Id == todayByHourCityId))
+                        return NotFound(new { message = "City with ID: " + todayByHourCityId.ToString() + " doesnt exist" });
+
+                    if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
+                        return NotFound(new { message = "Device category with ID: " + deviceCategoryId.ToString() + " doesnt exist" });
+
+                    return Ok(dsoService.GetCityHistoryTodayByHourPagination(todayByHourCityId, deviceCategoryId, pageNumber, itemsPerPage));
+                }
+            }
+            else
+                return NotFound(new { message = "Value for pageNumber and itemsPerPage must be greater then 0." });
+
+            return BadRequest("Input parameters are empty.");
+        }
     }
 }
