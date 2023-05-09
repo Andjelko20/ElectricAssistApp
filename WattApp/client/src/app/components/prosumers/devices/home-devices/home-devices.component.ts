@@ -28,7 +28,7 @@ export class HomeDevicesComponent implements OnInit {
 
 
 
-    this.deviceService.getAllDevices(1,12,2).subscribe(devices => {
+    this.deviceService.getAllDevicesNoPaggination().subscribe(devices => {
      this.devices=devices.data.map((u:any)=>({
       id:u.id,
       userId: u.userId,
@@ -49,35 +49,7 @@ export class HomeDevicesComponent implements OnInit {
      }} 
      );
     }
-    onSelectedCategory(event:any)
-    {
-      
-      this.deviceCategoryId = event.target.value;
-      
-      
-      this.deviceService.getAllDevices(1,12,this.deviceCategoryId).subscribe(devices => {
-        this.devices=devices.data.map((u:any)=>({
-         id:u.id,
-         userId: u.userId,
-         deviceCategory:u.deviceCategory,
-         deviceType: u.deviceType ,
-         deviceBrand: u.deviceBrand ,
-         deviceModel: u.deviceModel ,
-         name: u.name ,
-         energyInKwh: u.energyInKwh,
-         standByKwh: u.standByKwh,
-         visibility: u.visibility,
-         controlability: u.controlability,
-         turnOn: u.turnOn,
-        })as ShowDevices)
-       }, error => {
-        if (error.status === 404) {
-          console.log('Devices not found in database');
-       }} 
-       );
-      
-      
-    }
+   
     
 
 }

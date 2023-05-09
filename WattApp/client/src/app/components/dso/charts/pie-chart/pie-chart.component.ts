@@ -28,7 +28,7 @@ export class PieChartComponent implements OnInit {
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
           this.settlements = settlement;
           this.settlements.forEach(settlement =>{
-            this.historyService.getCurrentConsumptionProductionSettlement(2,settlement.id).subscribe(value =>{
+            this.historyService.getCurrentConsumptionProductionSettlement(1,settlement.id).subscribe(value =>{
               this.settlementsValue.push(value);
               this.PieChart();
             })

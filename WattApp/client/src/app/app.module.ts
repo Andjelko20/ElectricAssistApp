@@ -15,7 +15,6 @@ import { AllProsumersComponent } from "./components/dso/all-prosumers/all-prosum
 import { BarChartComponent } from "./components/dso/charts/bar-chart/bar-chart.component";
 import { BarMonthChartComponent } from "./components/dso/charts/bar-month-chart/bar-month-chart.component";
 import { BarYearChartComponent } from "./components/dso/charts/bar-year-chart/bar-year-chart.component";
-import { LineChartComponent } from "./components/dso/charts/line-chart/line-chart.component";
 import { LineDayChartComponent } from "./components/dso/charts/line-day-chart/line-day-chart.component";
 import { LineWeekChartComponent } from "./components/dso/charts/line-week-chart/line-week-chart.component";
 import { PieChartComponent } from "./components/dso/charts/pie-chart/pie-chart.component";
@@ -123,7 +122,6 @@ import { DeviceYearTabularComponent } from './components/prosumers/prosumer-devi
     RegisterComponent,
     ChangePasswordComponent,
     PieChartComponent,
-    LineChartComponent,
     BarChartComponent,
     ProsumerHomePageComponent,
     ProsumerDevicesPageComponent,

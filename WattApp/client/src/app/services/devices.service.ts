@@ -15,6 +15,10 @@ export class DevicesService {
   {
     return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12&categoryId='+categoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
+  getAllDevicesNoPaggination():Observable<any>
+  {
+    return this.http.get<any>(environment.serverUrl+'/api/device',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
   getDevice(id:number):Observable<any>
   {
     return this.http.get<any>(environment.serverUrl+"/api/device/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
