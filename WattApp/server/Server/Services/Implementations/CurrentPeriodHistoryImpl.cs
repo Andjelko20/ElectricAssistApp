@@ -151,7 +151,7 @@ namespace Server.Services.Implementations
             var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
             float EnergyInKwh = DeviceModel.EnergyKwh;
             DateTime StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            DateTime EndDate = StartDate.AddMonths(1).AddDays(-1).Date.AddDays(1).AddSeconds(-1);
+            DateTime EndDate = DateTime.Now;
 
             var UsageList = _context.DeviceEnergyUsages
                             .Where(u => u.DeviceId == deviceId && u.StartTime >= StartDate && u.EndTime <= EndDate)

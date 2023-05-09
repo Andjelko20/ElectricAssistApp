@@ -200,15 +200,6 @@ namespace Server.Controllers
                 var result = currentPeriodHistoryService.GetDeviceMonthByDayEnergyUsagePagination(monthByDayDeviceId, pageNumber, itemsPerPage);
                 return Ok(result);
             }
-
-            /*if (monthByDayDeviceId != 0)
-            {
-                if (!_sqliteDb.Devices.Any(u => u.Id == monthByDayDeviceId))
-                    return NotFound(new { message = "Device with the ID: " + monthByDayDeviceId.ToString() + " does not exist." });
-
-                var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentMonthByDay(monthByDayDeviceId);
-                return Ok(result);
-            }*/
         }
     }
 }
