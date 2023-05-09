@@ -123,6 +123,14 @@ input {
     background-color: gray;
 }
 
+.toggle-buttonss span.divider {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    margin: 0 10px;
+    background-color: gray;
+}
+
 .toggle-buttons input[type="radio"]:checked+label {
     font-weight: bold;
 }
@@ -132,7 +140,6 @@ input {
 }
 
 .history-charts-body {
-    margin-top: 15px;
     width: 100%;
 }
 
@@ -200,7 +207,6 @@ input {
 }
 
 .content {
-    padding: 0 18px;
     display: none;
     overflow: hidden;
     background-color: #f1f1f1;

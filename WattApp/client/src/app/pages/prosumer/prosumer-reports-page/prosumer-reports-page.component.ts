@@ -8,6 +8,7 @@ import { Component, ElementRef, ViewChildren, QueryList, ViewChild} from '@angul
 export class ProsumerReportsPageComponent {
   
   @ViewChildren('collapsibleButton') collapsibleButtons!: QueryList<ElementRef>;
+  @ViewChildren('collapsibleButton1') collapsibleButtons1!: QueryList<ElementRef>;
   dashboard:boolean = true;
   devices:boolean = false;
   day:boolean = true;
@@ -87,7 +88,7 @@ export class ProsumerReportsPageComponent {
     this.yearTable = true;
   }
   ngAfterViewInit() {
-    this.collapsibleButtons.forEach(button => {
+    this.collapsibleButtons1.forEach(button => {
       button.nativeElement.addEventListener('click', () => {
         button.nativeElement.classList.toggle('active');
         const content = button.nativeElement.nextElementSibling;

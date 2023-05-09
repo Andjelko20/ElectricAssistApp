@@ -130,13 +130,14 @@ export class ProsumerDayGraphComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -145,7 +146,7 @@ export class ProsumerDayGraphComponent {
               text: " kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -154,7 +155,7 @@ export class ProsumerDayGraphComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -162,7 +163,7 @@ export class ProsumerDayGraphComponent {
               text: "Hours in a day",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -171,32 +172,35 @@ export class ProsumerDayGraphComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend:{
+            display:false
           },
+          // legend: {
+          //   position: 'bottom',
+          //   onHover: function (event, legendItem, legend) {
+          //     document.body.style.cursor = 'pointer';
+          //   },
+          //   onLeave: function (event, legendItem, legend) {
+          //       document.body.style.cursor = 'default';
+          //   },
+          //   labels:{
+          //     usePointStyle: true,
+          //     color:'#000',
+          //     font:{
+          //       size:13
+          //     } 
+           
+          //   }
+          //   ,
+          //   align: "center"
+          // },
           title: {
             
             display: true,
             text: 'Production in one day',
             color: '#000',
             font:{
-              size:20
+              size:15
             }
           }
         }

@@ -12,14 +12,12 @@
             </div>
         </div>
         <div class="con" *ngIf="dashboard">
-
             <div class="row">
                 <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Consumption this month</h5>
                             <p class="card-text">9.24 kWh </p>
-
                         </div>
                     </div>
                 </div>
@@ -28,7 +26,6 @@
                         <div class="card-body">
                             <h5 class="card-title">Production this month</h5>
                             <p class="card-text">9.24 kWh </p>
-
                         </div>
                     </div>
                 </div>
@@ -47,10 +44,9 @@
                         <label for="year-btn">Year</label>
                     </div>
                 </div>
-
                 <div class="graf">
-                    <button type="button" class="collapsible dropdown-toggle " #collapsibleButton>Consumption</button>
-                    <div class="contentng-start-inserted" id="contentng">
+                    <button type="button" class="collapsible dropdown-toggle " #collapsibleButton1>Consumption</button>
+                    <div class="content">
                         <div class="history-charts-body" *ngIf="day">
                             <app-prosumer-day-graph></app-prosumer-day-graph>
                         </div>
@@ -66,7 +62,7 @@
                     </div>
                 </div>
                 <div class="graf1">
-                    <button type="button" class="collapsible dropdown-toggle " #collapsibleButton>Prodaction</button>
+                    <button type="button" class="collapsible dropdown-toggle " #collapsibleButton1>Prodaction</button>
                     <div class="content">
                         <!-- <div class="history-charts-body" *ngIf="day">
                             <app-prosumer-day-graph></app-prosumer-day-graph>
@@ -83,7 +79,7 @@
                     </div>
                 </div>
                 <div class="table">
-                    <button type="button" class="collapsible dropdown-toggle " id="collapsible1" #collapsibleButton>Table of production/consumption</button>
+                    <button type="button" class="collapsible dropdown-toggle " id="collapsible1" #collapsibleButton1>Table of production/consumption</button>
                     <div class="content1">
                         <div class="history-table-body" *ngIf="dayTable">
                             <app-prosumer-day-table></app-prosumer-day-table>
@@ -123,20 +119,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="graf">
-                    <button type="button" class="collapsible dropdown-toggle " id="collapsible" #collapsibleButton>Graph view</button>
-                    <div class="contentng-start-inserted" id="contentng">
-                        <app-prediction-prosumer></app-prediction-prosumer>
-                    </div>
-                    <button type="button" class="collapsible dropdown-toggle " id="collapsible" #collapsibleButton>Tabular view</button>
-                    <div class="content">
-                        <app-prediction-tabular-prosumer></app-prediction-tabular-prosumer>
-                    </div>
+                <button type="button" class="collapsible dropdown-toggle " id="collapsible" #collapsibleButton1>Graph view</button>
+                <div class="content1">
+                    <app-prediction-prosumer></app-prediction-prosumer>
                 </div>
+                <button type="button" class="collapsible dropdown-toggle " id="collapsible" #collapsibleButton1>Tabular view</button>
+                <div class="content1">
+                    <app-prediction-tabular-prosumer></app-prediction-tabular-prosumer>
+                </div>
+            </div>
         </div>
         <app-footer></app-footer>
         <app-prosumer-footer></app-prosumer-footer>
-
     </div>
-
 </div>

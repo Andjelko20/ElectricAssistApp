@@ -151,13 +151,14 @@ export class ProsumerWeekGraphComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -166,7 +167,7 @@ export class ProsumerWeekGraphComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -175,7 +176,7 @@ export class ProsumerWeekGraphComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -183,7 +184,7 @@ export class ProsumerWeekGraphComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -192,31 +193,34 @@ export class ProsumerWeekGraphComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend:{
+            display:false
           },
+          // legend: {
+          //   position: 'bottom',
+          //   onHover: function (event, legendItem, legend) {
+          //     document.body.style.cursor = 'pointer';
+          //   },
+          //   onLeave: function (event, legendItem, legend) {
+          //       document.body.style.cursor = 'default';
+          //   },
+          //   labels:{
+          //     usePointStyle: true,
+          //     color:'#000',
+          //     font:{
+          //       size:13
+          //     } 
+           
+          //   }
+          //   ,
+          //   align: "center"
+          // },
           title: {
             display: true,
             text: 'Production in a week',
             color:'#000',
             font:{
-              size:20
+              size:15
             }
           }
         }

@@ -183,32 +183,35 @@ export class ProsumerMonthGraphComponent {
             datalabels: {
               display: false
             },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:15
-                } 
-                // ,
-                // boxHeight:100,
-                // boxWidth:100
-              }
+            legend:{
+              display:false
             },
+            // legend: {
+            //   onHover: function (event, legendItem, legend) {
+            //     document.body.style.cursor = 'pointer';
+            //   },
+            //   onLeave: function (event, legendItem, legend) {
+            //       document.body.style.cursor = 'default';
+            //   },
+              
+            //   position: 'bottom',
+            //   labels: {
+            //     usePointStyle: true,
+            //     color: '#000',
+            //     font:{
+            //       size:15
+            //     } 
+            //     // ,
+            //     // boxHeight:100,
+            //     // boxWidth:100
+            //   }
+            // },
             title: {
               display: true,
               text: 'Production in a month',
               color: '#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
@@ -246,7 +249,7 @@ export class ProsumerMonthGraphComponent {
         },
         options: 
         {
-
+          maintainAspectRatio: false,
           responsive: true, // Enable responsiveness
           
           scales:{
@@ -254,7 +257,7 @@ export class ProsumerMonthGraphComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:15
+                  size:13
                 }
               },
               position: "left",
@@ -263,7 +266,7 @@ export class ProsumerMonthGraphComponent {
                 text: "kWh",
                 color: '#000',
                 font:{
-                  size:15
+                  size:13
                 }
               }
             }
@@ -272,7 +275,7 @@ export class ProsumerMonthGraphComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:15
+                  size:13
                 }
                 
               },
@@ -281,7 +284,7 @@ export class ProsumerMonthGraphComponent {
                 text: "Days in a month",
                 color: '#000',
                 font:{
-                  size:15
+                  size:13
                 }
               }
             }
@@ -291,23 +294,26 @@ export class ProsumerMonthGraphComponent {
             datalabels: {
               display: false
             },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:15
-                } 
-              }
+            legend:{
+              display:false
             },
+            // legend: {
+            //   onHover: function (event, legendItem, legend) {
+            //     document.body.style.cursor = 'pointer';
+            //   },
+            //   onLeave: function (event, legendItem, legend) {
+            //       document.body.style.cursor = 'default';
+            //   },
+              
+            //   position: 'bottom',
+            //   labels: {
+            //     usePointStyle: true,
+            //     color: '#000',
+            //     font:{
+            //       size:13
+            //     } 
+            //   }
+            // },
             // legend: {
             //   onHover: function (event, legendItem, legend) {
             //     document.body.style.cursor = 'pointer';
