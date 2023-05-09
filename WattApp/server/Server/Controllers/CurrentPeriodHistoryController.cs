@@ -181,7 +181,25 @@ namespace Server.Controllers
                 var result = currentPeriodHistoryService.GetProsumerTodayByHourEnergyUsagePagination(dayByHourUserId, deviceCategoryId, pageNumber, itemsPerPage);
                 return Ok(result);
             }
-            return null;
+            else if(monthByDayUserId != 0)
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == monthByDayUserId))
+                    return NotFound(new { message = "User with the ID: " + monthByDayUserId.ToString() + " does not exist." });
+
+                if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
+                    return NotFound(new { message = "Device category with the ID: " + deviceCategoryId.ToString() + " does not exist." });
+
+                var result = currentPeriodHistoryService.GetProsumerMonthByDayEnergyUsagePagination(monthByDayUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
+            else //if (monthByDayDeviceId != 0)
+            {
+                if (!_sqliteDb.Devices.Any(d => d.Id == monthByDayDeviceId))
+                    return NotFound(new { message = "Device with the ID: " + monthByDayDeviceId.ToString() + " does not exist." });
+
+                var result = currentPeriodHistoryService.GetDeviceMonthByDayEnergyUsagePagination(monthByDayDeviceId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
 
             /*if (monthByDayDeviceId != 0)
             {
