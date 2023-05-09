@@ -114,6 +114,10 @@ import { DeviceTodayTabularComponent } from './components/prosumers/prosumer-dev
 import { DeviceWeekTabularComponent } from './components/prosumers/prosumer-device-tabular/device-week-tabular/device-week-tabular.component';
 import { DeviceMonthTabularComponent } from './components/prosumers/prosumer-device-tabular/device-month-tabular/device-month-tabular.component';
 import { DeviceYearTabularComponent } from './components/prosumers/prosumer-device-tabular/device-year-tabular/device-year-tabular.component';
+import { ProsumerDayProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-day-production/prosumer-day-production.component';
+import { ProsumerWeekProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-week-production/prosumer-week-production.component';
+import { ProsumerMonthProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-month-production/prosumer-month-production.component';
+import { ProsumerYearProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-year-production/prosumer-year-production.component';
 
 
 @NgModule({
@@ -227,6 +231,10 @@ import { DeviceYearTabularComponent } from './components/prosumers/prosumer-devi
       DeviceWeekTabularComponent,
       DeviceMonthTabularComponent,
       DeviceYearTabularComponent,
+      ProsumerDayProductionComponent,
+      ProsumerWeekProductionComponent,
+      ProsumerMonthProductionComponent,
+      ProsumerYearProductionComponent,
     
   ],
   imports: [

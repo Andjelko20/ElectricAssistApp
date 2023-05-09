@@ -29,9 +29,9 @@ export const MY_FORMATS = {
   },
 };
 @Component({
-  selector: 'app-prosumer-month-graph',
-  templateUrl: './prosumer-month-graph.component.html',
-  styleUrls: ['./prosumer-month-graph.component.css'],
+  selector: 'app-prosumer-month-production',
+  templateUrl: './prosumer-month-production.component.html',
+  styleUrls: ['./prosumer-month-production.component.css'],
   providers: [
     {
       provide: DateAdapter,
@@ -42,8 +42,7 @@ export const MY_FORMATS = {
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
 })
-export class ProsumerMonthGraphComponent {
-
+export class ProsumerMonthProductionComponent {
   currentDate = new Date();
   maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
@@ -75,10 +74,11 @@ export class ProsumerMonthGraphComponent {
     const userId = token.data.id as number;
     if(this.selectedDate == undefined){
       forkJoin({
-        list1: this.deviceService.monthByDayUser(userId, 2),
-      }).subscribe(({ list1 }) => {
-        this.list1 = list1;
-        this.BarPlotConsumption();
+        list2: this.deviceService.monthByDayUser(userId, 1)
+      }).subscribe(({  list2 }) => {
+
+        this.list2 = list2;
+        this.BarPlotProduction();
       });
     }
     else{
@@ -92,26 +92,26 @@ export class ProsumerMonthGraphComponent {
             string2 = (year+1)+'-0'+1+'-0'+1
           }
           forkJoin([
-            this.deviceService.weekByDayUserFilter(string1,string2,userId, 2),
-          ]).subscribe(([list1]) => {
-            this.list1 = list1;
-            this.BarPlotConsumption();
+            this.deviceService.weekByDayUserFilter(string1,string2,userId, 1)
+          ]).subscribe(([list2]) => {
+            this.list2 = list2;
+            this.BarPlotProduction();
           });
     }
   }
-
-  BarPlotConsumption(){
+  BarPlotProduction(){
     
-    const chartId = 'barplot2';
+    const chartId = 'barplot1';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
-    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const monthbyday = this.list1.map(day => day.day);
 
-    const Linechart =new Chart("barplot2", {
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
+    const monthbyday = this.list2.map(day => day.day);
+
+    const Linechart =new Chart("barplot1", {
         type: 'bar',
        
         data : {
@@ -119,12 +119,12 @@ export class ProsumerMonthGraphComponent {
           
           datasets: [
             {
-              label: 'Consumption',
-              data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
-              
+              label: 'Production',
+              data: energyUsageResults2,
+              borderColor: 'rgb(255, 165, 0)',
+              backgroundColor: 'rgb(255, 165, 0)'
             },
+           
             
           ]
           
@@ -171,7 +171,8 @@ export class ProsumerMonthGraphComponent {
               }
             }
           },
-         
+          
+          
           plugins: {
             datalabels: {
               display: false
@@ -192,30 +193,16 @@ export class ProsumerMonthGraphComponent {
             //     usePointStyle: true,
             //     color: '#000',
             //     font:{
-            //       size:13
+            //       size:15
             //     } 
-            //   }
-            // },
-            // legend: {
-            //   onHover: function (event, legendItem, legend) {
-            //     document.body.style.cursor = 'pointer';
-            //   },
-            //   onLeave: function (event, legendItem, legend) {
-            //       document.body.style.cursor = 'default';
-            //   },
-              
-            //   position: 'bottom',
-            //   labels: {
-            //     usePointStyle: true,
-            //     color: '#000',
-            //     font:{
-            //       size:13
-            //     } 
+            //     // ,
+            //     // boxHeight:100,
+            //     // boxWidth:100
             //   }
             // },
             title: {
               display: true,
-              text: 'Consumption in a month',
+              text: 'Production in a month',
               color: '#000',
               font:{
                 size:15
@@ -225,4 +212,7 @@ export class ProsumerMonthGraphComponent {
         }
       });
   }
+
+
+
 }

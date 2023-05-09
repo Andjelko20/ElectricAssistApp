@@ -1,4 +1,4 @@
-.chart {
+.chart canvas {
     background-color: white;
     border-radius: 5px;
     width: 100%;
@@ -10,6 +10,6 @@
     align-items: center;
     justify-content: center;
     background-color: white;
-    min-height: 30vh;
+    min-height: 40vh;
     width: 100%;
 }

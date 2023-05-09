@@ -13,7 +13,7 @@
         </div>
         <div class="con" *ngIf="dashboard">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Consumption this month</h5>
@@ -21,7 +21,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Production this month</h5>
+                            <p class="card-text">9.24 kWh </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Production this month</h5>
+                            <p class="card-text">9.24 kWh </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Production this month</h5>
@@ -45,52 +61,52 @@
                     </div>
                 </div>
                 <div class="graf">
-                    <button type="button" class="collapsible dropdown-toggle " #collapsibleButton1>Consumption</button>
+                    <button type="button" class="collapsible dropdown-toggle active" #collapsibleButton1>Consumption</button>
                     <div class="content">
-                        <div class="history-charts-body" *ngIf="day">
+                        <div class=" history-charts-body " *ngIf="day ">
                             <app-prosumer-day-graph></app-prosumer-day-graph>
                         </div>
-                        <div class="history-charts-body" *ngIf="week">
+                        <div class="history-charts-body " *ngIf="week ">
                             <app-prosumer-week-graph></app-prosumer-week-graph>
                         </div>
-                        <div class="history-charts-body" *ngIf="month">
+                        <div class="history-charts-body " *ngIf="month ">
                             <app-prosumer-month-graph></app-prosumer-month-graph>
                         </div>
-                        <div class="history-charts-body" *ngIf="year">
+                        <div class="history-charts-body " *ngIf="year ">
                             <app-prosumer-year-graph></app-prosumer-year-graph>
                         </div>
                     </div>
                 </div>
-                <div class="graf1">
-                    <button type="button" class="collapsible dropdown-toggle " #collapsibleButton1>Prodaction</button>
-                    <div class="content">
-                        <!-- <div class="history-charts-body" *ngIf="day">
+                <div class="graf1 ">
+                    <button type="button " class="collapsible dropdown-toggle " #collapsibleButton2>Prodaction</button>
+                    <div class="content ">
+                        <!-- <div class="history-charts-body " *ngIf="day ">
                             <app-prosumer-day-graph></app-prosumer-day-graph>
                         </div>
-                        <div class="history-charts-body" *ngIf="week">
+                        <div class="history-charts-body " *ngIf="week ">
                             <app-prosumer-week-graph></app-prosumer-week-graph>
                         </div>
-                        <div class="history-charts-body" *ngIf="month">
+                        <div class="history-charts-body " *ngIf="month ">
                             <app-prosumer-month-graph></app-prosumer-month-graph>
                         </div>
-                        <div class="history-charts-body" *ngIf="year">
+                        <div class="history-charts-body " *ngIf="year ">
                             <app-prosumer-year-graph></app-prosumer-year-graph>
                         </div> -->
                     </div>
                 </div>
-                <div class="table">
-                    <button type="button" class="collapsible dropdown-toggle " id="collapsible1" #collapsibleButton1>Table of production/consumption</button>
-                    <div class="content1">
-                        <div class="history-table-body" *ngIf="dayTable">
+                <div class="table ">
+                    <button type="button " class="collapsible1 dropdown-toggle " #collapsibleButton3>Table of production/consumption</button>
+                    <div class="content1 ">
+                        <div class="history-table-body " *ngIf="dayTable ">
                             <app-prosumer-day-table></app-prosumer-day-table>
                         </div>
-                        <div class="history-table-body" *ngIf="weekTable">
+                        <div class="history-table-body " *ngIf="weekTable ">
                             <app-prosumer-week-table></app-prosumer-week-table>
                         </div>
-                        <div class="history-table-body" *ngIf="monthTable">
+                        <div class="history-table-body " *ngIf="monthTable ">
                             <app-prosumer-month-table></app-prosumer-month-table>
                         </div>
-                        <div class="history-table-body" *ngIf="yearTable">
+                        <div class="history-table-body " *ngIf="yearTable ">
                             <app-prosumer-year-table></app-prosumer-year-table>
                         </div>
                     </div>
@@ -98,38 +114,41 @@
             </div>
         </div>
 
-        <div class="con" *ngIf="devices">
+        <div class="con " *ngIf="devices ">
 
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Consumption next 7 days</h5>
-                            <p class="card-text">9.24 kWh </p>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Prediction next 7 days</h5>
-                            <p class="card-text">9.24 kWh </p>
+            <div class="row ">
+                <!-- <div class="col">
+                    <div class="card ">
+                        <div class="card-body ">
+                            <h5 class="card-title ">Consumption next 7 days</h5>
+                            <p class="card-text ">9.24 kWh </p>
 
                         </div>
                     </div>
                 </div>
-                <button type="button" class="collapsible dropdown-toggle " id="collapsible" #collapsibleButton1>Graph view</button>
-                <div class="content1">
-                    <app-prediction-prosumer></app-prediction-prosumer>
+                <div class="col">
+                    <div class="card ">
+                        <div class="card-body ">
+                            <h5 class="card-title ">Prediction next 7 days</h5>
+                            <p class="card-text ">9.24 kWh </p>
+
+                        </div>
+                    </div>
                 </div>
-                <button type="button" class="collapsible dropdown-toggle " id="collapsible" #collapsibleButton1>Tabular view</button>
-                <div class="content1">
-                    <app-prediction-tabular-prosumer></app-prediction-tabular-prosumer>
-                </div>
+                <div class="predictiontabelandgrapf">
+                    <button type="button " class="collapsible2 dropdown-toggle active" id="collapsible2 " #collapsibleButton1>Graph view</button>
+                    <div class="content2">
+                        <app-prediction-prosumer></app-prediction-prosumer>
+                    </div>
+                    <button type="button " class="collapsible2 dropdown-toggle " id="collapsible2 " #collapsibleButton2>Tabular view</button>
+                    <div class="content2">
+                        <app-prediction-tabular-prosumer></app-prediction-tabular-prosumer>
+                    </div>
+                </div> -->
             </div>
         </div>
-        <app-footer></app-footer>
-        <app-prosumer-footer></app-prosumer-footer>
+
     </div>
+    <app-footer></app-footer>
+    <app-prosumer-footer></app-prosumer-footer>
 </div>

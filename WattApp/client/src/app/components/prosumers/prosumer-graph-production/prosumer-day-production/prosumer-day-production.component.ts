@@ -7,12 +7,12 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
 import { JwtToken } from 'src/app/utilities/jwt-token';
 Chart.register(...registerables)
 @Component({
-  selector: 'app-prosumer-day-graph',
-  templateUrl: './prosumer-day-graph.component.html',
-  styleUrls: ['./prosumer-day-graph.component.css']
+  selector: 'app-prosumer-day-production',
+  templateUrl: './prosumer-day-production.component.html',
+  styleUrls: ['./prosumer-day-production.component.css']
 })
-export class ProsumerDayGraphComponent {
-  
+export class ProsumerDayProductionComponent {
+ 
   maxDate = new Date();
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     
@@ -33,11 +33,10 @@ export class ProsumerDayGraphComponent {
   
     if(this.selectedDate == undefined){
       combineLatest([
-        this.deviceService.dayByHourUser(userId, 2),
-      ]).subscribe(([list1]) => {
-
-        this.list1 = list1;
-        this.LineChartConsumption();
+        this.deviceService.dayByHourUser(userId, 1)
+      ]).subscribe(([list2]) => {
+        this.list2 = list2;
+        this.LineChartProduction();
       });
     }
     else if(this.selectedDate !== undefined){
@@ -78,11 +77,11 @@ export class ProsumerDayGraphComponent {
         }
       }
       forkJoin([
-        this.deviceService.dayByHourUserFilter(string1,string2,userId, 2),
+
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 1)
-      ]).subscribe(([list1]) => {
-        this.list1 = list1;
-        this.LineChartConsumption();
+      ]).subscribe(([list2]) => {
+        this.list2 = list2;
+        this.LineChartProduction();
 
       });
     }
@@ -90,48 +89,37 @@ export class ProsumerDayGraphComponent {
   
   }
 
-  
-  LineChartConsumption(){
+  LineChartProduction(){
 
-    const chartId = 'linechart2';
+    const chartId = 'linechart1';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
-    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const hours = this.list1.map(day => day.hour);
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
+    const hours = this.list2.map(day => day.hour);
 
-    const Linechart =new Chart("linechart2", {
+    const Linechart =new Chart("linechart1", {
       type: 'line',
       data : {
         labels: hours,
         
         datasets: [
           {
-            label: 'consumption',
-            data: energyUsageResults1,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-          ],
-          pointBorderColor: 'rgba(255,99,132,1)',
-          pointBorderWidth: 7,
+            label: 'production',
+            data: energyUsageResults2,
+            tension:0.5,
+            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+            borderColor: 'rgba(0, 255, 0, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
+            pointBorderColor: 'rgba(0, 255, 0, 1)',
+            pointBorderWidth: 7,
             pointRadius: 5,
-          borderWidth: 2,
-          fill: true
-          },
+            pointHoverRadius: 6,
+            fill:true
+          }
+          
         ]
         
       }
@@ -176,11 +164,12 @@ export class ProsumerDayGraphComponent {
           }
           ,
         },
-       
-      
+        
         plugins: {
           datalabels:{display: false},
-          legend:{display:false},
+          legend:{
+            display:false
+          },
           // legend: {
           //   position: 'bottom',
           //   onHover: function (event, legendItem, legend) {
@@ -193,17 +182,17 @@ export class ProsumerDayGraphComponent {
           //     usePointStyle: true,
           //     color:'#000',
           //     font:{
-          //       size:5
+          //       size:13
           //     } 
            
           //   }
           //   ,
           //   align: "center"
-          // }
+          // },
           title: {
             
             display: true,
-            text: 'Consumption in one day',
+            text: 'Production in one day',
             color: '#000',
             font:{
               size:15
@@ -215,3 +204,5 @@ export class ProsumerDayGraphComponent {
 
   }
 }
+
+

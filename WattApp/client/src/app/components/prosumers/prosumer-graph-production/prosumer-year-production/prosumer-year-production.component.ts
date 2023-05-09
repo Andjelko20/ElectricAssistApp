@@ -22,11 +22,10 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'YYYY',
   },
 };
-
 @Component({
-  selector: 'app-prosumer-year-graph',
-  templateUrl: './prosumer-year-graph.component.html',
-  styleUrls: ['./prosumer-year-graph.component.css'],
+  selector: 'app-prosumer-year-production',
+  templateUrl: './prosumer-year-production.component.html',
+  styleUrls: ['./prosumer-year-production.component.css'],
   providers: [
     {
       provide: DateAdapter,
@@ -38,7 +37,7 @@ export const MY_FORMATS = {
     },
    ]
 })
-export class ProsumerYearGraphComponent {
+export class ProsumerYearProductionComponent {
 
   currentDate = new Date();
   maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
@@ -68,52 +67,53 @@ export class ProsumerYearGraphComponent {
     const id = token.data.id as number;
     if(this.selectedDate == undefined){
       forkJoin([
-        this.deviceService.yearByMonthUser(id, 2),
-      ]).subscribe(([list1]) => {
-        this.list1 = list1;
+        this.deviceService.yearByMonthUser(id, 1)
+      ]).subscribe(([list2]) => {
 
-        this.BarPlotConsumption();
+        this.list2 = list2;
+        this.BarPlotProduction();
       });
     }
     else{
       const year = this.selectedDate.getFullYear();
       forkJoin([
         this.deviceService.monthbyDayUserFilter(year,id, 2),
-      ]).subscribe(([list1]) => {
-        this.list1 = list1;
+      ]).subscribe(([ list2]) => {
 
-        this.BarPlotConsumption();
+        this.list2 = list2;
+        this.BarPlotProduction();
       });
     }
   }
- 
-  BarPlotConsumption(){
+  BarPlotProduction(){
 
-    const chartId = 'barplot2';
+    const chartId = 'barplot1';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
-    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month = this.list1.map(day => day.month);
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
+    const month = this.list2.map(day => day.month);
 
-    const Linechart =new Chart("barplot2", {
-        type: 'bar',      
+    const Linechart =new Chart("barplot1", {
+        type: 'bar',
         data : {
-          labels: month,         
+          labels: month,
           datasets: [
+
             {
-              label: 'Consumption',
-              data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
-              
-            },                    
-          ]       
+              label: 'Production',
+              data: energyUsageResults2,
+              borderColor: 'rgb(255, 165, 0)',
+              backgroundColor: 'rgb(255, 165, 0)'
+            },        
+          ]
         },
         options: 
-        {responsive: true,
+        {
+          maintainAspectRatio: false,
+          responsive: true,
           scales:{
             y: {
               ticks:{
@@ -131,7 +131,8 @@ export class ProsumerYearGraphComponent {
                 color: '#000',
                 font:{
                   size:13
-                }                
+                }
+                
               }
             }
             ,
@@ -140,7 +141,7 @@ export class ProsumerYearGraphComponent {
                 color:'#000',
                 font:{
                   size:13
-                }
+                }              
               },
               title:{
                 display:true,
@@ -150,8 +151,8 @@ export class ProsumerYearGraphComponent {
                   size:13
                 }
               }
-            } 
-          }, 
+            }
+          },        
           plugins: {
             datalabels: {
               display: false
@@ -159,29 +160,9 @@ export class ProsumerYearGraphComponent {
             legend:{
               display:false
             },
-            // legend: {
-            //   onHover: function (event, legendItem, legend) {
-            //     document.body.style.cursor = 'pointer';
-            //   },
-            //   onLeave: function (event, legendItem, legend) {
-            //       document.body.style.cursor = 'default';
-            //   },
-              
-            //   position: 'bottom',
-            //   labels: {
-            //     usePointStyle: true,
-            //     color: '#000',
-            //     font:{
-            //       size:20
-            //     } 
-            //     // ,
-            //     // boxHeight:100,
-            //     // boxWidth:100
-            //   }
-            // },
             title: {
               display: true,
-              text: 'Consumption in a year',
+              text: 'Production in a year',
               color: '#000',
               font:{
                 size:15
@@ -191,4 +172,5 @@ export class ProsumerYearGraphComponent {
         }
       });
   }
+ 
 }

@@ -79,11 +79,8 @@ export class ProsumerWeekGraphComponent {
     if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
       forkJoin([
         this.deviceService.weekByDayUser(id, 2),
-        this.deviceService.weekByDayUser(id, 1),
-      ]).subscribe(([list1, list2]) => {
+      ]).subscribe(([list1]) => {
         this.list1 = list1;
-        this.list2 = list2;
-        this.LineChartProduction();
         this.LineChartConsumption();
     });
     }
@@ -103,131 +100,13 @@ export class ProsumerWeekGraphComponent {
 
           forkJoin([
             this.deviceService.weekByDayUserFilter(string1,string2,id, 2),
-            this.deviceService.weekByDayUserFilter(string1,string2,id, 1)
-          ]).subscribe(([list1, list2]) => {
+          ]).subscribe(([list1]) => {
             this.list1 = list1;
-            this.list2 = list2;
-            this.LineChartProduction();
             this.LineChartConsumption();
           });
     }
   }
-  LineChartProduction(){
-
-    const chartId = 'linechart1';
-    const chartExists = Chart.getChart(chartId);
-    if (chartExists) {
-        chartExists.destroy();
-    }
-
-    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month = this.list2.map(day => day.day);
-
-
-    const Linechart = new Chart("linechart1", {
-      type: 'line',
-      data : {
-        labels: month,
-        
-        datasets:  [
-          
-          {
-            label: 'production',
-            data: energyUsageResults2,
-            tension:0.5,
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-            pointBorderColor: 'rgba(0, 255, 0, 1)',
-            pointBorderWidth: 7,
-            pointRadius: 5,
-            pointHoverRadius: 6,
-            fill:true
-          }
-          
-        ]
-        
-      }
-      ,
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        scales:{
-          y: {
-            ticks:{
-              color:'#000',
-              font:{
-                size:13
-              }
-            },
-            position: "left",
-            title:{
-              display:true,
-              text: "kWh",
-              color:'#000',
-              font:{
-                size:13
-              }
-            }
-          }
-          ,
-          x:{
-            ticks:{
-              color:'#000',
-              font:{
-                size:13
-              }
-            },
-            title:{
-              display:true,
-              text: "Days in a week",
-              color:'#000',
-              font:{
-                size:13
-              }
-            }
-          }
-          ,
-        },
-        
-        plugins: {
-          datalabels:{display: false},
-          legend:{
-            display:false
-          },
-          // legend: {
-          //   position: 'bottom',
-          //   onHover: function (event, legendItem, legend) {
-          //     document.body.style.cursor = 'pointer';
-          //   },
-          //   onLeave: function (event, legendItem, legend) {
-          //       document.body.style.cursor = 'default';
-          //   },
-          //   labels:{
-          //     usePointStyle: true,
-          //     color:'#000',
-          //     font:{
-          //       size:13
-          //     } 
-           
-          //   }
-          //   ,
-          //   align: "center"
-          // },
-          title: {
-            display: true,
-            text: 'Production in a week',
-            color:'#000',
-            font:{
-              size:15
-            }
-          }
-        }
-      }
-    });
-
-  }
+  
   LineChartConsumption(){
 
     const chartId = 'linechart2';
