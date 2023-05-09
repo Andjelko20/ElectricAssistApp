@@ -185,6 +185,7 @@ input {
     color: grey;
     cursor: pointer;
     border-radius: 10px;
+    margin-bottom: 15px;
     padding: 9px;
     width: 100%;
     border: none;
@@ -238,15 +239,33 @@ input {
 }
 
 .content {
-    display: contents;
+    width: 100%;
+    padding: 0 0px;
+    display: block;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.content3 {
+    width: 100%;
+    padding: 0 0px;
+    display: block;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.content4 {
+    width: 100%;
+    padding: 0 0px;
+    display: none;
     overflow: hidden;
     background-color: #f1f1f1;
 }
 
 .content2 {
     width: 100%;
+    display: none;
     padding: 0 0px;
-    display: contents;
     overflow: hidden;
     background-color: #f1f1f1;
 }
@@ -336,10 +355,37 @@ button.active {
         background-color: #bce9e4;
     }
     .content {
+        width: 100%;
         padding: 0 140px;
+        display: block;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content3 {
+        width: 100%;
+        padding: 0 18px;
+        display: block;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content4 {
+        width: 100%;
+        padding: 0 18px;
         display: none;
-        display: flex;
-        justify-content: center;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content2 {
+        width: 100%;
+        display: none;
+        padding: 0 18px;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content1 {
+        width: 100%;
+        padding: 0 18px;
+        display: none;
         overflow: hidden;
         background-color: #f1f1f1;
     }

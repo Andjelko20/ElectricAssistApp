@@ -7,8 +7,8 @@
         </div>
         <app-one-device></app-one-device>
         <div class="glafik">
-            <button type="button" class="collapsible dropdown-toggle active" #collapsibleButton>Consumption</button>
-            <div class="content">
+            <button type="button" class="collapsible dropdown-toggle active" (click)="onClick()">Consumption</button>
+            <div class="content1">
                 <div class="history-charts">
                     <div class="toggle-container">
                         <div class="toggle-buttons">
@@ -66,20 +66,17 @@
                 </div>
             </div>
             <br><br>
-            <button type="button" class="collapsible dropdown-toggle" #collapsibleButton>Production</button>
-            <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem
-                </p>
+            <button type="button" class="collapsible dropdown-toggle" (click)="onClick1()">Production</button>
+            <div class="content2">
             </div>
 
             <br><br>
-            <button type="button" class="collapsible dropdown-toggle" #collapsibleButton>Prediction</button>
-            <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem
-                </p>
+            <button type="button" class="collapsible dropdown-toggle" (click)="onClick2()">Prediction</button>
+            <div class="content3">
+                <app-prediction-device></app-prediction-device>
             </div>
 
-
+            <app-prediction-device></app-prediction-device>
         </div>
         <app-footer></app-footer>
         <app-prosumer-footer></app-prosumer-footer>

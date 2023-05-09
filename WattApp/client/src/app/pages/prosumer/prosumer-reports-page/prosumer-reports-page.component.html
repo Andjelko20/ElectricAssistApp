@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="graf">
-                    <button type="button" class="collapsible dropdown-toggle active" #collapsibleButton1>Consumption</button>
+                    <button type="button" class="collapsible dropdown-toggle" (click)="onClick()">Consumption</button>
                     <div class="content">
                         <div class=" history-charts-body " *ngIf="day ">
                             <app-prosumer-day-graph></app-prosumer-day-graph>
@@ -78,24 +78,24 @@
                     </div>
                 </div>
                 <div class="graf1 ">
-                    <button type="button " class="collapsible dropdown-toggle " #collapsibleButton2>Prodaction</button>
-                    <div class="content ">
-                        <!-- <div class="history-charts-body " *ngIf="day ">
-                            <app-prosumer-day-graph></app-prosumer-day-graph>
+                    <button type="button " class="collapsible dropdown-toggle " (click)="onClickProd()">Prodaction</button>
+                    <div class="content2 ">
+                        <div class="history-charts-body " *ngIf="day ">
+                            <app-prosumer-day-production></app-prosumer-day-production>
                         </div>
                         <div class="history-charts-body " *ngIf="week ">
                             <app-prosumer-week-graph></app-prosumer-week-graph>
                         </div>
                         <div class="history-charts-body " *ngIf="month ">
-                            <app-prosumer-month-graph></app-prosumer-month-graph>
+                            <app-prosumer-month-production></app-prosumer-month-production>
                         </div>
                         <div class="history-charts-body " *ngIf="year ">
-                            <app-prosumer-year-graph></app-prosumer-year-graph>
-                        </div> -->
+                            <app-prosumer-year-production></app-prosumer-year-production>
+                        </div>
                     </div>
                 </div>
                 <div class="table ">
-                    <button type="button " class="collapsible1 dropdown-toggle " #collapsibleButton3>Table of production/consumption</button>
+                    <button type="button " class="collapsible dropdown-toggle " (click)="onClickTable()">Table of production/consumption</button>
                     <div class="content1 ">
                         <div class="history-table-body " *ngIf="dayTable ">
                             <app-prosumer-day-table></app-prosumer-day-table>
@@ -117,7 +117,7 @@
         <div class="con " *ngIf="devices ">
 
             <div class="row ">
-                <!-- <div class="col">
+                <div class="col">
                     <div class="card ">
                         <div class="card-body ">
                             <h5 class="card-title ">Consumption next 7 days</h5>
@@ -136,15 +136,15 @@
                     </div>
                 </div>
                 <div class="predictiontabelandgrapf">
-                    <button type="button " class="collapsible2 dropdown-toggle active" id="collapsible2 " #collapsibleButton1>Graph view</button>
-                    <div class="content2">
+                    <button type="button " class="collapsible dropdown-toggle active" (click)="onClickPredGraph()">Graph view</button>
+                    <div class="content3">
                         <app-prediction-prosumer></app-prediction-prosumer>
                     </div>
-                    <button type="button " class="collapsible2 dropdown-toggle " id="collapsible2 " #collapsibleButton2>Tabular view</button>
-                    <div class="content2">
+                    <button type="button " class="collapsible dropdown-toggle " (click)="onClickPredTable()">Tabular view</button>
+                    <div class="content4">
                         <app-prediction-tabular-prosumer></app-prediction-tabular-prosumer>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
 

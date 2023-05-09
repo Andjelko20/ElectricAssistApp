@@ -1,16 +1,22 @@
-import {  Component, ElementRef, ViewChildren, QueryList, ViewChild } from '@angular/core';
+import {  Component, ElementRef, ViewChildren, QueryList, ViewChild, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-prosumer-device-page',
   templateUrl: './prosumer-device-page.component.html',
   styleUrls: ['./prosumer-device-page.component.css']
 })
-export class ProsumerDevicePageComponent {
+export class ProsumerDevicePageComponent implements OnInit{
   @ViewChildren('collapsibleButton') collapsibleButtons!: QueryList<ElementRef>;
-
+  isContentVisible1 = false;
+  isContentVisible2 = false;
+  isContentVisible3 = false;
   constructor(private elementRef: ElementRef) {}
+  ngOnInit(): void {
+    this.isContentVisible1=true;
+    this.isContentVisible2=false;
+    this.isContentVisible3 = false;
+  }
 
- 
   ngAfterViewInit() {
     this.collapsibleButtons.forEach(button => {
       button.nativeElement.addEventListener('click', () => {
@@ -96,5 +102,34 @@ showTable(){
   this.graph = false;
   this.tabelar = true;
 }
-
+onClick()
+  {
+   const contentDiv = document.querySelector(".content1") as HTMLDivElement;
+   this.isContentVisible1 = !this.isContentVisible1;
+  if (this.isContentVisible1) {
+   contentDiv.style.display = 'block';
+   } else {
+   contentDiv.style.display = 'none';
+  }
+ }
+ onClick1()
+ {
+  const contentDiv = document.querySelector(".content2") as HTMLDivElement;
+  this.isContentVisible2 = !this.isContentVisible2;
+ if (this.isContentVisible2) {
+  contentDiv.style.display = 'block';
+  } else {
+  contentDiv.style.display = 'none';
+ }
+}
+onClick2()
+{
+ const contentDiv = document.querySelector(".content3") as HTMLDivElement;
+ this.isContentVisible3 = !this.isContentVisible3;
+if (this.isContentVisible3) {
+ contentDiv.style.display = 'block';
+ } else {
+ contentDiv.style.display = 'none';
+}
+}
 }

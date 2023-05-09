@@ -213,7 +213,23 @@ p {
     background-color: #1c315e;
 }
 
-.content {
+.content1 {
+    border: 1px solid black;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.content2 {
+    border: 1px solid black;
+    width: 100%;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.content3 {
     border: 1px solid black;
     width: 100%;
     display: none;
@@ -302,7 +318,22 @@ p {
     .collapsible:hover {
         background-color: #1c315e;
     }
-    .content {
+    .content1 {
+        width: 100%;
+        padding: 0 18px;
+        display: block;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content2 {
+        width: 100%;
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content3 {
+        width: 100%;
         padding: 0 18px;
         display: none;
         overflow: hidden;
