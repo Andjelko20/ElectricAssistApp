@@ -1,4 +1,6 @@
 import {  Component, ElementRef, ViewChildren, QueryList, ViewChild, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-prosumer-device-page',
@@ -10,25 +12,24 @@ export class ProsumerDevicePageComponent implements OnInit{
   isContentVisible1 = false;
   isContentVisible2 = false;
   isContentVisible3 = false;
-  constructor(private elementRef: ElementRef) {}
+  consm:boolean=false;
+  prodc:boolean=false;
+  constructor(private elementRef: ElementRef, private authService:AuthService,private route:ActivatedRoute) {}
   ngOnInit(): void {
     this.isContentVisible1=true;
     this.isContentVisible2=false;
     this.isContentVisible3 = false;
-  }
+    const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(deviceId).subscribe(data=>{
+      if(data.deviceCategory == "Electricity Consumer")
+        {
+          this.consm=true;
 
-  ngAfterViewInit() {
-    this.collapsibleButtons.forEach(button => {
-      button.nativeElement.addEventListener('click', () => {
-        button.nativeElement.classList.toggle('active');
-        const content = button.nativeElement.nextElementSibling;
-        if (content.style.display === 'block') {
-          content.style.display = 'none';
-        } else {
-          content.style.display = 'block';
         }
-      });
-    });
+        else{
+          this.prodc=true;
+        }
+    })
   }
 
   graph:boolean = true;

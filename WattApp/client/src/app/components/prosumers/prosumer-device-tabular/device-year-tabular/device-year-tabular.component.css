@@ -1,56 +1,59 @@
 .table-container {
     margin: 20px 0;
-  }
-  
-  .table-wrapper {
+}
+
+.table-wrapper {
     background-color: #f8f9fa;
     border-radius: 4px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     flex-basis: 48%;
     margin-bottom: 20px;
-    padding: 20px;
-  }
-  
-  .table-title {
+}
+
+.table-title {
     font-size: 20px;
     margin-bottom: 10px;
     text-align: center;
     text-transform: uppercase;
-  }
-  
-  .table {
+}
+
+.table {
     border-collapse: collapse;
     font-size: 14px;
     width: 100%;
-  }
-  
-  .table th,
-  .table td {
+}
+
+.table th,
+.table td {
     border: 1px solid #dee2e6;
     padding: 8px;
     text-align: center;
-  }
-  
-  .table th {
-    background-color: #2199e8;
+}
+
+.table th {
+    background-color: #1c315e;
     color: #fff;
     font-weight: bold;
     text-transform: uppercase;
-  }
-  
-  
-  .btn {
+}
+
+mat-form-field {
+    width: 58%;
+}
+
+.btn {
     padding: 8px;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #2199e8;
+    margin-left: 5px;
+    background-color: #1c315e;
     color: white;
     font-weight: normal;
     text-align: center;
-  }
-  
-  .btn:hover {
+}
+
+.btn:hover {
     background-color: #0d8beb;
-  }
+}

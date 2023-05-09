@@ -110,7 +110,7 @@ export class DeviceTodayComponent {
   }
   LineChartProduction(){
 
-    const chartId = 'linechart1';
+    const chartId = 'linechart11';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
@@ -118,7 +118,7 @@ export class DeviceTodayComponent {
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
 
-    const Linechart =new Chart("linechart1", {
+    const Linechart =new Chart("linechart11", {
       type: 'line',
       data : {
         labels: hours,
@@ -224,7 +224,7 @@ export class DeviceTodayComponent {
   }
   LineChartConsumption(){
 
-    const chartId = 'linechart2';
+    const chartId = 'linechart22';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
@@ -232,7 +232,7 @@ export class DeviceTodayComponent {
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
 
-    const Linechart =new Chart("linechart2", {
+    const Linechart =new Chart("linechart22", {
       type: 'line',
       data : {
         labels: hours,

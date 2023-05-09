@@ -7,11 +7,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 Chart.register(...registerables)
+
 @Component({
   selector: 'app-prediction-device',
   templateUrl: './prediction-device.component.html',
   styleUrls: ['./prediction-device.component.css']
 })
+
 export class PredictionDeviceComponent {
 
   list1:WeekByDay[] = [];
@@ -36,10 +38,22 @@ export class PredictionDeviceComponent {
         
       }
       else{
+        
         this.productionGraph=true;
+        
         this.deviceService.predictionDevice(id).subscribe(production =>{
-          this.list2 = production;
-          this.LineChartProduction();
+   
+          const br: any = 0;
+          if(production==br)
+          {
+            console.log("Nemamo dovoljno podataka");
+          }
+          else{
+            this.list2=production;
+            this.LineChartProduction();
+          }
+          console.log(typeof production);
+         
         })
       }
     })

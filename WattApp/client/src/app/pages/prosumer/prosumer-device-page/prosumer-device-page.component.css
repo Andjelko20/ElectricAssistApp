@@ -59,7 +59,7 @@
 
 .toggle-buttons input[type="radio"]:checked+label {
     font-weight: bold;
-    color: black;
+    color: #727272;
 }
 
 .toggle-buttons input[type="radio"]:not(:checked)+label {
@@ -67,11 +67,18 @@
 }
 
 .chart-buttons {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+
+/* .chart-buttons {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .chart-button {
     cursor: pointer;
@@ -94,23 +101,8 @@
 }
 
 button.active {
-    background-color: #2199e8;
-    color: white;
     box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
-
-
-/* .btn {
-    background-color: #3E5483;
-    border-color: #3E5483;
-    float: right;
-    font-size: 10px;
-    margin: 5px;
-    box-shadow: none;
-    color: white;
-    width: 60px;
-    border-radius: 10px;
-} */
 
 .deviceimg {
     margin-top: 5px;
@@ -202,6 +194,7 @@ p {
     border-radius: 5px;
     padding: 9px;
     width: 100%;
+    margin-bottom: 15px;
     border: none;
     text-align: left;
     outline: none;
