@@ -179,5 +179,55 @@ namespace Server.Controllers
                 return Ok(result);
             }
         }
+
+        /// <summary>
+        /// Histroy - From To
+        /// </summary>
+        [HttpGet]
+        [Route("Pagination")]
+        public async Task<IActionResult> GetHistoryFromDateToDatePagination([FromQuery] int pageNumber, int itemsPerPage, string fromDate, string toDate,
+                                                                                        long byHourDeviceId, long deviceCategoryId, long byHourUserId,
+                                                                                        long byHourSettlementId, long byHourCityId)
+        {
+            if (pageNumber > 0 && itemsPerPage > 0)
+            {
+                if (byHourDeviceId != 0)
+                {
+                    if (!_sqliteDb.Devices.Any(d => d.Id == byHourDeviceId))
+                        return NotFound(new { message = "Device with ID: " + byHourDeviceId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetDeviceHistoryByHourFromToPagination(fromDate, toDate, byHourDeviceId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+                else if (byHourUserId != 0)
+                {
+                    if (!_sqliteDb.Users.Any(u => u.Id == byHourUserId))
+                        return NotFound(new { message = "User with ID: " + byHourUserId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetUserHistoryByHourFromToPagination(fromDate, toDate, byHourUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+                else if (byHourSettlementId != 0)
+                {
+                    if (!_sqliteDb.Settlements.Any(s => s.Id == byHourSettlementId))
+                        return NotFound(new { message = "Settlement with ID: " + byHourSettlementId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetSettlementHistoryByHourFromToPagination(fromDate, toDate, byHourSettlementId, deviceCategoryId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+                else //if (byHourCityId != 0)
+                {
+                    if (!_sqliteDb.Cities.Any(c => c.Id == byHourCityId))
+                        return NotFound(new { message = "City with ID: " + byHourCityId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetCityHistoryByHourFromToPagination(fromDate, toDate, byHourCityId, deviceCategoryId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+            }
+            else
+            {
+                return NotFound(new { message = "Value for pageNumber and itemsPerPage must be greater then 0."});
+            }
+        }
     }
 }
