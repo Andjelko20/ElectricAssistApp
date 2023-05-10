@@ -13,6 +13,7 @@ namespace Server.Services
         Task<UserModel?> GetUserByUsername(string username);
         Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber, int itemsPerPage, Func<UserModel, bool> filter);
         Task<DataPage<UserDetailsDTO>> GetPageOfUsers(int pageNumber, int itemsPerPage, long roleId, long myId, UserFilterModel userFilterModel);
+        Task<DataPage<UserDetailsDTO>> GetPageOfUsersForDSO(int pageNumber, int itemsPerPage, long cityId, long loggedCityId, UserFilterModel userFilterModel);
         Task<List<RoleModel>> GetAllRoles();
 
         Task<List<object>> GetAllProsumers(string zone,int city);
