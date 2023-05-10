@@ -88,11 +88,16 @@ export class BarMonthChartComponent {
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
           this.settlements = settlement;
-          if(this.selectedOption != 0){
-            this.selectedOption = this.settlements[(this.selectedOption-1)].id;
-          }
-          else{
+          const selectElement = document.getElementById('dropdown') as HTMLSelectElement
+          const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;
+
+          if (selectedOptionName === 'Total') {
             this.selectedOption = 0;
+          } else {
+            const selectedItem = this.settlements.find(item => item.name === selectedOptionName);
+            if (selectedItem) {
+              this.selectedOption = selectedItem.id;
+            }
           }
         })
         if(this.selectedOption == 0 && this.selectedDate == undefined){
@@ -102,16 +107,19 @@ export class BarMonthChartComponent {
           ]).subscribe(([data1, data2]) => {
             this.list1 = data1;
             this.list2 = data2;
-            this.BarPlot();
+            this.BarPlotConsumption();
+            this.BarPlotProduction();
           });
         }
         else if(this.selectedOption == 0 && this.selectedDate != undefined){
-          const month = this.selectedDate!.getMonth()+1;
-          const year = this.selectedDate!.getFullYear();
-          let string1 = year+'-'+month+'-'+1;
-          let string2 = year+'-'+(month+1)+'-'+1;
+          let month = this.selectedDate!.getMonth()+1;
+          let monthString = String(month).padStart(2, '0');
+          let year = this.selectedDate!.getFullYear();
+          let string1 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
+          monthString = String(month+1).padStart(2, '0');
+          let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-'+1+'-'+1
+            string2 = (year+1)+'-0'+1+'-0'+1
           }
           forkJoin([
             this.deviceService.weekByDayCityFilter(string1,string2,number, 2),
@@ -119,16 +127,19 @@ export class BarMonthChartComponent {
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.BarPlot();
+            this.BarPlotConsumption();
+            this.BarPlotProduction();
           });
         }
         else if(this.selectedOption != 0 && this.selectedDate != undefined){
           let month = this.selectedDate!.getMonth()+1;
+          let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
-          let string1 = year+'-'+month+'-'+1;
-          let string2 = year+'-'+(month+1)+'-'+1;
+          let string1 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
+          monthString = String(month+1).padStart(2, '0');
+          let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-'+1+'-'+1
+            string2 = (year+1)+'-0'+1+'-0'+1
           }
 
           forkJoin([
@@ -137,7 +148,8 @@ export class BarMonthChartComponent {
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.BarPlot();
+            this.BarPlotConsumption();
+            this.BarPlotProduction();
           });
         }
         else{
@@ -147,37 +159,34 @@ export class BarMonthChartComponent {
           ]).subscribe(([data1, data2]) => {
             this.list1 = data1;
             this.list2 = data2;
-            this.BarPlot();
+            this.BarPlotConsumption();
+            this.BarPlotProduction();
+
           });
         }
         
       })
     })
   }
-  BarPlot(){
+  BarPlotProduction(){
     
-    const chartId = 'barplot';
+    const chartId = 'barplot1';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
-    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const Linechart =new Chart("barplot", {
+    const monthbyday = this.list2.map(day => day.day);
+
+    const Linechart =new Chart("barplot1", {
         type: 'bar',
        
         data : {
-          labels: this.itemList,
+          labels: monthbyday,
           
           datasets: [
-            {
-              label: 'Consumption',
-              data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
-              
-            },
             {
               label: 'Production',
               data: energyUsageResults2,
@@ -258,7 +267,112 @@ export class BarMonthChartComponent {
             },
             title: {
               display: true,
-              text: 'Consumption and production in a month',
+              text: 'Production in a month',
+              color: '#000',
+              font:{
+                size:20
+              }
+            }
+          }
+        }
+      });
+  }
+  BarPlotConsumption(){
+    
+    const chartId = 'barplot2';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const monthbyday = this.list1.map(day => day.day);
+
+    const Linechart =new Chart("barplot2", {
+        type: 'bar',
+       
+        data : {
+          labels: monthbyday,
+          
+          datasets: [
+            {
+              label: 'Consumption',
+              data: energyUsageResults1,
+              borderColor: 'rgb(128, 0, 128)',
+              backgroundColor: 'rgb(128, 0, 128)',
+              
+            },
+            
+          ]
+          
+        },
+        options: 
+        {
+
+          responsive: true, // Enable responsiveness
+          
+          scales:{
+            y: {
+              ticks:{
+                color:'#000',
+                font:{
+                  size:15
+                }
+              },
+              position: "left",
+              title:{
+                display:true,
+                text: "kWh",
+                color: '#000',
+                font:{
+                  size:15
+                }
+              }
+            }
+            ,
+            x:{
+              ticks:{
+                color:'#000',
+                font:{
+                  size:15
+                }
+                
+              },
+              title:{
+                display:true,
+                text: "Days in a month",
+                color: '#000',
+                font:{
+                  size:15
+                }
+              }
+            }
+          },
+         
+          plugins: {
+            datalabels: {
+              display: false
+            },
+            legend: {
+              onHover: function (event, legendItem, legend) {
+                document.body.style.cursor = 'pointer';
+              },
+              onLeave: function (event, legendItem, legend) {
+                  document.body.style.cursor = 'default';
+              },
+              
+              position: 'bottom',
+              labels: {
+                usePointStyle: true,
+                color: '#000',
+                font:{
+                  size:15
+                } 
+              }
+            },
+            title: {
+              display: true,
+              text: 'Consumption in a month',
               color: '#000',
               font:{
                 size:20

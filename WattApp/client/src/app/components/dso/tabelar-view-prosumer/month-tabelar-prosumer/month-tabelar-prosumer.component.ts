@@ -79,12 +79,14 @@ export class MonthTabelarProsumerComponent implements OnInit{
       });
     }
     else{
-      const month = this.selectedDate!.getMonth()+1;
-          const year = this.selectedDate!.getFullYear();
-          let string1 = year+'-'+month+'-'+1;
-          let string2 = year+'-'+(month+1)+'-'+1;
+          let month = this.selectedDate!.getMonth()+1;
+          let monthString = String(month).padStart(2, '0');
+          let year = this.selectedDate!.getFullYear();
+          let string1 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
+          monthString = String(month+1).padStart(2, '0');
+          let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-'+1+'-'+1
+            string2 = (year+1)+'-0'+1+'-0'+1
           }
           forkJoin([
             this.deviceService.weekByDayUserFilter(string1,string2,userId, 2),
@@ -113,13 +115,13 @@ export class MonthTabelarProsumerComponent implements OnInit{
   }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-month.csv',
+    filename: 'consumption/production-month',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production']
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);
