@@ -4,6 +4,33 @@ import * as Leaflet from 'leaflet';
 import { environment } from 'src/environments/environment';
 import { NgModel } from '@angular/forms';
 
+var cyrillic = ["а", "б", "в", "г", "д", "ђ", "е", "ж", "з", "и", "ј", "к", "л", "љ", "м", "н", "њ", "о", "п", "р", "с", "т", "ћ", "у", "ф", "х", "ц", "ч", "џ", "ш"];
+var latin = ["a", "b", "v", "g", "d", "đ", "e", "ž", "z", "i", "j", "k", "l", "lj", "m", "n", "nj", "o", "p", "r", "s", "t", "ć", "u", "f", "h", "c", "č", "dž", "š"];
+  
+
+function cyrillicToLatin(text:string):string {
+	
+	var result = "";
+  
+	for (var i = 0; i < text.length; i++) {
+	  var char = text.charAt(i);
+	  var index = cyrillic.indexOf(char.toLowerCase());
+  
+	  if (index !== -1) {
+		var latinChar = latin[index];
+		if (char === char.toUpperCase()) {
+		  latinChar = latinChar.toUpperCase();
+		}
+		result += latinChar;
+	  } else {
+		result += char;
+	  }
+	}
+  
+	return result;
+  }
+  
+
 @Component({
   selector: 'map-input',
   templateUrl: './map-input.component.html',
@@ -73,11 +100,6 @@ export class MapInputComponent {
 		Leaflet.Marker.prototype.options.icon = icon;
 	  
 		this.map = Leaflet.map('prosumers-map').setView([44.01721187973962, 20.90732574462891], 13);// postavljanje mape i početni prikaz
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(position=>{
-				this.changeFocus({lat:position.coords.latitude,lon:position.coords.longitude});
-			});
-		  }
 		Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		  attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
 		  maxZoom: 18,
@@ -101,7 +123,7 @@ export class MapInputComponent {
 		});
 	  }
 
-	  changeLocations(){
+	  changeLocations(event:KeyboardEvent){
 		if(this.address==undefined){
 			this.searchResultVisible=false;
 			return;
@@ -112,12 +134,26 @@ export class MapInputComponent {
 			this.searchResultVisible=false;
 			return;
 		}
+		if(event?.key!==undefined && !/[A-Za-z0-9\ \-]+/.test(event.key))
+			return;
+		/*
+		this.searchUrl.searchParams.set("country",JSON.parse(this.countryElement.value).name);
+		this.searchUrl.searchParams.set("city",JSON.parse(this.cityElement.value).name);
+		this.searchUrl.searchParams.set("street",this.address);
+		*/
 		this.searchResultVisible=true;
 		this.searchUrl.searchParams.set("q",this.address+","+JSON.parse(this.cityElement.value).name+","+JSON.parse(this.countryElement.value).name);
 		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
 		.then(res=>res.json())
 		.then(res=>{
-			this.locations=res;
+			console.log(res)
+			this.locations=res.map((place:any)=>{
+				place.display_name=cyrillicToLatin(place.display_name);
+				if(place.address.road!==undefined && place.address.road!==null){
+					place.address.road=cyrillicToLatin(place.address.road);
+				}
+				return place;
+			});
 		});
 		this.sendData();
 	  }
@@ -138,7 +174,7 @@ export class MapInputComponent {
 	  onSelectedCity(event:any){
 		let city=JSON.parse(event.target.value);
 		let id=city.id;
-		this.changeLocations();
+		this.changeLocations(({}) as KeyboardEvent);
 		fetch(environment.serverUrl+"/settlements?cityId="+id,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 		.then(res=>res.json())
 		.then(res=>{

@@ -11,11 +11,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./all-prosumers.component.css']
 })
 export class AllProsumersComponent implements OnInit {
-  url = `${environment.serverUrl}/api/ProsumersDetails/page`;
+  url = `${environment.serverUrl}/api/ProsumersDetails/page/filters`;
   currentPage = 1;
   itemsPerPage = 10;
   totalItems = 20;
-  data: Prosumers[] = [];
+  data: any[] = [];
   prosumerValues: any[] = [];
 i: any;
 
@@ -25,30 +25,9 @@ i: any;
   ) {}
 
   ngOnInit(): void {
-    this.getProsumerValues();
+    this.pageChanged(1);
   }
 
-  getProsumerValues(): void {
-    this.prosumerValues = [];
-    this.data.forEach((prosumer) => {
-      this.historyService.currentUserProductionConsumption(prosumer.id, 2).subscribe((vr1) => {
-        if (typeof vr1 !== 'number') {
-          vr1 = 0;
-        }
-        this.historyService.currentUserProductionConsumption(prosumer.id, 1).subscribe((vr2) => {
-          if (typeof vr2 !== 'number') {
-            vr2 = 0;
-          }
-          const prosumerData = {
-            id: prosumer.id,
-            consumption: vr1,
-            production: vr2
-          };
-          this.prosumerValues.push(prosumerData);
-        });
-      });
-    });
-  }
   pageChanged(pageNumber:number){
 	let url=new URL(this.url);
 		url.searchParams.set("pageNumber",pageNumber.toString());
@@ -57,47 +36,21 @@ i: any;
 		let controller=new AbortController();
 		setTimeout(()=>{
 			controller.abort();
-		},1000);
+		},3000);
 		fetch(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem("token")},signal:controller.signal})
 		.then(res=>{
 			if(res.status==401 || res.status==403){
 				return Promise.reject("aaa");
 			}
-			return res.text();
+			return res.json();
 		})
-		.then(ress=>{
-			try{
-				let res=JSON.parse(ress);
-				if(res?.data==undefined)
+		.then(res=>{
+				if(res==undefined)
 					return;
 				this.data=res?.data;
 				this.currentPage=pageNumber;
 				this.totalItems=res.numberOfPages*this.itemsPerPage;
-        this.prosumerValues = [];
-        this.data.forEach(prosumer =>{
-          this.historyService.currentUserProductionConsumption(prosumer.id,2).subscribe(vr1=>{
-            if(typeof vr1 !== 'number'){
-              vr1 = 0;
-            }
-            this.historyService.currentUserProductionConsumption(prosumer.id,1).subscribe(vr2=>{
-              if(typeof vr2 !== 'number')
-              {
-                vr2 = 0;
-              }
-              const prosumerData = {
-                id: prosumer.id,
-                consumption: vr1,
-                production: vr2
-              };
-              this.prosumerValues.push(prosumerData);
-            })
-          })
-        })
-			}
-			catch(err:any){
-				console.log(err.message);
-			}
-			
+        		this.prosumerValues = res;	
 		})
     
   }

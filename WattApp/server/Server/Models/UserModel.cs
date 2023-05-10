@@ -49,5 +49,10 @@ namespace Server.Models
 
         [ForeignKey("RoleId")]
         public RoleModel Role { get; set; }
+
+        public static explicit operator UserModel(Task<UserModel?> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
