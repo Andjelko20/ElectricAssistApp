@@ -5,7 +5,45 @@
 .centar {
     width: 100%;
     min-height: 100vh;
-    text-align: center;
+    text-align: left;
+}
+
+.container {
+    display: none;
+}
+
+body {
+    background: #BA68C8;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8;
+}
+
+.profile-button {
+    background: #BA68C8;
+    box-shadow: none;
+    border: none;
+}
+
+.profile-button:hover {
+    background: #682773;
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none;
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none;
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer;
 }
 
 #imgdevice {
@@ -56,6 +94,11 @@ a {
     color: #727272;
 }
 
+.userimg {
+    display: flex;
+    justify-content: center;
+}
+
 a:hover {
     border-radius: 5px;
     background-color: rgb(129, 202, 248);
@@ -95,16 +138,54 @@ a:hover {
     max-width: 300px;
 }
 
+.phone {
+    display: block;
+    padding-top: 61px;
+    padding-bottom: 65px;
+}
+
+.rounded-circle {
+    width: 100px;
+    margin-bottom: 37px;
+}
+
 @media (min-width: 768px) {
+    .phone {
+        display: none;
+    }
+    .container {
+        display: block;
+    }
     .main {
         top: 0;
         right: 0;
         left: 0;
+        display: flex;
+        align-items: center;
         position: absolute;
         justify-content: center;
         min-height: 100vh;
     }
-    .centar {
+    .rounded-circle {
+        width: 200px;
+        margin-bottom: 37px;
+    }
+    .col-md-8 {
+        border-radius: 37px;
+        background-color: #a2c7fb;
+    }
+    .col-md-6 {
+        margin-left: 202px;
+        font-size: 24px !important;
+    }
+    .col-md-6 input {
+        font-size: 24px !important;
+    }
+    .col-md-4 span a {
+        margin-bottom: 5px !important;
+        font-size: 24px !important;
+    }
+    /* .centar {
         display: flex;
         min-height: 100vh;
         width: 100%;
@@ -174,17 +255,10 @@ a:hover {
         margin-left: 20%;
         margin-right: 20%;
         float: left;
-        /* padding: 0;
-        margin-top: 155px;
-        margin-left: 80px;
-        width: 60%;
-        display: inline-block;
-        border-radius: 15px;
-        background-color: #b8dcff; */
     }
     #userimg {
         border: 1px solid black;
-    }
+    } */
     app-footer {
         width: 100%;
         display: contents;
