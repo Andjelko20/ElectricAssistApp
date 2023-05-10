@@ -17,6 +17,7 @@
     <option *ngFor="let item of settlements" value="{{item.id}}">{{item.name}}</option>
   </select>
 </div>
+<div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
   <div id="barplots">
     <div class="chart-container">
       <canvas id="barplot2"></canvas></div>

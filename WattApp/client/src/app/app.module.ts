@@ -26,7 +26,6 @@ import { ConsumptionMonthWattmeterComponent } from "./components/dso/meter/consu
 import { ConsumptionTodayWattmeterComponent } from "./components/dso/meter/consumption-today-wattmeter/consumption-today-wattmeter.component";
 import { ConsumptionYearWattmeterComponent } from "./components/dso/meter/consumption-year-wattmeter/consumption-year-wattmeter.component";
 import { CurrentPowerWattmeterComponent } from "./components/dso/meter/current-power-wattmeter/current-power-wattmeter.component";
-import { NumberOfUsersMeterComponent } from "./components/dso/meter/number-of-users-meter/number-of-users-meter.component";
 import { OneProsumerComponent } from "./components/dso/one-prosumer/one-prosumer.component";
 import { MapInputComponent } from "./components/map-input/map-input.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
@@ -89,7 +88,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatFormFieldControl } from "@angular/material/form-field";
+
 import { MatInputModule } from '@angular/material/input';
 import { ProsumerDayGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-day-graph/prosumer-day-graph.component";
 import { ProsumerMonthGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-month-graph/prosumer-month-graph.component";
@@ -135,7 +134,6 @@ import { DeviceYearTabularComponent } from './components/prosumers/prosumer-devi
     ConsumptionTodayWattmeterComponent,
     ConsumptionMonthWattmeterComponent,
     ConsumptionYearWattmeterComponent,
-    NumberOfUsersMeterComponent,
     MapsComponent,
     AllProsumersComponent,
     LineDayChartComponent,

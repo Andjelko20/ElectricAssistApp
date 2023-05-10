@@ -16,8 +16,7 @@ declare var $: any;
 
 })
 export class DsoHomePageComponent implements AfterViewInit, OnInit{
- 
-  popover: Popover | undefined;
+  loader:boolean=false;
   tooltip: Tooltip | undefined;
   numberOfProsumers=0;
   avgProduction?:number;
@@ -40,27 +39,20 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
 
   }
   ngAfterViewInit() {
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-    const popoverList = Array.from(popoverTriggerList).map(function (popoverTriggerEl) {
-      return new Popover(popoverTriggerEl)
-    });
-    this.popover = popoverList[0];
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = Array.from(tooltipTriggerList).map(function (tooltipTriggerEl) {
       return new Tooltip(tooltipTriggerEl)
-
-      
     });
     this.tooltip = tooltipList[0];
    
   }
   async ngOnInit(): Promise<void> {
+    this.loader=true;
     const { id, role } = new JwtToken().data;
     this.idUser = id as number;
     this.role = role as string;
-
-    try {
-      const response = await this.updateService.getlogInUser().toPromise();
+     this.updateService.getlogInUser().subscribe(response=>{
+      this.loader=false;
       this.updateUserDetail = {
         id: this.idUser,
         name: response.name,
@@ -72,40 +64,28 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
         city: response.city,
         country: response.country,
         address: response.address
-      };
-    } catch (error) {
-      this.router.navigate(["prosumer-account-page"]);
-    }
-
+      }
+     }
+    )
     const res = await fetch(environment.serverUrl + "/api/ProsumersDetails/count", {
       headers: { Authorization: "Bearer " + localStorage.getItem("token") }
     }).then(res => res.json());
-
     this.numberOfProsumers = res;
-
-    const result = await this.avgConsumption
-      .getAverageConsumptionProductionCity(1, this.idUser)
-      .pipe(first())
-      .toPromise();
-
-    this.avgProduction = result!;
-    const result1 = await this.avgConsumption
-      .getCurrentConsumptionProductionCity(1, this.idUser)
-      .pipe(first())
-      .toPromise();
-
-    this.totalProduction = result1!;
+    this.avgConsumption.getAverageConsumptionProductionCity(1, this.idUser).subscribe(result=>{
+      this.loader=false;
+      this.avgProduction = result;
+    })
+    this.avgConsumption.getCurrentConsumptionProductionCity(1, this.idUser).subscribe(result=>{
+      this.loader=false;
+        this.totalProduction = result;
+      })
   }
-
   graph:boolean = true;
   tabelar:boolean = false;
-
-
   compGraph = true;
   compGraph1 = false;
   compGraph2 = false;
   compGraph3 = false;
-
   compTable = true;
   compTable1 = false;
   compTable2 = false;
@@ -133,39 +113,37 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
     this.compTable1=false;
     this.compTable2 = false;
     this.compTable3 = true;
-}
-
-showComponentGraph() {
-  this.compGraph = true;
-  this.compGraph1=false;
-  this.compGraph2=false;
-  this.compGraph3 = false;
-}
-showComponentGraph1() {
-    this.compGraph = false;
-    this.compGraph1=true;
+  }
+  showComponentGraph() {
+    this.compGraph = true;
+    this.compGraph1=false;
     this.compGraph2=false;
     this.compGraph3 = false;
-}
-showComponentGraph2() {
-    this.compGraph = false;
+  }
+  showComponentGraph1() {
+      this.compGraph = false;
+      this.compGraph1=true;
+      this.compGraph2=false;
+      this.compGraph3 = false;
+  }
+  showComponentGraph2() {
+      this.compGraph = false;
+      this.compGraph1=false;
+      this.compGraph2=true;
+      this.compGraph3 = false;
+  }
+  showComponentGraph3() {
+    this.compGraph=false;
     this.compGraph1=false;
-    this.compGraph2=true;
-    this.compGraph3 = false;
-}
-showComponentGraph3() {
-  this.compGraph=false;
-  this.compGraph1=false;
-  this.compGraph2 = false;
-  this.compGraph3 = true;
-}
-
-showGraph(){
-  this.graph = true;
-  this.tabelar = false;
-}
-showTable(){
-  this.graph = false;
-  this.tabelar = true;
-}
+    this.compGraph2 = false;
+    this.compGraph3 = true;
+  }
+  showGraph(){
+    this.graph = true;
+    this.tabelar = false;
+  }
+  showTable(){
+    this.graph = false;
+    this.tabelar = true;
+  }
 }

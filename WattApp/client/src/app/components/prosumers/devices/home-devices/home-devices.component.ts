@@ -24,10 +24,6 @@ export class HomeDevicesComponent implements OnInit {
   constructor(private router:Router,private deviceService:DevicesService,private renderer: Renderer2,private route:ActivatedRoute) { }
   
   ngOnInit(): void {
-    
-
-
-
     this.deviceService.getAllDevicesNoPaggination().subscribe(devices => {
      this.devices=devices.data.map((u:any)=>({
       id:u.id,
