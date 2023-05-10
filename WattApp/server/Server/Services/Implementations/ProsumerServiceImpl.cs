@@ -572,27 +572,54 @@ namespace Server.Services.Implementations
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        DateTime startDate = DateTime.ParseExact(reader["StartTime"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture); 
-                        DateTime endDate = DateTime.ParseExact(reader["EndTime"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                        while (reader.Read())
+                        {
+                            DateTime startDate = DateTime.ParseExact(reader["StartTime"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                            DateTime endDate = DateTime.ParseExact(reader["EndTime"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
-                        double inTotalWorked = double.Parse(reader["SecondsWorked"].ToString());
-                        int hoursWorked = (int)inTotalWorked / 3600;
-                        inTotalWorked -= hoursWorked * 3600;
-                        int minutesWorked = (int)inTotalWorked / 60;
-                        inTotalWorked -= minutesWorked * 60;
-                        int secondsWorked = (int)inTotalWorked;
+                            double inTotalWorked = double.Parse(reader["SecondsWorked"].ToString());
+                            int hoursWorked = (int)inTotalWorked / 3600;
+                            inTotalWorked -= hoursWorked * 3600;
+                            int minutesWorked = (int)inTotalWorked / 60;
+                            inTotalWorked -= minutesWorked * 60;
+                            int secondsWorked = (int)inTotalWorked;
 
-                        var startTime = startDate.ToString("dd-MM-yyyy HH:mm:ss");
-                        var endTime = endDate.ToString("dd-MM-yyyy HH:mm:ss");
-                        var duration = hoursWorked + ":" + minutesWorked + ":" + secondsWorked;
+                            var startTime = startDate.ToString("dd-MM-yyyy HH:mm:ss");
+                            var endTime = endDate.ToString("dd-MM-yyyy HH:mm:ss");
+                            var duration = "";
 
+                            if(hoursWorked<10 && minutesWorked<10 && secondsWorked<10)
+                                duration = "0" + hoursWorked + ":0" + minutesWorked + ":0" + secondsWorked;
+                            else if (hoursWorked < 10 && minutesWorked<10)
+                                duration = "0" + hoursWorked + ":0" + minutesWorked + ":" + secondsWorked;
+                            else if (hoursWorked<10 && secondsWorked<10)
+                                duration = "0" + hoursWorked + ":" + minutesWorked + ":0" + secondsWorked;
+                            else if (minutesWorked<10 && secondsWorked<10)
+                                duration = hoursWorked + ":0" + minutesWorked + ":0" + secondsWorked;
+                            else if (hoursWorked<10)
+                                duration = "0" + hoursWorked + ":" + minutesWorked + ":" + secondsWorked;
+                            else if (minutesWorked < 10)
+                                duration = hoursWorked + ":0" + minutesWorked + ":" + secondsWorked;
+                            else if (secondsWorked < 10)
+                                duration = hoursWorked + ":" + minutesWorked + ":0" + secondsWorked;
+
+                            StartEndDuration = new DeviceTimeDTO
+                            {
+                                StartTime = startTime,
+                                EndTime = endTime,
+                                Duration = duration
+                            };
+                        }
+                    }
+                    else
+                    {
                         StartEndDuration = new DeviceTimeDTO
                         {
-                            StartTime = startTime,
-                            EndTime = endTime,
-                            Duration = duration
+                            StartTime = "/",
+                            EndTime = "/",
+                            Duration = "00:00:00"
                         };
                     }
                 }
@@ -628,6 +655,10 @@ namespace Server.Services.Implementations
                     command.CommandText = @"
                                             INSERT INTO DeviceEnergyUsages (DeviceId, StartTime, EndTime)
                                                                     VALUES (@deviceId, @turnedOn, NULL);
+                                            
+                                            UPDATE Devices
+                                            SET TurnOn = 1
+                                            WHERE Id = @deviceId;
                                            ";
                 }
                 else
@@ -636,6 +667,10 @@ namespace Server.Services.Implementations
                                             UPDATE DeviceEnergyUsages
                                             SET EndTime = @turnedOff
                                             WHERE DeviceId = @deviceId /*AND StartTime = @turnedOn*/ AND EndTime IS NULL;
+                                           
+                                            UPDATE Devices
+                                            SET TurnOn = 0
+                                            WHERE Id = @deviceId;
                                            ";
                 }
 
