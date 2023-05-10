@@ -59,13 +59,11 @@ constructor(private todayConsumption:HistoryPredictionService){
    async ngOnInit() {
     let token=new JwtToken();
     this.idProsumer=token.data.id as number;
-    const result = await this.todayConsumption.getTotalConsumptionProductionProsumer("Electricity Consumer",this.idProsumer).pipe(first()).toPromise();
+    const result = await this.todayConsumption.getTotalConsumptionProductionProsumer(2,this.idProsumer).subscribe(result=>{
+      this.value = result;
+    })
   
-    this.value = result!;
-  // this.todayConsumption.getTotalConsumptionProduction("Electricity Consumer").subscribe(result => {
-  //   this.value = typeof result === 'number' ? result : 0;
-  //   this.cdr.detectChanges();
-  // });
+    
   
     
   

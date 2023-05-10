@@ -85,7 +85,16 @@ export class OneDeviceComponent implements OnInit{
       this.onClick=()=> {
         this.deviceService.turnOn(id,formattedDate).subscribe({
           next:()=>{
+            this.deviceService.durationDateTime(id).subscribe(res=>{
           
+          
+              this.duration={
+               startTime: res.startTime,
+             endTime:res.endTime,
+              duration:res.duration,
+               }
+              
+            })
           
               this.device.turnOn = true;
               this.buttonOnoff=true;
@@ -117,7 +126,16 @@ export class OneDeviceComponent implements OnInit{
         this.offClick=()=> {
           this.deviceService.turnOff(id,formattedDate).subscribe({
             next:()=>{
-            
+              this.deviceService.durationDateTime(id).subscribe(res=>{
+          
+          
+                this.duration={
+                 startTime: res.startTime,
+               endTime:res.endTime,
+                duration:res.duration,
+                 }
+                
+              })
                 this.device.turnOn = false;
                 this.buttonOnoff=true;
                 
