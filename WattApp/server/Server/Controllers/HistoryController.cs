@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Server.Data;
 using Server.Models;
+using Server.Models.DropDowns.Location;
 using Server.Services;
 using System.Diagnostics;
 
@@ -545,6 +546,44 @@ namespace Server.Controllers
                     return NotFound(new { message = "City with the ID: " + PastMonthByDayCityId.ToString() + " does not exist." });
 
                 var result = historyService.GetCityDailyEnergyUsageForPastMonthPagination(PastMonthByDayCityId, deviceCategoryId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
+        }
+
+        [HttpGet]
+        [Route("ThatYear/{yearNumber:int}")]
+        public async Task<IActionResult> GetHistoryResultsForYear([FromRoute] int yearNumber, [FromQuery] long deviceCategoryId, long cityId, long settlementId, long userId, long deviceId)
+        {
+            if (cityId != 0)
+            {
+                if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+                    return NotFound(new { message = "City with the ID: " + cityId.ToString() + " does not exist." });
+
+                var result = historyService.CityHistoryForYearByMonth(cityId, deviceCategoryId, yearNumber);
+                return Ok(result);
+            }
+            else if (settlementId != 0)
+            {
+                if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
+                    return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not exist." });
+
+                var result = historyService.SettlementHistoryForYearByMonth(settlementId, deviceCategoryId, yearNumber);
+                return Ok(result);
+            }
+            else if (userId != 0)
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == userId))
+                    return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
+
+                var result = historyService.UserHistoryForYearByMonth(userId, deviceCategoryId, yearNumber);
+                return Ok(result);
+            }
+            else
+            {
+                if (!_sqliteDb.Devices.Any(d => d.Id == deviceId))
+                    return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+
+                var result = historyService.DeviceHistoryForYearByMonth(deviceId, yearNumber);
                 return Ok(result);
             }
         }

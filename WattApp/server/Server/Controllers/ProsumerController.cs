@@ -262,5 +262,22 @@ namespace Server.Controllers
 
             return Ok(prosumerService.GetNumberOfDevicesOfOneProsumer(userId));
         }
+
+        /// <summary>
+        /// How much device worked
+        /// </summary>
+        [HttpPut]
+        [Route("device")]
+        public async Task<IActionResult> HowMuchDeviceWorked([FromQuery] long deviceId, DateTime turnedOn, DateTime turnedOff)
+        {
+            if (!_sqliteDb.Devices.Any(d => d.Id == deviceId))
+                return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
+
+            var response = prosumerService.FromWhenToWhenDeviceWorks(deviceId, turnedOn, turnedOff);
+            if (response == null)
+                return BadRequest("Failed entry data into the database.");
+                    
+            return Ok(response);
+        }
     }
 }

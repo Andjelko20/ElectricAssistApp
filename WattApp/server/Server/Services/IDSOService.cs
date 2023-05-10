@@ -9,7 +9,9 @@ namespace Server.Services
         public double GetCityConsumptionForToday(long cityId, long deviceCategoryId);
         public double GetUsageHistoryForDeviceInThisMonth(long cityId, long deviceCategoryId);
         public double GetUsageHistoryForDeviceInThisYear(long cityId, long deviceCategoryId);
-        public List<EnergyToday> CalculateEnergyUsageForToday(long settlementId, long deviceCategoryId);
+        public List<EnergyToday> CalculateSettlementEnergyUsageForToday(long settlementId, long deviceCategoryId);
         public List<EnergyToday> CalculateEnergyUsageForTodayInCity(long cityId, long deviceCategoryId);
+        public List<EnergyToday> GetCityHistoryTodayByHourPagination(long cityId, long deviceCategoryId, int pageNumber, int itemsPerPage);
+        public List<EnergyToday> GetSettlementHistoryTodayByHourPagination(long settlementId, long deviceCategoryId, int pageNumber, int itemsPerPage);
     }
 }
