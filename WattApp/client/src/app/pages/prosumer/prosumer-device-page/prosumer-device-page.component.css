@@ -207,7 +207,6 @@ p {
 }
 
 .content1 {
-    border: 1px solid black;
     width: 100%;
     display: block;
     overflow: hidden;
@@ -215,7 +214,6 @@ p {
 }
 
 .content2 {
-    border: 1px solid black;
     width: 100%;
     display: none;
     overflow: hidden;
@@ -223,7 +221,6 @@ p {
 }
 
 .content3 {
-    border: 1px solid black;
     width: 100%;
     display: none;
     overflow: hidden;
