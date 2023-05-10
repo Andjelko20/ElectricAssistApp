@@ -11,7 +11,7 @@ import { Categories } from 'src/app/utilities/categories';
 })
 export class HomeDevicesComponent implements OnInit {
 
-  
+  noDev:boolean=false;
   devices:ShowDevices[] = [];
   pageNumber?:number;
   pageSize?:number;
@@ -24,6 +24,7 @@ export class HomeDevicesComponent implements OnInit {
   constructor(private router:Router,private deviceService:DevicesService,private renderer: Renderer2,private route:ActivatedRoute) { }
   
   ngOnInit(): void {
+    this.noDev=false;
     this.deviceService.getAllDevicesNoPaggination().subscribe(devices => {
      this.devices=devices.data.map((u:any)=>({
       id:u.id,
@@ -42,12 +43,10 @@ export class HomeDevicesComponent implements OnInit {
     }, error => {
       if (error.status === 404) {
         console.log('Devices not found in database');
+        this.noDev=true;
      }} 
      );
     }
-   
-    
-
 }
  
 

@@ -16,6 +16,7 @@ Chart.register(...registerables)
 
 export class PredictionDeviceComponent {
 
+  
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
@@ -32,7 +33,7 @@ export class PredictionDeviceComponent {
         this.consumptionGraph = true;
         this.deviceService.predictionDevice(id).subscribe(consumption =>{
           this.list1 = consumption;
-          console.log(this.list1);
+          
           this.LineChartConsumption();
         })
         
@@ -52,7 +53,7 @@ export class PredictionDeviceComponent {
             this.list2=production;
             this.LineChartProduction();
           }
-          console.log(typeof production);
+         
          
         })
       }
@@ -142,25 +143,7 @@ export class PredictionDeviceComponent {
           legend:{
             display: false
           },
-          // legend: {
-          //   position: 'bottom',
-          //   onHover: function (event, legendItem, legend) {
-          //     document.body.style.cursor = 'pointer';
-          //   },
-          //   onLeave: function (event, legendItem, legend) {
-          //       document.body.style.cursor = 'default';
-          //   },
-          //   labels:{
-          //     usePointStyle: true,
-          //     color:'#000',
-          //     font:{
-          //       size:20
-          //     } 
-           
-          //   }
-          //   ,
-          //   align: "center"
-          // },
+         
           title: {
             display: true,
             text: 'Prediction production in a week',
@@ -184,7 +167,7 @@ export class PredictionDeviceComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const month2 = this.list1.map(day => day.day);
-    console.log(month2)
+    
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
@@ -267,25 +250,7 @@ export class PredictionDeviceComponent {
           legend:{
             display:false
           },
-          // legend: {
-          //   position: 'bottom',
-          //   onHover: function (event, legendItem, legend) {
-          //     document.body.style.cursor = 'pointer';
-          //   },
-          //   onLeave: function (event, legendItem, legend) {
-          //       document.body.style.cursor = 'default';
-          //   },
-          //   labels:{
-          //     usePointStyle: true,
-          //     color:'#000',
-          //     font:{
-          //       size:20
-          //     } 
-           
-          //   }
-          //   ,
-          //   align: "center"
-          // },
+         
           title: {
             display: true,
             text: 'Prediction consuming in a week',

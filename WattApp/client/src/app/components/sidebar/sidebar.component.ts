@@ -97,54 +97,6 @@ export class SidebarComponent implements OnInit{
     
     
   }
-  
-  
-  
-  
-
-  // clickSidebar(event: Event)
-  // {
-   
-  //   if(this.location.path()=="/add-user")
-  //   {
-      
-  //     const routerLink = (event.target as Element).closest('a[routerLink]')?.getAttribute('routerLink');
-  //     if (routerLink === '/dashboard') {
-  //       this.modalService.open(this.modalContent);
-  //       const controlabilityOnPopup= document.getElementById('popup');
-  //       if(controlabilityOnPopup!=null)
-  //       {
-  //         controlabilityOnPopup.removeEventListener('click', this.onClickLeave);
-          
-  //           this.onClickLeave=()=> {
-
-  //             controlabilityOnPopup.removeEventListener('click',this.onClickLeave);
-  //         };
-  //         controlabilityOnPopup.addEventListener('click',this.onClickLeave);
-          
-  //       }
-  //     }else if (routerLink === '/profile-admin') {
-  //       this.modalService.open(this.modalContent);
-  //       const controlabilityOnPopup= document.getElementById('popup');
-  //       if(controlabilityOnPopup!=null)
-  //       {
-  //         controlabilityOnPopup.removeEventListener('click', this.onClickLeave);
-          
-  //           this.onClickLeave=()=> {
-
-  //             controlabilityOnPopup.removeEventListener('click',this.onClickLeave);
-  //         };
-  //         controlabilityOnPopup.addEventListener('click',this.onClickLeave);
-          
-  //       }
-  //     }
-      
-  //   }
-   
-    
-
-   
-  // }
   logout()
   {
     localStorage.removeItem('token');

@@ -17,7 +17,7 @@ export class AllDevicesDsoComponent implements OnInit{
   body: string = ''; 
   btnAction:string='';
   confirmTurnOnOff?:boolean=false;
-
+  datePipe: any;
   currentPage:number=1;
   itemsPerPage:number=12;
   totalItems:number=10;
@@ -149,12 +149,14 @@ export class AllDevicesDsoComponent implements OnInit{
         //console.log(turnOn);
        if(turnOn!=null)
        {
+        const date = new Date();
+        const formattedDate = this.datePipe.transform(date,'yyyy-MM-dd hh:mm:ss');
         this.body = 'Do you want to turn on this device?';
         this.btnAction="Turn On";
             turnOn.removeEventListener('click', this.onClick);
             this.onClick=() => {
               this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
-              this.deviceService.turnOn(id).subscribe({
+              this.deviceService.turnOn(id,formattedDate).subscribe({
               next:()=>{
                 const userIndex = this.devicesList.findIndex(user => user.id === id);
                 
@@ -171,6 +173,8 @@ export class AllDevicesDsoComponent implements OnInit{
        
       }
       turnOff(id: number){
+        const date = new Date();
+        const formattedDate = this.datePipe.transform(date,'yyyy-MM-dd hh:mm:ss');
         this.modalService.open(this.modalContent);
         this.confirmTurnOnOff=false;
         
@@ -182,7 +186,7 @@ export class AllDevicesDsoComponent implements OnInit{
           turnOff.removeEventListener('click', this.offClick);
               this.offClick=() => {
                 this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
-                this.deviceService.turnOff(id).subscribe({
+                this.deviceService.turnOff(id,formattedDate).subscribe({
                 next:()=>{
                   const userIndex = this.devicesList.findIndex(user => user.id === id);
                   

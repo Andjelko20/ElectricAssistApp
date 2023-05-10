@@ -72,7 +72,7 @@
             <label for="graphic-btn">Graphical view</label>
             <span class="divider"></span>
             <input type="radio" (click)="showTable()" name="toggle1" id="tabelar-btn">
-            <label for="tabelar-btn">Tabelar view</label>
+            <label for="tabelar-btn">Tabular view</label>
           </div>
       </div>
       <ng-container *ngIf="graph">
@@ -100,22 +100,22 @@
       <ng-container *ngIf="tabelar">
           <div class="chart-body">
               <div class="chart-buttons">
-                <button (click)="showComponentTable()" class="chart-button">Day</button>
-                <button (click)="showComponentTable1()" class="chart-button">Week</button>
-                <button (click)="showComponentTable2()" class="chart-button">Month</button>
-                <button (click)="showComponentTable3()" class="chart-button">Year</button>
+                <button (click)="showComponentGraph()" class="chart-button" [class.active]="compGraph">Day</button>
+                <button (click)="showComponentGraph1()" class="chart-button" [class.active]="compGraph1">Week</button>
+                <button (click)="showComponentGraph2()" class="chart-button" [class.active]="compGraph2">Month</button>
+                <button (click)="showComponentGraph3()" class="chart-button" [class.active]="compGraph3">Year</button>
               </div>
             </div>
-          <div class="history-charts-body" *ngIf="compTable">
+          <div class="history-charts-body" *ngIf="compGraph">
               <app-today-tabelar-prosumer></app-today-tabelar-prosumer>
           </div>
-          <div class="history-charts-body" *ngIf="compTable1">
+          <div class="history-charts-body" *ngIf="compGraph1">
               <app-week-tabelar-prosumer></app-week-tabelar-prosumer>
           </div>
-          <div class="history-charts-body" *ngIf="compTable2">
+          <div class="history-charts-body" *ngIf="compGraph2">
               <app-month-tabelar-prosumer></app-month-tabelar-prosumer>
           </div>
-          <div class="history-charts-body" *ngIf="compTable3">
+          <div class="history-charts-body" *ngIf="compGraph3">
               <app-year-tabelar-prosumer></app-year-tabelar-prosumer>
           </div>
       </ng-container>

@@ -22,17 +22,39 @@
         </div>
         <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
 
-        <div class="info">
+        <div class="info" *ngIf="device.turnOn===true ">
             <div class="session">
                 <p class="session-label">Session Started</p>
-                <p class="session-duration">01:25 h</p>
+                <p class="session-duration">{{duration.startTime}}</p>
             </div>
             <div class="session">
                 <p class="session-label">Duration </p>
-                <p class="session-duration">65 min</p>
+                <p class="session-duration">{{duration.duration}}</p>
+            </div>
+            <div class="session" *ngIf="device.deviceCategory=='Electricity Producer'">
+                <p class="session-label">Energy producing</p>
+                <p class="session-duration">25kWh</p>
+            </div>
+            <div class="session" *ngIf="device.deviceCategory=='Electricity Consumer'">
+                <p class="session-label">Energy consuming</p>
+                <p class="session-duration">25kWh</p>
+            </div>
+        </div>
+        <div class="info" *ngIf="device.turnOn===false ">
+            <div class="session">
+                <p class="session-label">Session Ended</p>
+                <p class="session-duration">{{duration.endTime}}</p>
             </div>
             <div class="session">
-                <p class="session-label">Energy consumtion</p>
+                <p class="session-label">Duration </p>
+                <p class="session-duration">{{duration.duration}}</p>
+            </div>
+            <div class="session" *ngIf="device.deviceCategory=='Electricity Producer'">
+                <p class="session-label">Energy producing</p>
+                <p class="session-duration">25kWh</p>
+            </div>
+            <div class="session" *ngIf="device.deviceCategory=='Electricity Consumer'">
+                <p class="session-label">Energy consuming</p>
                 <p class="session-duration">25kWh</p>
             </div>
         </div>
@@ -41,7 +63,6 @@
 
 <ng-template #modalContent let-modal>
     <div class="modal-header">
-        <!-- <h5 class="modal-title" id="modalTitle">{{ title }}</h5> -->
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
@@ -51,8 +72,4 @@
             <button type="button" class="btn btn-outline-danger" (click)="modal.dismiss('cancel')">Close</button>
         </div>
     </div>
-    <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>
-            <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
-          </div> -->
 </ng-template>

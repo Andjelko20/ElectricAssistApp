@@ -254,7 +254,6 @@ export class DeviceWeekComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const month2 = this.list1.map(day => day.day);
-    console.log(month2)
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {

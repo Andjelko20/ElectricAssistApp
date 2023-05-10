@@ -81,7 +81,6 @@ export class ProsumerWeekProductionComponent {
         this.deviceService.weekByDayUser(id, 1),
       ]).subscribe(([list2]) => {
         this.list2 = list2;
-        console.log(this.list2)
         this.LineChartProduction();
     });
     }
@@ -191,25 +190,7 @@ export class ProsumerWeekProductionComponent {
           legend:{
             display:false
           },
-          // legend: {
-          //   position: 'bottom',
-          //   onHover: function (event, legendItem, legend) {
-          //     document.body.style.cursor = 'pointer';
-          //   },
-          //   onLeave: function (event, legendItem, legend) {
-          //       document.body.style.cursor = 'default';
-          //   },
-          //   labels:{
-          //     usePointStyle: true,
-          //     color:'#000',
-          //     font:{
-          //       size:13
-          //     } 
-           
-          //   }
-          //   ,
-          //   align: "center"
-          // },
+          
           title: {
             display: true,
             text: 'Production in a week',

@@ -1,4 +1,4 @@
-<div class="devices"  >
+<div class="devices"*ngIf="!noDev">
     <div class="devices-item" id="slide-1" *ngFor="let device of devices">
       <a class="devices-device-item" *ngIf="device.turnOn===true" style="cursor: pointer;" [routerLink]="['/device/'+device.id]" >
         <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
@@ -8,5 +8,8 @@
       </a>
       <h3 id="deviceh3">{{device.name}}</h3>
     </div>
-  </div>
+</div>
+<div class="no-devices" *ngIf="noDev">
+  <h2>You don't have any devices!</h2>
+</div>
   <h2 class="moredevices"><a [routerLink]='["/devices"]'>See more devices</a></h2>
