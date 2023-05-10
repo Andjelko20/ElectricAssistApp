@@ -10,7 +10,27 @@ namespace Server.Filters
             if(filter == null)
                 return users;
 
+            if(filter.DeviceCategoryId != null)
+            {
+                if(filter.Value != null)
+                {
+                    if(filter.DeviceCategoryId == 1)
+                    {
+                        if(filter.greaterThan == true)
+                            users = users.Where(src => src.CurrentProduction > filter.Value);
+                        else
+                            users = users.Where(src => src.CurrentProduction <= filter.Value);
+                    }
+                    else if(filter.DeviceCategoryId == 2)
+                    {
+                        if (filter.greaterThan == true)
+                            users = users.Where(src => src.CurrentConsumption > filter.Value);
+                        else
+                            users = users.Where(src => src.CurrentConsumption <= filter.Value);
+                    }
 
+                }
+            }
             return users;
         }
 

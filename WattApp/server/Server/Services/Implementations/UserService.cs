@@ -132,9 +132,9 @@ namespace Server.Services.Implementations
             return page;
         }
 
-        public async Task<DataPage<UserDetailsDTO>> GetPageOfUsersForDSO(int pageNumber, int itemsPerPage, long cityId, long loggedCityId, UserFilterModel userFilterModel)
+        public async Task<DataPage<ProsumerForDSOResponseDTO>> GetPageOfUsersForDSO(int pageNumber, int itemsPerPage, long cityId, long loggedCityId, UserFilterModel userFilterModel, ProsumerDSOFilterModel prosumerDSOFilter)
         {
-            DataPage<UserDetailsDTO> page = new();
+            DataPage<ProsumerForDSOResponseDTO> page = new();
             IQueryable<UserModel> users = null;
 
             if (cityId == 0)
@@ -170,25 +170,41 @@ namespace Server.Services.Implementations
 
             users = UserFilter.applyFilters(users, userFilterModel);
 
-            if (!users.Any()) throw new HttpRequestException("There is no users!", null, System.Net.HttpStatusCode.NotFound);
+            //if (!users.Any()) throw new HttpRequestException("There is no users!", null, System.Net.HttpStatusCode.NotFound);
+
+            IQueryable<ProsumerForDSOResponseDTO> prosumerForDSOResponses = null;
+            List<ProsumerForDSOResponseDTO> listOfProsumers = new List<ProsumerForDSOResponseDTO>();
+            foreach(UserModel user in users)
+            {
+                listOfProsumers.Add(new ProsumerForDSOResponseDTO(
+                    new UserDetailsDTO(user),
+                    _service.GetTotalConsumptionInTheMomentForOneProsumer(2, user.Id),
+                    _service.GetTotalConsumptionInTheMomentForOneProsumer(1, user.Id)));
+            }
+
+            prosumerForDSOResponses = listOfProsumers.AsQueryable();
+
+            ProsumerDSOFilter.ApplyFilter(prosumerForDSOResponses, prosumerDSOFilter);
+            if (!prosumerForDSOResponses.Any()) throw new HttpRequestException("There is no users!", null, System.Net.HttpStatusCode.NotFound);
+
 
             int maxPageNumber;
-            if (users.Count() % itemsPerPage == 0) maxPageNumber = users.Count() / itemsPerPage;
+            if (prosumerForDSOResponses.Count() % itemsPerPage == 0) maxPageNumber = prosumerForDSOResponses.Count() / itemsPerPage;
             else maxPageNumber = users.Count() / itemsPerPage + 1;
 
             if (pageNumber < 1 || pageNumber > maxPageNumber) throw new HttpRequestException("Invalid page number!", null, System.Net.HttpStatusCode.BadRequest);
             if (itemsPerPage < 1) throw new HttpRequestException("Invalid page size number!", null, System.Net.HttpStatusCode.BadRequest);
 
-            users = users.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
+            prosumerForDSOResponses = prosumerForDSOResponses.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
 
-            List<UserModel> userModels = users.ToList();
+            /*List<UserModel> userModels = users.ToList();
             List<UserDetailsDTO> userDetailsDTOs = new List<UserDetailsDTO>();
             foreach (UserModel user in userModels)
             {
                 userDetailsDTOs.Add(new UserDetailsDTO(user));
-            }
+            }*/
 
-            page.Data = userDetailsDTOs;
+            page.Data = prosumerForDSOResponses.ToList();
             page.NumberOfPages = maxPageNumber;
             page.PreviousPage = (pageNumber == 1) ? null : pageNumber - 1;
             page.NextPage = (pageNumber == page.NumberOfPages) ? null : pageNumber + 1;

@@ -87,34 +87,14 @@ namespace Server.Controllers
         [HttpGet]
         [Route("page/filters")]
         [Authorize(Roles=Roles.Dispatcher)]
-        public async Task<IActionResult> GetPage([FromQuery] UserFilterModel userFilterModel, [FromQuery] int pageNumber,[FromQuery] long cityId=0, [FromQuery] int pageSize=20)
+        public async Task<IActionResult> GetPage([FromQuery] UserFilterModel userFilterModel, [FromQuery] ProsumerDSOFilterModel prosumerDSOFilter, [FromQuery] int pageNumber,[FromQuery] long cityId=0, [FromQuery] int pageSize=20)
         {
             try
             {
-                DataPage<UserDetailsDTO> page = new();
 
                 var id = long.Parse(tokenService.GetClaim(HttpContext, "id"));
                 var loggedInUser = await userService.GetUserById(id);
-                page = await userService.GetPageOfUsersForDSO(pageNumber, pageSize, cityId, loggedInUser.Settlement.CityId, userFilterModel);
-
-                DataPage<ProsumerForDSOResponseDTO> dataPage = new();
-                List<ProsumerForDSOResponseDTO> prosumerForDSOResponseDTOs = new List<ProsumerForDSOResponseDTO>();
-
-                List<UserDetailsDTO> userDetailsDTOs = page.Data;
-                foreach(UserDetailsDTO userDetailsDTO in userDetailsDTOs)
-                {
-                    prosumerForDSOResponseDTOs.Add(new ProsumerForDSOResponseDTO(userDetailsDTO,
-                        prosumerService.GetTotalConsumptionInTheMomentForOneProsumer(1, userDetailsDTO.Id),
-                        prosumerService.GetTotalConsumptionInTheMomentForOneProsumer(2, userDetailsDTO.Id)));
-                }
-
-                dataPage.Data = prosumerForDSOResponseDTOs;
-                dataPage.NumberOfPages = page.NumberOfPages;
-                dataPage.PreviousPage = page.PreviousPage;
-                dataPage.NextPage = page.NextPage;
-
-                return Ok(dataPage);
-
+                return Ok(await userService.GetPageOfUsersForDSO(pageNumber, pageSize, cityId, loggedInUser.Settlement.CityId, userFilterModel, prosumerDSOFilter));
 
             }
             catch (HttpRequestException ex)
