@@ -16,19 +16,21 @@ Chart.register(ChartDataLabels);
   styleUrls: ['./pie-chart.component.css']
 })
 export class PieChartComponent implements OnInit {
+  loader:boolean=false;
   settlements:Settlement[] = [];
   settlementsValue:number[] = [];
   constructor(private authService:AuthService,private historyService:HistoryPredictionService) {
   
   }
   ngOnInit(): void {
-
+    this.loader=true;
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
           this.settlements = settlement;
           this.settlements.forEach(settlement =>{
-            this.historyService.getCurrentConsumptionProductionSettlement(2,settlement.id).subscribe(value =>{
+            this.historyService.getCurrentConsumptionProductionSettlement(1,settlement.id).subscribe(value =>{
+              this.loader=false;
               this.settlementsValue.push(value);
               this.PieChart();
             })

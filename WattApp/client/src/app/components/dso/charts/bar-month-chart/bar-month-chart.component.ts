@@ -48,7 +48,8 @@ export const MY_FORMATS = {
   ],
 })
 export class BarMonthChartComponent {
-
+  
+  loader:boolean=false;
   currentDate = new Date();
   maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
@@ -84,9 +85,11 @@ export class BarMonthChartComponent {
   }
 
   ngOnInit(): void {
+    this.loader=true;
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.loader=false;
           this.settlements = settlement;
           const selectElement = document.getElementById('dropdown') as HTMLSelectElement
           const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;
@@ -99,6 +102,7 @@ export class BarMonthChartComponent {
               this.selectedOption = selectedItem.id;
             }
           }
+          
         })
         if(this.selectedOption == 0 && this.selectedDate == undefined){
           forkJoin([

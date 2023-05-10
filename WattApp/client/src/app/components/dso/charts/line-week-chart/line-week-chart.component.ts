@@ -52,6 +52,7 @@ Chart.register(...registerables)
 })
 export class LineWeekChartComponent {
 
+  loader:boolean=false;
   currentDate = new Date();
   maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   list1:WeekByDay[] = [];
@@ -83,9 +84,11 @@ export class LineWeekChartComponent {
   send = this.campaignOne.value.end;
 
   ngOnInit(): void {
+    this.loader=true;
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.loader=false;
           this.settlements = settlement;
           const selectElement = document.getElementById('dropdown') as HTMLSelectElement
           const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;

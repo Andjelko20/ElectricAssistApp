@@ -14,17 +14,18 @@ Chart.register(...registerables)
 })
 export class LineDayChartComponent {
 
+  loader:boolean=false;
   selectedOption: number;
-  constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {
-    this.selectedOption = 0;
-  }
+ 
   currentDate = new Date();
   maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-1);
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
   
-
+  constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {
+    this.selectedOption = 0;
+  }
   onOptionSelected(event: any) {
     this.selectedOption = event.target.value;
     this.ngOnInit()
@@ -39,9 +40,11 @@ export class LineDayChartComponent {
   
 
   ngOnInit(): void {
+    this.loader=true;
     this.authService.getlogInUser().subscribe(user => {
       this.authService.getCityId(user.city).subscribe(number => {
         this.authService.getSettlement(number).subscribe((settlement: Settlement[]) => {
+          this.loader=false;
           this.settlements = settlement;
           const selectElement = document.getElementById('dropdown') as HTMLSelectElement
           const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;
