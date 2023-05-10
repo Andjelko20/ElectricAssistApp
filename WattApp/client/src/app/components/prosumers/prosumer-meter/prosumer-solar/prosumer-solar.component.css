@@ -1,48 +1,41 @@
-/* div {
-    position: absolute;
-    top: 26%;
-    right: 15%;
-} */
-
-/* @media (max-width: 768px) {
-    div {
-        top: 30%;
-        right: 10%;
-    }
-}
-
-@media s (max-width: 320px) {
-    div {
-        top: 35%;
-        right: 5%;
-    }
-    ngx-gauge {
-        size: 20vh;
-    }
-} */
 #solar1 {
     display: block;
     align-items: center;
     justify-content: space-around;
 }
+
 #solar {
-
     display: none;
-
 }
-@media  (min-width: 768px) {
-   
+
+#solar2 {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    #solar {
+        display: none;
+    }
+    #solar1 {
+        display: none;
+    }
+    #solar2 {
+        display: block;
+        align-items: center;
+        justify-content: space-around;
+    }
+}
+
+@media (min-width: 1500px) {
     #solar {
         display: block;
         align-items: center;
         justify-content: space-around;
     }
     #solar1 {
-    
         display: none;
-    
     }
-    
+    #solar2 {
+        display: none;
+    }
 }
-
-/* promenite vrednosti u zavisnosti od vaših potreba */

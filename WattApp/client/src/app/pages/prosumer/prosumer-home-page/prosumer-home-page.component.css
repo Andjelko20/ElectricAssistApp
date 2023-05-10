@@ -11,6 +11,15 @@ ul {
     min-height: 100vh;
 }
 
+.infoSolar {
+    margin-top: -46px;
+}
+
+.prodactionNow {
+    display: flex;
+    justify-content: center;
+}
+
 .homeimage {
     position: relative;
     height: auto;
@@ -22,7 +31,7 @@ ul {
     padding-top: 45px;
     position: relative;
     width: 100%;
-    min-height: 279px;
+    min-height: 240px;
 }
 
 
@@ -62,7 +71,6 @@ ul {
 .midletree {
     display: flex;
     justify-content: center;
-    /* border: 1px solid black; */
     width: 100%;
     height: auto;
 }
@@ -172,8 +180,6 @@ ul {
 #imgdevice {
     position: sticky;
     display: inline-block;
-    /* max-width: 140px;
-    max-height: 120px; */
     width: 65%;
 }
 
@@ -198,20 +204,11 @@ ul {
 
 .consumptionNow {
     border: 1px solid black;
-    /* display: flexbox;
-    width: 10%;
-    max-height: 20%;
-    top: 31%;
-    display: inline-block;
-    left: 32%;
-    position: absolute;
-    transition: all 0.3s; */
     display: none;
 }
 
 .prognosis {
     display: none;
-    /* border: 1px solid black; */
     width: 50%;
     height: 7%;
     top: 12%;
@@ -221,15 +218,6 @@ ul {
 }
 
 .solarPowerNow {
-    /* display: flexbox;
-    border: 1px solid black;
-    width: 5%;
-    max-height: 20%;
-    top: 20%;
-    right: 26%;
-    position: absolute;
-    transition: all 0.3s;
-    display: flex; */
     display: none;
 }
 
@@ -277,6 +265,11 @@ h1 {
     .main {
         top: 0;
         position: absolute;
+    }
+    .prodactionNow {
+        width: 310px;
+        margin-top: 15px;
+        margin-left: 40%;
     }
     .midle {
         /* border: 1px solid black; */
@@ -333,24 +326,15 @@ h1 {
     #deviceh3 {
         font-size: 30px;
     }
-    /* .prodactionNow {
-        border: 1px solid black;
-        width: 200px;
-        max-height: 200px;
+    .infoSolar {
+        width: 100%;
+        margin: 0;
+        top: 60px !important;
         position: absolute;
-        top: 27%;
-        left: 66%;
-        transform: translate(-50%, -50%);
-    } */
-    /* .carbatterytree {
-        margin-left: 10%;
-        margin-top: 1%;
-        margin-bottom: 2%;
-    } */
+    }
     .prodactionToday {
         display: flexbox;
         width: 300px;
-        top: 100px;
         position: absolute;
         height: 100px;
         transition: all 0.3s;
