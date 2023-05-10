@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.DTOs;
 using Server.Models.DropDowns.Location;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace Server.Services.Implementations
@@ -1055,27 +1056,32 @@ namespace Server.Services.Implementations
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-
-                        var hour = date.Hour;
-                        var day = date.Day;
-                        var month = date.ToString("MMMM");
-                        var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
-
-                        var dailyEnergyUsage = new EnergyToday
+                        while (reader.Read())
                         {
-                            Hour = hour,
-                            Day = day,
-                            Month = month,
-                            Year = year,
-                            EnergyUsageResult = Math.Round(energyUsage, 2)
-                        };
+                            DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
-                        energyUsages.Add(dailyEnergyUsage);
+                            var hour = date.Hour;
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            var dailyEnergyUsage = new EnergyToday
+                            {
+                                Hour = hour,
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
                     }
+                    else
+                        FillInWithZerosConsumptionProductionDayByHour(skipCount, itemsPerPage, energyUsages);
                 }
 
                 return energyUsages;
@@ -1130,27 +1136,32 @@ namespace Server.Services.Implementations
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-
-                        var hour = date.Hour;
-                        var day = date.Day;
-                        var month = date.ToString("MMMM");
-                        var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
-
-                        var dailyEnergyUsage = new EnergyToday
+                        while (reader.Read())
                         {
-                            Hour = hour,
-                            Day = day,
-                            Month = month,
-                            Year = year,
-                            EnergyUsageResult = Math.Round(energyUsage, 2)
-                        };
+                            DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
-                        energyUsages.Add(dailyEnergyUsage);
+                            var hour = date.Hour;
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            var dailyEnergyUsage = new EnergyToday
+                            {
+                                Hour = hour,
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
                     }
+                    else
+                        FillInWithZerosConsumptionProductionDayByHour(skipCount, itemsPerPage, energyUsages);
                 }
 
                 return energyUsages;
@@ -1207,27 +1218,32 @@ namespace Server.Services.Implementations
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-
-                        var hour = date.Hour;
-                        var day = date.Day;
-                        var month = date.ToString("MMMM");
-                        var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
-
-                        var dailyEnergyUsage = new EnergyToday
+                        while (reader.Read())
                         {
-                            Hour = hour,
-                            Day = day,
-                            Month = month,
-                            Year = year,
-                            EnergyUsageResult = Math.Round(energyUsage, 2)
-                        };
+                            DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
-                        energyUsages.Add(dailyEnergyUsage);
+                            var hour = date.Hour;
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            var dailyEnergyUsage = new EnergyToday
+                            {
+                                Hour = hour,
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
                     }
+                    else
+                        FillInWithZerosConsumptionProductionDayByHour(skipCount, itemsPerPage, energyUsages);
                 }
 
                 return energyUsages;
@@ -1285,30 +1301,63 @@ namespace Server.Services.Implementations
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-
-                        var hour = date.Hour;
-                        var day = date.Day;
-                        var month = date.ToString("MMMM");
-                        var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
-
-                        var dailyEnergyUsage = new EnergyToday
+                        while (reader.Read())
                         {
-                            Hour = hour,
-                            Day = day,
-                            Month = month,
-                            Year = year,
-                            EnergyUsageResult = Math.Round(energyUsage, 2)
-                        };
+                            DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
-                        energyUsages.Add(dailyEnergyUsage);
+                            var hour = date.Hour;
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            var dailyEnergyUsage = new EnergyToday
+                            {
+                                Hour = hour,
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
                     }
+                    else
+                        FillInWithZerosConsumptionProductionDayByHour(skipCount, itemsPerPage, energyUsages);
                 }
 
                 return energyUsages;
+            }
+        }
+
+        public void FillInWithZerosConsumptionProductionDayByHour(int skipCount, int itemsPerPage, List<EnergyToday> energyUsages)
+        {
+            var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            var endDate = DateTime.Now;
+
+            int itemsAdded = 0;
+            for (var date = startDate; date < endDate; date = date.AddHours(1))
+            {
+                if (itemsAdded >= skipCount && itemsAdded < skipCount + itemsPerPage)
+                {
+                    var dailyEnergyUsage = new EnergyToday
+                    {
+                        Hour = date.Hour,
+                        Day = date.Day,
+                        Month = date.ToString("MMMM"),
+                        Year = date.Year,
+                        EnergyUsageResult = 0.0
+                    };
+
+                    energyUsages.Add(dailyEnergyUsage);
+                }
+
+                itemsAdded++;
+                if (itemsAdded >= skipCount + itemsPerPage)
+                    break;
             }
         }
     }
