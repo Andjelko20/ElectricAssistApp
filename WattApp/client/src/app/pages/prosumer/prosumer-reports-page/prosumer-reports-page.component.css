@@ -13,7 +13,7 @@
 .toggle-containerr {
     margin: 11px;
     border-radius: 5px;
-    max-width: 97%;
+    max-width: 94%;
     background-color: #bce9e4;
 }
 
@@ -333,7 +333,7 @@ button.active {
         margin-right: 23px;
     }
     .toggle-containerr {
-        width: 100%;
+        max-width: 100%;
     }
     .toggle-buttons label {
         font-size: 35px;
