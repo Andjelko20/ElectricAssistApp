@@ -19,6 +19,7 @@ export class PredictionTabularProsumerComponent {
   list2:WeekByDay[] = [];
 
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
+  datePipe: any;
 
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     
@@ -51,6 +52,8 @@ export class PredictionTabularProsumerComponent {
         }
       }
   }
+  const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'consumption/production-week',
@@ -59,7 +62,7 @@ export class PredictionTabularProsumerComponent {
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production']
+    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production', 'Exported Date '+formattedDate]
   };
 
   const csvExporter = new ExportToCsv(options);

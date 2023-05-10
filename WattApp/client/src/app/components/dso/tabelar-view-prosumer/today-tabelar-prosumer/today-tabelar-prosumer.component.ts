@@ -16,6 +16,7 @@ export class TodayTabelarProsumerComponent implements OnInit{
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number }[] = [];
+  datePipe: any;
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     this.maxDate = new Date();
   }
@@ -102,6 +103,8 @@ export class TodayTabelarProsumerComponent implements OnInit{
           }
         }
     }
+    const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
     const options = {
       fieldSeparator: ',',
       filename: 'consumption/production-day',
@@ -110,7 +113,7 @@ export class TodayTabelarProsumerComponent implements OnInit{
       decimalSeparator: '.',
       showLabels: true,
       useTextFile: false,
-      headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+      headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
     };
 
     const csvExporter = new ExportToCsv(options);

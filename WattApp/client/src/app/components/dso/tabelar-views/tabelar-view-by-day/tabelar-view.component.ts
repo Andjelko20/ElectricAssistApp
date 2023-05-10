@@ -6,7 +6,7 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
 import { saveAs } from 'file-saver';
 import { ExportToCsv } from 'export-to-csv';
 import { forkJoin } from 'rxjs';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-tabelar-view',
   templateUrl: './tabelar-view.component.html',
@@ -19,11 +19,11 @@ export class TabelarViewComponent implements OnInit{
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
   selectedOption: number = 0;
-  mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number }[] = [];
+  mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number}[] = [];
   onOptionSelected() {
     this.ngOnInit();
   }
-  constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {}
+  constructor(private authService:AuthService,private deviceService:HistoryPredictionService,private datePipe: DatePipe) {}
 
   selectedDate!: Date;
 
@@ -169,6 +169,8 @@ export class TabelarViewComponent implements OnInit{
         }
       }
   }
+  const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'consumption/production-day',
@@ -177,10 +179,11 @@ export class TabelarViewComponent implements OnInit{
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+    headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
   };
 
   const csvExporter = new ExportToCsv(options);
+
   const csvData = csvExporter.generateCsv(this.mergedList);
 
   }

@@ -50,6 +50,7 @@ export class TabelarViewByMonthComponent implements OnInit{
   list2:WeekByDay[]=[];
   settlements:Settlement[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
+  datePipe: any;
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService){
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -173,6 +174,8 @@ export class TabelarViewByMonthComponent implements OnInit{
         }
       }
   }
+  const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'consumption/production-month',
@@ -181,7 +184,7 @@ export class TabelarViewByMonthComponent implements OnInit{
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
   };
 
   const csvExporter = new ExportToCsv(options);
