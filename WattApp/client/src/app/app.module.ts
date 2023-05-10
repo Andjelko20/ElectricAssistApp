@@ -1,5 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
-import { DecimalPipe } from '@angular/common'; // import DecimalPipe
+import { DatePipe, DecimalPipe } from '@angular/common'; 
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -15,7 +15,6 @@ import { AllProsumersComponent } from "./components/dso/all-prosumers/all-prosum
 import { BarChartComponent } from "./components/dso/charts/bar-chart/bar-chart.component";
 import { BarMonthChartComponent } from "./components/dso/charts/bar-month-chart/bar-month-chart.component";
 import { BarYearChartComponent } from "./components/dso/charts/bar-year-chart/bar-year-chart.component";
-import { LineChartComponent } from "./components/dso/charts/line-chart/line-chart.component";
 import { LineDayChartComponent } from "./components/dso/charts/line-day-chart/line-day-chart.component";
 import { LineWeekChartComponent } from "./components/dso/charts/line-week-chart/line-week-chart.component";
 import { PieChartComponent } from "./components/dso/charts/pie-chart/pie-chart.component";
@@ -27,7 +26,6 @@ import { ConsumptionMonthWattmeterComponent } from "./components/dso/meter/consu
 import { ConsumptionTodayWattmeterComponent } from "./components/dso/meter/consumption-today-wattmeter/consumption-today-wattmeter.component";
 import { ConsumptionYearWattmeterComponent } from "./components/dso/meter/consumption-year-wattmeter/consumption-year-wattmeter.component";
 import { CurrentPowerWattmeterComponent } from "./components/dso/meter/current-power-wattmeter/current-power-wattmeter.component";
-import { NumberOfUsersMeterComponent } from "./components/dso/meter/number-of-users-meter/number-of-users-meter.component";
 import { OneProsumerComponent } from "./components/dso/one-prosumer/one-prosumer.component";
 import { MapInputComponent } from "./components/map-input/map-input.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
@@ -90,7 +88,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatFormFieldControl } from "@angular/material/form-field";
+
 import { MatInputModule } from '@angular/material/input';
 import { ProsumerDayGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-day-graph/prosumer-day-graph.component";
 import { ProsumerMonthGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-month-graph/prosumer-month-graph.component";
@@ -104,7 +102,21 @@ import { PredictionDsoComponent } from "./components/dso/prediction/prediction-d
 import { PredictionTabelarDsoComponent } from './components/dso/prediction/prediction-tabelar-dso/prediction-tabelar-dso.component';
 
 import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-change-password/prosumer-change-password.component';
-
+import { DeviceTodayComponent } from './components/prosumers/prosumer-device-graph/device-today/device-today.component';
+import { DeviceWeekComponent } from './components/prosumers/prosumer-device-graph/device-week/device-week.component';
+import { DeviceMonthComponent } from './components/prosumers/prosumer-device-graph/device-month/device-month.component';
+import { DeviceYearComponent } from './components/prosumers/prosumer-device-graph/device-year/device-year.component';
+import { PredictionTabularProsumerComponent } from './components/dso/prediction/prediction-tabular-prosumer/prediction-tabular-prosumer.component';
+import { PredictionTabularDeviceComponent } from './components/dso/prediction/prediction-tabular-device/prediction-tabular-device.component';
+import { DeviceTodayTabularComponent } from './components/prosumers/prosumer-device-tabular/device-today-tabular/device-today-tabular.component';
+import { DeviceWeekTabularComponent } from './components/prosumers/prosumer-device-tabular/device-week-tabular/device-week-tabular.component';
+import { DeviceMonthTabularComponent } from './components/prosumers/prosumer-device-tabular/device-month-tabular/device-month-tabular.component';
+import { DeviceYearTabularComponent } from './components/prosumers/prosumer-device-tabular/device-year-tabular/device-year-tabular.component';
+import { ProsumerDayProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-day-production/prosumer-day-production.component';
+import { ProsumerWeekProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-week-production/prosumer-week-production.component';
+import { ProsumerMonthProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-month-production/prosumer-month-production.component';
+import { ProsumerYearProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-year-production/prosumer-year-production.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -113,7 +125,6 @@ import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-chang
     RegisterComponent,
     ChangePasswordComponent,
     PieChartComponent,
-    LineChartComponent,
     BarChartComponent,
     ProsumerHomePageComponent,
     ProsumerDevicesPageComponent,
@@ -127,7 +138,6 @@ import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-chang
     ConsumptionTodayWattmeterComponent,
     ConsumptionMonthWattmeterComponent,
     ConsumptionYearWattmeterComponent,
-    NumberOfUsersMeterComponent,
     MapsComponent,
     AllProsumersComponent,
     LineDayChartComponent,
@@ -206,7 +216,21 @@ import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-chang
     PredictionDsoComponent,
     PredictionTabelarDsoComponent,
 
-    ProsumerChangePasswordComponent
+    ProsumerChangePasswordComponent,
+      DeviceTodayComponent,
+      DeviceWeekComponent,
+      DeviceMonthComponent,
+      DeviceYearComponent,
+      PredictionTabularProsumerComponent,
+      PredictionTabularDeviceComponent,
+      DeviceTodayTabularComponent,
+      DeviceWeekTabularComponent,
+      DeviceMonthTabularComponent,
+      DeviceYearTabularComponent,
+      ProsumerDayProductionComponent,
+      ProsumerWeekProductionComponent,
+      ProsumerMonthProductionComponent,
+      ProsumerYearProductionComponent,
     
   ],
   imports: [
@@ -225,7 +249,7 @@ import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-chang
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [DecimalPipe],
+  providers: [DecimalPipe,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -19,7 +19,6 @@ export class ProsumerHomePageComponent implements OnInit {
   ngOnInit(): void {
     let token=new JwtToken();
     this.id=token.data.id as number;
-    console.log(this.id)
     this.historyService.currentUserProductionConsumption(this.id,2).subscribe(data =>{
       this.currentConsumption = data;
     })

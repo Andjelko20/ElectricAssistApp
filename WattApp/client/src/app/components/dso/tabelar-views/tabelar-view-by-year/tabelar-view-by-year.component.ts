@@ -51,6 +51,7 @@ export class TabelarViewByYearComponent implements OnInit{
   settlements:Settlement[] = [];
   mergedList: {month: string, year: number, consumption: number, production: number }[] = [];
   itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
+  datePipe: any;
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -78,11 +79,16 @@ export class TabelarViewByYearComponent implements OnInit{
     this.authService.getCityId(user.city).subscribe(number=>{
       this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
         this.settlements = settlement;
-        if(this.selectedOption != 0){
-          this.selectedOption = this.settlements[(this.selectedOption-1)].id;
-        }
-        else{
+        const selectElement = document.getElementById('dropdown') as HTMLSelectElement
+        const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;
+
+        if (selectedOptionName === 'Total') {
           this.selectedOption = 0;
+        } else {
+          const selectedItem = this.settlements.find(item => item.name === selectedOptionName);
+          if (selectedItem) {
+            this.selectedOption = selectedItem.id;
+          }
         }
       })
       if(this.selectedOption == 0 && this.selectedDate == undefined){
@@ -97,11 +103,9 @@ export class TabelarViewByYearComponent implements OnInit{
       }
       else if(this.selectedOption == 0 && this.selectedDate != undefined){
         const year = this.selectedDate!.getFullYear();
-        let string1 = year-1+'-'+1+'-'+1;
-        let string2 = year+'-'+1+'-'+1;
         forkJoin([
-          this.deviceService.monthbyDayCityFilter(string1,string2,number, 2),
-          this.deviceService.monthbyDayCityFilter(string1,string2,number, 1)
+          this.deviceService.monthbyDayCityFilter(year,number, 2),
+          this.deviceService.monthbyDayCityFilter(year,number, 1)
         ]).subscribe(([list1, list2]) => {
           this.list1 = list1;
           this.list2 = list2;
@@ -110,12 +114,10 @@ export class TabelarViewByYearComponent implements OnInit{
       }
       else if(this.selectedOption != 0 && this.selectedDate != undefined){
         let year = this.selectedDate!.getFullYear();
-        let string1 = year-1+'-'+1+'-'+1;
-        let string2 = year+'-'+1+'-'+1;
 
         forkJoin([
-          this.deviceService.monthbySettlementCityFilter(string1,string2, this.selectedOption,2),
-          this.deviceService.monthbySettlementCityFilter(string1,string2, this.selectedOption,1)
+          this.deviceService.monthbySettlementCityFilter(year, this.selectedOption,2),
+          this.deviceService.monthbySettlementCityFilter(year, this.selectedOption,1)
         ]).subscribe(([list1, list2]) => {
           this.list1 = list1;
           this.list2 = list2;
@@ -151,15 +153,17 @@ export class TabelarViewByYearComponent implements OnInit{
         }
       }
   }
+  const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-year.csv',
+    filename: 'consumption/production-year',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Month', 'Year', 'Consumption', 'Production']
+    headers: ['Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
   };
 
   const csvExporter = new ExportToCsv(options);

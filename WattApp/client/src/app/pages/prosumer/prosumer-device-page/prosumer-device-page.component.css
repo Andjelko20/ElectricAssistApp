@@ -32,18 +32,69 @@
     justify-content: center;
 }
 
+.toggle-buttons {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
 
-/* .btn {
-    background-color: #3E5483;
-    border-color: #3E5483;
-    float: right;
-    font-size: 10px;
-    margin: 5px;
-    box-shadow: none;
+.toggle-buttons label {
+    display: inline-block;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.toggle-buttons input[type="radio"] {
+    display: none;
+}
+
+.toggle-buttons span.divider {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    margin: 0 10px;
+    background-color: gray;
+}
+
+.toggle-buttons input[type="radio"]:checked+label {
+    font-weight: bold;
+    color: #727272;
+}
+
+.toggle-buttons input[type="radio"]:not(:checked)+label {
+    color: gray;
+}
+
+.chart-buttons {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.chart-button {
+    cursor: pointer;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    color: #2199e8;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.chart-button:hover {
+    background-color: #2199e8;
     color: white;
-    width: 60px;
-    border-radius: 10px;
-} */
+    box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+}
+
+button.active {
+    box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+}
 
 .deviceimg {
     margin-top: 5px;
@@ -112,6 +163,10 @@ p {
     margin-top: 5px;
 }
 
+.history-charts {
+    background-color: white;
+}
+
 #phistiry {
     padding-left: 5px;
     border-radius: 5px;
@@ -131,6 +186,7 @@ p {
     border-radius: 5px;
     padding: 9px;
     width: 100%;
+    margin-bottom: 15px;
     border: none;
     text-align: left;
     outline: none;
@@ -142,10 +198,27 @@ p {
     background-color: #1c315e;
 }
 
-.content {
-    padding: 0 18px;
+.content1 {
+    width: 100%;
+    display: block;
+    margin-right: -13px;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.content2 {
+    width: 100%;
+    display: none;
+    margin-right: -13px;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.content3 {
+    width: 100%;
     display: none;
     overflow: hidden;
+    margin-right: -13px;
     background-color: #f1f1f1;
 }
 
@@ -166,26 +239,20 @@ p {
         width: 3%;
         margin-left: 2%;
     }
-    /* .btn {
-        width: 12% !important;
-        font-size: 20px;
-        margin: 9px;
-    } */
+    .toggle-buttons label {
+        font-size: 25px;
+    }
     .updatedelete {
         height: 60px;
     }
     .deviceimg {
         width: 100%;
         text-align: left;
-        /* min-height: auto; */
-        /* box-sizing: border-box; */
     }
     #imgdevice {
         box-sizing: border-box;
         width: 13%;
-        /* float: left; */
         margin: 10px;
-        /* position: relative; */
     }
     .info {
         float: right;
@@ -194,8 +261,6 @@ p {
     }
     .infoimg {
         float: left;
-        /* margin-top: 15px; */
-        /* float: left; */
         left: 15%;
         padding-top: 15px;
         position: absolute;
@@ -216,7 +281,6 @@ p {
         width: 96%;
     }
     .glafik {
-        /* min-height: 100vh; */
         margin: 2%;
         margin-bottom: 55px;
         border-radius: 5px;
@@ -230,7 +294,22 @@ p {
     .collapsible:hover {
         background-color: #1c315e;
     }
-    .content {
+    .content1 {
+        width: 100%;
+        padding: 0 18px;
+        display: block;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content2 {
+        width: 100%;
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content3 {
+        width: 100%;
         padding: 0 18px;
         display: none;
         overflow: hidden;

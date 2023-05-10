@@ -1,4 +1,8 @@
 <div class="chart">
-    <canvas height="490px" width="1500px" id="linechart">
-    </canvas>
+    <div class="chart-container" *ngIf="consumptionGraph">
+        <canvas id="linechart2"></canvas>
+    </div>
+    <div class="chart-container" *ngIf="productionGraph">
+        <canvas id="linechart1"></canvas>
+    </div>
 </div>

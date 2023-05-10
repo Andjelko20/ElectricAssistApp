@@ -1,50 +1,44 @@
-<div class="container">
-    <div class="row">
-      <div class="col-md-12">
+<div class="table-container responsive">
+    <div class="col-md-12">
         <h1>Energy Usage</h1>
         <mat-form-field appearance="fill">
-          <mat-label>Month and Year</mat-label>
-          <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
-          <mat-hint>MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="dp" ></mat-datepicker-toggle>
-          <mat-datepicker #dp
-                          startView="multi-year"
-                          (monthSelected)="setMonthAndYear($event, dp)"
-                          panelClass="example-month-picker">
-          </mat-datepicker>
+            <mat-label>Month and Year</mat-label>
+            <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
+            <mat-hint>MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp startView="multi-year" (monthSelected)="setMonthAndYear($event, dp)" panelClass="example-month-picker">
+            </mat-datepicker>
         </mat-form-field>
         <button class="btn" (click)="downloadCSV()">Export to CSV</button>
         <div class="table-container">
-          <div class="table-wrapper">
-            <h2 class="table-title">Consumption/Production</h2>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Year</th>
-                  <th>Month</th>
-                  <th>Day</th>
-                  <th>Consumption</th>
-                  <th>Production</th>
-  
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item1 of list1">
-                  <ng-container *ngFor="let item2 of list2">
-                    <ng-container *ngIf="item1.year == item2.year && item1.month == item2.month && item1.day == item2.day">
-                      <td>{{ item1.year }}</td>
-                      <td>{{ item1.month }}</td>
-                      <td>{{ item1.day }}</td>
-                      <td>{{ item1.energyUsageResult }} kWh</td>
-                      <td>{{ item2.energyUsageResult }} kWh</td>
-                    </ng-container>
-                  </ng-container>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <div class="table-wrapper">
+                <h2 class="table-title">Consumption/Production</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th>Day</th>
+                            <th>Consumption</th>
+                            <th>Production</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item1 of list1">
+                            <ng-container *ngFor="let item2 of list2">
+                                <ng-container *ngIf="item1.year == item2.year && item1.month == item2.month && item1.day == item2.day">
+                                    <td>{{ item1.year }}</td>
+                                    <td>{{ item1.month }}</td>
+                                    <td>{{ item1.day }}</td>
+                                    <td>{{ item1.energyUsageResult }} kWh</td>
+                                    <td>{{ item2.energyUsageResult }} kWh</td>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  
+</div>

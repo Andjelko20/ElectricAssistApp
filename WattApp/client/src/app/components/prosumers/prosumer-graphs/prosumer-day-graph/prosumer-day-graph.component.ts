@@ -34,66 +34,77 @@ export class ProsumerDayGraphComponent {
     if(this.selectedDate == undefined){
       combineLatest([
         this.deviceService.dayByHourUser(userId, 2),
-        this.deviceService.dayByHourUser(userId, 1)
-      ]).subscribe(([list1, list2]) => {
+      ]).subscribe(([list1]) => {
+
         this.list1 = list1;
-        this.list2 = list2;
-        this.LineChart();
+        this.LineChartConsumption();
       });
     }
     else if(this.selectedDate !== undefined){
       const day = this.selectedDate.getDate();
+      let dayString = String(day).padStart(2, '0');
       const month = this.selectedDate.getMonth()+1;
+      let monthString = String(month).padStart(2, '0');
       const year = this.selectedDate.getFullYear();
       let string1 = '';
       let string2 = '';
-      if(month % 2 )
-          {
-            if(day == 30 || (month == 2 && day == 28)){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
-            }
-            else{
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+month+'-'+(day+1)
-            }
-          }
-          else if(month % 2 == 1){
-            if(day == 31 || (month == 6 || month == 7) ){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
-            }
-            else{
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+month+'-'+(day+1)
-            }
-          }
-
+      if(month % 2 == 0)
+      {
+        if(day == 30 || (month == 2 && day == 28)){
+          string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+          monthString = String(month+1).padStart(2, '0');
+          string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00'
+        }
+        else if( month == 12){
+          string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+          string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
+        }
+        else{
+          string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+          dayString = String(day+1).padStart(2, '0');
+          string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+        }
+      }
+      else{
+        if(day == 31){
+          string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+          monthString = String(month+1).padStart(2, '0');
+          string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00'
+        }
+        else{
+          string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+          dayString = String(day+1).padStart(2, '0');
+          string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
+        }
+      }
       forkJoin([
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 2),
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 1)
-      ]).subscribe(([list1, list2]) => {
+      ]).subscribe(([list1]) => {
         this.list1 = list1;
-        this.list2 = list2;
-        this.LineChart();
+        this.LineChartConsumption();
+
       });
     }
     
   
   }
-  LineChart(){
 
-    const chartId = 'linechart';
+  
+  LineChartConsumption(){
+
+    const chartId = 'linechart2';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const Linechart =new Chart("linechart", {
+    const hours = this.list1.map(day => day.hour);
+
+    const Linechart =new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: ['0','4','8','12','16','20',''],
+        labels: ["0","4","8","12","16","20"," "],
         
         datasets: [
           {
@@ -121,32 +132,19 @@ export class ProsumerDayGraphComponent {
           borderWidth: 2,
           fill: true
           },
-          {
-            label: 'production',
-            data: energyUsageResults2,
-            tension:0.5,
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-            pointBorderColor: 'rgba(0, 255, 0, 1)',
-            pointBorderWidth: 7,
-            pointRadius: 5,
-            pointHoverRadius: 6,
-            fill:true
-          }
-          
         ]
         
       }
       ,
       options: {
+        maintainAspectRatio: false,
+        responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:13
               }
             },
             position: "left",
@@ -155,7 +153,7 @@ export class ProsumerDayGraphComponent {
               text: " kWh",
               color:'#000',
               font:{
-                size:20
+                size:13
               }
             }
           }
@@ -164,7 +162,7 @@ export class ProsumerDayGraphComponent {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:13
               }
             },
             title:{
@@ -172,41 +170,25 @@ export class ProsumerDayGraphComponent {
               text: "Hours in a day",
               color:'#000',
               font:{
-                size:20
+                size:13
               }
             }
           }
           ,
         },
-        responsive: true,
+       
+      
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
-          },
+          legend:{display:false},
+        
           title: {
             
             display: true,
-            text: 'Consumption and production in one day',
+            text: 'Consumption in one day',
             color: '#000',
             font:{
-              size:20
+              size:15
             }
           }
         }

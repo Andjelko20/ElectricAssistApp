@@ -1,5 +1,5 @@
-<div id="continer">
-	<div id="all">
+<div id="container1">
+	<div id="all" >
 		<label for="country">Country</label>
 		<br>
 		<select id="country" class="select-form-control" name="country">     
@@ -24,7 +24,7 @@
 		<div class="address-container">
 			<label for="Address">Address</label>
 			<br>
-			<input type="text" class="form-control" id="address" name="address" [(ngModel)]="address" (keydown)="changeLocations()">
+			<input type="text" class="form-control" id="address" name="address" [(ngModel)]="address" (keydown)="changeLocations($event)">
 			<div class="search-result" [class.invisible]="!searchResultVisible">
 				<div *ngIf="locations.length==0" class="no-results">
 					<p>There are no results</p>

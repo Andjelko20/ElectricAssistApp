@@ -1,50 +1,75 @@
+<div class="glavni" *ngIf="device">
+    <div class="updatedelete">
+        <span id="typedev">{{device.deviceType}}</span>
+        <button id="del" class="btn btn-primary" (click)="delete(device.id)">Delete</button>
+        <a id="del" class="btn btn-primary" [routerLink]='["/device-update/"+idDevice]' role="button">Update</a>
+    </div>
+    <div class="deviceimg">
+        <div class="infoimg">
 
-        <div class="glavni"  *ngIf="device">
-            <div class="updatedelete">
-                <span id="typedev">{{device.deviceType}}</span>
-                <button id="del" class="btn btn-primary" (click)="delete(device.id)" >Delete</button>
-                <a id="del"class="btn btn-primary" [routerLink]='["/device-update/"+idDevice]' role="button">Update</a>
-            </div>
-            <div class="deviceimg">
-                <div class="infoimg" >
-                    
-                    <h2 >{{device.name}}</h2>
-                    
-                    
-                          <label class="switch"  *ngIf="device.turnOn===false"(click)="turnOn(device.id)">
+            <h2>{{device.name}}</h2>
+
+
+            <label class="switch" *ngIf="device.turnOn===false" (click)="turnOn(device.id)">
                             <input type="checkbox" [disabled]="!buttonOnoff">
                             <span class="slider round"></span>
                           </label>
-                          <label class="switch"  *ngIf="device.turnOn===true" (click)="turnOff(device.id)">
+            <label class="switch" *ngIf="device.turnOn===true" (click)="turnOff(device.id)">
                             <input type="checkbox" checked [disabled]="!buttonOnoff">
                             <span class="slider round"></span>
                           </label>
-                   
-                </div>
-                <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
 
-                <div class="info">
-                    <p>Session Started</p>
-                    <p>Duration</p>
-                    <p>Energy consumtion</p>
-                </div>
+        </div>
+        <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
+
+        <div class="info" *ngIf="device.turnOn===true ">
+            <div class="session">
+                <p class="session-label">Session Started</p>
+                <p class="session-duration">{{duration.startTime}}</p>
+            </div>
+            <div class="session">
+                <p class="session-label">Duration </p>
+                <p class="session-duration">{{duration.duration}}</p>
+            </div>
+            <div class="session" *ngIf="device.deviceCategory=='Electricity Producer'">
+                <p class="session-label">Energy producing</p>
+                <p class="session-duration">25kWh</p>
+            </div>
+            <div class="session" *ngIf="device.deviceCategory=='Electricity Consumer'">
+                <p class="session-label">Energy consuming</p>
+                <p class="session-duration">25kWh</p>
             </div>
         </div>
-
-        <ng-template #modalContent let-modal >
-          <div class="modal-header">
-            <!-- <h5 class="modal-title" id="modalTitle">{{ title }}</h5> -->
-            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-          </div>
-          <div class="modal-body">
-            <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
-            <div id="subb">
-              <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>&nbsp;&nbsp;
-              <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+        <div class="info" *ngIf="device.turnOn===false ">
+            <div class="session">
+                <p class="session-label">Session Ended</p>
+                <p class="session-duration">{{duration.endTime}}</p>
             </div>
-          </div>
-          <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>
-            <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
-          </div> -->
-        </ng-template>
+            <div class="session">
+                <p class="session-label">Duration </p>
+                <p class="session-duration">{{duration.duration}}</p>
+            </div>
+            <div class="session" *ngIf="device.deviceCategory=='Electricity Producer'">
+                <p class="session-label">Energy producing</p>
+                <p class="session-duration">25kWh</p>
+            </div>
+            <div class="session" *ngIf="device.deviceCategory=='Electricity Consumer'">
+                <p class="session-label">Energy consuming</p>
+                <p class="session-duration">25kWh</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalContent let-modal>
+    <div class="modal-header">
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+        <div id="subb">
+            <button type="button" class="btn btn-primary" (click)="modal.close('Save click')" id="popup">{{btnAction}}</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-danger" (click)="modal.dismiss('cancel')">Close</button>
+        </div>
+    </div>
+</ng-template>

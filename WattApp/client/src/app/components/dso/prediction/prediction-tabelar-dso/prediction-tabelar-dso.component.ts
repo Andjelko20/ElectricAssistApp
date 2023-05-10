@@ -12,10 +12,12 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
   styleUrls: ['./prediction-tabelar-dso.component.css']
 })
 export class PredictionTabelarDsoComponent {
+  loader:boolean=false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   settlements:Settlement[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
+  datePipe: any;
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService){}
 
   selectedOption: number = 0;
@@ -24,16 +26,22 @@ export class PredictionTabelarDsoComponent {
     this.ngOnInit();
   }
   ngOnInit() {
+    this.loader=true
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.loader=false
           this.settlements = settlement;
-          if(this.selectedOption != 0){
-            
-            this.selectedOption = this.settlements[(this.settlements.length-this.selectedOption)].id;
-          }
-          else{
+          const selectElement = document.getElementById('dropdown') as HTMLSelectElement
+          const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;
+
+          if (selectedOptionName === 'Total') {
             this.selectedOption = 0;
+          } else {
+            const selectedItem = this.settlements.find(item => item.name === selectedOptionName);
+            if (selectedItem) {
+              this.selectedOption = selectedItem.id;
+            }
           }
         })
         
@@ -75,15 +83,17 @@ export class PredictionTabelarDsoComponent {
         }
       }
   }
+  const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-week.csv',
+    filename: 'prediction-week',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production']
+    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production', 'Exported Date '+formattedDate]
   };
 
   const csvExporter = new ExportToCsv(options);

@@ -7,42 +7,171 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 Chart.register(...registerables)
+
 @Component({
   selector: 'app-prediction-device',
   templateUrl: './prediction-device.component.html',
   styleUrls: ['./prediction-device.component.css']
 })
+
 export class PredictionDeviceComponent {
 
-
+  
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
-  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
+  constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     
   }
-
+  consumptionGraph:boolean = false;
+  productionGraph:boolean = false;
   ngOnInit(): void {
-    //treba da se uradi dobijanje deviceid
   
-    this.deviceService.predictionDevice(Number(this.route.snapshot.paramMap.get('deviceid'))).subscribe((data: WeekByDay[]) =>{
-      this.list1 = data;
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(id).subscribe(data=>{
+      if(data.deviceCategory == "Electricity Consumer")
+      {
+        this.consumptionGraph = true;
+        this.deviceService.predictionDevice(id).subscribe(consumption =>{
+          this.list1 = consumption;
+          
+          this.LineChartConsumption();
+        })
+        
+      }
+      else{
+        
+        this.productionGraph=true;
+        
+        this.deviceService.predictionDevice(id).subscribe(production =>{
+   
+          const br: any = 0;
+          if(production==br)
+          {
+            console.log("Nemamo dovoljno podataka");
+          }
+          else{
+            this.list2=production;
+            this.LineChartProduction();
+          }
+         
+         
+        })
+      }
     })
     
+    
   }
-  LineChart(){
+  LineChartProduction(){
 
-    const chartId = 'linechart';
+    const chartId = 'linechart1';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
+    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
+    const month1 = this.list2.map(day => day.day);
+    const Linechart = new Chart("linechart1", {
+      type: 'line',
+      data : {
+        labels: month1,
+        
+        datasets:  [
+          
+          {
+            label: 'production',
+            data: energyUsageResults2,
+            tension:0.5,
+            backgroundColor: 'rgba(0, 255, 0, 0.2)',
+            borderColor: 'rgba(0, 255, 0, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
+            pointBorderColor: 'rgba(0, 255, 0, 1)',
+            pointBorderWidth: 7,
+            pointRadius: 5,
+            pointHoverRadius: 6,
+            fill:true
+          }
+          
+        ]
+        
+      }
+      ,
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        scales:{
+          y: {
+            ticks:{
+              color:'#000',
+              font:{
+                size:13
+              }
+            },
+            position: "left",
+            title:{
+              display:true,
+              text: "kWh",
+              color:'#000',
+              font:{
+                size:13
+              }
+            }
+          }
+          ,
+          x:{
+            ticks:{
+              color:'#000',
+              font:{
+                size:13
+              }
+            },
+            title:{
+              display:true,
+              text: "Days in a week",
+              color:'#000',
+              font:{
+                size:13
+              }
+            }
+          }
+          ,
+        },
+        
+        plugins: {
+          datalabels:{display: false},
+          legend:{
+            display: false
+          },
+         
+          title: {
+            display: true,
+            text: 'Prediction production in a week',
+            color:'#000',
+            font:{
+              size:15
+            }
+          }
+        }
+      }
+    });
+
+  }
+  LineChartConsumption(){
+
+    const chartId = 'linechart2';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-
-    const Linechart = new Chart("linechart", {
+    const month2 = this.list1.map(day => day.day);
+    
+    const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        labels: month2,
         
         datasets:  [
           {
@@ -76,12 +205,14 @@ export class PredictionDeviceComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
+        responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:13
               }
             },
             position: "left",
@@ -90,7 +221,7 @@ export class PredictionDeviceComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:20
+                size:13
               }
             }
           }
@@ -99,7 +230,7 @@ export class PredictionDeviceComponent {
             ticks:{
               color:'#000',
               font:{
-                size:20
+                size:13
               }
             },
             title:{
@@ -107,40 +238,25 @@ export class PredictionDeviceComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:20
+                size:13
               }
             }
           }
           ,
         },
-        responsive: true,
+        
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend:{
+            display:false
           },
+         
           title: {
             display: true,
-            text: ' Consumption and production in a week',
+            text: 'Prediction consuming in a week',
             color:'#000',
             font:{
-              size:20
+              size:15
             }
           }
         }

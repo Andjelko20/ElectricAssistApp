@@ -16,23 +16,24 @@ Chart.register(ChartDataLabels);
   styleUrls: ['./pie-chart.component.css']
 })
 export class PieChartComponent implements OnInit {
+  loader:boolean=false;
   settlements:Settlement[] = [];
   settlementsValue:number[] = [];
   constructor(private authService:AuthService,private historyService:HistoryPredictionService) {
   
   }
   ngOnInit(): void {
-
+    this.loader=true;
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
           this.settlements = settlement;
           this.settlements.forEach(settlement =>{
-            this.historyService.getCurrentConsumptionProductionSettlement(2,settlement.id).subscribe(value =>{
+            this.historyService.getCurrentConsumptionProductionSettlement(1,settlement.id).subscribe(value =>{
+              this.loader=false;
               this.settlementsValue.push(value);
               this.PieChart();
             })
-            
           })
         })
       })
@@ -53,20 +54,32 @@ export class PieChartComponent implements OnInit {
       label: '',
       data: this.settlementsValue,
       backgroundColor: [
-         //dugine
-        "#F7DC6F", 
-        "#AF7AC5",
-        " #2E8B57 ", 
-        "#F5B7B1", 
-        "#D5F5E3", 
-        "#483D8B ",
-        "#87CEFA",  
-        "#4B0082 ",
-        "#FFFFF0", 
-        "#BC8F8F",
-        "#696969 ",
-        "#483D8B ",
-        "#4B0082 ",
+        '#081d58','#7fcdbb',
+          '#c7e9b4',  '#41b6c4', '#1d91c0', '#225ea8', '#253494', 
+        // "#2B70A7",
+        // "#BF1E2E",
+        // "#E2B37D",
+        // "#EF4136",
+        // "#F15A2B",
+        // "#006838",
+        // "#B5D4EF",
+        // "#77B3E1",
+        // "#28AAE1",
+        // "#2A3890",
+        // "#F9ED32",
+        // "#D7E022",
+        // "#8DC73F",
+        // "#39B54A",
+        // "#009445",
+        // "#F5F194",
+        // "#F2F5CD",
+        // "#7B5231",
+        // "#68499E",
+        // "#662D91",
+        // "#AF7AC5",
+        // " #2E8B57 ", 
+        // "#87CEFA", 
+        // "#D7E022",
           ],
       borderWidth: 1,
       borderColor: "#00000",
@@ -79,7 +92,7 @@ export class PieChartComponent implements OnInit {
         labels: name,
           datasets: data
       },
-      options: {
+      options: {maintainAspectRatio:false,responsive:true,
         plugins: {
             datalabels: {
                 formatter: (value: number, ctx: { chart: { data: { datasets: { data: any; }[]; }; }; }) => {
@@ -116,15 +129,7 @@ export class PieChartComponent implements OnInit {
               
               
             },
-            // title: {
-            //   display: true,
-            //   text: 'Production in Kwh',
-            //   color:'#727272',
-            //   font:{
-            //     size:25
-            //   }
-              
-            // }
+           
             
         }}
       

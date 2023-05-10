@@ -12,86 +12,143 @@
             </div>
         </div>
         <div class="con" *ngIf="dashboard">
-
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Consumption this month</h5>
-                            <p class="card-text">9.24 kWh </p>
-
+                            <h5 class="card-title">Consumption last today</h5>
+                            <p class="card-text">{{todayC}} kWh</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Production this month</h5>
-                            <p class="card-text">9.24 kWh </p>
-
+                            <h5 class="card-title">Production last today</h5>
+                            <p class="card-text">{{todayP}} kWh</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Storage this month</h5>
-                            <p class="card-text">9.24 kWh </p>
+                            <h5 class="card-title">Production last month</h5>
+                            <p class="card-text">{{monthC}} kWh</p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="graf">
-                <div class="row"></div>
-            </div>
-            <div class="table">
-                <div class="row"></div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Production last month</h5>
+                            <p class="card-text">{{monthP}} kWh</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="toggle-containerr">
+                    <div class="toggle-buttonss">
+                        <input type="radio" (click)="toogleDay()" (click)="toogledayTable()" name="toggle1" id="day-btn" checked [class.active]="day" [class.active]="dayTable">
+                        <label id="dash" for="day-btn">Day</label>
+                        <span class="divider"></span>
+                        <input type="radio" (click)="toogleWeek()" (click)="toogleweekTable()" name="toggle1" id="week-btn" [class.active]="week">
+                        <label for="week-btn">Week</label>
+                        <span class="divider"></span>
+                        <input type="radio" (click)="toogleMonth()" (click)="tooglemonthTable()" name="toggle1" id="month-btn" [class.active]="month">
+                        <label for="month-btn">Month</label>
+                        <span class="divider"></span>
+                        <input type="radio" (click)="toogleYear()" (click)="toogleyearTable()" name="toggle1" id="year-btn" [class.active]="year">
+                        <label for="year-btn">Year</label>
+                    </div>
+                </div>
+                <div class="graf">
+                    <button type="button" class="collapsible dropdown-toggle" (click)="onClick()">Consumption</button>
+                    <div class="content">
+                        <div class=" history-charts-body " *ngIf="day ">
+                            <app-prosumer-day-graph></app-prosumer-day-graph>
+                        </div>
+                        <div class="history-charts-body " *ngIf="week ">
+                            <app-prosumer-week-graph></app-prosumer-week-graph>
+                        </div>
+                        <div class="history-charts-body " *ngIf="month ">
+                            <app-prosumer-month-graph></app-prosumer-month-graph>
+                        </div>
+                        <div class="history-charts-body " *ngIf="year ">
+                            <app-prosumer-year-graph></app-prosumer-year-graph>
+                        </div>
+                    </div>
+                </div>
+                <div class="graf1 ">
+                    <button type="button " class="collapsible dropdown-toggle " (click)="onClickProd()">Prodaction</button>
+                    <div class="content2 ">
+                        <div class="history-charts-body " *ngIf="day ">
+                            <app-prosumer-day-production></app-prosumer-day-production>
+                        </div>
+                        <div class="history-charts-body " *ngIf="week ">
+                            <app-prosumer-week-production></app-prosumer-week-production>
+                        </div>
+                        <div class="history-charts-body " *ngIf="month ">
+                            <app-prosumer-month-production></app-prosumer-month-production>
+                        </div>
+                        <div class="history-charts-body " *ngIf="year ">
+                            <app-prosumer-year-production></app-prosumer-year-production>
+                        </div>
+                    </div>
+                </div>
+                <div class="table ">
+                    <button type="button " class="collapsible dropdown-toggle " (click)="onClickTable()">Table of production/consumption</button>
+                    <div class="content1 ">
+                        <div class="history-table-body " *ngIf="dayTable ">
+                            <app-prosumer-day-table></app-prosumer-day-table>
+                        </div>
+                        <div class="history-table-body " *ngIf="weekTable ">
+                            <app-prosumer-week-table></app-prosumer-week-table>
+                        </div>
+                        <div class="history-table-body " *ngIf="monthTable ">
+                            <app-prosumer-month-table></app-prosumer-month-table>
+                        </div>
+                        <div class="history-table-body " *ngIf="yearTable ">
+                            <app-prosumer-year-table></app-prosumer-year-table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <div class="con " *ngIf="devices ">
 
-        <div class="con" *ngIf="devices">
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Consumption next 7 days</h5>
-                            <p class="card-text">9.24 kWh </p>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Production next 7 days</h5>
-                            <p class="card-text">9.24 kWh </p>
+            <div class="row ">
+                <div class="col">
+                    <div class="card ">
+                        <div class="card-body ">
+                            <h5 class="card-title ">Consumption next 7 days</h5>
+                            <p class="card-text ">9.24 kWh </p>
 
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Storage next 7 days</h5>
-                            <p class="card-text">9.24 kWh </p>
+                <div class="col">
+                    <div class="card ">
+                        <div class="card-body ">
+                            <h5 class="card-title ">Prediction next 7 days</h5>
+                            <p class="card-text ">9.24 kWh </p>
+
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="graf">
-                <div class="row"></div>
-            </div>
-            <div class="table">
-                <div class="row"></div>
+                <div class="predictiontabelandgrapf">
+                    <button type="button " class="collapsible dropdown-toggle active" (click)="onClickPredGraph()">Graphical view</button>
+                    <div class="content3">
+                        <app-prediction-prosumer></app-prediction-prosumer>
+                    </div>
+                    <button type="button " class="collapsible dropdown-toggle " (click)="onClickPredTable()">Tabular view</button>
+                    <div class="content4">
+                        <app-prediction-tabular-prosumer></app-prediction-tabular-prosumer>
+                    </div>
+                </div>
             </div>
         </div>
-        <app-footer></app-footer>
-        <app-prosumer-footer></app-prosumer-footer>
 
     </div>
-    
+    <app-footer></app-footer>
+    <app-prosumer-footer></app-prosumer-footer>
 </div>

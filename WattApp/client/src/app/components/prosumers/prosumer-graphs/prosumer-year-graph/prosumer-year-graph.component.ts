@@ -66,32 +66,42 @@ export class ProsumerYearGraphComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const id = token.data.id as number;
-    forkJoin([
-      this.deviceService.yearByMonthUser(id, 2),
-      this.deviceService.yearByMonthUser(id, 1)
-    ]).subscribe(([list1, list2]) => {
-      this.list1 = list1;
-      this.list2 = list2;
-      this.BarPlot();
-    });
-  }
-  BarPlot(){
+    if(this.selectedDate == undefined){
+      forkJoin([
+        this.deviceService.yearByMonthUser(id, 2),
+      ]).subscribe(([list1]) => {
+        this.list1 = list1;
 
-    const chartId = 'barplot';
+        this.BarPlotConsumption();
+      });
+    }
+    else{
+      const year = this.selectedDate.getFullYear();
+      forkJoin([
+        this.deviceService.monthbyDayUserFilter(year,id, 2),
+      ]).subscribe(([list1]) => {
+        this.list1 = list1;
+
+        this.BarPlotConsumption();
+      });
+    }
+  }
+ 
+  BarPlotConsumption(){
+
+    const chartId = 'barplot2';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
-
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const Linechart =new Chart("barplot", {
-        type: 'bar',
-       
+    const month = this.list1.map(day => day.month);
+
+    const Linechart =new Chart("barplot2", {
+        type: 'bar',      
         data : {
-          labels: this.itemList,
-          
+          labels: month,         
           datasets: [
             {
               label: 'Consumption',
@@ -99,25 +109,17 @@ export class ProsumerYearGraphComponent {
               borderColor: 'rgb(128, 0, 128)',
               backgroundColor: 'rgb(128, 0, 128)',
               
-            },
-            {
-              label: 'Production',
-              data: energyUsageResults2,
-              borderColor: 'rgb(255, 165, 0)',
-              backgroundColor: 'rgb(255, 165, 0)'
-            },
-           
-          ]
-          
+            },                    
+          ]       
         },
         options: 
-        {
+        {responsive: true,
           scales:{
             y: {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:13
                 }
               },
               position: "left",
@@ -128,9 +130,8 @@ export class ProsumerYearGraphComponent {
                 text: "kWh",
                 color: '#000',
                 font:{
-                  size:20
-                }
-                
+                  size:13
+                }                
               }
             }
             ,
@@ -138,49 +139,52 @@ export class ProsumerYearGraphComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:13
                 }
-                
               },
               title:{
                 display:true,
                 text: "Months in a Year",
                 color: '#000',
                 font:{
-                  size:20
+                  size:13
                 }
               }
-            }
-
-          },
-          responsive: true,
+            } 
+          }, 
           plugins: {
             datalabels: {
               display: false
             },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:20
-                } 
-              }
+            legend:{
+              display:false
             },
+            // legend: {
+            //   onHover: function (event, legendItem, legend) {
+            //     document.body.style.cursor = 'pointer';
+            //   },
+            //   onLeave: function (event, legendItem, legend) {
+            //       document.body.style.cursor = 'default';
+            //   },
+              
+            //   position: 'bottom',
+            //   labels: {
+            //     usePointStyle: true,
+            //     color: '#000',
+            //     font:{
+            //       size:20
+            //     } 
+            //     // ,
+            //     // boxHeight:100,
+            //     // boxWidth:100
+            //   }
+            // },
             title: {
               display: true,
-              text: 'Consumption and production in a year',
+              text: 'Consumption in a year',
               color: '#000',
               font:{
-                size:20
+                size:15
               }
             }
           }

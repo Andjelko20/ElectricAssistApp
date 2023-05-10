@@ -44,6 +44,7 @@ Chart.defaults.color = "#fff";
 
 export class BarYearChartComponent {
 
+  loader:boolean=false;
   currentDate = new Date();
   maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:YearsByMonth[]=[];
@@ -73,15 +74,22 @@ export class BarYearChartComponent {
   }
 
   ngOnInit(): void {
+    this.loader=true;
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.loader=false;
           this.settlements = settlement;
-          if(this.selectedOption != 0){
-            this.selectedOption = this.settlements[(this.selectedOption-1)].id;
-          }
-          else{
+          const selectElement = document.getElementById('dropdown') as HTMLSelectElement
+          const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;
+
+          if (selectedOptionName === 'Total') {
             this.selectedOption = 0;
+          } else {
+            const selectedItem = this.settlements.find(item => item.name === selectedOptionName);
+            if (selectedItem) {
+              this.selectedOption = selectedItem.id;
+            }
           }
         })
         if(this.selectedOption == 0 && this.selectedDate == undefined){
@@ -91,34 +99,32 @@ export class BarYearChartComponent {
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.BarPlot();
+            this.BarPlotProduction();
+            this.BarPlotConsumption();
           });
         }
         else if(this.selectedOption == 0 && this.selectedDate != undefined){
           const year = this.selectedDate!.getFullYear();
-          let string1 = year-1+'-'+1+'-'+1;
-          let string2 = year+'-'+1+'-'+1;
           forkJoin([
-            this.deviceService.monthbyDayCityFilter(string1,string2,number, 2),
-            this.deviceService.monthbyDayCityFilter(string1,string2,number, 1)
+            this.deviceService.monthbyDayCityFilter(year,number, 2),
+            this.deviceService.monthbyDayCityFilter(year,number, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.BarPlot();
+            this.BarPlotProduction();
+            this.BarPlotConsumption();
           });
         }
         else if(this.selectedOption != 0 && this.selectedDate != undefined){
           let year = this.selectedDate!.getFullYear();
-          let string1 = year-1+'-'+1+'-'+1;
-          let string2 = year+'-'+1+'-'+1;
-
           forkJoin([
-            this.deviceService.monthbySettlementCityFilter(string1,string2, this.selectedOption,2),
-            this.deviceService.monthbySettlementCityFilter(string1,string2, this.selectedOption,1)
+            this.deviceService.monthbySettlementCityFilter(year, this.selectedOption,2),
+            this.deviceService.monthbySettlementCityFilter(year, this.selectedOption,1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.BarPlot();
+            this.BarPlotProduction();
+            this.BarPlotConsumption();
           });
         }
         else{
@@ -128,38 +134,33 @@ export class BarYearChartComponent {
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.BarPlot();
+            this.BarPlotProduction();
+            this.BarPlotConsumption();
           });
         }
         
       })
     })
   }
-  BarPlot(){
+  BarPlotProduction(){
 
-    const chartId = 'barplot';
+    const chartId = 'barplot1';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
-
-    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const Linechart =new Chart("barplot", {
+    const month = this.list2.map(day => day.month);
+
+    const Linechart =new Chart("barplot1", {
         type: 'bar',
        
         data : {
-          labels: this.itemList,
+          labels: month,
           
           datasets: [
-            {
-              label: 'Consumption',
-              data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
-              
-            },
+
             {
               label: 'Production',
               data: energyUsageResults2,
@@ -172,7 +173,9 @@ export class BarYearChartComponent {
           
         },
         options: 
-        {responsive: true,
+        {
+          maintainAspectRatio:false,
+          responsive: true,
           scales:{
             y: {
               ticks:{
@@ -220,32 +223,111 @@ export class BarYearChartComponent {
           },
           
           plugins: {
-            datalabels: {
+            datalabels:{display: false},
+            legend: { 
               display: false
-            },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:20
-                } 
-                // ,
-                // boxHeight:100,
-                // boxWidth:100
-              }
             },
             title: {
               display: true,
-              text: 'Consumption and production in a year',
+              text: 'Production in a year',
+              color: '#000',
+              font:{
+                size:20
+              }
+            }
+          }
+        }
+      });
+  }
+  BarPlotConsumption(){
+
+    const chartId = 'barplot2';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const month = this.list1.map(day => day.month);
+
+    const Linechart =new Chart("barplot2", {
+        type: 'bar',
+       
+        data : {
+          labels: month,
+          
+          datasets: [
+            {
+              label: 'Consumption',
+              data: energyUsageResults1,
+              borderColor: 'rgb(128, 0, 128)',
+              backgroundColor: 'rgb(128, 0, 128)',
+              
+            },
+           
+            
+          ]
+          
+        },
+        options: 
+        
+        {
+          maintainAspectRatio:false,
+          responsive: true,
+          scales:{
+            y: {
+              ticks:{
+                color:'#000',
+                font:{
+                  size:15
+                }
+              },
+              position: "left",
+              suggestedMin: 5,
+              suggestedMax: 140,
+              title:{
+                display:true,
+                text: "kWh",
+                color: '#000',
+                font:{
+                  size:15
+                }
+                
+              }
+            }
+            ,
+            x:{
+              ticks:{
+                color:'#000',
+                font:{
+                  size:15
+                }
+                
+              },
+              title:{
+                display:true,
+                text: "Months in a Year",
+                color: '#000',
+                font:{
+                  size:15
+                }
+              }
+            }
+            
+              
+            
+            
+            
+          },
+          
+          plugins: {
+            datalabels:{display: false},
+          legend: { 
+            display: false
+          },
+            title: {
+              display: true,
+              text: 'Consumption in a year',
               color: '#000',
               font:{
                 size:20

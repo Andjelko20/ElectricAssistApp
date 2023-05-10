@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { empty } from 'rxjs';
 import { ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
 import { Categories } from 'src/app/utilities/categories';
@@ -29,7 +28,7 @@ export class AllDevicesComponent implements OnInit {
     private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.deviceCategoryId=2
+    this.deviceCategoryId=0
     this.deviceService.getAllDevices(1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
       this.totalItems=devices.numberOfPages*this.itemsPerPage;
 		this.devices=devices.data.map((u:any)=>({
@@ -82,6 +81,7 @@ export class AllDevicesComponent implements OnInit {
     onSelectedCategory(event:any)
     {
       
+      
       this.deviceCategoryId = event.target.value;
       
       
@@ -109,20 +109,4 @@ export class AllDevicesComponent implements OnInit {
       
       
     }
-  delete(id:number)
-  {
-    if(confirm('Are you sere to delete? '+id))
-    {
-      this.deviceService.delete(id)
-      .subscribe({
-        next:()=>{
-          this.router.navigate(['devices']);
-          location.reload();
-        }
-      });
-    }
-  }
-  
-  
-  
 }

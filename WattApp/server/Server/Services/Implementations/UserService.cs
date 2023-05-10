@@ -25,11 +25,13 @@ namespace Server.Services.Implementations
         public readonly SqliteDbContext context;
         public readonly ILogger<UserService> logger;
         public readonly IHistoryService historyService;
-        public UserService(SqliteDbContext context, ILogger<UserService> logger, IHistoryService historyService)
+        public readonly IProsumerService _service;
+        public UserService(SqliteDbContext context, ILogger<UserService> logger, IHistoryService historyService, IProsumerService service)
         {
             this.context = context;
             this.logger = logger;
             this.historyService = historyService;
+            _service = service; 
         }
         public int GetNumberOfPages(int itemsPerPage, Func<UserModel, bool> filter)
         {
@@ -130,6 +132,84 @@ namespace Server.Services.Implementations
             return page;
         }
 
+        public async Task<DataPage<ProsumerForDSOResponseDTO>> GetPageOfUsersForDSO(int pageNumber, int itemsPerPage, long cityId, long loggedCityId, UserFilterModel userFilterModel, ProsumerDSOFilterModel prosumerDSOFilter)
+        {
+            DataPage<ProsumerForDSOResponseDTO> page = new();
+            IQueryable<UserModel> users = null;
+
+            if (cityId == 0)
+            {
+                users = (IQueryable<UserModel>)context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
+                .Where((user) => user.RoleId == Roles.ProsumerId);
+            }
+            else if (cityId == -1)
+            {
+                logger.LogInformation("Uzimam grad");
+                users = (IQueryable<UserModel>)context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
+                .Where((user) => user.RoleId == Roles.ProsumerId && loggedCityId == user.Settlement.CityId);
+            }
+            else
+            {
+                users = (IQueryable<UserModel>)context.Users
+                .Include(user => user.Role)
+                .Include(user => user.Settlement)
+                .Include(user => user.Settlement.City)
+                .Include(user => user.Settlement.City.Country)
+                .Where((user) => user.RoleId == Roles.ProsumerId && user.Settlement.CityId == cityId);
+            }
+
+            if (users == null)
+                throw new HttpRequestException("No items found in database.", null, HttpStatusCode.NotFound);
+            users = UserFilter.applyFilters(users, userFilterModel);
+
+            //if (!users.Any()) throw new HttpRequestException("There is no users!", null, System.Net.HttpStatusCode.NotFound);
+
+            IQueryable<ProsumerForDSOResponseDTO> prosumerForDSOResponses = null;
+            List<ProsumerForDSOResponseDTO> listOfProsumers = new List<ProsumerForDSOResponseDTO>();
+            foreach(UserModel user in users)
+            {
+                listOfProsumers.Add(new ProsumerForDSOResponseDTO(
+                    new UserDetailsDTO(user),
+                    _service.GetTotalConsumptionInTheMomentForOneProsumer(2, user.Id),
+                    _service.GetTotalConsumptionInTheMomentForOneProsumer(1, user.Id)));
+            }
+
+            prosumerForDSOResponses = listOfProsumers.AsQueryable();
+
+            ProsumerDSOFilter.ApplyFilter(prosumerForDSOResponses, prosumerDSOFilter);
+            if (!prosumerForDSOResponses.Any()) throw new HttpRequestException("There is no users!", null, System.Net.HttpStatusCode.NotFound);
+
+
+            int maxPageNumber;
+            if (prosumerForDSOResponses.Count() % itemsPerPage == 0) maxPageNumber = prosumerForDSOResponses.Count() / itemsPerPage;
+            else maxPageNumber = users.Count() / itemsPerPage + 1;
+
+            if (pageNumber < 1 || pageNumber > maxPageNumber) throw new HttpRequestException("Invalid page number!", null, System.Net.HttpStatusCode.BadRequest);
+            if (itemsPerPage < 1) throw new HttpRequestException("Invalid page size number!", null, System.Net.HttpStatusCode.BadRequest);
+
+            prosumerForDSOResponses = prosumerForDSOResponses.Skip((pageNumber - 1) * itemsPerPage).Take(itemsPerPage);
+
+            /*List<UserModel> userModels = users.ToList();
+            List<UserDetailsDTO> userDetailsDTOs = new List<UserDetailsDTO>();
+            foreach (UserModel user in userModels)
+            {
+                userDetailsDTOs.Add(new UserDetailsDTO(user));
+            }*/
+
+            page.Data = prosumerForDSOResponses.ToList();
+            page.NumberOfPages = maxPageNumber;
+            page.PreviousPage = (pageNumber == 1) ? null : pageNumber - 1;
+            page.NextPage = (pageNumber == page.NumberOfPages) ? null : pageNumber + 1;
+            return page;
+        }
         public Task<UserModel?> GetUserByEmail(string email)
         {
             return context
@@ -245,10 +325,10 @@ namespace Server.Services.Implementations
 
         public object ConfirmEmailAddress(string key)
         {
-            PendingUserModel pendingUser = context.PendingUsers.FirstOrDefault(src => src.ConfirmKey == key);
+            PendingUserModel pendingUser = context.PendingUsers.Where(src => src.ConfirmKey == key).FirstOrDefault();
             if (pendingUser == null)
             {
-                return new HttpRequestException("There is no pending request with such a key");
+                return new HttpRequestException("there is no pending request with such a key");
             }
             else
             {
@@ -256,14 +336,14 @@ namespace Server.Services.Implementations
                 {
                     context.PendingUsers.Remove(pendingUser);
                     context.SaveChanges();
-                    return new HttpRequestException("Confirmation link has been expired");
+                    return new HttpRequestException("confirmation link has been expired");
                 }
                 else
                 {
                     UserModel userModel = context.Users.FirstOrDefault(src => src.Username == pendingUser.Username || src.Email == pendingUser.Email);
                     if (userModel != null)
                     {
-                        return new HttpRequestException("Ooops... Looks like there is a user with such username or email.");
+                        return new HttpRequestException("there is a user with such username or email.");
                     }
                     else
                     {
@@ -327,7 +407,7 @@ namespace Server.Services.Implementations
 
             if(changeEmailModel == null)
             {
-                return new HttpRequestException("Sorry! But there is no request with that key.");
+                return new HttpRequestException("there is no request with that key.");
             }
             else
             {
@@ -335,7 +415,7 @@ namespace Server.Services.Implementations
                 {
                     context.ChangeEmailModels.Remove(changeEmailModel);
                     context.SaveChanges();
-                    return new HttpRequestException("Sorry! But link has been expired");
+                    return new HttpRequestException("link has been expired");
                 }
 
                 UserModel user = null;
@@ -344,7 +424,7 @@ namespace Server.Services.Implementations
                 {
                     context.ChangeEmailModels.Remove(changeEmailModel);
                     context.SaveChanges();
-                    return new HttpRequestException("Someone is already using that email address.");
+                    return new HttpRequestException("someone is already using that email address.");
                 }
 
                 user = context.Users.Where(src => src.Email == changeEmailModel.OldEmail).FirstOrDefault();

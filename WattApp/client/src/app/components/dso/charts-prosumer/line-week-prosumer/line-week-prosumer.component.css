@@ -1,21 +1,18 @@
-.chart canvas {
-    width: 100%; /* Set the width to 100% of the parent element */
-    height: 450px; /* Set the height to 500 pixels */
-  }
-
 .chart {
-    display: inline-block;
-    
+    background-color: white;
+    border-radius: 5px;
+    width: 100%;
 }
-@media only screen and (min-width: 768px) and (max-width: 1280px) {
-    .chart {
-        display: inline-block;
-       
-    }
-    .chart canvas {
-        width: 100%; /* Set the width to 100% of the parent element */
-        height: 1800px; /* Set the height to 500 pixels */
-      }
-    
-    
+
+.chart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    min-height: 30vh;
+    width: 100%;
+}
+#linechart{
+    display: inline-flex;
+    width: 100%;
 }

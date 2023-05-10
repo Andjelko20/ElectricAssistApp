@@ -1,14 +1,12 @@
 <app-prosumer-navbar></app-prosumer-navbar>
 <div class="main">
     <div class="all">
-        <div class="back">
-            <a [routerLink]='["/devices"]'><img id="turnback" src="assets/img/back.png" alt=""></a>
-        </div>
         <div class="global">
-
             <div class="global1">
+                <div class="back">
+                    <a [routerLink]='["/devices"]'><img id="turnback" src="assets/img/back.png" alt=""></a>
+                </div>
                 <h1>Add</h1>
-
                 <form #form="ngForm" (ngSubmit)="addDevices()" [formGroup]="myForm">
                     <div class="form-row">
                         <div class="form-group col-md-6 ">
@@ -46,10 +44,10 @@
                             <input type="text" class="form-control" id="name" name="name" formControlName="nameform1" [(ngModel)]="addDeviceRequest.name" required>
                             <br>
                             <label for="energyInKwh">Energy in kWh</label>
-                            <input type="number" class="form-control" id="energyInKwh" name="energyInKwh" formControlName="nameform2" [(ngModel)]="addDeviceRequest.energyInKwh">
+                            <input type="number" class="form-control" id="energyInKwh" name="energyInKwh" formControlName="nameform2" [(ngModel)]="addDeviceRequest.energyInKwh" readonly>
                             <br>
                             <label for="standByKwh">Stand by in kWh</label>
-                            <input type="number" class="form-control" id="standByKwh" name="standByKwh" formControlName="nameform3" [(ngModel)]="addDeviceRequest.standByKwh">
+                            <input type="number" class="form-control" id="standByKwh" name="standByKwh" formControlName="nameform3" [(ngModel)]="addDeviceRequest.standByKwh" readonly>
                             <br>
 
                         </div>

@@ -30,8 +30,8 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
 
   private _createFiveDayRange(date: D | null): DateRange<D> {
     if (date) {
-      const start = this._dateAdapter.addCalendarDays(date, -4);
-      const end = this._dateAdapter.addCalendarDays(date, 3);
+      const start = this._dateAdapter.addCalendarDays(date, 0);
+      const end = this._dateAdapter.addCalendarDays(date, 7);
       return new DateRange<D>(start, end);
     }
 
@@ -52,14 +52,13 @@ Chart.register(...registerables)
 })
 export class LineWeekChartComponent {
 
-
+  loader:boolean=false;
   currentDate = new Date();
-  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1,this.currentDate.getDate()-1);
+  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   settlements:Settlement[] = [];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
-    this.maxDate = new Date();
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
       this.send = value.end;
@@ -85,15 +84,22 @@ export class LineWeekChartComponent {
   send = this.campaignOne.value.end;
 
   ngOnInit(): void {
+    this.loader=true;
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.loader=false;
           this.settlements = settlement;
-          if(this.selectedOption != 0){
-            this.selectedOption = this.settlements[(this.selectedOption-1)].id;
-          }
-          else{
+          const selectElement = document.getElementById('dropdown') as HTMLSelectElement
+          const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;
+
+          if (selectedOptionName === 'Total') {
             this.selectedOption = 0;
+          } else {
+            const selectedItem = this.settlements.find(item => item.name === selectedOptionName);
+            if (selectedItem) {
+              this.selectedOption = selectedItem.id;
+            }
           }
         })
         
@@ -104,19 +110,24 @@ export class LineWeekChartComponent {
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.LineChart();
+            this.LineChartProduction();
+            this.LineChartConsumption();
           });
           
         }
         else if(this.selectedOption == 0 && (this.sdate != null && this.send != null)){
           const day1 = this.sdate.getDate();
           const month1 = this.sdate.getMonth()+1;
+          let dayString1 = String(day1).padStart(2, '0');
+          let monthString1 = String(month1).padStart(2, '0');
           const year1 = this.sdate.getFullYear();
           const day2 = this.send.getDate();
           const month2 = this.send.getMonth()+1;
+          let dayString2 = String(day2).padStart(2, '0');
+          let monthString2 = String(month2).padStart(2, '0');
           const year2 = this.send.getFullYear();
-          let string1 = year1+'-'+month1+'-'+day1;
-          let string2 = year2+'-'+month2+'-'+day2;
+          let string1 = year1+'-'+monthString1+'-'+dayString1+' '+'00:00:00';
+          let string2 = year2+'-'+monthString2+'-'+dayString2+' '+'00:00:00';
 
           forkJoin([
             this.deviceService.weekByDayCityFilter(string1,string2,number, 2),
@@ -124,18 +135,23 @@ export class LineWeekChartComponent {
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.LineChart();
+            this.LineChartProduction();
+            this.LineChartConsumption();
           });
         }
         else if(this.selectedOption != 0 && (this.sdate != null && this.send != null)){
           const day1 = this.sdate.getDate();
           const month1 = this.sdate.getMonth()+1;
+          let dayString1 = String(day1).padStart(2, '0');
+          let monthString1 = String(month1).padStart(2, '0');
           const year1 = this.sdate.getFullYear();
           const day2 = this.send.getDate();
           const month2 = this.send.getMonth()+1;
+          let dayString2 = String(day2).padStart(2, '0');
+          let monthString2 = String(month2).padStart(2, '0');
           const year2 = this.send.getFullYear();
-          let string1 = year1+'-'+month1+'-'+day1;
-          let string2 = year2+'-'+month2+'-'+day2;
+          let string1 = year1+'-'+monthString1+'-'+dayString1+' '+'00:00:00';
+          let string2 = year2+'-'+monthString2+'-'+dayString2+' '+'00:00:00';
 
           forkJoin([
             this.deviceService.weekByDaySettlementFilter(string1,string2,number, this.selectedOption),
@@ -143,7 +159,8 @@ export class LineWeekChartComponent {
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.LineChart();
+            this.LineChartProduction();
+            this.LineChartConsumption();
           });
         }
         else{
@@ -153,7 +170,9 @@ export class LineWeekChartComponent {
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-            this.LineChart();
+            this.LineChartProduction();
+            this.LineChartConsumption();
+
           });
         }
         
@@ -162,48 +181,25 @@ export class LineWeekChartComponent {
     
 
   }
-  LineChart(){
+  LineChartProduction(){
 
-    const chartId = 'linechart';
+    const chartId = 'linechart1';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
-    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
+    const month = this.list2.map(day => day.day);
 
-    const Linechart = new Chart("linechart", {
+
+    const Linechart = new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        labels: month,
         
         datasets:  [
-          {
-            label: 'consumption',
-            data: energyUsageResults1,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-          ],
-          pointBorderColor: 'rgba(255,99,132,1)',
-          pointBorderWidth: 7,
-            pointRadius: 5,
-          borderWidth: 2,
-          fill: true
-          },
+          
           {
             label: 'production',
             data: energyUsageResults2,
@@ -224,6 +220,7 @@ export class LineWeekChartComponent {
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -265,28 +262,113 @@ export class LineWeekChartComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
-          },
+          legend:{display:false},
           title: {
             display: true,
-            text: ' Consumption and production in a week',
+            text: 'Production in a week',
+            color:'#000',
+            font:{
+              size:20
+            }
+          }
+        }
+      }
+    });
+
+  }
+  LineChartConsumption(){
+
+    const chartId = 'linechart2';
+    const chartExists = Chart.getChart(chartId);
+    if (chartExists) {
+        chartExists.destroy();
+    }
+
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const month = this.list1.map(day => day.day);
+    const Linechart = new Chart("linechart2", {
+      type: 'line',
+      data : {
+        labels: month,
+        
+        datasets:  [
+          {
+            label: 'consumption',
+            data: energyUsageResults1,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+          ],
+          pointBorderColor: 'rgba(255,99,132,1)',
+          pointBorderWidth: 7,
+            pointRadius: 5,
+          borderWidth: 2,
+          fill: true
+          },
+          
+        ]
+        
+      }
+      ,
+      options: {
+        maintainAspectRatio:false,
+        responsive: true,
+        scales:{
+          y: {
+            ticks:{
+              color:'#000',
+              font:{
+                size:15
+              }
+            },
+            position: "left",
+            title:{
+              display:true,
+              text: "kWh",
+              color:'#000',
+              font:{
+                size:15
+              }
+            }
+          }
+          ,
+          x:{
+            ticks:{
+              color:'#000',
+              font:{
+                size:15
+              }
+            },
+            title:{
+              display:true,
+              text: "Days in a week",
+              color:'#000',
+              font:{
+                size:15
+              }
+            }
+          }
+          ,
+        },
+        
+        plugins: {
+          datalabels:{display: false},
+          legend:{display:false},
+          title: {
+            display: true,
+            text: ' Consumption in a week',
             color:'#000',
             font:{
               size:20

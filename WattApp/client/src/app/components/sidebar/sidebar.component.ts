@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit, TemplateRef, ViewChild,ElementRef  } from '@angular/core';
+import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationStart, Router, RouterLinkWithHref } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Roles } from '../../utilities/role'
 import { JwtToken } from 'src/app/utilities/jwt-token';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Location } from '@angular/common';
+import { Renderer2 } from '@angular/core';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit{
+  @ViewChild('modalContent') modalContent!: TemplateRef<any>;
+  onClickLeave!: (this: HTMLElement, ev: MouseEvent) => any;
   role?:string;
   admin?:string;
   superadmin?:string;
@@ -16,13 +21,15 @@ export class SidebarComponent implements OnInit{
   prosumer?:string;
   currentUrl: string = '';
   constructor(public router:Router,private usersService:AuthService,
-    public route:ActivatedRoute) { 
+    public route:ActivatedRoute,private modalService: NgbModal,private location: Location,
+    private renderer: Renderer2,private elRef: ElementRef) { 
 
       this.admin=Roles.ADMIN_NAME;
       this.dso=Roles.DISPATCHER_NAME;
       this.prosumer=Roles.PROSUMER_NAME;
       this.superadmin=Roles.SUPERADMIN_NAME;
       
+       
     }
   ngOnInit(): void {
     let token=new JwtToken();
@@ -47,6 +54,48 @@ export class SidebarComponent implements OnInit{
 
   toggleSidebarContent() {
     this.showSidebarContent = !this.showSidebarContent;
+  }
+  clickSidebar(event: Event, url: string) {
+    event.preventDefault();
+  
+    if(this.location.path() === '/add-user')
+    {
+      this.router.navigateByUrl('/add-user');
+      if (url !== '/add-user') {
+      
+        this.modalService.open(this.modalContent);
+        const controlabilityOnPopup = document.getElementById('popup');
+        if (controlabilityOnPopup != null) {
+          controlabilityOnPopup.removeEventListener('click', this.onClickLeave);
+          this.onClickLeave = () => {
+            this.modalService.dismissAll();
+            this.router.navigateByUrl(url);
+            controlabilityOnPopup.removeEventListener('click', this.onClickLeave);
+          };
+          controlabilityOnPopup.addEventListener('click', this.onClickLeave);
+        }
+      }
+    }
+    if(this.location.path() === '/profile-admin')
+    {
+      this.router.navigateByUrl('/profile-admin');
+      if (url !== '/profile-admin') {
+      
+        this.modalService.open(this.modalContent);
+        const controlabilityOnPopup = document.getElementById('popup');
+        if (controlabilityOnPopup != null) {
+          controlabilityOnPopup.removeEventListener('click', this.onClickLeave);
+          this.onClickLeave = () => {
+            this.modalService.dismissAll();
+            this.router.navigateByUrl(url);
+            controlabilityOnPopup.removeEventListener('click', this.onClickLeave);
+          };
+          controlabilityOnPopup.addEventListener('click', this.onClickLeave);
+        }
+      }
+    }
+    
+    
   }
   logout()
   {

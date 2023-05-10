@@ -12,7 +12,7 @@ namespace Server.Filters
                 users = users.Where(src => src.Blocked == filter.Blocked);
             if (filter.SettlmentId != null)
                 users = users.Where(src => src.SettlementId == filter.SettlmentId);
-            if (filter.CityId != null)
+            if (filter.CityId != null && filter.CityId!=-1)
                 users = users.Where(src => src.Settlement.CityId == filter.CityId);
             if (filter.RoleId != null)
                 users = users.Where(src => src.RoleId == filter.RoleId);

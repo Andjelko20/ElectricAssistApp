@@ -76,46 +76,46 @@ export class ProsumerMonthGraphComponent {
     if(this.selectedDate == undefined){
       forkJoin({
         list1: this.deviceService.monthByDayUser(userId, 2),
-        list2: this.deviceService.monthByDayUser(userId, 1)
-      }).subscribe(({ list1, list2 }) => {
+      }).subscribe(({ list1 }) => {
         this.list1 = list1;
-        this.list2 = list2;
-        this.BarPlot();
+        this.BarPlotConsumption();
       });
     }
     else{
-      const month = this.selectedDate!.getMonth()+1;
-          const year = this.selectedDate!.getFullYear();
-          let string1 = year+'-'+month+'-'+1;
-          let string2 = year+'-'+(month+1)+'-'+1;
+          let month = this.selectedDate!.getMonth()+1;
+          let monthString = String(month).padStart(2, '0');
+          let year = this.selectedDate!.getFullYear();
+          let string1 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
+          monthString = String(month+1).padStart(2, '0');
+          let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-'+1+'-'+1
+            string2 = (year+1)+'-0'+1+'-0'+1
           }
           forkJoin([
             this.deviceService.weekByDayUserFilter(string1,string2,userId, 2),
-            this.deviceService.weekByDayUserFilter(string1,string2,userId, 1)
-          ]).subscribe(([list1, list2]) => {
+          ]).subscribe(([list1]) => {
             this.list1 = list1;
-            this.list2 = list2;
-            this.BarPlot();
+            this.BarPlotConsumption();
           });
     }
   }
-  BarPlot(){
+
+  BarPlotConsumption(){
     
-    const chartId = 'barplot';
+    const chartId = 'barplot2';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const Linechart =new Chart("barplot", {
+    const monthbyday = this.list1.map(day => day.day);
+
+    const Linechart =new Chart("barplot2", {
         type: 'bar',
        
         data : {
-          labels: this.itemList,
+          labels: monthbyday,
           
           datasets: [
             {
@@ -123,26 +123,23 @@ export class ProsumerMonthGraphComponent {
               data: energyUsageResults1,
               borderColor: 'rgb(128, 0, 128)',
               backgroundColor: 'rgb(128, 0, 128)',
+              
             },
-            {
-              label: 'Production',
-              data: energyUsageResults2,
-              borderColor: 'rgb(255, 165, 0)',
-              backgroundColor: 'rgb(255, 165, 0)'
-            },
-           
             
           ]
           
         },
         options: 
         {
+          maintainAspectRatio: false,
+          responsive: true, // Enable responsiveness
+          
           scales:{
             y: {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:13
                 }
               },
               position: "left",
@@ -151,7 +148,7 @@ export class ProsumerMonthGraphComponent {
                 text: "kWh",
                 color: '#000',
                 font:{
-                  size:20
+                  size:13
                 }
               }
             }
@@ -160,7 +157,7 @@ export class ProsumerMonthGraphComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:20
+                  size:13
                 }
                 
               },
@@ -169,44 +166,26 @@ export class ProsumerMonthGraphComponent {
                 text: "Days in a month",
                 color: '#000',
                 font:{
-                  size:20
+                  size:13
                 }
               }
             }
-            
-              
-            
-            
-            
           },
-          responsive: true,
+         
           plugins: {
             datalabels: {
               display: false
             },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:20
-                } 
-              }
+            legend:{
+              display:false
             },
+          
             title: {
               display: true,
-              text: 'Consumption and production in a month',
+              text: 'Consumption in a month',
               color: '#000',
               font:{
-                size:20
+                size:15
               }
             }
           }

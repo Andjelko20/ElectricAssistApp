@@ -4,7 +4,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
 import { ExportToCsv } from 'export-to-csv';
 import moment, { Moment } from 'moment';
-import { switchMap } from 'rxjs';
+import { forkJoin, switchMap } from 'rxjs';
 import { YearsByMonth } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
@@ -42,6 +42,7 @@ export class ProsumerYearTableComponent {
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   mergedList: {month: string, year: number, consumption: number, production: number }[] = [];
+  datePipe: any;
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -64,15 +65,25 @@ export class ProsumerYearTableComponent {
     let token=new JwtToken();
     const userId = token.data.id as number;
   
-    this.deviceService.yearByMonthUser(userId, 2).pipe(
-      switchMap((data1: YearsByMonth[]) => {
-        this.list1 = data1;
-        return this.deviceService.yearByMonthUser(userId, 1);
-      })
-    ).subscribe((data2: YearsByMonth[]) => {
-      console.log("Data => ", data2);
-      this.list2 = data2;
-    });
+    if(this.selectedDate == undefined){
+      forkJoin([
+        this.deviceService.yearByMonthUser(userId, 2),
+        this.deviceService.yearByMonthUser(userId, 1)
+      ]).subscribe(([list1, list2]) => {
+        this.list1 = list1;
+        this.list2 = list2;
+      });
+    }
+    else{
+      const year = this.selectedDate.getFullYear();
+      forkJoin([
+        this.deviceService.monthbyDayUserFilter(year,userId, 2),
+        this.deviceService.monthbyDayUserFilter(year,userId, 1)
+      ]).subscribe(([list1, list2]) => {
+        this.list1 = list1;
+        this.list2 = list2;
+      });
+    }
   }
   downloadCSV(): void {
     this.mergedList = [];
@@ -89,6 +100,8 @@ export class ProsumerYearTableComponent {
         }
       }
   }
+  const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'consumption/production-year.csv',
@@ -97,7 +110,7 @@ export class ProsumerYearTableComponent {
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Month', 'Year', 'Consumption', 'Production']
+    headers: ['Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
   };
 
   const csvExporter = new ExportToCsv(options);

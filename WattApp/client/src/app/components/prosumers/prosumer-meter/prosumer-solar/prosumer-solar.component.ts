@@ -1,20 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { first } from 'rxjs';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
+import { NgxGaugeModule } from 'ngx-gauge';
 
 @Component({
   selector: 'app-prosumer-solar',
   templateUrl: './prosumer-solar.component.html',
   styleUrls: ['./prosumer-solar.component.css']
+
 })
+
 export class ProsumerSolarComponent {
 
   idProsumer?: number;
   
 enableThresholds: boolean = false;
 value: number = 0.00;
-thick: number = 15;
+thick: number = 5;
 
 type: any = "full";
 cap: any = "round";
@@ -34,13 +37,6 @@ markerConfig = {
     "7000": { color: '#yellow', size: 8, label: '60', type: 'line'},
     "10000": { color: '#red', size: 8, label: '100', type: 'line'},
 }
-  
-
-onClick() {
-  console.log(this.foregroundColor, this.backgroundColor);
-  this.foregroundColor = 'red';
-}
-
 
 
 showNewGauge = false;

@@ -2,69 +2,69 @@
     <nav id="sidebar">
         <ul class="list-unstyled components ">
             <li *ngIf="role==dso " id="role-li">
-                <a class="nav-link" >
-                    <span class="role-icon" ><i class="fas fa-user-cog" ></i> </span>
-                    <span class="role-title" >DSO</span>
+                <a class="nav-link">
+                    <span class="role-icon"><i class="fas fa-user-cog" ></i> </span>
+                    <span class="role-title">DSO</span>
                     <hr class="role-line">
                 </a>
             </li>
             <li *ngIf="role==admin || role==superadmin" id="role-li">
-                <a class="nav-link" >
-                    <span class="role-icon" ><i class="fas fa-user-shield" ></i> </span>
+                <a class="nav-link">
+                    <span class="role-icon"><i class="fas fa-user-shield" ></i> </span>
                     <span class="role-title">Admin</span>
                     <hr class="role-line">
                 </a>
             </li>
             <li *ngIf="role==prosumer " id="role-li">
-                <a class="nav-link" >
-                    <span class="role-icon" ><i class="fas fa-user-tie" ></i> </span>
-                    <span class="role-title" >Prosumer</span>
+                <a class="nav-link">
+                    <span class="role-icon"><i class="fas fa-user-tie" ></i> </span>
+                    <span class="role-title">Prosumer</span>
                     <hr class="role-line">
                 </a>
             </li>
-            <li *ngIf="role==admin || role==superadmin" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/dashboard"]'>
+            <li *ngIf="role == 'admin' || role == 'superadmin'" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link" [routerLink]="['/dashboard']" (click)="clickSidebar($event,'/dashboard')">
                     <span class="icon-holder"><i class="fas fa-home"></i> </span>
                     <span class="title">Home</span>
                 </a>
             </li>
-            <li *ngIf="role==admin || role==superadmin" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/add-user"]'>
+            <li *ngIf="role == 'admin' || role == 'superadmin'" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link" [routerLink]="['/add-user']" (click)="clickSidebar($event,'/add-user') ">
                     <span class="icon-holder"><i class="fas fa-user-plus"></i> </span>
-                    <span class="title" >Add User</span>
+                    <span class="title">Add User</span>
                 </a>
             </li>
-            <li *ngIf="role==admin || role==superadmin" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/profile-admin"]'>
-                <span class="icon-holder"><i class="fa fa-cog"></i></span>
-                <span class="title" >Settings</span>
+            <li *ngIf="role == 'admin' || role == 'superadmin'" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                <a class="nav-link" [routerLink]="['/profile-admin']" (click)="clickSidebar($event,'/profile-admin')">
+                    <span class="icon-holder"><i class="fa fa-cog"></i></span>
+                    <span class="title">Settings</span>
                 </a>
             </li>
-            <li *ngIf="role==dso " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" >
-                
-                <a class="nav-link" [routerLink]='["/dashboard"]' >
+            <li *ngIf="role==dso " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+
+                <a class="nav-link" [routerLink]='["/dashboard"]'>
                     <span class="icon-holder"><i class="fas fa-tachometer-alt"></i></span>
-                    <span class="title" >Dashboard</span>
+                    <span class="title">Dashboard</span>
                 </a>
             </li>
             <li *ngIf="role==dso" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
                 <a class="nav-link" [routerLink]='["/prosumers"]'>
                     <span class="icon-holder"><i class="fas fa-users"></i></span>
-                    <span class="title" >Prosumers</span>
+                    <span class="title">Prosumers</span>
                 </a>
             </li>
             <li *ngIf="role==dso" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-              
-                <a class="nav-link" [routerLink]='["/prediction"]' >
+
+                <a class="nav-link" [routerLink]='["/prediction"]'>
                     <span class="icon-holder"><i class="fas fa-chart-line"></i>
                     </span>
-                    <span class="title" >Predictions</span>
+                    <span class="title">Predictions</span>
                 </a>
             </li>
             <li *ngIf="role==dso" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
                 <a class="nav-link" [routerLink]='["/profile-dso"]'>
-                <span class="icon-holder"><i class="fa fa-cog"></i></span>
-                <span class="title" >Settings</span>
+                    <span class="icon-holder"><i class="fa fa-cog"></i></span>
+                    <span class="title">Settings</span>
                 </a>
             </li>
             <li *ngIf="role==prosumer" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
@@ -81,14 +81,14 @@
             </li>
             <li *ngIf="role==prosumer" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
                 <a class="nav-link" [routerLink]='["/prosumer-reports"]'>
-                <span class="icon-holder"><i class="fas fa-chart-bar"></i></span>
-                <span class="title" >Reports</span>
+                    <span class="icon-holder"><i class="fas fa-chart-bar"></i></span>
+                    <span class="title">Reports</span>
                 </a>
             </li>
             <li *ngIf="role==prosumer" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
                 <a class="nav-link" [routerLink]='["/profile"]'>
-                <span class="icon-holder"><i class="fa fa-cog"></i></span>
-                <span class="title" >Settings</span>
+                    <span class="icon-holder"><i class="fa fa-cog"></i></span>
+                    <span class="title">Profile</span>
                 </a>
             </li>
         </ul>
@@ -98,4 +98,16 @@
         <app-footer *ngIf="role==dso ||role==admin || role==superadmin"></app-footer>
     </div>
 </div>
-
+<ng-template #modalContent let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle"> Are you sure you want to leave?</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">All of your unsaved changes will be lost. </h5>
+        <div id="subb">
+            <button type="button" class="btn btn-primary" (click)="modal.close('Save click')" id="popup">Leave</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-danger" (click)="modal.dismiss('cancel')">Close</button>
+        </div>
+    </div>
+</ng-template>

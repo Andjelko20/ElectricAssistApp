@@ -112,10 +112,10 @@ namespace Server.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTime?>("EndTime")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("DeviceId", "StartTime", "EndTime");
+                    b.HasKey("DeviceId", "StartTime");
 
                     b.ToTable("DeviceEnergyUsages");
                 });
