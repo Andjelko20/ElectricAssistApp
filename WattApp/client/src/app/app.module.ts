@@ -1,5 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
-import { DecimalPipe } from '@angular/common'; // import DecimalPipe
+import { DatePipe, DecimalPipe } from '@angular/common'; 
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -249,7 +249,7 @@ import { ProsumerYearProductionComponent } from './components/prosumers/prosumer
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [DecimalPipe],
+  providers: [DecimalPipe,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

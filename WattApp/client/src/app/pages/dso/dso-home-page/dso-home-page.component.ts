@@ -119,6 +119,7 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
     this.compGraph1=false;
     this.compGraph2=false;
     this.compGraph3 = false;
+    
   }
   showComponentGraph1() {
       this.compGraph = false;

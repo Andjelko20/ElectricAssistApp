@@ -59,6 +59,10 @@ export interface DayByHour {
     month: string;
     year : number;
 }
-
+export interface Durations {
+    startTime: string;
+    endTime: string;
+    duration: string;
+};
 
 

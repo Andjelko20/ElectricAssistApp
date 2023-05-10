@@ -1,9 +1,10 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ShowDevices } from 'src/app/models/devices.model';
+import { Durations, ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
-
+import { DatePipe } from '@angular/common';
+import { Duration } from 'moment';
 @Component({
   selector: 'app-one-device',
   templateUrl: './one-device.component.html',
@@ -20,8 +21,9 @@ export class OneDeviceComponent implements OnInit{
   device!:ShowDevices;
   idDevice?:number;
   buttonOnoff:boolean=false;
+  duration!:Durations;
   constructor(private router:Router,private deviceService:DevicesService,
-    private route:ActivatedRoute,private modalService: NgbModal) {
+    private route:ActivatedRoute,private modalService: NgbModal, private datePipe: DatePipe ) {
      
      }
 
@@ -29,7 +31,18 @@ export class OneDeviceComponent implements OnInit{
       this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
       this.deviceService.getDevice( this.idDevice).subscribe(devices => {
         this.device=devices})
-  
+
+        this.deviceService.durationDateTime(this.idDevice).subscribe(res=>{
+          console.log(res);
+          
+          this.duration={
+           startTime: res.startTime,
+         endTime:res.endTime,
+          duration:res.duration,
+           }
+          
+        })
+        
       }
   delete(id:number)
   {
@@ -55,10 +68,14 @@ export class OneDeviceComponent implements OnInit{
   
   turnOn(id: number) {
     
+    
     this.modalService.open(this.modalContent);
 
     const turnOn= document.getElementById('popup');
-  
+    const date = new Date();
+    const formattedDate = this.datePipe.transform(date,'yyyy-MM-dd HH:mm:ss');
+    console.log(formattedDate);
+    
     this.buttonOnoff=false;
    if(turnOn!=null)
    {
@@ -66,10 +83,10 @@ export class OneDeviceComponent implements OnInit{
     this.btnAction="Turn On";
     turnOn.removeEventListener('click',  this.onClick)
       this.onClick=()=> {
-        this.deviceService.turnOn(id).subscribe({
-          next:()=>{
+        this.deviceService.turnOn(id,formattedDate).subscribe({
+          next:(res)=>{
           
-            
+          
               this.device.turnOn = true;
               this.buttonOnoff=true;
               
@@ -83,21 +100,24 @@ export class OneDeviceComponent implements OnInit{
    
   }
   turnOff(id: number) {
+    
     this.modalService.open(this.modalContent);
    
     const turnOff= document.getElementById('popup');
     
     this.buttonOnoff=false;
+    const date = new Date();
+    const formattedDate = this.datePipe.transform(date,'yyyy-MM-dd HH:mm:ss');
+    console.log(formattedDate);
     if(turnOff!=null)
    {
     this.body="Do you want to turn off this device?"
     this.btnAction="Turn Off";
         turnOff.removeEventListener('click',  this.offClick)
         this.offClick=()=> {
-          this.deviceService.turnOff(id).subscribe({
-            next:()=>{
+          this.deviceService.turnOff(id,formattedDate).subscribe({
+            next:(res)=>{
             
-              
                 this.device.turnOn = false;
                 this.buttonOnoff=true;
                 

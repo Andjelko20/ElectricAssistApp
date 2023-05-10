@@ -71,7 +71,7 @@
             </div>
         </div> 
         <div id="pie">
-            <div id="titlePie"><span><b>Current production in stettlements </b> <hr></span>
+            <div id="titlePie"><span><b>Current production for stettlement in kWh </b> <hr></span>
             </div>
             <div id="chart">
                 <app-pie-chart></app-pie-chart>
@@ -112,22 +112,22 @@
             <ng-container *ngIf="tabelar">
                 <div class="chart-body">
                     <div class="chart-buttons">
-                      <button (click)="showComponentTable()" class="chart-button" [class.active]="compTable">Day</button>
-                      <button (click)="showComponentTable1()" class="chart-button" [class.active]="compTable1">Week</button>
-                      <button (click)="showComponentTable2()" class="chart-button" [class.active]="compTable2">Month</button>
-                      <button (click)="showComponentTable3()" class="chart-button" [class.active]="compTable3">Year</button>
+                      <button (click)="showComponentGraph()" class="chart-button" [class.active]="compGraph">Day</button>
+                      <button (click)="showComponentGraph1()" class="chart-button" [class.active]="compGraph1">Week</button>
+                      <button (click)="showComponentGraph2()" class="chart-button" [class.active]="compGraph2">Month</button>
+                      <button (click)="showComponentGraph3()" class="chart-button" [class.active]="compGraph3">Year</button>
                     </div>
                   </div>
-                <div class="history-charts-body" *ngIf="compTable">
+                <div class="history-charts-body" *ngIf="compGraph">
                     <app-tabelar-view></app-tabelar-view>
                 </div>
-                <div class="history-charts-body" *ngIf="compTable1">
+                <div class="history-charts-body" *ngIf="compGraph1">
                     <app-tabelar-view-by-week></app-tabelar-view-by-week>
                 </div>
-                <div class="history-charts-body" *ngIf="compTable2">
+                <div class="history-charts-body" *ngIf="compGraph2">
                     <app-tabelar-view-by-month></app-tabelar-view-by-month>
                 </div>
-                <div class="history-charts-body" *ngIf="compTable3">
+                <div class="history-charts-body" *ngIf="compGraph3">
                     <app-tabelar-view-by-year></app-tabelar-view-by-year>
                 </div>
             </ng-container>

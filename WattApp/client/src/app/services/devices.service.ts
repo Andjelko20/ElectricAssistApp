@@ -50,20 +50,23 @@ export class DevicesService {
   {
     return this.http.delete<updateDevices>(environment.serverUrl+"/api/device/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
-  //samo id saljem
-  turnOn(id: number): Observable<any> {
+  turnOn(id: number,datestart:any): Observable<any> {
       
-    return this.http.put<any>(environment.serverUrl+"/api/device/turnOn"+id,{turnOn:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+    return this.http.put<any>(environment.serverUrl+"/api/prosumer/device?deviceId="+id+"&turnedOn="+datestart,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
-  turnOff(id: number): Observable<any> {
+  turnOff(id: number,dateend:any): Observable<any> {
       
-    return this.http.put<any>(environment.serverUrl+"/api/device/turnOn"+id,{turnOn:false},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+    return this.http.put<any>(environment.serverUrl+"/api/prosumer/device?deviceId="+id+"&turnedOff="+dateend,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
   visibility(id: number): Observable<any> {
       
     return this.http.put(environment.serverUrl+"/api/device/visibility"+id,{visibility:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
-  
+  durationDateTime(id: number): Observable<any>
+  {
+    return this.http.put<any>(environment.serverUrl+"/api/prosumer/device?deviceId="+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
+
+  }
   controlability(id: number): Observable<any> {
       
     return this.http.put(environment.serverUrl+"/api/device/controlability"+id,{controlability:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 

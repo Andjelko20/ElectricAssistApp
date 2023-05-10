@@ -12,6 +12,8 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
   styleUrls: ['./prediction-dso.component.css']
 })
 export class PredictionDsoComponent {
+
+  loader:boolean=false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   settlements:Settlement[] = [];
@@ -24,9 +26,11 @@ export class PredictionDsoComponent {
     this.ngOnInit();
   }
   ngOnInit() {
+    this.loader=true;
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
+          this.loader=false;
           this.settlements = settlement;
           const selectElement = document.getElementById('dropdown') as HTMLSelectElement
           const selectedOptionName = selectElement.options[selectElement.selectedIndex].text;

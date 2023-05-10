@@ -104,7 +104,7 @@ export class ProsumerDayGraphComponent {
     const Linechart =new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: hours,
+        labels: ["0","4","8","12","16","20"," "],
         
         datasets: [
           {
@@ -181,25 +181,7 @@ export class ProsumerDayGraphComponent {
         plugins: {
           datalabels:{display: false},
           legend:{display:false},
-          // legend: {
-          //   position: 'bottom',
-          //   onHover: function (event, legendItem, legend) {
-          //     document.body.style.cursor = 'pointer';
-          //   },
-          //   onLeave: function (event, legendItem, legend) {
-          //       document.body.style.cursor = 'default';
-          //   },
-          //   labels:{
-          //     usePointStyle: true,
-          //     color:'#000',
-          //     font:{
-          //       size:5
-          //     } 
-           
-          //   }
-          //   ,
-          //   align: "center"
-          // }
+        
           title: {
             
             display: true,
