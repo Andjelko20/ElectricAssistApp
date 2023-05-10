@@ -1,6 +1,5 @@
 <main class="background-image" [style.backgroundImage]="'url(' + backgroundImage + ')'">
-    <!-- 
-    <h1>WattApp</h1> -->
+
     <div class="containers">
 
         <div class="login-form-wrapper">
@@ -23,7 +22,6 @@
                     <button class="btn btn-dark" (click)="login()">Login</button>
                     <br>
                     <a class="linka" [routerLink]='["/forgot-password"]'>Forgot password?</a>
-                    <!-- <a class="linka" [routerLink]='["/register"]'>Register</a> -->
                 </div>
                 <div class="error-message">
                     {{errorMsg}}

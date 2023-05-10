@@ -1,31 +1,13 @@
 <header>
-    <!-- Logo -->
     <a [routerLink]='["prosumer-home-page"]' class="logo">WattApp</a>
-    <!-- <a href="prosumer-home-page" class="logoimi"><img id="logoimi" src="assets/img/logo.png" alt=""></a> -->
-    <!-- Hamburger icon -->
     <input class="side-menu" type="checkbox" id="side-menu" />
     <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
-    <!-- Menu -->
     <nav class="nav">
         <ul class="menu">
-            <li><a [routerLink]='["prosumer-home-page"]' >Dashboard</a></li>
+            <li><a [routerLink]='["prosumer-home-page"]'>Dashboard</a></li>
             <li><a [routerLink]='["/prosumer-devices-page"]'>Devices</a> </li>
             <li><a [routerLink]='["/prosumer-account-page"]'>Profile</a></li>
-            <li>
-                <a  id="logouta" (click)="logout()">Logout</a>
-            </li>
-
-
+            <li><a id="logouta" (click)="logout()">Logout</a></li>
         </ul>
-        <!-- <div class="user">
-            <div class="dropdown">
-                <a class="dropbtn"><i class="fa fa-user"></i> User1</a>
-                <div class="dropdown-content">
-                    <a href="#"><i>Number of devices: 25</i></a>
-                    <a href="prosumer-account-settings-page"><i class="fa fa-settings"></i> Settings</a>
-                    <a href="#" id="logouta" (click)="logout()"><i class="fa fa-user"></i>  Logout</a>
-                </div>
-            </div>
-        </div> -->
     </nav>
 </header>
