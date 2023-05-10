@@ -1340,26 +1340,32 @@ namespace Server.Services.Implementations
                 _connection.Open();
                 var command = _connection.CreateCommand();
                 command.CommandText = @"
-                                        SELECT
-	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', 'localtime')
-								                                          THEN datetime('now', 'localtime')
-								                                          WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
-								                                          ELSE deu.EndTime
-							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
-                                        FROM
-	                                        DeviceEnergyUsages deu
-	                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
-	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
-	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
-                                        WHERE
-	                                        deu.StartTime >= datetime('now', '-1 day', 'start of day') AND deu.StartTime <= datetime('now', 'start of day', '-1 second')
-                                        GROUP BY
-	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime)";
+                                        SELECT Datum, EnergyUsageKwh
+                                        FROM (
+	                                        SELECT
+		                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime) AS Datum,
+		                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', 'localtime')
+									                                          THEN datetime('now', 'localtime')
+									                                          WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
+									                                          ELSE deu.EndTime
+								                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh,
+		                                        ROW_NUMBER() OVER (ORDER BY DATE(deu.StartTime)) AS RowNumber
+	                                        FROM
+		                                        DeviceEnergyUsages deu
+		                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
+		                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+		                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
+	                                        WHERE
+		                                        deu.StartTime >= datetime('now', '-1 day', 'start of day') AND deu.StartTime <= datetime('now', 'start of day', '-1 second')
+	                                        GROUP BY
+		                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime)
+	                                        ) AS T
+                                        WHERE RowNumber > @skipCount
+                                        LIMIT @itemsPerPage";
 
                 command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
                 command.Parameters.Add(new SqliteParameter("@userId", userId));
-                command.Parameters.Add(new SqliteParameter("@pageNumber", pageNumber));
+                command.Parameters.Add(new SqliteParameter("@skipCount", skipCount));
                 command.Parameters.Add(new SqliteParameter("@itemsPerPage", itemsPerPage));
 
                 var energyUsages = new List<EnergyToday>();
