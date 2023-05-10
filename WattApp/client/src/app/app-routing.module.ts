@@ -32,6 +32,7 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
 import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-change-password/prosumer-change-password.component';
+import { PredictionDeviceComponent } from './components/dso/prediction/prediction-device/prediction-device.component';
 
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -64,6 +65,7 @@ const routes: Routes = [
 	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"loader",component:LoaderComponent},
 	{path:"prosumer-change-password",component:ProsumerChangePasswordComponent,canActivate:[ProsumerGuard]},
+
 	
 	
 	//TEST

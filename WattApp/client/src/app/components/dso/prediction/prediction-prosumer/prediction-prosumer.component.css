@@ -1,3 +1,10 @@
+.chart {
+    background-color: white;
+    border-radius: 5px;
+    width: 100%;
+    padding-top: 18px;
+}
+
 .chart-container {
     display: flex;
     align-items: center;

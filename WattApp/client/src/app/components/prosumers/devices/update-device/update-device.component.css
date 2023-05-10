@@ -3,7 +3,8 @@
 }
 
 #turnback {
-    width: 7%;
+    padding-top: 2px;
+    width: 10%;
     margin-left: 5px;
 }
 
@@ -22,8 +23,8 @@ input {
     border-radius: 5px;
     box-shadow: 2px 4px gray;
     background-color: #bce9e4;
-    margin-left: 26px;
-    margin-right: 26px;
+    margin-left: 9px;
+    margin-right: 9px;
     width: 100%;
     margin-bottom: 70px;
     padding-bottom: 5px;
@@ -42,10 +43,6 @@ label {
     font-size: 25px;
 }
 
-form {
-    margin-top: 50px;
-}
-
 .form-row {
     display: flex;
     justify-content: center;
@@ -54,7 +51,7 @@ form {
 #btn1 {
     justify-content: center;
     margin-left: 25%;
-    width: 60px;
+    width: 142px;
 }
 
 input.ng-invalid.ng-touched {
@@ -72,20 +69,21 @@ input.ng-touched {
 .all {
     padding-top: 55px;
 }
+
 .switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
-  }
-  
-  .switch input { 
+}
+
+.switch input {
     opacity: 0;
     width: 0;
     height: 0;
-  }
-  
-  .slider {
+}
+
+.slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -95,10 +93,9 @@ input.ng-touched {
     background-color: #ccc;
     -webkit-transition: .4s;
     transition: .4s;
-    
-  }
-  
-  .slider:before {
+}
+
+.slider:before {
     position: absolute;
     content: "";
     height: 26px;
@@ -108,44 +105,47 @@ input.ng-touched {
     background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
-  }
-  
-  input:checked + .slider {
+}
+
+input:checked+.slider {
     background-color: #2196F3;
-  }
-  
-  input:focus + .slider {
+}
+
+input:focus+.slider {
     box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
+}
+
+input:checked+.slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
+}
+
+
+/* Rounded sliders */
+
+.slider.round {
     border-radius: 34px;
-    
-  }
-  
-  .slider.round:before {
+}
+
+.slider.round:before {
     border-radius: 50%;
-  }
-  #modalContent {
+}
+
+#modalContent {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  #subb{
+}
+
+#subb {
     display: flex;
     flex-direction: row;
     justify-content: right;
     text-align: right;
     align-items: right;
-    
-  }
+}
+
 @media(min-width:768px) {
     .main {
         top: 0;
@@ -162,10 +162,10 @@ input.ng-touched {
     }
     #turnback {
         margin-top: 5px;
-        width: 3%;
+        width: 5%;
         margin-left: 105px;
     }
-    #btn1{
+    #btn1 {
         justify-content: center;
         margin-left: 25%;
         width: 180px;
@@ -175,15 +175,13 @@ input.ng-touched {
         display: inline-block;
         width: 60px;
         height: 34px;
-      }
-      
-      .switch input { 
+    }
+    .switch input {
         opacity: 0;
         width: 0;
         height: 0;
-      }
-      
-      .slider {
+    }
+    .slider {
         position: absolute;
         cursor: pointer;
         top: 0;
@@ -193,10 +191,8 @@ input.ng-touched {
         background-color: #ccc;
         -webkit-transition: .4s;
         transition: .4s;
-        
-      }
-      
-      .slider:before {
+    }
+    .slider:before {
         position: absolute;
         content: "";
         height: 26px;
@@ -206,29 +202,23 @@ input.ng-touched {
         background-color: white;
         -webkit-transition: .4s;
         transition: .4s;
-      }
-      
-      input:checked + .slider {
+    }
+    input:checked+.slider {
         background-color: #2196F3;
-      }
-      
-      input:focus + .slider {
+    }
+    input:focus+.slider {
         box-shadow: 0 0 1px #2196F3;
-      }
-      
-      input:checked + .slider:before {
+    }
+    input:checked+.slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);
-      }
-      
-      /* Rounded sliders */
-      .slider.round {
+    }
+    /* Rounded sliders */
+    .slider.round {
         border-radius: 34px;
-        
-      }
-      
-      .slider.round:before {
+    }
+    .slider.round:before {
         border-radius: 50%;
-      }
+    }
 }

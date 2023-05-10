@@ -110,7 +110,7 @@ export class DeviceTodayComponent {
   }
   LineChartProduction(){
 
-    const chartId = 'linechart1';
+    const chartId = 'linechart11';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
@@ -118,7 +118,7 @@ export class DeviceTodayComponent {
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
 
-    const Linechart =new Chart("linechart1", {
+    const Linechart =new Chart("linechart11", {
       type: 'line',
       data : {
         labels: hours,
@@ -144,13 +144,14 @@ export class DeviceTodayComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -159,7 +160,7 @@ export class DeviceTodayComponent {
               text: " kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -168,7 +169,7 @@ export class DeviceTodayComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -176,7 +177,7 @@ export class DeviceTodayComponent {
               text: "Hours in a day",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -185,25 +186,28 @@ export class DeviceTodayComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend:{
+            display:false
           },
+          // legend: {
+          //   position: 'bottom',
+          //   onHover: function (event, legendItem, legend) {
+          //     document.body.style.cursor = 'pointer';
+          //   },
+          //   onLeave: function (event, legendItem, legend) {
+          //       document.body.style.cursor = 'default';
+          //   },
+          //   labels:{
+          //     usePointStyle: true,
+          //     color:'#000',
+          //     font:{
+          //       size:13
+          //     } 
+           
+          //   }
+          //   ,
+          //   align: "center"
+          // },
           title: {
             
             display: true,
@@ -220,7 +224,7 @@ export class DeviceTodayComponent {
   }
   LineChartConsumption(){
 
-    const chartId = 'linechart2';
+    const chartId = 'linechart22';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
@@ -228,7 +232,7 @@ export class DeviceTodayComponent {
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
 
-    const Linechart =new Chart("linechart2", {
+    const Linechart =new Chart("linechart22", {
       type: 'line',
       data : {
         labels: hours,
@@ -263,14 +267,15 @@ export class DeviceTodayComponent {
         
       }
       ,
-      options: {
+      options: { 
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -279,7 +284,7 @@ export class DeviceTodayComponent {
               text: " kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -288,7 +293,7 @@ export class DeviceTodayComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -305,32 +310,35 @@ export class DeviceTodayComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend:{
+            display:false
           },
+          // legend: {
+          //   position: 'bottom',
+          //   onHover: function (event, legendItem, legend) {
+          //     document.body.style.cursor = 'pointer';
+          //   },
+          //   onLeave: function (event, legendItem, legend) {
+          //       document.body.style.cursor = 'default';
+          //   },
+          //   labels:{
+          //     usePointStyle: true,
+          //     color:'#000',
+          //     font:{
+          //       size:13
+          //     } 
+           
+          //   }
+            
+          //   align: "center"
+          // },
           title: {
             
             display: true,
             text: 'Consumption in one day',
             color: '#000',
             font:{
-              size:20
+              size:15
             }
           }
         }

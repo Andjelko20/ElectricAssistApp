@@ -155,7 +155,7 @@ export class DeviceMonthComponent {
         },
         options: 
         {
-
+          maintainAspectRatio: false,
           responsive: true, // Enable responsiveness
           
           scales:{
@@ -163,7 +163,7 @@ export class DeviceMonthComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:15
+                  size:13
                 }
               },
               position: "left",
@@ -172,7 +172,7 @@ export class DeviceMonthComponent {
                 text: "kWh",
                 color: '#000',
                 font:{
-                  size:15
+                  size:13
                 }
               }
             }
@@ -181,7 +181,7 @@ export class DeviceMonthComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:15
+                  size:13
                 }
                 
               },
@@ -190,7 +190,7 @@ export class DeviceMonthComponent {
                 text: "Days in a month",
                 color: '#000',
                 font:{
-                  size:15
+                  size:13
                 }
               }
             }
@@ -200,32 +200,35 @@ export class DeviceMonthComponent {
             datalabels: {
               display: false
             },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:15
-                } 
-                // ,
-                // boxHeight:100,
-                // boxWidth:100
-              }
+            legend:{
+              display:false
             },
+            // legend: {
+            //   onHover: function (event, legendItem, legend) {
+            //     document.body.style.cursor = 'pointer';
+            //   },
+            //   onLeave: function (event, legendItem, legend) {
+            //       document.body.style.cursor = 'default';
+            //   },
+              
+            //   position: 'bottom',
+            //   labels: {
+            //     usePointStyle: true,
+            //     color: '#000',
+            //     font:{
+            //       size:13
+            //     } 
+            //     // ,
+            //     // boxHeight:100,
+            //     // boxWidth:100
+            //   }
+            // },
             title: {
               display: true,
               text: 'Production in a month',
               color: '#000',
               font:{
-                size:20
+                size:15
               }
             }
           }
@@ -263,7 +266,7 @@ export class DeviceMonthComponent {
         },
         options: 
         {
-
+          maintainAspectRatio: false,
           responsive: true, // Enable responsiveness
           
           scales:{
@@ -271,7 +274,7 @@ export class DeviceMonthComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:15
+                  size:13
                 }
               },
               position: "left",
@@ -280,7 +283,7 @@ export class DeviceMonthComponent {
                 text: "kWh",
                 color: '#000',
                 font:{
-                  size:15
+                  size:13
                 }
               }
             }
@@ -289,7 +292,7 @@ export class DeviceMonthComponent {
               ticks:{
                 color:'#000',
                 font:{
-                  size:15
+                  size:13
                 }
                 
               },
@@ -298,7 +301,7 @@ export class DeviceMonthComponent {
                 text: "Days in a month",
                 color: '#000',
                 font:{
-                  size:15
+                  size:13
                 }
               }
             }
@@ -308,29 +311,32 @@ export class DeviceMonthComponent {
             datalabels: {
               display: false
             },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:15
-                } 
-              }
+            legend:{
+              display:false
             },
+            // legend: {
+            //   onHover: function (event, legendItem, legend) {
+            //     document.body.style.cursor = 'pointer';
+            //   },
+            //   onLeave: function (event, legendItem, legend) {
+            //       document.body.style.cursor = 'default';
+            //   },
+              
+            //   position: 'bottom',
+            //   labels: {
+            //     usePointStyle: true,
+            //     color: '#000',
+            //     font:{
+            //       size:15
+            //     } 
+            //   }
+            // },
             title: {
               display: true,
               text: 'Consumption in a month',
               color: '#000',
               font:{
-                size:20
+                size:15
               }
             }
           }

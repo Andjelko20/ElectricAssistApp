@@ -13,7 +13,7 @@
 .toggle-containerr {
     margin: 11px;
     border-radius: 5px;
-    width: 95%;
+    max-width: 97%;
     background-color: #bce9e4;
 }
 
@@ -42,15 +42,20 @@ input {
     width: 20%;
 }
 
+.col {
+    width: 160px;
+}
+
 .card-title {
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .card-text {
-    font-size: 25px;
+    font-size: 22px;
 }
 
 .card {
+    padding: 0;
     margin-bottom: 10px;
     background-color: #bce9e4;
 }
@@ -66,7 +71,12 @@ input {
 
 .table {
     margin-top: 15px;
-    padding: 0;
+    width: 100%;
+}
+
+.predictiontabelandgrapf {
+    margin-top: 15px;
+    width: 100%;
 }
 
 .history-table-body {
@@ -123,6 +133,14 @@ input {
     background-color: gray;
 }
 
+.toggle-buttonss span.divider {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    margin: 0 10px;
+    background-color: gray;
+}
+
 .toggle-buttons input[type="radio"]:checked+label {
     font-weight: bold;
 }
@@ -132,7 +150,6 @@ input {
 }
 
 .history-charts-body {
-    margin-top: 15px;
     width: 100%;
 }
 
@@ -168,6 +185,7 @@ input {
     color: grey;
     cursor: pointer;
     border-radius: 10px;
+    margin-bottom: 15px;
     padding: 9px;
     width: 100%;
     border: none;
@@ -176,13 +194,26 @@ input {
     font-size: 18px;
 }
 
-#collapsible1 {
+.collapsible2 {
     background-color: #bce9e4;
     color: grey;
     cursor: pointer;
     border-radius: 10px;
     padding: 9px;
-    width: 93%;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 18px;
+}
+
+.collapsible1 {
+    background-color: #bce9e4;
+    color: grey;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 9px;
+    width: 100%;
     border: none;
     text-align: left;
     outline: none;
@@ -192,23 +223,59 @@ input {
 .active,
 .collapsible:hover {
     background-color: #bce9e4;
+    box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
 
 .active,
-#collapsible1:hover {
+.collapsible2:hover {
     background-color: #bce9e4;
+    box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+}
+
+.active,
+.collapsible1:hover {
+    background-color: #bce9e4;
+    box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
 
 .content {
-    padding: 0 18px;
+    width: 100%;
+    padding: 0 0px;
+    display: block;
+    overflow: hidden;
+    margin-right: -13px;
+    background-color: #f1f1f1;
+}
+
+.content3 {
+    width: 100%;
+    padding: 0 0px;
+    display: block;
+    margin-right: -13px;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.content4 {
+    width: 100%;
+    padding: 0 0px;
     display: none;
+    margin-right: -13px;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.content2 {
+    width: 100%;
+    display: none;
+    padding: 0 0px;
+    margin-right: -13px;
     overflow: hidden;
     background-color: #f1f1f1;
 }
 
 .content1 {
-    width: 93%;
-    margin-left: 14px;
+    width: 100%;
     padding: 0 0px;
     display: none;
     overflow: hidden;
@@ -242,6 +309,9 @@ button.active {
     .con {
         margin: 21px;
         margin-bottom: 0px;
+    }
+    .col {
+        width: 300px;
     }
     .card {
         background-color: #bce9e4;
@@ -289,10 +359,37 @@ button.active {
         background-color: #bce9e4;
     }
     .content {
+        width: 100%;
         padding: 0 140px;
+        display: block;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content3 {
+        width: 100%;
+        padding: 0 18px;
+        display: block;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content4 {
+        width: 100%;
+        padding: 0 18px;
         display: none;
-        display: flex;
-        justify-content: center;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content2 {
+        width: 100%;
+        display: none;
+        padding: 0 18px;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+    .content1 {
+        width: 100%;
+        padding: 0 18px;
+        display: none;
         overflow: hidden;
         background-color: #f1f1f1;
     }

@@ -167,13 +167,14 @@ export class DeviceWeekComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -182,7 +183,7 @@ export class DeviceWeekComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -191,7 +192,7 @@ export class DeviceWeekComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -199,7 +200,7 @@ export class DeviceWeekComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -208,31 +209,34 @@ export class DeviceWeekComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend:{
+            display:false
           },
+          // legend: {
+          //   position: 'bottom',
+          //   onHover: function (event, legendItem, legend) {
+          //     document.body.style.cursor = 'pointer';
+          //   },
+          //   onLeave: function (event, legendItem, legend) {
+          //       document.body.style.cursor = 'default';
+          //   },
+          //   labels:{
+          //     usePointStyle: true,
+          //     color:'#000',
+          //     font:{
+          //       size:13
+          //     } 
+           
+          //   }
+          //   ,
+          //   align: "center"
+          // },
           title: {
             display: true,
             text: 'Production in a week for ',
             color:'#000',
             font:{
-              size:20
+              size:15
             }
           }
         }
@@ -288,13 +292,14 @@ export class DeviceWeekComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -303,7 +308,7 @@ export class DeviceWeekComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -312,7 +317,7 @@ export class DeviceWeekComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -320,7 +325,7 @@ export class DeviceWeekComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -329,31 +334,34 @@ export class DeviceWeekComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend:{
+            display:false
           },
+          // legend: {
+          //   position: 'bottom',
+          //   onHover: function (event, legendItem, legend) {
+          //     document.body.style.cursor = 'pointer';
+          //   },
+          //   onLeave: function (event, legendItem, legend) {
+          //       document.body.style.cursor = 'default';
+          //   },
+          //   labels:{
+          //     usePointStyle: true,
+          //     color:'#000',
+          //     font:{
+          //       size:20
+          //     } 
+           
+          //   }
+          //   ,
+          //   align: "center"
+          // },
           title: {
             display: true,
             text: ' Consumption in a week',
             color:'#000',
             font:{
-              size:20
+              size:15
             }
           }
         }

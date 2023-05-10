@@ -34,11 +34,9 @@ export class ProsumerDayGraphComponent {
     if(this.selectedDate == undefined){
       combineLatest([
         this.deviceService.dayByHourUser(userId, 2),
-        this.deviceService.dayByHourUser(userId, 1)
-      ]).subscribe(([list1, list2]) => {
+      ]).subscribe(([list1]) => {
+
         this.list1 = list1;
-        this.list2 = list2;
-        this.LineChartProduction();
         this.LineChartConsumption();
       });
     }
@@ -82,10 +80,8 @@ export class ProsumerDayGraphComponent {
       forkJoin([
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 2),
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 1)
-      ]).subscribe(([list1, list2]) => {
+      ]).subscribe(([list1]) => {
         this.list1 = list1;
-        this.list2 = list2;
-        this.LineChartProduction();
         this.LineChartConsumption();
 
       });
@@ -94,116 +90,7 @@ export class ProsumerDayGraphComponent {
   
   }
 
-  LineChartProduction(){
-
-    const chartId = 'linechart1';
-    const chartExists = Chart.getChart(chartId);
-    if (chartExists) {
-        chartExists.destroy();
-    }
-    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const hours = this.list2.map(day => day.hour);
-
-    const Linechart =new Chart("linechart1", {
-      type: 'line',
-      data : {
-        labels: hours,
-        
-        datasets: [
-          {
-            label: 'production',
-            data: energyUsageResults2,
-            tension:0.5,
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-            pointBorderColor: 'rgba(0, 255, 0, 1)',
-            pointBorderWidth: 7,
-            pointRadius: 5,
-            pointHoverRadius: 6,
-            fill:true
-          }
-          
-        ]
-        
-      }
-      ,
-      options: {
-        responsive: true,
-        scales:{
-          y: {
-            ticks:{
-              color:'#000',
-              font:{
-                size:15
-              }
-            },
-            position: "left",
-            title:{
-              display:true,
-              text: " kWh",
-              color:'#000',
-              font:{
-                size:15
-              }
-            }
-          }
-          ,
-          x:{
-            ticks:{
-              color:'#000',
-              font:{
-                size:15
-              }
-            },
-            title:{
-              display:true,
-              text: "Hours in a day",
-              color:'#000',
-              font:{
-                size:15
-              }
-            }
-          }
-          ,
-        },
-        
-        plugins: {
-          datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
-           
-            }
-            ,
-            align: "center"
-          },
-          title: {
-            
-            display: true,
-            text: 'Production in one day',
-            color: '#000',
-            font:{
-              size:20
-            }
-          }
-        }
-      }
-    });
-
-  }
+  
   LineChartConsumption(){
 
     const chartId = 'linechart2';
