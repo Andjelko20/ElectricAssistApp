@@ -33,7 +33,7 @@ export class OneDeviceComponent implements OnInit{
         this.device=devices})
 
         this.deviceService.durationDateTime(this.idDevice).subscribe(res=>{
-          console.log(res);
+          
           
           this.duration={
            startTime: res.startTime,
@@ -74,7 +74,7 @@ export class OneDeviceComponent implements OnInit{
     const turnOn= document.getElementById('popup');
     const date = new Date();
     const formattedDate = this.datePipe.transform(date,'yyyy-MM-dd HH:mm:ss');
-    console.log(formattedDate);
+    
     
     this.buttonOnoff=false;
    if(turnOn!=null)
@@ -84,7 +84,7 @@ export class OneDeviceComponent implements OnInit{
     turnOn.removeEventListener('click',  this.onClick)
       this.onClick=()=> {
         this.deviceService.turnOn(id,formattedDate).subscribe({
-          next:(res)=>{
+          next:()=>{
           
           
               this.device.turnOn = true;
@@ -108,7 +108,7 @@ export class OneDeviceComponent implements OnInit{
     this.buttonOnoff=false;
     const date = new Date();
     const formattedDate = this.datePipe.transform(date,'yyyy-MM-dd HH:mm:ss');
-    console.log(formattedDate);
+   
     if(turnOff!=null)
    {
     this.body="Do you want to turn off this device?"
@@ -116,7 +116,7 @@ export class OneDeviceComponent implements OnInit{
         turnOff.removeEventListener('click',  this.offClick)
         this.offClick=()=> {
           this.deviceService.turnOff(id,formattedDate).subscribe({
-            next:(res)=>{
+            next:()=>{
             
                 this.device.turnOn = false;
                 this.buttonOnoff=true;
