@@ -1,4 +1,7 @@
 import { Component, ElementRef, ViewChildren, QueryList, ViewChild, OnInit} from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
   selector: 'app-prosumer-reports-page',
@@ -22,14 +25,30 @@ export class ProsumerReportsPageComponent implements OnInit {
   weekTable:boolean = false;
   monthTable:boolean = false;
   yearTable:boolean = false;
-  constructor(private elementRef: ElementRef) {}
+  todayC:number = 0;
+  todayP:number = 0;
+  monthC:number = 0;
+  monthP:number = 0;
+  constructor(private elementRef: ElementRef,private historyService:HistoryPredictionService) {}
   ngOnInit(): void {
+    let token=new JwtToken();
+    const id = token.data.id as number;
     this.isContentVisible = true;
     this.isContentVisible1 = false;
     this.isContentVisible2 = false;
     this.isContentVisible3 = true;
     this.isContentVisible4 = false;
-
+    forkJoin([
+      this.historyService.todayConsumptionUser(id, 2),
+      this.historyService.todayConsumptionUser(id, 1),
+      this.historyService.monthConsumptionUser(id, 2),
+      this.historyService.monthConsumptionUser(id, 1),
+    ]).subscribe(([todayC, todayP, monthC, monthP]) => {
+      this.todayC = todayC;
+      this.todayP = todayP;
+      this.monthC = monthC;
+      this.monthP = monthP;
+    });
   }
 
   toggleD()

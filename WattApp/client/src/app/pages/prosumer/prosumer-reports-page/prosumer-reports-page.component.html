@@ -16,32 +16,32 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Consumption this month</h5>
-                            <p class="card-text">9.24 kWh </p>
+                            <h5 class="card-title">Consumption last today</h5>
+                            <p class="card-text">{{todayC}} kWh</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Production this month</h5>
-                            <p class="card-text">9.24 kWh </p>
+                            <h5 class="card-title">Production last today</h5>
+                            <p class="card-text">{{todayP}} kWh</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Production this month</h5>
-                            <p class="card-text">9.24 kWh </p>
+                            <h5 class="card-title">Production last month</h5>
+                            <p class="card-text">{{monthC}} kWh</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Production this month</h5>
-                            <p class="card-text">9.24 kWh </p>
+                            <h5 class="card-title">Production last month</h5>
+                            <p class="card-text">{{monthP}} kWh</p>
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                             <app-prosumer-day-production></app-prosumer-day-production>
                         </div>
                         <div class="history-charts-body " *ngIf="week ">
-                            <app-prosumer-week-graph></app-prosumer-week-graph>
+                            <app-prosumer-week-production></app-prosumer-week-production>
                         </div>
                         <div class="history-charts-body " *ngIf="month ">
                             <app-prosumer-month-production></app-prosumer-month-production>

@@ -52,6 +52,7 @@ export class DeviceMonthTabularComponent {
   list2:WeekByDay[]=[];
   itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
   ,'20','21','22','23','24','25','26','27','28','29','30'];
+  datePipe: any;
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -123,7 +124,8 @@ export class DeviceMonthTabularComponent {
   }
   downloadCSV(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
-    
+    const date = new Date();
+    const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
     this.authService.getDevice(deviceId).subscribe(data=>{
       if(data.deviceCategory == "Electricity Consumer"){
           const options = {
@@ -134,7 +136,7 @@ export class DeviceMonthTabularComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Exported Date '+formattedDate]
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list1);
@@ -148,7 +150,7 @@ export class DeviceMonthTabularComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
+          headers: ['Hour', 'Month', 'Year', 'Production [kWh]', 'Exported Date '+formattedDate]
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list2);

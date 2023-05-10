@@ -47,6 +47,7 @@ export class ProsumerMonthTableComponent {
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
+  datePipe: any;
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService,private route:ActivatedRoute){
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -115,6 +116,8 @@ export class ProsumerMonthTableComponent {
         }
       }
   }
+  const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'consumption/production-month.csv',
@@ -123,7 +126,7 @@ export class ProsumerMonthTableComponent {
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
   };
 
   const csvExporter = new ExportToCsv(options);

@@ -50,6 +50,7 @@ export class DeviceYearTabularComponent {
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
+  datePipe: any;
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -112,7 +113,8 @@ export class DeviceYearTabularComponent {
   }
   downloadCSV(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
-    
+    const date = new Date();
+    const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
     this.authService.getDevice(deviceId).subscribe(data=>{
       if(data.deviceCategory == "Electricity Consumer"){
           const options = {
@@ -123,7 +125,7 @@ export class DeviceYearTabularComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption']
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption', 'Exported Date '+formattedDate]
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list1);
@@ -137,7 +139,7 @@ export class DeviceYearTabularComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
+          headers: ['Hour', 'Month', 'Year', 'Production [kWh]', 'Exported Date '+formattedDate]
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list2);

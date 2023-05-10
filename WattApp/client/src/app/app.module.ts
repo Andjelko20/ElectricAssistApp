@@ -116,7 +116,7 @@ import { ProsumerDayProductionComponent } from './components/prosumers/prosumer-
 import { ProsumerWeekProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-week-production/prosumer-week-production.component';
 import { ProsumerMonthProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-month-production/prosumer-month-production.component';
 import { ProsumerYearProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-year-production/prosumer-year-production.component';
-
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -249,7 +249,7 @@ import { ProsumerYearProductionComponent } from './components/prosumers/prosumer
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [DecimalPipe],
+  providers: [DecimalPipe,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

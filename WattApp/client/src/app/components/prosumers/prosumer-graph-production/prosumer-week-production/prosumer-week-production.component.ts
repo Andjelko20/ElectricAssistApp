@@ -29,8 +29,8 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
 
   private _createFiveDayRange(date: D | null): DateRange<D> {
     if (date) {
-      const start = this._dateAdapter.addCalendarDays(date, -4);
-      const end = this._dateAdapter.addCalendarDays(date, 3);
+      const start = this._dateAdapter.addCalendarDays(date, 0);
+      const end = this._dateAdapter.addCalendarDays(date, 7);
       return new DateRange<D>(start, end);
     }
 
@@ -81,6 +81,7 @@ export class ProsumerWeekProductionComponent {
         this.deviceService.weekByDayUser(id, 1),
       ]).subscribe(([list2]) => {
         this.list2 = list2;
+        console.log(this.list2)
         this.LineChartProduction();
     });
     }
