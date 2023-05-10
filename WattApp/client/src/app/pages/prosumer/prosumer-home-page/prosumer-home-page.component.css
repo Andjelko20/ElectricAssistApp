@@ -80,7 +80,6 @@ ul {
     float: left;
     border: 1px solid black;
     width: 50%;
-    /* visina je stavljena samo da bi se videlo da je tu taj div */
     height: 50px;
 }
 
@@ -238,12 +237,6 @@ h1 {
 }
 
 .powerTransmissiontower {
-    /* width: 10%;
-    max-height: 20%;
-    text-align: center;
-    display: flex;
-    position: absolute;
-    transition: all 0.3s; */
     display: none;
 }
 
@@ -272,7 +265,6 @@ h1 {
         margin-left: 40%;
     }
     .midle {
-        /* border: 1px solid black; */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -282,7 +274,6 @@ h1 {
     .midletree {
         display: flex;
         justify-content: center;
-        /* border: 1px solid black; */
         width: 100%;
         height: auto;
     }
@@ -297,7 +288,6 @@ h1 {
         float: left;
         border: 1px solid black;
         width: 50%;
-        /* visina je stavljena samo da bi se videlo da je tu taj div */
         height: 50px;
     }
     .carbattery {
@@ -366,7 +356,6 @@ h1 {
     }
     .prognosis {
         display: flex;
-        /* border: 1px solid black; */
         width: 20%;
         height: 20%;
         top: 8%;
@@ -395,288 +384,3 @@ h1 {
         transition: all 0.3s;
     }
 }
-
-
-/* .homeimage>img {
-    height: 600px;
-    position: relative;
-    width: 100%;
-    transition: all 0.3s ease;
-}
-
-h2 {
-    color: #1C315E;
-}
-
-.consumptionNow {
-    display: flexbox;
-    width: 10%;
-    max-height: 20%;
-    top: 31%;
-    display: inline-block;
-    left: 32%;
-    position: absolute;
-    transition: all 0.3s;
-}
-
-.prognosis {
-    display: flex;
-    border: 1px solid black;
-    width: 17%;
-    height: 15%;
-    top: 2%;
-    right: 1%;
-    position: absolute;
-    transition: all 0.3s;
-}
-
-.solarPowerNow {
-    display: flexbox;
-    width: 10%;
-    max-height: 20%;
-    top: 20%;
-    right: 26%;
-    position: absolute;
-    transition: all 0.3s;
-    display: flex;
-}
-
-.prodactionToday {
-    display: flexbox;
-    width: 13%;
-    height: 100px;
-    position: absolute;
-    top: 200px;
-    right: 20px;
-    transition: all 0.3s;
-}
-
-.prodactionToday h2 {
-    font-size: 22px;
-    transition: all 0.3s;
-}
-
-.powerTransmissiontower {
-    width: 10%;
-    max-height: 20%;
-    text-align: center;
-    display: flex;
-    position: absolute;
-    top: 5%;
-    margin-left: 3%;
-    transition: all 0.3s;
-}
-
-.tower {
-    width: 200px;
-    position: absolute;
-    top: 250px;
-    margin-left: 50px;
-}
-
-.imgtower {
-    width: 200px;
-    height: 250px;
-}
-
-#imgbattery {
-    margin-top: 10px;
-    width: 150px;
-    height: 120px;
-    float: left;
-}
-
-.carbattery {
-    margin-top: -5px;
-    flex-wrap: nowrap;
-    height: 150px;
-    width: 100%;
-    transition: all 0.3s;
-    text-align: center;
-}
-
-.device-item {
-    transition: all 0.3s;
-    width: 300px;
-    height: 100%;
-    position: relative;
-    display: inline-block;
-}
-
-.devices {
-    align-items: stretch;
-    width: 1700px;
-    height: 200px;
-    text-align: center;
-    margin-left: 30px;
-    transition: all 0.3s;
-    display: flex;
-    overflow-x: auto;
-}
-
-.devices-item {
-    background-size: cover;
-    align-items: stretch;
-    scroll-snap-align: center;
-    transform-origin: center center;
-    box-shadow: 5px dodgerblue;
-    box-shadow: 2px 5px silver;
-    background-color: white;
-    transition: all 0.3s;
-    width: 250px;
-    text-align: center;
-    display: inline-block;
-    flex-shrink: 0;
-    position: relative;
-}
-
-#imgdevice {
-    display: inline-block;
-    width: 140px;
-    height: 120px;
-    margin-top: 10px;
-    border: 5px solid rgb(42, 134, 99);
-    border-radius: 50px;
-}
-
-.devices-device-item {
-    background-size: cover;
-    width: 200px;
-    height: 180px;
-    display: inline-block;
-}
-
-h3 {
-    padding-top: 15px;
-    color: #1C315E;
-    font-size: 19px;
-}
-
-@media only screen and (max-width: 500px) {
-    .homeimage>img {
-        transition: all 0.6s;
-        max-height: 200px;
-    }
-    .tower>img {
-        transition: all 0.6s;
-        max-width: 50px;
-        max-height: 80px;
-        position: absolute;
-        top: -160px;
-        margin-left: -35px;
-    }
-    .powerTransmissiontower {
-        border: 1px solid black;
-        transition: all 0.6s;
-        max-width: 50px;
-        max-height: 50px;
-        top: 15px;
-        position: absolute;
-    }
-    .consumptionNow {
-        border: 1px solid black;
-        transition: all 0.6s;
-        max-width: 60px;
-        max-height: 40px;
-        top: 105px;
-        left: 140px;
-        position: absolute;
-    }
-    .solarPowerNow {
-        border: 1px solid black;
-        transition: all 0.6s;
-        max-width: 60px;
-        max-height: 40px;
-        top: 70px;
-        left: 260px;
-        position: absolute;
-    }
-    .prognosis {
-        border: 1px solid black;
-        transition: all 0.6s;
-        min-width: 100px;
-        max-height: 40px;
-        top: 10px;
-        left: 260px;
-        position: absolute;
-    }
-    .prodactionToday {
-        padding-top: 5px;
-        border: 1px solid black;
-        transition: all 0.6s;
-        min-width: 80px;
-        max-height: 40px;
-        top: 160px;
-        left: 150px;
-        position: absolute;
-    }
-    .prodactionToday>h2 {
-        font-size: 8px;
-    }
-    .prodactionToday>h1 {
-        font-size: 10px;
-    }
-    .carbattery {
-        flex-wrap: nowrap;
-        height: 70px;
-        width: 100%;
-        transition: all 0.6s;
-        text-align: center;
-    }
-    .device-item {
-        transition: all 0.3s;
-        width: 100px;
-        height: 100%;
-        position: relative;
-        display: inline-block;
-    }
-    #imgbattery {
-        margin-top: 10px;
-        width: 50px;
-        height: 40px;
-        float: left;
-    }
-    .device-item h3 {
-        font-size: 8px;
-    }
-    .device-item h2 {
-        font-size: 8px;
-    }
-    .devices {
-        align-items: stretch;
-        height: 80px;
-        text-align: center;
-        transition: all 0.6s;
-        display: flex;
-        overflow-x: auto;
-    }
-    .devices-item {
-        background-size: cover;
-        align-items: stretch;
-        scroll-snap-align: center;
-        transform-origin: center center;
-        box-shadow: 5px dodgerblue;
-        box-shadow: 2px 5px silver;
-        background-color: white;
-        transition: all 0.3s ease;
-        width: 100px;
-        text-align: center;
-        display: inline-block;
-        flex-shrink: 0;
-        position: relative;
-    }
-    #imgdevice {
-        display: inline-block;
-        width: 80px;
-        height: 60px;
-        margin-top: 10px;
-        border: 5px solid rgb(42, 134, 99);
-        border-radius: 50px;
-    }
-    .devices-device-item {
-        background-size: cover;
-        width: 100px;
-        height: 180px;
-        display: inline-block;
-    }
-} */

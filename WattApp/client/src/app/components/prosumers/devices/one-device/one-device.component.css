@@ -243,28 +243,17 @@ input:checked+.slider:before {
         font-size: 20px;
         margin: 9px;
     }
-    /* .btn1 {
-        
-    .btn1:hover{
-        background-color: #5675b8;
-        border-color: #425a8d;
-    }
-    } */
     .updatedelete {
         height: 60px;
     }
     .deviceimg {
         width: 100%;
         text-align: left;
-        /* min-height: auto; */
-        /* box-sizing: border-box; */
     }
     #imgdevice {
         box-sizing: border-box;
         width: 13%;
-        /* float: left; */
         margin: 10px;
-        /* position: relative; */
     }
     .info {
         float: right;
@@ -274,8 +263,6 @@ input:checked+.slider:before {
     }
     .infoimg {
         float: left;
-        /* margin-top: 15px; */
-        /* float: left; */
         left: 22%;
         padding-top: 15px;
         position: absolute;
