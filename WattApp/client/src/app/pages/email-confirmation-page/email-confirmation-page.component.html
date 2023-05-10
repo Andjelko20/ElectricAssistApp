@@ -1,42 +1,56 @@
 
-<div class="container">
-    <div *ngIf="isConfirmed;">
-        
-        <div class="left-container">
-            <img src="assets/emailConfirmation/success.png" alt="Email confirmed successfully." class="photo">
+<div class="main-container">
+    <div class="loading-container" *ngIf="loading">
+        <div class="spinning-loading-container"></div>
+        <div class="loading-text-container">
+            Please wait...
         </div>
-        <div class="right-container">
-            <div class="title-container">
-                <h3 class="title">Your email address has been successfully confirmed.</h3>
+    </div>
+    <div *ngIf="!loading && isConfirmed">
+        <div class="container"> 
+            <div class="image-container"> 
+                <img src="assets/emailConfirmation/success.png" alt="Email confirmation successfully.">
             </div>
-        
-            <div class="message-container">
-                <br>
-                You can now <a (click)="goToLogin()" class="login-link">login</a> to our app and take control of your energy usage.
-                Start tracking and managing your household electricity 
-                consumption to help reduce your environmental impact.<br>
-                <br>
-                <b>Welcome aboard!</b><br><br>
+            <div>
+                <div class="title-container">
+                    <h2>Email confirmed successfully</h2>
+                </div>
+                <div class="message-container">
+                    <p>
+                        Congratulations! Your email address has been successfully confirmed. You can now log in to our app and take full control of your energy usage.
+                        <br>
+                        <b>Check your email box for password.</b>
+                        <br>
+                        Welcome to the <i>ElectricAssist</i> team!
+                    </p>
+                </div>
+                <div class="button-container">
+                    <button><a (click)="goToLoginPage()">Login</a></button>
+                </div>
             </div>
-        
-            <button class="login-button"><a (click)="goToLogin()">Login</a></button>
         </div>
     </div>
 
-    <div *ngIf="!isConfirmed;">
-        <div class="left-container">
-            <img src="assets/emailConfirmation/not_confirmed.png" alt="Email confirmation failed." class="photo">
-        </div>
-        <div class="right-container">
-            <div class="title-container">
-                <h3 class="title">{{message}}</h3>
+    <div *ngIf="!loading && !isConfirmed">
+        <div class="container"> 
+            <div class="image-container"> 
+                <img src="assets/emailConfirmation/not_confirmed.png" alt="Email confirmation failed.">
             </div>
-            <div class="message-container">
-                <br>
-                We're sorry to inform you that it appears that your email confirmation via the link has failed. 
-                Please contact administator for more informations. <br>
-                <br>
-                <b>See you soon!</b>
+            <div>
+                <div class="title-container">
+                    <h2>Failed to confirm your email address</h2>
+                </div>
+                <div class="message-container">
+                    <p>
+                        We apologize because your email address confirmation did not go as planned. It appears that <b><i>{{message}}</i></b>.
+                        <br>
+                        Please contact our app administrator to help resolve this problem.
+                        <br>
+                        <br>
+                        Sincerely, <br>
+                        The <i>ElectricAssist Team</i>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

@@ -220,6 +220,7 @@ export class LineWeekChartComponent {
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -261,25 +262,7 @@ export class LineWeekChartComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
-          },
+          legend:{display:false},
           title: {
             display: true,
             text: 'Production in a week',
@@ -340,6 +323,7 @@ export class LineWeekChartComponent {
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -381,25 +365,7 @@ export class LineWeekChartComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
-          },
+          legend:{display:false},
           title: {
             display: true,
             text: ' Consumption in a week',

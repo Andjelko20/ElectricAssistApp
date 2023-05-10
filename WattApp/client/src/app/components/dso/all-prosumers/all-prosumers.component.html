@@ -4,6 +4,7 @@
             <tr>
                 <th>#</th>
                 <th scope="col">Name</th>
+                <!-- <th>email</th> -->
                 <th scope="col">Settlement</th>
                 <th scope="col">City</th>
                 <th scope="col">Country</th>
@@ -13,20 +14,13 @@
         </thead>
         <tbody>
             <tr *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}let i = index ">
-
-
-                <ng-container *ngFor="let pr of prosumerValues | paginate: {currentPage,itemsPerPage,totalItems} ">
-                    <ng-container *ngIf="prosumer.id === pr.id ">
-                        <td>{{ (currentPage - 1) * itemsPerPage + i +1 }}</td>
-                        <td><a [routerLink]='["/prosumer/"+prosumer.id]'>{{prosumer.name}}</a></td>
-                        <td>{{prosumer.settlement}}</td>
-                        <td>{{prosumer.city}}</td>
-                        <td>{{prosumer.country}}</td>
-                        <td>{{pr.consumption}} kWh</td>
-                        <td>{{pr.production}} kWh</td>
-                    </ng-container>
-
-                </ng-container>
+                <td>{{ (currentPage - 1) * itemsPerPage + i +1 }}</td>
+                <td><a [routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]'>{{prosumer.userDetailsDTO.name}}</a></td>
+                <td>{{prosumer.userDetailsDTO.settlement}}</td>
+                <td>{{prosumer.userDetailsDTO.city}}</td>
+                <td>{{prosumer.userDetailsDTO.country}}</td>
+                <td>{{prosumer.currentConsumption}} kWh</td>
+                <td>{{prosumer.currentProduction}} kWh</td>
 
             </tr>
         </tbody>

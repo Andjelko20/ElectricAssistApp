@@ -195,7 +195,7 @@ export class LineDayChartComponent {
     const Linechart =new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: hours,
+        labels: ["0","4","8","12","16","20"," "],
         
         datasets: [
           {
@@ -218,6 +218,7 @@ export class LineDayChartComponent {
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -259,25 +260,7 @@ export class LineDayChartComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onClick: function() {},
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend: {display: false
           },
           title: {
             
@@ -306,7 +289,7 @@ export class LineDayChartComponent {
     const Linechart =new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: hours,
+        labels: ["0","4","8","12","16","20"," "],
         
         datasets: [
           {
@@ -339,6 +322,7 @@ export class LineDayChartComponent {
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -380,25 +364,8 @@ export class LineDayChartComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onClick: function() {},
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend: { 
+            display: false
           },
           title: {
             

@@ -92,7 +92,7 @@ export class PieChartComponent implements OnInit {
         labels: name,
           datasets: data
       },
-      options: {
+      options: {maintainAspectRatio:false,responsive:true,
         plugins: {
             datalabels: {
                 formatter: (value: number, ctx: { chart: { data: { datasets: { data: any; }[]; }; }; }) => {
@@ -102,7 +102,7 @@ export class PieChartComponent implements OnInit {
                   sum += data;
                 });
                 
-                let percentage = value+" kWh";
+                let percentage = value;
                 return percentage;
               },
                 color: '#fff',
@@ -129,15 +129,7 @@ export class PieChartComponent implements OnInit {
               
               
             },
-            // title: {
-            //   display: true,
-            //   text: 'Production in Kwh',
-            //   color:'#727272',
-            //   font:{
-            //     size:25
-            //   }
-              
-            // }
+           
             
         }}
       

@@ -13,6 +13,6 @@
     width: 100%;
 }
 #linechart{
-    display: flex;
+    display: inline-flex;
     width: 100%;
 }

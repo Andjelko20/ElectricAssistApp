@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { EmailConfirmationServiceService } from 'src/app/services/email-confirmation-service.service';
 
 @Component({
   selector: 'app-change-email-confirmation-page',
@@ -10,36 +9,46 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./change-email-confirmation-page.component.css']
 })
 export class ChangeEmailConfirmationPageComponent implements OnInit, OnDestroy{
-  isConfirmed : boolean = false;
-  message : string = "";
-  private mySubscription : Subscription = new Subscription();
-  constructor(private http : HttpClient, private route : ActivatedRoute, private router : Router){
+  isConfirmed! : boolean;
+  message! : string;
+  loading : boolean = true;
+  subscription : Subscription = new Subscription();
 
-  }
+  constructor(
+    private router : Router, 
+    private route : ActivatedRoute, 
+    private _service : EmailConfirmationServiceService
+  ){}
 
-  goToLogin(){
+  goToLoginPage(){
     this.router.navigate(['login']);
   }
 
-  ngOnInit(){
-    this.mySubscription = this.route.queryParams.subscribe(params => {
-      const key = encodeURIComponent(params['key']);
+  ngOnInit(): void {
+    this.loading = true;
+    this.route.queryParams.subscribe(params => {
+      const key = params['key'];
       console.log(key);
-      this.http.post<ConfirmEmailResponseDTO>(`${environment.serverUrl}/api/Users/changeEmailConfirmation/${key}`, null).subscribe((response) => {
-        console.log(response);
-        if(response && response.isConfirmed){
-          this.isConfirmed = true;
+
+      this._service.changeEmailAddressConfirmation(key).subscribe((response : ConfirmEmailResponseDTO) => {
+        if(response){
+          if(response.isConfirmed){
+            this.isConfirmed = true;
+          }
+          else{
+            this.isConfirmed = false;
+            this.message = response.error;
+          }
         }
-        else{
-          this.message = response.error;
-        }
+        this.loading = false;
       });
     });
   }
 
   ngOnDestroy(): void {
-    this.mySubscription.unsubscribe();
-}
+    this.subscription.unsubscribe();
+    this.loading = true;
+  }
   
 }
 

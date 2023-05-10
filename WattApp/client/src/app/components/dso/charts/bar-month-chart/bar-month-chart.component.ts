@@ -204,7 +204,7 @@ export class BarMonthChartComponent {
         },
         options: 
         {
-
+          maintainAspectRatio: false,
           responsive: true, // Enable responsiveness
           
           scales:{
@@ -246,29 +246,8 @@ export class BarMonthChartComponent {
           },
          
           plugins: {
-            datalabels: {
-              display: false
-            },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:15
-                } 
-                // ,
-                // boxHeight:100,
-                // boxWidth:100
-              }
-            },
+            datalabels:{display: false},
+          legend:{display:false},
             title: {
               display: true,
               text: 'Production in a month',
@@ -312,7 +291,7 @@ export class BarMonthChartComponent {
         },
         options: 
         {
-
+          maintainAspectRatio: false,
           responsive: true, // Enable responsiveness
           
           scales:{
@@ -354,26 +333,9 @@ export class BarMonthChartComponent {
           },
          
           plugins: {
-            datalabels: {
-              display: false
-            },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:15
-                } 
-              }
-            },
+            
+            datalabels:{display: false},
+            legend:{display:false},
             title: {
               display: true,
               text: 'Consumption in a month',

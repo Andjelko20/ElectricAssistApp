@@ -1,5 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
-import { DecimalPipe } from '@angular/common'; // import DecimalPipe
+import { DatePipe, DecimalPipe } from '@angular/common'; 
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -116,7 +116,7 @@ import { ProsumerDayProductionComponent } from './components/prosumers/prosumer-
 import { ProsumerWeekProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-week-production/prosumer-week-production.component';
 import { ProsumerMonthProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-month-production/prosumer-month-production.component';
 import { ProsumerYearProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-year-production/prosumer-year-production.component';
-import { DatePipe } from '@angular/common';
+// import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [

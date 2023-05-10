@@ -16,11 +16,8 @@
                 </h2>
                 <div id="collapseAll" class="accordion-collapse collapse show" aria-labelledby="headingAll" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        
                         <img id="imgdevice" src="assets/img/account.png" alt="">
-                        
                         <h1>{{updateUserDetail.name}}</h1>
-                        
                         <div class="info">
                             <ul>
                                 <li>Username: {{updateUserDetail.username}}</li>
@@ -37,7 +34,6 @@
                       </div>
                 </div>
               </div>
-  
               <!-- EDIT -->
               <div class="accordion-item">
                 <h2 class="accordion-header" id="headingEdit">
@@ -46,7 +42,6 @@
                   </button>
                 </h2>
                 <div id="collapseEdit" class="accordion-collapse collapse" aria-labelledby="headingEdit" data-bs-parent="#accordionExample">
-                  
                     <div class="accordion-body">
                       <form #form="ngForm" (ngSubmit)="upDateUser()">
                         <div class="form-group row mb-3">
@@ -55,33 +50,27 @@
                             <input type="text" class="form-control" id="name" name="name" [(ngModel)]="updateUserDetail.name">
                           </div>
                         </div>
-                        
                         <div class="form-group row mb-3">
                           <label for="username" class="col-sm-4 col-form-label">Username</label>
                           <div class="col-sm-7">
                             <input type="text" class="form-control" id="username" name="username" [(ngModel)]="updateUserDetail.username">
                           </div>
                         </div>
-                        
                         <div class="form-group row mb-3">
                           <label for="email" class="col-sm-4 col-form-label">E-mail</label>
                           <div class="col-sm-7">
                             <input type="email" class="form-control" id="email" name="email" [(ngModel)]="updateUserDetail.email">
                           </div>
                         </div>
-                        
                         <div class="form-group row mb-3">
                           <div class="col-sm-8 offset-sm-4">
                             <button type="submit" class="btn btn-primary" [routerLink]='["/dashboard"]'>Save Changes</button>
                           </div>
                         </div>
                       </form>
-                      
-                      
                     </div>
                 </div>
               </div>
-
               <!-- CHANGE PASSWORD -->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingPassword">
@@ -117,9 +106,8 @@
                         </div>
                         </form>
                     </div>
-                    </div>
-            </div>
-  
+                  </div>
+              </div>
             </div>
         </div>
     </div>

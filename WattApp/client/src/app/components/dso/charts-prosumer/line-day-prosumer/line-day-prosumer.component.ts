@@ -103,7 +103,7 @@ export class LineDayProsumerComponent{
     const Linechart =new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: hours,
+        labels: ["0","4","8","12","16","20"," "],
         
         datasets: [
           {
@@ -213,7 +213,7 @@ export class LineDayProsumerComponent{
     const Linechart =new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: hours,
+        labels: ["0","4","8","12","16","20"," "],
         
         datasets: [
           {
