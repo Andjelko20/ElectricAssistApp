@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Polly;
 using Server.Data;
 using Server.DTOs;
 using Server.Models;
@@ -538,8 +539,15 @@ namespace Server.Services.Implementations
         }
 
         // Device
-        public DeviceTimeDTO FromWhenToWhenDeviceWorks(long deviceId)
+        public DeviceTimeDTO FromWhenToWhenDeviceWorks(long deviceId, DateTime turnedOn, DateTime turnedOff)
         {
+            if (turnedOn!=default(DateTime) || turnedOff!=default(DateTime))
+            {
+                bool checker = TurnOnOffDevice(deviceId, turnedOn, turnedOff);
+                if (checker == false)
+                    return null;
+            }
+            
             using (var _connection = _context.Database.GetDbConnection())
             {
                 _connection.Open();
@@ -547,10 +555,11 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT deu.StartTime, 
 	                                           CASE 
-			                                        WHEN deu.EndTime LIKE 'null' THEN datetime('now', '+2 hours')
+			                                        WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
+                                                    WHEN deu.EndTime > datetime('now', '+2 hours') THEN datetime('now', '+2 hours')
 			                                        ELSE deu.EndTime
 	                                           END AS EndTime,
-	                                           (julianday(CASE WHEN deu.EndTime LIKE 'null' THEN datetime('now', '+2 hours') ELSE deu.EndTime END) - julianday(deu.StartTime)) * 24.0 * 60 * 60 AS SecondsWorked
+	                                           (julianday(CASE WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours') WHEN deu.EndTime > datetime('now', '+2 hours') THEN datetime('now', '+2 hours') ELSE deu.EndTime END) - julianday(deu.StartTime)) * 24.0 * 60 * 60 AS SecondsWorked
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
                                         WHERE deu.StartTime <= datetime('now', '+2 hours')
@@ -575,29 +584,65 @@ namespace Server.Services.Implementations
                         inTotalWorked -= minutesWorked * 60;
                         int secondsWorked = (int)inTotalWorked;
 
-                        var startDay = startDate.Day;
-                        var startMonth = startDate.ToString("MMMM");
-                        var startYear = startDate.Year;
-                        var endDay = endDate.Day;
-                        var endMonth = endDate.ToString("MMMM");
-                        var endYear = endDate.Year;
+                        var startTime = startDate.ToString("dd-MM-yyyy HH:mm:ss");
+                        var endTime = endDate.ToString("dd-MM-yyyy HH:mm:ss");
+                        var duration = hoursWorked + ":" + minutesWorked + ":" + secondsWorked;
 
                         StartEndDuration = new DeviceTimeDTO
                         {
-                            StartDay = startDay,
-                            StartMonth = startMonth,
-                            StartYear = startYear,
-                            EndDay = endDay,
-                            EndMonth = endMonth,
-                            EndYear = endYear,
-                            HoursWorked = hoursWorked,
-                            MinutesWorked = minutesWorked,
-                            SecondsWorked = secondsWorked
+                            StartTime = startTime,
+                            EndTime = endTime,
+                            Duration = duration
                         };
                     }
                 }
 
                 return StartEndDuration;
+            }
+        }
+
+        public bool TurnOnOffDevice(long deviceId, DateTime turnedOn, DateTime turnedOff)
+        {
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT TurnOn
+                                        FROM Devices
+                                        WHERE Id = @deviceId;
+                                       ";
+
+                command.Parameters.Add(new SqliteParameter("@deviceId", deviceId));
+                int TurnOn = -1;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        TurnOn = reader.GetInt32(0);
+                    }
+                }
+                
+                if (TurnOn == 0)
+                {
+                    command.CommandText = @"
+                                            INSERT INTO DeviceEnergyUsages (DeviceId, StartTime, EndTime)
+                                                                    VALUES (@deviceId, @turnedOn, NULL);
+                                           ";
+                }
+                else
+                {
+                    command.CommandText = @"
+                                            UPDATE DeviceEnergyUsages
+                                            SET EndTime = @turnedOff
+                                            WHERE DeviceId = @deviceId /*AND StartTime = @turnedOn*/ AND EndTime IS NULL;
+                                           ";
+                }
+
+                command.Parameters.Add(new SqliteParameter("@turnedOn", turnedOn));
+                command.Parameters.Add(new SqliteParameter("@turnedOff", turnedOff));
+
+                return command.ExecuteNonQuery() > 0;
             }
         }
     }

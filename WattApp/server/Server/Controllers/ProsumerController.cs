@@ -266,14 +266,18 @@ namespace Server.Controllers
         /// <summary>
         /// How much device worked
         /// </summary>
-        [HttpGet]
+        [HttpPut]
         [Route("device")]
-        public async Task<IActionResult> HowMuchDeviceWorked([FromQuery] long deviceId)
+        public async Task<IActionResult> HowMuchDeviceWorked([FromQuery] long deviceId, DateTime turnedOn, DateTime turnedOff)
         {
             if (!_sqliteDb.Devices.Any(d => d.Id == deviceId))
                 return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
 
-            return Ok(prosumerService.FromWhenToWhenDeviceWorks(deviceId));
+            var response = prosumerService.FromWhenToWhenDeviceWorks(deviceId, turnedOn, turnedOff);
+            if (response == null)
+                return BadRequest("Failed entry data into the database.");
+                    
+            return Ok(response);
         }
     }
 }
