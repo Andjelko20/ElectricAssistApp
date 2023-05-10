@@ -1,30 +1,29 @@
 <div class="table-responsive">
-  <table *ngIf="data?.length!=0" class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th scope="col">Name</th>
-        <!-- <th>email</th> -->
-        <th scope="col">Settlement</th>
-        <th scope="col">City</th>
-        <th scope="col">Country</th>
-        <th scope="col">Current consumption</th>
-        <th scope="col">Current production</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}let i = index ">
-            <td>{{ (currentPage - 1) * itemsPerPage + i +1  }}</td>
-            <td><a [routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]'>{{prosumer.userDetailsDTO.name}}</a></td>
-            <td>{{prosumer.userDetailsDTO.settlement}}</td>
-            <td>{{prosumer.userDetailsDTO.city}}</td>
-            <td>{{prosumer.userDetailsDTO.country}}</td>
-            <td>{{prosumer.currentConsumption}} kWh</td>
-            <td>{{prosumer.currentProduction}} kWh</td>
-        
-      </tr>
-    </tbody>
-  </table>
-  <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
-  </div>
-  
+    <table *ngIf="data?.length!=0" class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th scope="col">Name</th>
+                <!-- <th>email</th> -->
+                <th scope="col">Settlement</th>
+                <th scope="col">City</th>
+                <th scope="col">Country</th>
+                <th scope="col">Current consumption</th>
+                <th scope="col">Current production</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}let i = index ">
+                <td>{{ (currentPage - 1) * itemsPerPage + i +1 }}</td>
+                <td><a [routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]'>{{prosumer.userDetailsDTO.name}}</a></td>
+                <td>{{prosumer.userDetailsDTO.settlement}}</td>
+                <td>{{prosumer.userDetailsDTO.city}}</td>
+                <td>{{prosumer.userDetailsDTO.country}}</td>
+                <td>{{prosumer.currentConsumption}} kWh</td>
+                <td>{{prosumer.currentProduction}} kWh</td>
+
+            </tr>
+        </tbody>
+    </table>
+    <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
+</div>

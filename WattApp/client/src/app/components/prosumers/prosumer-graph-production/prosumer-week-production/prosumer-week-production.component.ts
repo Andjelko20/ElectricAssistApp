@@ -81,6 +81,7 @@ export class ProsumerWeekProductionComponent {
         this.deviceService.weekByDayUser(id, 1),
       ]).subscribe(([list2]) => {
         this.list2 = list2;
+        console.log(this.list2)
         this.LineChartProduction();
     });
     }

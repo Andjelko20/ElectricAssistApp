@@ -117,7 +117,6 @@ import { ProsumerWeekProductionComponent } from './components/prosumers/prosumer
 import { ProsumerMonthProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-month-production/prosumer-month-production.component';
 import { ProsumerYearProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-year-production/prosumer-year-production.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

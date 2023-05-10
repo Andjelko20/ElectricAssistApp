@@ -38,20 +38,16 @@
 }
 
 .devices {
-    /* position: sticky;
-    align-items: stretch; */
     width: 100%;
     height: auto;
     padding-bottom: 35px;
     text-align: center;
     transition: all 0.3s;
-    /* display: flex;
-    overflow-x: auto; */
+    margin-bottom: 18px;
     position: relative;
 }
 
 .devices-item {
-    /* position: sticky; */
     background-size: cover;
     box-shadow: 5px dodgerblue;
     background-color: white;
@@ -71,8 +67,6 @@
 #imgdevice {
     position: relative;
     display: inline-block;
-    /* max-width: 140px;
-    max-height: 120px; */
     width: 65%;
 }
 
@@ -112,14 +106,10 @@
     .devices-device-item {
         margin: 15px;
     }
-    /* .devices-item {
-        border: 1px solid red;
-    } */
     #deviceh3 {
         font-size: 34px;
     }
     .devices-item {
-        /* position: sticky; */
         width: 25%;
     }
     .btn {
