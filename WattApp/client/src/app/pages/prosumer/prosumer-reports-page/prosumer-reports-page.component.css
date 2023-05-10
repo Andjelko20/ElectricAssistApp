@@ -243,6 +243,7 @@ input {
     padding: 0 0px;
     display: block;
     overflow: hidden;
+    margin-right: -13px;
     background-color: #f1f1f1;
 }
 
@@ -250,6 +251,7 @@ input {
     width: 100%;
     padding: 0 0px;
     display: block;
+    margin-right: -13px;
     overflow: hidden;
     background-color: #f1f1f1;
 }
@@ -258,6 +260,7 @@ input {
     width: 100%;
     padding: 0 0px;
     display: none;
+    margin-right: -13px;
     overflow: hidden;
     background-color: #f1f1f1;
 }
@@ -266,6 +269,7 @@ input {
     width: 100%;
     display: none;
     padding: 0 0px;
+    margin-right: -13px;
     overflow: hidden;
     background-color: #f1f1f1;
 }

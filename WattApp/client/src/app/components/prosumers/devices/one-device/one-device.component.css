@@ -27,7 +27,7 @@
 }
 
 .updatedelete {
-    height: 40px;
+    height: 46px;
     background-color: #1C315E;
     border-radius: 5px;
     position: relative;
@@ -212,7 +212,7 @@ input:checked+.slider:before {
 
 #typedev {
     font-size: 25px;
-    padding-left: 20px;
+    padding-left: 4px;
     color: white;
 }
 

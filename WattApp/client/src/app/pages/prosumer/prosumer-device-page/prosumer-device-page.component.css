@@ -209,6 +209,7 @@ p {
 .content1 {
     width: 100%;
     display: block;
+    margin-right: -13px;
     overflow: hidden;
     background-color: #f1f1f1;
 }
@@ -216,6 +217,7 @@ p {
 .content2 {
     width: 100%;
     display: none;
+    margin-right: -13px;
     overflow: hidden;
     background-color: #f1f1f1;
 }
@@ -224,6 +226,7 @@ p {
     width: 100%;
     display: none;
     overflow: hidden;
+    margin-right: -13px;
     background-color: #f1f1f1;
 }
 
@@ -244,11 +247,9 @@ p {
         width: 3%;
         margin-left: 2%;
     }
-    /* .btn {
-        width: 12% !important;
-        font-size: 20px;
-        margin: 9px;
-    } */
+    .toggle-buttons label {
+        font-size: 25px;
+    }
     .updatedelete {
         height: 60px;
     }

@@ -68,6 +68,11 @@
     }
 }
 
+.btn {
+    background-color: #bce9e4;
+    color: grey;
+}
+
 @media (min-width: 768px) {
     h1 {
         font-size: 37px;

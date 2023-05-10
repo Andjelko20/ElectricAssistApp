@@ -17,9 +17,13 @@
     text-transform: uppercase;
 }
 
+.container {
+    text-align: center;
+}
+
 .table {
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 11px;
     width: 100%;
 }
 

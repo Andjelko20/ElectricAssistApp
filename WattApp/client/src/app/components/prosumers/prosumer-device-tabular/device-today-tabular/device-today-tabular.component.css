@@ -2,6 +2,10 @@
     margin: 20px 0;
 }
 
+.container {
+    text-align: center;
+}
+
 .table-wrapper {
     background-color: #f8f9fa;
     border-radius: 4px;
@@ -18,7 +22,7 @@
 
 .table {
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 11px;
     width: 100%;
 }
 

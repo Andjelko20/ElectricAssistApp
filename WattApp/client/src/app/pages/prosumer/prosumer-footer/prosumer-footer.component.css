@@ -29,14 +29,14 @@ a {
 .nav-link {
     text-align: center;
     width: 100%;
-    margin: 5px;
+    margin: 10px;
     float: left;
 }
 
 .active {
-    margin: 5px;
+    margin: 10px;
     background-color: #354871 !important;
-    color: rgb(0, 0, 0);
+    color: #2fbcff;
 }
 
 a:hover {
