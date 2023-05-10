@@ -68,11 +68,16 @@
 	justify-content: center;
 	align-items: center;
 	position: relative;
+	text-decoration: none !important;
 }
 .ngx-pagination {
     
     margin-bottom: 1rem;
 }
+
+::ng-deep .ngx-pagination a{
+	text-decoration: none !important;
+} 
 ::ng-deep .ngx-pagination li.small-screen{
 	display: none !important;
 }

@@ -20,13 +20,21 @@ namespace Server.Controllers
         public readonly SqliteDbContext _sqliteDb;
         public readonly IProsumerService prosumerService;
         public readonly ITokenService tokenService;
+        public readonly ILogger<ProsumersDetailsController> logger;
 
-        public ProsumersDetailsController(IUserService userService,SqliteDbContext sqliteDb,IProsumerService prosumerService,ITokenService tokenService)
+        public ProsumersDetailsController(
+            IUserService userService,
+            SqliteDbContext sqliteDb,
+            IProsumerService prosumerService,
+            ITokenService tokenService,
+            ILogger<ProsumersDetailsController> logger
+        )
         {
             this.userService = userService;
             _sqliteDb = sqliteDb;
             this.prosumerService = prosumerService;
             this.tokenService = tokenService;
+            this.logger = logger;
         }
 
         ///<summary>Get all prosumers for map</summary>
@@ -94,6 +102,8 @@ namespace Server.Controllers
 
                 var id = long.Parse(tokenService.GetClaim(HttpContext, "id"));
                 var loggedInUser = await userService.GetUserById(id);
+                logger.LogInformation(cityId.ToString());
+                logger.LogInformation(loggedInUser.Settlement.CityId.ToString());
                 return Ok(await userService.GetPageOfUsersForDSO(pageNumber, pageSize, cityId, loggedInUser.Settlement.CityId, userFilterModel, prosumerDSOFilter));
 
             }

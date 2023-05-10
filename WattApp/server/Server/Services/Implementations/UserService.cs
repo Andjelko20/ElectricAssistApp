@@ -148,6 +148,7 @@ namespace Server.Services.Implementations
             }
             else if (cityId == -1)
             {
+                logger.LogInformation("Uzimam grad");
                 users = (IQueryable<UserModel>)context.Users
                 .Include(user => user.Role)
                 .Include(user => user.Settlement)
@@ -167,7 +168,6 @@ namespace Server.Services.Implementations
 
             if (users == null)
                 throw new HttpRequestException("No items found in database.", null, HttpStatusCode.NotFound);
-
             users = UserFilter.applyFilters(users, userFilterModel);
 
             //if (!users.Any()) throw new HttpRequestException("There is no users!", null, System.Net.HttpStatusCode.NotFound);
