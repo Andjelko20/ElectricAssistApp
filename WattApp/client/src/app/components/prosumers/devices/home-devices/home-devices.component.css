@@ -221,7 +221,9 @@ h1 {
     width: 60%;
 }
 
-
+.no-devices{
+    text-align: center;
+}
 /* Responsiveness */
 
 @media (min-width: 768px) {

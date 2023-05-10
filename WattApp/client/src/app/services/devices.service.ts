@@ -13,7 +13,16 @@ export class DevicesService {
 
   getAllDevices(pageNumber:number, pageSize:number,categoryId:number):Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12&categoryId='+categoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    if(categoryId!=0)
+    {
+      console.log("da");
+      
+     return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12&categoryId='+categoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+ 
+    }
+    else
+    { return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    }
   }
   getAllDevicesNoPaggination():Observable<any>
   {

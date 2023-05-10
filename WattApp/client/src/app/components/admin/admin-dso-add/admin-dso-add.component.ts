@@ -1,19 +1,20 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { Roles } from 'src/app/utilities/role';
 import { environment } from 'src/environments/environment';
 import { LatLng } from 'leaflet';
-
+import { Location } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-admin-dso-add',
   templateUrl: './admin-dso-add.component.html',
   styleUrls: ['./admin-dso-add.component.css']
 })
 export class AdminDsoAddComponent implements OnInit{
-
+ 
   addUserRequest={
     name:'',
     username:'',
@@ -34,10 +35,15 @@ export class AdminDsoAddComponent implements OnInit{
 
   public cities:any;
   public settlements:any;
+  currentUrl: any;
   
   constructor(private usersService:AuthService,private router:Router) { }
 
   ngOnInit(): void {
+
+
+
+
 	fetch(environment.serverUrl+"/cities?countryId=1",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 	.then(res=>res.json())
 	.then(res=>{
@@ -81,4 +87,5 @@ export class AdminDsoAddComponent implements OnInit{
 		this.addUserRequest.address=event.address;
 		this.addUserRequest.settlementId=event.settlement;
 	}
+  
 }
