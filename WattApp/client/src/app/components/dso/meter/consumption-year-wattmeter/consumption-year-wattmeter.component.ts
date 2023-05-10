@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
   selector: 'app-consumption-year-wattmeter',
@@ -70,8 +68,7 @@ export class ConsumptionYearWattmeterComponent implements OnInit {
   constructor(private historyService:HistoryPredictionService,private authService:AuthService){
 
   }
-    async ngOnInit(){
-    let token=new JwtToken();
+   ngOnInit(){
     this.loader=true;
     this.authService.getlogInUser().subscribe(user=>{
       this.authService.getCityId(user.city).subscribe(number=>{

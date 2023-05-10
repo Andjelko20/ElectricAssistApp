@@ -1,8 +1,21 @@
-<div>
+<div id="solar">
 
-    <ngx-gauge [type]="type" [thick]="thick" [label]="label" [append]="append" [prepend]="prepend" [cap]="cap" [foregroundColor]="foregroundColor" [backgroundColor]="backgroundColor" [value]="value" [min]="min" [max]="max" [markers]="enableMarkers ? markerConfig: {}"
-        [margin]="11">
+    <ngx-gauge style="background-color: white; border-radius: 200px;" [size]="300"   [type]="type" [thick]="thick" [label]="label" [append]="append" 
+    [prepend]="prepend" [cap]="cap" [foregroundColor]="foregroundColor" [backgroundColor]="backgroundColor" 
+    [value]="value" [min]="min" [max]="max" [markers]="enableMarkers ? markerConfig: {}">
+
     </ngx-gauge>
+
+
+</div>
+<div id="solar1">
+    <ngx-gauge style="background-color: white; border-radius: 200px; " [size]="120"  [type]="type" [thick]="thick" [label]="label" [append]="append" 
+    [prepend]="prepend" [cap]="cap" [foregroundColor]="foregroundColor" [backgroundColor]="backgroundColor" 
+    [value]="value" [min]="min" [max]="max" [markers]="enableMarkers ? markerConfig: {}">
+    <ngx-gauge-value style="position: absolute; top: -10px; left: 30px; right: 0; bottom: auto; font-size: 36px;display: flex; justify-content: left; align-items: flex-start; text-align: center;">{{value}}</ngx-gauge-value>
+    <ngx-gauge-append style="position: absolute; top: 7px; left: 50px; right: 0; bottom: auto; font-size: 20px;display: flex; justify-content: left; align-items: flex-start; text-align: center;">MWh</ngx-gauge-append>    
+    <ngx-gauge-label style="font-size: 10px;">sadsadsadsad</ngx-gauge-label>
+</ngx-gauge>
 
 
 </div>
