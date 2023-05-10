@@ -43,7 +43,7 @@ namespace Server.Data
             //modelBuilder.Entity<ChargingScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.Time });
             modelBuilder.Entity<InclusionScheduler>().HasKey(x => new { x.DeviceId, x.Day, x.TurnOn, x.TurnOff });
             modelBuilder.Entity<UserEnergyUsage>().HasKey(x => new { x.UserId, x.Date });
-            modelBuilder.Entity<DeviceEnergyUsage>().HasKey(x => new { x.DeviceId, x.StartTime, x.EndTime });
+            modelBuilder.Entity<DeviceEnergyUsage>().HasKey(x => new { x.DeviceId, x.StartTime });
             //modelBuilder.Entity<DeviceDefaultSettings>().HasKey(x => new { x.DeviceModelId, x.DeviceBrandId });
             modelBuilder.Entity<Bill>().HasKey(x => new { x.UserId, x.Month, x.Year });
             //modelBuilder.Entity<TypeBrand>().HasKey(x => new { x.TypeId, x.BrandId });

@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Polly;
 using Server.Data;
 using Server.DTOs;
 using Server.Models;
+using System.Globalization;
 using System.Linq;
 
 namespace Server.Services.Implementations
@@ -83,7 +86,8 @@ namespace Server.Services.Implementations
                     usageEnd = now;
                 }
 
-                var usageTime = (usageEnd - usageStart).TotalHours;
+                TimeSpan timeDifference = (TimeSpan)(usageEnd - usage.StartTime);
+                double usageTime = Math.Abs(timeDifference.TotalHours);
                 var deviceEnergyUsage = _context.Devices
                     .Include(d => d.DeviceModel)
                     .Where(d => d.Id == usage.DeviceId)
@@ -138,7 +142,8 @@ namespace Server.Services.Implementations
                     usageEnd = now;
                 }
 
-                var usageTime = (usageEnd - usageStart).TotalHours;
+                TimeSpan timeDifference = (TimeSpan)(usageEnd - usage.StartTime);
+                double usageTime = Math.Abs(timeDifference.TotalHours);
                 var deviceEnergyUsage = _context.Devices
                     .Include(d => d.DeviceModel)
                     .Where(d => d.Id == usage.DeviceId)
@@ -188,7 +193,8 @@ namespace Server.Services.Implementations
                     usageEnd = now;
                 }
 
-                var usageTime = (usageEnd - usageStart).TotalHours;
+                TimeSpan timeDifference = (TimeSpan)(usageEnd - usage.StartTime);
+                double usageTime = Math.Abs(timeDifference.TotalHours);
                 var deviceEnergyUsage = _context.Devices
                     .Include(d => d.DeviceModel)
                     .Where(d => d.Id == usage.DeviceId)
@@ -238,7 +244,8 @@ namespace Server.Services.Implementations
                     usageEnd = now;
                 }
 
-                var usageTime = (usageEnd - usageStart).TotalHours;
+                TimeSpan timeDifference = (TimeSpan)(usageEnd - usage.StartTime);
+                double usageTime = Math.Abs(timeDifference.TotalHours);
                 var deviceEnergyUsage = _context.Devices
                     .Include(d => d.DeviceModel)
                     .Where(d => d.Id == usage.DeviceId)
@@ -375,7 +382,7 @@ namespace Server.Services.Implementations
                         if (usage.EndTime > DateTime.Now)
                             overlapEnd = DateTime.Now;
                         else
-                            overlapEnd = usage.EndTime;
+                            overlapEnd = (DateTime)usage.EndTime;
                     }
 
                     if (overlapStart < overlapEnd)
@@ -451,7 +458,7 @@ namespace Server.Services.Implementations
             var EndDate = DateTime.Now;
 
             usageList = _context.DeviceEnergyUsages
-                        .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= StartDate/* && u.EndTime <= EndDate*/)
+                        .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= StartDate && u.StartTime < EndDate/* && u.EndTime <= EndDate*/)
                         .ToList();
 
             var totalEnergyConsumption = 0.0;
@@ -465,10 +472,12 @@ namespace Server.Services.Implementations
 
                 foreach (var usage in deviceUsageList)
                 {
-                    if (usage.EndTime == null)
+                    if (usage.EndTime == null || usage.EndTime > EndDate)
                         usage.EndTime = EndDate;
 
-                    totalEnergyConsumption += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;// device.EnergyInKwh;
+                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
+                    double hours = Math.Abs(timeDifference.TotalHours);
+                    totalEnergyConsumption += hours * EnergyInKwh;
                 }
             }
 
@@ -508,7 +517,12 @@ namespace Server.Services.Implementations
                                         .FirstOrDefault()
                                         .EnergyKwh;
 
-                    EnergyUsage += (usage.EndTime - usage.StartTime).TotalHours * EnergyInKwh;
+                    if (usage.EndTime == null)
+                        usage.EndTime = DateTime.Now;
+
+                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
+                    double hours = Math.Abs(timeDifference.TotalHours);
+                    EnergyUsage += hours * EnergyInKwh;
                 }
 
                 Results.Add(new EnergyToday
@@ -522,6 +536,149 @@ namespace Server.Services.Implementations
             }
 
             return Results;
+        }
+
+        // Device
+        public DeviceTimeDTO FromWhenToWhenDeviceWorks(long deviceId, DateTime turnedOn, DateTime turnedOff)
+        {
+            if (turnedOn!=default(DateTime) || turnedOff!=default(DateTime))
+            {
+                bool checker = TurnOnOffDevice(deviceId, turnedOn, turnedOff);
+                if (checker == false)
+                    return null;
+            }
+            
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT deu.StartTime, 
+	                                           CASE 
+			                                        WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
+                                                    WHEN deu.EndTime > datetime('now', '+2 hours') THEN datetime('now', '+2 hours')
+			                                        ELSE deu.EndTime
+	                                           END AS EndTime,
+	                                           (julianday(CASE WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours') WHEN deu.EndTime > datetime('now', '+2 hours') THEN datetime('now', '+2 hours') ELSE deu.EndTime END) - julianday(deu.StartTime)) * 24.0 * 60 * 60 AS SecondsWorked
+                                        FROM DeviceEnergyUsages deu 
+                                        JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
+                                        WHERE deu.StartTime <= datetime('now', '+2 hours')
+                                        ORDER BY deu.StartTime DESC
+                                        LIMIT 1;";
+
+                command.Parameters.Add(new SqliteParameter("@deviceId", deviceId));
+
+                DeviceTimeDTO StartEndDuration = null;
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            DateTime startDate = DateTime.ParseExact(reader["StartTime"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                            DateTime endDate = DateTime.ParseExact(reader["EndTime"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+
+                            double inTotalWorked = double.Parse(reader["SecondsWorked"].ToString());
+                            int hoursWorked = (int)inTotalWorked / 3600;
+                            inTotalWorked -= hoursWorked * 3600;
+                            int minutesWorked = (int)inTotalWorked / 60;
+                            inTotalWorked -= minutesWorked * 60;
+                            int secondsWorked = (int)inTotalWorked;
+
+                            var startTime = startDate.ToString("dd-MM-yyyy HH:mm:ss");
+                            var endTime = endDate.ToString("dd-MM-yyyy HH:mm:ss");
+                            var duration = "";
+
+                            if(hoursWorked<10 && minutesWorked<10 && secondsWorked<10)
+                                duration = "0" + hoursWorked + ":0" + minutesWorked + ":0" + secondsWorked;
+                            else if (hoursWorked < 10 && minutesWorked<10)
+                                duration = "0" + hoursWorked + ":0" + minutesWorked + ":" + secondsWorked;
+                            else if (hoursWorked<10 && secondsWorked<10)
+                                duration = "0" + hoursWorked + ":" + minutesWorked + ":0" + secondsWorked;
+                            else if (minutesWorked<10 && secondsWorked<10)
+                                duration = hoursWorked + ":0" + minutesWorked + ":0" + secondsWorked;
+                            else if (hoursWorked<10)
+                                duration = "0" + hoursWorked + ":" + minutesWorked + ":" + secondsWorked;
+                            else if (minutesWorked < 10)
+                                duration = hoursWorked + ":0" + minutesWorked + ":" + secondsWorked;
+                            else if (secondsWorked < 10)
+                                duration = hoursWorked + ":" + minutesWorked + ":0" + secondsWorked;
+
+                            StartEndDuration = new DeviceTimeDTO
+                            {
+                                StartTime = startTime,
+                                EndTime = endTime,
+                                Duration = duration
+                            };
+                        }
+                    }
+                    else
+                    {
+                        StartEndDuration = new DeviceTimeDTO
+                        {
+                            StartTime = "/",
+                            EndTime = "/",
+                            Duration = "00:00:00"
+                        };
+                    }
+                }
+
+                return StartEndDuration;
+            }
+        }
+
+        public bool TurnOnOffDevice(long deviceId, DateTime turnedOn, DateTime turnedOff)
+        {
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT TurnOn
+                                        FROM Devices
+                                        WHERE Id = @deviceId;
+                                       ";
+
+                command.Parameters.Add(new SqliteParameter("@deviceId", deviceId));
+                int TurnOn = -1;
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        TurnOn = reader.GetInt32(0);
+                    }
+                }
+                
+                if (TurnOn == 0)
+                {
+                    command.CommandText = @"
+                                            INSERT INTO DeviceEnergyUsages (DeviceId, StartTime, EndTime)
+                                                                    VALUES (@deviceId, @turnedOn, NULL);
+                                            
+                                            UPDATE Devices
+                                            SET TurnOn = 1
+                                            WHERE Id = @deviceId;
+                                           ";
+                }
+                else
+                {
+                    command.CommandText = @"
+                                            UPDATE DeviceEnergyUsages
+                                            SET EndTime = @turnedOff
+                                            WHERE DeviceId = @deviceId /*AND StartTime = @turnedOn*/ AND EndTime IS NULL;
+                                           
+                                            UPDATE Devices
+                                            SET TurnOn = 0
+                                            WHERE Id = @deviceId;
+                                           ";
+                }
+
+                command.Parameters.Add(new SqliteParameter("@turnedOn", turnedOn));
+                command.Parameters.Add(new SqliteParameter("@turnedOff", turnedOff));
+
+                return command.ExecuteNonQuery() > 0;
+            }
         }
     }
 }
