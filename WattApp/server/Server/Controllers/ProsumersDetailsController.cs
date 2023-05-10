@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.DTOs;
 using Server.DTOs.Responses;
+using Server.Filters;
 using Server.Services;
 using Server.Services.Implementations;
 using Server.Utilities;
@@ -53,8 +54,8 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("page")]
-        [Authorize(Roles=Roles.Dispatcher)]
-        public async Task<IActionResult> GetPage([FromQuery] int pageNumber,[FromQuery] long cityId=0, [FromQuery] int pageSize=20)
+        [Authorize(Roles = Roles.Dispatcher)]
+        public async Task<IActionResult> GetPage([FromQuery] int pageNumber, [FromQuery] long cityId = 0, [FromQuery] int pageSize = 20)
         {
             try
             {
@@ -69,6 +70,31 @@ namespace Server.Controllers
                 }
 
                 return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId == Roles.ProsumerId && user.Settlement.CityId == cityId));
+
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode((int)ex.StatusCode.Value, new MessageResponseDTO(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                //logger.LogInformation(ex.Message);
+                return StatusCode(500, new { message = "Internal server error" });
+            }
+        }
+
+
+        [HttpGet]
+        [Route("page/filters")]
+        [Authorize(Roles=Roles.Dispatcher)]
+        public async Task<IActionResult> GetPage([FromQuery] UserFilterModel userFilterModel, [FromQuery] ProsumerDSOFilterModel prosumerDSOFilter, [FromQuery] int pageNumber,[FromQuery] long cityId=0, [FromQuery] int pageSize=20)
+        {
+            try
+            {
+
+                var id = long.Parse(tokenService.GetClaim(HttpContext, "id"));
+                var loggedInUser = await userService.GetUserById(id);
+                return Ok(await userService.GetPageOfUsersForDSO(pageNumber, pageSize, cityId, loggedInUser.Settlement.CityId, userFilterModel, prosumerDSOFilter));
 
             }
             catch (HttpRequestException ex)

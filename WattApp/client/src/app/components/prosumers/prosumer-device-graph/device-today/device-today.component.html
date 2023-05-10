@@ -1,0 +1,14 @@
+
+<div class="chart">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date</mat-label>
+      <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <canvas  id="linechart2" *ngIf="consumptionGraph">
+    </canvas>
+    <canvas  id="linechart1" *ngIf="productionGraph">
+    </canvas>
+    </div>

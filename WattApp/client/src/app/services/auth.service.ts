@@ -72,6 +72,11 @@ export class AuthService {
     return this.http.get<any>(environment.serverUrl+"/api/users/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
+  getDevice(id:number):Observable<any>
+  {
+    return this.http.get<any>(environment.serverUrl+"/api/Device/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
   getProsumer(id:number):Observable<any>
   {
     return this.http.get<any>(environment.serverUrl+"/api/prosumersDetails/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
