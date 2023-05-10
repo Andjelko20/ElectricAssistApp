@@ -7,11 +7,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 Chart.register(...registerables)
+
 @Component({
   selector: 'app-prediction-device',
   templateUrl: './prediction-device.component.html',
   styleUrls: ['./prediction-device.component.css']
 })
+
 export class PredictionDeviceComponent {
 
   list1:WeekByDay[] = [];
@@ -19,23 +21,39 @@ export class PredictionDeviceComponent {
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     
   }
-
+  consumptionGraph:boolean = false;
+  productionGraph:boolean = false;
   ngOnInit(): void {
   
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(id).subscribe(data=>{
       if(data.deviceCategory == "Electricity Consumer")
       {
+        this.consumptionGraph = true;
         this.deviceService.predictionDevice(id).subscribe(consumption =>{
           this.list1 = consumption;
+          console.log(this.list1);
           this.LineChartConsumption();
         })
         
       }
       else{
+        
+        this.productionGraph=true;
+        
         this.deviceService.predictionDevice(id).subscribe(production =>{
-          this.list2 = production;
-          this.LineChartProduction();
+   
+          const br: any = 0;
+          if(production==br)
+          {
+            console.log("Nemamo dovoljno podataka");
+          }
+          else{
+            this.list2=production;
+            this.LineChartProduction();
+          }
+          console.log(typeof production);
+         
         })
       }
     })
@@ -79,13 +97,14 @@ export class PredictionDeviceComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -94,7 +113,7 @@ export class PredictionDeviceComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -103,7 +122,7 @@ export class PredictionDeviceComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -111,7 +130,7 @@ export class PredictionDeviceComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -120,31 +139,34 @@ export class PredictionDeviceComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend:{
+            display: false
           },
+          // legend: {
+          //   position: 'bottom',
+          //   onHover: function (event, legendItem, legend) {
+          //     document.body.style.cursor = 'pointer';
+          //   },
+          //   onLeave: function (event, legendItem, legend) {
+          //       document.body.style.cursor = 'default';
+          //   },
+          //   labels:{
+          //     usePointStyle: true,
+          //     color:'#000',
+          //     font:{
+          //       size:20
+          //     } 
+           
+          //   }
+          //   ,
+          //   align: "center"
+          // },
           title: {
             display: true,
             text: 'Prediction production in a week',
             color:'#000',
             font:{
-              size:20
+              size:15
             }
           }
         }
@@ -200,13 +222,14 @@ export class PredictionDeviceComponent {
       }
       ,
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales:{
           y: {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             position: "left",
@@ -215,7 +238,7 @@ export class PredictionDeviceComponent {
               text: "kWh",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -224,7 +247,7 @@ export class PredictionDeviceComponent {
             ticks:{
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             },
             title:{
@@ -232,7 +255,7 @@ export class PredictionDeviceComponent {
               text: "Days in a week",
               color:'#000',
               font:{
-                size:15
+                size:13
               }
             }
           }
@@ -241,31 +264,34 @@ export class PredictionDeviceComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend:{
+            display:false
           },
+          // legend: {
+          //   position: 'bottom',
+          //   onHover: function (event, legendItem, legend) {
+          //     document.body.style.cursor = 'pointer';
+          //   },
+          //   onLeave: function (event, legendItem, legend) {
+          //       document.body.style.cursor = 'default';
+          //   },
+          //   labels:{
+          //     usePointStyle: true,
+          //     color:'#000',
+          //     font:{
+          //       size:20
+          //     } 
+           
+          //   }
+          //   ,
+          //   align: "center"
+          // },
           title: {
             display: true,
             text: 'Prediction consuming in a week',
             color:'#000',
             font:{
-              size:20
+              size:15
             }
           }
         }

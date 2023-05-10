@@ -32,6 +32,7 @@ export class ProsumerAccountPageComponent {
   public idUser!:number;
   public role!:string;
   public name!:string;
+  public username!:string;
   public email!:string;
   public emailErrorMessage:string="";
 	public errorMessage:string="";
@@ -71,6 +72,7 @@ export class ProsumerAccountPageComponent {
               
               };
               this.name=response.name;
+              this.username = response.username;
               this.email=response.email;
               this.adres=response.address;
             },

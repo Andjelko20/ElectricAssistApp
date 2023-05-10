@@ -1,13 +1,17 @@
-import { Component, ElementRef, ViewChildren, QueryList, ViewChild} from '@angular/core';
+import { Component, ElementRef, ViewChildren, QueryList, ViewChild, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-prosumer-reports-page',
   templateUrl: './prosumer-reports-page.component.html',
   styleUrls: ['./prosumer-reports-page.component.css']
 })
-export class ProsumerReportsPageComponent {
+export class ProsumerReportsPageComponent implements OnInit {
   
-  @ViewChildren('collapsibleButton') collapsibleButtons!: QueryList<ElementRef>;
+  isContentVisible = false;
+  isContentVisible1 = false;
+  isContentVisible2 = false;
+  isContentVisible3 = false;
+  isContentVisible4 = false;
   dashboard:boolean = true;
   devices:boolean = false;
   day:boolean = true;
@@ -19,7 +23,15 @@ export class ProsumerReportsPageComponent {
   monthTable:boolean = false;
   yearTable:boolean = false;
   constructor(private elementRef: ElementRef) {}
-  
+  ngOnInit(): void {
+    this.isContentVisible = true;
+    this.isContentVisible1 = false;
+    this.isContentVisible2 = false;
+    this.isContentVisible3 = true;
+    this.isContentVisible4 = false;
+
+  }
+
   toggleD()
   {
     this.dashboard = false;
@@ -86,17 +98,54 @@ export class ProsumerReportsPageComponent {
     this.monthTable=false;
     this.yearTable = true;
   }
-  ngAfterViewInit() {
-    this.collapsibleButtons.forEach(button => {
-      button.nativeElement.addEventListener('click', () => {
-        button.nativeElement.classList.toggle('active');
-        const content = button.nativeElement.nextElementSibling;
-        if (content.style.display === 'block') {
-          content.style.display = 'none';
-        } else {
-          content.style.display = 'block';
-        }
-      });
-    });
+  onClick()
+  {
+   const contentDiv = document.querySelector(".content") as HTMLDivElement;
+   this.isContentVisible = !this.isContentVisible;
+  if (this.isContentVisible) {
+   contentDiv.style.display = 'block';
+   } else {
+   contentDiv.style.display = 'none';
   }
+ }
+  onClickProd()
+  {
+    const contentDiv = document.querySelector(".content2") as HTMLDivElement;
+ this.isContentVisible1 = !this.isContentVisible1;
+   if (this.isContentVisible1) {
+ contentDiv.style.display = 'block';
+ } else {
+ contentDiv.style.display = 'none';
+ }
+ }
+  onClickTable()
+  {
+    const contentDiv = document.querySelector(".content1") as HTMLDivElement;
+ this.isContentVisible2 = !this.isContentVisible2;
+ if (this.isContentVisible2) {
+ contentDiv.style.display = 'block';
+  } else {
+ contentDiv.style.display = 'none';
+ }
+   }
+  onClickPredGraph()
+  {
+    const contentDiv = document.querySelector(".content3") as HTMLDivElement;
+    this.isContentVisible3 = !this.isContentVisible3;
+    if (this.isContentVisible3) {
+    contentDiv.style.display = 'block';
+  } else {
+      contentDiv.style.display = 'none';
+  }
+ }
+  onClickPredTable()
+  {
+  const contentDiv = document.querySelector(".content4") as HTMLDivElement;
+  this.isContentVisible4 = !this.isContentVisible4;
+ if (this.isContentVisible4) {
+  contentDiv.style.display = 'block';
+ } else {
+ contentDiv.style.display = 'none';
+ }
+   }
 }

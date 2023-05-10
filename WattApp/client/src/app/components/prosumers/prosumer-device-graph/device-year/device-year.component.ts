@@ -142,13 +142,15 @@ export class DeviceYearComponent {
             
           },
           options: 
-          {responsive: true,
+          {
+            maintainAspectRatio: false,
+            responsive: true,
             scales:{
               y: {
                 ticks:{
                   color:'#000',
                   font:{
-                    size:15
+                    size:13
                   }
                 },
                 position: "left",
@@ -159,7 +161,7 @@ export class DeviceYearComponent {
                   text: "kWh",
                   color: '#000',
                   font:{
-                    size:15
+                    size:13
                   }
                   
                 }
@@ -169,7 +171,7 @@ export class DeviceYearComponent {
                 ticks:{
                   color:'#000',
                   font:{
-                    size:15
+                    size:13
                   }
                   
                 },
@@ -178,47 +180,45 @@ export class DeviceYearComponent {
                   text: "Months in a Year",
                   color: '#000',
                   font:{
-                    size:15
+                    size:13
                   }
                 }
               }
-              
-                
-              
-              
-              
             },
             
             plugins: {
               datalabels: {
                 display: false
               },
-              legend: {
-                onHover: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'pointer';
-                },
-                onLeave: function (event, legendItem, legend) {
-                    document.body.style.cursor = 'default';
-                },
-                
-                position: 'bottom',
-                labels: {
-                  usePointStyle: true,
-                  color: '#000',
-                  font:{
-                    size:20
-                  } 
-                  // ,
-                  // boxHeight:100,
-                  // boxWidth:100
-                }
+              legend:{
+                display:false
               },
+              // legend: {
+              //   onHover: function (event, legendItem, legend) {
+              //     document.body.style.cursor = 'pointer';
+              //   },
+              //   onLeave: function (event, legendItem, legend) {
+              //       document.body.style.cursor = 'default';
+              //   },
+                
+              //   position: 'bottom',
+              //   labels: {
+              //     usePointStyle: true,
+              //     color: '#000',
+              //     font:{
+              //       size:20
+              //     } 
+              //     // ,
+              //     // boxHeight:100,
+              //     // boxWidth:100
+              //   }
+              // },
               title: {
                 display: true,
                 text: 'Production in a year',
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 }
               }
             }
@@ -256,13 +256,15 @@ export class DeviceYearComponent {
             
           },
           options: 
-          {responsive: true,
+          {
+            maintainAspectRatio: false,
+            responsive: true,
             scales:{
               y: {
                 ticks:{
                   color:'#000',
                   font:{
-                    size:15
+                    size:13
                   }
                 },
                 position: "left",
@@ -273,7 +275,7 @@ export class DeviceYearComponent {
                   text: "kWh",
                   color: '#000',
                   font:{
-                    size:15
+                    size:13
                   }
                   
                 }
@@ -283,7 +285,7 @@ export class DeviceYearComponent {
                 ticks:{
                   color:'#000',
                   font:{
-                    size:15
+                    size:13
                   }
                   
                 },
@@ -292,14 +294,10 @@ export class DeviceYearComponent {
                   text: "Months in a Year",
                   color: '#000',
                   font:{
-                    size:15
+                    size:13
                   }
                 }
               }
-              
-                
-              
-              
               
             },
             
@@ -307,32 +305,35 @@ export class DeviceYearComponent {
               datalabels: {
                 display: false
               },
-              legend: {
-                onHover: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'pointer';
-                },
-                onLeave: function (event, legendItem, legend) {
-                    document.body.style.cursor = 'default';
-                },
-                
-                position: 'bottom',
-                labels: {
-                  usePointStyle: true,
-                  color: '#000',
-                  font:{
-                    size:20
-                  } 
-                  // ,
-                  // boxHeight:100,
-                  // boxWidth:100
-                }
+              legend:{
+                display: false
               },
+              // legend: {
+              //   onHover: function (event, legendItem, legend) {
+              //     document.body.style.cursor = 'pointer';
+              //   },
+              //   onLeave: function (event, legendItem, legend) {
+              //       document.body.style.cursor = 'default';
+              //   },
+                
+              //   position: 'bottom',
+              //   labels: {
+              //     usePointStyle: true,
+              //     color: '#000',
+              //     font:{
+              //       size:20
+              //     } 
+              //     // ,
+              //     // boxHeight:100,
+              //     // boxWidth:100
+              //   }
+              // },
               title: {
                 display: true,
                 text: 'Consumption in a year',
                 color: '#000',
                 font:{
-                  size:20
+                  size:15
                 }
               }
             }

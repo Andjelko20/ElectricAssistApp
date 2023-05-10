@@ -29,7 +29,7 @@
     margin-top: -35px;
     position: relative;
     float: right;
-    font-size: 12px;
+    font-size: 14px;
     margin-right: 5px;
 }
 
@@ -95,7 +95,7 @@
 #deviceCategoryId {
     width: 41%;
     font-size: 12px;
-    margin-left: 28%;
+    margin-left: 26%;
     margin-top: -35px;
 }
 
@@ -136,7 +136,7 @@ label {
         border: 1px solid red;
     } */
     #deviceh3 {
-        font-size: 30px;
+        font-size: 35px;
     }
     .devices-item {
         /* position: sticky; */

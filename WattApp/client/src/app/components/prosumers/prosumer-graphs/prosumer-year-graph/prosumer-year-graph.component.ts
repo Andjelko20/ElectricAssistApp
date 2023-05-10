@@ -69,11 +69,9 @@ export class ProsumerYearGraphComponent {
     if(this.selectedDate == undefined){
       forkJoin([
         this.deviceService.yearByMonthUser(id, 2),
-        this.deviceService.yearByMonthUser(id, 1)
-      ]).subscribe(([list1, list2]) => {
+      ]).subscribe(([list1]) => {
         this.list1 = list1;
-        this.list2 = list2;
-        this.BarPlotProduction();
+
         this.BarPlotConsumption();
       });
     }
@@ -81,50 +79,41 @@ export class ProsumerYearGraphComponent {
       const year = this.selectedDate.getFullYear();
       forkJoin([
         this.deviceService.monthbyDayUserFilter(year,id, 2),
-        this.deviceService.monthbyDayUserFilter(year,id, 1)
-      ]).subscribe(([list1, list2]) => {
+      ]).subscribe(([list1]) => {
         this.list1 = list1;
-        this.list2 = list2;
-        this.BarPlotProduction();
+
         this.BarPlotConsumption();
       });
     }
-    
   }
-  BarPlotProduction(){
+ 
+  BarPlotConsumption(){
 
-    const chartId = 'barplot1';
+    const chartId = 'barplot2';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
-    const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month = this.list2.map(day => day.month);
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const month = this.list1.map(day => day.month);
 
-    const Linechart =new Chart("barplot1", {
-        type: 'bar',
-       
+    const Linechart =new Chart("barplot2", {
+        type: 'bar',      
         data : {
-          labels: month,
-          
+          labels: month,         
           datasets: [
-
             {
-              label: 'Production',
-              data: energyUsageResults2,
-              borderColor: 'rgb(255, 165, 0)',
-              backgroundColor: 'rgb(255, 165, 0)'
-            },
-           
-            
-          ]
-          
+              label: 'Consumption',
+              data: energyUsageResults1,
+              borderColor: 'rgb(128, 0, 128)',
+              backgroundColor: 'rgb(128, 0, 128)',
+              
+            },                    
+          ]       
         },
         options: 
-        {
-          maintainAspectRatio: false,
-          responsive: true,
+        {responsive: true,
           scales:{
             y: {
               ticks:{
@@ -142,8 +131,7 @@ export class ProsumerYearGraphComponent {
                 color: '#000',
                 font:{
                   size:13
-                }
-                
+                }                
               }
             }
             ,
@@ -153,7 +141,6 @@ export class ProsumerYearGraphComponent {
                 font:{
                   size:13
                 }
-                
               },
               title:{
                 display:true,
@@ -163,15 +150,8 @@ export class ProsumerYearGraphComponent {
                   size:13
                 }
               }
-            }
-            
-              
-            
-            
-            
-          },
-          
-         
+            } 
+          }, 
           plugins: {
             datalabels: {
               display: false
@@ -192,124 +172,13 @@ export class ProsumerYearGraphComponent {
             //     usePointStyle: true,
             //     color: '#000',
             //     font:{
-            //       size:13
+            //       size:20
             //     } 
+            //     // ,
+            //     // boxHeight:100,
+            //     // boxWidth:100
             //   }
             // },
-            title: {
-              display: true,
-              text: 'Production in a year',
-              color: '#000',
-              font:{
-                size:20
-              }
-            }
-          }
-        }
-      });
-  }
-  BarPlotConsumption(){
-
-    const chartId = 'barplot2';
-    const chartExists = Chart.getChart(chartId);
-    if (chartExists) {
-        chartExists.destroy();
-    }
-
-    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month = this.list1.map(day => day.month);
-
-    const Linechart =new Chart("barplot2", {
-        type: 'bar',
-       
-        data : {
-          labels: month,
-          
-          datasets: [
-            {
-              label: 'Consumption',
-              data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
-              
-            },
-           
-            
-          ]
-          
-        },
-        options: 
-        {responsive: true,
-          scales:{
-            y: {
-              ticks:{
-                color:'#000',
-                font:{
-                  size:15
-                }
-              },
-              position: "left",
-              suggestedMin: 5,
-              suggestedMax: 140,
-              title:{
-                display:true,
-                text: "kWh",
-                color: '#000',
-                font:{
-                  size:15
-                }
-                
-              }
-            }
-            ,
-            x:{
-              ticks:{
-                color:'#000',
-                font:{
-                  size:15
-                }
-                
-              },
-              title:{
-                display:true,
-                text: "Months in a Year",
-                color: '#000',
-                font:{
-                  size:15
-                }
-              }
-            }
-            
-              
-            
-            
-            
-          },
-          
-          plugins: {
-            datalabels: {
-              display: false
-            },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:20
-                } 
-                // ,
-                // boxHeight:100,
-                // boxWidth:100
-              }
-            },
             title: {
               display: true,
               text: 'Consumption in a year',
