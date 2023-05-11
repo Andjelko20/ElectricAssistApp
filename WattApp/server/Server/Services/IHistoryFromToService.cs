@@ -30,5 +30,6 @@ namespace Server.Services
         public List<DailyEnergyConsumptionPastMonth> GetUserHistoryByDayFromToPagination(string fromDate, string toDate, long userId, long deviceCategoryId, int pageNumber, int itemsPerPage);
         public List<DailyEnergyConsumptionPastMonth> GetDeviceHistoryByDayFromToPagination(string fromDate, string toDate, long deviceId, int pageNumber, int itemsPerPage);
         public List<DailyEnergyConsumptionPastMonth> GetSettlementHistoryByDayFromToPagination(string fromDate, string toDate, long settlementId, long deviceCategoryId, int pageNumber, int itemsPerPage);
+        public List<DailyEnergyConsumptionPastMonth> GetCityHistoryByDayFromToPagination(string fromDate, string toDate, long cityId, long deviceCategoryId, int pageNumber, int itemsPerPage);
     }
 }

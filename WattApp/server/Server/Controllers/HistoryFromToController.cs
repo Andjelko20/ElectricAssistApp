@@ -188,7 +188,7 @@ namespace Server.Controllers
         public async Task<IActionResult> GetHistoryFromDateToDatePagination([FromQuery] int pageNumber, int itemsPerPage, string fromDate, string toDate,
                                                                                         long byHourDeviceId, long deviceCategoryId, long byHourUserId,
                                                                                         long byHourSettlementId, long byHourCityId, long byDayUserId,
-                                                                                        long byDayDeviceId, long byDaySettlementId)
+                                                                                        long byDayDeviceId, long byDaySettlementId, long byDayCityId)
         {
             if (pageNumber > 0 && itemsPerPage > 0)
             {
@@ -240,12 +240,20 @@ namespace Server.Controllers
                     var result = historyFromToService.GetDeviceHistoryByDayFromToPagination(fromDate, toDate, byDayDeviceId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
-                else //if (byDaySettlementId != 0)
+                else if (byDaySettlementId != 0)
                 {
                     if (!_sqliteDb.Settlements.Any(s => s.Id == byDaySettlementId))
                         return NotFound(new { message = "Settlement with ID: " + byDaySettlementId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetSettlementHistoryByDayFromToPagination(fromDate, toDate, byDaySettlementId, deviceCategoryId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+                else //if (byDayCityId != 0)
+                {
+                    if (!_sqliteDb.Cities.Any(c => c.Id == byDayCityId))
+                        return NotFound(new { message = "City with ID: " + byDayCityId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetCityHistoryByDayFromToPagination(fromDate, toDate, byDayCityId, deviceCategoryId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
             }
