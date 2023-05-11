@@ -188,7 +188,7 @@ namespace Server.Controllers
         public async Task<IActionResult> GetHistoryFromDateToDatePagination([FromQuery] int pageNumber, int itemsPerPage, string fromDate, string toDate,
                                                                                         long byHourDeviceId, long deviceCategoryId, long byHourUserId,
                                                                                         long byHourSettlementId, long byHourCityId, long byDayUserId,
-                                                                                        long byDayDeviceId)
+                                                                                        long byDayDeviceId, long byDaySettlementId)
         {
             if (pageNumber > 0 && itemsPerPage > 0)
             {
@@ -232,12 +232,20 @@ namespace Server.Controllers
                     var result = historyFromToService.GetUserHistoryByDayFromToPagination(fromDate, toDate, byDayUserId, deviceCategoryId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
-                else //if (byDayDeviceId != 0)
+                else if (byDayDeviceId != 0)
                 {
                     if (!_sqliteDb.Devices.Any(u => u.Id == byDayDeviceId))
                         return NotFound(new { message = "Device with ID: " + byDayDeviceId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetDeviceHistoryByDayFromToPagination(fromDate, toDate, byDayDeviceId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+                else //if (byDaySettlementId != 0)
+                {
+                    if (!_sqliteDb.Settlements.Any(s => s.Id == byDaySettlementId))
+                        return NotFound(new { message = "Settlement with ID: " + byDaySettlementId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetSettlementHistoryByDayFromToPagination(fromDate, toDate, byDaySettlementId, deviceCategoryId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
             }
