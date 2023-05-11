@@ -187,7 +187,8 @@ namespace Server.Controllers
         [Route("Pagination")]
         public async Task<IActionResult> GetHistoryFromDateToDatePagination([FromQuery] int pageNumber, int itemsPerPage, string fromDate, string toDate,
                                                                                         long byHourDeviceId, long deviceCategoryId, long byHourUserId,
-                                                                                        long byHourSettlementId, long byHourCityId, long byDayUserId)
+                                                                                        long byHourSettlementId, long byHourCityId, long byDayUserId,
+                                                                                        long byDayDeviceId)
         {
             if (pageNumber > 0 && itemsPerPage > 0)
             {
@@ -223,12 +224,20 @@ namespace Server.Controllers
                     var result = historyFromToService.GetCityHistoryByHourFromToPagination(fromDate, toDate, byHourCityId, deviceCategoryId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
-                else //if (byDayUserId != 0)
+                else if (byDayUserId != 0)
                 {
                     if (!_sqliteDb.Users.Any(u => u.Id == byDayUserId))
                         return NotFound(new { message = "User with ID: " + byDayUserId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetUserHistoryByDayFromToPagination(fromDate, toDate, byDayUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+                else //if (byDayDeviceId != 0)
+                {
+                    if (!_sqliteDb.Devices.Any(u => u.Id == byDayDeviceId))
+                        return NotFound(new { message = "Device with ID: " + byDayDeviceId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetDeviceHistoryByDayFromToPagination(fromDate, toDate, byDayDeviceId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
             }
