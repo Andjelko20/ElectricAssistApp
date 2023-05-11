@@ -187,7 +187,7 @@ namespace Server.Controllers
         [Route("Pagination")]
         public async Task<IActionResult> GetHistoryFromDateToDatePagination([FromQuery] int pageNumber, int itemsPerPage, string fromDate, string toDate,
                                                                                         long byHourDeviceId, long deviceCategoryId, long byHourUserId,
-                                                                                        long byHourSettlementId, long byHourCityId)
+                                                                                        long byHourSettlementId, long byHourCityId, long byDayUserId)
         {
             if (pageNumber > 0 && itemsPerPage > 0)
             {
@@ -215,12 +215,20 @@ namespace Server.Controllers
                     var result = historyFromToService.GetSettlementHistoryByHourFromToPagination(fromDate, toDate, byHourSettlementId, deviceCategoryId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
-                else //if (byHourCityId != 0)
+                else if (byHourCityId != 0)
                 {
                     if (!_sqliteDb.Cities.Any(c => c.Id == byHourCityId))
                         return NotFound(new { message = "City with ID: " + byHourCityId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetCityHistoryByHourFromToPagination(fromDate, toDate, byHourCityId, deviceCategoryId, pageNumber, itemsPerPage);
+                    return Ok(result);
+                }
+                else //if (byDayUserId != 0)
+                {
+                    if (!_sqliteDb.Users.Any(u => u.Id == byDayUserId))
+                        return NotFound(new { message = "User with ID: " + byDayUserId.ToString() + " does not exist." });
+
+                    var result = historyFromToService.GetUserHistoryByDayFromToPagination(fromDate, toDate, byDayUserId, deviceCategoryId, pageNumber, itemsPerPage);
                     return Ok(result);
                 }
             }
