@@ -140,6 +140,12 @@ export class DeviceWeekComponent {
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const month1 = this.list2.map(day => day.day);
+    let max=0;
+    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    {
+      max=1;
+      
+    }
     const Linechart = new Chart("linechart1", {
       type: 'line',
       data : {
@@ -177,10 +183,11 @@ export class DeviceWeekComponent {
                 size:13
               }
             },
+            suggestedMax:max ,
             position: "left",
             title:{
               display:true,
-              text: "kWh",
+              text:"Prediction (kWh)",
               color:'#000',
               font:{
                 size:13
@@ -212,25 +219,7 @@ export class DeviceWeekComponent {
           legend:{
             display:false
           },
-          // legend: {
-          //   position: 'bottom',
-          //   onHover: function (event, legendItem, legend) {
-          //     document.body.style.cursor = 'pointer';
-          //   },
-          //   onLeave: function (event, legendItem, legend) {
-          //       document.body.style.cursor = 'default';
-          //   },
-          //   labels:{
-          //     usePointStyle: true,
-          //     color:'#000',
-          //     font:{
-          //       size:13
-          //     } 
-           
-          //   }
-          //   ,
-          //   align: "center"
-          // },
+         
           title: {
             display: true,
             text: 'Production in a week for ',
@@ -254,6 +243,12 @@ export class DeviceWeekComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const month2 = this.list1.map(day => day.day);
+    let max=0;
+    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    {
+      max=1;
+      
+    }
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
@@ -300,11 +295,11 @@ export class DeviceWeekComponent {
               font:{
                 size:13
               }
-            },
+            },suggestedMax:max ,
             position: "left",
             title:{
               display:true,
-              text: "kWh",
+              text:"Consumption (kWh)",
               color:'#000',
               font:{
                 size:13
@@ -336,25 +331,7 @@ export class DeviceWeekComponent {
           legend:{
             display:false
           },
-          // legend: {
-          //   position: 'bottom',
-          //   onHover: function (event, legendItem, legend) {
-          //     document.body.style.cursor = 'pointer';
-          //   },
-          //   onLeave: function (event, legendItem, legend) {
-          //       document.body.style.cursor = 'default';
-          //   },
-          //   labels:{
-          //     usePointStyle: true,
-          //     color:'#000',
-          //     font:{
-          //       size:20
-          //     } 
-           
-          //   }
-          //   ,
-          //   align: "center"
-          // },
+        
           title: {
             display: true,
             text: ' Consumption in a week',

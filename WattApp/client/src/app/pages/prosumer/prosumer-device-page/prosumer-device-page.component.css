@@ -304,7 +304,7 @@ p {
     .content2 {
         width: 100%;
         padding: 0 18px;
-        display: none;
+        display: block;
         overflow: hidden;
         background-color: #f1f1f1;
     }
@@ -315,4 +315,6 @@ p {
         overflow: hidden;
         background-color: #f1f1f1;
     }
+      
+    
 }

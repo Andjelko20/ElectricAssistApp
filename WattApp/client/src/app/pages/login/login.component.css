@@ -140,11 +140,12 @@
     }
     
     .error-message {
-        display: flex;
+        display: inline-flex;
         color: red;
         align-items: center;
         justify-content: center;
         margin-top: -28px;
+
     }
     
     @media(min-width:768px) {
@@ -213,4 +214,5 @@
         .checkbox {
             margin-left: 35px;
         }
+        
     }
