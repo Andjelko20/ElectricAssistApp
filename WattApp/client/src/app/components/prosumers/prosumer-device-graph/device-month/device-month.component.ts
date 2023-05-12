@@ -145,8 +145,8 @@ export class DeviceMonthComponent {
             {
               label: 'Production',
               data: energyUsageResults2,
-              borderColor: 'rgb(255, 165, 0)',
-              backgroundColor: 'rgb(255, 165, 0)'
+              borderColor: '#1d91c0',
+              backgroundColor: '#1d91c0'
             },
            
             
@@ -169,7 +169,7 @@ export class DeviceMonthComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Production (kWh)",
                 color: '#000',
                 font:{
                   size:13
@@ -203,26 +203,7 @@ export class DeviceMonthComponent {
             legend:{
               display:false
             },
-            // legend: {
-            //   onHover: function (event, legendItem, legend) {
-            //     document.body.style.cursor = 'pointer';
-            //   },
-            //   onLeave: function (event, legendItem, legend) {
-            //       document.body.style.cursor = 'default';
-            //   },
-              
-            //   position: 'bottom',
-            //   labels: {
-            //     usePointStyle: true,
-            //     color: '#000',
-            //     font:{
-            //       size:13
-            //     } 
-            //     // ,
-            //     // boxHeight:100,
-            //     // boxWidth:100
-            //   }
-            // },
+            
             title: {
               display: true,
               text: 'Production in a month',
@@ -256,8 +237,8 @@ export class DeviceMonthComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
+              borderColor: '#7fcdbb',
+              backgroundColor: '#7fcdbb',
               
             },
             
@@ -280,7 +261,7 @@ export class DeviceMonthComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Consumption (kWh)",
                 color: '#000',
                 font:{
                   size:13
@@ -314,23 +295,7 @@ export class DeviceMonthComponent {
             legend:{
               display:false
             },
-            // legend: {
-            //   onHover: function (event, legendItem, legend) {
-            //     document.body.style.cursor = 'pointer';
-            //   },
-            //   onLeave: function (event, legendItem, legend) {
-            //       document.body.style.cursor = 'default';
-            //   },
-              
-            //   position: 'bottom',
-            //   labels: {
-            //     usePointStyle: true,
-            //     color: '#000',
-            //     font:{
-            //       size:15
-            //     } 
-            //   }
-            // },
+           
             title: {
               display: true,
               text: 'Consumption in a month',

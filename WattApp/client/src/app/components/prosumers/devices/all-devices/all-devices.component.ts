@@ -80,11 +80,7 @@ export class AllDevicesComponent implements OnInit {
 	}
     onSelectedCategory(event:any)
     {
-      
-      
       this.deviceCategoryId = event.target.value;
-      
-      
       this.deviceService.getAllDevices(1,12,this.deviceCategoryId).subscribe(devices => {
         this.devices=devices.data.map((u:any)=>({
          id:u.id,

@@ -22,10 +22,14 @@
         </div>
         <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
 
-        <div class="info" *ngIf="device.turnOn===true ">
+        <div class="info" *ngIf="device.turnOn===true && duration">
             <div class="session">
                 <p class="session-label">Session Started</p>
                 <p class="session-duration">{{duration.startTime}}</p>
+            </div>
+            <div class="session">
+                <p class="session-label">Session Ended</p>
+                <p class="session-duration">No date</p>
             </div>
             <div class="session">
                 <p class="session-label">Duration </p>
@@ -40,7 +44,11 @@
                 <p class="session-duration">25kWh</p>
             </div>
         </div>
-        <div class="info" *ngIf="device.turnOn===false ">
+        <div class="info" *ngIf="device.turnOn===false && duration">
+            <div class="session">
+                <p class="session-label">Session Started</p>
+                <p class="session-duration">{{duration.startTime}}</p>
+            </div>
             <div class="session">
                 <p class="session-label">Session Ended</p>
                 <p class="session-duration">{{duration.endTime}}</p>

@@ -54,8 +54,8 @@ export class PieChartComponent implements OnInit {
       label: '',
       data: this.settlementsValue,
       backgroundColor: [
-        '#081d58','#7fcdbb',
-          '#c7e9b4',  '#41b6c4', '#1d91c0', '#225ea8', '#253494', 
+        '#7fcdbb',
+          '#c7e9b4',  '#1d91c0', '#225ea8', '#253494', '#081d58','#081d58',
         // "#2B70A7",
         // "#BF1E2E",
         // "#E2B37D",
@@ -92,7 +92,9 @@ export class PieChartComponent implements OnInit {
         labels: name,
           datasets: data
       },
-      options: {maintainAspectRatio:false,responsive:true,
+      options: {
+        maintainAspectRatio:false,
+        responsive:true,
         plugins: {
             datalabels: {
                 formatter: (value: number, ctx: { chart: { data: { datasets: { data: any; }[]; }; }; }) => {

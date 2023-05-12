@@ -121,8 +121,8 @@ export class ProsumerMonthGraphComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
+              borderColor: '#7fcdbb',
+              backgroundColor: '#7fcdbb',
               
             },
             
@@ -145,7 +145,7 @@ export class ProsumerMonthGraphComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Consumption (kWh)",
                 color: '#000',
                 font:{
                   size:13

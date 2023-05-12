@@ -21,7 +21,9 @@ export class OneDeviceComponent implements OnInit{
   device!:ShowDevices;
   idDevice?:number;
   buttonOnoff:boolean=false;
-  duration!:Durations;
+  date = new Date();
+  formattedDate = this.datePipe.transform(this.date,'yyyy-MM-dd HH:mm:ss');
+  duration?:Durations={startTime:"",endTime:"",duration:"0"};
   constructor(private router:Router,private deviceService:DevicesService,
     private route:ActivatedRoute,private modalService: NgbModal, private datePipe: DatePipe ) {
      
@@ -30,16 +32,26 @@ export class OneDeviceComponent implements OnInit{
     ngOnInit(): void {
       this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
       this.deviceService.getDevice( this.idDevice).subscribe(devices => {
-        this.device=devices})
+        this.device=devices});
 
         this.deviceService.durationDateTime(this.idDevice).subscribe(res=>{
           
+          if(res.startTime=='/' )
+          {
+            this.duration={
+              startTime:"No date",
+              endTime:"No date",
+              duration:res.duration,
+             }
+          }
+          else{
+            this.duration={
+              startTime: res.startTime,
+              endTime:res.endTime,
+              duration:res.duration,
+             }
+          }
           
-          this.duration={
-           startTime: res.startTime,
-         endTime:res.endTime,
-          duration:res.duration,
-           }
           
         })
         
@@ -85,7 +97,16 @@ export class OneDeviceComponent implements OnInit{
       this.onClick=()=> {
         this.deviceService.turnOn(id,formattedDate).subscribe({
           next:()=>{
+            this.deviceService.durationDateTime(id).subscribe(res=>{
           
+          
+              this.duration={
+               startTime: res.startTime,
+             endTime:res.endTime,
+              duration:res.duration,
+               }
+              
+            })
           
               this.device.turnOn = true;
               this.buttonOnoff=true;
@@ -117,7 +138,16 @@ export class OneDeviceComponent implements OnInit{
         this.offClick=()=> {
           this.deviceService.turnOff(id,formattedDate).subscribe({
             next:()=>{
-            
+              this.deviceService.durationDateTime(id).subscribe(res=>{
+          
+          
+                this.duration={
+                 startTime: res.startTime,
+               endTime:res.endTime,
+                duration:res.duration,
+                 }
+                
+              })
                 this.device.turnOn = false;
                 this.buttonOnoff=true;
                 

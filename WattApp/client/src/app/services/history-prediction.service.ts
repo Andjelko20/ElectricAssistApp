@@ -16,9 +16,9 @@ export class HistoryPredictionService {
     return this.http.get<any>(environment.serverUrl+'/api/Prosumer/'+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
 
   }
-  getTotalConsumptionProductionProsumer(name:string,id:number):Observable<number>
+  getTotalConsumptionProductionProsumer(id1:number,id:number):Observable<number>
   {
-    return this.http.get<number>(environment.serverUrl+'/api/Prosumer/'+name+'/'+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.get<number>(environment.serverUrl+'/api/Prosumer/user/'+id1+'/'+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
 
   }
   getCurrentConsumptionProductionCity(deviceCategoryId : number,cityId : number):Observable<number>

@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 	username='';
 	password='';
 	errorMsg='';
-	
+	show=false;
 	public backgroundImage = 'assets/images/background.jpg';
 	constructor(private authService: AuthService,private router:Router) { }
 
@@ -44,13 +44,15 @@ export class LoginComponent implements OnInit {
 		}
 	}
 	login(){
-		
+		this.show=false;
 		if (this.username.trim().length === 0) {
-			this.errorMsg = "User name is required";
+			this.errorMsg = " User name is required!";
+			this.show=true;
 			return;
 		}
 		if (this.password.trim().length === 0) {
-			this.errorMsg = "Password is required";
+			this.errorMsg = " Password is required!";
+			this.show=true;
 			return;
 		}
 		const rememberMe = (document.querySelector("#remember") as HTMLInputElement).checked;
@@ -58,7 +60,8 @@ export class LoginComponent implements OnInit {
 		this.authService.login(this.username, this.password).subscribe({
 			next: response => {
 				if (response.status == 401) {
-					this.errorMsg = "Pogresno korisnicko ime/lozinka!";
+					this.errorMsg = " Wrong username/password!";
+					this.show=true;
 					return;
 				}
 	
@@ -77,7 +80,8 @@ export class LoginComponent implements OnInit {
 			},
 			error: response => {
 				if (response.status == 401) {
-					this.errorMsg = "Pogresno korisnicko ime/lozinka!";
+					this.errorMsg = " Wrong username/password!";
+					this.show=true;
 					return;
 				}
 			}

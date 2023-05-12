@@ -176,6 +176,7 @@ a:hover {
     }
     #logout {
         color: black;
+        cursor: pointer;
     }
     .col-md-6 {
         margin-left: 202px;

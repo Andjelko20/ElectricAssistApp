@@ -23,8 +23,8 @@
                     <br>
                     <a class="linka" [routerLink]='["/forgot-password"]'>Forgot password?</a>
                 </div>
-                <div class="error-message">
-                    {{errorMsg}}
+                <div class="error-message" *ngIf="show">
+                    <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i> {{errorMsg}}
                 </div>
             </div>
         </div>
