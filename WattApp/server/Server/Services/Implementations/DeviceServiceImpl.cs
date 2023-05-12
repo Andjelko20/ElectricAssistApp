@@ -251,7 +251,15 @@ namespace Server.Services.Implementations
                 query = DeviceFilter.ApplyFilter(query, deviceFilter);
             }
 
-            if (query.Count() == 0) throw new HttpRequestException("There is no devices!", null, System.Net.HttpStatusCode.NotFound);
+            if (query.Count() == 0)
+            {
+                DataPage<DeviceResponseDTO> datapage = new();
+                datapage.Data = new List<DeviceResponseDTO>();
+                datapage.NumberOfPages = 1;
+                datapage.PreviousPage = null;
+                datapage.NextPage = null;
+                return datapage;
+            }
 
             int maxPageNumber;
             if (query.Count() % pageSize == 0) maxPageNumber = query.Count() / pageSize;
