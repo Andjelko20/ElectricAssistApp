@@ -98,11 +98,16 @@ export class ProsumerDayProductionComponent {
     }
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
-
+    let max=0;
+    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    {
+      max=1;
+      
+    }
     const Linechart =new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: ["0","4","8","12","16","20"," "],
+        labels: hours,
         
         datasets: [
           {
@@ -134,11 +139,11 @@ export class ProsumerDayProductionComponent {
               font:{
                 size:13
               }
-            },
+            },suggestedMax:max ,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Production (kWh)",
               color:'#000',
               font:{
                 size:13

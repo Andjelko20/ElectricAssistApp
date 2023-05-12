@@ -71,14 +71,22 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
       headers: { Authorization: "Bearer " + localStorage.getItem("token") }
     }).then(res => res.json());
     this.numberOfProsumers = res;
-    this.avgConsumption.getAverageConsumptionProductionCity(1, this.idUser).subscribe(result=>{
-      this.loader=false;
-      this.avgProduction = result;
-    })
-    this.avgConsumption.getCurrentConsumptionProductionCity(1, this.idUser).subscribe(result=>{
-      this.loader=false;
-        this.totalProduction = result;
+    this.updateService.getCityId(this.updateUserDetail.city).subscribe(city=>{
+      
+      this.avgConsumption.getAverageConsumptionProductionCity(1,city).subscribe(result=>{
+        this.loader=false;
+        this.avgProduction = result;
       })
+      this.avgConsumption.getCurrentConsumptionProductionCity(1, city).subscribe(result=>{
+        this.loader=false;
+          this.totalProduction = result;
+        })
+    })
+   
+    
+    
+    
+   
   }
   graph:boolean = true;
   tabelar:boolean = false;

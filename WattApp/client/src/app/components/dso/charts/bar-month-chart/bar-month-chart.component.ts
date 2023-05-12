@@ -194,8 +194,8 @@ export class BarMonthChartComponent {
             {
               label: 'Production',
               data: energyUsageResults2,
-              borderColor: 'rgb(255, 165, 0)',
-              backgroundColor: 'rgb(255, 165, 0)'
+              borderColor: '#1d91c0',
+              backgroundColor: '#1d91c0'
             },
            
             
@@ -218,7 +218,7 @@ export class BarMonthChartComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Production (kWh)",
                 color: '#000',
                 font:{
                   size:15
@@ -281,8 +281,8 @@ export class BarMonthChartComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
+              borderColor:  '#7fcdbb',
+              backgroundColor:  '#7fcdbb',
               
             },
             
@@ -305,7 +305,7 @@ export class BarMonthChartComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Consumption (kWh)",
                 color: '#000',
                 font:{
                   size:15

@@ -34,19 +34,15 @@
 }
 
 .devices {
-    /* position: sticky;
-    align-items: stretch; */
     width: 100%;
     height: auto;
     text-align: center;
     transition: all 0.3s;
-    /* display: flex;
-    overflow-x: auto; */
+    margin-bottom: 20px;
     position: relative;
 }
 
 .devices-item {
-    /* position: sticky; */
     background-size: cover;
     box-shadow: 5px dodgerblue;
     background-color: #bce9e4;
@@ -66,8 +62,6 @@
 #imgdevice {
     position: relative;
     display: inline-block;
-    /* max-width: 140px;
-    max-height: 120px; */
     width: 65%;
     margin: 15%;
 }
@@ -132,14 +126,10 @@ label {
         margin: 15px;
         width: 75%;
     }
-    /* .devices-item {
-        border: 1px solid red;
-    } */
     #deviceh3 {
         font-size: 35px;
     }
     .devices-item {
-        /* position: sticky; */
         padding: 10px;
         width: 25%;
     }

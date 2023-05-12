@@ -17,6 +17,7 @@ export class PredictionTabelarDsoComponent {
   list2:WeekByDay[] = [];
   settlements:Settlement[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
+  datePipe: any;
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService){}
 
   selectedOption: number = 0;
@@ -82,6 +83,8 @@ export class PredictionTabelarDsoComponent {
         }
       }
   }
+  const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'prediction-week',
@@ -90,7 +93,7 @@ export class PredictionTabelarDsoComponent {
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production']
+    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production', 'Exported Date '+formattedDate]
   };
 
   const csvExporter = new ExportToCsv(options);

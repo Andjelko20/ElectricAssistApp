@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { Categories } from 'src/app/utilities/categories';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-all-devices-dso',
   templateUrl: './all-devices-dso.component.html',
@@ -17,7 +18,6 @@ export class AllDevicesDsoComponent implements OnInit{
   body: string = ''; 
   btnAction:string='';
   confirmTurnOnOff?:boolean=false;
-  datePipe: any;
   currentPage:number=1;
   itemsPerPage:number=12;
   totalItems:number=10;
@@ -27,7 +27,7 @@ export class AllDevicesDsoComponent implements OnInit{
   devicesList:ShowDevices[] = [];
   deviceCategoryId!: number;
   idDevice!: number;
-  constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute,private modalService: NgbModal) {}
+  constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute,private modalService: NgbModal,private datePipe: DatePipe) {}
   categories=[
 
      {id:Categories.ELECTRICITY_PRODUCER_ID,name:Categories.ELECTRICITY_PRODUCER_NAME},
@@ -146,12 +146,12 @@ export class AllDevicesDsoComponent implements OnInit{
         this.confirmTurnOnOff=false;
         const turnOn= document.getElementById('popup');
        
-        //console.log(turnOn);
+        const date = new Date();
+    const formattedDate = this.datePipe.transform(date,'yyyy-MM-dd HH:mm:ss');
+   
        if(turnOn!=null)
        {
-        const date = new Date();
-        const formattedDate = this.datePipe.transform(date,'yyyy-MM-dd hh:mm:ss');
-        this.body = 'Do you want to turn on this device?';
+         this.body = 'Do you want to turn on this device?';
         this.btnAction="Turn On";
             turnOn.removeEventListener('click', this.onClick);
             this.onClick=() => {
@@ -173,12 +173,13 @@ export class AllDevicesDsoComponent implements OnInit{
        
       }
       turnOff(id: number){
-        const date = new Date();
-        const formattedDate = this.datePipe.transform(date,'yyyy-MM-dd hh:mm:ss');
         this.modalService.open(this.modalContent);
         this.confirmTurnOnOff=false;
         
         const turnOff= document.getElementById('popup');
+        const date = new Date();
+    const formattedDate = this.datePipe.transform(date,'yyyy-MM-dd HH:mm:ss');
+   
         if(turnOff!=null)
        {
           this.body = 'Do you want to turn off this device?';

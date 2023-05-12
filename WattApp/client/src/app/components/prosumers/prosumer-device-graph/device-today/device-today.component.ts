@@ -117,7 +117,11 @@ export class DeviceTodayComponent {
     }
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
-
+    let max=0;
+    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    {
+      max=1;
+    }
     const Linechart =new Chart("linechart11", {
       type: 'line',
       data : {
@@ -154,10 +158,12 @@ export class DeviceTodayComponent {
                 size:13
               }
             },
+            
+            suggestedMax:max ,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Prediction (kWh)",
               color:'#000',
               font:{
                 size:13
@@ -213,11 +219,16 @@ export class DeviceTodayComponent {
     }
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
-
+    let max=0;
+    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    {
+      max=1;
+      
+    }
     const Linechart =new Chart("linechart22", {
       type: 'line',
       data : {
-        labels: ["0","4","8","12","16","20"," "],
+        labels: hours,
         
         datasets: [
           {
@@ -260,10 +271,12 @@ export class DeviceTodayComponent {
                 size:13
               }
             },
+            
+            suggestedMax:max ,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Consumption (kWh)",
               color:'#000',
               font:{
                 size:13
@@ -295,25 +308,7 @@ export class DeviceTodayComponent {
           legend:{
             display:false
           },
-          // legend: {
-          //   position: 'bottom',
-          //   onHover: function (event, legendItem, legend) {
-          //     document.body.style.cursor = 'pointer';
-          //   },
-          //   onLeave: function (event, legendItem, legend) {
-          //       document.body.style.cursor = 'default';
-          //   },
-          //   labels:{
-          //     usePointStyle: true,
-          //     color:'#000',
-          //     font:{
-          //       size:13
-          //     } 
-           
-          //   }
-            
-          //   align: "center"
-          // },
+         
           title: {
             
             display: true,

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { first } from 'rxjs';
+import { first, subscribeOn } from 'rxjs';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 
@@ -66,8 +66,10 @@ constructor(private todayConsumption:HistoryPredictionService){
     async ngOnInit() {
       let token=new JwtToken();
       this.idProsumer=token.data.id as number;
-      const result = await this.todayConsumption.getTotalConsumptionProductionProsumer("Electricity Consumer",this.idProsumer).pipe(first()).toPromise();
+      const result = await this.todayConsumption.getTotalConsumptionProductionProsumer(2,this.idProsumer).subscribe(result=>{
+        this.value = result;
+      })
     
-      this.value = result!;
+      
     }
 }

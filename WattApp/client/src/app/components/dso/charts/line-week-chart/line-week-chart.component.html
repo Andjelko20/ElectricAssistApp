@@ -9,7 +9,7 @@
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker></mat-date-range-picker>
   </mat-form-field>
-  
+  <label>Select Settlement:</label>
     <select style="padding: 10px; text-align: center;" id="dropdown" [(ngModel)]="selectedOption" (change)="onOptionSelected()">
         <option value="0">Total</option>
         <option *ngFor="let item of settlements" value="{{item.id}}">{{item.name}}</option>

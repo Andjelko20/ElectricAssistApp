@@ -5,7 +5,45 @@
 .centar {
     width: 100%;
     min-height: 100vh;
-    text-align: center;
+    text-align: left;
+}
+
+.container {
+    display: none;
+}
+
+body {
+    background: #BA68C8;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8;
+}
+
+.profile-button {
+    background: #BA68C8;
+    box-shadow: none;
+    border: none;
+}
+
+.profile-button:hover {
+    background: #682773;
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none;
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none;
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer;
 }
 
 #imgdevice {
@@ -56,6 +94,11 @@ a {
     color: #727272;
 }
 
+.userimg {
+    display: flex;
+    justify-content: center;
+}
+
 a:hover {
     border-radius: 5px;
     background-color: rgb(129, 202, 248);
@@ -95,95 +138,60 @@ a:hover {
     max-width: 300px;
 }
 
+.phone {
+    display: block;
+    padding-top: 61px;
+    padding-bottom: 65px;
+}
+
+.rounded-circle {
+    width: 100px;
+    margin-bottom: 37px;
+}
+
 @media (min-width: 768px) {
+    .phone {
+        display: none;
+    }
+    .container {
+        display: block;
+    }
     .main {
         top: 0;
         right: 0;
         left: 0;
+        display: flex;
+        align-items: center;
         position: absolute;
         justify-content: center;
         min-height: 100vh;
     }
-    .centar {
-        display: flex;
-        min-height: 100vh;
-        width: 100%;
+    .rounded-circle {
+        width: 200px;
+        margin-bottom: 37px;
     }
-    #turnback {
-        width: 3%;
-        margin-left: 15px;
+    .col-md-8 {
+        border-radius: 37px;
+        background-color: #a2c7fb;
     }
-    #imgdevice {
-        width: 15%;
-        margin-top: -43%;
+    #logout {
+        color: black;
+        cursor: pointer;
     }
-    form {
-        margin-left: 200px;
-        margin-right: 200px;
+    .col-md-6 {
+        margin-left: 202px;
+        font-size: 24px !important;
     }
-    #number {
-        max-width: 436px;
-        border-bottom: 0px;
+    .col-md-6 input {
+        font-size: 24px !important;
     }
-    h1 {
-        margin-top: -11%;
-        font-size: 40px;
+    .col-md-4 span {
+        margin-bottom: 5px !important;
+        font-size: 24px !important;
     }
-    label {
-        font-size: 20px !important;
-    }
-    button {
-        width: 105px;
-    }
-    .info {
-        border-radius: 15px;
-        width: auto;
-        margin: 15px;
-        display: flex;
-        justify-content: center;
-        background-color: rgb(208 233 255);
-    }
-    ul {
-        display: inline-block;
-        text-align: center;
-        list-style: none;
-        margin-top: 38px;
-    }
-    ul>.li1 {
-        margin: 10px;
-        width: 689px;
-        text-align: left;
-        font-size: 35px;
-    }
-    .aa {
-        text-align: left;
-        font-size: 20px;
-        font-size: 80px;
-        width: 400px;
-    }
-    ul>.aa {
-        margin-top: 27px;
-        font-size: 30px;
-    }
-    .card {
-        min-height: 200px;
-        margin-top: 7%;
-        margin-bottom: 4%;
-        border-radius: 15px;
-        width: 100%;
-        margin-left: 20%;
-        margin-right: 20%;
-        float: left;
-        /* padding: 0;
-        margin-top: 155px;
-        margin-left: 80px;
-        width: 60%;
-        display: inline-block;
-        border-radius: 15px;
-        background-color: #b8dcff; */
-    }
-    #userimg {
-        border: 1px solid black;
+    .col-md-4 a {
+        margin-bottom: 5px !important;
+        font-size: 24px !important;
     }
     app-footer {
         width: 100%;

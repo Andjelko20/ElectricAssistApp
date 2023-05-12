@@ -1,30 +1,62 @@
 <app-prosumer-navbar></app-prosumer-navbar>
 <div class="main">
-    <div class="centar">
-
-        <div class="card">
-
-            <div class="userimg">
-                <img id="imgdevice" src="assets/img/account.png" alt="">
+    <div class="container rounded bg-white mt-5">
+        <div class="row">
+            <div class="col-md-4 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" src="assets/img/account.png" alt="" width="90">
+                    <span class="font-weight-bold"> {{name}}</span>
+                    <span class="font-weight-bold"><img id="imgdevice1" src="assets/userSetting.png" alt=""><a [routerLink]='["/profile-edit"]'>Edit Profile</a></span>
+                    <span class="font-weight-bold"><img id="imgdevice111" src="assets/key.png" alt=""><a id="pass" [routerLink]='["/prosumer-change-password"]'>Change Password</a></span>
+                    <span class="font-weight-bold" id="logout"><img id="imgdevice11" src="assets/exit.png" alt=""><a id="logout" (click)="logout()">Log out</a></span>
+                </div>
             </div>
-            <h1>{{name}}</h1>
-            <div class="info">
-                <ul>
-                    <li class="li1">Username: {{username}}</li>
-                    <li class="li1">E-mail: {{email}}</li>
-                    <li class="li1">Adress:{{adres}}</li>
-                    <li class="li1" id="number">Number of devices: {{numOfDevices}}</li>
-                    <li class="aa"> <img id="imgdevice1" src="assets/userSetting.png" alt=""><a [routerLink]='["/profile-edit"]'>Edit Profile</a></li>
-                    <li class="aa"> <img id="imgdevice111" src="assets/key.png" alt=""><a id="pass" [routerLink]='["/prosumer-change-password"]'>Change Password</a></li>
-                    <li class="aa"> <img id="imgdevice11" src="assets/exit.png" alt=""><a id="logout" (click)="logout()">Log out</a></li>
-
-                </ul>
-
+            <div class="col-md-8">
+                <div class="p-3 py-5">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <span class="font-weight-bold">Username: </span>
+                            <input type="text" class="form-control" placeholder="first name" value="{{username}}" readonly>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <span class="font-weight-bold">E-mail: </span>
+                            <input type="text" class="form-control" placeholder="Email" value="{{email}}" readonly></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <span class="font-weight-bold">Adress: </span>
+                            <input type="text" class="form-control" placeholder="address" value="{{adres}}" readonly>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <span class="font-weight-bold">Number of devices: </span>
+                            <input type="text" class="form-control" placeholder="Bank Name" value="{{numOfDevices}}" readonly>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
-
+    <div class="phone">
+        <div class="userimg">
+            <img id="imgdevice" src="assets/img/account.png" alt="">
+        </div>
+        <h1>{{name}}</h1>
+        <div class="info">
+            <ul>
+                <li class="li1">Username: {{username}}</li>
+                <li class="li1">E-mail: {{email}}</li>
+                <li class="li1">Adress:{{adres}}</li>
+                <li class="li1" id="number">Number of devices: {{numOfDevices}}</li>
+                <li class="aa"> <img id="imgdevice1" src="assets/userSetting.png" alt=""><a [routerLink]='["/profile-edit"]'>Edit Profile</a></li>
+                <li class="aa"> <img id="imgdevice111" src="assets/key.png" alt=""><a id="pass" [routerLink]='["/prosumer-change-password"]'>Change Password</a></li>
+                <li class="aa"> <img id="imgdevice11" src="assets/exit.png" alt=""><a id="logout" (click)="logout()">Log out</a></li>
+            </ul>
+        </div>
+    </div>
     <app-footer></app-footer>
     <app-prosumer-footer></app-prosumer-footer>
 </div>

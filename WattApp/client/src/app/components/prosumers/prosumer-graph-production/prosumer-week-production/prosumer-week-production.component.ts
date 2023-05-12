@@ -29,8 +29,8 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
 
   private _createFiveDayRange(date: D | null): DateRange<D> {
     if (date) {
-      const start = this._dateAdapter.addCalendarDays(date, -4);
-      const end = this._dateAdapter.addCalendarDays(date, 3);
+      const start = this._dateAdapter.addCalendarDays(date, 0);
+      const end = this._dateAdapter.addCalendarDays(date, 7);
       return new DateRange<D>(start, end);
     }
 
@@ -81,6 +81,7 @@ export class ProsumerWeekProductionComponent {
         this.deviceService.weekByDayUser(id, 1),
       ]).subscribe(([list2]) => {
         this.list2 = list2;
+        console.log(this.list2)
         this.LineChartProduction();
     });
     }
@@ -116,8 +117,11 @@ export class ProsumerWeekProductionComponent {
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const month = this.list2.map(day => day.day);
-
-
+    let max=0;
+    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    {
+      max=1;
+    }
     const Linechart = new Chart("linechart1", {
       type: 'line',
       data : {
@@ -154,11 +158,11 @@ export class ProsumerWeekProductionComponent {
               font:{
                 size:13
               }
-            },
+            },suggestedMax:max ,
             position: "left",
             title:{
               display:true,
-              text: "kWh",
+              text: "Production (kWh)",
               color:'#000',
               font:{
                 size:13
@@ -190,25 +194,7 @@ export class ProsumerWeekProductionComponent {
           legend:{
             display:false
           },
-          // legend: {
-          //   position: 'bottom',
-          //   onHover: function (event, legendItem, legend) {
-          //     document.body.style.cursor = 'pointer';
-          //   },
-          //   onLeave: function (event, legendItem, legend) {
-          //       document.body.style.cursor = 'default';
-          //   },
-          //   labels:{
-          //     usePointStyle: true,
-          //     color:'#000',
-          //     font:{
-          //       size:13
-          //     } 
-           
-          //   }
-          //   ,
-          //   align: "center"
-          // },
+          
           title: {
             display: true,
             text: 'Production in a week',

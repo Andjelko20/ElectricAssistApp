@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.DTOs;
 using Server.DTOs.Responses;
+using Server.Filters;
 using Server.Services;
 using Server.Services.Implementations;
 using Server.Utilities;
@@ -19,13 +20,21 @@ namespace Server.Controllers
         public readonly SqliteDbContext _sqliteDb;
         public readonly IProsumerService prosumerService;
         public readonly ITokenService tokenService;
+        public readonly ILogger<ProsumersDetailsController> logger;
 
-        public ProsumersDetailsController(IUserService userService,SqliteDbContext sqliteDb,IProsumerService prosumerService,ITokenService tokenService)
+        public ProsumersDetailsController(
+            IUserService userService,
+            SqliteDbContext sqliteDb,
+            IProsumerService prosumerService,
+            ITokenService tokenService,
+            ILogger<ProsumersDetailsController> logger
+        )
         {
             this.userService = userService;
             _sqliteDb = sqliteDb;
             this.prosumerService = prosumerService;
             this.tokenService = tokenService;
+            this.logger = logger;
         }
 
         ///<summary>Get all prosumers for map</summary>
@@ -53,8 +62,8 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("page")]
-        [Authorize(Roles=Roles.Dispatcher)]
-        public async Task<IActionResult> GetPage([FromQuery] int pageNumber,[FromQuery] long cityId=0, [FromQuery] int pageSize=20)
+        [Authorize(Roles = Roles.Dispatcher)]
+        public async Task<IActionResult> GetPage([FromQuery] int pageNumber, [FromQuery] long cityId = 0, [FromQuery] int pageSize = 20)
         {
             try
             {
@@ -69,6 +78,33 @@ namespace Server.Controllers
                 }
 
                 return Ok(await userService.GetPageOfUsers(pageNumber, pageSize, (user) => user.RoleId == Roles.ProsumerId && user.Settlement.CityId == cityId));
+
+            }
+            catch (HttpRequestException ex)
+            {
+                return StatusCode((int)ex.StatusCode.Value, new MessageResponseDTO(ex.Message));
+            }
+            catch (Exception ex)
+            {
+                //logger.LogInformation(ex.Message);
+                return StatusCode(500, new { message = "Internal server error" });
+            }
+        }
+
+
+        [HttpGet]
+        [Route("page/filters")]
+        [Authorize(Roles=Roles.Dispatcher)]
+        public async Task<IActionResult> GetPage([FromQuery] UserFilterModel userFilterModel, [FromQuery] ProsumerDSOFilterModel prosumerDSOFilter, [FromQuery] int pageNumber,[FromQuery] long cityId=0, [FromQuery] int pageSize=20)
+        {
+            try
+            {
+
+                var id = long.Parse(tokenService.GetClaim(HttpContext, "id"));
+                var loggedInUser = await userService.GetUserById(id);
+                logger.LogInformation(cityId.ToString());
+                logger.LogInformation(loggedInUser.Settlement.CityId.ToString());
+                return Ok(await userService.GetPageOfUsersForDSO(pageNumber, pageSize, cityId, loggedInUser.Settlement.CityId, userFilterModel, prosumerDSOFilter));
 
             }
             catch (HttpRequestException ex)

@@ -72,14 +72,6 @@
     align-items: center;
 }
 
-
-/* .chart-buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-} */
-
 .chart-button {
     cursor: pointer;
     border: none;
@@ -256,15 +248,11 @@ p {
     .deviceimg {
         width: 100%;
         text-align: left;
-        /* min-height: auto; */
-        /* box-sizing: border-box; */
     }
     #imgdevice {
         box-sizing: border-box;
         width: 13%;
-        /* float: left; */
         margin: 10px;
-        /* position: relative; */
     }
     .info {
         float: right;
@@ -273,8 +261,6 @@ p {
     }
     .infoimg {
         float: left;
-        /* margin-top: 15px; */
-        /* float: left; */
         left: 15%;
         padding-top: 15px;
         position: absolute;
@@ -295,7 +281,6 @@ p {
         width: 96%;
     }
     .glafik {
-        /* min-height: 100vh; */
         margin: 2%;
         margin-bottom: 55px;
         border-radius: 5px;
@@ -319,7 +304,7 @@ p {
     .content2 {
         width: 100%;
         padding: 0 18px;
-        display: none;
+        display: block;
         overflow: hidden;
         background-color: #f1f1f1;
     }
@@ -330,4 +315,6 @@ p {
         overflow: hidden;
         background-color: #f1f1f1;
     }
+      
+    
 }

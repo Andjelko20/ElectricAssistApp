@@ -95,8 +95,8 @@ export class AdminDsoComponent implements OnInit {
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
 		this.loading=true;
-		this.usersService.getAllUsers(pageNumber,this.itemsPerPage,this.filters).subscribe(
-			{ next:users => {
+		this.usersService.getAllUsers(pageNumber,this.itemsPerPage,this.filters).subscribe({
+			next:(users:any) => {
 			this.totalItems=users.numberOfPages*this.itemsPerPage;
 			this.showUsers=users.data.map((u:any)=>({
 			  id: u.id,
@@ -117,10 +117,12 @@ export class AdminDsoComponent implements OnInit {
 		   },
 		   error:err=>{
 			this.showUsers=[];
+			this.totalItems=0;
 			setTimeout(()=>{
 				this.loading=false;
 			},0);
-		}});
+			}
+		});
 		}
 
   blockUser(id: number) {
@@ -169,7 +171,7 @@ export class AdminDsoComponent implements OnInit {
     }
   }
   
-  delete(id:number)
+  deleteUser(id:number)
   {
       this.modalService.open(this.modalContent);
       const deletePopup= document.getElementById('popup');
@@ -183,8 +185,9 @@ export class AdminDsoComponent implements OnInit {
         deletePopup.addEventListener('click', () => {
           this.usersService.delete(id)
           .subscribe(()=>{
-              this.router.navigate(['/dashboard']);
-              this.usersService.getAllUsers(1).subscribe(users => {
+              //this.router.navigate(['/dashboard']);
+              this.usersService.getAllUsers(this.currentPage,this.itemsPerPage,this.filters).subscribe({
+				next:users => {
                 this.totalItems=users.numberOfPages*this.itemsPerPage;
                   this.showUsers=users.data.map((u:any)=>({
                     id: u.id,
@@ -198,10 +201,36 @@ export class AdminDsoComponent implements OnInit {
                     address:u.address,
                     country:u.country
                   } as ShowUsers));
-              });
-          });
-        });
-      }
+              },
+			  error:(_)=>{
+				let page=this.currentPage-1;
+				if(page<=0)
+					page=1;
+				this.usersService.getAllUsers(page,this.itemsPerPage,this.filters).subscribe({next:users => {
+					this.totalItems=users.numberOfPages*this.itemsPerPage;
+					this.currentPage=page;
+					  this.showUsers=users.data.map((u:any)=>({
+						id: u.id,
+						name: u.name,
+						username: u.username,
+						block: u.blocked,
+						email: u.email,
+						role: u.role,
+						settlement:u.settlement,
+						city:u.city,
+						address:u.address,
+						country:u.country
+					  } as ShowUsers));
+			  },error:()=>{
+				this.showUsers=[];
+				this.currentPage=1;
+				this.totalItems=0;
+			  }});
+          }
+		});
+      });
+	});
+	}
   }
   updatePage(id:number)
   {
