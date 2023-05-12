@@ -103,11 +103,10 @@
 .bgc-white, .bgcH-white:hover {
     background-color: #ffffff !important;
     border-radius: 10px;
-    box-shadow: 1px 2px grey;
     margin-bottom: 7px;
 }
 .bd {
-    border: 1px solid rgba(0, 0, 0, 0.0625) !important;
+    border: 1px solid #D2D2D2;
 }
 .p-20 {
     padding: 5px !important;
@@ -451,7 +450,7 @@ button.active {
       #pie{
         background-color: white;
         border-radius:10px;
-        width: 60%;
+        width: 50%;
         box-shadow: 1px 2px grey;
         display: flex;
         flex-direction: column;
@@ -486,8 +485,7 @@ button.active {
     }
             
       .weather {
-        width: 57%;
-        
+        width: 70%;
         margin-right: 10px;
         background-color: white;
         box-shadow: 1px 2px grey;
