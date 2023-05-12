@@ -10,10 +10,7 @@
             <button (click)="showComponent1()" class="nav-button" [class.active]="!prosumersPage">Map View</button>
           </div>
         </div>
-        <div class="tabel-body" *ngIf="prosumersPage"> <!--*ngIf="componentShown"-->
-			<!--<app-page-control [url]="pageUrl" [(itemsPerPage)]="itemsPerPage" [(totalItems)]="totalItems" [(items)]="items" [(currentPage)]="currentPage">
-            	<app-all-prosumers [data]="items" [currentPage]="currentPage" [itemsPerPage]="itemsPerPage" [totalItems]="totalItems"></app-all-prosumers>
-			</app-page-control>-->
+        <div class="tabel-body" *ngIf="prosumersPage">
 			<app-all-prosumers></app-all-prosumers>
         </div>
         <div class="map" *ngIf="!prosumersPage">

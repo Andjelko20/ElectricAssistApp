@@ -12,9 +12,9 @@
 }
 
 .currentTemp {
-width: 50%;
-display: inline-block;
-  /* background: #ffffff; */
+  width: 50%;
+  display: inline-block;
+
   top: 0;
   left: 0;
   border-top-left-radius: 10px;
@@ -23,7 +23,6 @@ display: inline-block;
 .currentWeather {
   width: 20%;
   display: inline-block;
-  /* background: #2ab2ea; */
   margin: 0;
   text-align: center;
   top: 0;
@@ -31,6 +30,7 @@ display: inline-block;
   border-radius: 10px;
 }
 img{
+  margin-top: -10px;
   width:  180px;
   height: 180px;
 }
@@ -38,34 +38,29 @@ img{
   font-size: 120px;
   text-align: center;
   
-  color: #000000;
+  color: #727272;
   
 }
 .location {
-  color: #000000;
+  color: #727272;
   text-align: center;
   text-transform: uppercase;
   font-size: 50px;
   display: block;
 }
 .conditions {
-  /* background-color: #ffffff; */
-  font-size: 30px;
   display: block;
   text-align: center;
 }
-
-
 .info {
 
   bottom: 0;
   right: 0;
-  margin-top: -60px;
-  /* background: #2ab2ea; */
+  margin-top: -30px;
   font-size: 20px;
-  color: #000000;
+  color: #727272;
   text-align: center;
-  /* margin-right: 15%; */
+
 }
 .rain,
 .wind {
@@ -98,7 +93,7 @@ img{
       border-radius: 5px;
   }
   .temp {
-      font-size: 70px;
+      font-size: 85px;
   }
   .location {
       font-size: 30px;

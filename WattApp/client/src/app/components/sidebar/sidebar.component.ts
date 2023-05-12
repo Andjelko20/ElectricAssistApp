@@ -20,6 +20,7 @@ export class SidebarComponent implements OnInit{
   dso?:string;
   prosumer?:string;
   currentUrl: string = '';
+  tab?:string;
   constructor(public router:Router,private usersService:AuthService,
     public route:ActivatedRoute,private modalService: NgbModal,private location: Location,
     private renderer: Renderer2,private elRef: ElementRef) { 
@@ -32,6 +33,19 @@ export class SidebarComponent implements OnInit{
        
     }
   ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+
+        if(event.url==='/prosumers?tab=table')
+        {
+          this.tab='table';
+        }
+        else
+        {
+          this.tab='map';
+        }  
+      }
+    });
     let token=new JwtToken();
     this.role=token.data.role as string;
 
@@ -97,6 +111,7 @@ export class SidebarComponent implements OnInit{
     
     
   }
+  
   logout()
   {
     localStorage.removeItem('token');

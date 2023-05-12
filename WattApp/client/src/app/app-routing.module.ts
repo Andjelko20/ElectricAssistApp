@@ -9,7 +9,6 @@ import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-pass
 import { ResetPasswordPageComponent } from './pages/reset-password/reset-password.component';
 import { ProsumerHomePageComponent } from './pages/prosumer/prosumer-home-page/prosumer-home-page.component';
 import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso.component';
-import { AdminDsoUpdateComponent } from './components/admin/admin-dso-update/admin-dso-update.component';
 import { AdminDsoAddComponent } from './components/admin/admin-dso-add/admin-dso-add.component';
 import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
 import { DispatcherGuard } from './guards/dispatcher.guard';
@@ -32,7 +31,6 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
 import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-change-password/prosumer-change-password.component';
-import { PredictionDeviceComponent } from './components/dso/prediction/prediction-device/prediction-device.component';
 
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -45,7 +43,6 @@ const routes: Routes = [
 	//ADMIN
 	{path:'',component:AdminDsoComponent,canActivate:[AdminGuard]},
 	{path:'add-user',component:AdminDsoAddComponent,canActivate:[AdminGuard]},
-	// {path:'update-user/:id',component:AdminDsoUpdateComponent,canActivate:[AdminGuard]},
 	{path:"profile-admin",component:AccountPageComponent,canActivate:[AdminGuard]},
 	//DSO
 	{path:'',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
@@ -66,7 +63,7 @@ const routes: Routes = [
 	{path:"loader",component:LoaderComponent},
 	{path:"prosumer-change-password",component:ProsumerChangePasswordComponent,canActivate:[ProsumerGuard]},
 
-	
+	{path:'**',redirectTo:"login"},
 	
 	//TEST
 	// {path:'register',component:RegisterComponent},
@@ -85,7 +82,7 @@ const routes: Routes = [
 	{path:"futuretest",component:FutureComponent},
 	{path:'email-confirmation',component:EmailConfirmationPageComponent},
 	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent},
-	{path:'**',redirectTo:"login"}
+	
 ];
 
 @NgModule({
