@@ -45,7 +45,7 @@ namespace Server.Services.Implementations
 	                                        JOIN Users u ON d.UserId = u.Id
 	                                        JOIN Settlements s ON s.Id = u.SettlementId AND s.CityId = @cityId
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate";
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')";
 
                 command.Parameters.Add(new SqliteParameter("@deviceCategoryId", deviceCategoryId));
                 command.Parameters.Add(new SqliteParameter("@cityId", cityId));
@@ -90,7 +90,7 @@ namespace Server.Services.Implementations
 	                                    JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @deviceCategoryId
 	                                    JOIN Users u ON d.UserId = u.Id AND u.SettlementId = @settlementId
                                     WHERE
-	                                    deu.StartTime >= @fromDate AND deu.StartTime <= @toDate";
+	                                    deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')";
 
                 command.Parameters.Add(new SqliteParameter("@deviceCategoryId", deviceCategoryId));
                 command.Parameters.Add(new SqliteParameter("@settlementId", settlementId));
@@ -137,7 +137,7 @@ namespace Server.Services.Implementations
 	                                        JOIN Users u ON d.UserId = u.Id
 	                                        JOIN Settlements s ON s.Id = u.SettlementId AND s.CityId = @cityId
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                         strftime('%Y-%m', deu.StartTime)";
 
@@ -209,7 +209,7 @@ namespace Server.Services.Implementations
 	                                        JOIN Users u ON d.UserId = u.Id
 	                                        JOIN Settlements s ON s.Id = u.SettlementId AND s.CityId = @cityId
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        DATE(deu.StartTime)";
 
@@ -282,7 +282,7 @@ namespace Server.Services.Implementations
 	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
 	                                        JOIN Users u ON d.UserId = u.Id AND u.SettlementId = @settlementId
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        strftime('%Y-%m', deu.StartTime)";
 
@@ -353,7 +353,7 @@ namespace Server.Services.Implementations
 	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
 	                                        JOIN Users u ON d.UserId = u.Id AND u.SettlementId = @settlementId
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        DATE(deu.StartTime)";
 
@@ -427,7 +427,7 @@ namespace Server.Services.Implementations
 	                                        JOIN Users u ON d.UserId = u.Id
                                             JOIN Settlements s ON u.SettlementId = s.Id AND s.cityId = @cityId 
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime)";
 
@@ -502,7 +502,7 @@ namespace Server.Services.Implementations
 	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
 	                                        JOIN Users u ON d.UserId = u.Id AND u.SettlementId = @settlementId
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime)";
 
@@ -566,9 +566,9 @@ namespace Server.Services.Implementations
                 command.CommandText = @"
                                         SELECT
 	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime) AS Datum,
-	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', '+2 hours')
-								                                          THEN datetime('now', '+2 hours')
-                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', '+2 hours')
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', 'localtime')
+								                                          THEN datetime('now', 'localtime')
+                                                                          WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
 								                                          ELSE deu.EndTime
 							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM
@@ -577,7 +577,7 @@ namespace Server.Services.Implementations
                                             JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
 	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime)";
 
@@ -651,7 +651,7 @@ namespace Server.Services.Implementations
                                             JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
 	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        strftime('%Y-%m', deu.StartTime)";
 
@@ -721,7 +721,7 @@ namespace Server.Services.Implementations
                                             JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
 	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        DATE(deu.StartTime)";
 
@@ -795,7 +795,7 @@ namespace Server.Services.Implementations
                                             JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
 	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate";
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')";
 
                 command.Parameters.Add(new SqliteParameter("@userId", userId));
                 command.Parameters.Add(new SqliteParameter("@categoryId", categoryId));
@@ -842,7 +842,7 @@ namespace Server.Services.Implementations
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
 	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate";
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')";
 
                 command.Parameters.Add(new SqliteParameter("@deviceId", deviceId));
                 command.Parameters.Add(new SqliteParameter("@fromDate", FromDate));
@@ -885,7 +885,7 @@ namespace Server.Services.Implementations
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
 	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        strftime('%Y-%m', deu.StartTime)";
 
@@ -953,7 +953,7 @@ namespace Server.Services.Implementations
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
 	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        DATE(deu.StartTime)";
 
@@ -1023,7 +1023,7 @@ namespace Server.Services.Implementations
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
 	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
                                         WHERE
-	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                        deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                         GROUP BY
 	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime)";
 
@@ -1101,7 +1101,7 @@ namespace Server.Services.Implementations
 	                                            JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
 	                                            JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
                                             WHERE
-	                                            deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                            deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                             GROUP BY
 	                                            strftime('%Y-%m-%d %H:00:00', deu.StartTime)
                                         ) AS T
@@ -1180,7 +1180,7 @@ namespace Server.Services.Implementations
 	                                            JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
                                                 JOIN DeviceTypes dt ON dt.Id = dm.DeviceTypeId AND dt.CategoryId = @deviceCategoryId
                                             WHERE
-	                                            deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                            deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                             GROUP BY
 	                                            strftime('%Y-%m-%d %H:00:00', deu.StartTime)
                                         ) AS T
@@ -1261,7 +1261,7 @@ namespace Server.Services.Implementations
                                                 JOIN DeviceTypes dt ON dt.Id = dm.DeviceTypeId AND dt.CategoryId = @deviceCategoryId
                                                 JOIN Users u ON u.Id = d.UserId AND u.SettlementId = @settlementId
                                             WHERE
-	                                            deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                            deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                             GROUP BY
 	                                            strftime('%Y-%m-%d %H:00:00', deu.StartTime)
                                         ) AS T
@@ -1344,7 +1344,7 @@ namespace Server.Services.Implementations
                                                 JOIN Users u ON u.Id = d.UserId
                                                 JOIN Settlements s ON s.Id = u.SettlementId AND s.CityId = @cityId
                                             WHERE
-	                                            deu.StartTime >= @fromDate AND deu.StartTime <= @toDate
+	                                            deu.StartTime >= @fromDate AND deu.StartTime <= @toDate AND deu.StartTime < datetime('now', 'localtime')
                                             GROUP BY
 	                                            strftime('%Y-%m-%d %H:00:00', deu.StartTime)
                                         ) AS T
@@ -1428,7 +1428,7 @@ namespace Server.Services.Implementations
 	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @deviceCategoryId
                                             JOIN Users u ON u.Id = d.UserId
                                             JOIN Settlements s ON s.Id = u.SettlementId AND s.CityId = @cityId
-	                                        WHERE deu.StartTime >= @FromDate AND deu.StartTime <= @ToDate
+	                                        WHERE deu.StartTime >= @FromDate AND deu.StartTime <= @ToDate AND deu.StartTime < datetime('now', 'localtime')
 	                                        GROUP BY strftime('%Y-%m-%d', deu.StartTime)
                                         ) AS T
                                         WHERE RowNumber > @skipCount
@@ -1507,7 +1507,7 @@ namespace Server.Services.Implementations
 	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
 	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @deviceCategoryId
                                             JOIN Users u ON u.Id = d.UserId AND u.SettlementId = @settlementId
-	                                        WHERE deu.StartTime >= @FromDate AND deu.StartTime <= @ToDate
+	                                        WHERE deu.StartTime >= @FromDate AND deu.StartTime <= @ToDate AND deu.StartTime < datetime('now', 'localtime')
 	                                        GROUP BY strftime('%Y-%m-%d', deu.StartTime)
                                         ) AS T
                                         WHERE RowNumber > @skipCount
@@ -1585,7 +1585,7 @@ namespace Server.Services.Implementations
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
 	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
 	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @deviceCategoryId
-	                                        WHERE deu.StartTime >= @FromDate AND deu.StartTime <= @ToDate
+	                                        WHERE deu.StartTime >= @FromDate AND deu.StartTime <= @ToDate AND deu.StartTime < datetime('now', 'localtime')
 	                                        GROUP BY strftime('%Y-%m-%d', deu.StartTime)
                                         ) AS T
                                         WHERE RowNumber > @skipCount
@@ -1662,7 +1662,7 @@ namespace Server.Services.Implementations
 	                                        FROM DeviceEnergyUsages deu 
 	                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.Id = @deviceId
 	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
-	                                        WHERE deu.StartTime >= @FromDate AND deu.StartTime <= @ToDate
+	                                        WHERE deu.StartTime >= @FromDate AND deu.StartTime <= @ToDate AND deu.StartTime < datetime('now', 'localtime')
 	                                        GROUP BY strftime('%Y-%m-%d', deu.StartTime)
                                         ) AS T
                                         WHERE RowNumber > @skipCount
