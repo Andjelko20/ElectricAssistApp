@@ -12,7 +12,15 @@
     min-height: 30vh;
     width: 100%;
 }
-#linechart{
-    display: inline-flex;
+
+#linechart {
+    /* display: inline-flex; */
     width: 100%;
+}
+
+@media(min-width:1200px) {
+    #linechart {
+        display: inline-flex;
+        width: 100%;
+    }
 }
