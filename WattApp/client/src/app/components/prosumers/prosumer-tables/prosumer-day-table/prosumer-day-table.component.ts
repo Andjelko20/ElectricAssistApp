@@ -106,7 +106,6 @@ export class ProsumerDayTableComponent {
           }
         }
     }
-
     const options = {
       fieldSeparator: ',',
       filename: 'consumption/production-day.csv',

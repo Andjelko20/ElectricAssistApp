@@ -25,8 +25,6 @@ export class DsoProsumersPageComponent implements OnInit {
 	  .then(res=>this.numberOfProsumers=res);
   }
   showComponent() {
-    //this.componentShown = true;
-    //this.componentShown1=false;
 	this.router.navigate(["prosumers"],{
 		queryParams:{
 			tab:"table"
@@ -35,8 +33,6 @@ export class DsoProsumersPageComponent implements OnInit {
 	this.prosumersPage=true;
   }
   showComponent1() {
-      //this.componentShown1 = true;
-      //this.componentShown=false;
 	  this.router.navigate(["prosumers"],{
 		queryParams:{
 			tab:"map"

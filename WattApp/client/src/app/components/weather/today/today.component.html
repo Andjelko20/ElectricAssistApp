@@ -4,6 +4,7 @@
         <span class="location">{{ location.name }}</span>
     </div>
     <div class="currentWeather">
+        
         <span class="conditions"><img src="assets/img/{{weatherNow.weather[0].icon}}.png" alt=""></span>
         <div class="info" >
             Feels like {{ weatherNow.main.feels_like | number: '1.0-0' }} °C  . {{ weatherNow.weather[0].main }}.

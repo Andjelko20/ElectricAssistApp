@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShowUsers, Users } from 'src/app/models/users.model';
@@ -28,13 +28,12 @@ export class AdminDsoComponent implements OnInit {
   settlements:any[]=[];
   loading:boolean=true;
   public filters={
-	blocked:-1,
-	role:0,
-	settlement:0,
-	city:0,
-	name:''
+    blocked:-1,
+    role:0,
+    settlement:0,
+    city:0,
+    name:''
   };
-
   onBlockClick!: (this: HTMLElement, ev: MouseEvent) => any;
   onUnblockClick!: (this: HTMLElement, ev: MouseEvent) => any;
   oneUser?:string;
@@ -58,8 +57,9 @@ export class AdminDsoComponent implements OnInit {
 	public success:boolean=false;
   public passwordGen='';
   public emailUp='';
+  showDropdown = false;
   constructor(private router:Router,private usersService:AuthService,
-    private route:ActivatedRoute,private modalService: NgbModal) { }
+    private route:ActivatedRoute,private modalService: NgbModal,private elementRef: ElementRef) { }
 
 	getSettlements(){
 
@@ -82,16 +82,6 @@ export class AdminDsoComponent implements OnInit {
 		this.cities=res
   	});
   }
-  isOpen = false;
-
-  toggleDropdown() {
-    this.isOpen = !this.isOpen;
-  }
-
-  closeDropdown() {
-    this.isOpen = false;
-  }
-  
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
 		this.loading=true;
@@ -271,24 +261,55 @@ export class AdminDsoComponent implements OnInit {
       }
     });
   }
-  // countChecked(): number {
-  //   let count = 0;
-  //   for (let prop in this.filters) {
-  //     if (this.filters.hasOwnProperty(prop)) {
-  //       if (Array.isArray(this.filters[prop])) {
-  //         count += this.filters[prop].filter(val => val).length;
-  //       } else {
-  //         count += this.filters[prop] ? 1 : 0;
-  //       }
-  //     }
-  //   }
-  //   return count;
-  // }
+
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    const clickedElement = event.target as HTMLElement;
+    const dropdownElement = this.elementRef.nativeElement;
+    const navbarElement = dropdownElement.querySelector('#dropbtn1') as HTMLElement;
+    const dropdownContent = dropdownElement.querySelector('.dropdown-content') as HTMLElement;
+
+    if (!dropdownElement.contains(clickedElement) || (!navbarElement.contains(clickedElement) && !dropdownContent.contains(clickedElement))) {
+      this.showDropdown = false;
+    }
+  }
+  countActiveFilters() {
+    let count = 0;
+    if (this.filters.blocked !== -1) {
+      count++;
+    }
+    if (this.filters.role !== 0) {
+      count++;
+    }
+    if (this.filters.settlement !== 0) {
+      count++;
+    }
+    if (this.filters.city !== 0) {
+      count++;
+    }
+    if (this.filters.name.trim() !== '') {
+      count++;
+    }
+  
+    return count;
+  }
+  clearFilters() {
+    this.filters = {
+      blocked:-1,
+      role:0,
+      settlement:0,
+      city:0,
+      name:''
+    };
+    this.pageChanged(1); 
+  }
   logout()
   {
     localStorage.removeItem('token');
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }
-
 }

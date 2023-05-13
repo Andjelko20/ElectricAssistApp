@@ -122,7 +122,7 @@ export class DeviceYearTabularComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption']
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list1);
