@@ -1,32 +1,3 @@
-/* .form-group{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-.form-group select{
-	border-radius: 4px;
-	height: 24px;
-}
-.no-users{
-	text-align: center;
-    font-size: 30px;
-}
-.filter{
-  padding: 10px;
-	display: flex;
-	flex-wrap: wrap;
-	gap:10px;
-}
-.settlement-text{
-	color:black;
-	margin: 0;
-}
-.search{
-	border-radius: 4px;
-	outline:none;
-	border: 1px solid black;
-	padding: 2px 3px;
-} */
 
 .first {
    
@@ -224,14 +195,12 @@ li a {
 
 .dropdown-content {
   border-radius: 5px;
-  width: 180px;
+  width: 200px;
   border: 1px solid #354871;
   display: none;
   position: absolute;
   background-color: #f9f9f9;
   text-align: center;
-  margin-top: 18px;
-  margin-left: -15px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
@@ -253,14 +222,7 @@ li a {
   display: block;
 }
 
-.dropdown-content:hover .dropbtn1 {
-  background-color: #354871;
-}
 
-.dropbtn1 a:hover {
-  background-color: #f9f9f9;
-  color: #354871;
-}
 
 @media only screen and (min-width: 768px) and (max-width: 1280px) {
     

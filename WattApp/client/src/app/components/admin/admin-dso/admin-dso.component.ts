@@ -28,13 +28,12 @@ export class AdminDsoComponent implements OnInit {
   settlements:any[]=[];
   loading:boolean=true;
   public filters={
-	blocked:-1,
-	role:0,
-	settlement:0,
-	city:0,
-	name:''
+    blocked:-1,
+    role:0,
+    settlement:0,
+    city:0,
+    name:''
   };
-
   onBlockClick!: (this: HTMLElement, ev: MouseEvent) => any;
   onUnblockClick!: (this: HTMLElement, ev: MouseEvent) => any;
   oneUser?:string;
@@ -58,6 +57,7 @@ export class AdminDsoComponent implements OnInit {
 	public success:boolean=false;
   public passwordGen='';
   public emailUp='';
+  showDropdown = false;
   constructor(private router:Router,private usersService:AuthService,
     private route:ActivatedRoute,private modalService: NgbModal,private elementRef: ElementRef) { }
 
@@ -82,8 +82,6 @@ export class AdminDsoComponent implements OnInit {
 		this.cities=res
   	});
   }
-  
-  
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
 		this.loading=true;
@@ -263,46 +261,35 @@ export class AdminDsoComponent implements OnInit {
       }
     });
   }
-  
-  showDropdown = false;
+
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
   }
   @HostListener('document:click', ['$event'])
   onClick(event: MouseEvent) {
     const clickedElement = event.target as HTMLElement;
-  const dropdownElement = this.elementRef.nativeElement;
-  const navbarElement = dropdownElement.querySelector('.dropbtn1') as HTMLElement;
-  const dropdownContent = dropdownElement.querySelector('.dropdown-content') as HTMLElement;
+    const dropdownElement = this.elementRef.nativeElement;
+    const navbarElement = dropdownElement.querySelector('#dropbtn1') as HTMLElement;
+    const dropdownContent = dropdownElement.querySelector('.dropdown-content') as HTMLElement;
 
-  if (!dropdownElement.contains(clickedElement) || (!navbarElement.contains(clickedElement) && !dropdownContent.contains(clickedElement))) {
-    this.showDropdown = false;
-  }
+    if (!dropdownElement.contains(clickedElement) || (!navbarElement.contains(clickedElement) && !dropdownContent.contains(clickedElement))) {
+      this.showDropdown = false;
+    }
   }
   countActiveFilters() {
     let count = 0;
-  
-    // Check the 'blocked' filter
     if (this.filters.blocked !== -1) {
       count++;
     }
-  
-    // Check the 'role' filter
     if (this.filters.role !== 0) {
       count++;
     }
-  
-    // Check the 'settlement' filter
     if (this.filters.settlement !== 0) {
       count++;
     }
-  
-    // Check the 'city' filter
     if (this.filters.city !== 0) {
       count++;
     }
-  
-    // Check the 'name' filter
     if (this.filters.name.trim() !== '') {
       count++;
     }
