@@ -7,6 +7,7 @@ using Server.Models;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -541,56 +542,82 @@ namespace Server.Services.Implementations
 
         public List<EnergyToday> UserHistoryForThePastDayByHour(long userId, long deviceCategoryId)
         {
-            var deviceIds = _context.Devices
-                .Include(d => d.DeviceModel)
-                .ThenInclude(dm => dm.DeviceType)
-                .ThenInclude(dt => dt.DeviceCategory)
-                .Where(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId)
-                .Select(d => d.Id)
-                .ToList();
-
-            DateTime startOfDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 0, 0, 0);
-            DateTime endOfDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1, 23, 59, 59);
-
-            List<DeviceEnergyUsage> UsageList = new List<DeviceEnergyUsage>();
-            var Results = new List<EnergyToday>();
-
-            UsageList = _context.DeviceEnergyUsages
-                        .Where(u => deviceIds.Contains(u.DeviceId) && u.StartTime >= startOfDay && (u.EndTime <= endOfDay || u.EndTime == null))
-                        .ToList();
-
-            for (var hour = startOfDay.Hour; hour <= endOfDay.Hour; hour = hour + 1)
+            using (var _connection = _context.Database.GetDbConnection())
             {
-                var UsageForHour = UsageList.Where(u => u.StartTime.Hour == hour).ToList();
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT
+	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime) AS Datum,
+	                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', 'localtime')
+								                                          THEN datetime('now', 'localtime')
+								                                          WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
+								                                          ELSE deu.EndTime
+							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM
+	                                        DeviceEnergyUsages deu
+	                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
+	                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+	                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
+                                        WHERE
+	                                        deu.StartTime >= datetime('now', '-1 day', 'start of day') AND deu.StartTime <= datetime('now', 'start of day', '-1 second')
+                                        GROUP BY
+	                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime)";
 
-                double EnergyUsage = 0.0;
-                foreach (var usage in UsageForHour)
+                command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
+                command.Parameters.Add(new SqliteParameter("@userId", userId));
+
+                var energyUsages = new List<EnergyToday>();
+
+                using (var reader = command.ExecuteReader())
                 {
-                    double EnergyInKwh = _context.Devices
-                                        .Where(d => d.Id == usage.DeviceId)
-                                        .Select(d => d.DeviceModel)
-                                        .FirstOrDefault()
-                                        .EnergyKwh;
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
-                    if (usage.EndTime == null)
-                        usage.EndTime = DateTime.Now;
+                            var hour = date.Hour;
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
 
-                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
-                    double hours = Math.Abs(timeDifference.TotalHours);
-                    EnergyUsage += hours * EnergyInKwh;
+                            var dailyEnergyUsage = new EnergyToday
+                            {
+                                Hour = hour,
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
+                    }
+                    else
+                    {
+                        var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 0, 0, 0);
+                        var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day-1, 23, 59, 59);
+
+                        for (var date = startDate; date < endDate; date = date.AddHours(1))
+                        {
+                            var dailyEnergyUsage = new EnergyToday
+                            {
+                                Hour = date.Hour,
+                                Day = date.Day,
+                                Month = date.ToString("MMMM"),
+                                Year = date.Year,
+                                EnergyUsageResult = 0.0
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
+                    }
                 }
 
-                Results.Add(new EnergyToday
-                {
-                    EnergyUsageResult = Math.Round(EnergyUsage, 2),
-                    Hour = hour,
-                    Day = startOfDay.Day,
-                    Month = startOfDay.ToString("MMMM"),
-                    Year = startOfDay.Year
-                });
+                return energyUsages;
             }
-
-            return Results;
         }
 
         public List<DailyEnergyConsumptionPastMonth> SettlementHistoryForThePastWeek(long settlementId, long deviceCategoryId)
@@ -1056,25 +1083,30 @@ namespace Server.Services.Implementations
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-                        var day = date.Day;
-                        var month = date.ToString("MMMM");
-                        var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
-
-                        var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                        while (reader.Read())
                         {
-                            Day = day,
-                            Month = month,
-                            Year = year,
-                            EnergyUsageResult = Math.Round(energyUsage, 2)
-                        };
+                            DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
-                        energyUsages.Add(dailyEnergyUsage);
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
                     }
+                    else
+                        FillInWithZerosConsumptionProductionMonthByDay(skipCount, itemsPerPage, energyUsages);
                 }
 
                 return energyUsages;
@@ -1146,23 +1178,7 @@ namespace Server.Services.Implementations
                         }
                     }
                     else
-                    {
-                        var endDate = DateTime.Now.Date;
-                        var startDate = endDate.AddMonths(-1);
-
-                        for (var date = startDate; date <= endDate; date = date.AddDays(1))
-                        {
-                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
-                            {
-                                Day = date.Day,
-                                Month = date.ToString("MMMM"),
-                                Year = date.Year,
-                                EnergyUsageResult = 0
-                            };
-
-                            energyUsages.Add(dailyEnergyUsage);
-                        }
-                    }
+                        FillInWithZerosConsumptionProductionMonthByDay(skipCount, itemsPerPage, energyUsages);
                 }
 
                 return energyUsages;
@@ -1212,25 +1228,30 @@ namespace Server.Services.Implementations
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
-
-                        var day = date.Day;
-                        var month = date.ToString("MMMM");
-                        var year = date.Year;
-                        var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
-
-                        var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                        while (reader.Read())
                         {
-                            Day = day,
-                            Month = month,
-                            Year = year,
-                            EnergyUsageResult = Math.Round(energyUsage, 2)
-                        };
+                            DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
-                        energyUsages.Add(dailyEnergyUsage);
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
                     }
+                    else
+                        FillInWithZerosConsumptionProductionMonthByDay(skipCount, itemsPerPage, energyUsages);
                 }
 
                 return energyUsages;
@@ -1304,23 +1325,79 @@ namespace Server.Services.Implementations
                         }
                     }
                     else
-                    {
-                        var endDate = DateTime.Now.Date;
-                        var startDate = endDate.AddMonths(-1);
+                        FillInWithZerosConsumptionProductionMonthByDay(skipCount, itemsPerPage, energyUsages);
+                }
 
-                        for (var date = startDate; date <= endDate; date = date.AddDays(1))
+                return energyUsages;
+            }
+        }
+
+        public List<EnergyToday> UserHistoryForThePastDayByHourPagination(long userId, long deviceCategoryId, int pageNumber, int itemsPerPage)
+        {
+            int skipCount = (pageNumber - 1) * itemsPerPage;
+            using (var _connection = _context.Database.GetDbConnection())
+            {
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT Datum, EnergyUsageKwh
+                                        FROM (
+	                                        SELECT
+		                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime) AS Datum,
+		                                        SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', 'localtime')
+									                                          THEN datetime('now', 'localtime')
+									                                          WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
+									                                          ELSE deu.EndTime
+								                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh,
+		                                        ROW_NUMBER() OVER (ORDER BY DATE(deu.StartTime)) AS RowNumber
+	                                        FROM
+		                                        DeviceEnergyUsages deu
+		                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.UserId = @userId
+		                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+		                                        JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id AND dt.CategoryId = @categoryId
+	                                        WHERE
+		                                        deu.StartTime >= datetime('now', '-1 day', 'start of day') AND deu.StartTime <= datetime('now', 'start of day', '-1 second')
+	                                        GROUP BY
+		                                        strftime('%Y-%m-%d %H:00:00', deu.StartTime)
+	                                        ) AS T
+                                        WHERE RowNumber > @skipCount
+                                        LIMIT @itemsPerPage";
+
+                command.Parameters.Add(new SqliteParameter("@categoryId", deviceCategoryId));
+                command.Parameters.Add(new SqliteParameter("@userId", userId));
+                command.Parameters.Add(new SqliteParameter("@skipCount", skipCount));
+                command.Parameters.Add(new SqliteParameter("@itemsPerPage", itemsPerPage));
+
+                var energyUsages = new List<EnergyToday>();
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
                         {
-                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            DateTime date = DateTime.ParseExact(reader["Datum"].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+
+                            var hour = date.Hour;
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            var dailyEnergyUsage = new EnergyToday
                             {
-                                Day = date.Day,
-                                Month = date.ToString("MMMM"),
-                                Year = date.Year,
-                                EnergyUsageResult = 0
+                                Hour = hour,
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
                             };
 
                             energyUsages.Add(dailyEnergyUsage);
                         }
                     }
+                    else
+                        FillInWithZerosConsumptionProductionDayByHour(skipCount, itemsPerPage, energyUsages);
                 }
 
                 return energyUsages;
@@ -1622,6 +1699,61 @@ namespace Server.Services.Implementations
                 }
 
                 return energyUsages.OrderBy(x => DateTime.ParseExact(x.Month, "MMMM", CultureInfo.InvariantCulture).Month).ToList();
+            }
+        }
+
+        public void FillInWithZerosConsumptionProductionMonthByDay(int skipCount, int itemsPerPage, List<DailyEnergyConsumptionPastMonth> energyUsages)
+        {
+            var endDate = DateTime.Now.Date;
+            var startDate = endDate.AddMonths(-1);
+
+            int itemsAdded = 0;
+            for (var date = startDate; date < endDate; date = date.AddDays(1))
+            {
+                if (itemsAdded >= skipCount && itemsAdded < skipCount + itemsPerPage)
+                {
+                    var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                    {
+                        Day = date.Day,
+                        Month = date.ToString("MMMM"),
+                        Year = date.Year,
+                        EnergyUsageResult = 0.0
+                    };
+
+                    energyUsages.Add(dailyEnergyUsage);
+                }
+
+                itemsAdded++;
+                if (itemsAdded >= skipCount + itemsPerPage)
+                    break;
+            }
+        }
+
+        public void FillInWithZerosConsumptionProductionDayByHour(int skipCount, int itemsPerPage, List<EnergyToday> energyUsages)
+        {
+            var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            var endDate = DateTime.Now;
+
+            int itemsAdded = 0;
+            for (var date = startDate; date < endDate; date = date.AddHours(1))
+            {
+                if (itemsAdded >= skipCount && itemsAdded < skipCount + itemsPerPage)
+                {
+                    var dailyEnergyUsage = new EnergyToday
+                    {
+                        Hour = date.Hour,
+                        Day = date.Day,
+                        Month = date.ToString("MMMM"),
+                        Year = date.Year,
+                        EnergyUsageResult = 0.0
+                    };
+
+                    energyUsages.Add(dailyEnergyUsage);
+                }
+
+                itemsAdded++;
+                if (itemsAdded >= skipCount + itemsPerPage)
+                    break;
             }
         }
     }

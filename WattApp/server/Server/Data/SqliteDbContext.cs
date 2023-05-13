@@ -2095,6 +2095,17 @@ namespace Server.Data
                             TurnOn = true,
                             EnergyInKwh = 0.36f,
                             StandByKwh = 0
+                        },
+                        new Device() // 94
+                        {
+                            UserId = 7,
+                            Name="Solar. ploca",
+                            DeviceModelId = 42,
+                            Visibility = true,
+                            Controlability = true,
+                            TurnOn = true,
+                            EnergyInKwh = 0.36f,
+                            StandByKwh = 0
                         }
                     });
                     context.SaveChanges();

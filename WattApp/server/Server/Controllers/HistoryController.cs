@@ -320,15 +320,9 @@ namespace Server.Controllers
             if (!_sqliteDb.Users.Any(u => u.Id == userId))
                 return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not exist." });
 
-            //if (!_sqliteDb.Devices.Any(u => u.UserId == userId))
-            //    return NotFound(new { message = "User with the ID: " + userId.ToString() + " does not have registered devices." }); // nema prijavljen uredjaj, tako da mu je predikcija 0 - ili da vratim neki drugi status?
-
             if (!_sqliteDb.DeviceCategories.Any(u => u.Id == deviceCategoryId))
                 return NotFound(new { message = "Device category with the ID " + deviceCategoryId.ToString() + " does not exist." });
 
-            /*if (!_sqliteDb.Devices.Include(d => d.DeviceModel).ThenInclude(dm => dm.DeviceType).ThenInclude(dt => dt.DeviceCategory).Any(d => d.UserId == userId && d.DeviceModel.DeviceType.DeviceCategory.Id == deviceCategoryId))
-                return NotFound(new { message = "User with the ID " + userId.ToString() + " does not have registered devices with device category ID " + deviceCategoryId.ToString() + "." });
-            */
             var resultsPastDayByHour = historyService.UserHistoryForThePastDayByHour(userId, deviceCategoryId);
             return Ok(resultsPastDayByHour);
         }
@@ -514,7 +508,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("Pagination/{pageNumber:int}/{itemsPerPage:int}")]
-        public async Task<IActionResult> GetHistoryResultsPagination([FromRoute] int pageNumber, [FromRoute] int itemsPerPage, [FromQuery] long PastMonthByDayDeviceId, long PastMonthByDayUserId, long deviceCategoryId, long PastMonthByDaySettlementId, long PastMonthByDayCityId)
+        public async Task<IActionResult> GetHistoryResultsPagination([FromRoute] int pageNumber, [FromRoute] int itemsPerPage, [FromQuery] long PastMonthByDayDeviceId, long PastMonthByDayUserId, long deviceCategoryId, long PastMonthByDaySettlementId, long PastMonthByDayCityId, long PastDayByHourUserId)
         {
             if(PastMonthByDayDeviceId != 0)
             {
@@ -540,12 +534,20 @@ namespace Server.Controllers
                 var result = historyService.GetSettlementDailyEnergyUsageForPastMonthPagination(PastMonthByDaySettlementId, deviceCategoryId, pageNumber, itemsPerPage);
                 return Ok(result);
             }
-            else // if (PastMonthByDayCityId != 0)
+            else if (PastMonthByDayCityId != 0)
             {
                 if (!_sqliteDb.Cities.Any(s => s.Id == PastMonthByDayCityId))
                     return NotFound(new { message = "City with the ID: " + PastMonthByDayCityId.ToString() + " does not exist." });
 
                 var result = historyService.GetCityDailyEnergyUsageForPastMonthPagination(PastMonthByDayCityId, deviceCategoryId, pageNumber, itemsPerPage);
+                return Ok(result);
+            }
+            else // if (PastDayByHourUserId != 0)
+            {
+                if (!_sqliteDb.Users.Any(u => u.Id == PastDayByHourUserId))
+                    return NotFound(new { message = "User with the ID: " + PastDayByHourUserId.ToString() + " does not exist." });
+
+                var result = historyService.UserHistoryForThePastDayByHourPagination(PastDayByHourUserId, deviceCategoryId, pageNumber, itemsPerPage);
                 return Ok(result);
             }
         }
