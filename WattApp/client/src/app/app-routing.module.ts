@@ -31,6 +31,7 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
 import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-change-password/prosumer-change-password.component';
+import { UnsavedChangesGuardGuard } from './guards/unsaved-changes-guard.guard';
 
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
@@ -42,8 +43,8 @@ const routes: Routes = [
 	{path:'dashboard',component:HomePageComponent,canActivate:[AuthenticatedGuard]},
 	//ADMIN
 	{path:'',component:AdminDsoComponent,canActivate:[AdminGuard]},
-	{path:'add-user',component:AdminDsoAddComponent,canActivate:[AdminGuard]},
-	{path:"profile-admin",component:AccountPageComponent,canActivate:[AdminGuard]},
+	{path:'add-user',component:AdminDsoAddComponent,canActivate:[AdminGuard],canDeactivate:[UnsavedChangesGuardGuard]},
+	{path:"profile-admin",component:AccountPageComponent,canActivate:[AdminGuard] },
 	//DSO
 	{path:'',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard],data:{tab:'table'}},

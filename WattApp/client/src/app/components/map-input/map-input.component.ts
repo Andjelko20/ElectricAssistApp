@@ -146,7 +146,6 @@ export class MapInputComponent {
 		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
 		.then(res=>res.json())
 		.then(res=>{
-			console.log(res)
 			this.locations=res.map((place:any)=>{
 				place.display_name=cyrillicToLatin(place.display_name);
 				if(place.address.road!==undefined && place.address.road!==null){

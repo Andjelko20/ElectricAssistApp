@@ -5,24 +5,24 @@
             <h3>Add User</h3>
         </div>
         
-        <form  (ngSubmit)="addUsers()">
+        <form  (ngSubmit)="addUsers()" (ngModelChange)="onFormChange()" #form="ngForm">
             <div class="form-row row">
                 <div class="form-group add-user-form col-md-3" >
                     <label for="name">Name</label>
                     <br>
-                    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addUserRequest.name">
+                    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="addUserRequest.name"(ngModelChange)="onFormChange()">
                     <br>
                     <label for="email">Email</label>
                     <br>
-                    <input type="text" class="form-control" id="email" name="email" [(ngModel)]="addUserRequest.email">
+                    <input type="text" class="form-control" id="email" name="email" [(ngModel)]="addUserRequest.email"(ngModelChange)="onFormChange()">
                     <br>
                     <label for="username">Username</label>
                     <br>
-                    <input type="text" class="form-control" id="userName" name="username" [(ngModel)]="addUserRequest.username">
+                    <input type="text" class="form-control" id="userName" name="username" [(ngModel)]="addUserRequest.username"(ngModelChange)="onFormChange()">
                     <br>
                     <label for="role">Role</label>
                     <br>
-                    <select id="role" class="select-form-control" name="role" [(ngModel)]="addUserRequest.roleId">     
+                    <select id="role" class="select-form-control" name="role" [(ngModel)]="addUserRequest.roleId" (ngModelChange)="onFormChange()">     
                         <option class="optionRole" [value]="roles.ADMIN_ID">{{roles.ADMIN_NAME}}</option>
                         <option class="optionRole" [value]="roles.DISPATCHER_ID">{{roles.DISPATCHER_NAME}}</option>
                         <option class="optionRole" [value]="roles.PROSUMER_ID">{{roles.PROSUMER_NAME}}</option>
@@ -34,7 +34,7 @@
                     <map-input (locationChanged)="locationChanged($event)" (settlementChanged)="settlementChanged($event)"></map-input>
                 </div>
             </div>
-            <button (click)="addUsers()" class="btn btn-primary ">ADD</button>
+            <button type="submit"   class="btn btn-primary ">ADD</button>
         </form>
         
     </div>

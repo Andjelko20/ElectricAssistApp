@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -36,8 +36,8 @@ export class AdminDsoAddComponent implements OnInit{
   public cities:any;
   public settlements:any;
   currentUrl: any;
-  
-  constructor(private usersService:AuthService,private router:Router) { }
+  isFormDirty: boolean = false;
+  constructor(private usersService:AuthService,private router:Router,private location:Location) { }
 
   ngOnInit(): void {
 
@@ -78,6 +78,7 @@ export class AdminDsoAddComponent implements OnInit{
       
       }
     });
+    this.isFormDirty = false;
   }
   locationChanged(latLng:LatLng){
 	this.addUserRequest.latitude=latLng.lat;
@@ -87,5 +88,14 @@ export class AdminDsoAddComponent implements OnInit{
 		this.addUserRequest.address=event.address;
 		this.addUserRequest.settlementId=event.settlement;
 	}
-  
+  onFormChange() {
+    this.isFormDirty = true;
+  }
+  @HostListener('window:beforeunload')
+  canDeactivate(): boolean {
+    if (this.isFormDirty) {
+      return confirm('Are you sure you want to leave? Your unsaved changes will be lost.');
+    }
+    return true;
+  }
 }
