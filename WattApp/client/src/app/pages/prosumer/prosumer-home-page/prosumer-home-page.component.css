@@ -6,6 +6,15 @@ ul {
     list-style: none;
 }
 
+.vremenska {
+    border: 1px solid black;
+    height: 50px;
+    position: absolute;
+    top: 60px;
+    right: 5px;
+    width: 100px;
+}
+
 .main {
     top: 0;
     min-height: 100vh;
@@ -276,6 +285,14 @@ h1 {
         justify-content: center;
         width: 100%;
         height: auto;
+    }
+    .vremenska {
+        border: 1px solid black;
+        height: 100px;
+        position: absolute;
+        top: 60px;
+        right: 5px;
+        width: 200px;
     }
     .card-title {
         font-size: 25px;

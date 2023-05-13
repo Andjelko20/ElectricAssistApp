@@ -24,7 +24,7 @@
                     <ng-container *ngIf="graph">
                         <div class="toggle-container">
                             <div class="toggle-buttons">
-                                <input type="radio" (click)="showComponentGraph()" name="toggle1" id="day-btn" checked [class.active]="compGraph">
+                                <input type="radio" (click)="showComponentGraph()" name="toggle1" id="day-btn" [class.active]="compGraph">
                                 <label id="dash" for="day-btn">Day</label>
                                 <span class="divider"></span>
                                 <input type="radio" (click)="showComponentGraph1()" name="toggle1" id="week-btn" [class.active]="compGraph1">
@@ -54,7 +54,7 @@
                         <div class="chart-body">
                             <div class="toggle-container">
                                 <div class="toggle-buttons">
-                                    <input type="radio" (click)="showComponentGraph()" name="toggle2" id="day-btn" checked [class.active]="compGraph">
+                                    <input type="radio" (click)="showComponentGraph()" name="toggle2" id="day-btn" [class.active]="compGraph">
                                     <label id="dash" for="day-btn">Day</label>
                                     <span class="divider"></span>
                                     <input type="radio" (click)="showComponentGraph1()" name="toggle2" id="week-btn" [class.active]="compGraph1">
@@ -84,31 +84,32 @@
                     </ng-container>
                 </div>
             </div>
-            <button type="button" class="collapsible dropdown-toggle" *ngIf="prodc" (click)="onClick1()">Production</button>
+            <button type="button" class="collapsible dropdown-toggle active" *ngIf="prodc" (click)="onClick1()">Production</button>
             <div class="content2" *ngIf="prodc">
                 <div class="history-charts">
                     <div class="toggle-container">
                         <div class="toggle-buttons">
-                            <input type="radio" (click)="showGraph()" name="toggle" id="dashboard-btn">
+                            <input type="radio" (click)="showGraph()" name="toggle" checked id="dashboard-btn">
                             <label for="dashboard-btn">Graphical view</label>
                             <span class="divider"></span>
                             <input type="radio" (click)="showTable()" name="toggle" id="devices-btn">
                             <label for="devices-btn">Tabular view</label>
                         </div>
-                        <hr>
                     </div>
                     <ng-container *ngIf="graph">
                         <div class="toggle-container">
                             <div class="toggle-buttons">
-                                <input type="radio" (click)="showComponentGraph()" checked id="day-btn" name="toggle" [class.active]="compGraph">
-                                <label for="day-btn">Day</label>
-                                <input type="radio" (click)="showComponentGraph1()" id="week-btn" name="toggle" [class.active]="compGraph1">
+                                <input type="radio" (click)="showComponentGraph()" name="toggle1" id="day-btn" [class.active]="compGraph">
+                                <label id="dash" for="day-btn">Day</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="showComponentGraph1()" name="toggle1" id="week-btn" [class.active]="compGraph1">
                                 <label for="week-btn">Week</label>
-                                <input type="radio" (click)="showComponentGraph2()" id="month-btn" name="toggle" [class.active]="compGraph2">
+                                <span class="divider"></span>
+                                <input type="radio" (click)="showComponentGraph2()" name="toggle1" id="month-btn" [class.active]="compGraph2">
                                 <label for="month-btn">Month</label>
-                                <input type="radio" (click)="showComponentGraph3()" id="year-btn" name="toggle" [class.active]="compGraph3">
+                                <span class="divider"></span>
+                                <input type="radio" (click)="showComponentGraph3()" name="toggle1" id="year-btn" [class.active]="compGraph3">
                                 <label for="year-btn">Year</label>
-
                             </div>
                         </div>
                         <div class="history-charts-body" *ngIf="compGraph">
@@ -127,13 +128,16 @@
                     <ng-container *ngIf="tabelar">
                         <div class="toggle-container">
                             <div class="toggle-buttons">
-                                <input type="radio" (click)="showComponentGraph()" checked id="day-btn" name="toggle" [class.active]="compGraph">
-                                <label for="day-btn">Day</label>
-                                <input type="radio" (click)="showComponentGraph1()" id="week-btn" name="toggle" [class.active]="compGraph1">
+                                <input type="radio" (click)="showComponentGraph()" name="toggle1" id="day-btn" [class.active]="compGraph">
+                                <label id="dash" for="day-btn">Day</label>
+                                <span class="divider"></span>
+                                <input type="radio" (click)="showComponentGraph1()" name="toggle1" id="week-btn" [class.active]="compGraph1">
                                 <label for="week-btn">Week</label>
-                                <input type="radio" (click)="showComponentGraph2()" id="month-btn" name="toggle" [class.active]="compGraph2">
+                                <span class="divider"></span>
+                                <input type="radio" (click)="showComponentGraph2()" name="toggle1" id="month-btn" [class.active]="compGraph2">
                                 <label for="month-btn">Month</label>
-                                <input type="radio" (click)="showComponentGraph3()" id="year-btn" name="toggle" [class.active]="compGraph3">
+                                <span class="divider"></span>
+                                <input type="radio" (click)="showComponentGraph3()" name="toggle1" id="year-btn" [class.active]="compGraph3">
                                 <label for="year-btn">Year</label>
                             </div>
                         </div>
