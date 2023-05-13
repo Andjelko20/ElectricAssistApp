@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShowUsers, Users } from 'src/app/models/users.model';
@@ -59,7 +59,7 @@ export class AdminDsoComponent implements OnInit {
   public passwordGen='';
   public emailUp='';
   constructor(private router:Router,private usersService:AuthService,
-    private route:ActivatedRoute,private modalService: NgbModal) { }
+    private route:ActivatedRoute,private modalService: NgbModal,private elementRef: ElementRef) { }
 
 	getSettlements(){
 
@@ -82,15 +82,7 @@ export class AdminDsoComponent implements OnInit {
 		this.cities=res
   	});
   }
-  isOpen = false;
-
-  toggleDropdown() {
-    this.isOpen = !this.isOpen;
-  }
-
-  closeDropdown() {
-    this.isOpen = false;
-  }
+  
   
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
@@ -271,24 +263,66 @@ export class AdminDsoComponent implements OnInit {
       }
     });
   }
-  // countChecked(): number {
-  //   let count = 0;
-  //   for (let prop in this.filters) {
-  //     if (this.filters.hasOwnProperty(prop)) {
-  //       if (Array.isArray(this.filters[prop])) {
-  //         count += this.filters[prop].filter(val => val).length;
-  //       } else {
-  //         count += this.filters[prop] ? 1 : 0;
-  //       }
-  //     }
-  //   }
-  //   return count;
-  // }
+  
+  showDropdown = false;
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    const clickedElement = event.target as HTMLElement;
+  const dropdownElement = this.elementRef.nativeElement;
+  const navbarElement = dropdownElement.querySelector('.dropbtn1') as HTMLElement;
+  const dropdownContent = dropdownElement.querySelector('.dropdown-content') as HTMLElement;
+
+  if (!dropdownElement.contains(clickedElement) || (!navbarElement.contains(clickedElement) && !dropdownContent.contains(clickedElement))) {
+    this.showDropdown = false;
+  }
+  }
+  countActiveFilters() {
+    let count = 0;
+  
+    // Check the 'blocked' filter
+    if (this.filters.blocked !== -1) {
+      count++;
+    }
+  
+    // Check the 'role' filter
+    if (this.filters.role !== 0) {
+      count++;
+    }
+  
+    // Check the 'settlement' filter
+    if (this.filters.settlement !== 0) {
+      count++;
+    }
+  
+    // Check the 'city' filter
+    if (this.filters.city !== 0) {
+      count++;
+    }
+  
+    // Check the 'name' filter
+    if (this.filters.name.trim() !== '') {
+      count++;
+    }
+  
+    return count;
+  }
+  clearFilters() {
+    this.filters = {
+      blocked:-1,
+      role:0,
+      settlement:0,
+      city:0,
+      name:''
+    };
+    this.pageChanged(1); 
+  }
   logout()
   {
     localStorage.removeItem('token');
     this.usersService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }
-
 }
