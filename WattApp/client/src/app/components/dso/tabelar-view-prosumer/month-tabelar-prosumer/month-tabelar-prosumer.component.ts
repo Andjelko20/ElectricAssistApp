@@ -42,7 +42,6 @@ export const MY_FORMATS = {
 export class MonthTabelarProsumerComponent implements OnInit{
 
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];

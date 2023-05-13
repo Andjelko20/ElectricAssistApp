@@ -14,6 +14,7 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
 export class ProsumerDayTableComponent {
 
   maxDate: Date;
+  currentDate = new Date();
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number }[] = [];

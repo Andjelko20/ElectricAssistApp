@@ -15,7 +15,7 @@ Chart.register(...registerables)
 export class DeviceTodayComponent {
 
   currentDate = new Date();
-  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-1);
+  maxDate = new Date();
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;  
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService,private authService:AuthService) {

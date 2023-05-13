@@ -16,9 +16,8 @@ export class LineDayChartComponent {
 
   loader:boolean=false;
   selectedOption: number;
- 
+  maxDate = new Date();
   currentDate = new Date();
-  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-1);
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];

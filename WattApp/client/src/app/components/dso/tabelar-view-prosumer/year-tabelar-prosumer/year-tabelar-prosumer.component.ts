@@ -38,8 +38,7 @@ export const MY_FORMATS = {
 })
 export class YearTabelarProsumerComponent {
 
-  currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
+  maxYear = new Date();
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   mergedList: {month: string, year: number, consumption: number, production: number }[] = [];

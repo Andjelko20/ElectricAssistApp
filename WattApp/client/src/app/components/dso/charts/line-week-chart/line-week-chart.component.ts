@@ -55,6 +55,7 @@ export class LineWeekChartComponent {
   loader:boolean=false;
   currentDate = new Date();
   maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
+  firstdate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   settlements:Settlement[] = [];
@@ -62,10 +63,12 @@ export class LineWeekChartComponent {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
       this.send = value.end;
-      if(this.send > this.maxDate){
-        this.send = null;
+      if(this.send > this.currentDate){
+        this.sdate = null;
       }
-      this.ngOnInit();
+      else{
+        this.ngOnInit()
+      }
     });
   }
 

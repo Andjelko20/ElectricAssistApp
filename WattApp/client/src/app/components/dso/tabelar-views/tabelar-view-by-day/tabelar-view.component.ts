@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 export class TabelarViewComponent implements OnInit{
 
   maxDate = new Date();
+  currentDate = new Date();
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
