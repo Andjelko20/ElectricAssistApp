@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChildren, QueryList, ViewChild, OnInit} from '@angular/core';
 import { forkJoin } from 'rxjs';
+import { WeekByDay } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 
@@ -29,6 +30,9 @@ export class ProsumerReportsPageComponent implements OnInit {
   todayP:number = 0;
   monthC:number = 0;
   monthP:number = 0;
+  idPro!:number;
+  maxp!:number;
+  maxc!:number;
   constructor(private elementRef: ElementRef,private historyService:HistoryPredictionService) {}
   ngOnInit(): void {
     let token=new JwtToken();
@@ -49,6 +53,17 @@ export class ProsumerReportsPageComponent implements OnInit {
       this.monthC = monthC;
       this.monthP = monthP;
     });
+    this.idPro=token.data.id as number;
+    this.historyService.predictionUser(this.idPro,2).subscribe((data: WeekByDay[]) =>{
+      console.log(data);
+      this.maxc=data.reduce((total,row)=> total+row.energyUsageResult,0);
+      })
+      this.historyService.predictionUser(this.idPro,1).subscribe((data: WeekByDay[]) =>{
+        
+        this.maxp=data.reduce((total,row)=> total+row.energyUsageResult,0);
+        
+        
+        })
   }
 
   toggleD()

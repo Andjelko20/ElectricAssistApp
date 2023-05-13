@@ -51,7 +51,7 @@ ngOnInit() {
   this.idProsumer=token.data.id as number;
   
   this.todayConsumption.getTotalConsumptionProductionProsumer(1,this.idProsumer).subscribe(result=>{
-    this.value = 999.99;
+    this.value = result;
     
   })
 

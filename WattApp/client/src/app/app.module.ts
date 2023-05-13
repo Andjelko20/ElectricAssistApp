@@ -12,7 +12,6 @@ import { AdminDsoUpdateComponent } from "./components/admin/admin-dso-update/adm
 import { AdminDsoComponent } from "./components/admin/admin-dso/admin-dso.component";
 import { ChangePasswordComponent } from "./components/change-password/change-password.component";
 import { AllProsumersComponent } from "./components/dso/all-prosumers/all-prosumers.component";
-import { BarChartComponent } from "./components/dso/charts/bar-chart/bar-chart.component";
 import { BarMonthChartComponent } from "./components/dso/charts/bar-month-chart/bar-month-chart.component";
 import { BarYearChartComponent } from "./components/dso/charts/bar-year-chart/bar-year-chart.component";
 import { LineDayChartComponent } from "./components/dso/charts/line-day-chart/line-day-chart.component";
@@ -29,9 +28,6 @@ import { CurrentPowerWattmeterComponent } from "./components/dso/meter/current-p
 import { OneProsumerComponent } from "./components/dso/one-prosumer/one-prosumer.component";
 import { MapInputComponent } from "./components/map-input/map-input.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
-
-
-
 import { ProsumersMapComponent } from "./components/prosumers-map/prosumers-map.component";
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { TodayComponent } from "./components/weather/today/today.component";
@@ -125,7 +121,6 @@ import { ProsumerSolarComponent } from "./components/prosumers/prosumer-solar/pr
     RegisterComponent,
     ChangePasswordComponent,
     PieChartComponent,
-    BarChartComponent,
     ProsumerHomePageComponent,
     ProsumerDevicesPageComponent,
     ProsumerReportsPageComponent,

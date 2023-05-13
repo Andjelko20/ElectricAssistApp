@@ -46,7 +46,7 @@ const routes: Routes = [
 	{path:"profile-admin",component:AccountPageComponent,canActivate:[AdminGuard]},
 	//DSO
 	{path:'',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
-	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard]},
+	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard],data:{tab:'table'}},
 	{path:'prosumer/:id',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prediction',component:DsoPredictionPageComponent,canActivate:[DispatcherGuard]},
 	{path:"profile-dso",component:AccountPageComponent,canActivate:[DispatcherGuard]},
@@ -60,26 +60,11 @@ const routes: Routes = [
 	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard]},
 	{path:"profile-edit",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
-	{path:"loader",component:LoaderComponent},
 	{path:"prosumer-change-password",component:ProsumerChangePasswordComponent,canActivate:[ProsumerGuard]},
 
 	{path:'**',redirectTo:"login"},
 	
-	//TEST
-	// {path:'register',component:RegisterComponent},
-	// {path:'change-password',component:ChangePasswordComponent},
-	//{path:'reset-password',component:ResetPasswordPageComponent},
-	{path:"prosumer-map",component:ProsumersMapComponent,canActivate:[DispatcherGuard]},
-	{path:'prosumer-home-page',component:ProsumerHomePageComponent},
-	{path:'prosumer-devices-page',component:ProsumerDevicesPageComponent},
-	{path:'prosumer-device-page',component:ProsumerDevicePageComponent},
-	{path:'reset-password',component:ResetPasswordPageComponent},
-	{path:'prosumer-account-page',component:ProsumerAccountPageComponent},
-	{path:'prosumer-account-settings-page',component:ProsumerAccountSettingsPageComponent},
-	{path:"prosumer-map",component:ProsumersMapComponent},//canActivate:[DispatcherGuard]},
-	//{path:"map-input",component:MapInputComponent},
-	{path:"todaytest",component:TodayComponent},
-	{path:"futuretest",component:FutureComponent},
+	
 	{path:'email-confirmation',component:EmailConfirmationPageComponent},
 	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent},
 	

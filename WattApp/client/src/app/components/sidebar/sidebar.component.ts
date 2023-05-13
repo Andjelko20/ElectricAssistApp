@@ -40,7 +40,7 @@ export class SidebarComponent implements OnInit{
         {
           this.tab='table';
         }
-        else
+        else  if(event.url==='/prosumers?tab=map')
         {
           this.tab='map';
         }  

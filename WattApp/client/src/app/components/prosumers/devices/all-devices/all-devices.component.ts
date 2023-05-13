@@ -53,6 +53,7 @@ export class AllDevicesComponent implements OnInit {
      );
     
     }
+    
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
 		this.deviceService.getAllDevices(pageNumber,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {

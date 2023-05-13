@@ -35,7 +35,11 @@
         $(document).on('click', '#sidebarCollapse', function() {
             $('#sidebar').toggleClass('active');
         });
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('#sidebarCollapse').length && !$(event.target).is('#sidebarCollapse')&&!$(event.target).closest('#sidebar').length && !$(event.target).is('#sidebar')) {
+                $('#sidebar').removeClass('active');
+            }
+        });
     </script>
 </body>
-
 </html>

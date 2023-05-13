@@ -123,7 +123,17 @@ li a {
     outline: none;
     background-color: #e0e0e0;
 }
-
+#names{
+    font-weight: bold;
+    text-decoration: none; 
+    color: #2199e8;
+}
+#names:hover{
+    font-weight: bold;
+    text-decoration: none; 
+    color: #354871;
+    transition: border-color 0.5s ease-in-out;
+}
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .table-responsive {
         margin-left: 10px;
