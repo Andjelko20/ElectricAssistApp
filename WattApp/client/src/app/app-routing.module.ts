@@ -63,11 +63,11 @@ const routes: Routes = [
 	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"prosumer-change-password",component:ProsumerChangePasswordComponent,canActivate:[ProsumerGuard]},
 
+	
+	{path:'email-confirmation',component:EmailConfirmationPageComponent,canActivate:[UnauthenticatedGuard]},
+	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'**',redirectTo:"login"},
 	
-	
-	{path:'email-confirmation',component:EmailConfirmationPageComponent},
-	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent},
 	
 ];
 
