@@ -110,7 +110,11 @@ export class LineDayChartComponent {
               string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
             }
           }
+          console.log(string1+'-'+string2);
+          
+
           forkJoin([
+            
             this.deviceService.dayByHourCityFilter(string1,string2,number, 2),
             this.deviceService.dayByHourCityFilter(string1,string2,number, 1)
           ]).subscribe(([list1, list2]) => {
@@ -215,9 +219,7 @@ export class LineDayChartComponent {
             pointHoverRadius: 6,
             fill:true
           }
-          
         ]
-        
       }
       ,
       options: {
@@ -325,7 +327,6 @@ export class LineDayChartComponent {
           fill: true
           },
         ]
-        
       }
       ,
       options: {
@@ -338,7 +339,8 @@ export class LineDayChartComponent {
               font:{
                 size:15
               }
-            },suggestedMax:max,
+            },
+            suggestedMax:max,
             position: "left",
             title:{
               display:true,
@@ -375,7 +377,6 @@ export class LineDayChartComponent {
             display: false
           },
           title: {
-            
             display: true,
             text: 'Consumption in one day',
             color: '#000',
