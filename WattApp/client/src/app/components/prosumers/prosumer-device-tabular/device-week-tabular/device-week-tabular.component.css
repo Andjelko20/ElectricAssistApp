@@ -57,6 +57,10 @@
     background-color: #0d8beb;
 }
 
+mat-form-field {
+    width: 61%;
+}
+
 @media(min-width:768px) {
     .btn {
         margin-left: 169px;

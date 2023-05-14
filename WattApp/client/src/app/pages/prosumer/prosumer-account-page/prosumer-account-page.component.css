@@ -149,12 +149,22 @@ a:hover {
     margin-bottom: 37px;
 }
 
+@media(min-width:390px) {
+    h1 {
+        font-size: 28px !important;
+    }
+    ul li {
+        font-size: 24px;
+    }
+}
+
 @media (min-width: 768px) {
     .phone {
         display: none;
     }
     .container {
         display: block;
+        margin-left: 200px;
     }
     .main {
         top: 0;
@@ -171,7 +181,6 @@ a:hover {
         margin-bottom: 37px;
     }
     .col-md-8 {
-        border-radius: 37px;
         background-color: #a2c7fb;
     }
     #logout {
@@ -182,10 +191,11 @@ a:hover {
         color: white;
     }
     .col-md-6 {
-        margin-left: 202px;
+        margin-left: 119px;
         font-size: 24px !important;
     }
     .col-md-6 input {
+        width: 132%;
         font-size: 24px !important;
     }
     .col-md-4 span {

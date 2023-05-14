@@ -42,3 +42,15 @@
     font-weight: bold;
     text-transform: uppercase;
 }
+
+@media(min-width:1060px) {
+    .btn {
+        margin-left: 550px;
+    }
+}
+
+@media(min-width:1200px) {
+    .btn {
+        margin-left: 850px;
+    }
+}

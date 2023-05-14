@@ -54,14 +54,30 @@
     background-color: #0d8beb;
 }
 
+mat-form-field {
+    width: 60%;
+}
+
 @media(min-width:768px) {
     mat-form-field {
-        margin-left: 31px;
+        margin-left: 83px;
     }
     .btn {
         margin-left: 169px;
     }
     .table {
         font-size: 20px;
+    }
+}
+
+@media(min-width:1060px) {
+    mat-form-field {
+        margin-left: 200px;
+    }
+}
+
+@media(min-width:1200px) {
+    mat-form-field {
+        margin-left: 400px;
     }
 }

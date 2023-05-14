@@ -42,7 +42,7 @@
 }
 
 mat-form-field {
-    width: 42%;
+    width: 60%;
 }
 
 .btn {
@@ -68,5 +68,14 @@ mat-form-field {
     }
     .table {
         font-size: 25px;
+    }
+    mat-form-field {
+        width: 36%;
+    }
+}
+
+@media(min-width:1060px) {
+    mat-form-field {
+        width: 15%;
     }
 }
