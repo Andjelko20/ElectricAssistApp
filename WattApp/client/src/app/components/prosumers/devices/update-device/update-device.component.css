@@ -73,6 +73,10 @@ input.ng-touched {
     padding-top: 55px;
 }
 
+#switch1 {
+    margin-left: 65px;
+}
+
 .switch {
     position: relative;
     display: inline-block;
