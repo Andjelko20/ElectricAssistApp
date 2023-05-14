@@ -47,24 +47,24 @@
                         <div class="form-group row mb-3">
                           <label for="name" class="col-sm-4 col-form-label">Name</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="logedDetail.name" >
+                            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="logedDetail.name" (ngModelChange)="onFormChange1()">
                           </div>
                         </div>
                         <div class="form-group row mb-3">
                           <label for="username" class="col-sm-4 col-form-label">Username</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" id="username" name="username" [(ngModel)]="logedDetail.username" >
+                            <input type="text" class="form-control" id="username" name="username" [(ngModel)]="logedDetail.username"(ngModelChange)="onFormChange1()" >
                           </div>
                         </div>
                         <div class="form-group row mb-3">
                           <label for="email" class="col-sm-4 col-form-label">E-mail</label>
                           <div class="col-sm-7">
-                            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="logedDetail.email" >
+                            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="logedDetail.email" (ngModelChange)="onFormChange1()">
                           </div>
                         </div>
                         <div class="form-group row mb-3">
                           <div class="col-sm-8 offset-sm-4">
-                            <button type="submit" class="btn btn-primary" >Save Changes</button>
+                            <button type="submit" class="btn btn-primary" [disabled]="!isFormDirty1">Save Changes</button>
                           </div>
                         </div>
                       </form>
@@ -101,7 +101,7 @@
                         </div>
                         <div class="form-group row mb-3">
                             <div class="col-sm-8 offset-sm-4">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="submit" class="btn btn-primary" [disabled]="!isFormDirty">Save Changes</button>
                             </div>
                         </div>
                         </form>
@@ -112,3 +112,14 @@
         </div>
     </div>
 </div>
+<ng-template #modalContent let-modal >
+  <div class="modal-header">
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+    <div id="subb">
+      <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+    </div>
+  </div>
+</ng-template>

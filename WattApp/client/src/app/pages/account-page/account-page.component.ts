@@ -1,9 +1,10 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LogedUser, Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-account-page',
   templateUrl: './account-page.component.html',
@@ -31,6 +32,8 @@ export class AccountPageComponent implements OnInit {
     email: '',
     
   }
+  @ViewChild('modalContent') modalContent!: TemplateRef<any>;
+  body: string = ''; 
   public idUser!:number;
   public role!:string;
   public name!:string;
@@ -40,8 +43,6 @@ export class AccountPageComponent implements OnInit {
   public passwordGen='';
   public emailUp='';
   public oldpass!:string;
-  myForm!: FormGroup;
-  myForm1!: FormGroup;
   isFormDirty: boolean = false;
   isFormDirty1: boolean = false;
   oldPassword!:string;
@@ -51,7 +52,8 @@ export class AccountPageComponent implements OnInit {
   errorMsg='';
 
   storePassword=localStorage.getItem("password");
-  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,private router:Router,private updateService:AuthService) {
+  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,
+    private router:Router,private updateService:AuthService,private modalService: NgbModal) {
   
    }
 
@@ -87,17 +89,28 @@ export class AccountPageComponent implements OnInit {
   }
   upDateUser()
   {
+    if(this.updateUserDetail.name!==this.logedDetail.name)
+    {
+          this.body="Your name has been changed." 
+    }
+    else if(this.updateUserDetail.email!==this.logedDetail.email)
+    {
+          this.body="You need to confirm your email."   
+    }
+    else if(this.updateUserDetail.username!==this.logedDetail.username)
+    {
+      this.body="Your username has been changed." 
+    }
+    else if(this.updateUserDetail.name===this.logedDetail.name && this.updateUserDetail.username===this.logedDetail.username && this.updateUserDetail.email===this.logedDetail.email)
+    {
+      this.body="You didnt make any changes.";
+      
+    }
     this.updateService.upDateLogedIn(this.logedDetail)
     .subscribe({
       next:()=>{
-        if(this.role==='admin')
-        {
-          this.router.navigate(['/profile-admin']);
-        }
-        else
-        {
-          this.router.navigate(['/profile-dso']);
-        }
+        this.modalService.open(this.modalContent);
+        this.ngOnInit();
       }
     });
     this.isFormDirty1 = false;
@@ -122,16 +135,24 @@ export class AccountPageComponent implements OnInit {
     const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
     const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
     const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
-
-    if(newpass==confpass)
+    if(oldpass==="" && newpass==="" && confpass==="")
     {
-      this.updateService.changePassword(oldpass,newpass).subscribe( 
-       { next:() => {  
-           
-            
-     }} );
+      this.isFormDirty = false;
     }
-    this.isFormDirty = false;
+    else if(newpass===confpass) {
+      
+      
+        this.updateService.changePassword(oldpass,newpass).subscribe( 
+        { next:() => {  
+            
+          this.modalService.open(this.modalContent);
+          this.body="Your password has been changed.";
+          this.ngOnInit();
+      }} );
+      
+      this.isFormDirty = false;
+    }
+    
   }
   checkIfInputsAreEqual(group: FormGroup) {
     const input1 = group.controls['nameform2'];
