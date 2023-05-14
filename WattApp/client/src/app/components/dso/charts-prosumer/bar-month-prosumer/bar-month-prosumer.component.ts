@@ -120,7 +120,7 @@ export class BarMonthProsumerComponent {
         },
         options: 
         {
-
+          maintainAspectRatio:false,
           responsive: true, // Enable responsiveness
           
           scales:{
@@ -165,25 +165,7 @@ export class BarMonthProsumerComponent {
             datalabels: {
               display: false
             },
-            legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:15
-                } 
-                // ,
-                // boxHeight:100,
-                // boxWidth:100
-              }
+            legend: {display:false
             },
             title: {
               display: true,
@@ -228,7 +210,7 @@ export class BarMonthProsumerComponent {
         },
         options: 
         {
-
+          maintainAspectRatio:false,
           responsive: true, // Enable responsiveness
           
           scales:{
@@ -274,21 +256,7 @@ export class BarMonthProsumerComponent {
               display: false
             },
             legend: {
-              onHover: function (event, legendItem, legend) {
-                document.body.style.cursor = 'pointer';
-              },
-              onLeave: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'default';
-              },
-              
-              position: 'bottom',
-              labels: {
-                usePointStyle: true,
-                color: '#000',
-                font:{
-                  size:15
-                } 
-              }
+              display:false
             },
             title: {
               display: true,

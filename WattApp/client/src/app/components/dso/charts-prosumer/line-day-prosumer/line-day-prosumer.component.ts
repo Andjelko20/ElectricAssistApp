@@ -117,6 +117,7 @@ export class LineDayProsumerComponent{
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -158,24 +159,7 @@ export class LineDayProsumerComponent{
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend: {display:false
           },
           title: {
             
@@ -200,7 +184,6 @@ export class LineDayProsumerComponent{
     }
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
-    console.log(this.list1)
     let max=0;
     if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
     {
@@ -242,6 +225,7 @@ export class LineDayProsumerComponent{
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -283,24 +267,7 @@ export class LineDayProsumerComponent{
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend: {display:false
           },
           title: {
             
