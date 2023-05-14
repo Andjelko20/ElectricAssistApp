@@ -7,6 +7,7 @@ import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
   selector: 'app-prediction-tabular-prosumer',
@@ -20,6 +21,7 @@ export class PredictionTabularProsumerComponent {
 
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   datePipe: any;
+  idProsumer!: number;
 
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     
@@ -27,10 +29,13 @@ export class PredictionTabularProsumerComponent {
 
   ngOnInit(): void {
   
-    this.deviceService.predictionUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe((data1: WeekByDay[]) =>{
-      this.list1 = data1;
-      this.deviceService.predictionUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe((data2: WeekByDay[]) =>{
-        this.list2 = data2;
+    let token=new JwtToken();
+    this.idProsumer=token.data.id as number;
+
+    this.deviceService.predictionUser(this.idProsumer,2).subscribe((data: WeekByDay[]) =>{
+      this.list1 = data;
+      this.deviceService.predictionUser(this.idProsumer,1).subscribe((data: WeekByDay[]) =>{
+        this.list2 = data;
       })
     })
     
@@ -52,8 +57,6 @@ export class PredictionTabularProsumerComponent {
         }
       }
   }
-  const date = new Date();
-  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'consumption/production-week',
@@ -62,7 +65,7 @@ export class PredictionTabularProsumerComponent {
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production', 'Exported Date '+formattedDate]
+    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production']
   };
 
   const csvExporter = new ExportToCsv(options);

@@ -49,8 +49,6 @@ export class PredictionTabularDeviceComponent {
 
   downloadCSV(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
-    const date = new Date();
-    const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
     this.authService.getDevice(deviceId).subscribe(data=>{
       if(data.deviceCategory == "Electricity Consumer"){
           const options = {
@@ -61,7 +59,7 @@ export class PredictionTabularDeviceComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption', 'Production', 'Exported Date '+formattedDate]
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption', 'Production']
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list1);
@@ -75,7 +73,7 @@ export class PredictionTabularDeviceComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Month', 'Year', 'Consumption', 'Production', 'Exported Date '+formattedDate]
+          headers: ['Hour', 'Month', 'Year', 'Consumption', 'Production']
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list2);

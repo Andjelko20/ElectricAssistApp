@@ -21,7 +21,7 @@ export class ProsumerDayProductionComponent {
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
 
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -31,16 +31,6 @@ export class ProsumerDayProductionComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
-  
-    if(this.selectedDate == undefined){
-      combineLatest([
-        this.deviceService.dayByHourUser(userId, 1)
-      ]).subscribe(([list2]) => {
-        this.list2 = list2;
-        this.LineChartProduction();
-      });
-    }
-    else if(this.selectedDate !== undefined){
       const day = this.selectedDate.getDate();
       let dayString = String(day).padStart(2, '0');
       const month = this.selectedDate.getMonth()+1;
@@ -86,9 +76,6 @@ export class ProsumerDayProductionComponent {
 
       });
     }
-    
-  
-  }
 
   LineChartProduction(){
 

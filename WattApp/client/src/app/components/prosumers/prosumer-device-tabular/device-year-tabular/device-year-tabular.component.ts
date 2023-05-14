@@ -116,7 +116,7 @@ export class DeviceYearTabularComponent {
       if(data.deviceCategory == "Electricity Consumer"){
           const options = {
           fieldSeparator: ',',
-          filename: 'consumption-week',
+          filename: 'consumption-year',
           quoteStrings: '"',
           useBom : true,
           decimalSeparator: '.',
@@ -127,10 +127,10 @@ export class DeviceYearTabularComponent {
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list1);
       }
-      else{
+      else if(data.deviceCategory == "Electricity Producer"){
           const options = {
           fieldSeparator: ',',
-          filename: 'production-week',
+          filename: 'production-year',
           quoteStrings: '"',
           useBom : true,
           decimalSeparator: '.',

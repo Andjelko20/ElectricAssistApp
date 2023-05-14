@@ -149,7 +149,7 @@ export class DeviceWeekTabularComponent {
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list1);
       }
-      else{
+      else if(data.deviceCategory == "Electricity Producer"){
           const options = {
           fieldSeparator: ',',
           filename: 'production-week',

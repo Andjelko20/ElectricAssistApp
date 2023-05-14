@@ -64,7 +64,7 @@ export class BarMonthChartComponent {
   }
 
   selectedOption: number = 0;
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   onOptionSelected() {
     this.ngOnInit();
   }
@@ -101,18 +101,7 @@ export class BarMonthChartComponent {
           }
           
         })
-        if(this.selectedOption == 0 && this.selectedDate == undefined){
-          forkJoin([
-            this.deviceService.monthByDay(number, 2),
-            this.deviceService.monthByDay(number, 1)
-          ]).subscribe(([data1, data2]) => {
-            this.list1 = data1;
-            this.list2 = data2;
-            this.BarPlotConsumption();
-            this.BarPlotProduction();
-          });
-        }
-        else if(this.selectedOption == 0 && this.selectedDate != undefined){
+        if(this.selectedOption == 0 && this.selectedDate != undefined){
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -153,19 +142,6 @@ export class BarMonthChartComponent {
             this.BarPlotProduction();
           });
         }
-        else{
-          forkJoin([
-            this.deviceService.monthByDaySettlement(this.selectedOption, 2),
-            this.deviceService.monthByDaySettlement(this.selectedOption, 1)
-          ]).subscribe(([data1, data2]) => {
-            this.list1 = data1;
-            this.list2 = data2;
-            this.BarPlotConsumption();
-            this.BarPlotProduction();
-
-          });
-        }
-        
       })
     })
   }
