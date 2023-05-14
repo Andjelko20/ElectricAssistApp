@@ -59,7 +59,7 @@ export class PredictionTabularDeviceComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption', 'Production']
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list1);
@@ -73,7 +73,7 @@ export class PredictionTabularDeviceComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Month', 'Year', 'Consumption', 'Production']
+          headers: ['Hour', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list2);

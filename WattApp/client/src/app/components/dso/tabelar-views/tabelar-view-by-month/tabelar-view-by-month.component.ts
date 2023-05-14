@@ -109,7 +109,6 @@ export class TabelarViewByMonthComponent implements OnInit{
           if(month == 12){
             string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
-          console.log(string1+'---------'+string2)
           forkJoin([
             this.deviceService.weekByDayCityFilter(string1,string2,number, 2),
             this.deviceService.weekByDayCityFilter(string1,string2,number, 1)

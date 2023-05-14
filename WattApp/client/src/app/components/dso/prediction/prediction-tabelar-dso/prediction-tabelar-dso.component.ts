@@ -91,7 +91,7 @@ export class PredictionTabelarDsoComponent {
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production']
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);
