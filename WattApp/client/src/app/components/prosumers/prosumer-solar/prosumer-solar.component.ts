@@ -52,7 +52,16 @@ ngOnInit() {
   
   this.todayConsumption.getTotalConsumptionProductionProsumer(1,this.idProsumer).subscribe(result=>{
     this.value = result;
-    
+    if(this.value>999.99)
+    {
+      this.value=parseFloat((this.value*0.001).toFixed(2))
+      this.append=" MWh"
+      if(this.value>999.99)
+      {
+        this.value=parseFloat((this.value*0.001).toFixed(2))
+        this.append=" GWh"
+      }
+    }
   })
 
   

@@ -183,5 +183,9 @@ export class HistoryPredictionService {
     return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/ThatYear/"+date+"?deviceCategoryId="+deviceCategoryId+"&settlementId="+settlementId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
 
   }
+  getTodayConsumtionProductionDevice(id:number): Observable<number>
+  {
+    return this.http.get<number>(environment.serverUrl+"/api/History/Today?deviceId="+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   
+  }
 }

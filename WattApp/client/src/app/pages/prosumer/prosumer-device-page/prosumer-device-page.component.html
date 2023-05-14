@@ -158,7 +158,7 @@
             </div>
 
             <br>
-            <button type="button" class="collapsible dropdown-toggle" (click)="onClick2()">Prediction</button>
+            <button type="button" class="collapsible dropdown-toggle active" (click)="onClick2()">Prediction</button>
             <div class="content3">
                 <div class="toggle-container">
                     <div class="toggle-buttons">
@@ -167,13 +167,6 @@
                         <span class="divider"></span>
                         <input type="radio" (click)="showTable()" name="toggle5" id="compGraph1-btn" [class.active]="compGraph1">
                         <label for="devices-btn">Tabular view</label>
-
-                        <!-- <input type="radio" (click)="showComponentGraph()" name="toggle1" id="day-btn" [class.active]="compGraph">
-                        <label id="dash" for="day-btn">Day</label>
-                        <span class="divider"></span>
-                        <input type="radio" (click)="showComponentGraph1()" name="toggle1" id="week-btn" [class.active]="compGraph1">
-                        <label for="week-btn">Week</label>
-                        <span class="divider"></span> -->
                     </div>
                 </div>
                 <div class="graf" *ngIf="compGraph">

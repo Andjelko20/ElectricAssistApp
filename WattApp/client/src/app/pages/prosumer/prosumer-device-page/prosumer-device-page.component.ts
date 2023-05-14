@@ -19,8 +19,8 @@ export class ProsumerDevicePageComponent implements OnInit{
   constructor(private elementRef: ElementRef, private authService:AuthService,private route:ActivatedRoute) {}
   ngOnInit(): void {
     this.isContentVisible1=true;
-    this.isContentVisible2=false;
-    this.isContentVisible3 = false;
+    this.isContentVisible2=true;
+    this.isContentVisible3 = true;
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{
       if(data.deviceCategory == "Electricity Consumer")
@@ -198,12 +198,12 @@ onClick()
 
 onClick2()
 {
- const contentDiv = document.querySelector(".content3") as HTMLDivElement;
- this.isContentVisible3 = !this.isContentVisible3;
-if (this.isContentVisible3) {
- contentDiv.style.display = 'block';
- } else {
- contentDiv.style.display = 'none';
-}
+  const contentDiv = document.querySelector(".content3") as HTMLDivElement;
+  this.isContentVisible3 = !this.isContentVisible3;
+  if (this.isContentVisible3) {
+    contentDiv.style.display = 'block';
+  } else {
+    contentDiv.style.display = 'none';
+  }
 }
 }
