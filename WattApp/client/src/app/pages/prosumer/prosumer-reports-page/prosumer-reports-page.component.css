@@ -360,7 +360,6 @@ button.active {
     }
     .content {
         width: 100%;
-        padding: 0 140px;
         display: block;
         overflow: hidden;
         background-color: white;

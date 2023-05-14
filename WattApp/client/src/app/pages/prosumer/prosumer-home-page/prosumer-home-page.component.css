@@ -42,7 +42,6 @@ ul {
     min-height: 240px;
 }
 
-
 .row {
     margin: 0;
     width: 100%;
@@ -280,10 +279,10 @@ h1 {
         width: 100%;
         height: auto;
     }
+    .col-sm-3 {
+        width: 28%;
+    }
     .vremenska {
-        height: 100px;
-        position: absolute;
-        top: 60px;
         right: 35px;
         width: 200px;
     }

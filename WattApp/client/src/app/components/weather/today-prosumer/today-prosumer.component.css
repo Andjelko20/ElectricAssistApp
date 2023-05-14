@@ -1,149 +1,152 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 @import url(https://cdnjs.cloudflare.com/ajax/libs/weather-icons/1.2/css/weather-icons.min.css);
-#weather_wrapper{
-  width: 100%;
- 
-}
-.weatherCard {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Open Sans';
-  border-radius: 30px;
-  margin-right: 20px;
-  
-}
-
-.currentTemp {
-  width: 100%;
-  display: inline-flex;
-  top: 0;
-  left: 0;
-}
-.currentWeather {
-  width:50%;
-  display: inline-flex;
-  margin: 0;
-  text-align: center;
-  top: 0;
-  right: 0;
-  border-radius: 10px;
-}
-img{
-  margin-top: -25px;
-  width:  100px;
-  height: 100px;
-}
-.temp {
-    position: absolute;
-    margin-left: 30px;
-    margin-top: -20px;
-    font-size: 15px;
-    text-align: center;
-    color: #727272;
-    width: 40%;
-  
-}
-.location {
-  color: #727272;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 10px;
-  display: block;
-}
-.conditions {
+#weather_wrapper {
     width: 100%;
-  display: flex;
-  text-align: center;
-}
-.info {
-
-  bottom: 0;
-  right: 0;
-  margin-top: -30px;
-  font-size: 20px;
-  color: #727272;
-  text-align: center;
-
-}
-.rain,
-.wind {
-  width: 50%;
-  top: 3px;
-}
-.wind {
-  right: -8px;
-}
-.wind::before {
-  display: block;
-  content: '\f050';
-  font-family: weathericons;
-  font-size: 20px;
-  left: -8px;
-
-  top: 5px;
 }
 
-@media (min-width: 768px) {
-  .weatherCard {
+.weatherCard {
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Open Sans';
     border-radius: 30px;
     margin-right: 20px;
-  }
-  .currentTemp {
+}
+
+.currentTemp {
     width: 100%;
     display: inline-flex;
-  }
-  .currentWeather {
-    width:40%;
+    top: 0;
+    left: 0;
+}
+
+.currentWeather {
+    width: 50%;
     display: inline-flex;
     margin: 0;
     text-align: center;
     top: 0;
     right: 0;
     border-radius: 10px;
-  }
-  .temp {
+}
+
+img {
+    margin-top: -25px;
+    width: 100px;
+    height: 100px;
+}
+
+.temp {
     position: absolute;
-    margin-left: 40px;
-    margin-top: -65px;
-    font-size: 35px;
+    margin-left: 33px;
+    margin-top: -20px;
+    font-size: 15px;
     text-align: center;
     color: #727272;
-    width: 50%;
-  }
-  .location {
-      font-size: 15px;
-  }
-  .conditions {
+    width: 40%;
+}
+
+.location {
+    color: #727272;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 10px;
+    display: block;
+}
+
+.conditions {
     width: 100%;
     display: flex;
     text-align: center;
-  }
-  .info {
-      
-      margin-bottom: 10px;
-  }
-  .rain,
-  .wind {
-      width: 50%;
-      top: 3px;
-  }
-  .wind {
-      right: -5px;
-  }
-  .wind::before {
-      font-size: 16px;
-      top: 5px;
-      left: -5px;
-  }
-  img{
-    margin-top: -120px;
-    margin-left: -100px;
-    width: 300px;
-    height: 300px;
-  }
+}
+
+.info {
+    bottom: 0;
+    right: 0;
+    margin-top: -30px;
+    font-size: 20px;
+    color: #727272;
+    text-align: center;
+}
+
+.rain,
+.wind {
+    width: 50%;
+    top: 3px;
+}
+
+.wind {
+    right: -8px;
+}
+
+.wind::before {
+    display: block;
+    content: '\f050';
+    font-family: weathericons;
+    font-size: 20px;
+    left: -8px;
+    top: 5px;
+}
+
+@media (min-width: 768px) {
+    .weatherCard {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Open Sans';
+        border-radius: 30px;
+        margin-right: 20px;
+    }
+    .currentTemp {
+        width: 100%;
+        display: inline-flex;
+    }
+    .currentWeather {
+        width: 40%;
+        display: inline-flex;
+        margin: 0;
+        text-align: center;
+        top: 0;
+        right: 0;
+        border-radius: 10px;
+    }
+    .temp {
+        position: absolute;
+        margin-left: 40px;
+        margin-top: -65px;
+        font-size: 35px;
+        text-align: center;
+        color: #727272;
+        width: 50%;
+    }
+    .location {
+        font-size: 15px;
+    }
+    .conditions {
+        width: 100%;
+        display: flex;
+        text-align: center;
+    }
+    .info {
+        margin-bottom: 10px;
+    }
+    .rain,
+    .wind {
+        width: 50%;
+        top: 3px;
+    }
+    .wind {
+        right: -5px;
+    }
+    .wind::before {
+        font-size: 16px;
+        top: 5px;
+        left: -5px;
+    }
+    img {
+        margin-top: -120px;
+        margin-left: -100px;
+        width: 300px;
+        height: 300px;
+    }
 }
