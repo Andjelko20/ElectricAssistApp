@@ -83,8 +83,6 @@ export class PredictionTabelarDsoComponent {
         }
       }
   }
-  const date = new Date();
-  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'prediction-week',
@@ -93,7 +91,7 @@ export class PredictionTabelarDsoComponent {
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production', 'Exported Date '+formattedDate]
+    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production']
   };
 
   const csvExporter = new ExportToCsv(options);

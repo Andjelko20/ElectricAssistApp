@@ -59,7 +59,7 @@ export class DeviceMonthComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -74,27 +74,6 @@ export class DeviceMonthComponent {
   ngOnInit(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{
-    if(this.selectedDate == undefined){
-      
-        if(data.deviceCategory == "Electricity Consumer")
-        {
-          this.consumptionGraph = true;
-          this.deviceService.monthbyDayDevice(deviceId).subscribe(consumption=>{
-            this.list1 = consumption;
-            this.BarPlotConsumption();
-          })
-          
-        }
-        else{
-          this.productionGraph = true;
-          this.deviceService.monthbyDayDevice(deviceId).subscribe(production=>{
-            this.list2 = production;
-            this.BarPlotProduction();
-          })
-        }
-      
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -119,7 +98,6 @@ export class DeviceMonthComponent {
               this.BarPlotProduction();
             }
           });
-    }
   })
   }
   BarPlotProduction(){

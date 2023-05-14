@@ -38,13 +38,10 @@ export class PredictionDeviceComponent {
         })
         
       }
-      else{
-        
+      else{ 
         this.productionGraph=true;
-        
         this.deviceService.predictionDevice(id).subscribe(production =>{
-   
-          const br: any = 0;
+        const br: any = 0;
           if(production==br)
           {
             console.log("Nemamo dovoljno podataka");
@@ -53,8 +50,6 @@ export class PredictionDeviceComponent {
             this.list2=production;
             this.LineChartProduction();
           }
-         
-         
         })
       }
     })

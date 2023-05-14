@@ -55,7 +55,7 @@ export class BarMonthProsumerComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -69,18 +69,6 @@ export class BarMonthProsumerComponent {
   
   ngOnInit(): void {
     const userId = Number(this.route.snapshot.paramMap.get('id'));
-    if(this.selectedDate == undefined){
-      forkJoin({
-        list1: this.deviceService.monthByDayUser(userId, 2),
-        list2: this.deviceService.monthByDayUser(userId, 1)
-      }).subscribe(({ list1, list2 }) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.BarPlotProduction();
-        this.BarPlotConsumption();
-      });
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -99,9 +87,7 @@ export class BarMonthProsumerComponent {
             this.BarPlotProduction();
             this.BarPlotConsumption();
           });
-    }
-    
-  }
+        }
   BarPlotProduction(){
     
     const chartId = 'barplot1';

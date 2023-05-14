@@ -57,7 +57,7 @@ export class ProsumerMonthGraphComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -72,15 +72,6 @@ export class ProsumerMonthGraphComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
-    if(this.selectedDate == undefined){
-      forkJoin({
-        list1: this.deviceService.monthByDayUser(userId, 2),
-      }).subscribe(({ list1 }) => {
-        this.list1 = list1;
-        this.BarPlotConsumption();
-      });
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -96,7 +87,6 @@ export class ProsumerMonthGraphComponent {
             this.list1 = list1;
             this.BarPlotConsumption();
           });
-    }
   }
 
   BarPlotConsumption(){
