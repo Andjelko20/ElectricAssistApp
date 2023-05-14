@@ -125,7 +125,7 @@
     margin-left: 10px;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 1px 2px grey;
+    border: 1px solid #D2D2D2;
     width: 100%;
     margin-bottom: 10px;
 }
@@ -200,7 +200,7 @@ button.active {
   background-color: white;
   border-radius: 10px;
   width: 20%;
-  box-shadow: 1px 2px grey;
+  border: 1px solid #D2D2D2;
   margin-bottom: 10px;
 }
 .tile_stats_count {
@@ -243,7 +243,7 @@ button.active {
   background-color: white;
   border-radius: 10px;
   width:28%;
-  box-shadow: 1px 2px grey;
+  border: 1px solid #D2D2D2;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -287,7 +287,7 @@ button.active {
   background-color: white;
   border-radius: 10px;
   margin-bottom: 7px;
-  box-shadow: 1px 2px grey;
+  border: 1px solid #D2D2D2;
   margin-bottom: 10px;
   align-items: center;
   justify-content: center;
@@ -363,7 +363,7 @@ button.active {
     .bgc-white, .bgcH-white:hover {
         background-color: #ffffff !important;
         border-radius: 10px;
-        box-shadow: 1px 2px grey;
+        border: 1px solid #D2D2D2;
         margin-bottom: 7px;
     }
     .bd {
@@ -405,7 +405,7 @@ button.active {
         background-color: white;
         border-radius: 10px;
         width: 40%;
-        box-shadow: 1px 2px grey;
+        border: 1px solid #D2D2D2;
         margin-bottom: 7px;
       }
       .tile_stats_count {
@@ -451,7 +451,7 @@ button.active {
         background-color: white;
         border-radius:10px;
         width: 50%;
-        box-shadow: 1px 2px grey;
+        border: 1px solid #D2D2D2;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -485,10 +485,10 @@ button.active {
     }
             
       .weather {
-        width: 70%;
+        width: 80%;
         margin-right: 10px;
         background-color: white;
-        box-shadow: 1px 2px grey;
+        border: 1px solid #D2D2D2;
         align-items: center;
         justify-content: center;
       }
@@ -574,7 +574,7 @@ button.active {
     background-color: white;
     border-radius:10px;
     width: 50%;
-    box-shadow: 1px 2px grey;
+    border: 1px solid #D2D2D2;
     display: flex;
     flex-direction: column;
     justify-content: center;

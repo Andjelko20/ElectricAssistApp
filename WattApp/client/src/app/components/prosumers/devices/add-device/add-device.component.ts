@@ -37,7 +37,6 @@ export class AddDeviceComponent implements OnInit{
   categories=[
     {id:Categories.ELECTRICITY_PRODUCER_ID,name:Categories.ELECTRICITY_PRODUCER_NAME},
     {id:Categories.ELECTRICITY_CONSUMER_ID,name:Categories.ELECTRICITY_CONSUMER_NAME},
-    {id:Categories.ELECTRICITY_STOCK_ID,name:Categories.ELECTRICITY_STOCK_NAME}
   ]
 
   constructor(private devicesService:DevicesService,private router:Router,private formBuilder: FormBuilder) {

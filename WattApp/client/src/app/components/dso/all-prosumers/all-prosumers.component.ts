@@ -17,7 +17,7 @@ export class AllProsumersComponent implements OnInit {
   totalItems = 20;
   data: any[] = [];
   prosumerValues: any[] = [];
-i: any;
+  loader:boolean=false;
 
   constructor(
     private authService: AuthService,
@@ -29,6 +29,7 @@ i: any;
   }
 
   pageChanged(pageNumber:number){
+	this.loader=true;
 	let url=new URL(this.url);
 		url.searchParams.set("pageNumber",pageNumber.toString());
 		url.searchParams.set("pageSize",this.itemsPerPage.toString());
@@ -39,18 +40,21 @@ i: any;
 		},3000);
 		fetch(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem("token")},signal:controller.signal})
 		.then(res=>{
+			this.loader=false;
 			if(res.status==401 || res.status==403){
 				return Promise.reject("aaa");
 			}
 			return res.json();
 		})
 		.then(res=>{
+			this.loader=false;
 				if(res==undefined)
 					return;
 				this.data=res?.data;
 				this.currentPage=pageNumber;
 				this.totalItems=res.numberOfPages*this.itemsPerPage;
-        		this.prosumerValues = res;	
+        		this.prosumerValues = res;
+					
 		})
     
   }

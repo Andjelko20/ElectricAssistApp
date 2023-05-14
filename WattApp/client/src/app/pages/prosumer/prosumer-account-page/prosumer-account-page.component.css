@@ -178,6 +178,9 @@ a:hover {
         color: black;
         cursor: pointer;
     }
+    #logout:hover {
+        color: white;
+    }
     .col-md-6 {
         margin-left: 202px;
         font-size: 24px !important;

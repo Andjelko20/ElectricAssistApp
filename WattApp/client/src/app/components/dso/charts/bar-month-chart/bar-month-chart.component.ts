@@ -51,12 +51,9 @@ export class BarMonthChartComponent {
   
   loader:boolean=false;
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   settlements:Settlement[] = [];
-  itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
-  ,'20','21','22','23','24','25','26','27','28','29','30'];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
       this.date.valueChanges.subscribe((selectedDate : any) => {
         const arr1: any[] = [];

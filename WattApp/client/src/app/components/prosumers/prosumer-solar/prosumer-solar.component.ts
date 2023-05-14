@@ -41,17 +41,6 @@ markerConfig = {
 
 showNewGauge = false;
 
-// markerConfig = {
-//   "0": { color: '#555', size: 8, label: '0', type: 'line'},
-//   "15": { color: '#555', size: 4, type: 'line'},
-//   "30": { color: '#555', size: 8, label: '30', type: 'line'},
-//   "40": { color: '#555', size: 4, type: 'line'},
-//   "50": { color: '#555', size: 8, label: '50', type: 'line'},
-//   "60": { color: '#555', size: 4, type: 'line'},
-//   "70": { color: '#555', size: 8, label: '70', type: 'line'},
-//   "85": { color: '#555', size: 4, type: 'line'},
-//   "100": { color: '#555', size: 8, label: '100', type: 'line'},
-// }
 
 
 constructor(private todayConsumption:HistoryPredictionService){
@@ -63,7 +52,16 @@ ngOnInit() {
   
   this.todayConsumption.getTotalConsumptionProductionProsumer(1,this.idProsumer).subscribe(result=>{
     this.value = result;
-    
+    if(this.value>999.99)
+    {
+      this.value=parseFloat((this.value*0.001).toFixed(2))
+      this.append=" MWh"
+      if(this.value>999.99)
+      {
+        this.value=parseFloat((this.value*0.001).toFixed(2))
+        this.append=" GWh"
+      }
+    }
   })
 
   
