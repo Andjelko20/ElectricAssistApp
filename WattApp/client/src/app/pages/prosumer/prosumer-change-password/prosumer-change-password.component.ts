@@ -138,12 +138,6 @@ export class ProsumerChangePasswordComponent {
             
      }} );
     }
-    
-   
-    // localStorage.removeItem('token');
-    // this.updateService.isLoginSubject.next(false)
-    // this.router.navigate(['/login']);
-    
   }
   checkIfInputsAreEqual(group: FormGroup) {
     const input1 = group.controls['nameform2'];
