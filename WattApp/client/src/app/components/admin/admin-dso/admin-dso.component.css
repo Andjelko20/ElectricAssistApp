@@ -1,4 +1,19 @@
-
+#all{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filter{
+  display: inline-block;
+}
+#clearf{
+  margin-left: 10px;
+  display: inline-block;
+  margin-right: 100px;
+}
+#search{
+  display: inline-block;
+}
 .first {
    
     margin-bottom: 60px;
@@ -7,7 +22,9 @@
     border: 1px solid #D2D2D2;
     border-radius: 10px;
 }
-
+#searchInput{
+  width: 230px;
+}
 #buttonAdd {
     width: 100px;
     height: 50px;
@@ -178,6 +195,7 @@ li a {
   position: relative;
   display: inline-block;
   margin-top: 15px;
+  margin-left: 15px;
 }
 
 .dropbtn1 {
@@ -221,12 +239,11 @@ li a {
 .dropdown:focus .dropdown-content {
   display: block;
 }
-
-
-
-@media only screen and (min-width: 768px) and (max-width: 1280px) {
-    
-
+@media only screen and (min-width: 768px) and (max-width: 1281px) {
+ 
+  #tableres{
+    padding: 15px;
+  }
 .first {
     padding: 0;
 }
@@ -239,11 +256,7 @@ table {
 table,
 td,
 th {
-    padding-top: 35px;
-    padding-bottom: 35px;
-    padding-left: 2px;
-    padding-right:2px;
-    border-bottom: 1px solid gray;
+    width: 100%;
     text-align: center;
 }
 

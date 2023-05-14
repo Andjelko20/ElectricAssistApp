@@ -40,6 +40,26 @@ export interface Prosumers{
     address:string;
 
 }
+export interface Prosumers{
+    id: number;
+    name: string;
+    username: string ;
+    email: string;
+    role: string;
+    blocked: boolean;
+    settlement:string;
+    city:string;
+    country: string;
+    address:string;
+
+}
+export interface LogedUser{
+    id: number;
+    name: string;
+    username: string ;
+    email: string;
+
+}
 export interface Register{
     name: string;
     username: string;

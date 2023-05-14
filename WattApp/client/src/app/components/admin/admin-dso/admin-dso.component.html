@@ -3,14 +3,15 @@
       <div class="header">
         <h3>All Users</h3>
       </div>
-      
+      <div id="all">
+
+     
+      <div class="filter" >
       <div class="dropdown" [class.show]="showDropdown">
         <a id="dropbtn1" class="btn btn-primary" (click)="toggleDropdown()" style="text-decoration: none;">
           Filters <span class="filter-count">{{ countActiveFilters() }}</span>
         </a>
-        <div class="form-group">
-          <button class="btn btn-secondary" (click)="clearFilters()">Clear All Filters</button>
-        </div>
+        
         <div class="dropdown-content">
           <div class="filter">
             <div class="form-group">
@@ -47,51 +48,17 @@
             </div>
           </div>
         </div>
+        <div class="form-group" id="clearf" >
+          <button class="btn btn-secondary" (click)="clearFilters()">Clear All Filters</button>
+        </div>
       </div>
       
-<!--       
-		<div class="filter">
-			<div class="form-group">
-				<label>Filter by role</label>
-				<select name="role" [(ngModel)]="filters.role" (ngModelChange)="pageChanged(1)">
-					<option value="0">All roles</option>
-					<option value="1">Admin</option>
-					<option value="2">Dispatcher</option>
-					<option value="3">Prosumer</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label>Filter by blocked status</label>
-				<select name="role" [(ngModel)]="filters.blocked" (ngModelChange)="pageChanged(1)">
-					<option value="-1">Select status</option>
-					<option value="1">Blocked</option>
-					<option value="0">Active</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label>Filter by city</label>
-				<select name="role" [(ngModel)]="filters.city" (ngModelChange)="cityChanged()">
-					<option value="0">All cities</option>
-					<option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label>Filter by settlement</label>
-				<p *ngIf="filters.city==0" class="settlement-text">Select city first</p>
-				<select name="role" *ngIf="filters.city!=0" [(ngModel)]="filters.settlement" (ngModelChange)="pageChanged(1)">
-					<option value="0">All settlements</option>
-					<option *ngFor="let settlement of settlements" [value]="settlement.id">{{settlement.name}}</option>
-				</select>
-			</div>
-			<div class="form-group">
-        <label>Search user by name, username or address</label>
-        <input type="text" name="search" [(ngModel)]="filters.name" class="search" (ngModelChange)="pageChanged(1)">
-      </div>
-		</div> -->
-    <!-- <div class="form-group">
-      <label>Search user by name, username or address</label>
-      <input type="text" name="search" [(ngModel)]="filters.name" class="search" (ngModelChange)="pageChanged(1)">
-    </div> -->
+      <div class="form-group" id="search">
+        <label>Search user by: </label>
+        <input type="text" name="search" [(ngModel)]="filters.name" class="form-control search" id="searchInput"placeholder="name, username or address" (ngModelChange)="pageChanged(1)">
+      </div> 
+    </div>
+  </div>
 		<app-loader *ngIf="loading"></app-loader>
 		<div *ngIf="!loading && showUsers?.length==0" class="no-users">
 			There are no users to be shown.
@@ -166,9 +133,6 @@
                   <br>
                   <label for="email " class="form-label ">Email</label>
                   <input type="text " class="form-control " id="id " name="email " [(ngModel)]="updateUserDetail.email ">
-                  <br>
-                  <label for="password " class="form-label ">Enter your password</label>
-                  <input type="password " class="form-control " id="id " name="password "  >
                   <br>
               </div>
           </div>

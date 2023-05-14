@@ -44,13 +44,13 @@ const routes: Routes = [
 	//ADMIN
 	{path:'',component:AdminDsoComponent,canActivate:[AdminGuard]},
 	{path:'add-user',component:AdminDsoAddComponent,canActivate:[AdminGuard],canDeactivate:[UnsavedChangesGuardGuard]},
-	{path:"profile-admin",component:AccountPageComponent,canActivate:[AdminGuard] },
+	{path:"profile-admin",component:AccountPageComponent,canActivate:[AdminGuard],canDeactivate:[UnsavedChangesGuardGuard] },
 	//DSO
 	{path:'',component:DsoHomePageComponent,canActivate:[DispatcherGuard]},
 	{path:'prosumers',component:DsoProsumersPageComponent,canActivate:[DispatcherGuard],data:{tab:'table'}},
 	{path:'prosumer/:id',component:DsoOneProsumerPageComponent,canActivate:[DispatcherGuard]},
 	{path:'prediction',component:DsoPredictionPageComponent,canActivate:[DispatcherGuard]},
-	{path:"profile-dso",component:AccountPageComponent,canActivate:[DispatcherGuard]},
+	{path:"profile-dso",component:AccountPageComponent,canActivate:[DispatcherGuard],canDeactivate:[UnsavedChangesGuardGuard]},
 	//PROSUMER
 	{path:'',component:ProsumerHomePageComponent,canActivate:[ProsumerGuard]},
 	{path:'devices',component:ProsumerDevicesPageComponent,canActivate:[ProsumerGuard]},
@@ -58,12 +58,10 @@ const routes: Routes = [
 	{path:'reports',component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"device-update/:id",component:UpdateDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"device-add",component:AddDeviceComponent,canActivate:[ProsumerGuard]},
-	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard]},
-	{path:"profile-edit",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
+	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard],canDeactivate:[UnsavedChangesGuardGuard]},
+	{path:"profile-edit",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard],canDeactivate:[UnsavedChangesGuardGuard]},
 	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
-	{path:"prosumer-change-password",component:ProsumerChangePasswordComponent,canActivate:[ProsumerGuard]},
-
-	
+	{path:"prosumer-change-password",component:ProsumerChangePasswordComponent,canActivate:[ProsumerGuard],canDeactivate:[UnsavedChangesGuardGuard]},
 	{path:'email-confirmation',component:EmailConfirmationPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'**',redirectTo:"login"},
