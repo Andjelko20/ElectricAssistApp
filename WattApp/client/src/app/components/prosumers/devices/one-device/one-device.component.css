@@ -253,8 +253,8 @@ input:checked+.slider:before {
     }
     #imgdevice {
         box-sizing: border-box;
-        width: 13%;
-        margin: 10px;
+        width: 22%;
+        margin: 28px;
     }
     .info {
         border-radius: 7px;
@@ -262,8 +262,8 @@ input:checked+.slider:before {
     }
     .infoimg {
         float: left;
-        left: 22%;
-        padding-top: 15px;
+        left: 41%;
+        padding-top: 37px;
         position: absolute;
         width: 20%;
     }
