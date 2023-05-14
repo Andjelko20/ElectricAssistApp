@@ -120,7 +120,9 @@ export class BarYearProsumerComponent {
             
           },
           options: 
-          {responsive: true,
+          {
+            maintainAspectRatio:false,
+            responsive: true,
             scales:{
               y: {
                 ticks:{
@@ -172,24 +174,7 @@ export class BarYearProsumerComponent {
                 display: false
               },
               legend: {
-                onHover: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'pointer';
-                },
-                onLeave: function (event, legendItem, legend) {
-                    document.body.style.cursor = 'default';
-                },
-                
-                position: 'bottom',
-                labels: {
-                  usePointStyle: true,
-                  color: '#000',
-                  font:{
-                    size:20
-                  } 
-                  // ,
-                  // boxHeight:100,
-                  // boxWidth:100
-                }
+                display:false
               },
               title: {
                 display: true,
@@ -234,7 +219,9 @@ export class BarYearProsumerComponent {
             
           },
           options: 
-          {responsive: true,
+          {
+            maintainAspectRatio:false,
+            responsive: true,
             scales:{
               y: {
                 ticks:{
@@ -286,24 +273,7 @@ export class BarYearProsumerComponent {
                 display: false
               },
               legend: {
-                onHover: function (event, legendItem, legend) {
-                  document.body.style.cursor = 'pointer';
-                },
-                onLeave: function (event, legendItem, legend) {
-                    document.body.style.cursor = 'default';
-                },
-                
-                position: 'bottom',
-                labels: {
-                  usePointStyle: true,
-                  color: '#000',
-                  font:{
-                    size:20
-                  } 
-                  // ,
-                  // boxHeight:100,
-                  // boxWidth:100
-                }
+                display:false
               },
               title: {
                 display: true,

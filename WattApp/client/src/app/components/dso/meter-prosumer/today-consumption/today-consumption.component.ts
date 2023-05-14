@@ -14,7 +14,7 @@ export class TodayConsumptionComponent implements OnInit{
   valueMWh!: any;
   valueGWh!: any;
   min: number = 0;
-  maxkwh: number = 60000;
+  maxkwh: number = 2000;
   maxmwh: number = this.maxkwh*0.001;
   maxgwh: number = this.maxmwh*0.001;
   constructor(private historyService:HistoryPredictionService,private route:ActivatedRoute){}
@@ -34,19 +34,19 @@ export class TodayConsumptionComponent implements OnInit{
 
   markerConfigKWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
-    "7500": { color: '#57A75B', size: 4, type: 'line'},
-    "15000": { color: '#57A75B', size: 8, label: '15000', type: 'line'},
-    "22500": { color: '#F9D435', size: 4, type: 'line'},
-    "30000": { color: '#F9D435', size: 8, label: '30000', type: 'line'},
-    "37500": { color: '#F69E0B', size: 4, type: 'line'},
-    "45000": { color: '#F69E0B', size: 8, label: '45000', type: 'line'},
-    "52500": { color: '#E0453A', size: 4, type: 'line'},
-    "60000": { color: '#E0453A', size: 8, label: '60000', type: 'line'},
+    "250": { color: '#57A75B', size: 4, type: 'line'},
+    "500": { color: '#57A75B', size: 8, label: '500', type: 'line'},
+    "750": { color: '#F9D435', size: 4, type: 'line'},
+    "1000": { color: '#F9D435', size: 8, label: '1,000', type: 'line'},
+    "1250": { color: '#F69E0B', size: 4, type: 'line'},
+    "1500": { color: '#F69E0B', size: 8, label: '1,500', type: 'line'},
+    "1750": { color: '#E0453A', size: 4, type: 'line'},
+    "2000": { color: '#E0453A', size: 8, label: '2000', type: 'line'},
   }
   thresholdConfigKWh = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '22223': { color: 'blue', "bgOpacity": 0.2 },
-    '44445': { color: 'red', "bgOpacity": 0.2 }
+    '351': { color: 'blue', "bgOpacity": 0.2 },
+    '1600': { color: 'red', "bgOpacity": 0.2 }
   };
 
   markerConfigMWh = {

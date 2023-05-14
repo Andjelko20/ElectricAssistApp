@@ -15,7 +15,7 @@ export class MonthConsumptionComponent implements OnInit{
   valueMWh!: any;
   valueGWh!: any;
   min: number = 0;
-  maxkwh: number = 1500000;
+  maxkwh: number = 5000;
   maxmwh: number = this.maxkwh*0.001;
   maxgwh: number = this.maxmwh*0.001;
   constructor(private historyService:HistoryPredictionService,private route:ActivatedRoute) {
@@ -36,36 +36,36 @@ export class MonthConsumptionComponent implements OnInit{
   }
   markerConfigKWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
-    "187500": { color: '#57A75B', size: 4, type: 'line'},
-    "375000": { color: '#57A75B', size: 8, label: '375000', type: 'line'},
-    "562500": { color: '#F9D435', size: 4, type: 'line'},
-    "750000": { color: '#F9D435', size: 8, label: '750000', type: 'line'},
-    "937500": { color: '#F69E0B', size: 4, type: 'line'},
-    "1125000": { color: '#F69E0B', size: 8, label: '1125000', type: 'line'},
-    "1312500": { color: '#E0453A', size: 4, type: 'line'},
-    "1500000": { color: '#E0453A', size: 8, label: '1500000', type: 'line'},
+    "625": { color: '#57A75B', size: 4, type: 'line'},
+    "1250": { color: '#57A75B', size: 8, label: '1,250', type: 'line'},
+    "1875": { color: '#F9D435', size: 4, type: 'line'},
+    "2500": { color: '#F9D435', size: 8, label: '2,500', type: 'line'},
+    "3125": { color: '#F69E0B', size: 4, type: 'line'},
+    "3750": { color: '#F69E0B', size: 8, label: '3,750', type: 'line'},
+    "4375": { color: '#E0453A', size: 4, type: 'line'},
+    "5000": { color: '#E0453A', size: 8, label: '5,000', type: 'line'},
   }
   thresholdConfigKWh = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '666668': { color: 'blue', "bgOpacity": 0.2 },
-    '1333334': { color: 'red', "bgOpacity": 0.2 }
+    '2223': { color: 'blue', "bgOpacity": 0.2 },
+    '3944': { color: 'red', "bgOpacity": 0.2 }
   };
   
   markerConfigMWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
-    "187.5": { color: '#57A75B', size: 4, type: 'line'},
-    "375": { color: '#57A75B', size: 8, label: '375', type: 'line'},
-    "562.5": { color: '#F9D435', size: 4, type: 'line'},
-    "750": { color: '#F9D435', size: 8, label: '750', type: 'line'},
-    "937.5": { color: '#F69E0B', size: 4, type: 'line'},
-    "1125": { color: '#F69E0B', size: 8, label: '1125', type: 'line'},
-    "1312.5": { color: '#E0453A', size: 4, type: 'line'},
-    "1500": { color: '#E0453A', size: 8, label: '1500', type: 'line'},
+    "0.63": { color: '#57A75B', size: 4, type: 'line'},
+    "1.3": { color: '#57A75B', size: 8, label: '1.3', type: 'line'},
+    "1.9": { color: '#F9D435', size: 4, type: 'line'},
+    "2.5": { color: '#F9D435', size: 8, label: '2.77', type: 'line'},
+    "3.13": { color: '#F69E0B', size: 4, type: 'line'},
+    "3.8": { color: '#F69E0B', size: 8, label: '3.8', type: 'line'},
+    "4.38": { color: '#E0453A', size: 4, type: 'line'},
+    "5": { color: '#E0453A', size: 8, label: '5', type: 'line'},
   }
   thresholdConfigMWh = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '666.66': { color: 'blue', "bgOpacity": 0.2 },
-    '1333.33': { color: 'red', "bgOpacity": 0.2 }
+    '2.223': { color: 'blue', "bgOpacity": 0.2 },
+    '4.444': { color: 'red', "bgOpacity": 0.2 }
   };
 
   markerConfigGWh = {
