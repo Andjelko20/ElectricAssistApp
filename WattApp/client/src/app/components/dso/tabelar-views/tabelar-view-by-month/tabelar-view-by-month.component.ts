@@ -116,8 +116,9 @@ export class TabelarViewByMonthComponent implements OnInit{
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
+          console.log(string1+'---------'+string2)
           forkJoin([
             this.deviceService.weekByDayCityFilter(string1,string2,number, 2),
             this.deviceService.weekByDayCityFilter(string1,string2,number, 1)
@@ -134,7 +135,7 @@ export class TabelarViewByMonthComponent implements OnInit{
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
 
           forkJoin([
@@ -173,8 +174,6 @@ export class TabelarViewByMonthComponent implements OnInit{
         }
       }
   }
-  const date = new Date();
-  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'consumption/production-month',
@@ -183,7 +182,7 @@ export class TabelarViewByMonthComponent implements OnInit{
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);

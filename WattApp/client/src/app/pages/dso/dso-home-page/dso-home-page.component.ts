@@ -23,18 +23,7 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
   totalProduction?:number;
   idUser!:number;
   role!:string;
-  updateUserDetail:Prosumers={
-    id: 0,
-    name: '',
-    username: '',
-    email: '',
-    role: '',
-    blocked: false,
-    settlement:'',
-    city:'',
-    country: '',
-    address:''
-  }
+  city! : string;
   constructor(private avgConsumption:HistoryPredictionService,private route:ActivatedRoute,private router:Router,private updateService:AuthService){
 
   }
@@ -51,42 +40,23 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
     const { id, role } = new JwtToken().data;
     this.idUser = id as number;
     this.role = role as string;
-     this.updateService.getlogInUser().subscribe(response=>{
-      this.loader=false;
-      this.updateUserDetail = {
-        id: this.idUser,
-        name: response.name,
-        username: response.username,
-        email: response.email,
-        blocked: response.blocked,
-        role: this.role,
-        settlement: response.settlement,
-        city: response.city,
-        country: response.country,
-        address: response.address
-      }
-     }
-    )
+     this.updateService.getlogInUser().subscribe(user=>{
+      this.updateService.getCityId(user.city).subscribe(city=>{
+        this.city = user.city;
+        this.avgConsumption.getAverageConsumptionProductionCity(1,city).subscribe(result=>{
+          this.loader=false;
+          this.avgProduction = result;
+        })
+        this.avgConsumption.getCurrentConsumptionProductionCity(1, city).subscribe(result=>{
+          this.loader=false;
+            this.totalProduction = result;
+          })
+      })
+     })
     const res = await fetch(environment.serverUrl + "/api/ProsumersDetails/count", {
       headers: { Authorization: "Bearer " + localStorage.getItem("token") }
     }).then(res => res.json());
     this.numberOfProsumers = res;
-    this.updateService.getCityId(this.updateUserDetail.city).subscribe(city=>{
-      
-      this.avgConsumption.getAverageConsumptionProductionCity(1,city).subscribe(result=>{
-        this.loader=false;
-        this.avgProduction = result;
-      })
-      this.avgConsumption.getCurrentConsumptionProductionCity(1, city).subscribe(result=>{
-        this.loader=false;
-          this.totalProduction = result;
-        })
-    })
-   
-    
-    
-    
-   
   }
   graph:boolean = true;
   tabelar:boolean = false;
