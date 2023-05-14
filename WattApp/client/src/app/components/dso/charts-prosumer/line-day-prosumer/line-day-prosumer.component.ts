@@ -13,6 +13,7 @@ Chart.register(...registerables)
 })
 export class LineDayProsumerComponent{
   maxDate: Date;
+  currentDate = new Date();
 
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     this.maxDate = new Date();
@@ -20,7 +21,7 @@ export class LineDayProsumerComponent{
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -30,18 +31,6 @@ export class LineDayProsumerComponent{
   ngOnInit(): void {
     const userId = Number(this.route.snapshot.paramMap.get('id'));
   
-    if(this.selectedDate == undefined){
-      combineLatest([
-        this.deviceService.dayByHourUser(userId, 2),
-        this.deviceService.dayByHourUser(userId, 1)
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.LineChartProduction();
-        this.LineChartConsumption();
-      });
-    }
-    else if(this.selectedDate !== undefined){
       const day = this.selectedDate.getDate();
       let dayString = String(day).padStart(2, '0');
       const month = this.selectedDate.getMonth()+1;
@@ -87,8 +76,6 @@ export class LineDayProsumerComponent{
         this.LineChartProduction();
         this.LineChartConsumption();
       });
-    }
-    
   }
   LineChartProduction(){
 
@@ -99,11 +86,15 @@ export class LineDayProsumerComponent{
     }
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
-
+    let max=0;
+    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    {
+      max=1;
+    }
     const Linechart =new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: ["0","4","8","12","16","20"," "],
+        labels: hours,
         
         datasets: [
           {
@@ -134,11 +125,11 @@ export class LineDayProsumerComponent{
               font:{
                 size:15
               }
-            },
+            },suggestedMax:max,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Production (kWh)",
               color:'#000',
               font:{
                 size:15
@@ -209,11 +200,16 @@ export class LineDayProsumerComponent{
     }
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
-
+    console.log(this.list1)
+    let max=0;
+    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    {
+      max=1;
+    }
     const Linechart =new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: ["0","4","8","12","16","20"," "],
+        labels: hours,
         
         datasets: [
           {
@@ -254,11 +250,11 @@ export class LineDayProsumerComponent{
               font:{
                 size:15
               }
-            },
+            },suggestedMax:max,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Consumption (kWh)",
               color:'#000',
               font:{
                 size:15

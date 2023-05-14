@@ -14,13 +14,14 @@ Chart.register(...registerables)
 export class ProsumerDayGraphComponent {
   
   maxDate = new Date();
+  currentDate = new Date();
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     
   }
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
 
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -30,17 +31,6 @@ export class ProsumerDayGraphComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
-  
-    if(this.selectedDate == undefined){
-      combineLatest([
-        this.deviceService.dayByHourUser(userId, 2),
-      ]).subscribe(([list1]) => {
-
-        this.list1 = list1;
-        this.LineChartConsumption();
-      });
-    }
-    else if(this.selectedDate !== undefined){
       const day = this.selectedDate.getDate();
       let dayString = String(day).padStart(2, '0');
       const month = this.selectedDate.getMonth()+1;
@@ -86,10 +76,6 @@ export class ProsumerDayGraphComponent {
 
       });
     }
-    
-  
-  }
-
   
   LineChartConsumption(){
 
@@ -100,11 +86,15 @@ export class ProsumerDayGraphComponent {
     }
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
-
+    let max=0;
+    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    {
+      max=1;
+    }
     const Linechart =new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: ["0","4","8","12","16","20"," "],
+        labels: hours,
         
         datasets: [
           {
@@ -146,11 +136,11 @@ export class ProsumerDayGraphComponent {
               font:{
                 size:13
               }
-            },
+            },suggestedMax:max,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Consumption (kWh)",
               color:'#000',
               font:{
                 size:13

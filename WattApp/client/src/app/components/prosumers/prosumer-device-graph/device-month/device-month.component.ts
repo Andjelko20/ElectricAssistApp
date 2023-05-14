@@ -45,7 +45,6 @@ export const MY_FORMATS = {
 export class DeviceMonthComponent {
 
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;
   list1:WeekByDay[]=[];
@@ -60,7 +59,7 @@ export class DeviceMonthComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -75,27 +74,6 @@ export class DeviceMonthComponent {
   ngOnInit(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{
-    if(this.selectedDate == undefined){
-      
-        if(data.deviceCategory == "Electricity Consumer")
-        {
-          this.consumptionGraph = true;
-          this.deviceService.monthbyDayDevice(deviceId).subscribe(consumption=>{
-            this.list1 = consumption;
-            this.BarPlotConsumption();
-          })
-          
-        }
-        else{
-          this.productionGraph = true;
-          this.deviceService.monthbyDayDevice(deviceId).subscribe(production=>{
-            this.list2 = production;
-            this.BarPlotProduction();
-          })
-        }
-      
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -103,7 +81,7 @@ export class DeviceMonthComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayDeviceFilter(string1,string2,deviceId, 2),
@@ -120,7 +98,6 @@ export class DeviceMonthComponent {
               this.BarPlotProduction();
             }
           });
-    }
   })
   }
   BarPlotProduction(){
@@ -145,8 +122,8 @@ export class DeviceMonthComponent {
             {
               label: 'Production',
               data: energyUsageResults2,
-              borderColor: 'rgb(255, 165, 0)',
-              backgroundColor: 'rgb(255, 165, 0)'
+              borderColor: '#1d91c0',
+              backgroundColor: '#1d91c0'
             },
            
             
@@ -169,7 +146,7 @@ export class DeviceMonthComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Production (kWh)",
                 color: '#000',
                 font:{
                   size:13
@@ -203,26 +180,7 @@ export class DeviceMonthComponent {
             legend:{
               display:false
             },
-            // legend: {
-            //   onHover: function (event, legendItem, legend) {
-            //     document.body.style.cursor = 'pointer';
-            //   },
-            //   onLeave: function (event, legendItem, legend) {
-            //       document.body.style.cursor = 'default';
-            //   },
-              
-            //   position: 'bottom',
-            //   labels: {
-            //     usePointStyle: true,
-            //     color: '#000',
-            //     font:{
-            //       size:13
-            //     } 
-            //     // ,
-            //     // boxHeight:100,
-            //     // boxWidth:100
-            //   }
-            // },
+            
             title: {
               display: true,
               text: 'Production in a month',
@@ -256,8 +214,8 @@ export class DeviceMonthComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
+              borderColor: '#7fcdbb',
+              backgroundColor: '#7fcdbb',
               
             },
             
@@ -280,7 +238,7 @@ export class DeviceMonthComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Consumption (kWh)",
                 color: '#000',
                 font:{
                   size:13
@@ -314,23 +272,7 @@ export class DeviceMonthComponent {
             legend:{
               display:false
             },
-            // legend: {
-            //   onHover: function (event, legendItem, legend) {
-            //     document.body.style.cursor = 'pointer';
-            //   },
-            //   onLeave: function (event, legendItem, legend) {
-            //       document.body.style.cursor = 'default';
-            //   },
-              
-            //   position: 'bottom',
-            //   labels: {
-            //     usePointStyle: true,
-            //     color: '#000',
-            //     font:{
-            //       size:15
-            //     } 
-            //   }
-            // },
+           
             title: {
               display: true,
               text: 'Consumption in a month',

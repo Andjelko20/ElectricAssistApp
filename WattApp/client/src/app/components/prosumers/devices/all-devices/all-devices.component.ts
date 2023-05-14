@@ -22,7 +22,7 @@ export class AllDevicesComponent implements OnInit {
   categories=[
     {id:Categories.ELECTRICITY_PRODUCER_ID,name:Categories.ELECTRICITY_PRODUCER_NAME},
     {id:Categories.ELECTRICITY_CONSUMER_ID,name:Categories.ELECTRICITY_CONSUMER_NAME},
-    {id:Categories.ELECTRICITY_STOCK_ID,name:Categories.ELECTRICITY_STOCK_NAME}
+    
   ]
   constructor(private router:Router,private deviceService:DevicesService,
     private route:ActivatedRoute) { }
@@ -53,6 +53,7 @@ export class AllDevicesComponent implements OnInit {
      );
     
     }
+    
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
 		this.deviceService.getAllDevices(pageNumber,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
@@ -80,11 +81,7 @@ export class AllDevicesComponent implements OnInit {
 	}
     onSelectedCategory(event:any)
     {
-      
-      
       this.deviceCategoryId = event.target.value;
-      
-      
       this.deviceService.getAllDevices(1,12,this.deviceCategoryId).subscribe(devices => {
         this.devices=devices.data.map((u:any)=>({
          id:u.id,

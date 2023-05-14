@@ -46,7 +46,6 @@ export class BarYearChartComponent {
 
   loader:boolean=false;
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   settlements:Settlement[] = [];
@@ -164,8 +163,8 @@ export class BarYearChartComponent {
             {
               label: 'Production',
               data: energyUsageResults2,
-              borderColor: 'rgb(255, 165, 0)',
-              backgroundColor: 'rgb(255, 165, 0)'
+              borderColor: '#1d91c0',
+              backgroundColor: '#1d91c0'
             },
            
             
@@ -185,11 +184,10 @@ export class BarYearChartComponent {
                 }
               },
               position: "left",
-              suggestedMin: 5,
-              suggestedMax: 140,
+       
               title:{
                 display:true,
-                text: "kWh",
+                text: " Production (kWh)",
                 color: '#000',
                 font:{
                   size:15
@@ -215,10 +213,6 @@ export class BarYearChartComponent {
                 }
               }
             }
-            
-              
-            
-            
             
           },
           
@@ -260,8 +254,8 @@ export class BarYearChartComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
+              borderColor: '#7fcdbb',
+              backgroundColor: '#7fcdbb',
               
             },
            
@@ -283,11 +277,11 @@ export class BarYearChartComponent {
                 }
               },
               position: "left",
-              suggestedMin: 5,
-              suggestedMax: 140,
+              
+              
               title:{
                 display:true,
-                text: "kWh",
+                text: "Consumption (kWh)",
                 color: '#000',
                 font:{
                   size:15

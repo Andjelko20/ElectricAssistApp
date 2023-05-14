@@ -11,9 +11,9 @@
 }
 .card-group {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-wrap: wrap;
-  text-align: left;
+  text-align: center;
 }
 .toggle-container {
 
@@ -84,11 +84,11 @@
     -ms-flex-flow: row wrap;
     flex-flow: row wrap;
     height: auto;
-    max-width: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     margin-bottom: 10px;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 .gap-10 > * {
     padding: 10px !important;
@@ -103,15 +103,15 @@
 .bgc-white, .bgcH-white:hover {
     background-color: #ffffff !important;
     border-radius: 10px;
-    box-shadow: 1px 2px grey;
     margin-bottom: 7px;
 }
 .bd {
-    border: 1px solid rgba(0, 0, 0, 0.0625) !important;
+    border: 1px solid #D2D2D2;
 }
 .p-20 {
     padding: 5px !important;
     margin-right: 10px;
+    width: 100%;
 }
 .peer {
     display: block;
@@ -125,8 +125,8 @@
     margin-left: 10px;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 1px 2px grey;
-    width: 70%;
+    border: 1px solid #D2D2D2;
+    width: 100%;
     margin-bottom: 10px;
 }
 .history-charts-body {
@@ -199,20 +199,21 @@ button.active {
   margin-right: 10px;
   background-color: white;
   border-radius: 10px;
-  width: 15%;
-  box-shadow: 1px 2px grey;
+  width: 20%;
+  border: 1px solid #D2D2D2;
   margin-bottom: 10px;
 }
 .tile_stats_count {
 
   width: 100%;
-  margin-top: 12px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   float: none;
   display: inline-block;
   text-align: center;
 }
 .count_top {
-  font-size: 12px;
+  font-size: 15px;
   text-transform: uppercase;
   color: #7B7B7B;
 }
@@ -242,7 +243,7 @@ button.active {
   background-color: white;
   border-radius: 10px;
   width:28%;
-  box-shadow: 1px 2px grey;
+  border: 1px solid #D2D2D2;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -252,7 +253,6 @@ button.active {
 #titlePie
 {
   font-size: 25px;
-  margin-bottom: 30px;
   
 }
 #chart{
@@ -262,32 +262,32 @@ button.active {
 .green-square {
   display: inline-block;
   background-color: rgb(111, 180, 111);
-  width: 10px; /* Set the width to your desired size */
-  height: 10px; /* Set the height to the same value as the width to create a square shape */
+  width: 20px; /* Set the width to your desired size */
+  height: 20px; /* Set the height to the same value as the width to create a square shape */
   margin-left: 10px;
 }
 .blue-square {
   display: inline-block;
   background-color: rgb(120, 120, 238);
-  width: 10px; /* Set the width to your desired size */
-  height: 10px; /* Set the height to the same value as the width to create a square shape */
+  width: 20px; /* Set the width to your desired size */
+  height: 20px; /* Set the height to the same value as the width to create a square shape */
   margin-left: 10px;
 }
 .red-square {
   display: inline-block;
   background-color: rgb(247, 117, 117);
-  width: 10px; /* Set the width to your desired size */
-  height: 10px; /* Set the height to the same value as the width to create a square shape */
+  width: 20px; /* Set the width to your desired size */
+  height: 20px; /* Set the height to the same value as the width to create a square shape */
   margin-left: 10px;
   
 }  
 .weather {
-  width: 24%;
+  width: 44%;
   margin-right: 5px;
   background-color: white;
   border-radius: 10px;
   margin-bottom: 7px;
-  box-shadow: 1px 2px grey;
+  border: 1px solid #D2D2D2;
   margin-bottom: 10px;
   align-items: center;
   justify-content: center;
@@ -299,6 +299,7 @@ button.active {
   right: auto;
   margin: 0 15px;
   text-align: center;
+  
 }
 @media only screen and (min-width: 768px) and (max-width: 1440px) {
     .wrapper{
@@ -362,7 +363,7 @@ button.active {
     .bgc-white, .bgcH-white:hover {
         background-color: #ffffff !important;
         border-radius: 10px;
-        box-shadow: 1px 2px grey;
+        border: 1px solid #D2D2D2;
         margin-bottom: 7px;
     }
     .bd {
@@ -383,7 +384,7 @@ button.active {
         background-color: white;
         box-shadow: 1px 2px grey;
         height: 100%;
-        width: 65%;
+        width: 100%;
         
     }
     .history-charts-body {
@@ -404,7 +405,7 @@ button.active {
         background-color: white;
         border-radius: 10px;
         width: 40%;
-        box-shadow: 1px 2px grey;
+        border: 1px solid #D2D2D2;
         margin-bottom: 7px;
       }
       .tile_stats_count {
@@ -449,8 +450,8 @@ button.active {
       #pie{
         background-color: white;
         border-radius:10px;
-        width: 33.9%;
-        box-shadow: 1px 2px grey;
+        width: 50%;
+        border: 1px solid #D2D2D2;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -484,11 +485,10 @@ button.active {
     }
             
       .weather {
-        width: 40%;
-        margin-left: 20px;
+        width: 80%;
         margin-right: 10px;
         background-color: white;
-        box-shadow: 1px 2px grey;
+        border: 1px solid #D2D2D2;
         align-items: center;
         justify-content: center;
       }
@@ -574,7 +574,7 @@ button.active {
     background-color: white;
     border-radius:10px;
     width: 50%;
-    box-shadow: 1px 2px grey;
+    border: 1px solid #D2D2D2;
     display: flex;
     flex-direction: column;
     justify-content: center;

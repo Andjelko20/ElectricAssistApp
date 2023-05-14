@@ -15,10 +15,7 @@ export class DevicesService {
   {
     if(categoryId!=0)
     {
-      console.log("da");
-      
      return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12&categoryId='+categoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
- 
     }
     else
     { return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});

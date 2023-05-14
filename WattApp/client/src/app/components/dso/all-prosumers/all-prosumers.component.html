@@ -1,10 +1,10 @@
+<div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
 <div class="table-responsive">
     <table *ngIf="data?.length!=0" class="table">
         <thead>
             <tr>
                 <th>#</th>
                 <th scope="col">Name</th>
-                <!-- <th>email</th> -->
                 <th scope="col">Settlement</th>
                 <th scope="col">City</th>
                 <th scope="col">Country</th>
@@ -15,7 +15,7 @@
         <tbody>
             <tr *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}let i = index ">
                 <td>{{ (currentPage - 1) * itemsPerPage + i +1 }}</td>
-                <td><a [routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]'>{{prosumer.userDetailsDTO.name}}</a></td>
+                <td><a id="names"[routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]'>{{prosumer.userDetailsDTO.name}}</a></td>
                 <td>{{prosumer.userDetailsDTO.settlement}}</td>
                 <td>{{prosumer.userDetailsDTO.city}}</td>
                 <td>{{prosumer.userDetailsDTO.country}}</td>

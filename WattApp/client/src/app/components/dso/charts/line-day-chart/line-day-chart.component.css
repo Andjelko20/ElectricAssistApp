@@ -12,7 +12,18 @@
     min-height: 30vh;
     width: 100%;
 }
-#linechart{
-    display: flex;
+
+#linechart {
     width: 100%;
+}
+
+@media(min-width:1200px) {
+    .chart-container {
+        min-height: 50vh !important;
+        width: 100%;
+    }
+    #linechart {
+        display: inline-flex;
+        width: 100%;
+    }
 }

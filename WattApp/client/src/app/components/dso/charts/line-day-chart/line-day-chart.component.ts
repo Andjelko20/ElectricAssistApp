@@ -16,9 +16,8 @@ export class LineDayChartComponent {
 
   loader:boolean=false;
   selectedOption: number;
- 
+  maxDate = new Date();
   currentDate = new Date();
-  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-1);
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
@@ -31,7 +30,7 @@ export class LineDayChartComponent {
     this.ngOnInit()
   }
 
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -59,18 +58,7 @@ export class LineDayChartComponent {
           }
             
         });
-        if (this.selectedOption == 0 && this.selectedDate == undefined) {
-          forkJoin([
-            this.deviceService.dayByHour(number, 2),
-            this.deviceService.dayByHour(number, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.LineChartProduction();
-            this.LineChartConsumption();
-          });
-        } 
-        else if(this.selectedOption == 0 && this.selectedDate != undefined){
+        if(this.selectedOption == 0 && this.selectedDate != undefined){
           const day = this.selectedDate.getDate();
           let dayString = String(day).padStart(2, '0');
           const month = this.selectedDate.getMonth()+1;
@@ -90,8 +78,8 @@ export class LineDayChartComponent {
               string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
             }
             else if( month == 6){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
+              string1 = year+'-'+month+'-'+day+' '+'00:00:00'
+              string2 = year+'-'+(month+1)+'-'+1+' '+'00:00:00'
             }
             else{
               string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
@@ -111,7 +99,9 @@ export class LineDayChartComponent {
               string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
             }
           }
+          
           forkJoin([
+            
             this.deviceService.dayByHourCityFilter(string1,string2,number, 2),
             this.deviceService.dayByHourCityFilter(string1,string2,number, 1)
           ]).subscribe(([list1, list2]) => {
@@ -168,17 +158,6 @@ export class LineDayChartComponent {
             this.LineChartConsumption();
           });
         }
-        else {
-          forkJoin([
-            this.deviceService.dayByHourSettlement(this.selectedOption, 2),
-            this.deviceService.dayByHourSettlement(this.selectedOption, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.LineChartProduction();
-            this.LineChartConsumption();
-          });
-        }
       });
     });
   }
@@ -191,11 +170,15 @@ export class LineDayChartComponent {
     }
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
-
+    let max=0;
+    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    {
+      max=1;
+    }
     const Linechart =new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: ["0","4","8","12","16","20"," "],
+        labels: hours,
         
         datasets: [
           {
@@ -212,9 +195,7 @@ export class LineDayChartComponent {
             pointHoverRadius: 6,
             fill:true
           }
-          
         ]
-        
       }
       ,
       options: {
@@ -227,11 +208,11 @@ export class LineDayChartComponent {
               font:{
                 size:15
               }
-            },
+            },suggestedMax:max,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Production (kWh)",
               color:'#000',
               font:{
                 size:15
@@ -285,11 +266,15 @@ export class LineDayChartComponent {
     }
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
-
+    let max=0;
+    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    {
+      max=1;
+    }
     const Linechart =new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: ["0","4","8","12","16","20"," "],
+        labels: hours,
         
         datasets: [
           {
@@ -318,7 +303,6 @@ export class LineDayChartComponent {
           fill: true
           },
         ]
-        
       }
       ,
       options: {
@@ -332,10 +316,11 @@ export class LineDayChartComponent {
                 size:15
               }
             },
+            suggestedMax:max,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Consumption (kWh)",
               color:'#000',
               font:{
                 size:15
@@ -368,7 +353,6 @@ export class LineDayChartComponent {
             display: false
           },
           title: {
-            
             display: true,
             text: 'Consumption in one day',
             color: '#000',

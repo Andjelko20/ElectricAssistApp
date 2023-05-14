@@ -45,7 +45,6 @@ export const MY_FORMATS = {
 export class ProsumerMonthGraphComponent {
 
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
@@ -58,7 +57,7 @@ export class ProsumerMonthGraphComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -73,15 +72,6 @@ export class ProsumerMonthGraphComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
-    if(this.selectedDate == undefined){
-      forkJoin({
-        list1: this.deviceService.monthByDayUser(userId, 2),
-      }).subscribe(({ list1 }) => {
-        this.list1 = list1;
-        this.BarPlotConsumption();
-      });
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -97,7 +87,6 @@ export class ProsumerMonthGraphComponent {
             this.list1 = list1;
             this.BarPlotConsumption();
           });
-    }
   }
 
   BarPlotConsumption(){
@@ -121,8 +110,8 @@ export class ProsumerMonthGraphComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
+              borderColor: '#7fcdbb',
+              backgroundColor: '#7fcdbb',
               
             },
             
@@ -145,7 +134,7 @@ export class ProsumerMonthGraphComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Consumption (kWh)",
                 color: '#000',
                 font:{
                   size:13

@@ -42,8 +42,7 @@ export const MY_FORMATS = {
 })
 export class DeviceYearComponent {
 
-  currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
+  maxYear = new Date();
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
@@ -133,8 +132,8 @@ export class DeviceYearComponent {
               {
                 label: 'Production',
                 data: energyUsageResults2,
-                borderColor: 'rgb(255, 165, 0)',
-                backgroundColor: 'rgb(255, 165, 0)'
+                borderColor: '#1d91c0',
+                backgroundColor: '#1d91c0',
               },
              
               
@@ -154,11 +153,9 @@ export class DeviceYearComponent {
                   }
                 },
                 position: "left",
-                suggestedMin: 5,
-                suggestedMax: 140,
                 title:{
                   display:true,
-                  text: "kWh",
+                  text: "Production (kWh)",
                   color: '#000',
                   font:{
                     size:13
@@ -193,26 +190,7 @@ export class DeviceYearComponent {
               legend:{
                 display:false
               },
-              // legend: {
-              //   onHover: function (event, legendItem, legend) {
-              //     document.body.style.cursor = 'pointer';
-              //   },
-              //   onLeave: function (event, legendItem, legend) {
-              //       document.body.style.cursor = 'default';
-              //   },
-                
-              //   position: 'bottom',
-              //   labels: {
-              //     usePointStyle: true,
-              //     color: '#000',
-              //     font:{
-              //       size:20
-              //     } 
-              //     // ,
-              //     // boxHeight:100,
-              //     // boxWidth:100
-              //   }
-              // },
+            
               title: {
                 display: true,
                 text: 'Production in a year',
@@ -268,11 +246,9 @@ export class DeviceYearComponent {
                   }
                 },
                 position: "left",
-                suggestedMin: 5,
-                suggestedMax: 140,
                 title:{
                   display:true,
-                  text: "kWh",
+                  text: "Consumption (kWh)",
                   color: '#000',
                   font:{
                     size:13
@@ -308,26 +284,7 @@ export class DeviceYearComponent {
               legend:{
                 display: false
               },
-              // legend: {
-              //   onHover: function (event, legendItem, legend) {
-              //     document.body.style.cursor = 'pointer';
-              //   },
-              //   onLeave: function (event, legendItem, legend) {
-              //       document.body.style.cursor = 'default';
-              //   },
-                
-              //   position: 'bottom',
-              //   labels: {
-              //     usePointStyle: true,
-              //     color: '#000',
-              //     font:{
-              //       size:20
-              //     } 
-              //     // ,
-              //     // boxHeight:100,
-              //     // boxWidth:100
-              //   }
-              // },
+          
               title: {
                 display: true,
                 text: 'Consumption in a year',

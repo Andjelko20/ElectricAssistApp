@@ -1,12 +1,13 @@
 <div class="weatherCard" *ngIf="weatherNow">
     <div class="currentTemp">
-        <span class="temp">{{ weatherNow.main.temp | number: '1.0-0' }} {{ cels ? '°C' : '°F' }}</span>
+        <span class="temp">{{ weatherNow.main.temp | number: '1.0-0' }} °C</span>
         <span class="location">{{ location.name }}</span>
     </div>
     <div class="currentWeather">
+        
         <span class="conditions"><img src="assets/img/{{weatherNow.weather[0].icon}}.png" alt=""></span>
         <div class="info" >
-            Feels like {{ weatherNow.main.feels_like | number: '1.0-0' }} {{ cels ? '°C' : '°F' }} . {{ weatherNow.weather[0].main }}.
+            Feels like {{ weatherNow.main.feels_like | number: '1.0-0' }} °C  . {{ weatherNow.weather[0].main }}.
         </div>
     </div>
 </div>

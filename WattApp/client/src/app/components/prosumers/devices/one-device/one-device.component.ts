@@ -5,6 +5,7 @@ import { Durations, ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
 import { DatePipe } from '@angular/common';
 import { Duration } from 'moment';
+import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 @Component({
   selector: 'app-one-device',
   templateUrl: './one-device.component.html',
@@ -21,26 +22,54 @@ export class OneDeviceComponent implements OnInit{
   device!:ShowDevices;
   idDevice?:number;
   buttonOnoff:boolean=false;
-  duration!:Durations;
+  todayDevice!:number;
+  date = new Date();
+  formattedDate = this.datePipe.transform(this.date,'yyyy-MM-dd HH:mm:ss');
+  duration?:Durations={startTime:"",endTime:"",duration:"0"};
+  meter!: string;
   constructor(private router:Router,private deviceService:DevicesService,
-    private route:ActivatedRoute,private modalService: NgbModal, private datePipe: DatePipe ) {
+    private route:ActivatedRoute,private modalService: NgbModal, private datePipe: DatePipe,private history: HistoryPredictionService ) {
      
      }
 
     ngOnInit(): void {
+
       this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
       this.deviceService.getDevice( this.idDevice).subscribe(devices => {
-        this.device=devices})
+        this.device=devices});
 
+        this.history.getTodayConsumtionProductionDevice(this.idDevice).subscribe(result=>{
+          
+            this.todayDevice=result;
+            this.meter=" kWh"
+            if(this.todayDevice>999.99)
+            {
+              this.todayDevice=parseFloat((this.todayDevice*0.001).toFixed(2));
+              this.meter=" MWh";
+              if(this.todayDevice>999.99)
+              {
+                this.todayDevice=parseFloat((this.todayDevice*0.001).toFixed(2));
+                this.meter=" GWh";
+              }
+            }
+        })
         this.deviceService.durationDateTime(this.idDevice).subscribe(res=>{
           
-          
-          this.duration={
-           startTime: res.startTime,
-         endTime:res.endTime,
-          duration:res.duration,
-           }
-          
+          if(res.startTime=='/' )
+          {
+            this.duration={
+              startTime:"No date",
+              endTime:"No date",
+              duration:res.duration,
+             }
+          }
+          else{
+            this.duration={
+              startTime: res.startTime,
+              endTime:res.endTime,
+              duration:res.duration,
+             }
+          }
         })
         
       }
@@ -85,7 +114,16 @@ export class OneDeviceComponent implements OnInit{
       this.onClick=()=> {
         this.deviceService.turnOn(id,formattedDate).subscribe({
           next:()=>{
+            this.deviceService.durationDateTime(id).subscribe(res=>{
           
+          
+              this.duration={
+               startTime: res.startTime,
+             endTime:res.endTime,
+              duration:res.duration,
+               }
+              
+            })
           
               this.device.turnOn = true;
               this.buttonOnoff=true;
@@ -117,7 +155,16 @@ export class OneDeviceComponent implements OnInit{
         this.offClick=()=> {
           this.deviceService.turnOff(id,formattedDate).subscribe({
             next:()=>{
-            
+              this.deviceService.durationDateTime(id).subscribe(res=>{
+          
+          
+                this.duration={
+                 startTime: res.startTime,
+               endTime:res.endTime,
+                duration:res.duration,
+                 }
+                
+              })
                 this.device.turnOn = false;
                 this.buttonOnoff=true;
                 

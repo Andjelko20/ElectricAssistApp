@@ -5,7 +5,7 @@
       <div class="form-group">
         <mat-form-field appearance="fill">
           <mat-label>Month and Year</mat-label>
-          <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
+          <input matInput [matDatepicker]="dp" [formControl]="date" [max]="currentDate">
           <mat-hint>MM/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="dp" ></mat-datepicker-toggle>
           <mat-datepicker #dp

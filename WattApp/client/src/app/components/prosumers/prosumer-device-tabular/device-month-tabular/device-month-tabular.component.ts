@@ -1,9 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin, switchMap } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-import { MatDatepickerModule} from '@angular/material/datepicker';
 import { FormControl, FormGroup } from '@angular/forms';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -47,7 +45,6 @@ export class DeviceMonthTabularComponent {
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
@@ -61,7 +58,7 @@ export class DeviceMonthTabularComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -76,26 +73,6 @@ export class DeviceMonthTabularComponent {
   ngOnInit(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{
-    if(this.selectedDate == undefined){
-      
-        if(data.deviceCategory == "Electricity Consumer")
-        {
-          this.deviceService.monthbyDayDevice(deviceId).subscribe(consumption=>{
-            this.list1 = consumption;
-            this.consumptionGraph = true;
-
-          })
-          
-        }
-        else{
-          this.deviceService.monthbyDayDevice(deviceId).subscribe(production=>{
-            this.list2 = production;
-            this.productionGraph = true;
-          })
-        }
-      
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -103,7 +80,7 @@ export class DeviceMonthTabularComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayDeviceFilter(string1,string2,deviceId, 2),
@@ -119,38 +96,35 @@ export class DeviceMonthTabularComponent {
 
             }
           });
-    }
   })
   }
   downloadCSV(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
-    const date = new Date();
-    const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
     this.authService.getDevice(deviceId).subscribe(data=>{
       if(data.deviceCategory == "Electricity Consumer"){
           const options = {
           fieldSeparator: ',',
-          filename: 'consumption-week',
+          filename: 'consumption-month',
           quoteStrings: '"',
           useBom : true,
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Exported Date '+formattedDate]
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list1);
       }
-      else{
+      else if(data.deviceCategory == "Electricity Producer"){
           const options = {
           fieldSeparator: ',',
-          filename: 'production-week',
+          filename: 'production-month',
           quoteStrings: '"',
           useBom : true,
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Month', 'Year', 'Production [kWh]', 'Exported Date '+formattedDate]
+          headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list2);

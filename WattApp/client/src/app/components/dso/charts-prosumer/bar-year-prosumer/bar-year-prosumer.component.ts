@@ -42,10 +42,8 @@ export const MY_FORMATS = {
 export class BarYearProsumerComponent {
 
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
-  itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -113,8 +111,8 @@ export class BarYearProsumerComponent {
               {
                 label: 'Production',
                 data: energyUsageResults2,
-                borderColor: 'rgb(255, 165, 0)',
-                backgroundColor: 'rgb(255, 165, 0)'
+                borderColor: '#1d91c0',
+                backgroundColor: '#1d91c0'
               },
              
               
@@ -136,7 +134,7 @@ export class BarYearProsumerComponent {
                 suggestedMax: 140,
                 title:{
                   display:true,
-                  text: "kWh",
+                  text: "Production (kWh)",
                   color: '#000',
                   font:{
                     size:15
@@ -226,8 +224,8 @@ export class BarYearProsumerComponent {
               {
                 label: 'Consumption',
                 data: energyUsageResults1,
-                borderColor: 'rgb(128, 0, 128)',
-                backgroundColor: 'rgb(128, 0, 128)',
+                borderColor:  '#7fcdbb',
+                backgroundColor:  '#7fcdbb',
                 
               },
              
@@ -250,7 +248,7 @@ export class BarYearProsumerComponent {
                 suggestedMax: 140,
                 title:{
                   display:true,
-                  text: "kWh",
+                  text: "Consumption (kWh)",
                   color: '#000',
                   font:{
                     size:15

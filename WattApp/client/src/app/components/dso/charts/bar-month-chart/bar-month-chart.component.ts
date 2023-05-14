@@ -51,12 +51,9 @@ export class BarMonthChartComponent {
   
   loader:boolean=false;
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   settlements:Settlement[] = [];
-  itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
-  ,'20','21','22','23','24','25','26','27','28','29','30'];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
       this.date.valueChanges.subscribe((selectedDate : any) => {
         const arr1: any[] = [];
@@ -67,7 +64,7 @@ export class BarMonthChartComponent {
   }
 
   selectedOption: number = 0;
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   onOptionSelected() {
     this.ngOnInit();
   }
@@ -104,18 +101,7 @@ export class BarMonthChartComponent {
           }
           
         })
-        if(this.selectedOption == 0 && this.selectedDate == undefined){
-          forkJoin([
-            this.deviceService.monthByDay(number, 2),
-            this.deviceService.monthByDay(number, 1)
-          ]).subscribe(([data1, data2]) => {
-            this.list1 = data1;
-            this.list2 = data2;
-            this.BarPlotConsumption();
-            this.BarPlotProduction();
-          });
-        }
-        else if(this.selectedOption == 0 && this.selectedDate != undefined){
+        if(this.selectedOption == 0 && this.selectedDate != undefined){
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -123,7 +109,7 @@ export class BarMonthChartComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayCityFilter(string1,string2,number, 2),
@@ -143,7 +129,7 @@ export class BarMonthChartComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
 
           forkJoin([
@@ -156,19 +142,6 @@ export class BarMonthChartComponent {
             this.BarPlotProduction();
           });
         }
-        else{
-          forkJoin([
-            this.deviceService.monthByDaySettlement(this.selectedOption, 2),
-            this.deviceService.monthByDaySettlement(this.selectedOption, 1)
-          ]).subscribe(([data1, data2]) => {
-            this.list1 = data1;
-            this.list2 = data2;
-            this.BarPlotConsumption();
-            this.BarPlotProduction();
-
-          });
-        }
-        
       })
     })
   }
@@ -194,8 +167,8 @@ export class BarMonthChartComponent {
             {
               label: 'Production',
               data: energyUsageResults2,
-              borderColor: 'rgb(255, 165, 0)',
-              backgroundColor: 'rgb(255, 165, 0)'
+              borderColor: '#1d91c0',
+              backgroundColor: '#1d91c0'
             },
            
             
@@ -218,7 +191,7 @@ export class BarMonthChartComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Production (kWh)",
                 color: '#000',
                 font:{
                   size:15
@@ -281,8 +254,8 @@ export class BarMonthChartComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
+              borderColor:  '#7fcdbb',
+              backgroundColor:  '#7fcdbb',
               
             },
             
@@ -305,7 +278,7 @@ export class BarMonthChartComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Consumption (kWh)",
                 color: '#000',
                 font:{
                   size:15

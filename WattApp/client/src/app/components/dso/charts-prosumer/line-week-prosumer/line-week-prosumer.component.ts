@@ -52,16 +52,19 @@ export class LineWeekProsumerComponent {
 
   currentDate = new Date();
   maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
+  firstdate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
       this.send = value.end;
-      if(this.send > this.maxDate){
-        this.send = null;
+      if(this.send > this.currentDate){
+        this.sdate = null;
       }
-      this.ngOnInit();
+      else{
+        this.ngOnInit()
+      }
     });
   }
   campaignOne: FormGroup = new FormGroup({
@@ -123,7 +126,11 @@ export class LineWeekProsumerComponent {
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const month = this.list2.map(day => day.day);
 
-
+    let max=0;
+    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    {
+      max=1;
+    }
     const Linechart = new Chart("linechart1", {
       type: 'line',
       data : {
@@ -159,11 +166,11 @@ export class LineWeekProsumerComponent {
               font:{
                 size:15
               }
-            },
+            },suggestedMax:max,
             position: "left",
             title:{
               display:true,
-              text: "kWh",
+              text: "Production (kWh)",
               color:'#000',
               font:{
                 size:15
@@ -234,6 +241,11 @@ export class LineWeekProsumerComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const month = this.list1.map(day => day.day);
+    let max=0;
+    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    {
+      max=1;
+    }
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
@@ -279,11 +291,11 @@ export class LineWeekProsumerComponent {
               font:{
                 size:15
               }
-            },
+            },suggestedMax:max,
             position: "left",
             title:{
               display:true,
-              text: "kWh",
+              text: "Consumption (kWh)",
               color:'#000',
               font:{
                 size:15

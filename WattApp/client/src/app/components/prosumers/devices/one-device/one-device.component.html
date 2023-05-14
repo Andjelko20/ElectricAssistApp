@@ -1,13 +1,13 @@
 <div class="glavni" *ngIf="device">
     <div class="updatedelete">
-        <span id="typedev">{{device.deviceType}}</span>
+
         <button id="del" class="btn btn-primary" (click)="delete(device.id)">Delete</button>
         <a id="del" class="btn btn-primary" [routerLink]='["/device-update/"+idDevice]' role="button">Update</a>
     </div>
     <div class="deviceimg">
         <div class="infoimg">
 
-            <h2>{{device.name}}</h2>
+            <h2>Turn On/Off</h2>
 
 
             <label class="switch" *ngIf="device.turnOn===false" (click)="turnOn(device.id)">
@@ -22,40 +22,64 @@
         </div>
         <img id="imgdevice" src="assets/img/{{device.deviceType}}.png" alt="">
 
-        <div class="info" *ngIf="device.turnOn===true ">
+        <div class="info" *ngIf="device.turnOn===true && duration">
             <div class="session">
-                <p class="session-label">Session Started</p>
+                <p class="session-label">Device category:</p>
+                <p class="session-duration">{{device.deviceCategory}}</p>
+            </div>
+            <div class="session">
+                <p class="session-label">Device name: </p>
+                <p class="session-duration">{{device.name}}</p>
+            </div>
+            <div class="session">
+                <p class="session-label">Session Started:</p>
                 <p class="session-duration">{{duration.startTime}}</p>
             </div>
             <div class="session">
-                <p class="session-label">Duration </p>
+                <p class="session-label">Session Ended:</p>
+                <p class="session-duration">No date</p>
+            </div>
+            <div class="session">
+                <p class="session-label">Duration:</p>
                 <p class="session-duration">{{duration.duration}}</p>
             </div>
             <div class="session" *ngIf="device.deviceCategory=='Electricity Producer'">
-                <p class="session-label">Energy producing</p>
-                <p class="session-duration">25kWh</p>
+                <p class="session-label">Energy producing today:</p>
+                <p class="session-duration">{{todayDevice}} {{meter}}</p>
             </div>
             <div class="session" *ngIf="device.deviceCategory=='Electricity Consumer'">
-                <p class="session-label">Energy consuming</p>
-                <p class="session-duration">25kWh</p>
+                <p class="session-label">Energy consuming today:</p>
+                <p class="session-duration">{{todayDevice}} {{meter}}</p>
             </div>
         </div>
-        <div class="info" *ngIf="device.turnOn===false ">
+        <div class="info" *ngIf="device.turnOn===false && duration">
             <div class="session">
-                <p class="session-label">Session Ended</p>
+                <p class="session-label">Device category:</p>
+                <p class="session-duration">{{device.deviceCategory}}</p>
+            </div>
+            <div class="session">
+                <p class="session-label">Device name:</p>
+                <p class="session-duration">{{device.name}}</p>
+            </div>
+            <div class="session">
+                <p class="session-label">Session Started:</p>
+                <p class="session-duration">{{duration.startTime}}</p>
+            </div>
+            <div class="session">
+                <p class="session-label">Session Ended:</p>
                 <p class="session-duration">{{duration.endTime}}</p>
             </div>
             <div class="session">
-                <p class="session-label">Duration </p>
+                <p class="session-label">Duration:</p>
                 <p class="session-duration">{{duration.duration}}</p>
             </div>
             <div class="session" *ngIf="device.deviceCategory=='Electricity Producer'">
-                <p class="session-label">Energy producing</p>
-                <p class="session-duration">25kWh</p>
+                <p class="session-label">Energy producing today:</p>
+                <p class="session-duration">{{todayDevice}} {{meter}}</p>
             </div>
             <div class="session" *ngIf="device.deviceCategory=='Electricity Consumer'">
-                <p class="session-label">Energy consuming</p>
-                <p class="session-duration">25kWh</p>
+                <p class="session-label">Energy consuming today:</p>
+                <p class="session-duration">{{todayDevice}} {{meter}}</p>
             </div>
         </div>
     </div>

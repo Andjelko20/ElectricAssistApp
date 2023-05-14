@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" name="password" class="form-control" [(ngModel)]="password" id="password" (keydown)="toLogin($event)" />
-                    <input class="checkbox" type="checkbox" name="forgotpass" id="remember"><label for="remember">Remember me</label>
+                   <label for="remember"> <input class="checkbox" type="checkbox" name="forgotpass" id="remember"> Remember me</label>
                 </div>
 
                 <div class="btn-container">
@@ -23,8 +23,8 @@
                     <br>
                     <a class="linka" [routerLink]='["/forgot-password"]'>Forgot password?</a>
                 </div>
-                <div class="error-message">
-                    {{errorMsg}}
+                <div class="error-message" *ngIf="show">
+                    <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i> {{errorMsg}}
                 </div>
             </div>
         </div>

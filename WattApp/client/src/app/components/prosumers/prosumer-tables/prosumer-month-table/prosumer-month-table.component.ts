@@ -43,7 +43,6 @@ export const MY_FORMATS = {
 export class ProsumerMonthTableComponent {
 
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
@@ -57,7 +56,7 @@ export class ProsumerMonthTableComponent {
     });
   }
 
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -71,17 +70,6 @@ export class ProsumerMonthTableComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
-  
-    if(this.selectedDate == undefined){
-      forkJoin({
-        list1: this.deviceService.monthByDayUser(userId, 2),
-        list2: this.deviceService.monthByDayUser(userId, 1)
-      }).subscribe(({ list1, list2 }) => {
-        this.list1 = list1;
-        this.list2 = list2;
-      });
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -89,7 +77,7 @@ export class ProsumerMonthTableComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayUserFilter(string1,string2,userId, 2),
@@ -98,7 +86,6 @@ export class ProsumerMonthTableComponent {
             this.list1 = list1;
             this.list2 = list2;
           });
-    }
   }
   downloadCSV(): void {
     this.mergedList = [];
@@ -120,7 +107,7 @@ export class ProsumerMonthTableComponent {
   const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-month.csv',
+    filename: 'consumption/production-month',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',

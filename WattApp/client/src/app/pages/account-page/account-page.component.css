@@ -44,6 +44,14 @@ ul{
   margin-right: 10px;
   width: 200px;
 }
+#subb{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  text-align: right;
+  align-items: right;
+  
+}
 @media only screen and (min-width: 768px) and (max-width: 1280px) {
   .container{
     margin-top: 80px;

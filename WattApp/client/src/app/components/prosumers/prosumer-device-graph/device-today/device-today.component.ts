@@ -15,7 +15,7 @@ Chart.register(...registerables)
 export class DeviceTodayComponent {
 
   currentDate = new Date();
-  maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-1);
+  maxDate = new Date();
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;  
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService,private authService:AuthService) {
@@ -23,7 +23,7 @@ export class DeviceTodayComponent {
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -33,25 +33,6 @@ export class DeviceTodayComponent {
   ngOnInit(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{
-      if(this.selectedDate == undefined){
-        if(data.deviceCategory == "Electricity Consumer")
-        {
-          this.consumptionGraph = true;
-          this.deviceService.dayByHourDevice(deviceId).subscribe(consumption=>{
-            this.list1 = consumption;
-            this.LineChartConsumption();
-          })
-          
-        }
-        else{
-          this.productionGraph = true;
-          this.deviceService.dayByHourDevice(deviceId).subscribe(production=>{
-            this.list2 = production;
-            this.LineChartProduction();
-          })
-        }
-      }
-      else if(this.selectedDate !== undefined){
         const day = this.selectedDate.getDate();
         let dayString = String(day).padStart(2, '0');
         const month = this.selectedDate.getMonth()+1;
@@ -103,7 +84,6 @@ export class DeviceTodayComponent {
             this.LineChartProduction();
           }
         });
-      }
     })
     
     
@@ -117,7 +97,11 @@ export class DeviceTodayComponent {
     }
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
-
+    let max=0;
+    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    {
+      max=1;
+    }
     const Linechart =new Chart("linechart11", {
       type: 'line',
       data : {
@@ -154,10 +138,12 @@ export class DeviceTodayComponent {
                 size:13
               }
             },
+            
+            suggestedMax:max ,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Prediction (kWh)",
               color:'#000',
               font:{
                 size:13
@@ -213,7 +199,12 @@ export class DeviceTodayComponent {
     }
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
-
+    let max=0;
+    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    {
+      max=1;
+      
+    }
     const Linechart =new Chart("linechart22", {
       type: 'line',
       data : {
@@ -260,10 +251,12 @@ export class DeviceTodayComponent {
                 size:13
               }
             },
+            
+            suggestedMax:max ,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Consumption (kWh)",
               color:'#000',
               font:{
                 size:13

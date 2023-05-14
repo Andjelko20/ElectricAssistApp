@@ -16,9 +16,9 @@ export class HistoryPredictionService {
     return this.http.get<any>(environment.serverUrl+'/api/Prosumer/'+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
 
   }
-  getTotalConsumptionProductionProsumer(name:string,id:number):Observable<number>
+  getTotalConsumptionProductionProsumer(id1:number,id:number):Observable<number>
   {
-    return this.http.get<number>(environment.serverUrl+'/api/Prosumer/'+name+'/'+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.get<number>(environment.serverUrl+'/api/Prosumer/user/'+id1+'/'+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
 
   }
   getCurrentConsumptionProductionCity(deviceCategoryId : number,cityId : number):Observable<number>
@@ -183,5 +183,56 @@ export class HistoryPredictionService {
     return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/ThatYear/"+date+"?deviceCategoryId="+deviceCategoryId+"&settlementId="+settlementId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
 
   }
+  getTodayConsumtionProductionDevice(id:number): Observable<number>
+  {
+    return this.http.get<number>(environment.serverUrl+"/api/History/Today?deviceId="+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationDayByHourCity(pageNumber:number,cityId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/DSO/Pagination?pageNumber="+pageNumber+"&itemsPerPage=7&deviceCategoryId="+deviceCategoryId+"&todayByHourCityId="+cityId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationDayByHourSettlement(pageNumber:number,settlementId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/DSO/Pagination?pageNumber="+pageNumber+"&itemsPerPage=7&deviceCategoryId="+deviceCategoryId+"&todayByHourSettlementId="+settlementId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationDayByHourUser(pageNumber:number,userId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/History/Pagination/"+pageNumber+"/7?deviceCategoryId="+deviceCategoryId+"&PastDayByHourUserId="+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationMonthByDayUser(pageNumber:number,userId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/Pagination/"+pageNumber+"/7?deviceCategoryId="+deviceCategoryId+"&PastMonthByDayUserId="+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationMonthByDayDevice(pageNumber:number,deviceId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/Pagination/"+pageNumber+"/7?deviceCategoryId="+deviceCategoryId+"&PastMonthByDayDeviceId="+deviceId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationMonthByDayCity(pageNumber:number,cityId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/Pagination/"+pageNumber+"/7?deviceCategoryId="+deviceCategoryId+"&PastMonthByDayCityId="+cityId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationMonthByDaySettlement(pageNumber:number,settlementId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/Pagination/"+pageNumber+"/7?deviceCategoryId="+deviceCategoryId+"&PastMonthByDaySettlementId="+settlementId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  paginationDayByHourCityFilter(fromDate:string,toDate:string,pageNumber:number,cityId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/HistoryFromTo/Pagination?pageNumber="+pageNumber+"&itemsPerPage=7&fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byHourCityId="+cityId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationDayByHourSettlementFilter(fromDate:string,toDate:string,pageNumber:number,settlementId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/HistoryFromTo/Pagination?pageNumber="+pageNumber+"&itemsPerPage=7&fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byHourSettlementId="+settlementId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationDayByHourUserFilter(fromDate:string,toDate:string,pageNumber:number,userId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/HistoryFromTo/Pagination?pageNumber="+pageNumber+"&itemsPerPage=7&fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byHourUserId="+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationDayByHourDeviceFilter(fromDate:string,toDate:string,pageNumber:number,deviceId:number,deviceCategoryId:number): Observable<DayByHour[]>{
+    return this.http.get<DayByHour[]>(environment.serverUrl+"/api/HistoryFromTo/Pagination?pageNumber="+pageNumber+"&itemsPerPage=7&fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byHourDeviceId="+deviceId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationByDayCityFilter(fromDate:string,toDate:string,pageNumber:number,cityId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/HistoryFromTo/Pagination?pageNumber="+pageNumber+"&itemsPerPage=7&fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byDayCityId="+cityId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationByDaySettlementFilter(fromDate:string,toDate:string,pageNumber:number,settlementId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/HistoryFromTo/Pagination?pageNumber="+pageNumber+"&itemsPerPage=7&fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byDaySettlementId="+settlementId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationByDayUserFilter(fromDate:string,toDate:string,pageNumber:number,userId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/HistoryFromTo/Pagination?pageNumber="+pageNumber+"&itemsPerPage=7&fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byDayUserId="+userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+  paginationByDayDeviceFilter(fromDate:string,toDate:string,pageNumber:number,deviceId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/HistoryFromTo/Pagination?pageNumber="+pageNumber+"&itemsPerPage=7&fromDate="+fromDate+"&toDate="+toDate+"&deviceCategoryId="+deviceCategoryId+"&byDayDeviceId="+deviceId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
   
+
 }

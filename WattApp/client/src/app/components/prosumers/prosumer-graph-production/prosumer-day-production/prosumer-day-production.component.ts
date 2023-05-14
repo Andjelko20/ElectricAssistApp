@@ -14,13 +14,14 @@ Chart.register(...registerables)
 export class ProsumerDayProductionComponent {
  
   maxDate = new Date();
+  currentDate = new Date();
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     
   }
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
 
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -30,16 +31,6 @@ export class ProsumerDayProductionComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
-  
-    if(this.selectedDate == undefined){
-      combineLatest([
-        this.deviceService.dayByHourUser(userId, 1)
-      ]).subscribe(([list2]) => {
-        this.list2 = list2;
-        this.LineChartProduction();
-      });
-    }
-    else if(this.selectedDate !== undefined){
       const day = this.selectedDate.getDate();
       let dayString = String(day).padStart(2, '0');
       const month = this.selectedDate.getMonth()+1;
@@ -85,9 +76,6 @@ export class ProsumerDayProductionComponent {
 
       });
     }
-    
-  
-  }
 
   LineChartProduction(){
 
@@ -98,7 +86,12 @@ export class ProsumerDayProductionComponent {
     }
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
-
+    let max=0;
+    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    {
+      max=1;
+      
+    }
     const Linechart =new Chart("linechart1", {
       type: 'line',
       data : {
@@ -134,11 +127,11 @@ export class ProsumerDayProductionComponent {
               font:{
                 size:13
               }
-            },
+            },suggestedMax:max ,
             position: "left",
             title:{
               display:true,
-              text: " kWh",
+              text: "Production (kWh)",
               color:'#000',
               font:{
                 size:13

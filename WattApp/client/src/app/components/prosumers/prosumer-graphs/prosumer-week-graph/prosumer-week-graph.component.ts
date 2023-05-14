@@ -52,16 +52,19 @@ export class ProsumerWeekGraphComponent {
 
   currentDate = new Date();
   maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
+  firstdate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
       this.send = value.end;
-      if(this.send > this.maxDate){
-        this.send = null;
+      if(this.send > this.currentDate){
+        this.sdate = null;
       }
-      this.ngOnInit();
+      else{
+        this.ngOnInit()
+      }
     });
   }
   campaignOne: FormGroup = new FormGroup({
@@ -117,6 +120,11 @@ export class ProsumerWeekGraphComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const month = this.list1.map(day => day.day);
+    let max=0;
+    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    {
+      max=1;
+    }
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
@@ -164,10 +172,11 @@ export class ProsumerWeekGraphComponent {
                 size:13
               }
             },
+            suggestedMax:max,
             position: "left",
             title:{
               display:true,
-              text: "kWh",
+              text: "Consumption (kWh)",
               color:'#000',
               font:{
                 size:13
@@ -200,25 +209,6 @@ export class ProsumerWeekGraphComponent {
           legend:{
             display:false
           },
-          // legend: {
-          //   position: 'bottom',
-          //   onHover: function (event, legendItem, legend) {
-          //     document.body.style.cursor = 'pointer';
-          //   },
-          //   onLeave: function (event, legendItem, legend) {
-          //       document.body.style.cursor = 'default';
-          //   },
-          //   labels:{
-          //     usePointStyle: true,
-          //     color:'#000',
-          //     font:{
-          //       size:20
-          //     } 
-           
-          //   }
-          //   ,
-          //   align: "center"
-          // },
           title: {
             display: true,
             text: ' Consumption in a week',

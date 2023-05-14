@@ -45,11 +45,8 @@ export const MY_FORMATS = {
 export class BarMonthProsumerComponent {
 
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
-  itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
-  ,'20','21','22','23','24','25','26','27','28','29','30'];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -58,7 +55,7 @@ export class BarMonthProsumerComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -72,18 +69,6 @@ export class BarMonthProsumerComponent {
   
   ngOnInit(): void {
     const userId = Number(this.route.snapshot.paramMap.get('id'));
-    if(this.selectedDate == undefined){
-      forkJoin({
-        list1: this.deviceService.monthByDayUser(userId, 2),
-        list2: this.deviceService.monthByDayUser(userId, 1)
-      }).subscribe(({ list1, list2 }) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.BarPlotProduction();
-        this.BarPlotConsumption();
-      });
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -91,7 +76,7 @@ export class BarMonthProsumerComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayUserFilter(string1,string2,userId, 2),
@@ -102,9 +87,7 @@ export class BarMonthProsumerComponent {
             this.BarPlotProduction();
             this.BarPlotConsumption();
           });
-    }
-    
-  }
+        }
   BarPlotProduction(){
     
     const chartId = 'barplot1';
@@ -127,8 +110,8 @@ export class BarMonthProsumerComponent {
             {
               label: 'Production',
               data: energyUsageResults2,
-              borderColor: 'rgb(255, 165, 0)',
-              backgroundColor: 'rgb(255, 165, 0)'
+              borderColor:  '#1d91c0',
+              backgroundColor:  '#1d91c0'
             },
            
             
@@ -151,7 +134,7 @@ export class BarMonthProsumerComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Production (kWh)",
                 color: '#000',
                 font:{
                   size:15
@@ -235,8 +218,8 @@ export class BarMonthProsumerComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor: 'rgb(128, 0, 128)',
-              backgroundColor: 'rgb(128, 0, 128)',
+              borderColor:  '#7fcdbb',
+              backgroundColor:  '#7fcdbb',
               
             },
             
@@ -259,7 +242,7 @@ export class BarMonthProsumerComponent {
               position: "left",
               title:{
                 display:true,
-                text: "kWh",
+                text: "Consumption (kWh)",
                 color: '#000',
                 font:{
                   size:15
