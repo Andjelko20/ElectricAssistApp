@@ -14,6 +14,7 @@ Chart.register(...registerables)
 export class ProsumerDayGraphComponent {
   
   maxDate = new Date();
+  currentDate = new Date();
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     
   }

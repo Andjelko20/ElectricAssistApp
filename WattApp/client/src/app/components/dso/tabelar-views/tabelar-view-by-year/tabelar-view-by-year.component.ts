@@ -44,8 +44,7 @@ export const MY_FORMATS = {
    ]
 })
 export class TabelarViewByYearComponent implements OnInit{
-  currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
+  maxYear = new Date()
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   settlements:Settlement[] = [];
@@ -153,6 +152,8 @@ export class TabelarViewByYearComponent implements OnInit{
         }
       }
   }
+  const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'consumption/production-year',
@@ -161,7 +162,7 @@ export class TabelarViewByYearComponent implements OnInit{
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+    headers: ['Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
   };
 
   const csvExporter = new ExportToCsv(options);

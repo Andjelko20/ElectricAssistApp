@@ -6,13 +6,13 @@
     <div class="infoSolar">
         <div class="prodactionToday">
             <h2>Production today</h2>
-            <h1><strong>{{todayProduction}} kWh</strong></h1>
+            <h1><strong>{{todayProduction}} {{meter1}}</strong></h1>
         </div>
         <div class="prodactionNow">
-            <app-prosumer-solar></app-prosumer-solar>
+           <app-prosumer-solar></app-prosumer-solar>
         </div>
         <div class="vremenska">
-
+            <app-today-prosumer></app-today-prosumer>
         </div>
     </div>
 
@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Current consumption</h5>
-                    <p class="card-text">{{currentConsumption}} kWh</p>
+                    <p class="card-text">{{currentConsumption}} {{meter}}</p>
 
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Today consumption</h5>
-                    <p class="card-text">{{todayConsumption}} kWh</p>
+                    <p class="card-text">{{todayConsumption}} {{meter2}}</p>
 
                 </div>
             </div>
@@ -39,7 +39,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Month consumption</h5>
-                    <p class="card-text">{{monthConsumption}} kWh</p>
+                    <p class="card-text">{{monthConsumption}} {{meter3}}</p>
                 </div>
             </div>
         </div>

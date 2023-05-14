@@ -113,6 +113,7 @@ export class PredictionDsoComponent {
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -154,24 +155,7 @@ export class PredictionDsoComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend: {display:false
           },
           title: {
             display: true,
@@ -238,6 +222,7 @@ export class PredictionDsoComponent {
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -279,24 +264,7 @@ export class PredictionDsoComponent {
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:20
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend: {display:false
           },
           title: {
             display: true,

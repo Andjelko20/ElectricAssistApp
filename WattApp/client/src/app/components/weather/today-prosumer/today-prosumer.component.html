@@ -1,0 +1,10 @@
+<div class="weatherCard" *ngIf="weatherNow">
+    <div class="currentWeather">
+        <span class="conditions"><img src="assets/img/{{weatherNow.weather[0].icon}}.png" alt=""></span>
+    </div>
+    <div class="currentTemp">
+        <span class="temp">{{ weatherNow.main.temp | number: '1.0-0' }} °C</span>
+        
+    </div>
+   
+</div>

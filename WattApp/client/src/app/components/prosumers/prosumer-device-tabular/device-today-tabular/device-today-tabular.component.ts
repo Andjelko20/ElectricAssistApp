@@ -13,7 +13,7 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
 })
 export class DeviceTodayTabularComponent {
   maxDate: Date;
-
+  currentDate = new Date();
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;
   datePipe: any;

@@ -2,7 +2,7 @@
     <h1>Energy Usage</h1>
     <mat-form-field appearance="fill">
         <mat-label>Enter a date</mat-label>
-        <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)">
+        <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)" [(ngModel)]="currentDate">
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>

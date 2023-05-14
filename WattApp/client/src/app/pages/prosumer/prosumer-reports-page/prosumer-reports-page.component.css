@@ -244,7 +244,7 @@ input {
     display: block;
     overflow: hidden;
     margin-right: -13px;
-    background-color: #f1f1f1;
+    background-color: white;
 }
 
 .content3 {
@@ -253,7 +253,7 @@ input {
     display: block;
     margin-right: -13px;
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: white;
 }
 
 .content4 {
@@ -262,7 +262,7 @@ input {
     display: none;
     margin-right: -13px;
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: white;
 }
 
 .content2 {
@@ -271,7 +271,7 @@ input {
     padding: 0 0px;
     margin-right: -13px;
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: white;
 }
 
 .content1 {
@@ -279,7 +279,7 @@ input {
     padding: 0 0px;
     display: none;
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: white;
 }
 
 button.active {
@@ -363,35 +363,35 @@ button.active {
         padding: 0 140px;
         display: block;
         overflow: hidden;
-        background-color: #f1f1f1;
+        background-color: white;
     }
     .content3 {
         width: 100%;
         padding: 0 18px;
         display: block;
         overflow: hidden;
-        background-color: #f1f1f1;
+        background-color: white;
     }
     .content4 {
         width: 100%;
         padding: 0 18px;
         display: none;
         overflow: hidden;
-        background-color: #f1f1f1;
+        background-color: white;
     }
     .content2 {
         width: 100%;
         display: none;
         padding: 0 18px;
         overflow: hidden;
-        background-color: #f1f1f1;
+        background-color: white;
     }
     .content1 {
         width: 100%;
         padding: 0 18px;
         display: none;
         overflow: hidden;
-        background-color: #f1f1f1;
+        background-color: white;
     }
     #contentng {
         padding: 0 140px;

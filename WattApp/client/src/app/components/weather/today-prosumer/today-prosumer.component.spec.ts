@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BarChartComponent } from './bar-chart.component';
+import { TodayProsumerComponent } from './today-prosumer.component';
 
-describe('BarChartComponent', () => {
-  let component: BarChartComponent;
-  let fixture: ComponentFixture<BarChartComponent>;
+describe('TodayProsumerComponent', () => {
+  let component: TodayProsumerComponent;
+  let fixture: ComponentFixture<TodayProsumerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BarChartComponent ]
+      declarations: [ TodayProsumerComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BarChartComponent);
+    fixture = TestBed.createComponent(TodayProsumerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

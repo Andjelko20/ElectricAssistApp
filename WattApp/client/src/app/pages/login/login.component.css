@@ -135,8 +135,8 @@
     
     .checkbox {
         display: inline-flex;
-        margin-right: 5px;
-        font-size: 5px;
+        width: 15px;
+        height: 15px;
     }
     
     .error-message {
@@ -212,7 +212,9 @@
             font-size: 32px;
         }
         .checkbox {
-            margin-left: 35px;
+            width: 20px;
+            height: 20px;
+            
         }
         
     }

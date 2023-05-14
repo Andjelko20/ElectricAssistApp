@@ -43,7 +43,6 @@ export const MY_FORMATS = {
 export class ProsumerMonthTableComponent {
 
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
@@ -116,6 +115,8 @@ export class ProsumerMonthTableComponent {
         }
       }
   }
+  const date = new Date();
+  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'consumption/production-month.csv',
@@ -124,7 +125,7 @@ export class ProsumerMonthTableComponent {
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
   };
 
   const csvExporter = new ExportToCsv(options);

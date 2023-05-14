@@ -45,7 +45,6 @@ export const MY_FORMATS = {
 export class DeviceMonthComponent {
 
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;
   list1:WeekByDay[]=[];

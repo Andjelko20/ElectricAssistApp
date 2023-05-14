@@ -9,10 +9,20 @@
     align-items: center;
     justify-content: center;
     background-color: white;
-    min-height: 50vh;
+    min-height: 30vh;
     width: 100%;
 }
-#barplots{
-    display: inline-flex;
+
+#barplots {
     width: 100%;
+}
+
+@media(min-width:1200px) {
+    .chart-container {
+        min-height: 50vh !important;
+    }
+    #barplots {
+        display: inline-flex;
+        width: 100%;
+    }
 }

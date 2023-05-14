@@ -38,6 +38,7 @@ h1 {
 }
 
 label {
+    margin-left: 0;
     color: #1C315E;
     font-style: italic;
     font-size: 25px;
@@ -45,6 +46,8 @@ label {
 
 .form-row {
     display: flex;
+    margin-left: 14px;
+    margin-right: 14px;
     justify-content: center;
 }
 

@@ -1,0 +1,41 @@
+#solar1 {
+    display: block;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#solar {
+    display: none;
+}
+
+#solar2 {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    #solar {
+        display: none;
+    }
+    #solar1 {
+        display: none;
+    }
+    #solar2 {
+        display: block;
+        align-items: center;
+        justify-content: space-around;
+    }
+}
+
+@media (min-width: 1500px) {
+    #solar {
+        display: block;
+        align-items: center;
+        justify-content: space-around;
+    }
+    #solar1 {
+        display: none;
+    }
+    #solar2 {
+        display: none;
+    }
+}
