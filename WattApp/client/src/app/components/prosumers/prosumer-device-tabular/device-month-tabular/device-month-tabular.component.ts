@@ -1,9 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin, switchMap } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-import { MatDatepickerModule} from '@angular/material/datepicker';
 import { FormControl, FormGroup } from '@angular/forms';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -47,7 +45,6 @@ export class DeviceMonthTabularComponent {
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
@@ -124,8 +121,6 @@ export class DeviceMonthTabularComponent {
   }
   downloadCSV(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
-    const date = new Date();
-    const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
     this.authService.getDevice(deviceId).subscribe(data=>{
       if(data.deviceCategory == "Electricity Consumer"){
           const options = {
@@ -136,7 +131,7 @@ export class DeviceMonthTabularComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Exported Date '+formattedDate]
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list1);
@@ -150,7 +145,7 @@ export class DeviceMonthTabularComponent {
           decimalSeparator: '.',
           showLabels: true,
           useTextFile: false,
-          headers: ['Hour', 'Month', 'Year', 'Production [kWh]', 'Exported Date '+formattedDate]
+          headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
         };
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list2);

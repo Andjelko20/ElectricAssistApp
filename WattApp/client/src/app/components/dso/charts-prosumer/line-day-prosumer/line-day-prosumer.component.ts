@@ -13,6 +13,7 @@ Chart.register(...registerables)
 })
 export class LineDayProsumerComponent{
   maxDate: Date;
+  currentDate = new Date();
 
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     this.maxDate = new Date();

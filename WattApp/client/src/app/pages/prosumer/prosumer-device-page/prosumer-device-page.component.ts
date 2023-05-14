@@ -63,27 +63,12 @@ export class ProsumerDevicePageComponent implements OnInit{
   showComponentTable() {
     this.compTable = true;
     this.compTable1=false;
-    this.compTable2=false;
-    this.compTable3 = false;
   }
   showComponentTable1() {
       this.compTable = false;
       this.compTable1=true;
-      this.compTable2=false;
-      this.compTable3 = false;
   }
-  showComponentTable2() {
-      this.compTable = false;
-      this.compTable1=false;
-      this.compTable2=true;
-      this.compTable3 = false;
-  }
-  showComponentTable3() {
-    this.compTable=false;
-    this.compTable1=false;
-    this.compTable2 = false;
-    this.compTable3 = true;
-}
+
 
   showProducingGrafTablee(){
     this.compTablee = true;

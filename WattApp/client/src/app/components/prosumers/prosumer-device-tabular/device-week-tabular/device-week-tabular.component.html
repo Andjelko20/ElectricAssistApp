@@ -5,8 +5,8 @@
         <mat-form-field appearance="fill">
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="picker" [max]="maxDate">
-              <input matStartDate placeholder="Start date" formControlName="start">
-              <input matEndDate placeholder="End date" formControlName="end">
+              <input matStartDate placeholder="Start date" formControlName="start" [(ngModel)]="firstdate">
+              <input matEndDate placeholder="End date" formControlName="end" [(ngModel)]="currentDate">
             </mat-date-range-input>
             <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

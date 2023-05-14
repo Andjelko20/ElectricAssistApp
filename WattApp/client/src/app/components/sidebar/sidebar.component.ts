@@ -12,14 +12,13 @@ import { Renderer2 } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit{
-  @ViewChild('modalContent') modalContent!: TemplateRef<any>;
-  onClickLeave!: (this: HTMLElement, ev: MouseEvent) => any;
   role?:string;
   admin?:string;
   superadmin?:string;
   dso?:string;
   prosumer?:string;
   currentUrl: string = '';
+  tab?:string;
   constructor(public router:Router,private usersService:AuthService,
     public route:ActivatedRoute,private modalService: NgbModal,private location: Location,
     private renderer: Renderer2,private elRef: ElementRef) { 
@@ -32,6 +31,19 @@ export class SidebarComponent implements OnInit{
        
     }
   ngOnInit(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+
+        if(event.url==='/prosumers?tab=table')
+        {
+          this.tab='table';
+        }
+        else  if(event.url==='/prosumers?tab=map')
+        {
+          this.tab='map';
+        }  
+      }
+    });
     let token=new JwtToken();
     this.role=token.data.role as string;
 
@@ -55,48 +67,8 @@ export class SidebarComponent implements OnInit{
   toggleSidebarContent() {
     this.showSidebarContent = !this.showSidebarContent;
   }
-  clickSidebar(event: Event, url: string) {
-    event.preventDefault();
-  
-    if(this.location.path() === '/add-user')
-    {
-      this.router.navigateByUrl('/add-user');
-      if (url !== '/add-user') {
-      
-        this.modalService.open(this.modalContent);
-        const controlabilityOnPopup = document.getElementById('popup');
-        if (controlabilityOnPopup != null) {
-          controlabilityOnPopup.removeEventListener('click', this.onClickLeave);
-          this.onClickLeave = () => {
-            this.modalService.dismissAll();
-            this.router.navigateByUrl(url);
-            controlabilityOnPopup.removeEventListener('click', this.onClickLeave);
-          };
-          controlabilityOnPopup.addEventListener('click', this.onClickLeave);
-        }
-      }
-    }
-    if(this.location.path() === '/profile-admin')
-    {
-      this.router.navigateByUrl('/profile-admin');
-      if (url !== '/profile-admin') {
-      
-        this.modalService.open(this.modalContent);
-        const controlabilityOnPopup = document.getElementById('popup');
-        if (controlabilityOnPopup != null) {
-          controlabilityOnPopup.removeEventListener('click', this.onClickLeave);
-          this.onClickLeave = () => {
-            this.modalService.dismissAll();
-            this.router.navigateByUrl(url);
-            controlabilityOnPopup.removeEventListener('click', this.onClickLeave);
-          };
-          controlabilityOnPopup.addEventListener('click', this.onClickLeave);
-        }
-      }
-    }
-    
-    
-  }
+ 
+
   logout()
   {
     localStorage.removeItem('token');

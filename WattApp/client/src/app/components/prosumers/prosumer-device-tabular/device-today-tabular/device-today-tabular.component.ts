@@ -13,7 +13,7 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
 })
 export class DeviceTodayTabularComponent {
   maxDate: Date;
-
+  currentDate = new Date();
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;
   datePipe: any;
@@ -106,8 +106,6 @@ export class DeviceTodayTabularComponent {
   }  
   downloadCSV(): void {
   const deviceId = Number(this.route.snapshot.paramMap.get('id'));
-  const date = new Date();
-  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   this.authService.getDevice(deviceId).subscribe(data=>{
     if(data.deviceCategory == "Electricity Consumer"){
         const options = {
@@ -118,7 +116,7 @@ export class DeviceTodayTabularComponent {
         decimalSeparator: '.',
         showLabels: true,
         useTextFile: false,
-        headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Exported Date '+formattedDate]
+        headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
       };
       const csvExporter = new ExportToCsv(options);
       const csvData = csvExporter.generateCsv(this.list1);
@@ -132,7 +130,7 @@ export class DeviceTodayTabularComponent {
         decimalSeparator: '.',
         showLabels: true,
         useTextFile: false,
-        headers: ['Hour', 'Day', 'Month', 'Year', 'Production [kWh]', 'Exported Date '+formattedDate]
+        headers: ['Hour', 'Day', 'Month', 'Year', 'Production [kWh]']
       };
       const csvExporter = new ExportToCsv(options);
       const csvData = csvExporter.generateCsv(this.list2);

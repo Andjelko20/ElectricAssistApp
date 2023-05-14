@@ -46,7 +46,6 @@ export class BarYearChartComponent {
 
   loader:boolean=false;
   currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   settlements:Settlement[] = [];

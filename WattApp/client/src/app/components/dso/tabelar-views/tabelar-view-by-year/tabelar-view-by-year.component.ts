@@ -44,8 +44,7 @@ export const MY_FORMATS = {
    ]
 })
 export class TabelarViewByYearComponent implements OnInit{
-  currentDate = new Date();
-  maxYear = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth()-1, 1);
+  maxYear = new Date()
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   settlements:Settlement[] = [];

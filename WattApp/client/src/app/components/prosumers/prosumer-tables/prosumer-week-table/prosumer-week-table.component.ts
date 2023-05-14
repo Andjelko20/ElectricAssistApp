@@ -52,6 +52,7 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
 export class ProsumerWeekTableComponent {
   currentDate = new Date();
   maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
+  firstdate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
@@ -60,10 +61,12 @@ export class ProsumerWeekTableComponent {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
       this.send = value.end;
-      if(this.send > this.maxDate){
-        this.send = null;
+      if(this.send > this.currentDate){
+        this.sdate = null;
       }
-      this.ngOnInit();
+      else{
+        this.ngOnInit()
+      }
     });
   }
 

@@ -13,6 +13,8 @@ import { HistoryPredictionService } from 'src/app/services/history-prediction.se
 export class TodayTabelarProsumerComponent implements OnInit{
 
   maxDate: Date;
+  currentDate = new Date();
+
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number }[] = [];
