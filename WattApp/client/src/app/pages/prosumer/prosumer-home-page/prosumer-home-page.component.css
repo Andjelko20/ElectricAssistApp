@@ -7,11 +7,10 @@ ul {
 }
 
 .vremenska {
-    border: 1px solid black;
     height: 50px;
     position: absolute;
-    top: 60px;
-    right: 5px;
+    top: 50px;
+    right: 15px;
     width: 100px;
 }
 
@@ -43,11 +42,6 @@ ul {
     min-height: 240px;
 }
 
-
-/* Logo */
-
-
-/* pravi problem kad se smanji na 320px */
 
 .row {
     margin: 0;
@@ -287,11 +281,10 @@ h1 {
         height: auto;
     }
     .vremenska {
-        border: 1px solid black;
         height: 100px;
         position: absolute;
         top: 60px;
-        right: 5px;
+        right: 35px;
         width: 200px;
     }
     .card-title {

@@ -61,7 +61,6 @@ import { PageControlComponent } from './components/page-control/page-control.com
 import { NgxPaginationModule } from "ngx-pagination";
 import { FooterComponent } from './components/footer/footer.component';
 import { TabelarViewComponent } from './components/dso/tabelar-views/tabelar-view-by-day/tabelar-view.component';
-import { TodayDsoComponent } from './components/weather/today-dso/today-dso.component';
 import { TabelarViewByMonthComponent } from "./components/dso/tabelar-views/tabelar-view-by-month/tabelar-view-by-month.component";
 import { TabelarViewByYearComponent } from './components/dso/tabelar-views/tabelar-view-by-year/tabelar-view-by-year.component';
 import { TabelarViewByWeekComponent } from './components/dso/tabelar-views/tabelar-view-by-week/tabelar-view-by-week.component';
@@ -84,7 +83,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
 import { MatInputModule } from '@angular/material/input';
 import { ProsumerDayGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-day-graph/prosumer-day-graph.component";
 import { ProsumerMonthGraphComponent } from "./components/prosumers/prosumer-graphs/prosumer-month-graph/prosumer-month-graph.component";
@@ -96,7 +94,6 @@ import { ProsumerMonthTableComponent } from "./components/prosumers/prosumer-tab
 import { ProsumerYearTableComponent } from "./components/prosumers/prosumer-tables/prosumer-year-table/prosumer-year-table.component";
 import { PredictionDsoComponent } from "./components/dso/prediction/prediction-dso/prediction-dso.component";
 import { PredictionTabelarDsoComponent } from './components/dso/prediction/prediction-tabelar-dso/prediction-tabelar-dso.component';
-
 import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-change-password/prosumer-change-password.component';
 import { DeviceTodayComponent } from './components/prosumers/prosumer-device-graph/device-today/device-today.component';
 import { DeviceWeekComponent } from './components/prosumers/prosumer-device-graph/device-week/device-week.component';
@@ -113,6 +110,7 @@ import { ProsumerWeekProductionComponent } from './components/prosumers/prosumer
 import { ProsumerMonthProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-month-production/prosumer-month-production.component';
 import { ProsumerYearProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-year-production/prosumer-year-production.component';
 import { ProsumerSolarComponent } from "./components/prosumers/prosumer-solar/prosumer-solar.component";
+import { TodayProsumerComponent } from './components/weather/today-prosumer/today-prosumer.component';
 
 @NgModule({
   declarations: [
@@ -176,7 +174,6 @@ import { ProsumerSolarComponent } from "./components/prosumers/prosumer-solar/pr
     PageControlComponent,
     FooterComponent,
     TabelarViewComponent,
-    TodayDsoComponent,
     TabelarViewByYearComponent,
     TabelarViewByWeekComponent,
     TabelarViewByMonthComponent,
@@ -224,6 +221,7 @@ import { ProsumerSolarComponent } from "./components/prosumers/prosumer-solar/pr
       ProsumerWeekProductionComponent,
       ProsumerMonthProductionComponent,
       ProsumerYearProductionComponent,
+      TodayProsumerComponent,
     
   ],
   imports: [

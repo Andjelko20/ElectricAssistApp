@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TodayDsoComponent } from './today-dso.component';
+import { TodayProsumerComponent } from './today-prosumer.component';
 
-describe('TodayDsoComponent', () => {
-  let component: TodayDsoComponent;
-  let fixture: ComponentFixture<TodayDsoComponent>;
+describe('TodayProsumerComponent', () => {
+  let component: TodayProsumerComponent;
+  let fixture: ComponentFixture<TodayProsumerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TodayDsoComponent ]
+      declarations: [ TodayProsumerComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TodayDsoComponent);
+    fixture = TestBed.createComponent(TodayProsumerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
