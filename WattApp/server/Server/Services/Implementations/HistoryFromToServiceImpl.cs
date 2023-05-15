@@ -251,7 +251,7 @@ namespace Server.Services.Implementations
                     else
                         NoPaginationFillInWithZerosConsumptionProductionMonthByDay(FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillDaysWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -395,7 +395,7 @@ namespace Server.Services.Implementations
                     else
                         NoPaginationFillInWithZerosConsumptionProductionMonthByDay(FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillDaysWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -763,7 +763,7 @@ namespace Server.Services.Implementations
                     else
                         NoPaginationFillInWithZerosConsumptionProductionMonthByDay(FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillDaysWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -994,7 +994,7 @@ namespace Server.Services.Implementations
                     else
                         NoPaginationFillInWithZerosConsumptionProductionMonthByDay(FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillDaysWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -1148,6 +1148,40 @@ namespace Server.Services.Implementations
 
                 return energyUsages;
             }
+        }
+
+        public List<DailyEnergyConsumptionPastMonth> FillDaysWithoutResults(DateTime FromDate, DateTime ToDate, List<DailyEnergyConsumptionPastMonth> energyUsages)
+        {
+            int checker = 0;
+            for (var date = FromDate; date < ToDate; date = date.AddDays(1))
+            {
+                checker = 0;
+                foreach (var item in energyUsages)
+                {
+                    int monthNumber = GetMonthNumber(item.Month);
+                    if (date.Day == item.Day && date.Month == monthNumber && date.Year == item.Year)
+                    {
+                        checker = 1;
+                    }
+                }
+                if (checker == 0)
+                {
+                    var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                    {
+                        Day = date.Day,
+                        Month = date.ToString("MMMM"),
+                        Year = date.Year,
+                        EnergyUsageResult = 0.0
+                    };
+                    energyUsages.Add(dailyEnergyUsage);
+                }
+            }
+            return energyUsages.OrderBy(eu => new DateTime(eu.Year, GetMonthNumber(eu.Month), eu.Day)).ToList();
+        }
+
+        private static int GetMonthNumber(string monthName)
+        {
+            return DateTime.ParseExact(monthName, "MMMM", CultureInfo.CurrentCulture).Month;
         }
 
         public List<EnergyToday> GetUserHistoryByHourFromToPagination(string fromDate, string toDate, long userId, long deviceCategoryId, int pageNumber, int itemsPerPage)
@@ -1470,7 +1504,7 @@ namespace Server.Services.Implementations
                     else
                         FillInWithZerosConsumptionProductionByDay(skipCount, itemsPerPage, FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillDaysWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -1549,7 +1583,7 @@ namespace Server.Services.Implementations
                     else
                         FillInWithZerosConsumptionProductionByDay(skipCount, itemsPerPage, FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillDaysWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -1627,7 +1661,7 @@ namespace Server.Services.Implementations
                     else
                         FillInWithZerosConsumptionProductionByDay(skipCount, itemsPerPage, FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillDaysWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -1703,7 +1737,7 @@ namespace Server.Services.Implementations
                     else
                         FillInWithZerosConsumptionProductionByDay(skipCount, itemsPerPage, FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillDaysWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
