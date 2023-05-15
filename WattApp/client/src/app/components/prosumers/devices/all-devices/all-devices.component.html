@@ -5,9 +5,7 @@
     <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>     
                 <option value="0" >All devices</option>
                 <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
-            </select>
-
-
+    </select>
     <a class="btn btn-primary" [routerLink]='["/device-add"]' role="button">Add device</a>
 </div>
 <div class="devices" *ngIf="devices.length!==0">

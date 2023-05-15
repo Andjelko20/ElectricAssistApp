@@ -38,7 +38,7 @@ img {
 
 .temp {
     position: absolute;
-    margin-left: 33px;
+    margin-left: 35px;
     margin-top: -20px;
     font-size: 15px;
     text-align: center;
@@ -112,7 +112,7 @@ img {
     }
     .temp {
         position: absolute;
-        margin-left: 40px;
+        margin-left: 55px;
         margin-top: -65px;
         font-size: 35px;
         text-align: center;
