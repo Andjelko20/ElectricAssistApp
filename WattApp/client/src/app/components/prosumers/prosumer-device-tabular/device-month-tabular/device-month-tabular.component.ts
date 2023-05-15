@@ -73,6 +73,12 @@ export class DeviceMonthTabularComponent {
   ngOnInit(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{
+          if(data.deviceCategory == "Electricity Consumer"){
+            this.consumptionGraph = true;
+            }
+            else{
+              this.productionGraph = true;
+            }
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -88,12 +94,9 @@ export class DeviceMonthTabularComponent {
           ]).subscribe(([list1, list2]) => {
             if(data.deviceCategory == "Electricity Consumer"){
               this.list1 = list1;
-              this.consumptionGraph = true;
             }
             else{
               this.list2 = list2;
-              this.productionGraph = true;
-
             }
           });
   })
