@@ -471,7 +471,7 @@ namespace Server.Services.Implementations
                     else
                         NoPaginationFillInWithZerosConsumptionProductionDayByHour(FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillHoursWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -546,7 +546,7 @@ namespace Server.Services.Implementations
                     else
                         NoPaginationFillInWithZerosConsumptionProductionDayByHour(FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillHoursWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -621,7 +621,7 @@ namespace Server.Services.Implementations
                     else
                         NoPaginationFillInWithZerosConsumptionProductionDayByHour(FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillHoursWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -1066,7 +1066,7 @@ namespace Server.Services.Implementations
                     else
                         NoPaginationFillInWithZerosConsumptionProductionDayByHour(FromDate, ToDate, energyUsages);
                 }
-
+                energyUsages = FillHoursWithoutResults(FromDate, ToDate, energyUsages);
                 return energyUsages;
             }
         }
@@ -1145,7 +1145,7 @@ namespace Server.Services.Implementations
                     else
                         FillInWithZerosConsumptionProductionDayByHour(skipCount, itemsPerPage, energyUsages);
                 }
-
+                
                 return energyUsages;
             }
         }
@@ -1182,6 +1182,36 @@ namespace Server.Services.Implementations
         private static int GetMonthNumber(string monthName)
         {
             return DateTime.ParseExact(monthName, "MMMM", CultureInfo.CurrentCulture).Month;
+        }
+
+        public List<EnergyToday> FillHoursWithoutResults(DateTime FromDate, DateTime ToDate, List<EnergyToday> energyUsages)
+        {
+            int checker = 0;
+            for (var date = FromDate; date < ToDate; date = date.AddHours(1))
+            {
+                checker = 0;
+                foreach (var item in energyUsages)
+                {
+                    int monthNumber = GetMonthNumber(item.Month);
+                    if (date.Hour == item.Hour && date.Day == item.Day && date.Month == monthNumber && date.Year == item.Year)
+                    {
+                        checker = 1;
+                    }
+                }
+                if (checker == 0)
+                {
+                    var dailyEnergyUsage = new EnergyToday
+                    {
+                        Hour = date.Hour,
+                        Day = date.Day,
+                        Month = date.ToString("MMMM"),
+                        Year = date.Year,
+                        EnergyUsageResult = 0.0
+                    };
+                    energyUsages.Add(dailyEnergyUsage);
+                }
+            }
+            return energyUsages.OrderBy(eu => new DateTime(eu.Year, GetMonthNumber(eu.Month), eu.Day, eu.Hour, 0, 0)).ToList();
         }
 
         public List<EnergyToday> GetUserHistoryByHourFromToPagination(string fromDate, string toDate, long userId, long deviceCategoryId, int pageNumber, int itemsPerPage)

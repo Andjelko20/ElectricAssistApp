@@ -1002,7 +1002,7 @@ namespace Server.Services.Implementations
                                                     ELSE deu.EndTime 
                                                 END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
                                         FROM DeviceEnergyUsages deu
-	                                         JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = 94
+	                                         JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
 	                                         JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
                                         WHERE deu.StartTime >= datetime('now', 'start of day') AND deu.StartTime < datetime('now', 'localtime')";
 
@@ -1018,7 +1018,7 @@ namespace Server.Services.Implementations
                     }
                 }
 
-                return energyUsages;
+                return Math.Round(energyUsages, 2);
             }
         }
 
