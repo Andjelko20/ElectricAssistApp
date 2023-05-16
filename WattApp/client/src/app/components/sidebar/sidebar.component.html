@@ -48,10 +48,15 @@
                 </a>
             </li>
             <li *ngIf="role==dso" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]="['/prosumers']"[queryParams]="{ tab: tab}">
+                <a class="nav-link" [routerLink]="['/prosumers']"[queryParams]="{ tab: tab}"*ngIf="showLink==false">
                     <span class="icon-holder"><i class="fas fa-users"></i></span>
                     <span class="title">Prosumers</span>
                 </a>
+                <a class="nav-link" [routerLink]="currentUrl" *ngIf="showLink==true">
+                    <span class="icon-holder"><i class="fas fa-users"></i></span>
+                    <span class="title">Prosumers</span>
+                </a>
+                
                
             </li>
             <li *ngIf="role==dso" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
