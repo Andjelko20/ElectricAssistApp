@@ -59,7 +59,7 @@ export class DeviceMonthComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -74,27 +74,12 @@ export class DeviceMonthComponent {
   ngOnInit(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{
-    if(this.selectedDate == undefined){
-      
-        if(data.deviceCategory == "Electricity Consumer")
-        {
-          this.consumptionGraph = true;
-          this.deviceService.monthbyDayDevice(deviceId).subscribe(consumption=>{
-            this.list1 = consumption;
-            this.BarPlotConsumption();
-          })
-          
-        }
-        else{
-          this.productionGraph = true;
-          this.deviceService.monthbyDayDevice(deviceId).subscribe(production=>{
-            this.list2 = production;
-            this.BarPlotProduction();
-          })
-        }
-      
-    }
-    else{
+          if(data.deviceCategory == "Electricity Consumer"){
+            this.consumptionGraph = true;
+            }
+            else{
+              this.productionGraph = true;
+            }
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -102,7 +87,7 @@ export class DeviceMonthComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayDeviceFilter(string1,string2,deviceId, 2),
@@ -110,16 +95,13 @@ export class DeviceMonthComponent {
           ]).subscribe(([list1, list2]) => {
             if(data.deviceCategory == "Electricity Consumer"){
               this.list1 = list1;
-              this.consumptionGraph = true;
               this.BarPlotConsumption();
             }
             else{
               this.list2 = list2;
-              this.productionGraph = true;
               this.BarPlotProduction();
             }
           });
-    }
   })
   }
   BarPlotProduction(){

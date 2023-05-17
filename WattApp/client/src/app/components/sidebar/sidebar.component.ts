@@ -17,8 +17,10 @@ export class SidebarComponent implements OnInit{
   superadmin?:string;
   dso?:string;
   prosumer?:string;
-  currentUrl: string = '';
+  currentUrl?: string;
   tab?:string;
+  showLink:boolean=false;
+  id?:string;
   constructor(public router:Router,private usersService:AuthService,
     public route:ActivatedRoute,private modalService: NgbModal,private location: Location,
     private renderer: Renderer2,private elRef: ElementRef) { 
@@ -33,15 +35,29 @@ export class SidebarComponent implements OnInit{
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-
+        const path = this.location.path(); 
+        const segments = path.split('/'); 
+        this.id = segments[segments.length - 1]; 
+        this.showLink=false
         if(event.url==='/prosumers?tab=table')
         {
+          this.currentUrl="'/prosumers?tab=table'";
           this.tab='table';
+          this.showLink=false
         }
         else  if(event.url==='/prosumers?tab=map')
         {
+          this.currentUrl="'/prosumers?tab=map'";
           this.tab='map';
-        }  
+          this.showLink=false
+        }
+        else if(event.url==='/prosumer/'+this.id)
+        {
+          
+          this.currentUrl="['/prosumer/"+this.id+"']";
+          this.showLink=true
+          
+        }
       }
     });
     let token=new JwtToken();

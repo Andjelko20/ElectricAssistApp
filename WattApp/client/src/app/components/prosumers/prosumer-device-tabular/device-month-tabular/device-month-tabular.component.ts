@@ -58,7 +58,7 @@ export class DeviceMonthTabularComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -73,26 +73,12 @@ export class DeviceMonthTabularComponent {
   ngOnInit(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{
-    if(this.selectedDate == undefined){
-      
-        if(data.deviceCategory == "Electricity Consumer")
-        {
-          this.deviceService.monthbyDayDevice(deviceId).subscribe(consumption=>{
-            this.list1 = consumption;
+          if(data.deviceCategory == "Electricity Consumer"){
             this.consumptionGraph = true;
-
-          })
-          
-        }
-        else{
-          this.deviceService.monthbyDayDevice(deviceId).subscribe(production=>{
-            this.list2 = production;
-            this.productionGraph = true;
-          })
-        }
-      
-    }
-    else{
+            }
+            else{
+              this.productionGraph = true;
+            }
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -100,7 +86,7 @@ export class DeviceMonthTabularComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayDeviceFilter(string1,string2,deviceId, 2),
@@ -108,15 +94,11 @@ export class DeviceMonthTabularComponent {
           ]).subscribe(([list1, list2]) => {
             if(data.deviceCategory == "Electricity Consumer"){
               this.list1 = list1;
-              this.consumptionGraph = true;
             }
             else{
               this.list2 = list2;
-              this.productionGraph = true;
-
             }
           });
-    }
   })
   }
   downloadCSV(): void {
@@ -125,7 +107,7 @@ export class DeviceMonthTabularComponent {
       if(data.deviceCategory == "Electricity Consumer"){
           const options = {
           fieldSeparator: ',',
-          filename: 'consumption-week',
+          filename: 'consumption-month',
           quoteStrings: '"',
           useBom : true,
           decimalSeparator: '.',
@@ -136,10 +118,10 @@ export class DeviceMonthTabularComponent {
         const csvExporter = new ExportToCsv(options);
         const csvData = csvExporter.generateCsv(this.list1);
       }
-      else{
+      else if(data.deviceCategory == "Electricity Producer"){
           const options = {
           fieldSeparator: ',',
-          filename: 'production-week',
+          filename: 'production-month',
           quoteStrings: '"',
           useBom : true,
           decimalSeparator: '.',

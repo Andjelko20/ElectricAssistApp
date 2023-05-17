@@ -134,7 +134,7 @@ export class ProsumerWeekTableComponent {
   const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-week.csv',
+    filename: 'consumption/production-week',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',

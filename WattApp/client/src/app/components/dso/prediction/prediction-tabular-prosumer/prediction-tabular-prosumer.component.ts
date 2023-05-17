@@ -29,7 +29,6 @@ export class PredictionTabularProsumerComponent {
 
   ngOnInit(): void {
   
-    
     let token=new JwtToken();
     this.idProsumer=token.data.id as number;
 
@@ -37,7 +36,6 @@ export class PredictionTabularProsumerComponent {
       this.list1 = data;
       this.deviceService.predictionUser(this.idProsumer,1).subscribe((data: WeekByDay[]) =>{
         this.list2 = data;
-        
       })
     })
   }
@@ -58,17 +56,15 @@ export class PredictionTabularProsumerComponent {
         }
       }
   }
-  const date = new Date();
-  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-week',
+    filename: 'consumption/production-prediction',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption', 'Production', 'Exported Date '+formattedDate]
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);

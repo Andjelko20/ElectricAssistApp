@@ -34,7 +34,7 @@ export class AllDevicesDsoComponent implements OnInit{
     
      {id:Categories.ELECTRICITY_CONSUMER_ID,name:Categories.ELECTRICITY_CONSUMER_NAME},
     
-     {id:Categories.ELECTRICITY_STOCK_ID,name:Categories.ELECTRICITY_STOCK_NAME}
+ 
     
      ]
 

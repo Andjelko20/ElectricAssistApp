@@ -23,7 +23,7 @@ export class DeviceTodayComponent {
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -33,25 +33,12 @@ export class DeviceTodayComponent {
   ngOnInit(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{
-      if(this.selectedDate == undefined){
-        if(data.deviceCategory == "Electricity Consumer")
-        {
-          this.consumptionGraph = true;
-          this.deviceService.dayByHourDevice(deviceId).subscribe(consumption=>{
-            this.list1 = consumption;
-            this.LineChartConsumption();
-          })
-          
+        if(data.deviceCategory == "Electricity Consumer"){
+        this.consumptionGraph = true;
         }
         else{
           this.productionGraph = true;
-          this.deviceService.dayByHourDevice(deviceId).subscribe(production=>{
-            this.list2 = production;
-            this.LineChartProduction();
-          })
         }
-      }
-      else if(this.selectedDate !== undefined){
         const day = this.selectedDate.getDate();
         let dayString = String(day).padStart(2, '0');
         const month = this.selectedDate.getMonth()+1;
@@ -94,16 +81,13 @@ export class DeviceTodayComponent {
         ]).subscribe(([list1, list2]) => {
           if(data.deviceCategory == "Electricity Consumer"){
             this.list1 = list1;
-            this.consumptionGraph = true;
             this.LineChartConsumption();
           }
           else{
             this.list2 = list2;
-            this.productionGraph = true;
             this.LineChartProduction();
           }
         });
-      }
     })
     
     

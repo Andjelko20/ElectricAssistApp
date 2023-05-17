@@ -55,7 +55,7 @@ export class MonthTabelarProsumerComponent implements OnInit{
     });
   }
 
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -68,17 +68,6 @@ export class MonthTabelarProsumerComponent implements OnInit{
   }
   ngOnInit(): void {
     const userId = Number(this.route.snapshot.paramMap.get('id'));
-  
-    if(this.selectedDate == undefined){
-      forkJoin({
-        list1: this.deviceService.monthByDayUser(userId, 2),
-        list2: this.deviceService.monthByDayUser(userId, 1)
-      }).subscribe(({ list1, list2 }) => {
-        this.list1 = list1;
-        this.list2 = list2;
-      });
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -86,7 +75,7 @@ export class MonthTabelarProsumerComponent implements OnInit{
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayUserFilter(string1,string2,userId, 2),
@@ -96,7 +85,6 @@ export class MonthTabelarProsumerComponent implements OnInit{
             this.list2 = list2;
           });
     }
-  }
   downloadCSV(): void {
     this.mergedList = [];
     for (let i = 0; i < this.list1.length; i++) {

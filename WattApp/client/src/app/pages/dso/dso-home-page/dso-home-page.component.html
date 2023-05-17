@@ -2,7 +2,7 @@
     <div class="card-group">
         <div class="bgc-white p-20 bd">
             <div class="c-grey-900 text-center"  >
-                <div style="display: inline-block;"><h1 style=" font-weight: bolder;">Overview of {{updateUserDetail.city}}</h1></div>
+                <div style="display: inline-block;"><h1 style=" font-weight: bolder;">Overview of {{city}}</h1></div>
                 <hr style="margin-bottom: 0;padding-bottom: 0;">
             </div>
             <div class="peers mT-20 fxw-nw@lg+ jc-sb ta-c gap-10">
@@ -46,20 +46,20 @@
         </div>
         <div class="numpro">
             <div class="col-md-2 col-sm-4  tile_stats_count">
-                <span class="count_top"><i style="font-size: 20px;margin-right: 5px; " class="fa fa-user"></i>Total Prosumers in {{updateUserDetail.city}}</span>
+                <span class="count_top"><i style="font-size: 20px;margin-right: 5px; " class="fa fa-user"></i>Total Prosumers in {{city}}</span>
                 <div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
                 <div class="count">{{numberOfProsumers}}</div>
                 <span class="count_bottom"><i class="green">10% </i> From last Week</span>
             </div>
             <hr style="margin: 0;">
             <div class="col-md-2 col-sm-4  tile_stats_count">
-                <span class="count_top"><i style="font-size: 20px; margin-right: 5px; color: rgb(255, 198, 55);"class="fa fa-sun"></i>Total Production in {{updateUserDetail.city}}</span>
+                <span class="count_top"><i style="font-size: 20px; margin-right: 5px; color: rgb(255, 198, 55);"class="fa fa-sun"></i>Total Production in {{city}}</span>
                 <div class="count"> {{totalProduction}} kWh </div>
                 <span class="count_bottom"><i class="green">2% </i> From last Week</span>
             </div>    
             <hr style="margin: 0;">
             <div class="col-md-2 col-sm-4  tile_stats_count">
-                <span class="count_top"><i style="font-size: 20px; margin-right: 5px; color: rgb(0, 157, 255);" class="fa fa-bolt"></i>Average Production in {{updateUserDetail.city}}</span>
+                <span class="count_top"><i style="font-size: 20px; margin-right: 5px; color: rgb(0, 157, 255);" class="fa fa-bolt"></i>Average Production in {{city}}</span>
                 <div class="count">{{avgProduction}} kWh</div>
                 <span class="count_bottom"><i class="green"><i class="fa fa-arrow-up"></i>14% </i> From last Week</span>
             </div>

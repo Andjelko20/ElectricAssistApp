@@ -21,7 +21,7 @@ export class LineDayProsumerComponent{
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -31,18 +31,6 @@ export class LineDayProsumerComponent{
   ngOnInit(): void {
     const userId = Number(this.route.snapshot.paramMap.get('id'));
   
-    if(this.selectedDate == undefined){
-      combineLatest([
-        this.deviceService.dayByHourUser(userId, 2),
-        this.deviceService.dayByHourUser(userId, 1)
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.LineChartProduction();
-        this.LineChartConsumption();
-      });
-    }
-    else if(this.selectedDate !== undefined){
       const day = this.selectedDate.getDate();
       let dayString = String(day).padStart(2, '0');
       const month = this.selectedDate.getMonth()+1;
@@ -88,8 +76,6 @@ export class LineDayProsumerComponent{
         this.LineChartProduction();
         this.LineChartConsumption();
       });
-    }
-    
   }
   LineChartProduction(){
 
@@ -108,7 +94,7 @@ export class LineDayProsumerComponent{
     const Linechart =new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: ["0","4","8","12","16","20"," "],
+        labels: hours,
         
         datasets: [
           {
@@ -131,6 +117,7 @@ export class LineDayProsumerComponent{
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -172,24 +159,7 @@ export class LineDayProsumerComponent{
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend: {display:false
           },
           title: {
             
@@ -255,6 +225,7 @@ export class LineDayProsumerComponent{
       }
       ,
       options: {
+        maintainAspectRatio:false,
         responsive: true,
         scales:{
           y: {
@@ -296,24 +267,7 @@ export class LineDayProsumerComponent{
         
         plugins: {
           datalabels:{display: false},
-          legend: {
-            position: 'bottom',
-            onHover: function (event, legendItem, legend) {
-              document.body.style.cursor = 'pointer';
-            },
-            onLeave: function (event, legendItem, legend) {
-                document.body.style.cursor = 'default';
-            },
-            labels:{
-              usePointStyle: true,
-              color:'#000',
-              font:{
-                size:15
-              } 
-           
-            }
-            ,
-            align: "center"
+          legend: {display:false
           },
           title: {
             

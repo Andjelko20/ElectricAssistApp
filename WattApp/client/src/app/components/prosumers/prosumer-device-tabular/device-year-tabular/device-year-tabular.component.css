@@ -42,7 +42,7 @@
 }
 
 mat-form-field {
-    width: 58%;
+    width: 60%;
 }
 
 .btn {
@@ -60,4 +60,22 @@ mat-form-field {
 
 .btn:hover {
     background-color: #0d8beb;
+}
+
+@media(min-width:768px) {
+    .btn {
+        margin-left: 169px;
+    }
+    .table {
+        font-size: 25px;
+    }
+    mat-form-field {
+        width: 36%;
+    }
+}
+
+@media(min-width:1060px) {
+    mat-form-field {
+        width: 15%;
+    }
 }

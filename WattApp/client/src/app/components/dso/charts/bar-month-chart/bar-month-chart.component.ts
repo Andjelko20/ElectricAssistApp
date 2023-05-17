@@ -64,7 +64,7 @@ export class BarMonthChartComponent {
   }
 
   selectedOption: number = 0;
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   onOptionSelected() {
     this.ngOnInit();
   }
@@ -101,18 +101,7 @@ export class BarMonthChartComponent {
           }
           
         })
-        if(this.selectedOption == 0 && this.selectedDate == undefined){
-          forkJoin([
-            this.deviceService.monthByDay(number, 2),
-            this.deviceService.monthByDay(number, 1)
-          ]).subscribe(([data1, data2]) => {
-            this.list1 = data1;
-            this.list2 = data2;
-            this.BarPlotConsumption();
-            this.BarPlotProduction();
-          });
-        }
-        else if(this.selectedOption == 0 && this.selectedDate != undefined){
+        if(this.selectedOption == 0 && this.selectedDate != undefined){
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -120,7 +109,7 @@ export class BarMonthChartComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayCityFilter(string1,string2,number, 2),
@@ -140,7 +129,7 @@ export class BarMonthChartComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
 
           forkJoin([
@@ -153,19 +142,6 @@ export class BarMonthChartComponent {
             this.BarPlotProduction();
           });
         }
-        else{
-          forkJoin([
-            this.deviceService.monthByDaySettlement(this.selectedOption, 2),
-            this.deviceService.monthByDaySettlement(this.selectedOption, 1)
-          ]).subscribe(([data1, data2]) => {
-            this.list1 = data1;
-            this.list2 = data2;
-            this.BarPlotConsumption();
-            this.BarPlotProduction();
-
-          });
-        }
-        
       })
     })
   }

@@ -23,7 +23,7 @@ export class TodayTabelarProsumerComponent implements OnInit{
     this.maxDate = new Date();
   }
   
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -32,17 +32,6 @@ export class TodayTabelarProsumerComponent implements OnInit{
 
   ngOnInit(): void {
     const userId = Number(this.route.snapshot.paramMap.get('id'));
-  
-    if(this.selectedDate == undefined){
-      combineLatest([
-        this.deviceService.dayByHourUser(userId, 2),
-        this.deviceService.dayByHourUser(userId, 1)
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-      });
-    }
-    else if(this.selectedDate !== undefined){
       const day = this.selectedDate.getDate();
       let dayString = String(day).padStart(2, '0');
       const month = this.selectedDate.getMonth()+1;
@@ -87,7 +76,6 @@ export class TodayTabelarProsumerComponent implements OnInit{
         this.list2 = list2;
       });
     }
-  }
   downloadCSV(): void {
       this.mergedList = [];
       for (let i = 0; i < this.list1.length; i++) {

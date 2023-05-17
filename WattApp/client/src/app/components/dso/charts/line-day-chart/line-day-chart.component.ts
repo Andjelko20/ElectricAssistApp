@@ -30,7 +30,7 @@ export class LineDayChartComponent {
     this.ngOnInit()
   }
 
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -58,18 +58,7 @@ export class LineDayChartComponent {
           }
             
         });
-        if (this.selectedOption == 0 && this.selectedDate == undefined) {
-          forkJoin([
-            this.deviceService.dayByHour(number, 2),
-            this.deviceService.dayByHour(number, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.LineChartProduction();
-            this.LineChartConsumption();
-          });
-        } 
-        else if(this.selectedOption == 0 && this.selectedDate != undefined){
+        if(this.selectedOption == 0 && this.selectedDate != undefined){
           const day = this.selectedDate.getDate();
           let dayString = String(day).padStart(2, '0');
           const month = this.selectedDate.getMonth()+1;
@@ -89,8 +78,8 @@ export class LineDayChartComponent {
               string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
             }
             else if( month == 6){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
+              string1 = year+'-'+month+'-'+day+' '+'00:00:00'
+              string2 = year+'-'+(month+1)+'-'+1+' '+'00:00:00'
             }
             else{
               string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
@@ -110,9 +99,7 @@ export class LineDayChartComponent {
               string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
             }
           }
-          console.log(string1+'-'+string2);
           
-
           forkJoin([
             
             this.deviceService.dayByHourCityFilter(string1,string2,number, 2),
@@ -164,17 +151,6 @@ export class LineDayChartComponent {
           forkJoin([
             this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,2),
             this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.LineChartProduction();
-            this.LineChartConsumption();
-          });
-        }
-        else {
-          forkJoin([
-            this.deviceService.dayByHourSettlement(this.selectedOption, 2),
-            this.deviceService.dayByHourSettlement(this.selectedOption, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;

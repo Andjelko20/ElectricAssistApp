@@ -64,7 +64,7 @@ export class TabelarViewByMonthComponent implements OnInit{
     start: new FormControl(),
     end: new FormControl()
   });
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   selectedOption: number = 0;
 
   date = new FormControl(moment());
@@ -99,16 +99,7 @@ export class TabelarViewByMonthComponent implements OnInit{
             }
           }
         })
-        if(this.selectedOption == 0 && this.selectedDate === undefined){
-          forkJoin([
-            this.deviceService.monthByDay(number, 2),
-            this.deviceService.monthByDay(number, 1)
-          ]).subscribe(([data1, data2]) => {
-            this.list1 = data1;
-            this.list2 = data2;
-          });
-        }
-        else if(this.selectedOption == 0 && this.selectedDate != undefined){
+        if(this.selectedOption == 0 && this.selectedDate != undefined){
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -116,7 +107,7 @@ export class TabelarViewByMonthComponent implements OnInit{
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayCityFilter(string1,string2,number, 2),
@@ -134,7 +125,7 @@ export class TabelarViewByMonthComponent implements OnInit{
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
 
           forkJoin([
@@ -143,15 +134,6 @@ export class TabelarViewByMonthComponent implements OnInit{
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.list2 = list2;
-          });
-        }
-        else{
-          forkJoin([
-            this.deviceService.monthByDaySettlement(this.selectedOption, 2),
-            this.deviceService.monthByDaySettlement(this.selectedOption, 1)
-          ]).subscribe(([data1, data2]) => {
-            this.list1 = data1;
-            this.list2 = data2;
           });
         }
       })

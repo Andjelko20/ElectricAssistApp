@@ -130,7 +130,7 @@
     
     .btn-container>.linka {
         color: #D9D9D9;
-        margin-bottom: 30px !important;
+        margin-bottom: 4px !important;
     }
     
     .checkbox {
@@ -140,12 +140,10 @@
     }
     
     .error-message {
-        display: inline-flex;
+        display: flex;
         color: red;
         align-items: center;
         justify-content: center;
-        margin-top: -28px;
-
     }
     
     @media(min-width:768px) {
@@ -214,7 +212,5 @@
         .checkbox {
             width: 20px;
             height: 20px;
-            
         }
-        
     }

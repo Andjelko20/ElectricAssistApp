@@ -29,10 +29,11 @@ mat-form-field {
     .chart {
         display: inline-block;
     }
-    .chart canvas {
+    .chart-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40vh;
         width: 100%;
-        /* Set the width to 100% of the parent element */
-        height: 1800px;
-        /* Set the height to 500 pixels */
     }
 }

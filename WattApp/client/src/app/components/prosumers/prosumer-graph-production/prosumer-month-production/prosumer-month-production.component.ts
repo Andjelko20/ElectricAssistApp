@@ -56,7 +56,7 @@ export class ProsumerMonthProductionComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -71,16 +71,6 @@ export class ProsumerMonthProductionComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
-    if(this.selectedDate == undefined){
-      forkJoin({
-        list2: this.deviceService.monthByDayUser(userId, 1)
-      }).subscribe(({  list2 }) => {
-
-        this.list2 = list2;
-        this.BarPlotProduction();
-      });
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -88,7 +78,7 @@ export class ProsumerMonthProductionComponent {
           monthString = String(month+1).padStart(2, '0');
           let string2 = year+'-'+monthString+'-0'+1+' '+'00:00:00';
           if(month == 12){
-            string2 = (year+1)+'-0'+1+'-0'+1
+            string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
           }
           forkJoin([
             this.deviceService.weekByDayUserFilter(string1,string2,userId, 1)
@@ -96,7 +86,6 @@ export class ProsumerMonthProductionComponent {
             this.list2 = list2;
             this.BarPlotProduction();
           });
-    }
   }
   BarPlotProduction(){
     

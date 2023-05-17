@@ -103,7 +103,7 @@ export class ProsumerYearTableComponent {
   const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-year.csv',
+    filename: 'consumption/production-year',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
