@@ -123,6 +123,41 @@ namespace Server.Data
                         {
                             CountryId = 1,
                             Name = "Novi Sad"
+                        }, 
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Nis"
+                        }, 
+                        new City
+                        {
+                            CountryId = 1, 
+                            Name = "Subotica"
+                        },
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Zrenjanin"
+                        },
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Zajecar"
+                        },
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Novi Pazar"
+                        },
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Trstenik"
+                        },
+                        new City
+                        {
+                            CountryId = 1,
+                            Name = "Leskovac"
                         }
                     });
                     context.SaveChanges();
@@ -148,8 +183,123 @@ namespace Server.Data
                         },
                         new Settlement
                         {
+                            CityId = 1,
+                            Name = "Male Pcelice"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Koricani"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Stanovo"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Bagremar"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Erdoglija"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Grosnica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Petrovac"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Jovanovac"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Resnik"
+                        },
+                        new Settlement
+                        {
+                            CityId = 1,
+                            Name = "Belosevac"
+                        },
+                        new Settlement
+                        {
                             CityId = 2,
                             Name = "Karaburma"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Novi Beograd"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Zemun"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Vozdovac"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Vracar"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Rakovica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Cukarica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Palilula"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Savski venac"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Stari grad"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Mirijevo"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Borca"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Banjica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 2,
+                            Name = "Dorcol"
                         },
                         new Settlement
                         {
@@ -159,8 +309,279 @@ namespace Server.Data
                         new Settlement
                         {
                             CityId = 3,
+                            Name = "Podbara"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Grbavica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Salajka"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Rotkvarija"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Sremska Kamenica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Telep"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Novo Naselje"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Veternik"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Liman"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
                             Name = "Petrovoradin"
 
+                        },
+                        new Settlement
+                        {
+                            CityId = 4,
+                            Name = "Palilula"
+
+                        },
+                        new Settlement
+                        {
+                            CityId = 4,
+                            Name = "Medijana"
+                        },
+                        new Settlement
+                        {
+                            CityId = 4,
+                            Name = "Crveni Krst"
+                        },
+                        new Settlement
+                        {
+                            CityId = 4,
+                            Name = "Bulevar"
+                        },
+                        new Settlement
+                        {
+                            CityId = 4,
+                            Name = "Ledena Stena"
+                        },
+                        new Settlement
+                        {
+                            CityId = 4,
+                            Name = "Duvaliste"
+                        },
+                        new Settlement
+                        {
+                            CityId = 4,
+                            Name = "Pantelej"
+                        },
+                        new Settlement
+                        {
+                            CityId = 4,
+                            Name = "Cair"
+                        },
+                        new Settlement
+                        {
+                            CityId = 4,
+                            Name = "Bubanj"
+                        },
+                        new Settlement
+                        {
+                            CityId = 4,
+                            Name = "Niska Banja"
+                        },
+                        new Settlement
+                        {
+                            CityId = 5,
+                            Name = "Centar"
+                        },
+                        new Settlement
+                        {
+                            CityId = 5,
+                            Name = "Palic"
+                        },
+                        new Settlement
+                        {
+                            CityId = 5,
+                            Name = "Kelebija"
+                        },
+                        new Settlement
+                        {
+                            CityId = 5,
+                            Name = "Stari grad"
+                        },
+                        new Settlement
+                        {
+                            CityId = 5,
+                            Name = "Bajmok"
+                        },
+                        new Settlement
+                        {
+                            CityId = 5,
+                            Name = "Prozivka"
+                        },
+                        new Settlement
+                        {
+                            CityId = 5,
+                            Name = "Novi grad"
+                        },
+                        new Settlement
+                        {
+                            CityId = 5,
+                            Name = "Mali Radanovac"
+                        },
+                        new Settlement
+                        {
+                            CityId = 5,
+                            Name = "Bikovo"
+                        },
+                        new Settlement
+                        {
+                            CityId = 6,
+                            Name = "Bagljas"
+                        },
+                        new Settlement
+                        {
+                            CityId = 6,
+                            Name = "Zarko Zrenjanin"
+                        },
+                        new Settlement
+                        {
+                            CityId = 6,
+                            Name = "Dositej Obradovic"
+                        },
+                        new Settlement
+                        {
+                            CityId = 6,
+                            Name = "Centar"
+                        },
+                        new Settlement
+                        {
+                            CityId = 6,
+                            Name = "Mala Amerika"
+                        },
+                        new Settlement
+                        {
+                            CityId = 7,
+                            Name = "Centar"
+                        },
+                        new Settlement
+                        {
+                            CityId = 7,
+                            Name = "Kraljevica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 7,
+                            Name = "Kotlujevac"
+                        },
+                        new Settlement
+                        {
+                            CityId = 7,
+                            Name = "Kraljevica II"
+                        },
+                        new Settlement
+                        {
+                            CityId = 7,
+                            Name = "Kotlujevac II"
+                        },
+                        new Settlement
+                        {
+                            CityId = 8,
+                            Name = "Centar"
+                        },
+                        new Settlement
+                        {
+                            CityId = 8,
+                            Name = "Rasadnik"
+                        },
+                        new Settlement
+                        {
+                            CityId = 8,
+                            Name = "Polje"
+                        },
+                        new Settlement
+                        {
+                            CityId = 8,
+                            Name = "Selakovac"
+                        },
+                        new Settlement
+                        {
+                            CityId = 9,
+                            Name = "Centar"
+                        },
+                        new Settlement
+                        {
+                            CityId = 9,
+                            Name = "Cicevac"
+                        },
+                        new Settlement
+                        {
+                            CityId = 9,
+                            Name = "Svirce"
+                        },
+                        new Settlement
+                        {
+                            CityId = 9,
+                            Name = "Vrncani"
+                        },
+                        new Settlement
+                        {
+                            CityId = 9,
+                            Name = "Bogdanje"
+                        },
+                        new Settlement
+                        {
+                            CityId = 9,
+                            Name = "Ribare"
+                        },
+                        new Settlement
+                        {
+                            CityId = 10,
+                            Name = "Centar"
+                        },
+                        new Settlement
+                        {
+                            CityId = 10,
+                            Name = "Hisar"
+                        },
+                        new Settlement
+                        {
+                            CityId = 10,
+                            Name = "Nemanjina"
+                        },
+                        new Settlement
+                        {
+                            CityId = 10,
+                            Name = "Dubocica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 10,
+                            Name = "Grdelica"
+                        },
+                        new Settlement
+                        {
+                            CityId = 10,
+                            Name = "Slavujevce"
                         }
                     });
                     context.SaveChanges();
