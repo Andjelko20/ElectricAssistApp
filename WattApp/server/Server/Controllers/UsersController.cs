@@ -378,8 +378,8 @@ namespace Server.Controllers
                     return NotFound(new { message = "User doesn't exists" });
                 
                 UserModel uniqueUsername = _sqliteDb.Users.Where(src => src.Username == requestBody.Username && src.Id != userId).FirstOrDefault();
-                if(uniqueUsername != null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("This username is already taken."));
+                if (uniqueUsername != null)
+                    return Ok(new ActionFailedDTO("username", "This username is already taken."));
                 user.Username = requestBody.Username;
 
                 user.Name = requestBody.Name;
@@ -395,7 +395,9 @@ namespace Server.Controllers
                         ChangeEmailKey = PasswordGenerator.GenerateRandomPassword(15)//ChangeEmailConfirmationKeyGenerator.GenerateConfirmEmailKey()
                     };
 
-                    userService.CreateChangeEmailRequest(changeEmailModel);
+                    var response = userService.CreateChangeEmailRequest(changeEmailModel);
+                    if (response is ActionFailedDTO)
+                        return Ok(response);
 
                     try
                     {
