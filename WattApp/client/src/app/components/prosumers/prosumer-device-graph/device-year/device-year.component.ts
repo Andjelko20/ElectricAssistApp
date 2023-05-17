@@ -224,8 +224,8 @@ export class DeviceYearComponent {
               {
                 label: 'Consumption',
                 data: energyUsageResults1,
-                borderColor: 'rgb(128, 0, 128)',
-                backgroundColor: 'rgb(128, 0, 128)',
+                borderColor: '#7fcdbb',
+                backgroundColor: '#7fcdbb',
                 
               },
              

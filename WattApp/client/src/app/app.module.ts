@@ -8,7 +8,6 @@ import { NgxGaugeModule } from "ngx-gauge";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AdminDsoAddComponent } from "./components/admin/admin-dso-add/admin-dso-add.component";
-import { AdminDsoUpdateComponent } from "./components/admin/admin-dso-update/admin-dso-update.component";
 import { AdminDsoComponent } from "./components/admin/admin-dso/admin-dso.component";
 import { ChangePasswordComponent } from "./components/change-password/change-password.component";
 import { AllProsumersComponent } from "./components/dso/all-prosumers/all-prosumers.component";
@@ -142,7 +141,6 @@ import { TodayProsumerComponent } from './components/weather/today-prosumer/toda
     ProsumersMapComponent,
 	  MapInputComponent,
     AdminDsoComponent,
-    AdminDsoUpdateComponent,
     AdminDsoAddComponent,
     OneProsumerComponent,
     TodayConsumptionComponent,
@@ -156,7 +154,6 @@ import { TodayProsumerComponent } from './components/weather/today-prosumer/toda
     ProsumerSolarComponent,
     ProsumerHomePageComponent,
     HomePageComponent,
-    AdminDsoUpdateComponent,
     AdminDsoPageComponent,
     UpdateDeviceComponent,
     AddDeviceComponent,

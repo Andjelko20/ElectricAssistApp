@@ -7,8 +7,8 @@ import { AdminDsoAddComponent } from '../components/admin/admin-dso-add/admin-ds
   providedIn: 'root'
 })
 export class UnsavedChangesGuardGuard implements CanDeactivate<unknown> {
-  canDeactivate(component: AdminDsoAddComponent): boolean {
-    if (component.isFormDirty) {
+  canDeactivate(component: any): boolean {
+    if (component.isFormDirty || component.isFormDirty1) {
       return confirm('Are you sure you want to leave? Your unsaved changes will be lost.');
     }
     return true;

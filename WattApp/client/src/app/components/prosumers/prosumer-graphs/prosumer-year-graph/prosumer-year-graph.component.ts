@@ -106,7 +106,7 @@ export class ProsumerYearGraphComponent {
               label: 'Consumption',
               data: energyUsageResults1,
               borderColor: '#7fcdbb',
-              backgroundColor: '#7fcdbb',
+              backgroundColor: '#7fcdbb'
               
             },                    
           ]       
