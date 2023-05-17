@@ -35,9 +35,9 @@ export class SidebarComponent implements OnInit{
   ngOnInit(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const path = this.location.path(); // Get the current URL path
-        const segments = path.split('/'); // Split the path into segments
-        this.id = segments[segments.length - 1]; // Extract the last segment (assuming the ID is at the end)
+        const path = this.location.path(); 
+        const segments = path.split('/'); 
+        this.id = segments[segments.length - 1]; 
         this.showLink=false
         if(event.url==='/prosumers?tab=table')
         {

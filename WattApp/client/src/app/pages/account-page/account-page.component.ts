@@ -106,6 +106,14 @@ export class AccountPageComponent implements OnInit {
       this.body="You didnt make any changes.";
       
     }
+    else if(this.updateUserDetail.name!==this.logedDetail.name && this.updateUserDetail.email!==this.logedDetail.email)
+    {
+        this.body="Your name and username has been changed." 
+    }
+    else if(this.updateUserDetail.name!==this.logedDetail.name && this.updateUserDetail.email!==this.logedDetail.email)
+    {
+      this.body="Your name, username and email has been changed. You need to confirm your email" 
+    }
     this.updateService.upDateLogedIn(this.logedDetail)
     .subscribe({
       next:()=>{
