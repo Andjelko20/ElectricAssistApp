@@ -191,9 +191,9 @@ namespace Server.Controllers
                 var pendingUser = userService.CreatePendingUser(user);
                 if (pendingUser == null)
                     throw new EmailAddressAlreadyInUseException("Doslo je do greske prilikom kreiranja zahteva.");
-                else if(pendingUser is ActionFailedDTO)
+                else if(pendingUser is List<ActionFailedDTO>)
                 {
-                    return Ok(pendingUser);
+                    return BadRequest(pendingUser);
                 }
                 
                 try
@@ -320,8 +320,8 @@ namespace Server.Controllers
                     };
 
                     object o = userService.CreateChangeEmailRequest(changeEmailModel);
-                    if (o is ActionFailedDTO)
-                        return Ok(o);
+                    if (o is List<ActionFailedDTO>)
+                        return BadRequest(o);
                     else if (o is HttpRequestException)
                         return Ok(new { message = ((HttpRequestException)o).Message });
                     else
@@ -378,8 +378,9 @@ namespace Server.Controllers
                     return NotFound(new { message = "User doesn't exists" });
                 
                 UserModel uniqueUsername = _sqliteDb.Users.Where(src => src.Username == requestBody.Username && src.Id != userId).FirstOrDefault();
+                ActionFailedDTO error = null;
                 if (uniqueUsername != null)
-                    return Ok(new ActionFailedDTO("username", "This username is already taken."));
+                    error = new ActionFailedDTO("username", "This username is already taken.");
                 user.Username = requestBody.Username;
 
                 user.Name = requestBody.Name;
@@ -396,8 +397,13 @@ namespace Server.Controllers
                     };
 
                     var response = userService.CreateChangeEmailRequest(changeEmailModel);
-                    if (response is ActionFailedDTO)
-                        return Ok(response);
+                    if (response is List<ActionFailedDTO>)
+                    {
+                        if (error != null)
+                            ((List<ActionFailedDTO>)response).Add(error);
+                        return BadRequest(response);
+                    }
+                        
 
                     try
                     {
@@ -422,6 +428,13 @@ namespace Server.Controllers
                         return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
                     }
                 }
+                if (error != null)
+                {
+                    List<ActionFailedDTO> errors = new List<ActionFailedDTO>();
+                    errors.Add(error);
+                    return BadRequest(errors);
+                }
+
                 _sqliteDb.Users.Update(user);
                 await _sqliteDb.SaveChangesAsync();
                 return Ok(new { message = "User is updated successfully" });
