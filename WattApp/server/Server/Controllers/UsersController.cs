@@ -320,10 +320,10 @@ namespace Server.Controllers
                     };
 
                     object o = userService.CreateChangeEmailRequest(changeEmailModel);
-                    if (o is HttpRequestException)
-                    {
+                    if (o is ActionFailedDTO)
+                        return Ok(o);
+                    else if (o is HttpRequestException)
                         return Ok(new { message = ((HttpRequestException)o).Message });
-                    }
                     else
                     {
                         try

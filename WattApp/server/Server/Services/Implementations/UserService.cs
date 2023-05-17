@@ -380,10 +380,9 @@ namespace Server.Services.Implementations
         {
             UserModel user = null;
             user = context.Users.Where(src => src.Email == changeEmail.NewEmail).FirstOrDefault();
-            if(user != null)
-            {
-                return new HttpRequestException("User with that email address already exists.");
-            }
+            if (user != null)
+                return new ActionFailedDTO("email", "User with that email address already exists.");
+ 
 
             ChangeEmailModel changeEmailModel = null;
             changeEmailModel = context.ChangeEmailModels.Where(src => src.OldEmail == changeEmail.OldEmail).FirstOrDefault();
