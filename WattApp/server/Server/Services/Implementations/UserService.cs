@@ -308,11 +308,14 @@ namespace Server.Services.Implementations
         {
             var user = context.Users.Where(src => src.Email == pendingUser.Email).FirstOrDefault();
             if (user != null)
-                return new HttpRequestException("User with that email address already exists.");
+                return new ActionFailedDTO("email", "User with that email address already exists.");
+            user = context.Users.Where(src => src.Username == pendingUser.Username).FirstOrDefault();
+            if (user != null)
+                return new ActionFailedDTO("username", "User with that username already exists.");
             
             var pending = context.PendingUsers.Where(src => src.Email == pendingUser.Email).FirstOrDefault();
             if (pending != null && pending.ExpireAt > DateTime.Now)
-                return new HttpRequestException("Request with that email already exists. Please check your email address.");
+                return new ActionFailedDTO(null, "Request with that email already exists. Please check your email address.");
             else if(pending != null && pending.ExpireAt > DateTime.Now)
                 context.PendingUsers.Remove(pending);
             

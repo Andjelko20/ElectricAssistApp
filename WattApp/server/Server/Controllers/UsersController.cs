@@ -191,9 +191,9 @@ namespace Server.Controllers
                 var pendingUser = userService.CreatePendingUser(user);
                 if (pendingUser == null)
                     throw new EmailAddressAlreadyInUseException("Doslo je do greske prilikom kreiranja zahteva.");
-                else if(pendingUser is HttpRequestException)
+                else if(pendingUser is ActionFailedDTO)
                 {
-                    throw (HttpRequestException)pendingUser;
+                    return Ok(pendingUser);
                 }
                 
                 try
