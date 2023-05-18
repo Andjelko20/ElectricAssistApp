@@ -23,6 +23,8 @@ namespace Server
             
             SqliteDbContext.Seed(app);
 
+
+
             app.Run();
         }
     }

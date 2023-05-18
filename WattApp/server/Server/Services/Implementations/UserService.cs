@@ -307,12 +307,18 @@ namespace Server.Services.Implementations
         public object CreatePendingUser(PendingUserModel pendingUser)
         {
             var user = context.Users.Where(src => src.Email == pendingUser.Email).FirstOrDefault();
+            List<ActionFailedDTO> actionFailedDTOs = new List<ActionFailedDTO>();
             if (user != null)
-                return new HttpRequestException("User with that email address already exists.");
+                actionFailedDTOs.Add(new ActionFailedDTO("email", "User with that email address already exists."));
+            user = context.Users.Where(src => src.Username == pendingUser.Username).FirstOrDefault();
+            if (user != null)
+                actionFailedDTOs.Add(new ActionFailedDTO("username", "User with that username already exists."));
+            if (actionFailedDTOs.Count() > 0)
+                return actionFailedDTOs;
             
             var pending = context.PendingUsers.Where(src => src.Email == pendingUser.Email).FirstOrDefault();
             if (pending != null && pending.ExpireAt > DateTime.Now)
-                return new HttpRequestException("Request with that email already exists. Please check your email address.");
+                return new ActionFailedDTO(null, "Request with that email already exists. Please check your email address.");
             else if(pending != null && pending.ExpireAt > DateTime.Now)
                 context.PendingUsers.Remove(pending);
             
@@ -377,24 +383,26 @@ namespace Server.Services.Implementations
         {
             UserModel user = null;
             user = context.Users.Where(src => src.Email == changeEmail.NewEmail).FirstOrDefault();
-            if(user != null)
-            {
-                return new HttpRequestException("User with that email address already exists.");
-            }
-
+            List<ActionFailedDTO> actionFailedDTOs = new List<ActionFailedDTO>();
+            if (user != null)
+                actionFailedDTOs.Add(new ActionFailedDTO("email", "User with that email address already exists."));
+ 
             ChangeEmailModel changeEmailModel = null;
             changeEmailModel = context.ChangeEmailModels.Where(src => src.OldEmail == changeEmail.OldEmail).FirstOrDefault();
             if(changeEmailModel != null)
             {
                 if(changeEmailModel.ExpireAt > DateTime.Now)
                 {
-                    return new HttpRequestException("You've already created request to change email address. Check your email inbox.");
+                    actionFailedDTOs.Add(new ActionFailedDTO("general", "You've already created request to change email address. Check your email inbox."));
                 }
                 else
                 {
                     context.ChangeEmailModels.Remove(changeEmailModel);
                 }
             }
+
+            if (actionFailedDTOs.Count > 0)
+                return actionFailedDTOs;
 
             ChangeEmailModel model = context.ChangeEmailModels.Add(changeEmail).Entity;
             context.SaveChanges();

@@ -77,16 +77,6 @@ namespace Server.Services.Implementations
         /// <inheritdoc/>
         public Device addNewDevice(Device device)
         {
-            /*
-            if (device.EnergyInKwh == null || device.EnergyInKwh == 0)
-            {
-                device.EnergyInKwh = _context.TypeBrandModels.FirstOrDefault(x => x.TypeId == device.DeviceTypeId && x.ModelId == device.DeviceModelId && x.BrandId == x.BrandId).EnergyKwh;
-            }
-            if (device.StandByKwh == null || device.StandByKwh == 0)
-            {
-                device.StandByKwh = _context.TypeBrandModels.FirstOrDefault(x => x.TypeId == device.DeviceTypeId && x.ModelId == device.DeviceModelId && x.BrandId == x.BrandId).StandByKwh;
-            }
-			*/
             long deviceModelId = device.DeviceModelId;
 
             if (device.EnergyInKwh == null || device.EnergyInKwh == 0)

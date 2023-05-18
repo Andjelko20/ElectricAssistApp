@@ -116,6 +116,7 @@ namespace Server
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 swagger.IncludeXmlComments(xmlPath);
             });
+
         }
     }
 }
