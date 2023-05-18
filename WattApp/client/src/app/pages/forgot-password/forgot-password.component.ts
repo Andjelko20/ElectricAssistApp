@@ -43,7 +43,7 @@ export class ForgotPasswordPageComponent {
 			},
 			error:(response:HttpErrorResponse)=>{
 				this.success=false;
-				this.errorMessage=response.error.message;
+				this.errorMessage="This email doesn't exist in database";
 			}
 		})
 	}
