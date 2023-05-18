@@ -10,12 +10,6 @@
     left: 0;
 }
 
-a {
-    text-decoration: none;
-    color: white;
-    float: inherit;
-}
-
 .footer-app {
     position: relative;
     margin: 0px 20px 0px 20px;
@@ -33,26 +27,34 @@ a {
     float: left;
 }
 
-.active {
-    margin: 10px;
-    background-color: #354871 !important;
-    color: #2fbcff;
-}
 
-a:hover {
-    background-color: #354871;
-    color: white;
-}
 
 .icon-holder {
     display: flex;
     justify-content: center;
+    color: white;
+
 }
 
 .title {
     font-size: 15px;
+    color: white;
 }
-
+.active .title:active {
+    font-size: 15px;
+    color: #2fbcff;
+}
+.active .title {
+    color: #2fbcff;
+}
+.active .icon-holder {
+    color: #2fbcff;
+}
+a  {
+    background-color: #354871;
+    color: white;
+    float: inherit;
+}
 @media (min-width: 768px) {
     #pros {
         display: none;

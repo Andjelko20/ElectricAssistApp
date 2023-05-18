@@ -12,23 +12,26 @@ Chart.register(...registerables)
   styleUrls: ['./prosumer-day-graph.component.css']
 })
 export class ProsumerDayGraphComponent {
-  
+
+  loader:boolean=false;
   maxDate = new Date();
   currentDate = new Date();
-  constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
-    
-  }
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
 
   selectedDate: Date = new Date();
 
+  constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
+    
+  }
+  
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
     this.ngOnInit();
   }
 
   ngOnInit(): void {
+    this.loader=true;
     let token=new JwtToken();
     const userId = token.data.id as number;
       const day = this.selectedDate.getDate();
@@ -71,6 +74,7 @@ export class ProsumerDayGraphComponent {
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 2),
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 1)
       ]).subscribe(([list1]) => {
+        this.loader=false;
         this.list1 = list1;
         this.LineChartConsumption();
 
