@@ -44,7 +44,7 @@ export class MonthProductionComponent implements OnInit{
   }
   thresholdConfig = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '601': { color: 'orange', "bgOpacity": 0.2 },
+    '601': { color: 'blue', "bgOpacity": 0.2 },
     '900': { color: 'red', "bgOpacity": 0.2 }
   };
 }

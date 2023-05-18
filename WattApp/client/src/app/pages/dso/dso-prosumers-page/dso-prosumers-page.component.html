@@ -1,6 +1,4 @@
-
 <div class="wrapper">
-    
         <div class="tabel-map">
           <div id="numpros">
             <span >Number of prosumers in {{updateUserDetail.city}}:  {{numberOfProsumers}}</span>
@@ -10,6 +8,7 @@
             <button (click)="showComponent1()" class="nav-button" [class.active]="!prosumersPage">Map View</button>
           </div>
         </div>
+        <hr>
         <div class="tabel-body" *ngIf="prosumersPage">
 			<app-all-prosumers></app-all-prosumers>
         </div>

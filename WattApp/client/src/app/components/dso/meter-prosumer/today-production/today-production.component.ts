@@ -45,7 +45,7 @@ export class TodayProductionComponent implements OnInit{
   }
   thresholdConfig = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '151': { color: 'orange', "bgOpacity": 0.2 },
+    '151': { color: 'blue', "bgOpacity": 0.2 },
     '300': { color: 'red', "bgOpacity": 0.2 }
   };
 }
