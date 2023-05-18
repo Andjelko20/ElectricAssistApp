@@ -18,18 +18,18 @@
         <div class="peers mT-20 fxw-nw@lg+ jc-sb ta-c gap-10">
             <div class="peer">
                 <div class="c-grey-900 text-center"  >
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than 350 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 2,222 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 2,223 and 4,444 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 4,445 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
                     </div>
                     <app-today-consumption></app-today-consumption>
                     <span>Today consumption</span>
             </div>
             <div class="peer">
                 <div class="c-grey-900 text-center"  >
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 2,222 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 2,223 and 4,444 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 4,445 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 33,230 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 33,230 and 66,444 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 66,444 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
                 </div>
                     <app-month-consumption></app-month-consumption>
                     <span>Month consumption</span>
@@ -55,14 +55,11 @@
             </div>
         </div>
     </div>
-  
-
     <div class="information">
       <app-one-prosumer></app-one-prosumer>
     </div>
   </div> 
 </div>
- 
 <app-all-devices-dso *ngIf="devices"></app-all-devices-dso>
   <div class="container2" *ngIf="dashboard">
     <div class="history-charts">
@@ -119,8 +116,6 @@
               <app-year-tabelar-prosumer></app-year-tabelar-prosumer>
           </div>
       </ng-container>
-
-
     </div> 
   </div>
 

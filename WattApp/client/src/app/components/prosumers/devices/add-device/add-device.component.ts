@@ -23,8 +23,6 @@ export class AddDeviceComponent implements OnInit{
     deviceBrandId: 0 ,
     deviceModelId: 0 ,
     name: '' ,
-    energyInKwh: 0,
-    standByKwh: 0,
     visibility: false,
     controlability: false,
     turnOn: false
