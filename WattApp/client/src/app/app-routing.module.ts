@@ -63,6 +63,7 @@ const routes: Routes = [
 	{path:"profile-edit",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
 	{path:"prosumer-change-password",component:ProsumerChangePasswordComponent,canActivate:[ProsumerGuard]},
+	//Login and NoLogin
 	{path:'email-confirmation',component:EmailConfirmationPageComponent},
 	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent},
 	{path:'**',redirectTo:"login"},

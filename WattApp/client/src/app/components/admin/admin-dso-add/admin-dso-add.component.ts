@@ -37,13 +37,12 @@ export class AdminDsoAddComponent implements OnInit{
   public settlements:any;
   currentUrl: any;
   isFormDirty: boolean = false;
-  constructor(private usersService:AuthService,private router:Router,private location:Location) { }
+
+  @ViewChild('modalContent') modalContent!: TemplateRef<any>;
+  body: string = ''; 
+  constructor(private usersService:AuthService,private router:Router,private location:Location,private modalService: NgbModal) { }
 
   ngOnInit(): void {
-
-
-
-
 	fetch(environment.serverUrl+"/cities?countryId=1",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 	.then(res=>res.json())
 	.then(res=>{
@@ -74,6 +73,8 @@ export class AdminDsoAddComponent implements OnInit{
     this.usersService.addUsers(this.addUserRequest)
     .subscribe({
       next:()=>{
+        this.modalService.open(this.modalContent);
+        this.body="Email confirmation has been sent to the user.";
          this.router.navigate(['dashboard']);
       
       }

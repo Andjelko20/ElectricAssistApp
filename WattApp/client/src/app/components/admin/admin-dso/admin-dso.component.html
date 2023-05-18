@@ -70,6 +70,7 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>User name</th>
+                    <th>Email</th>
                     <th>Role</th>
                     <th>Address</th>
                     <th>Settlement</th>
@@ -83,6 +84,7 @@
                     <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
                     <td>{{show.name}}</td>
                     <td>{{show.username}}</td>
+                    <td>{{show.email}}</td>
                     <td>{{show.role}}</td>
                     <td>{{show.address}}</td>
                     <td>{{show.settlement}}</td>
@@ -129,7 +131,7 @@
       <div class="modal-body">
         <form #form="ngForm" (ngSubmit)="upDate()">
           <div class="form-row">
-              <div class="form-group col-md-6 ">
+              <div class="form-group col-md-6 " >
                   <br>
                   <label for="email " class="form-label ">Email</label>
                   <input type="text " class="form-control " id="id " name="email " [(ngModel)]="updateUserDetail.email ">
@@ -137,12 +139,25 @@
               </div>
           </div>
           <div id="subb">
-            <button type=" submit " class="btn btn-primary mr-5 " id="change-pass-popup"(click)="modal.close('Save click')">Save</button>&nbsp;&nbsp;
+            <button type=" submit " class="btn btn-primary mr-5 " id="change-pass-popup"(click)="modal.close('Save click')" >Save</button>&nbsp;&nbsp;
             <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
           </div>
         </form>
-     
       </div>
     </ng-template>
+    <!-- Email confirmation -->
+    <ng-template #modalContent2 let-modal >
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Update {{oneUser}}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;" >{{body}}</h5>
+        <div id="subb" >
+          <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+        </div>
+      </div>
+    </ng-template>
+    
     
     
