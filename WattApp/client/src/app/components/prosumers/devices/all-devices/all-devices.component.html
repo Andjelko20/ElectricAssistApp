@@ -8,6 +8,7 @@
     </select>
     <a class="btn btn-primary" [routerLink]='["/device-add"]' role="button">Add device</a>
 </div>
+<div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
 <div class="devices" *ngIf="devices.length!==0">
     <div class="devices-item" id="slide-1" *ngFor="let device of devices | paginate: {itemsPerPage,totalItems,currentPage}">
         <a *ngIf="device.turnOn===true" [routerLink]='["/device/"+device.id]' class="devices-device-item">

@@ -18,11 +18,6 @@ export class ProsumersMapComponent implements OnInit,AfterViewInit {
 	popover: Popover | undefined;
   	tooltip: Tooltip | undefined;
 	ngAfterViewInit(): void {
-		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-		const popoverList = Array.from(popoverTriggerList).map(function (popoverTriggerEl) {
-		  return new Popover(popoverTriggerEl)
-		});
-		this.popover = popoverList[0];
 		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
 		const tooltipList = Array.from(tooltipTriggerList).map(function (tooltipTriggerEl) {
 		  return new Tooltip(tooltipTriggerEl)

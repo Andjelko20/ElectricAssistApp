@@ -3,14 +3,34 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { WeekByDay, YearsByMonth, updateDevices } from '../models/devices.model';
-
+import { NavigationStart, Router } from '@angular/router';
+import { Location } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
 export class DevicesService {
 
-  constructor(private http:HttpClient) { }
-
+  previousUrl:string;
+  constructor(private http:HttpClient,private router:Router,private location: Location) {
+    this.previousUrl=''
+    this.router.events.subscribe((event) => {
+    if (event instanceof NavigationStart) {
+      
+      if(this.location.path()==='/dashboard')
+      {
+        this.previousUrl = '/dashboard';
+      }
+      else if(this.location.path()==='/devices')
+      {
+        this.previousUrl = '/devices';
+      }
+     
+    }
+  }); }
+  getBack():string
+  {
+    return this.previousUrl;
+  }
   getAllDevices(pageNumber:number, pageSize:number,categoryId:number):Observable<any>
   {
     if(categoryId!=0)

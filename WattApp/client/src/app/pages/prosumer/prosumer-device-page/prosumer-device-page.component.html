@@ -3,7 +3,7 @@
 <div class="main">
     <div class="device">
         <div class="back">
-            <a [routerLink]='["/devices"]'><img id="turnback" src="assets/img/back.png" alt=""></a>
+            <a (click)="goBack()" style="cursor: pointer;"><img id="turnback" src="assets/img/back.png" alt=""></a>
         </div>
         <app-one-device></app-one-device>
         <div class="glafik">

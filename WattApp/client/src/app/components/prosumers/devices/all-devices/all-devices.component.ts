@@ -19,6 +19,8 @@ export class AllDevicesComponent implements OnInit {
   pageNumber?:number;
   pageSize?:number;
   deviceCategoryId!:number;
+  loader:boolean=false;
+
   categories=[
     {id:Categories.ELECTRICITY_PRODUCER_ID,name:Categories.ELECTRICITY_PRODUCER_NAME},
     {id:Categories.ELECTRICITY_CONSUMER_ID,name:Categories.ELECTRICITY_CONSUMER_NAME},
@@ -28,9 +30,11 @@ export class AllDevicesComponent implements OnInit {
     private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.loader=true;
     this.deviceCategoryId=0
     this.deviceService.getAllDevices(1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
       this.totalItems=devices.numberOfPages*this.itemsPerPage;
+      this.loader=false;
 		this.devices=devices.data.map((u:any)=>({
        id:u.id,
        userId: u.userId,
@@ -80,9 +84,10 @@ export class AllDevicesComponent implements OnInit {
 		   );
 	}
     onSelectedCategory(event:any)
-    {
+    {this.loader=true;
       this.deviceCategoryId = event.target.value;
       this.deviceService.getAllDevices(1,12,this.deviceCategoryId).subscribe(devices => {
+        this.loader=false;
         this.devices=devices.data.map((u:any)=>({
          id:u.id,
          userId: u.userId,
