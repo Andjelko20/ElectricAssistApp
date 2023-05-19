@@ -2,7 +2,7 @@
     <h1 id="allh1">All devices
     </h1>
     <label for="deviceCategoryId">Filter by:</label>
-    <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>     
+    <select id="deviceCategoryId" class="form-select" aria-label="Default select example" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>     
                 <option value="0" >All devices</option>
                 <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
     </select>
