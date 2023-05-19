@@ -106,11 +106,11 @@ export class AccountPageComponent implements OnInit {
       this.body="You didnt make any changes.";
       
     }
-    else if(this.updateUserDetail.name!==this.logedDetail.name && this.updateUserDetail.email!==this.logedDetail.email)
+    else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username )
     {
         this.body="Your name and username has been changed." 
     }
-    else if(this.updateUserDetail.name!==this.logedDetail.name && this.updateUserDetail.email!==this.logedDetail.email)
+    else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username && this.updateUserDetail.email!=this.logedDetail.email)
     {
       this.body="Your name, username and email has been changed. You need to confirm your email" 
     }
@@ -124,11 +124,29 @@ export class AccountPageComponent implements OnInit {
     this.isFormDirty1 = false;
   }
   onFormChange() {
-    this.isFormDirty = true;
+    const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
+    const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
+    const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
+    if(oldpass==="" && newpass==="" && confpass==="")
+    {
+      this.isFormDirty = false;
+    }
+    else
+    {
+      this.isFormDirty = true;
+    }
+    
   }
   onFormChange1() {
-    this.isFormDirty1 = true;
-    
+    if(this.updateUserDetail.name===this.logedDetail.name && this.updateUserDetail.username===this.logedDetail.username && this.updateUserDetail.email===this.logedDetail.email)
+    {
+      this.isFormDirty1 = false;
+      
+    }
+    else
+    {
+      this.isFormDirty1 = true;
+    }
   }
   @HostListener('window:beforeunload')
   canDeactivate(): boolean {

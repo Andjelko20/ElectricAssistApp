@@ -105,14 +105,29 @@ export class ProsumerYearGraphComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor: '#7fcdbb',
-              backgroundColor: '#7fcdbb'
+              borderColor:  'rgba(127, 205, 187, 1)',
+              backgroundColor:  'rgba(127, 205, 187, 0.3)',
+              borderWidth: 2.5,
               
             },                    
           ]       
         },
         options: 
-        {responsive: true,
+        {
+          onHover: (e, chartEle) => {
+            if (e.native) {
+              const target = e.native.target as HTMLElement;
+              if (target instanceof HTMLElement) {
+                target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+              } else {
+                console.error('Invalid target element:', target);
+              }
+            } else {
+              console.error('Missing native event:', e);
+            }
+          },  
+          maintainAspectRatio: false,
+          responsive: true,
           scales:{
             y: {
               ticks:{
