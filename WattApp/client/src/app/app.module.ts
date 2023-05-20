@@ -110,6 +110,7 @@ import { ProsumerMonthProductionComponent } from './components/prosumers/prosume
 import { ProsumerYearProductionComponent } from './components/prosumers/prosumer-graph-production/prosumer-year-production/prosumer-year-production.component';
 import { ProsumerSolarComponent } from "./components/prosumers/prosumer-solar/prosumer-solar.component";
 import { TodayProsumerComponent } from './components/weather/today-prosumer/today-prosumer.component';
+import { PrimeModule } from './prime/prime.module';
 
 @NgModule({
   declarations: [
@@ -235,7 +236,8 @@ import { TodayProsumerComponent } from './components/weather/today-prosumer/toda
     BrowserAnimationsModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+	PrimeModule
   ],
   providers: [DecimalPipe,DatePipe],
   bootstrap: [AppComponent]
