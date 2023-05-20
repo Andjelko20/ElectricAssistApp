@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
 		const rememberMe = (document.querySelector("#remember") as HTMLInputElement).checked;
 	
 		this.authService.login(this.username, this.password).subscribe({
-			next: response => {
+			next: (response:any) => {
 				if (response.status == 401) {
 					this.errorMsg = " Wrong username/password!";
 					this.messageService.add({severity:"error",summary:"Error",detail:this.errorMsg})
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
 				this.authService.isLoginSubject.next(true);
 				this.router.navigate([""]);
 			},
-			error: response => {
+			error: (response:any) => {
 				if (response.status == 401) {
 					this.errorMsg = " Wrong username/password!";
 					//this.show=true;

@@ -123,7 +123,7 @@ namespace Server.Controllers
         {
             var user=await userService.GetUserByEmail(requestBody.Email);
             if (user == null)
-                return BadRequest(new BadRequestStatusResponse("User not exist"));
+                return BadRequest(new MessageResponseDTO("Email doesn't exist in database."));
             var resetPassword = await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r => r.UserId == user.Id);
             bool exists = true;
             if (resetPassword == null)
@@ -143,7 +143,7 @@ namespace Server.Controllers
             }
             catch
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,new MessageResponseDTO("Email is not sent"));
+                return StatusCode(StatusCodes.Status500InternalServerError,new MessageResponseDTO("Fatal error! Email is not sent!"));
             }
             if (!exists)
                 _sqliteDb.ResetPassword.Add(resetPassword);
