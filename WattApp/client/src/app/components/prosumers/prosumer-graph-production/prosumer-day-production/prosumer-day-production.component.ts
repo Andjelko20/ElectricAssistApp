@@ -99,16 +99,16 @@ export class ProsumerDayProductionComponent {
         
         datasets: [
           {
-            label: 'production',
+            label: 'Production',
             data: energyUsageResults2,
-            tension:0.5,
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-            pointBorderColor: 'rgba(0, 255, 0, 1)',
-            pointBorderWidth: 7,
-            pointRadius: 5,
+            tension:0.1,
+            backgroundColor: 'rgba(29, 145, 192, 0.2)',
+            borderColor: 'rgba(29, 145, 192, 1)',
+            borderWidth: 1,
+            pointBackgroundColor: 'rgba(29, 145, 192, 1)',
+            pointBorderColor: 'rgba(29, 145, 192, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
             pointHoverRadius: 6,
             fill:true
           }
@@ -118,6 +118,18 @@ export class ProsumerDayProductionComponent {
       }
       ,
       options: {
+        onHover: (e, chartEle) => {
+          if (e.native) {
+            const target = e.native.target as HTMLElement;
+            if (target instanceof HTMLElement) {
+              target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+            } else {
+              console.error('Invalid target element:', target);
+            }
+          } else {
+            console.error('Missing native event:', e);
+          }
+        },  
         maintainAspectRatio: false,
         responsive: true,
         scales:{

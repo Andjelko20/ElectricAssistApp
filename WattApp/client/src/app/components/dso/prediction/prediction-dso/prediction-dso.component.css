@@ -16,6 +16,9 @@
 #linechart {
     width: 100%;
 }
+.container{
+    width: 15%;
+}
 
 @media(min-width:1200px) {
     .chart-container {

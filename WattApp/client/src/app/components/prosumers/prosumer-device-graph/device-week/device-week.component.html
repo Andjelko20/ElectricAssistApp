@@ -5,7 +5,7 @@
             <input matStartDate placeholder="Start date" formControlName="start" [(ngModel)]="firstdate">
             <input matEndDate placeholder="End date" formControlName="end" [(ngModel)]="currentDate">
         </mat-date-range-input>
-        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
