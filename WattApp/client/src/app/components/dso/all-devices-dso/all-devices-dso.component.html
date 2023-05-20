@@ -2,19 +2,17 @@
   <!-- <div class="search">
     <input type="text" placeholder="Search...">
   </div> -->
-  <div class="sort-by">
-      <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>
+  <div class="filters">
+  <div class="form-group">
+	  <label>Filter by category</label>
+      <select id="deviceCategoryId" class="select-form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>
           <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
       </select>
-    <!-- <select>
-      <option value="asc">Ascending</option>
-      <option value="desc">Descending</option>
-    </select>
-    <select>
-      <option value="10">10 per page</option>
-      <option value="20">20 per page</option>
-      <option value="50">50 per page</option>
-    </select> -->
+  </div>
+  <div class="form-group">
+	<label>Filter by type</label>
+	<select class="select-form-control"></select>
+  </div>
   </div>
   <div class="table">
           <table>
