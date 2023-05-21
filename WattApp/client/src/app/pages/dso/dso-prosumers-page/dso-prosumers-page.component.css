@@ -6,19 +6,14 @@
   margin-right: 20px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 1px 2px grey;
+  border: 1px solid #D2D2D2;
   margin-bottom: 70px;
-}
-.tabel-body{
-  
 }
 .tabel-map {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
-  border: 1px solid gray;
-  border-radius: 10px;
   margin-left: 50px;
   margin-right: 50px;
   margin-bottom: 10px;
@@ -139,7 +134,7 @@
     margin-right: 10px;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 1px 2px grey;
+    border: 1px solid #D2D2D2;
     margin-bottom: 70px;
   }
   
@@ -148,8 +143,6 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
-  border: 1px solid gray;
-  border-radius: 10px;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;

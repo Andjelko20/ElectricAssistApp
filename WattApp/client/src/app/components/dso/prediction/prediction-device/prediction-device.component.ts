@@ -58,7 +58,7 @@ export class PredictionDeviceComponent {
   }
   LineChartProduction(){
 
-    const chartId = 'linechart1';
+    const chartId = 'linechartP';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
@@ -71,7 +71,7 @@ export class PredictionDeviceComponent {
     {
       max=1;
     }
-    const Linechart = new Chart("linechart1", {
+    const Linechart = new Chart("linechartP", {
       type: 'line',
       data : {
         labels: month1,
@@ -159,7 +159,7 @@ export class PredictionDeviceComponent {
   }
   LineChartConsumption(){
 
-    const chartId = 'linechart2';
+    const chartId = 'linechartC';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
@@ -172,7 +172,7 @@ export class PredictionDeviceComponent {
     {
       max=1;
     }
-    const Linechart = new Chart("linechart2", {
+    const Linechart = new Chart("linechartC", {
       type: 'line',
       data : {
         labels: month2,

@@ -202,7 +202,6 @@ import { TodayProsumerComponent } from './components/weather/today-prosumer/toda
     ProsumerYearTableComponent,
     PredictionDsoComponent,
     PredictionTabelarDsoComponent,
-
     ProsumerChangePasswordComponent,
       DeviceTodayComponent,
       DeviceWeekComponent,
@@ -219,7 +218,6 @@ import { TodayProsumerComponent } from './components/weather/today-prosumer/toda
       ProsumerMonthProductionComponent,
       ProsumerYearProductionComponent,
       TodayProsumerComponent,
-    
   ],
   imports: [
     AppRoutingModule,

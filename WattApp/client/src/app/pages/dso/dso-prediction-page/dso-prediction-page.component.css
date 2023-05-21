@@ -10,21 +10,15 @@
     border: 1px solid #D2D2D2;
 }
 #pred{
-    display: flex;
-    text-align: center;
-    align-items: right;
-    justify-content: right;
-    border-bottom: 2px solid gray;
-
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.date-time{
-    margin-top: 15px;
-    font-size: 20px;
-    margin-left: 400px;
-    margin-right: 10px;
-    
+#title-pred{
+  text-align: center;
+  width: 100%;
 }
+
 .toggle-container {
 
     display: flex;
@@ -57,8 +51,13 @@
   }
   .toggle-buttons input[type="radio"]:checked + label {
     font-weight: bold;
-    color: black;
   }
   .toggle-buttons input[type="radio"]:not(:checked) + label {
     color: gray;
+  }
+  @media (max-width: 768px) {
+    #pred {
+      flex-direction: column;
+    }
+
   }

@@ -2,12 +2,13 @@
     <h1 id="allh1">All devices
     </h1>
     <label for="deviceCategoryId">Filter by:</label>
-    <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>     
+    <select id="deviceCategoryId" class="form-select" aria-label="Default select example" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>     
                 <option value="0" >All devices</option>
                 <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
     </select>
     <a class="btn btn-primary" [routerLink]='["/device-add"]' role="button">Add device</a>
 </div>
+<div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
 <div class="devices" *ngIf="devices.length!==0">
     <div class="devices-item" id="slide-1" *ngFor="let device of devices | paginate: {itemsPerPage,totalItems,currentPage}">
         <a *ngIf="device.turnOn===true" [routerLink]='["/device/"+device.id]' class="devices-device-item">
