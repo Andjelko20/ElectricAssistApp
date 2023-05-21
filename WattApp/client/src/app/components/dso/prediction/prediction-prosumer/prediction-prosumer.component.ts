@@ -19,6 +19,7 @@ export class PredictionProsumerComponent {
 
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  dayNames: string[] = [];
   idProsumer!:number;
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     
@@ -29,6 +30,16 @@ export class PredictionProsumerComponent {
     let token=new JwtToken();
     this.idProsumer=token.data.id as number;
 
+          this.dayNames = []
+          const currentDate = new Date();
+          currentDate.setDate(currentDate.getDate()+1)
+          const enddate = new Date()
+          enddate.setDate(enddate.getDate()+7)
+          while (currentDate <= enddate) {
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            this.dayNames.push(dayName);
+            currentDate.setDate(currentDate.getDate() + 1 );
+          }
     this.deviceService.predictionUser(this.idProsumer,2).subscribe((data: WeekByDay[]) =>{
       this.list1 = data;
       this.deviceService.predictionUser(this.idProsumer,1).subscribe((data: WeekByDay[]) =>{
@@ -48,7 +59,6 @@ export class PredictionProsumerComponent {
     }
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month1 = this.list2.map(day => day.day);
     let max=0;
     if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
     {
@@ -57,7 +67,7 @@ export class PredictionProsumerComponent {
     const Linechart = new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: month1,
+        labels: this.dayNames,
         
         datasets:  [
           
@@ -148,7 +158,6 @@ export class PredictionProsumerComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month2 = this.list1.map(day => day.day);
     let max=0;
     if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
     {
@@ -157,7 +166,7 @@ export class PredictionProsumerComponent {
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: month2,
+        labels: this.dayNames,
         
         datasets:  [
           {

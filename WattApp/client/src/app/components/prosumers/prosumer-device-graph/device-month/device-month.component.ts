@@ -11,6 +11,7 @@ import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { ExportToCsv } from 'export-to-csv';
 Chart.register(...registerables)
 
 const moment = _rollupMoment || _moment;
@@ -48,8 +49,7 @@ export class DeviceMonthComponent {
   productionGraph:boolean = false;
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
-  itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
-  ,'20','21','22','23','24','25','26','27','28','29','30'];
+  mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -314,4 +314,38 @@ export class DeviceMonthComponent {
         }
       });
   }
+
+  downloadCSV(): void {
+    const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(deviceId).subscribe(data=>{
+      if(data.deviceCategory == "Electricity Consumer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'consumption-month',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list1);
+      }
+      else if(data.deviceCategory == "Electricity Producer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'production-month',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list2);
+      }
+    })
+    } 
 }

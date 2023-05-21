@@ -13,6 +13,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { ExportToCsv } from 'export-to-csv';
 Chart.register(...registerables)
 
 @Injectable()
@@ -58,6 +59,8 @@ export class DeviceWeekComponent {
   productionGraph:boolean = false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  dayNames: string[] = [];
+  mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
@@ -103,6 +106,15 @@ export class DeviceWeekComponent {
       
     }
     else{
+          this.dayNames = []
+          const currentDate = new Date(this.sdate);
+          const enddate = new Date(this.send)
+          enddate.setDate(enddate.getDate()-1)
+          while (currentDate <= enddate) {
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            this.dayNames.push(dayName);
+            currentDate.setDate(currentDate.getDate() + 1 );
+          }
           const day1 = this.sdate.getDate();
           const month1 = this.sdate.getMonth()+1;
           let dayString1 = String(day1).padStart(2, '0');
@@ -142,7 +154,6 @@ export class DeviceWeekComponent {
     }
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month1 = this.list2.map(day => day.day);
     let max=0;
     if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
     {
@@ -152,7 +163,7 @@ export class DeviceWeekComponent {
     const Linechart = new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: month1,
+        labels: this.dayNames,
         
         datasets:  [
           
@@ -257,7 +268,6 @@ export class DeviceWeekComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month2 = this.list1.map(day => day.day);
     let max=0;
     if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
     {
@@ -267,7 +277,7 @@ export class DeviceWeekComponent {
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: month2,
+        labels: this.dayNames,
         
         datasets:  [
           {
@@ -363,4 +373,38 @@ export class DeviceWeekComponent {
     });
 
   }
+
+  downloadCSV(): void {
+    const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(deviceId).subscribe(data=>{
+      if(data.deviceCategory == "Electricity Consumer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'consumption-week',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list1);
+      }
+      else if(data.deviceCategory == "Electricity Producer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'production-week',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list2);
+      }
+    })
+    } 
 }

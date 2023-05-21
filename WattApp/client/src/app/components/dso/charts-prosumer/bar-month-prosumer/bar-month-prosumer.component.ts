@@ -12,6 +12,7 @@ Chart.register(...registerables)
 import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
 import { ActivatedRoute } from '@angular/router';
+import { ExportToCsv } from 'export-to-csv';
 
 const moment = _rollupMoment || _moment;
 
@@ -46,6 +47,7 @@ export class BarMonthProsumerComponent {
   currentDate = new Date();
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
+  mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -294,5 +296,36 @@ export class BarMonthProsumerComponent {
           }
         }
       });
+  }
+  downloadCSV(): void {
+    this.mergedList = [];
+    for (let i = 0; i < this.list1.length; i++) {
+      for (let j = 0; j < this.list2.length; j++) {
+        if (this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
+          this.mergedList.push({
+            day: this.list1[i].day,
+            month: this.list1[i].month,
+            year: this.list1[i].year,
+            consumption: this.list1[i].energyUsageResult,
+            production: this.list2[j].energyUsageResult
+          });
+          break;
+        }
+      }
+  }
+  const options = {
+    fieldSeparator: ',',
+    filename: 'consumption/production-month',
+    quoteStrings: '"',
+    useBom : true,
+    decimalSeparator: '.',
+    showLabels: true,
+    useTextFile: false,
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+  };
+
+  const csvExporter = new ExportToCsv(options);
+  const csvData = csvExporter.generateCsv(this.mergedList);
+
   }
 }

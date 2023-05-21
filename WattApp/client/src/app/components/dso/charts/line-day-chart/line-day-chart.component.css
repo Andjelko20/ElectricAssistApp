@@ -13,6 +13,40 @@
     width: 100%;
 }
 
+.container {
+    width: 15%;
+    float: left;
+    margin-left: 5%;
+  }
+  
+  .container2 {
+    display: inline-block;
+    width: 15%;
+
+  }
+  .container3 {
+    width: 15%;
+    float: right;
+    margin-right: 5%;
+  }
+
+
+  .btn {
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #2199e8;
+    color: white;
+    font-weight: normal;
+    text-align: center;
+  }
+  
+  .btn:hover {
+    background-color: #0d8beb;
+  }
+
 #linechart {
     width: 100%;
 }
