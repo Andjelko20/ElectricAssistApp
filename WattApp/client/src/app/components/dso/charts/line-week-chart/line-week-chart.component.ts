@@ -127,7 +127,7 @@ export class LineWeekChartComponent {
           const enddate = new Date(this.send)
           enddate.setDate(enddate.getDate()-1)
           while (currentDate <= enddate) {
-            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
             this.dayNames.push(dayName);
             currentDate.setDate(currentDate.getDate() + 1 );
           }
@@ -161,7 +161,7 @@ export class LineWeekChartComponent {
           const enddate = new Date(this.send)
           enddate.setDate(enddate.getDate()-1)
           while (currentDate <= enddate) {
-            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
             this.dayNames.push(dayName);
             currentDate.setDate(currentDate.getDate() + 1 );
           }
