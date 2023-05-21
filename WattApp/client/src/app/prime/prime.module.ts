@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 
 @NgModule({
@@ -10,8 +13,11 @@ import { MessageService } from 'primeng/api';
     CommonModule
   ],
   exports:[
-	ToastModule
+	ToastModule,
+	DialogModule,
+	ConfirmDialogModule,
+	ConfirmPopupModule
   ],
-  providers:[MessageService]
+  providers:[MessageService,ConfirmationService]
 })
 export class PrimeModule { }

@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -22,7 +23,7 @@ export class ResetPasswordPageComponent {
 	public errorConfirmedPassword:string="";
 
 	public backgroundImage = 'assets/images/background.jpg';
-	constructor(private route:ActivatedRoute,private router:Router,private authService:AuthService){
+	constructor(private route:ActivatedRoute,private router:Router,private authService:AuthService,private messageService:MessageService){
 		this.resetKey=this.route.snapshot.paramMap.get('id') ?? "";
 	}
 	ngOnInit(){
@@ -61,7 +62,7 @@ export class ResetPasswordPageComponent {
 			return true;
 		}
 		input.classList.add("invalid");
-		this.errorConfirmedPassword="Confirmed must be that same as required and not empty";
+		this.errorConfirmedPassword="Password isn't confirmed";
 		return false;
 	}
 	resetPassword(){
@@ -69,12 +70,14 @@ export class ResetPasswordPageComponent {
 			return;
 		this.authService.resetPasswordWithResetCode(this.resetKey,this.newPassword).subscribe(
 			{
-				next:(response)=>{
-					this.success=true;
+				next:(response:any)=>{
+					//this.success=true;
+					this.messageService.add({severity:"success",summary:"Success",detail:response.message});
 				},
 				error:(response:HttpErrorResponse)=>{
-					this.success=false;
-					this.errorMessage="Reset key is expired or invalid";
+					//this.success=false;
+					//this.errorMessage="Reset key is expired or invalid";
+					this.messageService.add({severity:"error",summary:"Error",detail:response.error.message});
 				}
 			}
 		);

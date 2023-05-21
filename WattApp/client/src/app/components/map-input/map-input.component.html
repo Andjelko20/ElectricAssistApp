@@ -24,7 +24,7 @@
 		<div class="address-container">
 			<label for="Address">Address</label>
 			<br>
-			<input type="text" class="form-control" id="address" name="address" [(ngModel)]="address" (keydown)="changeLocations($event)">
+			<input type="text" class="form-control" id="address" name="address" [(ngModel)]="address" (ngModelChange)="changeLocations($event)">
 			<div class="search-result" [class.invisible]="!searchResultVisible">
 				<div *ngIf="locations.length==0" class="no-results">
 					<p>There are no results</p>

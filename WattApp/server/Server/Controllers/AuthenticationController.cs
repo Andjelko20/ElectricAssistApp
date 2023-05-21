@@ -168,7 +168,7 @@ namespace Server.Controllers
             _sqliteDb.ResetPassword.RemoveRange(_sqliteDb.ResetPassword.Where(r=>r.ExpireAt<DateTime.Now));
             var resetPassword=await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r=>r.ResetKey==requestBody.ResetKey);
             if (resetPassword == null)
-                return BadRequest();
+                return BadRequest(new MessageResponseDTO("Reset token is expired or already used!"));
             var user = await _sqliteDb.Users.FirstOrDefaultAsync(u => u.Id == resetPassword.UserId);
             if (user == null)
                 return BadRequest();
