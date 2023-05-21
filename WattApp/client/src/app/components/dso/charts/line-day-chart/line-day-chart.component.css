@@ -19,8 +19,6 @@
 ::ng-deep .mat-calendar-body .mat-calendar-body-selected {
     background-color: #354871 !important;
   }
-
-  
 @media(min-width:1200px) {
     .chart-container {
         min-height: 50vh !important;
