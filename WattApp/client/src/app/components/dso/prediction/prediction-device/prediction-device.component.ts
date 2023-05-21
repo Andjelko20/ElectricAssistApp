@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ExportToCsv } from 'export-to-csv';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
@@ -268,4 +269,38 @@ export class PredictionDeviceComponent {
     });
 
   }
+
+  downloadCSV(): void {
+    const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(deviceId).subscribe(data=>{
+      if(data.deviceCategory == "Electricity Consumer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'consumption-week',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list1);
+      }
+      else if(data.deviceCategory == "Electricity Producer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'production-week',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list2);
+      }
+    })
+    } 
 }

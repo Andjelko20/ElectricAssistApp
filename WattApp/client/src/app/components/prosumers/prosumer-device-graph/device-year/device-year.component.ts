@@ -325,33 +325,36 @@ export class DeviceYearComponent {
         });
     }
     downloadCSV(): void {
-      this.mergedList = [];
-      for (let i = 0; i < this.list1.length; i++) {
-        for (let j = 0; j < this.list2.length; j++) {
-          if (this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
-            this.mergedList.push({
-              month: this.list1[i].month,
-              year: this.list1[i].year,
-              consumption: this.list1[i].energyUsageResult,
-              production: this.list2[j].energyUsageResult
-            });
-            break;
-          }
+      const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+      this.authService.getDevice(deviceId).subscribe(data=>{
+        if(data.deviceCategory == "Electricity Consumer"){
+            const options = {
+            fieldSeparator: ',',
+            filename: 'consumption-year',
+            quoteStrings: '"',
+            useBom : true,
+            decimalSeparator: '.',
+            showLabels: true,
+            useTextFile: false,
+            headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
+          };
+          const csvExporter = new ExportToCsv(options);
+          const csvData = csvExporter.generateCsv(this.list1);
         }
-    }
-    const options = {
-      fieldSeparator: ',',
-      filename: 'consumption/production-year',
-      quoteStrings: '"',
-      useBom : true,
-      decimalSeparator: '.',
-      showLabels: true,
-      useTextFile: false,
-      headers: ['Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
-    };
-  
-    const csvExporter = new ExportToCsv(options);
-    const csvData = csvExporter.generateCsv(this.mergedList);
-  
-    }
+        else if(data.deviceCategory == "Electricity Producer"){
+            const options = {
+            fieldSeparator: ',',
+            filename: 'production-year',
+            quoteStrings: '"',
+            useBom : true,
+            decimalSeparator: '.',
+            showLabels: true,
+            useTextFile: false,
+            headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
+          };
+          const csvExporter = new ExportToCsv(options);
+          const csvData = csvExporter.generateCsv(this.list2);
+        }
+      })
+      } 
 }
