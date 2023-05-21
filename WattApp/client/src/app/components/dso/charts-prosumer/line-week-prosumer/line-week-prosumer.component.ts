@@ -56,6 +56,7 @@ export class LineWeekProsumerComponent {
   firstdate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  dayNames: string[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
@@ -92,6 +93,15 @@ export class LineWeekProsumerComponent {
     });
     }
     else{
+      this.dayNames = []
+      const currentDate = new Date(this.sdate);
+      const enddate = new Date(this.send)
+      enddate.setDate(enddate.getDate()-1)
+      while (currentDate <= enddate) {
+        const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+        this.dayNames.push(dayName);
+        currentDate.setDate(currentDate.getDate() + 1 );
+      }
       const day1 = this.sdate.getDate();
       const month1 = this.sdate.getMonth()+1;
       let dayString1 = String(day1).padStart(2, '0');
@@ -126,7 +136,6 @@ export class LineWeekProsumerComponent {
     }
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month = this.list2.map(day => day.day);
 
     let max=0;
     if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
@@ -136,7 +145,7 @@ export class LineWeekProsumerComponent {
     const Linechart = new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: month,
+        labels: this.dayNames,
         
         datasets:  [
           
@@ -238,7 +247,6 @@ export class LineWeekProsumerComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month = this.list1.map(day => day.day);
     let max=0;
     if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
     {
@@ -247,7 +255,7 @@ export class LineWeekProsumerComponent {
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: month,
+        labels: this.dayNames,
         
         datasets:  [
           {

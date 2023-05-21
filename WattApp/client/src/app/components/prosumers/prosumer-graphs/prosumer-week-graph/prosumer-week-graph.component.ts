@@ -57,6 +57,7 @@ export class ProsumerWeekGraphComponent {
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  dayNames: string[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
@@ -90,6 +91,15 @@ export class ProsumerWeekGraphComponent {
     });
     }
     else{
+          this.dayNames = []
+          const currentDate = new Date(this.sdate);
+          const enddate = new Date(this.send)
+          enddate.setDate(enddate.getDate()-1)
+          while (currentDate <= enddate) {
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            this.dayNames.push(dayName);
+            currentDate.setDate(currentDate.getDate() + 1 );
+          }
           const day1 = this.sdate.getDate();
           const month1 = this.sdate.getMonth()+1;
           let dayString1 = String(day1).padStart(2, '0');
@@ -121,7 +131,6 @@ export class ProsumerWeekGraphComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month = this.list1.map(day => day.day);
     let max=0;
     if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
     {
@@ -130,7 +139,7 @@ export class ProsumerWeekGraphComponent {
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: month,
+        labels: this.dayNames,
         
         datasets:  [
           {
