@@ -242,6 +242,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "User with ID: " + byDayUserId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetUserHistoryByDayFromToPagination(fromDate, toDate, byDayUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return BadRequest("Page " + pageNumber + " does not exist.");
+
                     return Ok(result);
                 }
                 else if (byDayDeviceId != 0)
@@ -250,6 +253,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "Device with ID: " + byDayDeviceId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetDeviceHistoryByDayFromToPagination(fromDate, toDate, byDayDeviceId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return BadRequest("Page " + pageNumber + " does not exist.");
+
                     return Ok(result);
                 }
                 else if (byDaySettlementId != 0)
@@ -258,6 +264,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "Settlement with ID: " + byDaySettlementId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetSettlementHistoryByDayFromToPagination(fromDate, toDate, byDaySettlementId, deviceCategoryId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return BadRequest("Page " + pageNumber + " does not exist.");
+
                     return Ok(result);
                 }
                 else //if (byDayCityId != 0)
@@ -266,6 +275,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "City with ID: " + byDayCityId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetCityHistoryByDayFromToPagination(fromDate, toDate, byDayCityId, deviceCategoryId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return BadRequest("Page " + pageNumber + " does not exist.");
+
                     return Ok(result);
                 }
             }
