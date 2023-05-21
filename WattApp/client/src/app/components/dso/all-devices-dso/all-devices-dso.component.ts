@@ -27,6 +27,7 @@ export class AllDevicesDsoComponent implements OnInit{
   devicesList:ShowDevices[] = [];
   deviceCategoryId!: number;
   idDevice!: number;
+  deviceCategory?:boolean=false;
   constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute,private modalService: NgbModal,private datePipe: DatePipe) {}
   categories=[
 
@@ -39,8 +40,7 @@ export class AllDevicesDsoComponent implements OnInit{
      ]
 
   ngOnInit(): void {
-   
-    
+    this.deviceCategory=false
     this.deviceCategoryId = 2;
     this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
     	this.totalItems=devices.numberOfPages*this.itemsPerPage;
@@ -65,8 +65,6 @@ export class AllDevicesDsoComponent implements OnInit{
     if (error.status === 404) {
     
       this.devicesList=[]
-    
-      //console.log('Devices not found in database');
     
     }}
     
@@ -109,9 +107,12 @@ export class AllDevicesDsoComponent implements OnInit{
 
   onSelectedCategory(event:any){
 
-    this.deviceCategoryId = event.target.value;
+    this.deviceCategoryId = event.target.value as number;
+    this.deviceCategory = event.target.value === "1";
+
     this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
-		this.totalItems=devices.numberOfPages*this.itemsPerPage;
+		
+      this.totalItems=devices.numberOfPages*this.itemsPerPage;
 		this.devicesList=devices.data.map((u:any)=>({
         id:u.id,
         userId: u.userId,
@@ -133,8 +134,6 @@ export class AllDevicesDsoComponent implements OnInit{
     if (error.status === 404) {
     
       this.devicesList=[]
-    
-      //console.log('Devices not found in database');
     
     }}
     
