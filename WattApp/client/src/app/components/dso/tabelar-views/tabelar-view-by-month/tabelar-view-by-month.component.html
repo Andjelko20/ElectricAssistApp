@@ -2,6 +2,11 @@
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
+        <label>Select Settlement:</label>
+        <select style="padding: 10px; text-align: center;" id="dropdown"  [(ngModel)]="selectedOption" (change)="onOptionSelected()">
+          <option value="0">Total</option>
+          <option *ngFor="let item of settlements" value="{{item.id}}">{{item.name}}</option>
+        </select>
         <mat-form-field appearance="fill">
           <mat-label>Month and Year</mat-label>
           <input matInput [matDatepicker]="dp" [formControl]="date" [max]="currentDate">
@@ -13,11 +18,6 @@
                           panelClass="example-month-picker">
           </mat-datepicker>
         </mat-form-field>
-        <label>Select Settlement:</label>
-        <select style="padding: 10px; text-align: center;" id="dropdown"  [(ngModel)]="selectedOption" (change)="onOptionSelected()">
-          <option value="0">Total</option>
-          <option *ngFor="let item of settlements" value="{{item.id}}">{{item.name}}</option>
-        </select><br>
         <button class="btn" (click)="downloadCSV()">Export to CSV</button>
       </div>
       <div class="table-container">
