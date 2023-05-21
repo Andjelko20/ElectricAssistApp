@@ -4,6 +4,6 @@
     {
         public int NumberOfRows { get; set; }
         public int NumberOfPages { get; set; }
-        public List<DailyEnergyConsumptionPastMonth> ByDayPaginationList { get; set; }
+        public List<DailyEnergyConsumptionPastMonth> Data { get; set; }
     }
 }

@@ -1099,7 +1099,7 @@ namespace Server.Services.Implementations
             {
                 NumberOfRows = NumberOfRows,
                 NumberOfPages = NumberOfPages,
-                ByHourPaginationList = deviceListEnergyUsage.GetRange(fromIndex, itemsPerPage),
+                Data = deviceListEnergyUsage.GetRange(fromIndex, itemsPerPage)
             };
 
             return result;
@@ -1122,7 +1122,7 @@ namespace Server.Services.Implementations
             {
                 NumberOfRows = NumberOfRows,
                 NumberOfPages = NumberOfPages,
-                ByDayPaginationList = listEnergyUsage.GetRange(fromIndex, itemsPerPage),
+                Data = listEnergyUsage.GetRange(fromIndex, itemsPerPage),
             };
 
             return result;

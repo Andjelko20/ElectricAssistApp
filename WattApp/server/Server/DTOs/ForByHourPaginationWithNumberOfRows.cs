@@ -4,6 +4,6 @@
     {
         public int NumberOfRows { get; set; }
         public int NumberOfPages { get; set; }
-        public List<EnergyToday> ByHourPaginationList {get; set;}
+        public List<EnergyToday> Data {get; set;}
     }
 }

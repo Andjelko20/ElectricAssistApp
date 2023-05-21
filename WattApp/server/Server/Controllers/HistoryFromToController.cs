@@ -199,7 +199,7 @@ namespace Server.Controllers
 
                     var result = historyFromToService.GetDeviceHistoryByHourFromToPagination(fromDate, toDate, byHourDeviceId, pageNumber, itemsPerPage);
                     if(result == null)
-                        return BadRequest("Page " + pageNumber + " does not exist.");
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
 
                     return Ok(result);
                 }
@@ -210,7 +210,7 @@ namespace Server.Controllers
 
                     var result = historyFromToService.GetUserHistoryByHourFromToPagination(fromDate, toDate, byHourUserId, deviceCategoryId, pageNumber, itemsPerPage);
                     if (result == null)
-                        return BadRequest("Page " + pageNumber + " does not exist.");
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
 
                     return Ok(result);
                 }
@@ -221,7 +221,7 @@ namespace Server.Controllers
 
                     var result = historyFromToService.GetSettlementHistoryByHourFromToPagination(fromDate, toDate, byHourSettlementId, deviceCategoryId, pageNumber, itemsPerPage);
                     if (result == null)
-                        return BadRequest("Page " + pageNumber + " does not exist.");
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
 
                     return Ok(result);
                 }
@@ -232,7 +232,7 @@ namespace Server.Controllers
 
                     var result = historyFromToService.GetCityHistoryByHourFromToPagination(fromDate, toDate, byHourCityId, deviceCategoryId, pageNumber, itemsPerPage);
                     if (result == null)
-                        return BadRequest("Page " + pageNumber + " does not exist.");
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
 
                     return Ok(result);
                 }
@@ -243,7 +243,7 @@ namespace Server.Controllers
 
                     var result = historyFromToService.GetUserHistoryByDayFromToPagination(fromDate, toDate, byDayUserId, deviceCategoryId, pageNumber, itemsPerPage);
                     if (result == null)
-                        return BadRequest("Page " + pageNumber + " does not exist.");
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
 
                     return Ok(result);
                 }
@@ -254,7 +254,7 @@ namespace Server.Controllers
 
                     var result = historyFromToService.GetDeviceHistoryByDayFromToPagination(fromDate, toDate, byDayDeviceId, pageNumber, itemsPerPage);
                     if (result == null)
-                        return BadRequest("Page " + pageNumber + " does not exist.");
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
 
                     return Ok(result);
                 }
@@ -265,7 +265,7 @@ namespace Server.Controllers
 
                     var result = historyFromToService.GetSettlementHistoryByDayFromToPagination(fromDate, toDate, byDaySettlementId, deviceCategoryId, pageNumber, itemsPerPage);
                     if (result == null)
-                        return BadRequest("Page " + pageNumber + " does not exist.");
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
 
                     return Ok(result);
                 }
@@ -276,7 +276,7 @@ namespace Server.Controllers
 
                     var result = historyFromToService.GetCityHistoryByDayFromToPagination(fromDate, toDate, byDayCityId, deviceCategoryId, pageNumber, itemsPerPage);
                     if (result == null)
-                        return BadRequest("Page " + pageNumber + " does not exist.");
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
 
                     return Ok(result);
                 }
