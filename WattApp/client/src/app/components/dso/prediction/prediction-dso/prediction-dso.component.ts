@@ -17,6 +17,7 @@ export class PredictionDsoComponent {
   loader:boolean=false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  dayNames: string[] = [];
   settlements:Settlement[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService){}
@@ -47,6 +48,16 @@ export class PredictionDsoComponent {
         })
         
         if(this.selectedOption == 0){
+          this.dayNames = []
+          const currentDate = new Date();
+          currentDate.setDate(currentDate.getDate()+1)
+          const enddate = new Date()
+          enddate.setDate(enddate.getDate()+7)
+          while (currentDate <= enddate) {
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            this.dayNames.push(dayName);
+            currentDate.setDate(currentDate.getDate() + 1 );
+          }
           forkJoin([
             this.deviceService.predictionCity(number, 2),
             this.deviceService.predictionCity(number, 1)
@@ -59,6 +70,15 @@ export class PredictionDsoComponent {
           
         }
         else{
+          this.dayNames = []
+          const currentDate = new Date();
+          const enddate = new Date()
+          enddate.setDate(enddate.getDate()+7)
+          while (currentDate <= enddate) {
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            this.dayNames.push(dayName);
+            currentDate.setDate(currentDate.getDate() + 1 );
+          }
           forkJoin([
             this.deviceService.predictionSettlement(this.selectedOption, 2),
             this.deviceService.predictionSettlement(this.selectedOption, 1)
@@ -81,7 +101,6 @@ export class PredictionDsoComponent {
     }
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month = this.list2.map(day => day.day);
     let max=0;
     if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
     {
@@ -90,7 +109,7 @@ export class PredictionDsoComponent {
     const Linechart = new Chart("linechart1", {
       type: 'line',
       data : {
-        labels: month,
+        labels: this.dayNames,
         
         datasets:  [
           
@@ -180,7 +199,6 @@ export class PredictionDsoComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month = this.list1.map(day => day.day);
     let max=0;
     if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
     {
@@ -189,7 +207,7 @@ export class PredictionDsoComponent {
     const Linechart = new Chart("linechart2", {
       type: 'line',
       data : {
-        labels: month,
+        labels: this.dayNames,
         
         datasets:  [
           {
