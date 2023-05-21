@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MessageService } from 'primeng/api';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-account-page',
   templateUrl: './account-page.component.html',
@@ -53,7 +55,7 @@ export class AccountPageComponent implements OnInit {
 
   storePassword=localStorage.getItem("password");
   constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,
-    private router:Router,private updateService:AuthService,private modalService: NgbModal) {
+    private router:Router,private updateService:AuthService,private modalService: NgbModal,private messageService:MessageService) {
   
    }
 
@@ -63,7 +65,7 @@ export class AccountPageComponent implements OnInit {
     this.role=token.data.role as string;
 
     this.updateService.getlogInUser().subscribe({
-          next:(response)=>{
+          next:(response:any)=>{
             this.updateUserDetail={
               id:this.idUser,
               name:response.name,
@@ -169,15 +171,23 @@ export class AccountPageComponent implements OnInit {
       
       
         this.updateService.changePassword(oldpass,newpass).subscribe( 
-        { next:() => {  
+        { next:(response:any) => {  
             
-          this.modalService.open(this.modalContent);
-          this.body="Your password has been changed.";
+          //this.modalService.open(this.modalContent);
+          //this.body="Your password has been changed.";
+		  this.messageService.add({severity:"success",summary:"Success",detail:response.message});
+		  this.oldPassword="";
+		  this.newPassword="";
+		  this.confirmPassword="";
           this.ngOnInit();
-      }} );
+      }, error:(response:HttpErrorResponse)=>{
+		this.messageService.add({severity:"error",summary:"Error",detail:response.error.message});
+	  }} );
       
       this.isFormDirty = false;
-    }
+    } else {
+		this.messageService.add({severity:"error",summary:"Error",detail:"New password isn't confirmed!"});
+	}
     
   }
   checkIfInputsAreEqual(group: FormGroup) {

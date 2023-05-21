@@ -532,7 +532,7 @@ namespace Server.Controllers
             UserModel user = await userService.GetUserById(userId);
             if (!HashGenerator.Verify(requestBody.OldPassword, user.Password))
             {
-                return BadRequest(new { message = "Old password is not valid" });
+                return BadRequest(new { message = "Current password is not valid" });
             }
             user.Password = HashGenerator.Hash(requestBody.NewPassword);
             await _sqliteDb.SaveChangesAsync();
