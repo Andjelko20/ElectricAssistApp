@@ -11,7 +11,6 @@
 .toggle-container {
 
   display: flex;
-  
   justify-content: space-between;
   justify-content: center;
   align-items: center;
@@ -63,10 +62,6 @@
   min-height: 10%;
 }
 
-.information {
-  width: 35%;
-  margin-left: 15px;
-}
 
 .today-future{
   display: block;
@@ -77,10 +72,6 @@
   padding: 15px;
   margin: 0 15px;
   text-align: center;
-}
-
-* {
-  box-sizing: border-box;
 }
 
 .containers {
@@ -310,10 +301,10 @@ box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
   max-width: 100%;
   margin: 0;
   padding: 0;
-  justify-content: left;
+  justify-content: space-evenly;
 }
 .gap-10 > * {
-  padding: 8px !important;
+  padding:10px !important;
 }
 .gap-10 {
   margin: 8px !important;
@@ -332,8 +323,8 @@ box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
   border: 1px solid #D2D2D2;
 }
 .p-20 {
-  padding: 5px !important;
-  margin-right: 10px;
+  padding: 20px !important;
+  margin-right: 30px;
 }
 .peer {
   display: block;
@@ -369,6 +360,7 @@ button.active {
   color: white;
   box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
+
 @media (max-width: 768px) {
   .wrapper{
     margin-top: 100px;
@@ -391,9 +383,7 @@ button.active {
     font-size: 16px;
   }
 
-  .toggle-buttons span.divider {
-    display: none;
-  }
+
 
   .date-time {
     margin-right: 0;
@@ -401,10 +391,6 @@ button.active {
     text-align: left;
 }
 
-  .container {
-  flex-direction: column;
-  align-items: center;
-  }
 
   .card-group{
     width: 100%;
@@ -418,11 +404,6 @@ button.active {
     max-width: calc(50% - 15px);
     }
 
-    .information {
-    min-width: 100%;
-    max-width: 100%;
-    margin: 10px 0;
-    }
 
     .today-future {
     min-width: 100%;
@@ -438,4 +419,22 @@ button.active {
     width: 100%;
 }
 
+}
+@media (max-width: 1800px)  {
+  .card-group{
+ 
+    justify-content: center;
+   
+
+  }
+  .gap-10 > * {
+    padding:2px !important;
+  }
+  .gap-10 {
+    margin:2px !important;
+  }
+  .p-20{
+    padding: 20px !important;
+    margin-right: 12px!important;
+  }
 }
