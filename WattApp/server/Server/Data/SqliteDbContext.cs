@@ -689,7 +689,7 @@ namespace Server.Data
                         {
                             DeviceBrandId = 5,
                             DeviceTypeId = 7,
-                            EnergyKwh = 5.2f,
+                            EnergyKwh = 1.8f,
                             StandByKwh = 0,
                             Mark = "PULAR 18K"
                         },
@@ -697,7 +697,7 @@ namespace Server.Data
                         {
                             DeviceBrandId = 5,
                             DeviceTypeId = 7,
-                            EnergyKwh = 3.4f,
+                            EnergyKwh = 1.2f,
                             StandByKwh = 0,
                             Mark = "PULAR 12K"
                         },
@@ -745,7 +745,7 @@ namespace Server.Data
                         {
                             DeviceBrandId = 1,
                             DeviceTypeId = 8,
-                            EnergyKwh = 2.37f,
+                            EnergyKwh = 1.37f,
                             StandByKwh = 0,
                             Mark = "CHT6000W"
                         },
@@ -753,7 +753,7 @@ namespace Server.Data
                         {
                             DeviceBrandId = 1,
                             DeviceTypeId = 8,
-                            EnergyKwh = 2.185f,
+                            EnergyKwh = 1.185f,
                             StandByKwh = 0,
                             Mark = "EHB 604 XL"
                         },
@@ -761,7 +761,7 @@ namespace Server.Data
                         {
                             DeviceBrandId = 8,
                             DeviceTypeId = 8,
-                            EnergyKwh = 2.705f,
+                            EnergyKwh = 1.705f,
                             StandByKwh = 0,
                             Mark = "HKR39A150"
                         },
@@ -769,7 +769,7 @@ namespace Server.Data
                         {
                             DeviceBrandId = 8,
                             DeviceTypeId = 8,
-                            EnergyKwh = 2.55f,
+                            EnergyKwh = 1.55f,
                             StandByKwh = 0,
                             Mark = "HKR39A120"
                         },
@@ -1024,51 +1024,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
-                /*
-                if (!context.DeviceDefaultSettings.Any())
-                {
-                    context.DeviceDefaultSettings.AddRange(new[]
-                    {
-                        new DeviceDefaultSettings
-                        {
-                            DeviceModelId = 1, 
-                            DeviceBrandId = 1, 
-                            DefaultKwh = 300
-                        },
-                        new DeviceDefaultSettings
-                        {
-                            DeviceModelId = 2,
-                            DeviceBrandId = 1,
-                            DefaultKwh = 150
-                        },
-                        new DeviceDefaultSettings
-                        {
-                            DeviceModelId = 2,
-                            DeviceBrandId = 2,
-                            DefaultKwh = 175
-                        },
-                        new DeviceDefaultSettings
-                        {
-                            DeviceModelId = 5,
-                            DeviceBrandId = 3,
-                            DefaultKwh = 1750
-                        },
-                        new DeviceDefaultSettings
-                        {
-                            DeviceModelId = 6,
-                            DeviceBrandId = 4,
-                            DefaultKwh = 740
-                        },
-                        new DeviceDefaultSettings
-                        {
-                            DeviceModelId = 7,
-                            DeviceBrandId = 5,
-                            DefaultKwh = 74
-                        }
-                    });
-                    context.SaveChanges();
-                }
-                */
+                
                 if (!context.Devices.Any())
                 {
                     context.Devices.AddRange(new[]
@@ -1081,7 +1037,7 @@ namespace Server.Data
                             Visibility = true, 
                             Controlability = true, 
                             TurnOn = false,
-                            EnergyInKwh = 1.1f,
+                            EnergyInKwh = 0.05f,
                             StandByKwh = 0
                         },
                         new Device() // 2
@@ -1092,7 +1048,7 @@ namespace Server.Data
                             Visibility = true,
                             Controlability = true,
                             TurnOn = false,
-                            EnergyInKwh = 5.2f,
+                            EnergyInKwh = 1.8f,
                             StandByKwh = 0
                         },
                         new Device() // 3
@@ -1103,7 +1059,7 @@ namespace Server.Data
                             Visibility = true,
                             Controlability = true,
                             TurnOn = false,
-                            EnergyInKwh = 3.4f,
+                            EnergyInKwh = 1.2f,
                             StandByKwh = 0
                         },
                         new Device() // 4
@@ -1125,7 +1081,7 @@ namespace Server.Data
                             Visibility = true,
                             Controlability = true,
                             TurnOn = true,
-                            EnergyInKwh = 5.2f,
+                            EnergyInKwh = 1.8f,
                             StandByKwh = 0
                         },
                         new Device() // 6
@@ -1224,7 +1180,7 @@ namespace Server.Data
                             Visibility = true,
                             Controlability = true,
                             TurnOn = true,
-                            EnergyInKwh = 2.37f,
+                            EnergyInKwh = 1.37f,
                             StandByKwh = 0
                         },
                         new Device() // 15
@@ -1235,7 +1191,7 @@ namespace Server.Data
                             Visibility = true,
                             Controlability = true,
                             TurnOn = true,
-                            EnergyInKwh = 2.185f,
+                            EnergyInKwh = 1.185f,
                             StandByKwh = 0
                         },
                         new Device() // 16
@@ -1246,7 +1202,7 @@ namespace Server.Data
                             Visibility = true,
                             Controlability = true,
                             TurnOn = true,
-                            EnergyInKwh = 2.7f,
+                            EnergyInKwh = 1.7f,
                             StandByKwh = 0
                         },
                         new Device() // 17
@@ -1257,7 +1213,7 @@ namespace Server.Data
                             Visibility = true,
                             Controlability = true,
                             TurnOn = true,
-                            EnergyInKwh = 2.55f,
+                            EnergyInKwh = 1.55f,
                             StandByKwh = 0
                         },
                         new Device() // 18
@@ -2110,103 +2066,7 @@ namespace Server.Data
                     });
                     context.SaveChanges();
                 }
-                /*
-                if (!context.TypeBrands.Any())
-                {
-                    context.TypeBrands.AddRange(new[]
-                    {
-                        new TypeBrand()
-                        {
-                            TypeId = 1,
-                            BrandId = 1
-                        },
-                        new TypeBrand()
-                        {
-                            TypeId = 1,
-                            BrandId = 2
-                        },
-                        new TypeBrand()
-                        {
-                            TypeId = 1,
-                            BrandId = 3
-                        },
-                        new TypeBrand()
-                        {
-                            TypeId = 3,
-                            BrandId = 3
-                        },
-                        new TypeBrand()
-                        {
-                            TypeId = 3,
-                            BrandId = 1
-                        },
-                        new TypeBrand()
-                        {
-                            TypeId = 6,
-                            BrandId = 4
-                        }
-                    });
-                    context.SaveChanges();
-                }
-                if (!context.TypeBrandModels.Any())
-                {
-                    context.TypeBrandModels.AddRange(new[]
-                    {
-                        new TypeBrandModel()
-                        {
-                            TypeId = 1,
-                            BrandId = 1, 
-                            ModelId = 1, 
-                            EnergyKwh = 10, 
-                            StandByKwh = 2
-                        },
-                        new TypeBrandModel()
-                        {
-                            TypeId = 1,
-                            BrandId = 2,
-                            ModelId = 2,
-                            EnergyKwh = 10,
-                            StandByKwh = 2
-                        },
-                        new TypeBrandModel()
-                        {
-                            TypeId = 1,
-                            BrandId = 3,
-                            ModelId = 3,
-                            EnergyKwh = 10,
-                            StandByKwh = 2
-                        },
-                        new TypeBrandModel()
-                        {
-                            TypeId = 3,
-                            BrandId = 3,
-                            ModelId = 1,
-                            EnergyKwh = 10,
-                            StandByKwh = 2
-                        },
-                        new TypeBrandModel()
-                        {
-                            TypeId = 3,
-                            BrandId = 1,
-                            ModelId = 2,
-                            EnergyKwh = 10,
-                            StandByKwh = 2
-                        },
-                        new TypeBrandModel()
-                        {
-                            TypeId = 6,
-                            BrandId = 4,
-                            ModelId = 3,
-                            EnergyKwh = 10,
-                            StandByKwh = 2
-                        }
-                    });
-                    context.SaveChanges();
-                }
-                */
-
             }
         }
-
     }
 }
