@@ -1283,6 +1283,110 @@ namespace Server.Data
                             EnergyKwh = 0.95f,
                             StandByKwh = 0,
                             Mark = "WAN24265BY"
+                        },
+                        new DeviceModel() // 76 - masina za sudove BOSCH
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.8f,
+                            StandByKwh = 0,
+                            Mark = "SMS4HVI33E"
+                        },
+                        new DeviceModel() // 77 - masina za sudove BOSCH
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.85f,
+                            StandByKwh = 0,
+                            Mark = "SMS4HVW33E"
+                        },
+                        new DeviceModel() // 78 - masina za sudove BOSCH
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.9f,
+                            StandByKwh = 0,
+                            Mark = "SMS24AW02E"
+                        },
+                        new DeviceModel() // 79 - masina za sudove VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.9f,
+                            StandByKwh = 0,
+                            Mark = "LC10Y15CE"
+                        },
+                        new DeviceModel() // 80 - masina za sudove VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.85f,
+                            StandByKwh = 0,
+                            Mark = "LC12A1EDBE"
+                        },
+                        new DeviceModel() // 81 - masina za sudove VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.9f,
+                            StandByKwh = 0,
+                            Mark = "LC12A15E"
+                        },
+                        new DeviceModel() // 82 - masina za sudove BEKO
+                        {
+                            DeviceBrandId = 7,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.9f,
+                            StandByKwh = 0,
+                            Mark = "DVS 05024 S"
+                        },
+                        new DeviceModel() // 83 - masina za sudove BEKO
+                        {
+                            DeviceBrandId = 7,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.8f,
+                            StandByKwh = 0,
+                            Mark = "DVN 05320 S"
+                        },
+                        new DeviceModel() // 84 - masina za sudove BEKO
+                        {
+                            DeviceBrandId = 7,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.85f,
+                            StandByKwh = 0,
+                            Mark = "BDFN 26430 X"
+                        },
+                        new DeviceModel() // 85 - masina za sudove GORENJE
+                        {
+                            DeviceBrandId = 19,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.9f,
+                            StandByKwh = 0,
+                            Mark = "GS 520E15 S"
+                        },
+                        new DeviceModel() // 86 - masina za sudove GORENJE
+                        {
+                            DeviceBrandId = 19,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.78f,
+                            StandByKwh = 0,
+                            Mark = "GS 520E15 W"
+                        },
+                        new DeviceModel() // 87 - masina za sudove GORENJE
+                        {
+                            DeviceBrandId = 19,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.82f,
+                            StandByKwh = 0,
+                            Mark = "GS 62040 S"
+                        },
+                        new DeviceModel() // 88 - masina za sudove GORENJE
+                        {
+                            DeviceBrandId = 19,
+                            DeviceTypeId = 11,
+                            EnergyKwh = 0.82f,
+                            StandByKwh = 0,
+                            Mark = "GS 62040 S"
                         }
                     });
                     context.SaveChanges();
