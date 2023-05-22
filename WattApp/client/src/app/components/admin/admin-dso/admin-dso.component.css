@@ -7,7 +7,7 @@
   display: inline-block;
 }
 #clearf{
-  margin-left: 10px;
+  margin-left: 20px;
   display: inline-block;
   margin-right: 100px;
 }
@@ -23,7 +23,8 @@
     border-radius: 10px;
 }
 #searchInput{
-  width: 230px;
+  width: 550px;
+  height: 40px;
 }
 #buttonAdd {
     width: 100px;
@@ -198,13 +199,28 @@ li a {
   margin-left: 15px;
 }
 
-.dropbtn1 {
+#dropbtn1 {
   color: white;
-  padding: 20px;
+  padding: 11px;
+  padding-left: 88px;
+  padding-right: 88px;
   font-size: 20px;
   border: none;
   cursor: pointer;
   background-color: #354871;
+  border-radius: 5px;
+}
+
+#clear-btn{
+  color: #fff;
+  padding: 9px;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  background-color: #adb5bd;
+  border-radius: 5px;
 }
 
 .dropdown.show .dropdown-content {
@@ -213,15 +229,28 @@ li a {
 
 .dropdown-content {
   border-radius: 5px;
-  width: 200px;
+  width: 250px;
   border: 1px solid #354871;
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  text-align: center;
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
+
+.filter-label{
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.form-control{
+  width: 210px;
+}
+
 
 .dropdown-content a {
   color: #354871;
