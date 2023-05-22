@@ -590,6 +590,21 @@ namespace Server.Data
                         {
                             Name = "Electric bulb",
                             CategoryId = 2
+                        },
+                        new DeviceType() // 10
+                        {
+                            Name = "Washing machine",
+                            CategoryId = 2
+                        },
+                        new DeviceType() // 11
+                        {
+                            Name = "Dishwasher",
+                            CategoryId = 2
+                        },
+                        new DeviceType() // 12
+                        {
+                            Name = "Heater",
+                            CategoryId = 2
                         }
                     });
                     context.SaveChanges();
@@ -641,6 +656,22 @@ namespace Server.Data
                         new DeviceBrand() // 11
                         {
                             Name = "Philips"
+                        },
+                        new DeviceBrand() // 12
+                        {
+                            Name = "Union"
+                        },
+                        new DeviceBrand() // 13
+                        {
+                            Name = "CORDYS"
+                        },
+                        new DeviceBrand() // 14
+                        {
+                            Name = "Electrolux"
+                        },
+                        new DeviceBrand() // 15
+                        {
+                            Name = "Tristar"
                         },
                         new DeviceBrand() //
                         {
@@ -1020,6 +1051,238 @@ namespace Server.Data
                             EnergyKwh = 0.01f,
                             StandByKwh = 0,
                             Mark = "Hue White and Colour Ambiance 3/1"
+                        },
+                        new DeviceModel() // 47 - grejalica UNION
+                        {
+                            DeviceBrandId = 12,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 0.75f,
+                            StandByKwh = 0,
+                            Mark = "CH-01WFT"
+                        },
+                        new DeviceModel() // 48 - grejalica UNION
+                        {
+                            DeviceBrandId = 12,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 1.0f,
+                            StandByKwh = 0,
+                            Mark = "PH-01WX"
+                        },
+                        new DeviceModel() // 49 - grejalica CORDYS
+                        {
+                            DeviceBrandId = 13,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 0.8f,
+                            StandByKwh = 0,
+                            Mark = "CH-2001"
+                        },
+                        new DeviceModel() // 50 - grejalica CORDYS
+                        {
+                            DeviceBrandId = 13,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 0.75f,
+                            StandByKwh = 0,
+                            Mark = "CH-2002"
+                        },
+                        new DeviceModel() // 51 - grejalica Electrolux
+                        {
+                            DeviceBrandId = 14,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 0.5f,
+                            StandByKwh = 0,
+                            Mark = "ECH/T-1500 M EEC"
+                        },
+                        new DeviceModel() // 52 - grejalica Electrolux
+                        {
+                            DeviceBrandId = 14,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 1.0f,
+                            StandByKwh = 0,
+                            Mark = "ECH/T-2000 M EEC"
+                        },
+                        new DeviceModel() // 53 - grejalica Electrolux
+                        {
+                            DeviceBrandId = 14,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 0.5f,
+                            StandByKwh = 0,
+                            Mark = "ECH/T-1500 E EEC"
+                        },
+                        new DeviceModel() // 54 - grejalica Electrolux
+                        {
+                            DeviceBrandId = 14,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 1.0f,
+                            StandByKwh = 0,
+                            Mark = "ECH/AG2-2000 3BE EEC"
+                        },
+                        new DeviceModel() // 55 - grejalica Electrolux
+                        {
+                            DeviceBrandId = 14,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 1.5f,
+                            StandByKwh = 0,
+                            Mark = "ECH/AG2-2500 3BE EEC"
+                        },
+                        new DeviceModel() // 56 - grejalica Tristar
+                        {
+                            DeviceBrandId = 15,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 0.85f,
+                            StandByKwh = 0,
+                            Mark = "KA-5037"
+                        },
+                        new DeviceModel() // 57 - grejalica Tristar
+                        {
+                            DeviceBrandId = 15,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 0.85f,
+                            StandByKwh = 0,
+                            Mark = "KA-5039"
+                        },
+                        new DeviceModel() // 58 - grejalica Bosch
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 1.5f,
+                            StandByKwh = 0,
+                            Mark = "HC 4000-25"
+                        },
+                        new DeviceModel() // 59 - grejalica Bosch
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 1.0f,
+                            StandByKwh = 0,
+                            Mark = "HC 4000-20"
+                        },
+                        new DeviceModel() // 60 - grejalica FOX
+                        {
+                            DeviceBrandId = 9,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 0.9f,
+                            StandByKwh = 0,
+                            Mark = "GR-100"
+                        },
+                        new DeviceModel() // 61 - grejalica FOX
+                        {
+                            DeviceBrandId = 9,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 1.0f,
+                            StandByKwh = 0,
+                            Mark = "GR-110"
+                        },
+                        new DeviceModel() // 62 - grejalica VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 1.0f,
+                            StandByKwh = 0,
+                            Mark = "FH 59"
+                        },
+                        new DeviceModel() // 63 - grejalica VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 12,
+                            EnergyKwh = 1.0f,
+                            StandByKwh = 0,
+                            Mark = "FH 75"
+                        },
+                        new DeviceModel() // 64 - ves masina SAMSUNG
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.7f,
+                            StandByKwh = 0,
+                            Mark = "WW70T4040EE1/LE"
+                        },
+                        new DeviceModel() // 65 - ves masina SAMSUNG
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.8f,
+                            StandByKwh = 0,
+                            Mark = "WW80T4020EE1/LE"
+                        },
+                        new DeviceModel() // 66 - ves masina SAMSUNG
+                        {
+                            DeviceBrandId = 10,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.9f,
+                            StandByKwh = 0,
+                            Mark = "WW90T4040CE1LE"
+                        },
+                        new DeviceModel() // 67 - ves masina VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.6f,
+                            StandByKwh = 0,
+                            Mark = "WM1070SYTD"
+                        },
+                        new DeviceModel() // 68 - ves masina VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.7f,
+                            StandByKwh = 0,
+                            Mark = "WM1060SYTD"
+                        },
+                        new DeviceModel() // 69 - ves masina VOX
+                        {
+                            DeviceBrandId = 1,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.8f,
+                            StandByKwh = 0,
+                            Mark = "WM1285YTQD"
+                        },
+                        new DeviceModel() // 70 - ves masina BEKO
+                        {
+                            DeviceBrandId = 7,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.75f,
+                            StandByKwh = 0,
+                            Mark = "WUE 8622 XCW"
+                        },
+                        new DeviceModel() // 71 - ves masina BEKO
+                        {
+                            DeviceBrandId = 7,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.85f,
+                            StandByKwh = 0,
+                            Mark = "WUE 7511D XWW"
+                        },
+                        new DeviceModel() // 72 - ves masina BEKO
+                        {
+                            DeviceBrandId = 7,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.95f,
+                            StandByKwh = 0,
+                            Mark = "WTE 8511 X0"
+                        },
+                        new DeviceModel() // 73 - ves masina BOSCH
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.95f,
+                            StandByKwh = 0,
+                            Mark = "WGG14403BY"
+                        },
+                        new DeviceModel() // 74 - ves masina BOSCH
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.95f,
+                            StandByKwh = 0,
+                            Mark = "WGG14202BY"
+                        },
+                        new DeviceModel() // 75 - ves masina BOSCH
+                        {
+                            DeviceBrandId = 8,
+                            DeviceTypeId = 10,
+                            EnergyKwh = 0.95f,
+                            StandByKwh = 0,
+                            Mark = "WAN24265BY"
                         }
                     });
                     context.SaveChanges();
