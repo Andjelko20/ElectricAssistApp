@@ -42,12 +42,11 @@ form {
     padding-bottom: 80px;
 }
 
-button {
+#button-add {
     justify-content: center;
     margin-left: 5%;
     width: 160px;
     margin-bottom: 20px;
-    /* background-color: #1C315E; */
 }
 .select-form-control{
     width: 88%;

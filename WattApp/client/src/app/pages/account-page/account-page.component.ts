@@ -50,13 +50,13 @@ export class AccountPageComponent implements OnInit {
   confirmPassword!:string;
   pass!:string;
   errorMsg='';
-
+  btnAction:string=''  
+  confirm:boolean=false;
   storePassword=localStorage.getItem("password");
   constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,
     private router:Router,private updateService:AuthService,private modalService: NgbModal) {
   
    }
-
   ngOnInit(): void {
     let token=new JwtToken();
     this.idUser=token.data.id as number;
@@ -148,14 +148,6 @@ export class AccountPageComponent implements OnInit {
       this.isFormDirty1 = true;
     }
   }
-  @HostListener('window:beforeunload')
-  canDeactivate(): boolean {
-    if (this.isFormDirty) {
-      return confirm('Are you sure you want to leave? Your unsaved changes will be lost.');
-    }
-    return true;
-  }
-
   updatePasswordProsumer()
   {
     const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;

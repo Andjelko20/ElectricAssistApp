@@ -37,7 +37,8 @@ export class AdminDsoAddComponent implements OnInit{
   public settlements:any;
   currentUrl: any;
   isFormDirty: boolean = false;
-
+  btnAction:string=''  
+  confirm:boolean=false;
   @ViewChild('modalContent') modalContent!: TemplateRef<any>;
   body: string = ''; 
   constructor(private usersService:AuthService,private router:Router,private location:Location,private modalService: NgbModal) { }
@@ -91,12 +92,5 @@ export class AdminDsoAddComponent implements OnInit{
 	}
   onFormChange() {
     this.isFormDirty = true;
-  }
-  @HostListener('window:beforeunload')
-  canDeactivate(): boolean {
-    if (this.isFormDirty) {
-      return confirm('Are you sure you want to leave? Your unsaved changes will be lost.');
-    }
-    return true;
   }
 }

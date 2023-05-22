@@ -119,6 +119,7 @@
   <div class="modal-body">
     <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
     <div id="subb">
+      <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup" *ngIf="confirm===true">{{btnAction}}</button>&nbsp;&nbsp;
       <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
     </div>
   </div>
