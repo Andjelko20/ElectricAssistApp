@@ -134,6 +134,13 @@ li a {
     color: #354871;
     transition: border-color 0.5s ease-in-out;
 }
+#show-prosumer{
+    cursor: pointer;
+}
+#show-prosumer:hover{
+    border: 1px solid gray;
+    box-shadow: 5px 1.5px 1.5px gray;
+}
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .table-responsive {
         margin-left: 10px;

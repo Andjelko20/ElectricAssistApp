@@ -136,7 +136,7 @@ export class ProsumerWeekProductionComponent {
       max=1;
     }
     const Linechart = new Chart("linechart1", {
-      type: 'line',
+      type: 'bar',
       data : {
         labels: this.dayNames,
         
@@ -145,16 +145,9 @@ export class ProsumerWeekProductionComponent {
           {
             label: 'Production',
             data: energyUsageResults2,
-            tension:0.1,
-            backgroundColor: 'rgba(29, 145, 192, 0.2)',
             borderColor: 'rgba(29, 145, 192, 1)',
-            borderWidth: 1,
-            pointBackgroundColor: 'rgba(29, 145, 192, 1)',
-            pointBorderColor: 'rgba(29, 145, 192, 1)',
-            pointBorderWidth: 8,
-            pointRadius: 1,
-            pointHoverRadius: 6,
-            fill:true
+            backgroundColor: 'rgba(29, 145, 192, 0.2)',
+            borderWidth: 2,
           }
           
         ]

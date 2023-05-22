@@ -1,4 +1,4 @@
-import { Component, Injectable, ViewChild } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
@@ -8,7 +8,6 @@ import {
   MatDateRangeSelectionStrategy,
   DateRange,
   MAT_DATE_RANGE_SELECTION_STRATEGY,
-  MatDatepickerInputEvent,
 } from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -161,7 +160,7 @@ export class DeviceWeekComponent {
       
     }
     const Linechart = new Chart("linechart1", {
-      type: 'line',
+      type: 'bar',
       data : {
         labels: this.dayNames,
         
@@ -170,16 +169,9 @@ export class DeviceWeekComponent {
           {
             label: 'Production',
             data: energyUsageResults2,
-            tension:0.1,
-            backgroundColor: 'rgba(29, 145, 192, 0.2)',
             borderColor: 'rgba(29, 145, 192, 1)',
-            borderWidth: 1,
-            pointBackgroundColor: 'rgba(29, 145, 192, 1)',
-            pointBorderColor: 'rgba(29, 145, 192, 1)',
-            pointBorderWidth: 8,
-            pointRadius: 1,
-            pointHoverRadius: 6,
-            fill:true
+            backgroundColor: 'rgba(29, 145, 192, 0.2)',
+            borderWidth: 2,
           }
           
         ]
@@ -275,7 +267,7 @@ export class DeviceWeekComponent {
       
     }
     const Linechart = new Chart("linechart2", {
-      type: 'line',
+      type: 'bar',
       data : {
         labels: this.dayNames,
         
@@ -283,16 +275,9 @@ export class DeviceWeekComponent {
           {
             label: 'Consumption ',
             data: energyUsageResults1,
-            tension:0.1,
-            backgroundColor: 'rgba(127, 205, 187, 0.3)',
-            borderColor: ' rgba(127, 205, 187, 1)',
-            borderWidth: 1.5,
-            pointBackgroundColor: 'rgba(127, 205, 187, 1)',
-            pointBorderColor: 'rgba(127, 205, 187, 1)',
-            pointBorderWidth: 8,
-            pointRadius: 1,
-            pointHoverRadius: 6,
-            fill:true,
+            borderColor:  'rgba(127, 205, 187, 1)',
+            backgroundColor:  'rgba(127, 205, 187, 0.3)',
+            borderWidth: 2.5,
             
           },
           

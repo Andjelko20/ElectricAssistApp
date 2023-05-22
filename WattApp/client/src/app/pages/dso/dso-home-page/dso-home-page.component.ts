@@ -1,8 +1,6 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Popover, Tooltip } from 'bootstrap';
-import { first } from 'rxjs';
-import { Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
@@ -15,7 +13,7 @@ declare var $: any;
   styleUrls: ['./dso-home-page.component.css'],
 
 })
-export class DsoHomePageComponent implements AfterViewInit, OnInit{
+export class DsoHomePageComponent implements AfterViewInit, OnInit,OnDestroy{
   loader:boolean=false;
   tooltip: Tooltip | undefined;
   numberOfProsumers=0;
@@ -24,16 +22,24 @@ export class DsoHomePageComponent implements AfterViewInit, OnInit{
   idUser!:number;
   role!:string;
   city! : string;
+  private tooltips: Tooltip[] = [];
   constructor(private avgConsumption:HistoryPredictionService,private route:ActivatedRoute,private router:Router,private updateService:AuthService){
 
   }
   ngAfterViewInit() {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    const tooltipList = Array.from(tooltipTriggerList).map(function (tooltipTriggerEl) {
-      return new Tooltip(tooltipTriggerEl)
+    const tooltipList = Array.from(tooltipTriggerList).map((tooltipTriggerEl) => {
+      return new Tooltip(tooltipTriggerEl);
     });
-    this.tooltip = tooltipList[0];
-   
+    this.tooltips = tooltipList;
+    
+  }
+  ngOnDestroy(): void {
+    this.tooltips.forEach((tooltip) => {
+      tooltip.dispose();
+    });
+    this.tooltips = [];
+    this.tooltip = undefined;
   }
   async ngOnInit(): Promise<void> {
     this.loader=true;
