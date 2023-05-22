@@ -673,6 +673,22 @@ namespace Server.Data
                         {
                             Name = "Tristar"
                         },
+                        new DeviceBrand() // 16
+                        {
+                            Name = "BMW"
+                        },
+                        new DeviceBrand() // 17
+                        {
+                            Name = "Volkswagen"
+                        },
+                        new DeviceBrand() // 18
+                        {
+                            Name = "Renault"
+                        },
+                        new DeviceBrand() // 19
+                        {
+                            Name = "Gorenje"
+                        },
                         new DeviceBrand() //
                         {
                             Name = "Other"
@@ -1387,6 +1403,94 @@ namespace Server.Data
                             EnergyKwh = 0.82f,
                             StandByKwh = 0,
                             Mark = "GS 62040 S"
+                        },
+                        new DeviceModel() // 89 - auto BMW
+                        {
+                            DeviceBrandId = 16,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "i3"
+                        },
+                        new DeviceModel() // 90 - auto BMW
+                        {
+                            DeviceBrandId = 16,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "i7"
+                        },
+                        new DeviceModel() // 91 - auto BMW
+                        {
+                            DeviceBrandId = 16,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "iX1"
+                        },
+                        new DeviceModel() // 92 - auto BMW
+                        {
+                            DeviceBrandId = 16,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "iX3"
+                        },
+                        new DeviceModel() // 93 - auto Volkswagen
+                        {
+                            DeviceBrandId = 17,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "ID.3"
+                        },
+                        new DeviceModel() // 94 - auto Volkswagen
+                        {
+                            DeviceBrandId = 17,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "ID.4"
+                        },
+                        new DeviceModel() // 95 - auto Volkswagen
+                        {
+                            DeviceBrandId = 17,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "eGolf 7"
+                        },
+                        new DeviceModel() // 96 - auto Renault
+                        {
+                            DeviceBrandId = 18,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "Zoe Intens R135 LP"
+                        },
+                        new DeviceModel() // 97 - auto Renault
+                        {
+                            DeviceBrandId = 18,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "Zoe Limited Q90"
+                        },
+                        new DeviceModel() // 98 - auto Renault
+                        {
+                            DeviceBrandId = 18,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "Zoe ZE"
+                        },
+                        new DeviceModel() // 99 - auto Renault
+                        {
+                            DeviceBrandId = 18,
+                            DeviceTypeId = 4,
+                            EnergyKwh = 50f,
+                            StandByKwh = 0,
+                            Mark = "Zoe BOSE"
                         }
                     });
                     context.SaveChanges();
