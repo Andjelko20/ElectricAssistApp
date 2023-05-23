@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ShowDevices } from 'src/app/models/devices.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
 import { Categories } from 'src/app/utilities/categories';
 
@@ -14,7 +15,7 @@ export class AllDevicesComponent implements OnInit {
   itemsPerPage:number=12;
   totalItems:number=10;
 
-
+  numberOfDevices : number = 0;
   devices:ShowDevices[] = [];
   pageNumber?:number;
   pageSize?:number;
@@ -41,8 +42,9 @@ export class AllDevicesComponent implements OnInit {
 
   showDropdown = false;
   msgShow:boolean=false;
-  constructor(private router:Router,private deviceService:DevicesService,
-    private route:ActivatedRoute, private elementRef: ElementRef) { }
+  constructor(private router : Router,private deviceService : DevicesService,
+    private route : ActivatedRoute, private elementRef : ElementRef, 
+    private authService : AuthService) { }
 
   ngOnInit(): void {
     this.loader=true;
@@ -97,6 +99,8 @@ export class AllDevicesComponent implements OnInit {
 		   }} 
 		   );
 	}
+
+
     onSelectedCategory(event:any)
     {this.loader=true;
       this.filters.categoryId = event.target.value;

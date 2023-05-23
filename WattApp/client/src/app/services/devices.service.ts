@@ -53,6 +53,10 @@ export class DevicesService {
     }
     return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
+
+  getNumberOfDevices(userId : number):Observable<any>{
+    return this.http.get<any>(environment.serverUrl+"/api/Prosumer/numberOfDevices/" + userId);
+  }
   getAllDevicesNoPaggination():Observable<any>
   {
     return this.http.get<any>(environment.serverUrl+'/api/device',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
@@ -125,7 +129,7 @@ export class DevicesService {
     return this.http.get<YearsByMonth[]>(environment.serverUrl+"/api/History/YearByMonth/Settlement/"+settlementId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
- 
+  
   
   
  
