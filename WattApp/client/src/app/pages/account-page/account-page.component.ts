@@ -91,7 +91,7 @@ export class AccountPageComponent implements OnInit {
   {
     if(this.updateUserDetail.name!==this.logedDetail.name)
     {
-          this.body="Your name has been changed." 
+          this.body="Your name has been successfully changed." 
     }
     else if(this.updateUserDetail.email!==this.logedDetail.email)
     {
@@ -99,7 +99,7 @@ export class AccountPageComponent implements OnInit {
     }
     else if(this.updateUserDetail.username!==this.logedDetail.username)
     {
-      this.body="Your username has been changed." 
+      this.body="Your username has been successfully changed." 
     }
     else if(this.updateUserDetail.name===this.logedDetail.name && this.updateUserDetail.username===this.logedDetail.username && this.updateUserDetail.email===this.logedDetail.email)
     {
@@ -108,11 +108,11 @@ export class AccountPageComponent implements OnInit {
     }
     else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username )
     {
-        this.body="Your name and username has been changed." 
+        this.body="Your name and username have been successfully changed." 
     }
     else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username && this.updateUserDetail.email!=this.logedDetail.email)
     {
-      this.body="Your name, username and email has been changed. You need to confirm your email" 
+      this.body="Your name, username and email have been successfully changed. You need to confirm your email" 
     }
     this.updateService.upDateLogedIn(this.logedDetail)
     .subscribe({
@@ -148,6 +148,7 @@ export class AccountPageComponent implements OnInit {
       this.isFormDirty1 = true;
     }
   }
+
   updatePasswordProsumer()
   {
     const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
@@ -164,7 +165,7 @@ export class AccountPageComponent implements OnInit {
         { next:() => {  
             
           this.modalService.open(this.modalContent);
-          this.body="Your password has been changed.";
+          this.body="Your password has been successfully changed.";
           this.ngOnInit();
       }} );
       

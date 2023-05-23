@@ -1,6 +1,6 @@
 <div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
 <div class="table-responsive">
-    <table *ngIf="data?.length!=0" class="table">
+    <table *ngIf="data?.length!=0 && !loader" class="table" >
         <thead>
             <tr>
                 <th>#</th>

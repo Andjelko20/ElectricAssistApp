@@ -38,6 +38,7 @@
 ::ng-deep #pagination .ngx-pagination .pagination-previous a{
 	color: #2199e8 !important;
 	font-weight: bold;
+	text-decoration: none!important;
 }
 
 ::ng-deep #pagination .ngx-pagination li a:hover{
@@ -48,6 +49,7 @@
 	justify-content: center;
 	border-radius: 50% !important;
 	text-decoration: none !important;
+	
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
 ::ng-deep .ngx-pagination{
