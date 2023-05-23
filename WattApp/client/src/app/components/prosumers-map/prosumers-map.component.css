@@ -108,7 +108,7 @@ button{
 	margin-bottom: 10px;
 }
 .search-user .input-form-control{
-	width: 100%;
+	width: 40%;
 	padding: 4px 5px;
 	font-weight: 400;
 	line-height: 1.5;
@@ -213,39 +213,41 @@ button{
 	padding: 10px;
 	border-radius: 10px;
 	border: 1px solid #D2D2D2;
+	font-size: 16px;
 }
 
 @media screen and (max-width: 1900px) {
 	.c-grey-900 {
-		width:calc(23vw + 2vw);
-		height: calc(17.2vh + 2vw);
-		left: calc(87% - 8vw);
-		top: calc(47.8% - 6.6vh);
+		width:calc(21.8vw + 5vw);
+		height: calc(14.8vh + 2vw);
+		left: calc(86% - 8vw);
+		top: calc(44.8% - 6.6vh);
 	}
 }
 @media screen and (max-width: 1279px) {
 	.c-grey-900 {
-		width:34vw;
-		height: 25.5vh;
-		left:76%;
-		top: 47%;
+		width:calc(34vw + 2vw);
+		height: calc(17vh + 3vw);
+		left: calc(82% - 8vw);
+		top: calc( 49% - 5.6vh);
 	}
 }
 
 @media screen and (max-width: 1023px) {
 	.c-grey-900 {
-		width: 43vw;
-		height: 12vh;
-		left:70%;
-		top: 32%;
+		width:calc(40vw + 2vw);
+		height: calc(11vh + 3vw);
+		left: calc(80% - 8vw);
+		top: calc(40% - 6.6vh);
 	}
 }
 
 @media screen and (max-width: 768px) {
 	.c-grey-900 {
-		width: 48vw;
-		left:66%;
-		top: 34%;
-		height: 12.5vh;
+		width:calc(40vw + 2vw);
+		height: calc(12.5vh + 3vw);
+		left: calc(78% - 8vw);
+		top: calc(42.5% - 6.6vh);
+		font-size: 14px;
 	}
 }

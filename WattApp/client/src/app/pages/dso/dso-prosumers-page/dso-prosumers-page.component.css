@@ -22,6 +22,8 @@
 #numpros {
   display: flex;
   align-items: center;
+  margin-left: 50px;
+  margin-bottom: 10px;
 }
 
 #numpros span {
@@ -34,7 +36,6 @@
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  padding-right: 280px;
 }
 
 .map{
@@ -118,7 +119,7 @@
   color: white;
   box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
-@media only screen and (min-width: 768px) and (max-width: 1280px) {
+@media only screen and (min-width: 768px) and (max-width: 1279px) {
   .wrapper{
     margin-top: 90px;
     padding-top: 15px;
@@ -144,6 +145,7 @@
 #numpros {
   display: flex;
   align-items: center;
+  margin-left: 12px;
 }
 
 #numpros span {
@@ -156,7 +158,6 @@
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  padding-right: 100px;
 }
 .map{
   margin-left: 10px;
@@ -216,7 +217,10 @@
   .nav-button{
     cursor: pointer;
     border: none;
-    padding: 20px 6px;
+    padding-left: 6px;
+    margin-left: 1px;
+    margin-right: 1px;
+    padding-right: 6px;
     margin: 0 10px;
     color: #2199e8;
     font-size: 16px;
