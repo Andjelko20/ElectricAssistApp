@@ -5,24 +5,28 @@ import datetime
 # povezivanje sa bazom
 conn = sqlite3.connect('sqlite.db')
 
-def uredjajiKategorije1(DeviceId):
+def uredjajiKategorije2(DeviceId):
     randDays = random.randint(0, 99)
     randHours = random.randint(0, 5)
     randMinutes = random.randint(0, 59)
     randSeconds = random.randint(0, 59)
+    #randRangeOfHour = random.randint(0,2)
+    #randRangeOfMinutes = random.randint(0,59)
+    #randRangeOfSecundes = random.randint(0,59)
 
     StartTime = datetime.datetime.now().replace(microsecond=0)
     StartTime = StartTime.replace(year=StartTime.year-1)
     time = datetime.datetime.now().replace(microsecond=0)
     time = time + datetime.timedelta(days=90)
     for i in range(20000):
+        #StartTime = StartTime + datetime.timedelta(hours=randRangeOfHour, minutes=randRangeOfMinutes, seconds=randRangeOfSecundes)
         StartTime = StartTime + datetime.timedelta(hours=randHours, minutes=randMinutes, seconds=randSeconds)
         EndTime = StartTime + datetime.timedelta(hours=randHours, minutes=randMinutes, seconds=randSeconds)
         if StartTime >= time:
             break
         conn.execute(f"INSERT INTO DeviceEnergyUsages (DeviceId, StartTime, EndTime) VALUES ({DeviceId}, '{StartTime}', '{EndTime}')")
 
-def uredjajiKategorije2(DeviceId):
+def uredjajiKategorije1(DeviceId):
     time = datetime.datetime.now().replace(microsecond=0)
     StartTime = datetime.datetime.now().replace(microsecond=0)
     StartTime = StartTime.replace(year=StartTime.year-1)
@@ -43,9 +47,9 @@ def uredjajiKategorije2(DeviceId):
 
 def popunjavanjeTabeleDeviceEnergyUsage(DeviceId, DeviceCategoryId):
     if(DeviceCategoryId == 1):
-        uredjajiKategorije2(DeviceId)
-    elif(DeviceCategoryId == 2):
         uredjajiKategorije1(DeviceId)
+    elif(DeviceCategoryId == 2):
+        uredjajiKategorije2(DeviceId)
 
 
 # popunjavanje tabele DeviceEnergyUsage
@@ -63,14 +67,10 @@ curCategory.execute("""
 
 rows = cur.fetchall()
 rowsCategories = curCategory.fetchall()
-#print("---{}---".format(len(rows)))
 for i in range(0,len(rows)):
     DeviceCategoryId = rowsCategories[i][0]
     print(DeviceCategoryId)
-    #print(rows[i]) 
-    #print("DeviceId: {} - DeviceCatgoryId: {}".format(i+1, DeviceCategoryId))
     popunjavanjeTabeleDeviceEnergyUsage(i+1, DeviceCategoryId) # i+1 se salje jer se uredjaji popunjavaju od id 1, ne od id 0
-    #uredjajiKategorije1(i+1)
 
 conn.commit()
 conn.close()
