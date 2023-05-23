@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ShowDevices } from 'src/app/models/devices.model';
 import { DevicesService } from 'src/app/services/devices.service';
@@ -18,21 +18,35 @@ export class AllDevicesComponent implements OnInit {
   devices:ShowDevices[] = [];
   pageNumber?:number;
   pageSize?:number;
-  deviceCategoryId!:number;
   loader:boolean=false;
+
+  filters : DeviceFilterModel = new DeviceFilterModel(
+    0, 
+    0, 
+    0, 
+    -1, 
+    false, 
+    false,
+    SortCriteriaValues.NAME, 
+    true, 
+    0, 
+    false, 
+    ""
+  );
 
   categories=[
     {id:Categories.ELECTRICITY_PRODUCER_ID,name:Categories.ELECTRICITY_PRODUCER_NAME},
     {id:Categories.ELECTRICITY_CONSUMER_ID,name:Categories.ELECTRICITY_CONSUMER_NAME},
-    
   ]
+
+  showDropdown = false;
+  msgShow:boolean=false;
   constructor(private router:Router,private deviceService:DevicesService,
-    private route:ActivatedRoute) { }
+    private route:ActivatedRoute, private elementRef: ElementRef) { }
 
   ngOnInit(): void {
     this.loader=true;
-    this.deviceCategoryId=0
-    this.deviceService.getAllDevices(1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+    this.deviceService.getAllDevices(1,this.itemsPerPage,this.filters).subscribe(devices => {
       this.totalItems=devices.numberOfPages*this.itemsPerPage;
       this.loader=false;
 		this.devices=devices.data.map((u:any)=>({
@@ -60,7 +74,7 @@ export class AllDevicesComponent implements OnInit {
     
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
-		this.deviceService.getAllDevices(pageNumber,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+		this.deviceService.getAllDevices(pageNumber,this.itemsPerPage,this.filters).subscribe(devices => {
 			this.totalItems=devices.numberOfPages*this.itemsPerPage;
 			  this.devices=devices.data.map((u:any)=>({
 			 id:u.id,
@@ -85,8 +99,8 @@ export class AllDevicesComponent implements OnInit {
 	}
     onSelectedCategory(event:any)
     {this.loader=true;
-      this.deviceCategoryId = event.target.value;
-      this.deviceService.getAllDevices(1,12,this.deviceCategoryId).subscribe(devices => {
+      this.filters.categoryId = event.target.value;
+      this.deviceService.getAllDevices(1,12,this.filters).subscribe(devices => {
         this.loader=false;
         this.devices=devices.data.map((u:any)=>({
          id:u.id,
@@ -108,8 +122,65 @@ export class AllDevicesComponent implements OnInit {
           console.log('Devices not found in database');
        }} 
        );
-      
-      
+    }
+
+    onSelectedTurnOn(event:any)
+    {this.loader=true;
+      this.filters.turnOn = event.target.value;
+      this.deviceService.getAllDevices(1,12,this.filters).subscribe(devices => {
+        this.loader=false;
+        this.devices=devices.data.map((u:any)=>({
+         id:u.id,
+         userId: u.userId,
+         deviceCategory:u.deviceCategory,
+         deviceType: u.deviceType ,
+         deviceBrand: u.deviceBrand ,
+         deviceModel: u.deviceModel ,
+         name: u.name ,
+         energyInKwh: u.energyInKwh,
+         standByKwh: u.standByKwh,
+         visibility: u.visibility,
+         controlability: u.controlability,
+         turnOn: u.turnOn,
+        })as ShowDevices)
+       }, error => {
+        if (error.status === 404) {
+          this.devices=[]
+          console.log('Devices not found in database');
+       }} 
+       );
+    }
+
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown;
+    }
+    @HostListener('document:click', ['$event'])
+    onClick(event: MouseEvent) {
+      const clickedElement = event.target as HTMLElement;
+      const dropdownElement = this.elementRef.nativeElement;
+      const navbarElement = dropdownElement.querySelector('#dropbtn1') as HTMLElement;
+      const dropdownContent = dropdownElement.querySelector('.dropdown-content') as HTMLElement;
+  
+      if (!dropdownElement.contains(clickedElement) || (!navbarElement.contains(clickedElement) && !dropdownContent.contains(clickedElement))) {
+        this.showDropdown = false;
+      }
+    }
+
+    clearFilters() {
+      this.filters = {
+        categoryId:0,
+        typeId:0,
+        brandId:0, 
+        turnOn:-1, 
+        visibility:false, 
+        contolability:false, 
+        sortCriteria:SortCriteriaValues.NAME, 
+        byAscending:true, 
+        greaterThan:false, 
+        energyInKwhValue:0,
+        searchValue:""
+      };
+      this.pageChanged(1); 
     }
 }
 
@@ -118,7 +189,7 @@ class DeviceFilterModel{
   categoryId : number;
   typeId : number;
   brandId : number;
-  turnOn : boolean;
+  turnOn : number;
   visibility : boolean;
   contolability : boolean;
 
@@ -137,7 +208,7 @@ class DeviceFilterModel{
     categoryId: number,
     typeId: number,
     brandId: number,
-    turnOn: boolean,
+    turnOn: number,
     visibility: boolean,
     contolability: boolean,
     sortCriteria: SortCriteriaValues,
@@ -165,5 +236,5 @@ class DeviceFilterModel{
 
 enum SortCriteriaValues{
   NAME, 
-  ENERGYINKWH, 
+  ENERGYINKWH
 }

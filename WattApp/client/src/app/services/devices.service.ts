@@ -31,15 +31,27 @@ export class DevicesService {
   {
     return this.previousUrl;
   }
-  getAllDevices(pageNumber:number, pageSize:number,categoryId:number):Observable<any>
+  getAllDevices(pageNumber:number, pageSize:number,filter:any):Observable<any>
   {
-    if(categoryId!=0)
-    {
-     return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12&categoryId='+categoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    let url = new URL(environment.serverUrl + "/api/device");
+    url.searchParams.set("pageNumber",pageNumber.toString());
+	  url.searchParams.set("pageSize",pageSize.toString());
+    if(filter == null)
+      return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    else{
+      if(filter?.categoryId > 0)
+        url.searchParams.set("categoryId", filter.categoryId);
+      if(!isNaN(filter.turnOn) && filter.turnOn>-1){
+        if(filter.turnOn == 1){
+          url.searchParams.set("turnOn", "true");
+        }
+        else{
+          url.searchParams.set("turnOn", "false");
+        }
+      }
+        
     }
-    else
-    { return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
-    }
+    return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   getAllDevicesNoPaggination():Observable<any>
   {

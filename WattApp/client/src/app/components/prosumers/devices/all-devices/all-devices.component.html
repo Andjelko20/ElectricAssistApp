@@ -1,11 +1,35 @@
 <div class="adddevices">
     <h1 id="allh1">All devices
     </h1>
-    <label for="deviceCategoryId">Filter by:</label>
-    <select id="deviceCategoryId" class="form-select" aria-label="Default select example" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>     
-                <option value="0" >All devices</option>
-                <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
-    </select>
+    <div class="filter">
+        <div class="dropdown" [class.show]="showDropdown">
+            <a id="dropbtn1" (click)="toggleDropdown()" style="text-decoration: none;">
+                Filters <span class="filter-count"></span>
+            </a>
+
+            <div class="dropdown-content">
+                <div class="filter">
+                    <div class="form-group">
+                        <label class="filter-label">Filter by category</label>
+                        <select id="deviceCategoryId" class="form-select" aria-label="Default select example" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="filters.categoryId" required>     
+                            <option value="0" >All devices</option>
+                            <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="filter-label">Filter by visibility</label>
+                        <select id="turnOn" class="form-select" aria-label="Default select example" name="turnOn" (change)="onSelectedTurnOn($event)" [(ngModel)]="filters.turnOn">     
+                            <option value="-1" >All devices</option>
+                            <option value="1" >Turned on</option>
+                            <option value="2" >Turned off</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <a class="btn btn-primary" [routerLink]='["/device-add"]' role="button">Add device</a>
 </div>
 <div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
