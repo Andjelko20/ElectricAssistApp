@@ -4,7 +4,9 @@
 	align-items: center;
 	gap:4px;
 }
-
+::ng-deep .ngx-pagination a{
+	text-decoration: none !important;
+} 
 ::ng-deep .ngx-pagination li{
 	width: 35px;
 	height: 35px;
