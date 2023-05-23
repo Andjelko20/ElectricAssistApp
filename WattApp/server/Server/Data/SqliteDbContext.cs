@@ -1400,9 +1400,9 @@ namespace Server.Data
                         {
                             DeviceBrandId = 19,
                             DeviceTypeId = 11,
-                            EnergyKwh = 0.82f,
+                            EnergyKwh = 0.76f,
                             StandByKwh = 0,
-                            Mark = "GS 62040 S"
+                            Mark = "TotalDry 16"
                         },
                         new DeviceModel() // 89 - auto BMW
                         {
