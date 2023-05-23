@@ -24,31 +24,23 @@
 #searchInput{
   width: 230px;
 }
-#buttonAdd {
-    width: 100px;
-    height: 50px;
-}
-#buttonAdd:hover {
-    background-color: #2199e8;
-    color: white;
-}
 table {
   border-collapse: collapse;
   width: 100%;
+  overflow-x: auto;
 }
 td,
 th {
     border-bottom: 1px solid gray;
-    text-align: center;
     padding-top: 35px;
     padding-bottom: 35px;
     padding-left: 2px;
     padding-right:2px;
 }
 th {
-    text-align: center;
     background-color: #2199e8;
     color: white;
+    text-align: left;
 }
 td {
     color: #1C315E;
@@ -57,37 +49,6 @@ th,
 td {
     padding: 10px;
     text-align: left;
-}
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #2199e8;
-}
-li {
-    float: left;
-}
-li a {
-    display: block;
-    color: #1C315E;
-    text-align: left;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-.green-circle {
-    display: inline-block;
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    background-color: green;
-}
-.yellow-circle {
-    display: inline-block;
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    background-color: yellow;
 }
 .switch {
     position: relative;
@@ -139,28 +100,17 @@ li a {
   .slider.round:before {
     border-radius: 50%;
   }
-  #modalContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   .form-row {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    text-align: left;
-    align-items: center;
   }
   #subb{
     display: flex;
-    flex-direction: row;
     justify-content: right;
-    text-align: right;
-    align-items: right;
   }
   .header{
     background-color: #F7F7F7;
-    border-radius: 10px 10px 00px 0px;
+    border-radius: 10px 10px 0px 0px;
     border-bottom: 1px solid #D2D2D2;
     text-align: center;
     padding: 10px;   
@@ -175,12 +125,7 @@ li a {
   margin-left: 15px;
 }
 .dropbtn1 {
-  color: white;
-  padding: 20px;
-  font-size: 20px;
-  border: none;
   cursor: pointer;
-  background-color: #354871;
 }
 .dropdown.show .dropdown-content {
   display: block;
@@ -207,120 +152,15 @@ li a {
   background-color: #354871;
   color: #f9f9f9;
 }
-
 .dropdown:focus .dropdown-content {
   display: block;
 }
 @media only screen and (min-width: 768px) and (max-width: 1281px) {
-  #tableres{
-    padding: 15px;
-  }
-.first {
-    padding: 0;
-}
 table {
-   width: 100%;
-    overflow-x: auto;
     display: block;
-}
-table,
-td,
-th {
-    width: 100%;
-    text-align: left;
-}
-th {
-    text-align: left;
-    background-color: #2199e8;
-    color: white;
-}
-td {
-    color: #1C315E;
 }
 th,
 td {
     white-space: nowrap;
-    text-align: left;
 }
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #2199e8;
-}
-li {
-    float: left;
-}
-li a {
-    display: block;
-    color: #1C315E;
-    text-align: left;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-.green-circle {
-    display: inline-block;
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    background-color: green;
-}
-.yellow-circle {
-    display: inline-block;
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    background-color: yellow;
-}
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-  .switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s; 
-  }
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  input:checked + .slider {
-    background-color: #2196F3;
-  }
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  .slider.round {
-    border-radius: 34px;  
-  }
-  .slider.round:before {
-    border-radius: 50%;
-  }
 }

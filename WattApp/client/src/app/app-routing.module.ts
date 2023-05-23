@@ -10,7 +10,6 @@ import { ResetPasswordPageComponent } from './pages/reset-password/reset-passwor
 import { ProsumerHomePageComponent } from './pages/prosumer/prosumer-home-page/prosumer-home-page.component';
 import { AdminDsoComponent } from './components/admin/admin-dso/admin-dso.component';
 import { AdminDsoAddComponent } from './components/admin/admin-dso-add/admin-dso-add.component';
-import { ProsumersMapComponent } from './components/prosumers-map/prosumers-map.component';
 import { DispatcherGuard } from './guards/dispatcher.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { ProsumerGuard } from './guards/prosumer.guard';
@@ -18,18 +17,15 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { DsoPredictionPageComponent } from './pages/dso/dso-prediction-page/dso-prediction-page.component';
 import { ProsumerDevicesPageComponent } from './pages/prosumer/prosumer-devices-page/prosumer-devices-page.component';
 import { ProsumerReportsPageComponent } from './pages/prosumer/prosumer-reports-page/prosumer-reports-page.component';
-import { TodayComponent } from './components/weather/today/today.component';
 import { ProsumerDevicePageComponent } from './pages/prosumer/prosumer-device-page/prosumer-device-page.component';
 import { UpdateDeviceComponent } from './components/prosumers/devices/update-device/update-device.component';
 import { AddDeviceComponent } from './components/prosumers/devices/add-device/add-device.component';
-import { FutureComponent } from './components/weather/future/future.component';
 import { DsoOneProsumerPageComponent } from './pages/dso/dso-one-prosumer-page/dso-one-prosumer-page.component';
 import { ProsumerAccountPageComponent } from './pages/prosumer/prosumer-account-page/prosumer-account-page.component';
 import { ProsumerAccountSettingsPageComponent } from './pages/prosumer/prosumer-account-settings-page/prosumer-account-settings-page.component';
 import { EmailConfirmationPageComponent } from './pages/email-confirmation-page/email-confirmation-page.component';
 import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confirmation-page/change-email-confirmation-page.component';
 import { AccountPageComponent } from './pages/account-page/account-page.component';
-import { LoaderComponent } from './components/loader/loader.component';
 import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-change-password/prosumer-change-password.component';
 import { UnsavedChangesGuardGuard } from './guards/unsaved-changes-guard.guard';
 
@@ -39,7 +35,7 @@ const routes: Routes = [
 	//login
 	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
-	{path:'reset-password/:id',component:ResetPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
+	{path:'reset-password/:id',component:ResetPasswordPageComponent},
 	//home
 	{path:'dashboard',component:HomePageComponent,canActivate:[AuthenticatedGuard]},
 	//ADMIN

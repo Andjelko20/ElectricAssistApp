@@ -12,8 +12,14 @@
     </a>
     <a class="nav-link" [routerLink]='["/prosumer-reports"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
         <span class="icon-holder"><i class="fas fa-chart-bar"></i></span>
-        <span class="title">Reports</span></a>
-    <a class="nav-link" [routerLink]='["/profile"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <span class="title">Reports</span>
+    </a>
+    <a class="nav-link" [routerLink]='["/profile"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"*ngIf="showLink1===false">
         <span class="icon-holder"><i class="fa fa-user"></i></span>
-        <span class="title">Profile</span></a>
+        <span class="title">Profile</span>
+    </a>
+    <a class="nav-link" [routerLink]='["/profile"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"*ngIf="showLink1===true">
+        <span class="icon-holder"  style="color: #2fbcff;"><i class="fa fa-user"></i></span>
+        <span class="title"  style="color: #2fbcff;">Profile</span>
+    </a>
 </footer>
