@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ExportToCsv } from 'export-to-csv';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
@@ -16,7 +17,7 @@ Chart.register(...registerables)
 
 export class PredictionDeviceComponent {
 
-  
+  loader:boolean=false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
@@ -25,22 +26,28 @@ export class PredictionDeviceComponent {
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;
   ngOnInit(): void {
-  
+    this.loader=true;
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(id).subscribe(data=>{
+      
       if(data.deviceCategory == "Electricity Consumer")
       {
         this.consumptionGraph = true;
+        this.loader=false;
         this.deviceService.predictionDevice(id).subscribe(consumption =>{
+          
           this.list1 = consumption;
           
           this.LineChartConsumption();
+          
         })
         
       }
       else{ 
         this.productionGraph=true;
+        this.loader=false;
         this.deviceService.predictionDevice(id).subscribe(production =>{
+          
         const br: any = 0;
           if(production==br)
           {
@@ -48,7 +55,9 @@ export class PredictionDeviceComponent {
           }
           else{
             this.list2=production;
+            
             this.LineChartProduction();
+            
           }
         })
       }
@@ -81,16 +90,19 @@ export class PredictionDeviceComponent {
           {
             label: 'production',
             data: energyUsageResults2,
-            tension:0.5,
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-            pointBorderColor: 'rgba(0, 255, 0, 1)',
-            pointBorderWidth: 7,
-            pointRadius: 5,
+            tension:0.1,
+            backgroundColor: 'rgba(29, 145, 192, 0.2)',
+            borderColor: 'rgba(29, 145, 192, 1)',
+            borderWidth: 1,
+            pointBackgroundColor: 'rgba(29, 145, 192, 1)',
+            pointBorderColor: 'rgba(29, 145, 192, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
             pointHoverRadius: 6,
-            fill:true
+            fill:true,
+            segment:{
+              borderDash:[6,6]
+            }
           }
           
         ]
@@ -98,6 +110,18 @@ export class PredictionDeviceComponent {
       }
       ,
       options: {
+        onHover: (e, chartEle) => {
+          if (e.native) {
+            const target = e.native.target as HTMLElement;
+            if (target instanceof HTMLElement) {
+              target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+            } else {
+              console.error('Invalid target element:', target);
+            }
+          } else {
+            console.error('Missing native event:', e);
+          }
+        },  
         maintainAspectRatio: false,
         responsive: true,
         scales:{
@@ -137,8 +161,17 @@ export class PredictionDeviceComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend:{
             display: false
@@ -176,39 +209,38 @@ export class PredictionDeviceComponent {
       type: 'line',
       data : {
         labels: month2,
-        
         datasets:  [
           {
             label: 'consumption',
             data: energyUsageResults1,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-          ],
-          pointBorderColor: 'rgba(255,99,132,1)',
-          pointBorderWidth: 7,
-            pointRadius: 5,
-          borderWidth: 2,
-          fill: true
-          },
-          
+            backgroundColor: 'rgba(127, 205, 187, 0.2)',
+            borderColor: ' rgba(127, 205, 187, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(127, 205, 187, 1)',
+            pointBorderColor: 'rgba(127, 205, 187, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
+            pointHoverRadius: 6,
+            fill:true,
+            segment:{
+              borderDash:[6,6]
+            }
+          }, 
         ]
-        
-      }
-      ,
+      },
       options: {
+        onHover: (e, chartEle) => {
+          if (e.native) {
+            const target = e.native.target as HTMLElement;
+            if (target instanceof HTMLElement) {
+              target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+            } else {
+              console.error('Invalid target element:', target);
+            }
+          } else {
+            console.error('Missing native event:', e);
+          }
+        },  
         maintainAspectRatio: false,
         responsive: true,
         scales:{
@@ -245,16 +277,23 @@ export class PredictionDeviceComponent {
                 size:13
               }
             }
-          }
-          ,
+          },
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend:{
             display:false
           },
-         
           title: {
             display: true,
             text: 'Prediction consuming in a week',
@@ -266,6 +305,38 @@ export class PredictionDeviceComponent {
         }
       }
     });
-
   }
+  downloadCSV(): void {
+    const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(deviceId).subscribe(data=>{
+      if(data.deviceCategory == "Electricity Consumer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'consumption-week',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list1);
+      }
+      else if(data.deviceCategory == "Electricity Producer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'production-week',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list2);
+      }
+    })
+    } 
 }

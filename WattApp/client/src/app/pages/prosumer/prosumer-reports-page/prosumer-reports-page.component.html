@@ -16,7 +16,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Consumption last today</h5>
+                            <h5 class="card-title">Consumption today</h5>
                             <p class="card-text">{{todayC}} {{meter1}}</p>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Production last today</h5>
+                            <h5 class="card-title">Production today</h5>
                             <p class="card-text">{{todayP}} {{meter2}}</p>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Production last month</h5>
+                            <h5 class="card-title">Consumption this month</h5>
                             <p class="card-text">{{monthC}} {{meter3}}</p>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Production last month</h5>
+                            <h5 class="card-title">Production this month</h5>
                             <p class="card-text">{{monthP}} {{meter4}}</p>
                         </div>
                     </div>
@@ -122,21 +122,19 @@
                         <div class="card-body ">
                             <h5 class="card-title ">Consumption next 7 days</h5>
                             <p class="card-text ">{{maxc}} {{meter}} </p>
-
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card ">
                         <div class="card-body ">
-                            <h5 class="card-title ">Prediction next 7 days</h5>
+                            <h5 class="card-title ">Production next 7 days</h5>
                             <p class="card-text ">{{maxp}} {{meter}} </p>
-
                         </div>
                     </div>
                 </div>
                 <div class="predictiontabelandgrapf">
-                    <button type="button " class="collapsible dropdown-toggle active" (click)="onClickPredGraph()">Graphical view</button>
+                    <button type="button " class="collapsible dropdown-toggle" (click)="onClickPredGraph()">Graphical view</button>
                     <div class="content3">
                         <app-prediction-prosumer></app-prediction-prosumer>
                     </div>
@@ -147,7 +145,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <app-footer></app-footer>
     <app-prosumer-footer></app-prosumer-footer>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ExportToCsv } from 'export-to-csv';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { combineLatest, forkJoin } from 'rxjs';
 import { DayByHour } from 'src/app/models/devices.model';
@@ -17,7 +18,8 @@ export class DeviceTodayComponent {
   currentDate = new Date();
   maxDate = new Date();
   consumptionGraph:boolean = false;
-  productionGraph:boolean = false;  
+  productionGraph:boolean = false; 
+  mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService,private authService:AuthService) {
   }
   list1:DayByHour[] = [];
@@ -321,4 +323,38 @@ export class DeviceTodayComponent {
     });
 
   }
+
+  downloadCSV(): void {
+    const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+    this.authService.getDevice(deviceId).subscribe(data=>{
+      if(data.deviceCategory == "Electricity Consumer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'consumption-day',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list1);
+      }
+      else if(data.deviceCategory == "Electricity Producer"){
+          const options = {
+          fieldSeparator: ',',
+          filename: 'production-day',
+          quoteStrings: '"',
+          useBom : true,
+          decimalSeparator: '.',
+          showLabels: true,
+          useTextFile: false,
+          headers: ['Hour', 'Day', 'Month', 'Year', 'Production [kWh]']
+        };
+        const csvExporter = new ExportToCsv(options);
+        const csvData = csvExporter.generateCsv(this.list2);
+      }
+    })
+    } 
 }

@@ -3,7 +3,6 @@
 	justify-content: center;
 	align-items: center;
 	gap:4px;
-	margin-right: 120px;
 }
 
 ::ng-deep .ngx-pagination li{
@@ -22,23 +21,27 @@
 }
 ::ng-deep .ngx-pagination li.small-screen{
 	display: none !important;
+	
 }
 ::ng-deep #pagination .ngx-pagination .pagination-next a::after,
 ::ng-deep #pagination .ngx-pagination .pagination-next.disabled::after{
 	margin-left: 0 !important;
 	font-size: 20px;
+	text-decoration: none !important;
 }
 
 ::ng-deep #pagination .ngx-pagination .pagination-previous a::before,
 ::ng-deep #pagination .ngx-pagination .pagination-previous.disabled::before{
 	margin-right: 0 !important;
 	font-size: 20px;
+	text-decoration: none !important;
 }
 
 ::ng-deep #pagination .ngx-pagination .pagination-next a, 
 ::ng-deep #pagination .ngx-pagination .pagination-previous a{
 	color: #2199e8 !important;
 	font-weight: bold;
+	text-decoration: none!important;
 }
 
 ::ng-deep #pagination .ngx-pagination li a:hover{
@@ -49,6 +52,7 @@
 	justify-content: center;
 	border-radius: 50% !important;
 	text-decoration: none !important;
+	
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
 ::ng-deep .ngx-pagination{
@@ -85,18 +89,21 @@
 ::ng-deep #pagination .ngx-pagination .pagination-next.disabled::after{
 	margin-left: 0 !important;
 	font-size: 20px;
+	text-decoration: none !important;
 }
 
 ::ng-deep #pagination .ngx-pagination .pagination-previous a::before,
 ::ng-deep #pagination .ngx-pagination .pagination-previous.disabled::before{
 	margin-right: 0 !important;
 	font-size: 20px;
+	text-decoration: none !important;
 }
 
 ::ng-deep #pagination .ngx-pagination .pagination-next a, 
 ::ng-deep #pagination .ngx-pagination .pagination-previous a{
 	color: #2199e8 !important;
 	font-weight: bold;
+	text-decoration: none !important;
 }
 
 ::ng-deep #pagination .ngx-pagination li a:hover{

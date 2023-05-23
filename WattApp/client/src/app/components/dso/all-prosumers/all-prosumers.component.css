@@ -2,58 +2,48 @@
     margin-left: 50px;
     margin-right: 50px;
 }
-
 .first {
     padding: 0;
     margin-bottom: 30px;
     display: flex;
     justify-content: center;
 }
-
 #buttonAdd {
     width: 100px;
     height: 50px;
 }
-
 #buttonAdd:hover {
     background-color: #2199e8;
     color: white;
 }
-
 table {
     box-sizing: border-box;
 }
-
 table,
 td,
 th {
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid gray;   
     text-align: left;
     box-sizing: border-box;
 }
-
 th {
     text-align: left;
     background-color: #2199e8;
     color: white;
 }
-
 table {
     border-collapse: collapse;
 }
-
 th,
 td {
     padding: 15px;
     text-align: left;
 }
-
 button {
     background-color: white;
     color: black;
     border: 2px solid #2199e8;
 }
-
 ul {
     list-style-type: none;
     margin: 0;
@@ -61,11 +51,9 @@ ul {
     overflow: hidden;
     background-color: #1C315E;
 }
-
 li {
     float: left;
 }
-
 li a {
     display: block;
     color: #1C315E;
@@ -73,14 +61,12 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
 }
-
 .search-filter-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 20px 0 15px 20px;
 }
-
 .search-label,
 .filter-label {
     display: block;
@@ -89,7 +75,6 @@ li a {
     margin-bottom: 8px;
     color: #444;
 }
-
 #search-input {
     padding: 8px;
     font-size: 16px;
@@ -101,12 +86,10 @@ li a {
     width: 100%;
     transition: border-color 0.2s ease-in-out;
 }
-
 #search-input:focus {
     outline: none;
     border-color: #4d90fe;
 }
-
 #filter-select {
     padding: 8px;
     font-size: 16px;
@@ -118,7 +101,6 @@ li a {
     width: 100%;
     transition: background-color 0.2s ease-in-out;
 }
-
 #filter-select:focus {
     outline: none;
     background-color: #e0e0e0;
@@ -133,6 +115,13 @@ li a {
     text-decoration: none; 
     color: #354871;
     transition: border-color 0.5s ease-in-out;
+}
+#show-prosumer{
+    cursor: pointer;
+}
+#show-prosumer:hover{
+    border: 1px solid grey;
+    box-shadow: 5px 1px 1px gray;
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .table-responsive {

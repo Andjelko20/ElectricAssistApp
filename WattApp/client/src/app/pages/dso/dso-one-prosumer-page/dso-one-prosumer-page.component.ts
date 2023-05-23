@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 import { Prosumers } from 'src/app/models/users.model'
@@ -13,7 +13,7 @@ import { Popover, Tooltip } from 'bootstrap';
   templateUrl: './dso-one-prosumer-page.component.html',
   styleUrls: ['./dso-one-prosumer-page.component.css']
 })
-export class DsoOneProsumerPageComponent implements AfterViewInit,OnInit{
+export class DsoOneProsumerPageComponent implements AfterViewInit,OnInit,OnDestroy{
 
   name!:string;
   popover: Popover | undefined;
@@ -23,30 +23,29 @@ export class DsoOneProsumerPageComponent implements AfterViewInit,OnInit{
   devices:boolean = false;
   devicesList:ShowDevices[] = []
   deviceCategoryId!: number;
+  private tooltips: Tooltip[] = [];
   constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute) {  }
-
+ 
   ngAfterViewInit() {
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-    const popoverList = Array.from(popoverTriggerList).map(function (popoverTriggerEl) {
-      return new Popover(popoverTriggerEl)
-    });
-    this.popover = popoverList[0];
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    const tooltipList = Array.from(tooltipTriggerList).map(function (tooltipTriggerEl) {
-      return new Tooltip(tooltipTriggerEl)
-
-      
+    const tooltipList = Array.from(tooltipTriggerList).map((tooltipTriggerEl) => {
+      return new Tooltip(tooltipTriggerEl);
     });
-    this.tooltip = tooltipList[0];
+    this.tooltips = tooltipList;
    
   }
-  ngOnInit(): void {
-    
+  ngOnDestroy(): void {
+    this.tooltips.forEach((tooltip) => {
+      tooltip.dispose();
+    });
+    this.tooltips = [];
+    this.tooltip = undefined;
+  }
 
+  ngOnInit(): void {
     this.authService.getProsumer(Number(this.route.snapshot.paramMap.get('id'))).subscribe(user=>{
         this.name=user.name;
     })
-
   }
 
   toggleD()
@@ -100,36 +99,6 @@ graph:boolean = true;
   compGraph1 = false;
   compGraph2 = false;
   compGraph3 = false;
-
-  compTable = true;
-  compTable1 = false;
-  compTable2 = false;
-  compTable3 = false;
-  showComponentTable() {
-    this.compTable = true;
-    this.compTable1=false;
-    this.compTable2=false;
-    this.compTable3 = false;
-  }
-  showComponentTable1() {
-      this.compTable = false;
-      this.compTable1=true;
-      this.compTable2=false;
-      this.compTable3 = false;
-  }
-  showComponentTable2() {
-      this.compTable = false;
-      this.compTable1=false;
-      this.compTable2=true;
-      this.compTable3 = false;
-  }
-  showComponentTable3() {
-    this.compTable=false;
-    this.compTable1=false;
-    this.compTable2 = false;
-    this.compTable3 = true;
-}
-
 showComponentGraph() {
   this.compGraph = true;
   this.compGraph1=false;

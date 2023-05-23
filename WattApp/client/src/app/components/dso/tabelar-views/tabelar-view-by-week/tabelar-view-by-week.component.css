@@ -38,6 +38,24 @@
     text-transform: uppercase;
   }
 
+  .container1 {
+    width: 15%;
+    float: left;
+    margin-left: 5%;
+  }
+  
+  .container2 {
+    display: inline-block;
+    width: 15%;
+
+  }
+  .container3 {
+    width: 15%;
+    float: right;
+    margin-right: 5%;
+  }
+
+
   .btn {
     padding: 8px;
     border: none;

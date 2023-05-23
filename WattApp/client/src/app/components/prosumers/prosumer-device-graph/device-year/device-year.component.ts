@@ -10,6 +10,7 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import moment, { Moment } from 'moment';
 import { FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { ExportToCsv } from 'export-to-csv';
 Chart.register(...registerables)
 Chart.register(...registerables)
 
@@ -45,7 +46,7 @@ export class DeviceYearComponent {
   maxYear = new Date();
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
-  itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
+  mergedList: {month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -323,4 +324,37 @@ export class DeviceYearComponent {
           }
         });
     }
+    downloadCSV(): void {
+      const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+      this.authService.getDevice(deviceId).subscribe(data=>{
+        if(data.deviceCategory == "Electricity Consumer"){
+            const options = {
+            fieldSeparator: ',',
+            filename: 'consumption-year',
+            quoteStrings: '"',
+            useBom : true,
+            decimalSeparator: '.',
+            showLabels: true,
+            useTextFile: false,
+            headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
+          };
+          const csvExporter = new ExportToCsv(options);
+          const csvData = csvExporter.generateCsv(this.list1);
+        }
+        else if(data.deviceCategory == "Electricity Producer"){
+            const options = {
+            fieldSeparator: ',',
+            filename: 'production-year',
+            quoteStrings: '"',
+            useBom : true,
+            decimalSeparator: '.',
+            showLabels: true,
+            useTextFile: false,
+            headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
+          };
+          const csvExporter = new ExportToCsv(options);
+          const csvData = csvExporter.generateCsv(this.list2);
+        }
+      })
+      } 
 }

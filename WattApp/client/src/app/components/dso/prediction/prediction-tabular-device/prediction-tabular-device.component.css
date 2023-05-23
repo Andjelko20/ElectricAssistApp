@@ -2,11 +2,28 @@
     margin: 20px 0;
 }
 
-.btn {
-    background-color: #1c315e;
+.container3 {
+    width: 15%;
+    float: right;
+    margin-right: 5%;
+  }
+
+
+  .btn {
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #2199e8;
     color: white;
-    margin-bottom: 12px;
-}
+    font-weight: normal;
+    text-align: center;
+  }
+  
+  .btn:hover {
+    background-color: #0d8beb;
+  }
 
 .table-wrapper {
     background-color: #f8f9fa;
