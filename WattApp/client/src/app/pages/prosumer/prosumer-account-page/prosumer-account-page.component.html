@@ -41,19 +41,26 @@
         </div>
     </div>
     <div class="phone">
-        <div class="userimg">
-            <img id="imgdevice" src="assets/img/account.png" >
+        <div class="backgr">
+            <div class="userimg">
+                <img id="imgdevice" src="assets/img/account.png">
+            </div>
+            <h1>{{name}}</h1>
         </div>
-        <h1>{{name}}</h1>
         <div class="info">
+            <h2>Information</h2>
+            <hr>
             <ul>
                 <li class="li1">Username: {{username}}</li>
                 <li class="li1">E-mail: {{email}}</li>
                 <li class="li1">Adress:{{adres}}</li>
                 <li class="li1" id="number">Number of devices: {{numOfDevices}}</li>
-                <li class="aa"> <img id="imgdevice1" src="assets/userSetting.png" ><a [routerLink]='["/profile-edit"]'>Edit Profile</a></li>
-                <li class="aa"> <img id="imgdevice111" src="assets/key.png" ><a id="pass" [routerLink]='["/prosumer-change-password"]'>Change Password</a></li>
-                <li class="aa"> <img id="imgdevice11" src="assets/exit.png" ><a id="logout" (click)="logout()">Log out</a></li>
+            </ul>
+            <hr>
+            <ul>
+                <li class="aa"> <img id="imgdevice1" src="assets/userSetting.png"><a [routerLink]='["/profile-edit"]'>Edit Profile</a></li>
+                <li class="aaa"> <img id="imgdevice111" src="assets/key.png"><a id="pass" [routerLink]='["/prosumer-change-password"]'>Change Password</a></li>
+                <li class="aa"> <img id="imgdevice11" src="assets/exit.png"><a id="logout" (click)="logout()">Log out</a></li>
             </ul>
         </div>
     </div>

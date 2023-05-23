@@ -63,7 +63,14 @@ body {
 h1 {
     text-align: center;
     margin-top: 27px;
+    padding-bottom: 12px;
     font-size: 20px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-left: 15px;
+    padding-top: 10px;
 }
 
 ul {
@@ -85,6 +92,20 @@ a {
 
 .aa {
     margin-top: 10px;
+    border: 1px solid #c0d9fd;
+    width: 151px;
+    border-radius: 17px;
+    padding: 5px;
+    background-color: #c0d9fd;
+}
+
+.aaa {
+    margin-top: 10px;
+    border: 1px solid #c0d9fd;
+    width: 225px;
+    border-radius: 17px;
+    padding: 5px;
+    background-color: #c0d9fd;
 }
 
 .aa a {
@@ -94,8 +115,16 @@ a {
     color: #727272;
 }
 
+.aaa #pass {
+    border-radius: 5px;
+    margin-top: 15px;
+    padding: 5px;
+    color: #727272;
+}
+
 .userimg {
     display: flex;
+    padding-top: 26px;
     justify-content: center;
 }
 
@@ -134,13 +163,12 @@ a:hover {
 }
 
 #number {
-    border-bottom: 1px solid rgb(183, 183, 183);
     max-width: 300px;
 }
 
 .phone {
     display: block;
-    padding-top: 61px;
+    padding-top: 45px;
     padding-bottom: 65px;
 }
 
@@ -149,12 +177,22 @@ a:hover {
     margin-bottom: 37px;
 }
 
+.backgr {
+    background-color: #c0d9fd;
+}
+
 @media(min-width:390px) {
     h1 {
         font-size: 28px !important;
     }
     ul li {
         font-size: 24px;
+    }
+    .aa {
+        width: 225px;
+    }
+    .aaa {
+        width: 266px;
     }
 }
 
