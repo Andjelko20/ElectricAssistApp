@@ -17,7 +17,7 @@ Chart.register(...registerables)
 
 export class PredictionDeviceComponent {
 
-  
+  loader:boolean=false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
@@ -26,22 +26,28 @@ export class PredictionDeviceComponent {
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;
   ngOnInit(): void {
-  
+    this.loader=true;
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(id).subscribe(data=>{
+      
       if(data.deviceCategory == "Electricity Consumer")
       {
         this.consumptionGraph = true;
+        this.loader=false;
         this.deviceService.predictionDevice(id).subscribe(consumption =>{
+          
           this.list1 = consumption;
           
           this.LineChartConsumption();
+          
         })
         
       }
       else{ 
         this.productionGraph=true;
+        this.loader=false;
         this.deviceService.predictionDevice(id).subscribe(production =>{
+          
         const br: any = 0;
           if(production==br)
           {
@@ -49,7 +55,9 @@ export class PredictionDeviceComponent {
           }
           else{
             this.list2=production;
+            
             this.LineChartProduction();
+            
           }
         })
       }
@@ -158,6 +166,12 @@ export class PredictionDeviceComponent {
           mode: 'index',
         },
         plugins: {
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend:{
             display: false
@@ -270,6 +284,12 @@ export class PredictionDeviceComponent {
           mode: 'index',
         },
         plugins: {
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend:{
             display:false

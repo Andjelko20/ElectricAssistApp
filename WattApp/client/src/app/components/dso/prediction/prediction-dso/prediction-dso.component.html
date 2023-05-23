@@ -13,7 +13,7 @@
           <button class="btn" (click)="downloadCSV()">Export to CSV</button>
         </div>
         <div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
-        <div id="linechart">
+        <div id="linechart" *ngIf="!loader">
           <div class="chart-container"> <canvas  id="linechart2">
           </canvas></div>
           <div class="chart-container"><canvas  id="linechart1">

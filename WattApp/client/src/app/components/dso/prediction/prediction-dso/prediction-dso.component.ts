@@ -195,6 +195,8 @@ export class PredictionDsoComponent {
         plugins: {
           tooltip: {
             enabled: true,
+            boxHeight:5,
+            boxWidth:5,
             boxPadding:3
           },
           datalabels:{display: false},
@@ -237,7 +239,7 @@ export class PredictionDsoComponent {
             label: 'consumption',
             data: energyUsageResults1,
             
-            backgroundColor: 'rgba(127, 205, 187, 1)',
+            backgroundColor: 'rgba(127, 205, 187, 0.2)',
             borderColor: ' rgba(127, 205, 187, 1)',
             borderWidth: 2,
             pointBackgroundColor: 'rgba(127, 205, 187, 1)',
@@ -245,7 +247,7 @@ export class PredictionDsoComponent {
             pointBorderWidth: 8,
             pointRadius: 1,
             pointHoverRadius: 6,
-            
+            fill:true,
             segment:{
               borderDash:[6,6]
             }

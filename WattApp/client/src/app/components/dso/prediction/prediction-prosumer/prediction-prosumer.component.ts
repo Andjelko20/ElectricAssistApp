@@ -13,7 +13,7 @@ Chart.register(...registerables)
 })
 export class PredictionProsumerComponent {
 
-
+  loader:boolean=false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
   dayNames: string[] = [];
@@ -23,7 +23,7 @@ export class PredictionProsumerComponent {
   }
 
   ngOnInit(): void {
-
+    this.loader=true;
     let token=new JwtToken();
     this.idProsumer=token.data.id as number;
 
@@ -38,9 +38,12 @@ export class PredictionProsumerComponent {
             currentDate.setDate(currentDate.getDate() + 1 );
           }
     this.deviceService.predictionUser(this.idProsumer,2).subscribe((data: WeekByDay[]) =>{
+      
       this.list1 = data;
       this.deviceService.predictionUser(this.idProsumer,1).subscribe((data: WeekByDay[]) =>{
+
         this.list2 = data;
+        this.loader=false;
         this.LineChartProduction();
         this.LineChartConsumption();
       })
@@ -140,6 +143,12 @@ export class PredictionProsumerComponent {
           mode: 'index',
         },
         plugins: {
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend:{
             display:false
@@ -255,6 +264,12 @@ export class PredictionProsumerComponent {
           mode: 'index',
         },
         plugins: {
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend:{
             display:false

@@ -258,6 +258,11 @@ export class AdminDsoComponent implements OnInit {
         this.modalService.open(this.modalContent2);
         this.body="Email confirmation has been successfully sent to the user's email."
         this.router.navigate(['dashboard']);
+      },error:()=>{
+        this.modalService.open(this.modalContent2);
+        this.body="User with that email address already exists."
+        this.router.navigate(['dashboard']);
+        
       }
     });
   }
