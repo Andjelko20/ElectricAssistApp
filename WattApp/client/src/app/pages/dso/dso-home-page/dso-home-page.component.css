@@ -47,7 +47,6 @@
 }
 .toggle-buttons input[type="radio"]:checked + label {
   font-weight: bold;
-  color: black;
 }
 .toggle-buttons input[type="radio"]:not(:checked) + label {
   color: gray;
@@ -301,6 +300,11 @@ button.active {
   text-align: center;
   
 }
+#legend{
+  display: inline-block; 
+  cursor: pointer;
+  font-size: 18px;
+}
 @media only screen and (min-width: 768px) and (max-width: 1440px) {
     .wrapper{
         margin-top: 90px;
@@ -382,7 +386,7 @@ button.active {
     /* charts */
     .history-charts {
         background-color: white;
-        box-shadow: 1px 2px grey;
+        border: 1px solid #D2D2D2;
         height: 100%;
         width: 100%;
         
@@ -510,7 +514,6 @@ button.active {
           align-items: center;
           background-color: white;
           padding-top: 10px;
-          border-bottom: 1px solid black;
         }
         
         .toggle-buttons {
@@ -596,5 +599,38 @@ button.active {
       bottom: 0px;
       top: 0px;
       margin-right: 15px;
+  }
+  #legend{
+    display: inline-block; 
+    cursor: pointer;
+    font-size: 15px;
+  }
+}
+@media only screen and (max-width: 1800px) {
+  .green-square {
+
+    width: 10px; 
+    height: 10px;
+  }
+  .blue-square {
+  
+    width: 10px; 
+    height: 10px; 
+  }
+  .red-square {
+  
+    width: 10px; 
+    height: 10px; 
+  }
+  .peers{
+    justify-content: space-evenly;
+  }
+  .gap-10 > *{
+    padding: 8px !important;
+  }
+  #legend{
+    display: inline-block; 
+    cursor: pointer;
+    font-size: 15px;
   }
 }

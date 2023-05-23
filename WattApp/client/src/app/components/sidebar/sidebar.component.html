@@ -52,12 +52,10 @@
                     <span class="icon-holder"><i class="fas fa-users"></i></span>
                     <span class="title">Prosumers</span>
                 </a>
-                <a class="nav-link" [routerLink]="currentUrl" *ngIf="showLink==true">
+                <a class="nav-link" [routerLink]="['/prosumers']"[queryParams]="{ tab: tab}"style="background-color: #354871;color: white;" *ngIf="showLink==true">
                     <span class="icon-holder"><i class="fas fa-users"></i></span>
                     <span class="title">Prosumers</span>
-                </a>
-                
-               
+                </a> 
             </li>
             <li *ngIf="role==dso" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
 
@@ -80,7 +78,11 @@
                 </a>
             </li>
             <li *ngIf="role==prosumer" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/devices"]'>
+                <a class="nav-link" [routerLink]='["/devices"]'*ngIf="showLink==false">
+                    <span class="icon-holder"><i class="fa fa-mobile"></i></span>
+                    <span class="title">Devices</span>
+                </a>
+                <a class="nav-link" [routerLink]='["/devices"]'*ngIf="showLink==true" style="background-color: #354871;color: white;">
                     <span class="icon-holder"><i class="fa fa-mobile"></i></span>
                     <span class="title">Devices</span>
                 </a>

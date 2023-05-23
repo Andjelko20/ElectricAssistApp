@@ -1,9 +1,8 @@
-import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { LogedUser, Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-account-page',
@@ -50,13 +49,13 @@ export class AccountPageComponent implements OnInit {
   confirmPassword!:string;
   pass!:string;
   errorMsg='';
-
+  btnAction:string=''  
+  confirm:boolean=false;
   storePassword=localStorage.getItem("password");
-  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,
-    private router:Router,private updateService:AuthService,private modalService: NgbModal) {
+  constructor(
+    private updateService:AuthService,private modalService: NgbModal) {
   
    }
-
   ngOnInit(): void {
     let token=new JwtToken();
     this.idUser=token.data.id as number;
@@ -75,7 +74,6 @@ export class AccountPageComponent implements OnInit {
               city:response.city,
               country: response.country,
               address:response.address
-              
               };
               this.logedDetail={
                 id:this.idUser,
@@ -91,7 +89,7 @@ export class AccountPageComponent implements OnInit {
   {
     if(this.updateUserDetail.name!==this.logedDetail.name)
     {
-          this.body="Your name has been changed." 
+          this.body="Your name has been successfully changed." 
     }
     else if(this.updateUserDetail.email!==this.logedDetail.email)
     {
@@ -99,20 +97,20 @@ export class AccountPageComponent implements OnInit {
     }
     else if(this.updateUserDetail.username!==this.logedDetail.username)
     {
-      this.body="Your username has been changed." 
+      this.body="Your username has been successfully changed." 
     }
     else if(this.updateUserDetail.name===this.logedDetail.name && this.updateUserDetail.username===this.logedDetail.username && this.updateUserDetail.email===this.logedDetail.email)
     {
       this.body="You didnt make any changes.";
       
     }
-    else if(this.updateUserDetail.name!==this.logedDetail.name && this.updateUserDetail.email!==this.logedDetail.email)
+    else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username )
     {
-        this.body="Your name and username has been changed." 
+        this.body="Your name and username have been successfully changed." 
     }
-    else if(this.updateUserDetail.name!==this.logedDetail.name && this.updateUserDetail.email!==this.logedDetail.email)
+    else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username && this.updateUserDetail.email!=this.logedDetail.email)
     {
-      this.body="Your name, username and email has been changed. You need to confirm your email" 
+      this.body="Your name, username and email have been successfully changed. You need to confirm your email" 
     }
     this.updateService.upDateLogedIn(this.logedDetail)
     .subscribe({
@@ -124,18 +122,29 @@ export class AccountPageComponent implements OnInit {
     this.isFormDirty1 = false;
   }
   onFormChange() {
-    this.isFormDirty = true;
-  }
-  onFormChange1() {
-    this.isFormDirty1 = true;
+    const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
+    const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
+    const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
+    if(oldpass==="" && newpass==="" && confpass==="")
+    {
+      this.isFormDirty = false;
+    }
+    else
+    {
+      this.isFormDirty = true;
+    }
     
   }
-  @HostListener('window:beforeunload')
-  canDeactivate(): boolean {
-    if (this.isFormDirty) {
-      return confirm('Are you sure you want to leave? Your unsaved changes will be lost.');
+  onFormChange1() {
+    if(this.updateUserDetail.name===this.logedDetail.name && this.updateUserDetail.username===this.logedDetail.username && this.updateUserDetail.email===this.logedDetail.email)
+    {
+      this.isFormDirty1 = false;
+      
     }
-    return true;
+    else
+    {
+      this.isFormDirty1 = true;
+    }
   }
 
   updatePasswordProsumer()
@@ -154,9 +163,13 @@ export class AccountPageComponent implements OnInit {
         { next:() => {  
             
           this.modalService.open(this.modalContent);
-          this.body="Your password has been changed.";
+          this.body="Your password has been successfully changed.";
           this.ngOnInit();
-      }} );
+      },error:()=>{
+        this.modalService.open(this.modalContent);
+        this.body="Your old password is not valid.";
+      }
+    } );
       
       this.isFormDirty = false;
     }

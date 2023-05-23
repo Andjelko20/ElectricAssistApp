@@ -1,11 +1,9 @@
-import { Component, OnInit, TemplateRef, ViewChild,ElementRef  } from '@angular/core';
-import { ActivatedRoute, NavigationCancel, NavigationEnd, NavigationStart, Router, RouterLinkWithHref } from '@angular/router';
+import { Component, OnInit  } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Roles } from '../../utilities/role'
 import { JwtToken } from 'src/app/utilities/jwt-token';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Location } from '@angular/common';
-import { Renderer2 } from '@angular/core';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -22,8 +20,7 @@ export class SidebarComponent implements OnInit{
   showLink:boolean=false;
   id?:string;
   constructor(public router:Router,private usersService:AuthService,
-    public route:ActivatedRoute,private modalService: NgbModal,private location: Location,
-    private renderer: Renderer2,private elRef: ElementRef) { 
+    public route:ActivatedRoute,private location: Location,) { 
 
       this.admin=Roles.ADMIN_NAME;
       this.dso=Roles.DISPATCHER_NAME;
@@ -41,22 +38,34 @@ export class SidebarComponent implements OnInit{
         this.showLink=false
         if(event.url==='/prosumers?tab=table')
         {
-          this.currentUrl="'/prosumers?tab=table'";
           this.tab='table';
           this.showLink=false
         }
         else  if(event.url==='/prosumers?tab=map')
         {
-          this.currentUrl="'/prosumers?tab=map'";
           this.tab='map';
           this.showLink=false
         }
         else if(event.url==='/prosumer/'+this.id)
         {
-          
-          this.currentUrl="['/prosumer/"+this.id+"']";
+          if(this.tab==='map')
+          {
+            this.tab='map';
+          }
+          else (this.tab==='table')
+          {
+            this.tab='table';
+          }
           this.showLink=true
           
+        }
+        if(event.url==='/device/'+this.id)
+        {
+          this.showLink=true
+        }
+        else if(event.url==='/devices')
+        {
+          this.showLink=false
         }
       }
     });

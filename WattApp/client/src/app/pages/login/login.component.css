@@ -1,7 +1,6 @@
     label[for="remember"] {
         cursor: pointer;
     }
-    
     .background-image {
         background-size: cover;
         background-position: center;
@@ -14,7 +13,6 @@
         background-size: cover;
         z-index: -1;
     }
-    
     main {
         width: 100%;
         min-height: 100vh;

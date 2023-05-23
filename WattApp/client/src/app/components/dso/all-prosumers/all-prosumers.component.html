@@ -1,6 +1,6 @@
 <div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
 <div class="table-responsive">
-    <table *ngIf="data?.length!=0" class="table">
+    <table *ngIf="data?.length!=0 && !loader" class="table" >
         <thead>
             <tr>
                 <th>#</th>
@@ -13,15 +13,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}let i = index ">
+            <tr [routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]' id="show-prosumer" *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}let i = index ">
                 <td>{{ (currentPage - 1) * itemsPerPage + i +1 }}</td>
-                <td><a id="names"[routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]'>{{prosumer.userDetailsDTO.name}}</a></td>
+                <td><a id="names" class="hovered-link"[routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]'>{{prosumer.userDetailsDTO.name}}</a></td>
                 <td>{{prosumer.userDetailsDTO.settlement}}</td>
                 <td>{{prosumer.userDetailsDTO.city}}</td>
                 <td>{{prosumer.userDetailsDTO.country}}</td>
                 <td>{{prosumer.currentConsumption}} kWh</td>
                 <td>{{prosumer.currentProduction}} kWh</td>
-
             </tr>
         </tbody>
     </table>

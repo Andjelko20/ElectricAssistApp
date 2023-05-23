@@ -96,6 +96,7 @@ img {
         font-family: 'Open Sans';
         border-radius: 30px;
         margin-right: 20px;
+        margin-top: 25px;
     }
     .currentTemp {
         width: 100%;

@@ -11,7 +11,6 @@
 .toggle-container {
 
   display: flex;
-  
   justify-content: space-between;
   justify-content: center;
   align-items: center;
@@ -63,10 +62,6 @@
   min-height: 10%;
 }
 
-.information {
-  width: 35%;
-  margin-left: 15px;
-}
 
 .today-future{
   display: block;
@@ -77,10 +72,6 @@
   padding: 15px;
   margin: 0 15px;
   text-align: center;
-}
-
-* {
-  box-sizing: border-box;
 }
 
 .containers {
@@ -158,13 +149,13 @@
 
 .history-charts {
   background-color: white;
-  box-shadow: 2px 4px grey;
-  /* border: 1px solid black; */
+  border: 1px solid #D2D2D2;
   height: 100%;
   flex-grow: 100;
-  padding-left: 5%;
-  margin-right: 15px;
+  padding-left: 1%;
+  padding-right: 1%;
   width: 100%;
+  border-radius: 10px;
 }
 
 .history-charts-body {
@@ -273,9 +264,9 @@ box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
   color: gray;
 }
 .card-group {
-  margin-left: 17px;
-  margin-right: 15px;
-  flex-wrap: 100px;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
   text-align: center;
   margin-bottom: 10px;
 }
@@ -310,13 +301,13 @@ box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
   max-width: 100%;
   margin: 0;
   padding: 0;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 .gap-10 > * {
-  padding: 10px !important;
+  padding:10px !important;
 }
 .gap-10 {
-  margin: 10px !important;
+  margin: 8px !important;
 }
 [class*='gap'] {
   width: auto !important;
@@ -325,15 +316,15 @@ box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 .bgc-white, .bgcH-white:hover {
   background-color: #ffffff !important;
   border-radius: 10px;
-  box-shadow: 1px 2px grey;
+ 
   margin-bottom: 7px;
 }
 .bd {
-  border: 1px solid rgba(0, 0, 0, 0.0625) !important;
+  border: 1px solid #D2D2D2;
 }
 .p-20 {
-  padding: 5px !important;
-  margin-right: 10px;
+  padding: 20px !important;
+  margin-right: 30px;
 }
 .peer {
   display: block;
@@ -369,70 +360,28 @@ button.active {
   color: white;
   box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
-@media (max-width: 768px) {
-  .wrapper{
-    margin-top: 100px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    margin-left: 20px;
-    margin-right: 20px;
-
-    margin-bottom: 70px;
-  }
-  .toggle-container {
-    flex-direction: column;
-  }
-
-  .toggle-buttons {
-    margin-left: 0;
-    margin-top: 10px;
-  }
-
-  .toggle-buttons label {
-    font-size: 16px;
-  }
-
-  .toggle-buttons span.divider {
-    display: none;
-  }
-
-  .date-time {
-    margin-right: 0;
-    margin-top: 10px;
-    text-align: left;
+.information{
+  margin-left: 100px;
 }
 
-  .container {
-  flex-direction: column;
-  align-items: center;
-  }
-
+@media (max-width: 1800px)  {
   .card-group{
-    width: 100%;
+ 
+    justify-content: center;
+   
+
   }
-.card-group .consumption {
-flex: 1 0 calc(50% - 15px);
-max-width: calc(50% - 15px);
-}
-
-.information {
-min-width: 100%;
-max-width: 100%;
-margin: 10px 0;
-}
-
-.today-future {
-min-width: 100%;
-max-width: 100%;
-margin: 10px 0;
-}
-
-.search input[type="text"] {
-width: 100%;
-}
-
-.table {
-width: 100%;
-}
-
+  .gap-10 > * {
+    padding:2px !important;
+  }
+  .gap-10 {
+    margin:2px !important;
+  }
+  .p-20{
+    padding: 20px !important;
+    margin-right: 12px!important;
+  }
+  .information{
+    margin-left: 2px;
+  }
 }

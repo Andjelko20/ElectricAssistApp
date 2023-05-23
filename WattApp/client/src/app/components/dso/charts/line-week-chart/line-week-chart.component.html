@@ -1,19 +1,28 @@
 <div class="chart">
-  <mat-form-field appearance="fill">
-    <mat-label>Enter a date range</mat-label>
-    <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="picker" [max]="maxDate" >
-      <input matStartDate placeholder="Start date" formControlName="start" [(ngModel)]="firstdate">
-      <input matEndDate placeholder="End date" formControlName="end" [(ngModel)]="currentDate">
-    </mat-date-range-input>
-    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-date-range-picker #picker></mat-date-range-picker>
-  </mat-form-field>
-  <label>Select Settlement:</label>
-    <select style="padding: 10px; text-align: center;" id="dropdown" [(ngModel)]="selectedOption" (change)="onOptionSelected()">
+  <div class="container">
+    <div class="form-group">
+      <label for="dropdown ">Select by Settlement:</label>
+      <select class="form-select" aria-label="Default select example" id="dropdown"  [(ngModel)]="selectedOption" (change)="onOptionSelected()">
         <option value="0">Total</option>
         <option *ngFor="let item of settlements" value="{{item.id}}">{{item.name}}</option>
       </select>
+    </div>
+  </div>
+  <div class="container2">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="picker" [max]="maxDate" >
+        <input matStartDate placeholder="Start date" formControlName="start" [(ngModel)]="firstdate">
+        <input matEndDate placeholder="End date" formControlName="end" [(ngModel)]="currentDate">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+  </div>
+  <div class="container3">
+    <button class="btn" (click)="downloadCSV()">Export to CSV</button>
+  </div>
       <div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
       <div id="linechart">
         <div class="chart-container">  <canvas  id="linechart2">

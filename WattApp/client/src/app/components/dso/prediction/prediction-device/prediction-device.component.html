@@ -1,8 +1,12 @@
 <div class="chart">
-    <div class="chart-container" *ngIf="consumptionGraph">
-        <canvas id="linechart2"></canvas>
+    <div class="container3">
+        <button class="btn" (click)="downloadCSV()">Export to CSV</button>
+      </div>
+      <div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
+    <div class="chart-container" *ngIf="consumptionGraph && !loader">
+        <canvas id="linechartC"></canvas>
     </div>
-    <div class="chart-container" *ngIf="productionGraph">
-        <canvas id="linechart1"></canvas>
+    <div class="chart-container" *ngIf="productionGraph && !loader">
+        <canvas id="linechartP"></canvas>
     </div>
 </div>

@@ -18,6 +18,7 @@ Chart.defaults.color = "#fff";
 
 import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
+import { ExportToCsv } from 'export-to-csv';
 
 const moment = _rollupMoment || _moment;
 
@@ -54,6 +55,7 @@ export class BarMonthChartComponent {
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
   settlements:Settlement[] = [];
+  mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
       this.date.valueChanges.subscribe((selectedDate : any) => {
         const arr1: any[] = [];
@@ -159,26 +161,34 @@ export class BarMonthChartComponent {
 
     const Linechart =new Chart("barplot1", {
         type: 'bar',
-       
         data : {
           labels: monthbyday,
-          
           datasets: [
             {
               label: 'Production',
               data: energyUsageResults2,
-              borderColor: '#1d91c0',
-              backgroundColor: '#1d91c0'
+              borderColor: 'rgba(29, 145, 192, 1)',
+              backgroundColor: 'rgba(29, 145, 192, 0.2)',
+              borderWidth: 2,
             },
-           
-            
           ]
-          
         },
         options: 
         {
+          onHover: (e, chartEle) => {
+            if (e.native) {
+              const target = e.native.target as HTMLElement;
+              if (target instanceof HTMLElement) {
+                target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+              } else {
+                console.error('Invalid target element:', target);
+              }
+            } else {
+              console.error('Missing native event:', e);
+            }
+          },  
           maintainAspectRatio: false,
-          responsive: true, // Enable responsiveness
+          responsive: true, 
           
           scales:{
             y: {
@@ -254,9 +264,9 @@ export class BarMonthChartComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor:  '#7fcdbb',
-              backgroundColor:  '#7fcdbb',
-              
+              borderColor:  'rgba(127, 205, 187, 1)',
+              backgroundColor:  'rgba(127, 205, 187, 0.3)',
+              borderWidth: 2.5,
             },
             
           ]
@@ -264,6 +274,18 @@ export class BarMonthChartComponent {
         },
         options: 
         {
+          onHover: (e, chartEle) => {
+            if (e.native) {
+              const target = e.native.target as HTMLElement;
+              if (target instanceof HTMLElement) {
+                target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+              } else {
+                console.error('Invalid target element:', target);
+              }
+            } else {
+              console.error('Missing native event:', e);
+            }
+          },  
           maintainAspectRatio: false,
           responsive: true, // Enable responsiveness
           
@@ -320,5 +342,36 @@ export class BarMonthChartComponent {
           }
         }
       });
+  }
+  downloadCSV(): void {
+    this.mergedList = [];
+    for (let i = 0; i < this.list1.length; i++) {
+      for (let j = 0; j < this.list2.length; j++) {
+        if (this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
+          this.mergedList.push({
+            day: this.list1[i].day,
+            month: this.list1[i].month,
+            year: this.list1[i].year,
+            consumption: this.list1[i].energyUsageResult,
+            production: this.list2[j].energyUsageResult
+          });
+          break;
+        }
+      }
+  }
+  const options = {
+    fieldSeparator: ',',
+    filename: 'consumption/production-month',
+    quoteStrings: '"',
+    useBom : true,
+    decimalSeparator: '.',
+    showLabels: true,
+    useTextFile: false,
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+  };
+
+  const csvExporter = new ExportToCsv(options);
+  const csvData = csvExporter.generateCsv(this.mergedList);
+
   }
 }

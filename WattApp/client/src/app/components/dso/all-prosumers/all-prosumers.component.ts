@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { environment } from 'src/environments/environment';
@@ -19,10 +17,7 @@ export class AllProsumersComponent implements OnInit {
   prosumerValues: any[] = [];
   loader:boolean=false;
 
-  constructor(
-    private authService: AuthService,
-    private historyService: HistoryPredictionService
-  ) {}
+  constructor( ) {}
 
   ngOnInit(): void {
     this.pageChanged(1);

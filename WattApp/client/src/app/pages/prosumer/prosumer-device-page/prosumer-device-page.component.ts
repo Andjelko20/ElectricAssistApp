@@ -1,7 +1,8 @@
 import {  Component, ElementRef, ViewChildren, QueryList, ViewChild, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { DevicesService } from 'src/app/services/devices.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-prosumer-device-page',
   templateUrl: './prosumer-device-page.component.html',
@@ -16,7 +17,11 @@ export class ProsumerDevicePageComponent implements OnInit{
 
   consm:boolean=false;
   prodc:boolean=false;
-  constructor(private elementRef: ElementRef, private authService:AuthService,private route:ActivatedRoute) {}
+  previousUrl:string="";
+  constructor(private elementRef: ElementRef, private authService:AuthService,private route:ActivatedRoute,private router:Router,
+    private device:DevicesService) {
+    
+    }
   ngOnInit(): void {
     this.isContentVisible1=true;
     this.isContentVisible2=true;
@@ -32,8 +37,12 @@ export class ProsumerDevicePageComponent implements OnInit{
           this.prodc=true;
         }
     })
+    
   }
-
+  goBack()
+  {
+    this.router.navigateByUrl(this.device.getBack())
+  }
   graph:boolean = true;
   tabelar:boolean = false;
 
@@ -45,70 +54,17 @@ export class ProsumerDevicePageComponent implements OnInit{
   compGraph2 = false;
   compGraph3 = false;
 
-  compGraphh = true;
-  compGraph11 = false;
-  compGraph22 = false;
-  compGraph33 = false;
-
   compTable = true;
   compTable1 = false;
-  compTable2 = false;
-  compTable3 = false;
 
-  compTablee = true;
-  compTable11 = false;
-  compTable22 = false;
-  compTable33 = false;
-
-  showComponentTable() {
-    this.compTable = true;
-    this.compTable1=false;
-    this.compTable2=false;
-    this.compTable3 = false;
-  }
-  showComponentTable1() {
-      this.compTable = false;
-      this.compTable1=true;
-      this.compTable2=false;
-      this.compTable3 = false;
-  }
-  showComponentTable2() {
-      this.compTable = false;
-      this.compTable1=false;
-      this.compTable2=true;
-      this.compTable3 = false;
-  }
-  showComponentTable3() {
-    this.compTable=false;
-    this.compTable1=false;
-    this.compTable2 = false;
-    this.compTable3 = true;
+showComponentTable() {
+  this.compTable = true;
+  this.compTable1=false;
 }
-
-  showProducingGrafTablee(){
-    this.compTablee = true;
-    this.compTable11=false;
-    this.compTable22=false;
-    this.compTable33 = false;
-  }
-  showProducingGrafTablee1(){
-    this.compTablee = false;
-    this.compTable11=true;
-    this.compTable22=false;
-    this.compTable33 = false;
-  }
-  showProducingGrafTablee2(){
-    this.compTablee = false;
-    this.compTable11=false;
-    this.compTable22=true;
-    this.compTable33 = false;
-  }
-  showProducingGrafTablee3(){
-    this.compTablee = false;
-    this.compTable11=false;
-    this.compTable22=false;
-    this.compTable33 = true;
-  }
+showComponentTable1() {
+  this.compTable = false;
+  this.compTable1=true;
+}
 showComponentGraph() {
   this.compGraph = true;
   this.compGraph1=false;
@@ -133,77 +89,43 @@ showComponentGraph3() {
   this.compGraph2 = false;
   this.compGraph3 = true;
 }
-
-showComponentGraphh() {
-  this.compGraphh = true;
-  this.compGraph11=false;
-  this.compGraph22=false;
-  this.compGraph33 = false;
-}
-showComponentGraph11() {
-    this.compGraphh = false;
-    this.compGraph11=true;
-    this.compGraph22=false;
-    this.compGraph33 = false;
-}
-showComponentGraph22() {
-    this.compGraphh = false;
-    this.compGraph11=false;
-    this.compGraph22=true;
-    this.compGraph33 = false;
-}
-showComponentGraph33() {
-  this.compGraphh=false;
-  this.compGraph11=false;
-  this.compGraph22 = false;
-  this.compGraph33 = true;
-}
-
 showGraph(){
   this.graph = true;
   this.tabelar = false;
-}
-showGraph1(){
-  this.graph1 = true;
-  this.tabelar1 = false;
 }
 showTable(){
   this.graph = false;
   this.tabelar = true;
 }
-showTable1(){
-  this.graph1 = false;
-  this.tabelar1 = true;
-}
 onClick()
   {
-   const contentDiv = document.querySelector(".content1") as HTMLDivElement;
-   this.isContentVisible1 = !this.isContentVisible1;
-  if (this.isContentVisible1) {
-   contentDiv.style.display = 'block';
-   } else {
-   contentDiv.style.display = 'none';
-  }
+    const contentDiv = document.querySelector(".content1") as HTMLDivElement;
+    this.isContentVisible1 = !this.isContentVisible1;
+    if (this.isContentVisible1) {
+    contentDiv.style.display = 'block';
+    } else {
+    contentDiv.style.display = 'none';
+    }
  }
  onClick1()
  {
-  const contentDiv = document.querySelector(".content2") as HTMLDivElement;
-  this.isContentVisible2 = !this.isContentVisible2;
- if (this.isContentVisible2) {
-  contentDiv.style.display = 'block';
-  } else {
-  contentDiv.style.display = 'none';
- }
+    const contentDiv = document.querySelector(".content2") as HTMLDivElement;
+    this.isContentVisible2 = !this.isContentVisible2;
+    if (this.isContentVisible2) {
+      contentDiv.style.display = 'block';
+      } else {
+      contentDiv.style.display = 'none';
+    }
 }
 
 onClick2()
 {
-  const contentDiv = document.querySelector(".content3") as HTMLDivElement;
-  this.isContentVisible3 = !this.isContentVisible3;
-  if (this.isContentVisible3) {
-    contentDiv.style.display = 'block';
-  } else {
-    contentDiv.style.display = 'none';
-  }
+    const contentDiv = document.querySelector(".content3") as HTMLDivElement;
+    this.isContentVisible3 = !this.isContentVisible3;
+    if (this.isContentVisible3) {
+      contentDiv.style.display = 'block';
+    } else {
+      contentDiv.style.display = 'none';
+    }
 }
 }

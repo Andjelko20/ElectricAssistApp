@@ -55,7 +55,7 @@ export class PieChartComponent implements OnInit {
       data: this.settlementsValue,
       backgroundColor: [
         '#7fcdbb',
-          '#c7e9b4',  '#1d91c0', '#225ea8', '#253494', '#081d58','#081d58',
+          '#c7e9b4',  '#1d91c0', '#225ea8', '#253494', '#081d58',
         // "#2B70A7",
         // "#BF1E2E",
         // "#E2B37D",
@@ -93,6 +93,18 @@ export class PieChartComponent implements OnInit {
           datasets: data
       },
       options: {
+        onHover: (e, chartEle) => {
+          if (e.native) {
+            const target = e.native.target as HTMLElement;
+            if (target instanceof HTMLElement) {
+              target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+            } else {
+              console.error('Invalid target element:', target);
+            }
+          } else {
+            console.error('Missing native event:', e);
+          }
+        },  
         maintainAspectRatio:false,
         responsive:true,
         plugins: {
