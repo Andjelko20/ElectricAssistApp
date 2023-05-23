@@ -188,7 +188,8 @@ export class LineDayChartComponent {
             pointBorderWidth: 8,
             pointRadius: 1,
             pointHoverRadius: 6,
-            fill:true
+            fill:true,
+            
           }
         ]
       }

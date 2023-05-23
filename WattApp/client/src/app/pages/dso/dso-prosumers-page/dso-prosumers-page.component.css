@@ -40,7 +40,7 @@
 .map{
   margin-left: 50px;
   margin-right: 50px;
-  border: 1px solid gray;
+  border-radius: 10px;
   border-radius: 10px;
   margin-bottom: 0;
 }
@@ -75,8 +75,6 @@
   
   .toggle-buttons span.divider {
     display: inline-block;
-    /* width: 1px;
-    height: 20px; */
     margin: 0 10px;
     background-color: gray;
   }
@@ -88,14 +86,11 @@
   .toggle-buttons input[type="radio"]:not(:checked) + label {
     color: gray;
   }
-  
   .date-time {
     margin-right: 15px;
     text-align: right;
   }
-
 .nav-button{
-
     cursor: pointer;
     border: none;
     padding: 10px 20px;
@@ -107,9 +102,7 @@
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-
 }
-
 .nav-button:not(.active){
   background-color: white;
   color: #2199e8;
@@ -165,17 +158,13 @@
   margin-right: auto;
   padding-right: 100px;
 }
-
-
 .map{
-  
   margin-left: 10px;
   margin-right: 10px;
-  border: 1px solid gray;
+  border-radius: 10px;
   border-radius: 10px;
   margin-bottom: 0;
 }
-  
   .toggle-container {
       display: flex;
       margin: 15px;
@@ -225,10 +214,9 @@
     }
   
   .nav-button{
-
     cursor: pointer;
     border: none;
-    padding: 10px 20px;
+    padding: 20px 6px;
     margin: 0 10px;
     color: #2199e8;
     font-size: 16px;
@@ -237,7 +225,6 @@
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-
   }
 
   .nav-button:not(.active){

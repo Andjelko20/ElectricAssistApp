@@ -14,7 +14,7 @@ export class TodayConsumptionComponent implements OnInit{
   valueMWh!: any;
   valueGWh!: any;
   min: number = 0;
-  maxkwh: number = 6000;
+  maxkwh: number = 10000;
   maxmwh: number = this.maxkwh*0.001;
   maxgwh: number = this.maxmwh*0.001;
   constructor(private historyService:HistoryPredictionService,private route:ActivatedRoute){}
@@ -32,52 +32,52 @@ export class TodayConsumptionComponent implements OnInit{
 
   markerConfigKWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
-    "750": { color: '#57A75B', size: 4, type: 'line'},
-    "1500": { color: '#57A75B', size: 8, label: '1500', type: 'line'},
-    "2250": { color: '#F9D435', size: 4, type: 'line'},
-    "3000": { color: '#F9D435', size: 8, label: '3000', type: 'line'},
-    "3750": { color: '#F69E0B', size: 4, type: 'line'},
-    "4500": { color: '#F69E0B', size: 8, label: '4500', type: 'line'},
-    "5250": { color: '#E0453A', size: 4, type: 'line'},
-    "6000": { color: '#E0453A', size: 8, label: '6000', type: 'line'},
+    "1250": { color: '#57A75B', size: 4, type: 'line'},
+    "2500": { color: '#57A75B', size: 8, label: '2500', type: 'line'},
+    "3750": { color: '#F9D435', size: 4, type: 'line'},
+    "5000": { color: '#F9D435', size: 8, label: '5000', type: 'line'},
+    "6250": { color: '#F69E0B', size: 4, type: 'line'},
+    "7500": { color: '#F69E0B', size: 8, label: '7500', type: 'line'},
+    "8750": { color: '#E0453A', size: 4, type: 'line'},
+    "10000": { color: '#E0453A', size: 8, label: '10000', type: 'line'},
   }
   thresholdConfigKWh = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '2223': { color: 'blue', "bgOpacity": 0.2 },
-    '4445': { color: 'red', "bgOpacity": 0.2 }
+    '4223': { color: 'blue', "bgOpacity": 0.2 },
+    '7445': { color: 'red', "bgOpacity": 0.2 }
   };
 
   markerConfigMWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
-    "0.75": { color: '#57A75B', size: 4, type: 'line'},
-    "1.5": { color: '#57A75B', size: 8, label: '1.5', type: 'line'},
-    "2.25": { color: '#F9D435', size: 4, type: 'line'},
-    "3": { color: '#F9D435', size: 8, label: '3', type: 'line'},
-    "3.75": { color: '#F69E0B', size: 4, type: 'line'},
-    "4.5": { color: '#F69E0B', size: 8, label: '4.5', type: 'line'},
-    "5.2": { color: '#E0453A', size: 4, type: 'line'},
-    "6": { color: '#E0453A', size: 8, label: '6', type: 'line'},
+    "1.25": { color: '#57A75B', size: 4, type: 'line'},
+    "2.5": { color: '#57A75B', size: 8, label: '2.5', type: 'line'},
+    "3.75": { color: '#F9D435', size: 4, type: 'line'},
+    "5": { color: '#F9D435', size: 8, label: '5', type: 'line'},
+    "6.25": { color: '#F69E0B', size: 4, type: 'line'},
+    "7.5": { color: '#F69E0B', size: 8, label: '7.5', type: 'line'},
+    "8.75": { color: '#E0453A', size: 4, type: 'line'},
+    "10": { color: '#E0453A', size: 8, label: '10', type: 'line'},
   }
   thresholdConfigMWh = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '2.223': { color: 'blue', "bgOpacity": 0.2 },
-    '4.445': { color: 'red', "bgOpacity": 0.2 }
+    '4.223': { color: 'blue', "bgOpacity": 0.2 },
+    '7.445': { color: 'red', "bgOpacity": 0.2 }
   };
   markerConfigGWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
-    "0.0008": { color: '#57A75B', size: 4, type: 'line'},
+    "0.001": { color: '#57A75B', size: 4, type: 'line'},
     "0.002": { color: '#57A75B', size: 8, label: '0.002', type: 'line'},
-    "0.0023": { color: '#F9D435', size: 4, type: 'line'},
-    "0.003": { color: '#F9D435', size: 8, label: '0.003', type: 'line'},
-    "0.004": { color: '#F69E0B', size: 4, type: 'line'},
-    "0.0045": { color: '#F69E0B', size: 8, label: '0.0045', type: 'line'},
-    "0.0052": { color: '#E0453A', size: 4, type: 'line'},
-    "0.006": { color: '#E0453A', size: 8, label: '0.006', type: 'line'},
+    "0.004": { color: '#F9D435', size: 4, type: 'line'},
+    "0.005": { color: '#F9D435', size: 8, label: '0.005', type: 'line'},
+    "0.006": { color: '#F69E0B', size: 4, type: 'line'},
+    "0.008": { color: '#F69E0B', size: 8, label: '0.008', type: 'line'},
+    "0.009": { color: '#E0453A', size: 4, type: 'line'},
+    "0.01": { color: '#E0453A', size: 8, label: '0.01', type: 'line'},
   }
   thresholdConfigGWh = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '0.0022': { color: 'blue', "bgOpacity": 0.2 },
-    '0.0045': { color: 'red', "bgOpacity": 0.2 }
+    '0.0042': { color: 'blue', "bgOpacity": 0.2 },
+    '0.0075': { color: 'red', "bgOpacity": 0.2 }
   };
   
 }

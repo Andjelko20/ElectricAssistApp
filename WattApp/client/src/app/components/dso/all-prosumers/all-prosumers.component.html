@@ -15,7 +15,7 @@
         <tbody>
             <tr [routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]' id="show-prosumer" *ngFor="let prosumer of data | paginate: {currentPage,itemsPerPage,totalItems}let i = index ">
                 <td>{{ (currentPage - 1) * itemsPerPage + i +1 }}</td>
-                <td><a id="names"[routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]'>{{prosumer.userDetailsDTO.name}}</a></td>
+                <td><a id="names" class="hovered-link"[routerLink]='["/prosumer/"+prosumer.userDetailsDTO.id]'>{{prosumer.userDetailsDTO.name}}</a></td>
                 <td>{{prosumer.userDetailsDTO.settlement}}</td>
                 <td>{{prosumer.userDetailsDTO.city}}</td>
                 <td>{{prosumer.userDetailsDTO.country}}</td>

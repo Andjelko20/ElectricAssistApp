@@ -264,8 +264,8 @@ box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
   color: gray;
 }
 .card-group {
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
   margin-bottom: 10px;
@@ -360,66 +360,10 @@ button.active {
   color: white;
   box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
-
-@media (max-width: 768px) {
-  .wrapper{
-    margin-top: 100px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 70px;
-  }
-  .toggle-container {
-    flex-direction: column;
-  }
-
-  .toggle-buttons {
-    margin-left: 0;
-    margin-top: 10px;
-  }
-
-  .toggle-buttons label {
-    font-size: 16px;
-  }
-
-
-
-  .date-time {
-    margin-right: 0;
-    margin-top: 10px;
-    text-align: left;
+.information{
+  margin-left: 100px;
 }
 
-
-  .card-group{
-    width: 100%;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-
-  }
-    .card-group .consumption {
-    flex: 1 0 calc(50% - 15px);
-    max-width: calc(50% - 15px);
-    }
-
-
-    .today-future {
-    min-width: 100%;
-    max-width: 100%;
-    margin: 10px 0;
-    }
-
-    .search input[type="text"] {
-    width: 100%;
-    }
-
-    .table {
-    width: 100%;
-}
-
-}
 @media (max-width: 1800px)  {
   .card-group{
  
@@ -436,5 +380,8 @@ button.active {
   .p-20{
     padding: 20px !important;
     margin-right: 12px!important;
+  }
+  .information{
+    margin-left: 2px;
   }
 }
