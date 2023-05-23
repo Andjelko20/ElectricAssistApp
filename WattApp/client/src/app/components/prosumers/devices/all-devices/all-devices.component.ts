@@ -112,3 +112,58 @@ export class AllDevicesComponent implements OnInit {
       
     }
 }
+
+class DeviceFilterModel{
+  //Filteri
+  categoryId : number;
+  typeId : number;
+  brandId : number;
+  turnOn : boolean;
+  visibility : boolean;
+  contolability : boolean;
+
+  //Sortiranje
+  sortCriteria : SortCriteriaValues;
+  byAscending : boolean;
+
+  //Potrosnja veca/manja od
+  energyInKwhValue : number;
+  greaterThan : boolean;
+
+  //Search prema nazivu uredjaja
+  searchValue : string;
+
+  constructor(
+    categoryId: number,
+    typeId: number,
+    brandId: number,
+    turnOn: boolean,
+    visibility: boolean,
+    contolability: boolean,
+    sortCriteria: SortCriteriaValues,
+    byAscending: boolean,
+    energyInKwhValue: number,
+    greaterThan: boolean,
+    searchValue: string
+  ) {
+    this.categoryId = categoryId;
+    this.typeId = typeId;
+    this.brandId = brandId;
+    this.turnOn = turnOn;
+    this.visibility = visibility;
+    this.contolability = contolability;
+    this.sortCriteria = sortCriteria;
+    this.byAscending = byAscending;
+    this.energyInKwhValue = energyInKwhValue;
+    this.greaterThan = greaterThan;
+    this.searchValue = searchValue;
+  }
+
+
+}
+
+
+enum SortCriteriaValues{
+  NAME, 
+  ENERGYINKWH, 
+}
