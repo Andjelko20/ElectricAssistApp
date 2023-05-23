@@ -1,12 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { Users } from 'src/app/models/users.model';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Roles } from 'src/app/utilities/role';
 import { environment } from 'src/environments/environment';
 import { LatLng } from 'leaflet';
-import { Location } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-admin-dso-add',
@@ -41,8 +38,7 @@ export class AdminDsoAddComponent implements OnInit{
   confirm:boolean=false;
   @ViewChild('modalContent') modalContent!: TemplateRef<any>;
   body: string = ''; 
-  constructor(private usersService:AuthService,private router:Router,private location:Location,private modalService: NgbModal) { }
-
+  constructor(private usersService:AuthService,private router:Router,private modalService: NgbModal) { }
   ngOnInit(): void {
 	fetch(environment.serverUrl+"/cities?countryId=1",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 	.then(res=>res.json())

@@ -1,9 +1,8 @@
-import { Component, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { LogedUser, Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-account-page',
@@ -53,8 +52,8 @@ export class AccountPageComponent implements OnInit {
   btnAction:string=''  
   confirm:boolean=false;
   storePassword=localStorage.getItem("password");
-  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,
-    private router:Router,private updateService:AuthService,private modalService: NgbModal) {
+  constructor(
+    private updateService:AuthService,private modalService: NgbModal) {
   
    }
   ngOnInit(): void {
@@ -75,7 +74,6 @@ export class AccountPageComponent implements OnInit {
               city:response.city,
               country: response.country,
               address:response.address
-              
               };
               this.logedDetail={
                 id:this.idUser,
