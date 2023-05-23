@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ExportToCsv } from 'export-to-csv';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { combineLatest, forkJoin } from 'rxjs';
 import { DayByHour } from 'src/app/models/devices.model';
@@ -15,13 +16,14 @@ export class ProsumerDayProductionComponent {
  
   maxDate = new Date();
   currentDate = new Date();
+  mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     
   }
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
 
-  selectedDate!: Date;
+  selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
@@ -31,16 +33,6 @@ export class ProsumerDayProductionComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
-  
-    if(this.selectedDate == undefined){
-      combineLatest([
-        this.deviceService.dayByHourUser(userId, 1)
-      ]).subscribe(([list2]) => {
-        this.list2 = list2;
-        this.LineChartProduction();
-      });
-    }
-    else if(this.selectedDate !== undefined){
       const day = this.selectedDate.getDate();
       let dayString = String(day).padStart(2, '0');
       const month = this.selectedDate.getMonth()+1;
@@ -86,9 +78,6 @@ export class ProsumerDayProductionComponent {
 
       });
     }
-    
-  
-  }
 
   LineChartProduction(){
 
@@ -112,16 +101,16 @@ export class ProsumerDayProductionComponent {
         
         datasets: [
           {
-            label: 'production',
+            label: 'Production',
             data: energyUsageResults2,
-            tension:0.5,
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-            pointBorderColor: 'rgba(0, 255, 0, 1)',
-            pointBorderWidth: 7,
-            pointRadius: 5,
+            tension:0.1,
+            backgroundColor: 'rgba(29, 145, 192, 0.2)',
+            borderColor: 'rgba(29, 145, 192, 1)',
+            borderWidth: 1,
+            pointBackgroundColor: 'rgba(29, 145, 192, 1)',
+            pointBorderColor: 'rgba(29, 145, 192, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
             pointHoverRadius: 6,
             fill:true
           }
@@ -131,6 +120,18 @@ export class ProsumerDayProductionComponent {
       }
       ,
       options: {
+        onHover: (e, chartEle) => {
+          if (e.native) {
+            const target = e.native.target as HTMLElement;
+            if (target instanceof HTMLElement) {
+              target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+            } else {
+              console.error('Invalid target element:', target);
+            }
+          } else {
+            console.error('Missing native event:', e);
+          }
+        },  
         maintainAspectRatio: false,
         responsive: true,
         scales:{
@@ -188,6 +189,38 @@ export class ProsumerDayProductionComponent {
         }
       }
     });
+
+  }
+  downloadCSV(): void {
+    this.mergedList = [];
+    for (let i = 0; i < this.list1.length; i++) {
+      for (let j = 0; j < this.list2.length; j++) {
+        if (this.list1[i].hour === this.list2[j].hour && this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
+          this.mergedList.push({
+            hour: this.list1[i].hour,
+            day: this.list1[i].day,
+            month: this.list1[i].month,
+            year: this.list1[i].year,
+            consumption: this.list1[i].energyUsageResult,
+            production: this.list2[j].energyUsageResult
+          });
+          break;
+        }
+      }
+  }
+  const options = {
+    fieldSeparator: ',',
+    filename: 'consumption/production-day',
+    quoteStrings: '"',
+    useBom : true,
+    decimalSeparator: '.',
+    showLabels: true,
+    useTextFile: false,
+    headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+  };
+
+  const csvExporter = new ExportToCsv(options);
+  const csvData = csvExporter.generateCsv(this.mergedList);
 
   }
 }

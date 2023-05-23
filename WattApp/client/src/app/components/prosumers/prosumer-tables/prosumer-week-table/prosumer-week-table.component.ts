@@ -30,8 +30,8 @@ export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionSt
 
   private _createFiveDayRange(date: D | null): DateRange<D> {
     if (date) {
-      const start = this._dateAdapter.addCalendarDays(date, -4);
-      const end = this._dateAdapter.addCalendarDays(date, 3);
+      const start = this._dateAdapter.addCalendarDays(date, 0);
+      const end = this._dateAdapter.addCalendarDays(date, 7);
       return new DateRange<D>(start, end);
     }
 
@@ -130,17 +130,15 @@ export class ProsumerWeekTableComponent {
         }
       }
   }
-  const date = new Date();
-  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-week.csv',
+    filename: 'consumption/production-week',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);

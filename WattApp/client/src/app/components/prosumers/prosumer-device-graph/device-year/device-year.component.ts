@@ -10,6 +10,7 @@ import {MatDatepicker} from '@angular/material/datepicker';
 import moment, { Moment } from 'moment';
 import { FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { ExportToCsv } from 'export-to-csv';
 Chart.register(...registerables)
 Chart.register(...registerables)
 
@@ -45,7 +46,7 @@ export class DeviceYearComponent {
   maxYear = new Date();
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
-  itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
+  mergedList: {month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -132,8 +133,9 @@ export class DeviceYearComponent {
               {
                 label: 'Production',
                 data: energyUsageResults2,
-                borderColor: '#1d91c0',
-                backgroundColor: '#1d91c0',
+                borderColor: 'rgba(29, 145, 192, 1)',
+                backgroundColor: 'rgba(29, 145, 192, 0.2)',
+                borderWidth: 2,
               },
              
               
@@ -142,6 +144,18 @@ export class DeviceYearComponent {
           },
           options: 
           {
+            onHover: (e, chartEle) => {
+              if (e.native) {
+                const target = e.native.target as HTMLElement;
+                if (target instanceof HTMLElement) {
+                  target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+                } else {
+                  console.error('Invalid target element:', target);
+                }
+              } else {
+                console.error('Missing native event:', e);
+              }
+            },  
             maintainAspectRatio: false,
             responsive: true,
             scales:{
@@ -224,8 +238,9 @@ export class DeviceYearComponent {
               {
                 label: 'Consumption',
                 data: energyUsageResults1,
-                borderColor: 'rgb(128, 0, 128)',
-                backgroundColor: 'rgb(128, 0, 128)',
+                borderColor:  'rgba(127, 205, 187, 1)',
+                backgroundColor:  'rgba(127, 205, 187, 0.3)',
+                borderWidth: 2.5,
                 
               },
              
@@ -235,6 +250,18 @@ export class DeviceYearComponent {
           },
           options: 
           {
+            onHover: (e, chartEle) => {
+              if (e.native) {
+                const target = e.native.target as HTMLElement;
+                if (target instanceof HTMLElement) {
+                  target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+                } else {
+                  console.error('Invalid target element:', target);
+                }
+              } else {
+                console.error('Missing native event:', e);
+              }
+            },  
             maintainAspectRatio: false,
             responsive: true,
             scales:{
@@ -297,4 +324,37 @@ export class DeviceYearComponent {
           }
         });
     }
+    downloadCSV(): void {
+      const deviceId = Number(this.route.snapshot.paramMap.get('id'));
+      this.authService.getDevice(deviceId).subscribe(data=>{
+        if(data.deviceCategory == "Electricity Consumer"){
+            const options = {
+            fieldSeparator: ',',
+            filename: 'consumption-year',
+            quoteStrings: '"',
+            useBom : true,
+            decimalSeparator: '.',
+            showLabels: true,
+            useTextFile: false,
+            headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
+          };
+          const csvExporter = new ExportToCsv(options);
+          const csvData = csvExporter.generateCsv(this.list1);
+        }
+        else if(data.deviceCategory == "Electricity Producer"){
+            const options = {
+            fieldSeparator: ',',
+            filename: 'production-year',
+            quoteStrings: '"',
+            useBom : true,
+            decimalSeparator: '.',
+            showLabels: true,
+            useTextFile: false,
+            headers: ['Hour', 'Month', 'Year', 'Production [kWh]']
+          };
+          const csvExporter = new ExportToCsv(options);
+          const csvData = csvExporter.generateCsv(this.list2);
+        }
+      })
+      } 
 }

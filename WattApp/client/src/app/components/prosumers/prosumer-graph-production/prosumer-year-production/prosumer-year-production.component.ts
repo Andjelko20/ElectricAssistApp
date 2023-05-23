@@ -10,6 +10,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import { FormControl } from '@angular/forms';
 import moment, { Moment } from 'moment';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { ExportToCsv } from 'export-to-csv';
 Chart.register(...registerables)
 
 export const MY_FORMATS = {
@@ -42,7 +43,7 @@ export class ProsumerYearProductionComponent {
   maxYear = new Date();
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
-  itemList: string[] = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Avg','Sep','Okt','Nov','Dec'];
+  mergedList: {month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -104,13 +105,26 @@ export class ProsumerYearProductionComponent {
             {
               label: 'Production',
               data: energyUsageResults2,
-              borderColor: '#1d91c0',
-              backgroundColor:'#1d91c0'
+              borderColor: 'rgba(29, 145, 192, 1)',
+              backgroundColor: 'rgba(29, 145, 192, 0.2)',
+              borderWidth: 2,
             },        
           ]
         },
         options: 
         {
+          onHover: (e, chartEle) => {
+            if (e.native) {
+              const target = e.native.target as HTMLElement;
+              if (target instanceof HTMLElement) {
+                target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+              } else {
+                console.error('Invalid target element:', target);
+              }
+            } else {
+              console.error('Missing native event:', e);
+            }
+          },  
           maintainAspectRatio: false,
           responsive: true,
           scales:{
@@ -170,6 +184,36 @@ export class ProsumerYearProductionComponent {
           }
         }
       });
+  }
+  downloadCSV(): void {
+    this.mergedList = [];
+    for (let i = 0; i < this.list1.length; i++) {
+      for (let j = 0; j < this.list2.length; j++) {
+        if (this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
+          this.mergedList.push({
+            month: this.list1[i].month,
+            year: this.list1[i].year,
+            consumption: this.list1[i].energyUsageResult,
+            production: this.list2[j].energyUsageResult
+          });
+          break;
+        }
+      }
+  }
+  const options = {
+    fieldSeparator: ',',
+    filename: 'consumption/production-year',
+    quoteStrings: '"',
+    useBom : true,
+    decimalSeparator: '.',
+    showLabels: true,
+    useTextFile: false,
+    headers: ['Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+  };
+
+  const csvExporter = new ExportToCsv(options);
+  const csvData = csvExporter.generateCsv(this.mergedList);
+
   }
  
 }

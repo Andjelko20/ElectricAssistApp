@@ -1,6 +1,9 @@
 .wrapper{
   display: none;
 }
+a{
+  color: white;
+}
   @media (min-width: 768px) {
     .wrapper{
       display: block;
@@ -35,6 +38,7 @@
       margin-top: -40px;
       margin-right: auto;
       height: 100px;
+      color: white;
     }
     .navbar-brand:hover {
       font-size: 25px;
@@ -108,5 +112,8 @@
     }
     .dropbtn a:hover {
       background-color: #f9f9f9;
+    }
+    #logouta{
+      cursor: pointer;
     }
   }

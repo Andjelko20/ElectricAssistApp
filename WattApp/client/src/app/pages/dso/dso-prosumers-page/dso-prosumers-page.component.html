@@ -1,17 +1,16 @@
-
 <div class="wrapper">
-    
         <div class="tabel-map">
-          <div id="numpros">
-            <span >Number of prosumers {{numberOfProsumers}} in {{updateUserDetail.city}}</span>
-          </div>
           <div id="select-view">
             <button (click)="showComponent()" class="nav-button" [class.active]="prosumersPage">Tabelar View</button>
             <button (click)="showComponent1()" class="nav-button" [class.active]="!prosumersPage">Map View</button>
           </div>
         </div>
+        <hr>
         <div class="tabel-body" *ngIf="prosumersPage">
-			<app-all-prosumers></app-all-prosumers>
+          <div id="numpros">
+            <span >Number of prosumers in {{updateUserDetail.city}}:  {{numberOfProsumers}}</span>
+          </div>
+			      <app-all-prosumers></app-all-prosumers>
         </div>
         <div class="map" *ngIf="!prosumersPage">
             <app-prosumers-map ></app-prosumers-map>

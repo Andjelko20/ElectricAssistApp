@@ -13,6 +13,7 @@ import {
   MAT_DATE_RANGE_SELECTION_STRATEGY,
   MatDatepickerInputEvent,
 } from '@angular/material/datepicker';
+import { ExportToCsv } from 'export-to-csv';
 Chart.register(...registerables)
 
 @Injectable()
@@ -53,8 +54,10 @@ export class ProsumerWeekGraphComponent {
   currentDate = new Date();
   maxDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   firstdate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
+  mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  dayNames: string[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
@@ -88,6 +91,15 @@ export class ProsumerWeekGraphComponent {
     });
     }
     else{
+          this.dayNames = []
+          const currentDate = new Date(this.sdate);
+          const enddate = new Date(this.send)
+          enddate.setDate(enddate.getDate()-1)
+          while (currentDate <= enddate) {
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            this.dayNames.push(dayName);
+            currentDate.setDate(currentDate.getDate() + 1 );
+          }
           const day1 = this.sdate.getDate();
           const month1 = this.sdate.getMonth()+1;
           let dayString1 = String(day1).padStart(2, '0');
@@ -119,42 +131,23 @@ export class ProsumerWeekGraphComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month = this.list1.map(day => day.day);
     let max=0;
     if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
     {
       max=1;
     }
     const Linechart = new Chart("linechart2", {
-      type: 'line',
+      type: 'bar',
       data : {
-        labels: month,
+        labels: this.dayNames,
         
         datasets:  [
           {
-            label: 'consumption',
+            label: 'Consumption ',
             data: energyUsageResults1,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-          ],
-          pointBorderColor: 'rgba(255,99,132,1)',
-          pointBorderWidth: 7,
-            pointRadius: 5,
-          borderWidth: 2,
-          fill: true
+            borderColor:  'rgba(127, 205, 187, 1)',
+            backgroundColor:  'rgba(127, 205, 187, 0.3)',
+            borderWidth: 2.5,
           },
           
         ]
@@ -162,6 +155,18 @@ export class ProsumerWeekGraphComponent {
       }
       ,
       options: {
+        onHover: (e, chartEle) => {
+          if (e.native) {
+            const target = e.native.target as HTMLElement;
+            if (target instanceof HTMLElement) {
+              target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+            } else {
+              console.error('Invalid target element:', target);
+            }
+          } else {
+            console.error('Missing native event:', e);
+          }
+        },  
         maintainAspectRatio: false,
         responsive: true,
         scales:{
@@ -220,5 +225,37 @@ export class ProsumerWeekGraphComponent {
         }
       }
     });
+  }
+
+  downloadCSV(): void {
+    this.mergedList = [];
+    for (let i = 0; i < this.list1.length; i++) {
+      for (let j = 0; j < this.list2.length; j++) {
+        if (this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
+          this.mergedList.push({
+            day: this.list1[i].day,
+            month: this.list1[i].month,
+            year: this.list1[i].year,
+            consumption: this.list1[i].energyUsageResult,
+            production: this.list2[j].energyUsageResult
+          });
+          break;
+        }
+      }
+  }
+  const options = {
+    fieldSeparator: ',',
+    filename: 'consumption/production-week',
+    quoteStrings: '"',
+    useBom : true,
+    decimalSeparator: '.',
+    showLabels: true,
+    useTextFile: false,
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+  };
+
+  const csvExporter = new ExportToCsv(options);
+  const csvData = csvExporter.generateCsv(this.mergedList);
+
   }
 }

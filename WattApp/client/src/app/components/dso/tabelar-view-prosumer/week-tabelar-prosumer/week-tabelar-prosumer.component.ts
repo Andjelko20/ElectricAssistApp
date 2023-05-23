@@ -129,8 +129,6 @@ export class WeekTabelarProsumerComponent implements OnInit{
         }
       }
   }
-  const date = new Date();
-  const formattedDate = this.datePipe.transform(date,'dd-MM-yyyy hh:mm:ss');
   const options = {
     fieldSeparator: ',',
     filename: 'consumption/production-week',
@@ -139,7 +137,7 @@ export class WeekTabelarProsumerComponent implements OnInit{
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]', 'Exported Date '+formattedDate]
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);

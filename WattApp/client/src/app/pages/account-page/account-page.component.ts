@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Prosumers } from 'src/app/models/users.model';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { LogedUser, Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-account-page',
   templateUrl: './account-page.component.html',
@@ -24,12 +24,38 @@ export class AccountPageComponent implements OnInit {
     country: '',
     address:''
   }
+  logedDetail:LogedUser={
+    id: 0,
+    name: '',
+    username: '',
+    email: '',
+    
+  }
+  @ViewChild('modalContent') modalContent!: TemplateRef<any>;
+  body: string = ''; 
   public idUser!:number;
   public role!:string;
   public name!:string;
-
-  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,private router:Router,private updateService:AuthService) { }
-
+  public emailErrorMessage:string="";
+	public errorMessage:string="";
+	public success:boolean=false;
+  public passwordGen='';
+  public emailUp='';
+  public oldpass!:string;
+  isFormDirty: boolean = false;
+  isFormDirty1: boolean = false;
+  oldPassword!:string;
+  newPassword!:string;
+  confirmPassword!:string;
+  pass!:string;
+  errorMsg='';
+  btnAction:string=''  
+  confirm:boolean=false;
+  storePassword=localStorage.getItem("password");
+  constructor(
+    private updateService:AuthService,private modalService: NgbModal) {
+  
+   }
   ngOnInit(): void {
     let token=new JwtToken();
     this.idUser=token.data.id as number;
@@ -48,20 +74,123 @@ export class AccountPageComponent implements OnInit {
               city:response.city,
               country: response.country,
               address:response.address
-              
               };
+              this.logedDetail={
+                id:this.idUser,
+                name:response.name,
+                username:response.username,
+                email:response.email,
+              }
             },
 			
           });
   }
   upDateUser()
   {
-    this.updateService.upDateLogedIn(this.updateUserDetail)
+    if(this.updateUserDetail.name!==this.logedDetail.name)
+    {
+          this.body="Your name has been successfully changed." 
+    }
+    else if(this.updateUserDetail.email!==this.logedDetail.email)
+    {
+          this.body="You need to confirm your email."   
+    }
+    else if(this.updateUserDetail.username!==this.logedDetail.username)
+    {
+      this.body="Your username has been successfully changed." 
+    }
+    else if(this.updateUserDetail.name===this.logedDetail.name && this.updateUserDetail.username===this.logedDetail.username && this.updateUserDetail.email===this.logedDetail.email)
+    {
+      this.body="You didnt make any changes.";
+      
+    }
+    else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username )
+    {
+        this.body="Your name and username have been successfully changed." 
+    }
+    else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username && this.updateUserDetail.email!=this.logedDetail.email)
+    {
+      this.body="Your name, username and email have been successfully changed. You need to confirm your email" 
+    }
+    this.updateService.upDateLogedIn(this.logedDetail)
     .subscribe({
       next:()=>{
-        if(this.role==='admin')
-            this.router.navigate(['/profile-admin']);
+        this.modalService.open(this.modalContent);
+        this.ngOnInit();
       }
     });
+    this.isFormDirty1 = false;
+  }
+  onFormChange() {
+    const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
+    const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
+    const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
+    if(oldpass==="" && newpass==="" && confpass==="")
+    {
+      this.isFormDirty = false;
+    }
+    else
+    {
+      this.isFormDirty = true;
+    }
+    
+  }
+  onFormChange1() {
+    if(this.updateUserDetail.name===this.logedDetail.name && this.updateUserDetail.username===this.logedDetail.username && this.updateUserDetail.email===this.logedDetail.email)
+    {
+      this.isFormDirty1 = false;
+      
+    }
+    else
+    {
+      this.isFormDirty1 = true;
+    }
+  }
+
+  updatePasswordProsumer()
+  {
+    const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
+    const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
+    const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
+    if(oldpass==="" && newpass==="" && confpass==="")
+    {
+      this.isFormDirty = false;
+    }
+    else if(newpass===confpass) {
+      
+      
+        this.updateService.changePassword(oldpass,newpass).subscribe( 
+        { next:() => {  
+            
+          this.modalService.open(this.modalContent);
+          this.body="Your password has been successfully changed.";
+          this.ngOnInit();
+      },error:()=>{
+        this.modalService.open(this.modalContent);
+        this.body="Your old password is not valid.";
+      }
+    } );
+      
+      this.isFormDirty = false;
+    }
+    
+  }
+  checkIfInputsAreEqual(group: FormGroup) {
+    const input1 = group.controls['nameform2'];
+    const input2 = group.controls['nameform3'];
+    const input3 = group.controls['nameform1'];
+ 
+
+    if (input1.value !== input2.value) {
+      input2.setErrors({ notEqual: true });
+      input1.setErrors({ notEqual: true });
+    } else {
+      input2.setErrors(null);
+      input1.setErrors(null);
+      input3.setErrors(null);
+      
+    }
+
+    return null;
   }
 }

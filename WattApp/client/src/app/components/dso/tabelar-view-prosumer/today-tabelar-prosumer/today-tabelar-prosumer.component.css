@@ -39,6 +39,19 @@
   }
   
   
+  .container2 {
+    display: inline-block;
+    width: 15%;
+    margin-left: 5%;
+
+  }
+  .container3 {
+    width: 15%;
+    float: right;
+    margin-right: 5%;
+  }
+
+
   .btn {
     padding: 8px;
     border: none;

@@ -15,7 +15,7 @@ export class MonthConsumptionComponent implements OnInit{
   valueMWh!: any;
   valueGWh!: any;
   min: number = 0;
-  maxkwh: number = 1500000;
+  maxkwh: number = 100000;
   maxmwh: number = this.maxkwh*0.001;
   maxgwh: number = this.maxmwh*0.001;
   constructor(private historyService:HistoryPredictionService,private route:ActivatedRoute) {
@@ -23,65 +23,62 @@ export class MonthConsumptionComponent implements OnInit{
   }
   ngOnInit(): void {
     this.historyService.historyMonthUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe(number=>{
-      if(number != null){
+      
         this.value = number;  
         this.valuekWh = this.value.toFixed(2);
         this.valueMWh= (this.valuekWh*0.001).toFixed(2);
         this.valueGWh= (this.valueMWh*0.001).toFixed(2);
-      }
-      else{
-        this.value = 0;
-      }
+      
     })
   }
   markerConfigKWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
-    "187500": { color: '#57A75B', size: 4, type: 'line'},
-    "375000": { color: '#57A75B', size: 8, label: '375000', type: 'line'},
-    "562500": { color: '#F9D435', size: 4, type: 'line'},
-    "750000": { color: '#F9D435', size: 8, label: '750000', type: 'line'},
-    "937500": { color: '#F69E0B', size: 4, type: 'line'},
-    "1125000": { color: '#F69E0B', size: 8, label: '1125000', type: 'line'},
-    "1312500": { color: '#E0453A', size: 4, type: 'line'},
-    "1500000": { color: '#E0453A', size: 8, label: '1500000', type: 'line'},
+    "12500": { color: '#57A75B', size: 4, type: 'line'},
+    "25000": { color: '#57A75B', size: 8, label: '25,000', type: 'line'},
+    "37500": { color: '#F9D435', size: 4, type: 'line'},
+    "50000": { color: '#F9D435', size: 8, label: '50,000', type: 'line'},
+    "62500": { color: '#F69E0B', size: 4, type: 'line'},
+    "75000": { color: '#F69E0B', size: 8, label: '75,000', type: 'line'},
+    "87500": { color: '#E0453A', size: 4, type: 'line'},
+    "100000": { color: '#E0453A', size: 8, label: '100,000', type: 'line'},
   }
   thresholdConfigKWh = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '666668': { color: 'blue', "bgOpacity": 0.2 },
-    '1333334': { color: 'red', "bgOpacity": 0.2 }
+    '43230': { color: 'blue', "bgOpacity": 0.2 },
+    '76444': { color: 'red', "bgOpacity": 0.2 }
   };
   
   markerConfigMWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
-    "187.5": { color: '#57A75B', size: 4, type: 'line'},
-    "375": { color: '#57A75B', size: 8, label: '375', type: 'line'},
-    "562.5": { color: '#F9D435', size: 4, type: 'line'},
-    "750": { color: '#F9D435', size: 8, label: '750', type: 'line'},
-    "937.5": { color: '#F69E0B', size: 4, type: 'line'},
-    "1125": { color: '#F69E0B', size: 8, label: '1125', type: 'line'},
-    "1312.5": { color: '#E0453A', size: 4, type: 'line'},
-    "1500": { color: '#E0453A', size: 8, label: '1500', type: 'line'},
+    "12.5": { color: '#57A75B', size: 4, type: 'line'},
+    "25": { color: '#57A75B', size: 8, label: '25', type: 'line'},
+    "37.5": { color: '#F9D435', size: 4, type: 'line'},
+    "50": { color: '#F9D435', size: 8, label: '50', type: 'line'},
+    "62.5": { color: '#F69E0B', size: 4, type: 'line'},
+    "75": { color: '#F69E0B', size: 8, label: '75', type: 'line'},
+    "87.5": { color: '#E0453A', size: 4, type: 'line'},
+    "100": { color: '#E0453A', size: 8, label: '100', type: 'line'},
   }
   thresholdConfigMWh = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '666.66': { color: 'blue', "bgOpacity": 0.2 },
-    '1333.33': { color: 'red', "bgOpacity": 0.2 }
+    '43.23': { color: 'blue', "bgOpacity": 0.2 },
+    '76.44': { color: 'red', "bgOpacity": 0.2 }
   };
 
   markerConfigGWh = {
     "0": { color: '#57A75B', size: 8, label: '0', type: 'line'},
-    "0.1875": { color: '#57A75B', size: 4, type: 'line'},
-    "0.375": { color: '#57A75B', size: 8, label: '0.375', type: 'line'},
-    "0.5625": { color: '#F9D435', size: 4, type: 'line'},
-    "0.750": { color: '#F9D435', size: 8, label: '0.750', type: 'line'},
-    "0.9375": { color: '#F69E0B', size: 4, type: 'line'},
-    "1.125": { color: '#F69E0B', size: 8, label: '1.125', type: 'line'},
-    "1.3125": { color: '#E0453A', size: 4, type: 'line'},
-    "1.5": { color: '#E0453A', size: 8, label: '1.5', type: 'line'},
+    "0.013": { color: '#57A75B', size: 4, type: 'line'},
+    "0.025": { color: '#57A75B', size: 8, label: '0.03', type: 'line'},
+    "0.038": { color: '#F9D435', size: 4, type: 'line'},
+    "0.05": { color: '#F9D435', size: 8, label: '0.05', type: 'line'},
+    "0.062": { color: '#F69E0B', size: 4, type: 'line'},
+    "0.075": { color: '#F69E0B', size: 8, label: '0.08', type: 'line'},
+    "0.088": { color: '#E0453A', size: 4, type: 'line'},
+    "0.10": { color: '#E0453A', size: 8, label: '0.10', type: 'line'}
   }
   thresholdConfigGWh = {
     '0': { color: 'green', "bgOpacity": 0.2 },
-    '0.66666': { color: 'blue', "bgOpacity": 0.2 },
-    '1.33333': { color: 'red', "bgOpacity": 0.2 }
+    '0.043': { color: 'blue', "bgOpacity": 0.2 },
+    '0.076': { color: 'red', "bgOpacity": 0.2 }
   };
 }

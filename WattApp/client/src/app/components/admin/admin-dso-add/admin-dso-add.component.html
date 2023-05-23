@@ -34,8 +34,20 @@
                     <map-input (locationChanged)="locationChanged($event)" (settlementChanged)="settlementChanged($event)"></map-input>
                 </div>
             </div>
-            <button type="submit"   class="btn btn-primary ">ADD</button>
+            <button type="submit" id="button-add" class="btn btn-primary ">ADD</button>
         </form>
         
     </div>
 </div>
+<ng-template #modalContent let-modal >
+    <div class="modal-header">
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+      <div id="subb">
+        <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup" *ngIf="confirm===true">{{btnAction}}</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+      </div>
+    </div>
+  </ng-template>

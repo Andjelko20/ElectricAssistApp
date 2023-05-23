@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h1>Energy Usage</h1>
-        <mat-form-field appearance="fill">
+        <div class="container2">
+          <mat-form-field appearance="fill">
             <mat-label>Month and Year</mat-label>
             <input matInput [matDatepicker]="dp" [formControl]="date" [max]="currentDate">
             <mat-hint>MM/YYYY</mat-hint>
@@ -13,7 +13,11 @@
                             panelClass="example-month-picker">
             </mat-datepicker>
           </mat-form-field>
-        <button class="btn" (click)="downloadCSV()">Export to CSV</button>
+        </div>
+        
+        <div class="container3">
+          <button class="btn" (click)="downloadCSV()">Export to CSV</button>
+        </div>
         <div class="table-container" *ngIf="consumptionGraph">
           <div class="table-wrapper">
             <h2 class="table-title">Consumption</h2>

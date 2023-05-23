@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ExportToCsv } from 'export-to-csv';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
 import { DayByHour } from 'src/app/models/devices.model';
@@ -21,23 +22,18 @@ export class LineDayChartComponent {
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
   settlements:Settlement[] = [];
-  
+  mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number}[] = [];
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {
     this.selectedOption = 0;
   }
-  onOptionSelected(event: any) {
-    this.selectedOption = event.target.value;
+  onOptionSelected() {
     this.ngOnInit()
   }
-
-  selectedDate!: Date;
-
+  selectedDate: Date = new Date();
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
     this.ngOnInit();
   }
-  
-
   ngOnInit(): void {
     this.loader=true;
     this.authService.getlogInUser().subscribe(user => {
@@ -56,20 +52,8 @@ export class LineDayChartComponent {
               this.selectedOption = selectedItem.id;
             }
           }
-            
         });
-        if (this.selectedOption == 0 && this.selectedDate == undefined) {
-          forkJoin([
-            this.deviceService.dayByHour(number, 2),
-            this.deviceService.dayByHour(number, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.LineChartProduction();
-            this.LineChartConsumption();
-          });
-        } 
-        else if(this.selectedOption == 0 && this.selectedDate != undefined){
+        if(this.selectedOption == 0 && this.selectedDate != undefined){
           const day = this.selectedDate.getDate();
           let dayString = String(day).padStart(2, '0');
           const month = this.selectedDate.getMonth()+1;
@@ -89,8 +73,8 @@ export class LineDayChartComponent {
               string2 = (year+1)+'-0'+1+'-0'+1+' '+'00:00:00'
             }
             else if( month == 6){
-              string1 = year+'-'+month+'-'+day
-              string2 = year+'-'+(month+1)+'-'+1
+              string1 = year+'-'+month+'-'+day+' '+'00:00:00'
+              string2 = year+'-'+(month+1)+'-'+1+' '+'00:00:00'
             }
             else{
               string1 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
@@ -110,9 +94,7 @@ export class LineDayChartComponent {
               string2 = year+'-'+monthString+'-'+dayString+' '+'00:00:00'
             }
           }
-          console.log(string1+'-'+string2);
           
-
           forkJoin([
             
             this.deviceService.dayByHourCityFilter(string1,string2,number, 2),
@@ -171,17 +153,6 @@ export class LineDayChartComponent {
             this.LineChartConsumption();
           });
         }
-        else {
-          forkJoin([
-            this.deviceService.dayByHourSettlement(this.selectedOption, 2),
-            this.deviceService.dayByHourSettlement(this.selectedOption, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.LineChartProduction();
-            this.LineChartConsumption();
-          });
-        }
       });
     });
   }
@@ -206,23 +177,36 @@ export class LineDayChartComponent {
         
         datasets: [
           {
-            label: 'production',
+            label: 'Production',
             data: energyUsageResults2,
-            tension:0.5,
-            backgroundColor: 'rgba(0, 255, 0, 0.2)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            pointBackgroundColor: 'rgba(0, 255, 0, 1)',
-            pointBorderColor: 'rgba(0, 255, 0, 1)',
-            pointBorderWidth: 7,
-            pointRadius: 5,
+            tension:0.1,
+            backgroundColor: 'rgba(29, 145, 192, 0.2)',
+            borderColor: 'rgba(29, 145, 192, 1)',
+            borderWidth: 1,
+            pointBackgroundColor: 'rgba(29, 145, 192, 1)',
+            pointBorderColor: 'rgba(29, 145, 192, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
             pointHoverRadius: 6,
-            fill:true
+            fill:true,
+            
           }
         ]
       }
       ,
       options: {
+        onHover: (e, chartEle) => {
+          if (e.native) {
+            const target = e.native.target as HTMLElement;
+            if (target instanceof HTMLElement) {
+              target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+            } else {
+              console.error('Invalid target element:', target);
+            }
+          } else {
+            console.error('Missing native event:', e);
+          }
+        },  
         maintainAspectRatio:false,
         responsive: true,
         scales:{
@@ -262,7 +246,6 @@ export class LineDayChartComponent {
           }
           ,
         },
-        
         plugins: {
           datalabels:{display: false},
           legend: {display: false
@@ -279,7 +262,6 @@ export class LineDayChartComponent {
         }
       }
     });
-
   }
   LineChartConsumption(){
 
@@ -302,34 +284,36 @@ export class LineDayChartComponent {
         
         datasets: [
           {
-            label: 'consumption',
+            label: 'Consumption ',
             data: energyUsageResults1,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-          ],
-          pointBorderColor: 'rgba(255,99,132,1)',
-          pointBorderWidth: 7,
-            pointRadius: 5,
-          borderWidth: 2,
-          fill: true
+            tension:0.1,
+            backgroundColor: 'rgba(127, 205, 187, 0.3)',
+            borderColor: ' rgba(127, 205, 187, 1)',
+            borderWidth: 1.5,
+            pointBackgroundColor: 'rgba(127, 205, 187, 1)',
+            pointBorderColor: 'rgba(127, 205, 187, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
+            pointHoverRadius: 6,
+            fill:true,
+            
           },
         ]
       }
       ,
       options: {
+        onHover: (e, chartEle) => {
+          if (e.native) {
+            const target = e.native.target as HTMLElement;
+            if (target instanceof HTMLElement) {
+              target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+            } else {
+              console.error('Invalid target element:', target);
+            }
+          } else {
+            console.error('Missing native event:', e);
+          }
+        },             
         maintainAspectRatio:false,
         responsive: true,
         scales:{
@@ -370,7 +354,6 @@ export class LineDayChartComponent {
           }
           ,
         },
-        
         plugins: {
           datalabels:{display: false},
           legend: { 
@@ -387,6 +370,39 @@ export class LineDayChartComponent {
         }
       }
     });
+
+  }
+  downloadCSV(): void {
+    this.mergedList = [];
+    for (let i = 0; i < this.list1.length; i++) {
+      for (let j = 0; j < this.list2.length; j++) {
+        if (this.list1[i].hour === this.list2[j].hour && this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
+          this.mergedList.push({
+            hour: this.list1[i].hour,
+            day: this.list1[i].day,
+            month: this.list1[i].month,
+            year: this.list1[i].year,
+            consumption: this.list1[i].energyUsageResult,
+            production: this.list2[j].energyUsageResult
+          });
+          break;
+        }
+      }
+  }
+  const options = {
+    fieldSeparator: ',',
+    filename: 'consumption/production-day',
+    quoteStrings: '"',
+    useBom : true,
+    decimalSeparator: '.',
+    showLabels: true,
+    useTextFile: false,
+    headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+  };
+
+  const csvExporter = new ExportToCsv(options);
+
+  const csvData = csvExporter.generateCsv(this.mergedList);
 
   }
    

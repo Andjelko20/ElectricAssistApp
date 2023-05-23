@@ -1,12 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { Users } from 'src/app/models/users.model';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Roles } from 'src/app/utilities/role';
 import { environment } from 'src/environments/environment';
 import { LatLng } from 'leaflet';
-import { Location } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-admin-dso-add',
@@ -37,13 +34,12 @@ export class AdminDsoAddComponent implements OnInit{
   public settlements:any;
   currentUrl: any;
   isFormDirty: boolean = false;
-  constructor(private usersService:AuthService,private router:Router,private location:Location) { }
-
+  btnAction:string=''  
+  confirm:boolean=false;
+  @ViewChild('modalContent') modalContent!: TemplateRef<any>;
+  body: string = ''; 
+  constructor(private usersService:AuthService,private router:Router,private modalService: NgbModal) { }
   ngOnInit(): void {
-
-
-
-
 	fetch(environment.serverUrl+"/cities?countryId=1",{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
 	.then(res=>res.json())
 	.then(res=>{
@@ -74,6 +70,8 @@ export class AdminDsoAddComponent implements OnInit{
     this.usersService.addUsers(this.addUserRequest)
     .subscribe({
       next:()=>{
+        this.modalService.open(this.modalContent);
+        this.body="Email confirmation has been successfully sent to the user's email.";
          this.router.navigate(['dashboard']);
       
       }
@@ -90,12 +88,5 @@ export class AdminDsoAddComponent implements OnInit{
 	}
   onFormChange() {
     this.isFormDirty = true;
-  }
-  @HostListener('window:beforeunload')
-  canDeactivate(): boolean {
-    if (this.isFormDirty) {
-      return confirm('Are you sure you want to leave? Your unsaved changes will be lost.');
-    }
-    return true;
   }
 }

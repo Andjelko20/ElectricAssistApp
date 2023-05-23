@@ -13,6 +13,7 @@
 }
 #prosumers-map{
 	margin-left: 5px;
+	border-radius: 10px;
 	width: 100%;
 	height: 100%;
 }
@@ -20,7 +21,6 @@
 	flex-grow: 1;
 	width: 100%;
 	text-align: center;
-	
 }
 button{
 	width: 60%;
@@ -33,34 +33,14 @@ button{
 	margin-left: 5px;
 	max-width: 100%;
 	text-align: left;
-	
 }
 .location:hover{
 	text-decoration: underline;
 }
-.legend{
-	margin-left: 300px;
-	margin-bottom: 10px;
-	--green-square:green;
-	--blue-square:blue;
-	--red-square:red;
-}
-.legend-item{
-	display: flex;
-	gap:20px;
-	align-items: center;
-}
-.legend-square{
-	width: 10px;
-	height: 10px;
-	background-color: var(--bg-color);
-}
-
 .search-container > form{
 	display: flex;
 	gap:20px;
 }
-
 .search-container > form > input[type="text"]{
 	flex-grow: 1;
 	border-radius: 5px;
@@ -68,34 +48,24 @@ button{
 .green-square {
     display: inline-block;
     background-color: rgb(111, 180, 111);
-    width: 17px; /* Set the width to your desired size */
-    height: 17px; /* Set the height to the same value as the width to create a square shape */
-    margin-left: 10px;
-    
+	border-radius: 20px;
+    width: 17px; 
+    height: 17px; 
 }
-
   .blue-square {
     display: inline-block;
     background-color: rgb(120, 120, 238);
-    width: 17px; /* Set the width to your desired size */
-    height: 17px; /* Set the height to the same value as the width to create a square shape */
-    margin-left: 10px;
-   
+	border-radius: 20px;
+    width: 17px; 
+    height: 17px; 
 }
   .red-square {
     display: inline-block;
     background-color: rgb(247, 117, 117);
-    width: 17px; /* Set the width to your desired size */
-    height: 17px; /* Set the height to the same value as the width to create a square shape */
-    margin-left: 10px;
+	border-radius: 20px;
+    width: 17px; 
+    height: 17px; 
   }
-    
-
-/*
-select[name="zone"] > option{
-	background-color: var(--bg-color);
-}
-*/
 .filter-select{
 	display: flex;
 	flex-direction: column;
@@ -118,7 +88,6 @@ select[name="zone"] > option{
 .filter-select > label,.search-user label{
 	text-align: left;
 }
-
 .map-filters-container{
 	display: flex;
 	flex-direction: row;
@@ -139,7 +108,7 @@ select[name="zone"] > option{
 	margin-bottom: 10px;
 }
 .search-user .input-form-control{
-	width: 100%;
+	width: 40%;
 	padding: 4px 5px;
 	font-weight: 400;
 	line-height: 1.5;
@@ -211,4 +180,74 @@ select[name="zone"] > option{
 }
 .hidden{
 	visibility: hidden;
+}
+#legend{
+	display: block; 
+	cursor: pointer;
+}
+.c-grey-900 {
+	position: absolute;
+	top: 37%;
+	left: 83.5%;
+	transform: translate(-50%, -50%);
+	z-index: 9999;
+	background-color: white;
+	width: 20%;
+	height: 15%;
+	text-align: left;
+	padding: 10px;
+	border-radius: 10px;
+	border: 1px solid #D2D2D2;
+}
+
+.c-grey-900 {
+	position: absolute;
+	top: 35%;
+	left: 83.5%;
+	transform: translate(-50%, -50%);
+	z-index: 9999;
+	background-color: white;
+	width: 20%;
+	height: 13%;
+	text-align: left;
+	padding: 10px;
+	border-radius: 10px;
+	border: 1px solid #D2D2D2;
+	font-size: 16px;
+}
+
+@media screen and (max-width: 1900px) {
+	.c-grey-900 {
+		width:calc(21.8vw + 5vw);
+		height: calc(14.8vh + 2vw);
+		left: calc(86% - 8vw);
+		top: calc(44.8% - 6.6vh);
+	}
+}
+@media screen and (max-width: 1279px) {
+	.c-grey-900 {
+		width:calc(34vw + 2vw);
+		height: calc(17vh + 3vw);
+		left: calc(82% - 8vw);
+		top: calc( 49% - 5.6vh);
+	}
+}
+
+@media screen and (max-width: 1023px) {
+	.c-grey-900 {
+		width:calc(40vw + 2vw);
+		height: calc(11vh + 3vw);
+		left: calc(80% - 8vw);
+		top: calc(40% - 6.6vh);
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.c-grey-900 {
+		width:calc(40vw + 2vw);
+		height: calc(12.5vh + 3vw);
+		left: calc(78% - 8vw);
+		top: calc(42.5% - 6.6vh);
+		font-size: 14px;
+	}
 }

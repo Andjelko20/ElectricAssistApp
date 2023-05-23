@@ -91,6 +91,7 @@
     font-size: 12px;
     margin-left: 26%;
     margin-top: -35px;
+    cursor: pointer;
 }
 
 label {
@@ -104,7 +105,9 @@ label {
     margin-top: 30%;
     font-size: 20px;
 }
-
+.custom-select {
+    cursor: pointer;
+  }
 @media (min-width: 768px) {
     .alldevices {
         top: 10%;
@@ -134,8 +137,8 @@ label {
         width: 25%;
     }
     .btn {
-        background-color: #1C315E;
-        border-color: #1C315E;
+        background-color: #354871;
+        border-color: #354871;
         margin-top: -55px;
         font-size: 20px;
         width: 200px;
@@ -157,4 +160,5 @@ label {
         margin-top: 10%;
         font-size: 40px;
     }
+    
 }

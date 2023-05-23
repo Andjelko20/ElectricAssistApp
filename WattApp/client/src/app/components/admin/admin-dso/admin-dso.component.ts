@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export class AdminDsoComponent implements OnInit {
   @ViewChild('modalContent') modalContent!: TemplateRef<any>;
   @ViewChild('modalContent1') modalContent1!: TemplateRef<any>;
+  @ViewChild('modalContent2') modalContent2!: TemplateRef<any>;
   body: string = ''; 
   btnAction:string='';
 
@@ -52,12 +53,9 @@ export class AdminDsoComponent implements OnInit {
   address: '',
   password: ''
   }
-  public emailErrorMessage:string="";
-	public errorMessage:string="";
 	public success:boolean=false;
-  public passwordGen='';
-  public emailUp='';
   showDropdown = false;
+  msgShow:boolean=false;
   constructor(private router:Router,private usersService:AuthService,
     private route:ActivatedRoute,private modalService: NgbModal,private elementRef: ElementRef) { }
 
@@ -175,7 +173,6 @@ export class AdminDsoComponent implements OnInit {
         deletePopup.addEventListener('click', () => {
           this.usersService.delete(id)
           .subscribe(()=>{
-              //this.router.navigate(['/dashboard']);
               this.usersService.getAllUsers(this.currentPage,this.itemsPerPage,this.filters).subscribe({
 				next:users => {
                 this.totalItems=users.numberOfPages*this.itemsPerPage;
@@ -254,10 +251,18 @@ export class AdminDsoComponent implements OnInit {
   }
   upDate()
   {
+    
     this.usersService.upDate(this.updateUserDetail.id,this.updateUserDetail)
     .subscribe({
       next:()=>{
+        this.modalService.open(this.modalContent2);
+        this.body="Email confirmation has been successfully sent to the user's email."
         this.router.navigate(['dashboard']);
+      },error:()=>{
+        this.modalService.open(this.modalContent2);
+        this.body="User with that email address already exists."
+        this.router.navigate(['dashboard']);
+        
       }
     });
   }

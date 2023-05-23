@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="toggle-container">
+  <div class="toggle-container" style="margin-bottom: 20px;">
     <div class="toggle-buttons">
       <input type="radio" (click)="toggleDa()" name="toggle" id="dashboard-btn" checked >
       <label for="dashboard-btn">Dashboard</label>
@@ -17,20 +17,19 @@
         </div>
         <div class="peers mT-20 fxw-nw@lg+ jc-sb ta-c gap-10">
             <div class="peer">
-              PRomeni legend
                 <div class="c-grey-900 text-center"  >
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than 350 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between 351 and 1600 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than 1601 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 4,222 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 4,223 and 7,444 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 7,445 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
                     </div>
                     <app-today-consumption></app-today-consumption>
                     <span>Today consumption</span>
             </div>
             <div class="peer">
                 <div class="c-grey-900 text-center"  >
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 22,222 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 22,223-44,444 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 44,445 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 43,230 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 43,230 and 76,444 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 76,444 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
                 </div>
                     <app-month-consumption></app-month-consumption>
                     <span>Month consumption</span>
@@ -38,32 +37,29 @@
 
             <div class="peer">
                 <div class="c-grey-900 text-center"  >
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 666,667 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 666,668 - 1,333,333 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 1,333,334 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 150 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 151 and 300 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 301 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
                 </div>
                     <app-today-production></app-today-production>
                     <span>Today production</span>
             </div>
             <div class="peer">
                 <div class="c-grey-900 text-center"  >
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 8,000,000 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 8,000,001-16,000,000 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
-                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 16,000,001 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption less than: 1,600 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="green-square" ></span> Green zone </div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption between: 1,601 and 3,900 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="blue-square"></span> Blue zone</div>
+                    <div data-bs-toggle="tooltip" data-bs-placement="top" title="Consumption more than: 3,901 kWh" style="display: inline-block; cursor: pointer;font-size: 12px;"><span class="red-square" ></span> Red zone</div>
                 </div>
                     <app-month-production></app-month-production>
                     <span>Month production</span>
             </div>
         </div>
     </div>
-  
-
-    <div class="information">
+    <div class="information" >
       <app-one-prosumer></app-one-prosumer>
     </div>
   </div> 
 </div>
- 
 <app-all-devices-dso *ngIf="devices"></app-all-devices-dso>
   <div class="container2" *ngIf="dashboard">
     <div class="history-charts">
@@ -76,6 +72,7 @@
             <label for="tabelar-btn">Tabular view</label>
           </div>
       </div>
+      <hr>
       <ng-container *ngIf="graph">
           <div class="chart-body">
               <div class="chart-buttons">
@@ -120,8 +117,6 @@
               <app-year-tabelar-prosumer></app-year-tabelar-prosumer>
           </div>
       </ng-container>
-
-
     </div> 
   </div>
 

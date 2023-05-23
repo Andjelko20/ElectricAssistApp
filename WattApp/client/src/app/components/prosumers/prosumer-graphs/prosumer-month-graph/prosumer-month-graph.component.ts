@@ -14,6 +14,7 @@ import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { JwtToken } from 'src/app/utilities/jwt-token';
+import { ExportToCsv } from 'export-to-csv';
 
 const moment = _rollupMoment || _moment;
 
@@ -47,8 +48,7 @@ export class ProsumerMonthGraphComponent {
   currentDate = new Date();
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
-  itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
-  ,'20','21','22','23','24','25','26','27','28','29','30'];
+  mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -57,7 +57,7 @@ export class ProsumerMonthGraphComponent {
     this.ngOnInit();
     });
   }
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
@@ -72,15 +72,6 @@ export class ProsumerMonthGraphComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
-    if(this.selectedDate == undefined){
-      forkJoin({
-        list1: this.deviceService.monthByDayUser(userId, 2),
-      }).subscribe(({ list1 }) => {
-        this.list1 = list1;
-        this.BarPlotConsumption();
-      });
-    }
-    else{
           let month = this.selectedDate!.getMonth()+1;
           let monthString = String(month).padStart(2, '0');
           let year = this.selectedDate!.getFullYear();
@@ -96,7 +87,6 @@ export class ProsumerMonthGraphComponent {
             this.list1 = list1;
             this.BarPlotConsumption();
           });
-    }
   }
 
   BarPlotConsumption(){
@@ -120,8 +110,9 @@ export class ProsumerMonthGraphComponent {
             {
               label: 'Consumption',
               data: energyUsageResults1,
-              borderColor: '#7fcdbb',
-              backgroundColor: '#7fcdbb',
+              borderColor:  'rgba(127, 205, 187, 1)',
+              backgroundColor:  'rgba(127, 205, 187, 0.3)',
+              borderWidth: 2.5,
               
             },
             
@@ -130,6 +121,18 @@ export class ProsumerMonthGraphComponent {
         },
         options: 
         {
+          onHover: (e, chartEle) => {
+            if (e.native) {
+              const target = e.native.target as HTMLElement;
+              if (target instanceof HTMLElement) {
+                target.style.cursor = chartEle.length > 0 && chartEle[0] ? 'pointer' : 'default';
+              } else {
+                console.error('Invalid target element:', target);
+              }
+            } else {
+              console.error('Missing native event:', e);
+            }
+          },  
           maintainAspectRatio: false,
           responsive: true, // Enable responsiveness
           
@@ -190,5 +193,37 @@ export class ProsumerMonthGraphComponent {
           }
         }
       });
+  }
+
+  downloadCSV(): void {
+    this.mergedList = [];
+    for (let i = 0; i < this.list1.length; i++) {
+      for (let j = 0; j < this.list2.length; j++) {
+        if (this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
+          this.mergedList.push({
+            day: this.list1[i].day,
+            month: this.list1[i].month,
+            year: this.list1[i].year,
+            consumption: this.list1[i].energyUsageResult,
+            production: this.list2[j].energyUsageResult
+          });
+          break;
+        }
+      }
+  }
+  const options = {
+    fieldSeparator: ',',
+    filename: 'consumption/production-month',
+    quoteStrings: '"',
+    useBom : true,
+    decimalSeparator: '.',
+    showLabels: true,
+    useTextFile: false,
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+  };
+
+  const csvExporter = new ExportToCsv(options);
+  const csvData = csvExporter.generateCsv(this.mergedList);
+
   }
 }

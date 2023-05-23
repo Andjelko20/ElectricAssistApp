@@ -6,19 +6,14 @@
   margin-right: 20px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 1px 2px grey;
+  border: 1px solid #D2D2D2;
   margin-bottom: 70px;
-}
-.tabel-body{
-  
 }
 .tabel-map {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
-  border: 1px solid gray;
-  border-radius: 10px;
   margin-left: 50px;
   margin-right: 50px;
   margin-bottom: 10px;
@@ -27,6 +22,8 @@
 #numpros {
   display: flex;
   align-items: center;
+  margin-left: 50px;
+  margin-bottom: 10px;
 }
 
 #numpros span {
@@ -39,13 +36,12 @@
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  padding-right: 280px;
 }
 
 .map{
   margin-left: 50px;
   margin-right: 50px;
-  border: 1px solid gray;
+  border-radius: 10px;
   border-radius: 10px;
   margin-bottom: 0;
 }
@@ -80,8 +76,6 @@
   
   .toggle-buttons span.divider {
     display: inline-block;
-    /* width: 1px;
-    height: 20px; */
     margin: 0 10px;
     background-color: gray;
   }
@@ -93,14 +87,11 @@
   .toggle-buttons input[type="radio"]:not(:checked) + label {
     color: gray;
   }
-  
   .date-time {
     margin-right: 15px;
     text-align: right;
   }
-
 .nav-button{
-
     cursor: pointer;
     border: none;
     padding: 10px 20px;
@@ -112,9 +103,7 @@
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-
 }
-
 .nav-button:not(.active){
   background-color: white;
   color: #2199e8;
@@ -130,7 +119,7 @@
   color: white;
   box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
 }
-@media only screen and (min-width: 768px) and (max-width: 1280px) {
+@media only screen and (min-width: 768px) and (max-width: 1279px) {
   .wrapper{
     margin-top: 90px;
     padding-top: 15px;
@@ -139,7 +128,7 @@
     margin-right: 10px;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 1px 2px grey;
+    border: 1px solid #D2D2D2;
     margin-bottom: 70px;
   }
   
@@ -148,8 +137,6 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
-  border: 1px solid gray;
-  border-radius: 10px;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -158,6 +145,7 @@
 #numpros {
   display: flex;
   align-items: center;
+  margin-left: 12px;
 }
 
 #numpros span {
@@ -170,19 +158,14 @@
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  padding-right: 100px;
 }
-
-
 .map{
-  
   margin-left: 10px;
   margin-right: 10px;
-  border: 1px solid gray;
+  border-radius: 10px;
   border-radius: 10px;
   margin-bottom: 0;
 }
-  
   .toggle-container {
       display: flex;
       margin: 15px;
@@ -232,10 +215,12 @@
     }
   
   .nav-button{
-
     cursor: pointer;
     border: none;
-    padding: 10px 20px;
+    padding-left: 6px;
+    margin-left: 1px;
+    margin-right: 1px;
+    padding-right: 6px;
     margin: 0 10px;
     color: #2199e8;
     font-size: 16px;
@@ -244,7 +229,6 @@
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-
   }
 
   .nav-button:not(.active){
