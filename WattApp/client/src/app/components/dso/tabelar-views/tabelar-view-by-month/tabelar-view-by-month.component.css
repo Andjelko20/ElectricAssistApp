@@ -40,9 +40,12 @@
 }
 
 .container1 {
-  width: 15%;
+  width: 10%;
   float: left;
   margin-left: 5%;
+}
+.form-select {
+  cursor: pointer;
 }
 
 .container2 {

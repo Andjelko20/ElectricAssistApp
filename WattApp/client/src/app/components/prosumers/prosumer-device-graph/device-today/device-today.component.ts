@@ -24,7 +24,8 @@ export class DeviceTodayComponent {
   }
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
-  
+  list1pred: number[] = [];
+  list2pred: number[] = [];
   selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
@@ -83,10 +84,20 @@ export class DeviceTodayComponent {
         ]).subscribe(([list1, list2]) => {
           if(data.deviceCategory == "Electricity Consumer"){
             this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list1pred.push(increasedEnergy);
+            }
             this.LineChartConsumption();
           }
           else{
             this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list2pred.push(increasedEnergy);
+            }
             this.LineChartProduction();
           }
         });

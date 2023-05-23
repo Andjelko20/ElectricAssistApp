@@ -14,11 +14,14 @@
 }
 
 .container {
-    width: 15%;
-    float: left;
-    margin-left: 5%;
-  }
-  
+  width: 10%;
+  float: left;
+  margin-left: 5%;
+}
+.form-select {
+  cursor: pointer;
+}
+
   .container2 {
     display: inline-block;
     width: 15%;

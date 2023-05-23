@@ -18,7 +18,7 @@ export class ProsumerDayGraphComponent {
   maxDate = new Date();
   currentDate = new Date();
   list1:DayByHour[] = [];
-  list2:DayByHour[] = [];
+  list1pred: number[] = [];
   mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number }[] = [];
   selectedDate: Date = new Date();
 
@@ -77,6 +77,11 @@ export class ProsumerDayGraphComponent {
       ]).subscribe(([list1]) => {
         this.loader=false;
         this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list1pred.push(increasedEnergy);
+            }
         this.LineChartConsumption();
 
       });
@@ -193,35 +198,19 @@ export class ProsumerDayGraphComponent {
 
   }
   downloadCSV(): void {
-    this.mergedList = [];
-    for (let i = 0; i < this.list1.length; i++) {
-      for (let j = 0; j < this.list2.length; j++) {
-        if (this.list1[i].hour === this.list2[j].hour && this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
-          this.mergedList.push({
-            hour: this.list1[i].hour,
-            day: this.list1[i].day,
-            month: this.list1[i].month,
-            year: this.list1[i].year,
-            consumption: this.list1[i].energyUsageResult,
-            production: this.list2[j].energyUsageResult
-          });
-          break;
-        }
-      }
-  }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-day',
+    filename: 'consumption-day',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+    headers: ['Hour', 'Day', 'Month', 'Year', 'Consumption [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);
-  const csvData = csvExporter.generateCsv(this.mergedList);
+  const csvData = csvExporter.generateCsv(this.list1);
 
   }
 }
