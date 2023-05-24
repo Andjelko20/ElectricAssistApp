@@ -61,13 +61,13 @@ export class WeekTabelarProsumerComponent implements OnInit{
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.currentDate){
-        this.sdate = null;
+      if(value.end == null){
+        this.send = this.currentDate;
       }
       else{
-        this.ngOnInit()
+        this.send = value.end
       }
+      this.ngOnInit();
     });
   }
 
@@ -76,8 +76,8 @@ export class WeekTabelarProsumerComponent implements OnInit{
     end: new FormControl()
   });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  sdate = this.firstdate;
+  send = this.currentDate;
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));

@@ -62,13 +62,13 @@ export class LineWeekProsumerComponent {
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.currentDate){
-        this.sdate = null;
+      if(value.end == null){
+        this.send = this.currentDate;
       }
       else{
-        this.ngOnInit()
+        this.send = value.end
       }
+      this.ngOnInit();
     });
   }
   campaignOne: FormGroup = new FormGroup({
@@ -76,24 +76,11 @@ export class LineWeekProsumerComponent {
     end: new FormControl()
   });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  sdate = this.firstdate;
+  send = this.currentDate;
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-
-    if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
-      forkJoin([
-        this.deviceService.weekByDayUser(id, 2),
-        this.deviceService.weekByDayUser(id, 1),
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.LineChartProduction();
-        this.LineChartConsumption();
-    });
-    }
-    else{
       this.dayNames = []
       const currentDate = new Date(this.sdate);
       const enddate = new Date(this.send)
@@ -115,7 +102,6 @@ export class LineWeekProsumerComponent {
       const year2 = this.send.getFullYear();
       let string1 = year1+'-'+monthString1+'-'+dayString1+' '+'00:00:00';
       let string2 = year2+'-'+monthString2+'-'+dayString2+' '+'00:00:00';
-
           forkJoin([
             this.deviceService.weekByDayUserFilter(string1,string2,id, 2),
             this.deviceService.weekByDayUserFilter(string1,string2,id, 1)
@@ -135,7 +121,6 @@ export class LineWeekProsumerComponent {
             this.LineChartProduction();
             this.LineChartConsumption();
           });
-    }
     
   }
   LineChartProduction(){
