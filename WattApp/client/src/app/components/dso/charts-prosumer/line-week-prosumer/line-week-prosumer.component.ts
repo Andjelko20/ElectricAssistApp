@@ -1,4 +1,4 @@
-import { Component, Injectable, ViewChild } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
@@ -8,7 +8,6 @@ import {
   MatDateRangeSelectionStrategy,
   DateRange,
   MAT_DATE_RANGE_SELECTION_STRATEGY,
-  MatDatepickerInputEvent,
 } from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -100,7 +99,7 @@ export class LineWeekProsumerComponent {
       const enddate = new Date(this.send)
       enddate.setDate(enddate.getDate()-1)
       while (currentDate <= enddate) {
-        const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+        const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
         this.dayNames.push(dayName);
         currentDate.setDate(currentDate.getDate() + 1 );
       }
@@ -162,21 +161,19 @@ export class LineWeekProsumerComponent {
         datasets:  [
           
           {
-            label: 'Production',
+            label: ' Production',
             data: energyUsageResults2,
-            // tension:0.1,
-            // backgroundColor: 'rgba(29, 145, 192, 0.2)',
-            // borderColor: 'rgba(29, 145, 192, 1)',
-            // borderWidth: 1,
-            // pointBackgroundColor: 'rgba(29, 145, 192, 1)',
-            // pointBorderColor: 'rgba(29, 145, 192, 1)',
-            // pointBorderWidth: 8,
-            // pointRadius: 1,
-            // pointHoverRadius: 6,
-            // fill:true
             borderColor: 'rgba(29, 145, 192, 1)',
-              backgroundColor: 'rgba(29, 145, 192, 0.2)',
-              borderWidth: 2,
+            backgroundColor: 'rgba(29, 145, 192, 0.2)',
+            borderWidth: 2,
+           
+          },
+          {
+            label: ' Prediction',
+            data: this.list2pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
           }
           
         ]
@@ -209,7 +206,7 @@ export class LineWeekProsumerComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -235,7 +232,10 @@ export class LineWeekProsumerComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
           datalabels:{display: false},
           legend: {display:false
@@ -274,21 +274,18 @@ export class LineWeekProsumerComponent {
         
         datasets:  [
           {
-            label: 'Consumption ',
+            label: ' Consumption ',
             data: energyUsageResults1,
-            // tension:0.1,
-            // backgroundColor: 'rgba(127, 205, 187, 0.3)',
-            // borderColor: ' rgba(127, 205, 187, 1)',
-            // borderWidth: 1.5,
-            // pointBackgroundColor: 'rgba(127, 205, 187, 1)',
-            // pointBorderColor: 'rgba(127, 205, 187, 1)',
-            // pointBorderWidth: 8,
-            // pointRadius: 1,
-            // pointHoverRadius: 6,
-            // fill:true,
             borderColor:  'rgba(127, 205, 187, 1)',
             backgroundColor:  'rgba(127, 205, 187, 0.3)',
             borderWidth: 2.5,
+          },
+          {
+            label: ' Prediction',
+            data: this.list1pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
           },
           
         ]
@@ -321,7 +318,7 @@ export class LineWeekProsumerComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -347,7 +344,10 @@ export class LineWeekProsumerComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
           datalabels:{display: false},
           legend: {display:false

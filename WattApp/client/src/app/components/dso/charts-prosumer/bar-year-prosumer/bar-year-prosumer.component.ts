@@ -103,15 +103,23 @@ export class BarYearProsumerComponent {
       const Linechart =new Chart("barplot1", {
           type: 'bar',
           data : {
-            labels: month,
+            labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
             datasets: [
               {
-                label: 'Production',
+                label: ' Production',
                 data: energyUsageResults2,
                 borderColor: 'rgba(29, 145, 192, 1)',
                 backgroundColor: 'rgba(29, 145, 192, 0.2)',
                 borderWidth: 2,
+               
               },
+              {
+                label: ' Prediction',
+                data: this.list2pred,
+                borderColor: 'rgba(252, 129, 155, 1)',
+                backgroundColor: 'rgba(252, 129, 155, 0.2)',
+                borderWidth: 2,
+              }
             ]
           },
           options: 
@@ -210,7 +218,7 @@ export class BarYearProsumerComponent {
           type: 'bar',
          
           data : {
-            labels: month,
+            labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
             
             datasets: [
               {

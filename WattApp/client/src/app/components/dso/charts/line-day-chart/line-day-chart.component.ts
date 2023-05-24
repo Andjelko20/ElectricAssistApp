@@ -188,7 +188,7 @@ export class LineDayChartComponent {
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
     let max=0;
-    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    if(energyUsageResults2[0]===0 )
     {
       max=1;
     }
@@ -199,7 +199,7 @@ export class LineDayChartComponent {
         
         datasets: [
           {
-            label: 'Production',
+            label: ' Production',
             data: energyUsageResults2,
             backgroundColor: 'rgba(29, 145, 192, 0.2)',
             borderColor: 'rgba(29, 145, 192, 1)',
@@ -213,7 +213,7 @@ export class LineDayChartComponent {
             
           },
           {
-            label: 'Prediction ',
+            label: ' Prediction',
             data: this.list2pred,
             borderColor: 'rgba(252, 129, 155, 1)',
             borderWidth: 2,
@@ -316,10 +316,10 @@ export class LineDayChartComponent {
         chartExists.destroy();
     }
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult)
-
+    
     const hours = this.list1.map(day => day.hour);
     let max=0;
-    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    if(energyUsageResults1[0]===0 )
     {
       max=1;
     }
@@ -330,7 +330,7 @@ export class LineDayChartComponent {
         
         datasets: [
           {
-            label: 'Consumption ',
+            label: ' Consumption',
             data: energyUsageResults1,
             backgroundColor: 'rgba(127, 205, 187, 0.3)',
             borderColor: ' rgba(127, 205, 187, 1)',
@@ -344,7 +344,7 @@ export class LineDayChartComponent {
             
           },
           {
-            label: 'Prediction',
+            label: ' Prediction',
             data: this.list1pred,
             borderColor: 'rgba(252, 129, 155, 1)',
             borderWidth: 2,

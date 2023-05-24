@@ -18,6 +18,7 @@ Chart.register(ChartDataLabels);
 export class PieChartComponent implements OnInit {
   loader:boolean=false;
   settlements:Settlement[] = [];
+  settlements1:Settlement[] = [];
   settlementsValue:number[] = [];
   constructor(private authService:AuthService,private historyService:HistoryPredictionService) {
   
@@ -31,8 +32,13 @@ export class PieChartComponent implements OnInit {
           this.settlements.forEach(settlement =>{
             this.historyService.getCurrentConsumptionProductionSettlement(1,settlement.id).subscribe(value =>{
               this.loader=false;
-              this.settlementsValue.push(value);
-              this.PieChart();
+              if(value!=0)
+              {
+                this.settlements1.push(settlement);
+                this.settlementsValue.push(value);
+                this.PieChart();
+              }
+              
             })
           })
         })
@@ -41,15 +47,13 @@ export class PieChartComponent implements OnInit {
   }
 
   PieChart(){
-
-
     const chartId = 'piechart';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
-    const name = this.settlements.map(name => name.name);
+    const name = this.settlements1.map(name => name.name);
     var data= [{
       label: '',
       data: this.settlementsValue,

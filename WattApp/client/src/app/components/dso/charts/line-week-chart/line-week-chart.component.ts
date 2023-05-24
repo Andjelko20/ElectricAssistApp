@@ -203,7 +203,7 @@ export class LineWeekChartComponent {
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     let max=0;
-    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    if(energyUsageResults2[0]===0 )
     {
       max=1;
     }
@@ -215,7 +215,7 @@ export class LineWeekChartComponent {
         datasets:  [
           
           {
-            label: 'Production',
+            label: ' Production',
             data: energyUsageResults2,
             borderColor: 'rgba(29, 145, 192, 1)',
             backgroundColor: 'rgba(29, 145, 192, 0.2)',
@@ -223,10 +223,11 @@ export class LineWeekChartComponent {
            
           },
           {
-            label: 'Prediction',
+            label: ' Prediction',
             data: this.list2pred,
             borderColor: 'rgba(252, 129, 155, 1)',
             backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
           }
           
         ]
@@ -259,7 +260,7 @@ export class LineWeekChartComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -285,13 +286,17 @@ export class LineWeekChartComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+        
           datalabels:{display: false},
           legend:{display:false},
           title: {
             display: true,
-            text: 'Production in a week',
+            text: ' Production in a week',
             color:'#000',
             font:{
               size:20
@@ -323,13 +328,19 @@ export class LineWeekChartComponent {
         
         datasets:  [
           {
-            label: 'Consumption ',
+            label: ' Consumption',
             data: energyUsageResults1,
             borderColor:  'rgba(127, 205, 187, 1)',
             backgroundColor:  'rgba(127, 205, 187, 0.3)',
             borderWidth: 2.5,
           },
-          
+          {
+            label: ' Prediction',
+            data: this.list1pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
+          },
         ]
         
       }
@@ -360,7 +371,7 @@ export class LineWeekChartComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -386,8 +397,12 @@ export class LineWeekChartComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+          
           datalabels:{display: false},
           legend:{display:false},
           title: {
