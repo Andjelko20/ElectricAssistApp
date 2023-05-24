@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ExportToCsv } from 'export-to-csv';
 import { Chart,registerables } from 'node_modules/chart.js'
+import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,6 +23,7 @@ export class PredictionTabularProsumerComponent {
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   datePipe: any;
   idProsumer!: number;
+  dateTime: any[] = [];
 
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     
@@ -32,12 +34,19 @@ export class PredictionTabularProsumerComponent {
     let token=new JwtToken();
     this.idProsumer=token.data.id as number;
 
-    this.deviceService.predictionUser(this.idProsumer,2).subscribe((data: WeekByDay[]) =>{
-      this.list1 = data;
-      this.deviceService.predictionUser(this.idProsumer,1).subscribe((data: WeekByDay[]) =>{
-        this.list2 = data;
-      })
-    })
+    forkJoin([
+      this.deviceService.predictionUser(this.idProsumer,2),
+      this.deviceService.predictionUser(this.idProsumer,1)
+    ]).subscribe(([list1, list2]) => {
+      this.list1 = list1;
+      this.dateTime = [];
+        for (let i = 0; i < this.list1.length; i++) {
+          const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+          const formattedDay = `${pad(this.list1[i].day)}`;
+          this.dateTime.push(formattedDay)
+        }
+      this.list2 = list2;
+    });
   }
 
   downloadCSV(): void {

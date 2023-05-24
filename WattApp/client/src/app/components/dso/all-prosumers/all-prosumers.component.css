@@ -2,20 +2,6 @@
     margin-left: 50px;
     margin-right: 50px;
 }
-.first {
-    padding: 0;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: center;
-}
-#buttonAdd {
-    width: 100px;
-    height: 50px;
-}
-#buttonAdd:hover {
-    background-color: #2199e8;
-    color: white;
-}
 table {
     box-sizing: border-box;
 }
@@ -38,72 +24,6 @@ th,
 td {
     padding: 15px;
     text-align: left;
-}
-button {
-    background-color: white;
-    color: black;
-    border: 2px solid #2199e8;
-}
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #1C315E;
-}
-li {
-    float: left;
-}
-li a {
-    display: block;
-    color: #1C315E;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-.search-filter-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px 0 15px 20px;
-}
-.search-label,
-.filter-label {
-    display: block;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    margin-bottom: 8px;
-    color: #444;
-}
-#search-input {
-    padding: 8px;
-    font-size: 16px;
-    border: none;
-    border-bottom: 2px solid #ddd;
-    background-color: transparent;
-    font-family: Arial, sans-serif;
-    color: #000000;
-    width: 100%;
-    transition: border-color 0.2s ease-in-out;
-}
-#search-input:focus {
-    outline: none;
-    border-color: #4d90fe;
-}
-#filter-select {
-    padding: 8px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #f2f2f2;
-    font-family: Arial, sans-serif;
-    color: #444;
-    width: 100%;
-    transition: background-color 0.2s ease-in-out;
-}
-#filter-select:focus {
-    outline: none;
-    background-color: #e0e0e0;
 }
 #names{
     font-weight: bold;
@@ -128,110 +48,11 @@ li a {
         margin-left: 10px;
         margin-right: 10px;
     }
-    .first {
-        padding: 0;
-        margin-bottom: 30px;
-        display: flex;
-        justify-content: center;
-    }
-    #buttonAdd {
-        width: 100px;
-        height: 50px;
-    }
-    #buttonAdd:hover {
-        background-color: #1C315E;
-        color: white;
-    }
-    table {
-        box-sizing: border-box;
-    }
-    table,
-    td,
-    th {
-        border-bottom: 1px solid gray;
-        text-align: left;
-        box-sizing: border-box;
-    }
-    th {
-        text-align: left;
-        background-color: #2199e8;
-        color: white;
-    }
-    table {
-        border-collapse: collapse;
-    }
     td {
         color: #1C315E;
     }
     th,
     td {
-        padding: 15px;
-        text-align: center;
-    }
-    button {
-        background-color: white;
-        color: black;
-        border: 2px solid #1C315E;
-    }
-    ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: #2199e8;
-    }
-    li {
-        float: left;
-    }
-    li a {
-        display: block;
-        color: #1C315E;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-    .search-filter-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 20px 0 15px 20px;
-    }
-    .search-label,
-    .filter-label {
-        display: block;
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-        margin-bottom: 8px;
-        color: #444;
-    }
-    #search-input {
-        padding: 8px;
-        font-size: 16px;
-        border: none;
-        border-bottom: 2px solid #ddd;
-        background-color: transparent;
-        font-family: Arial, sans-serif;
-        color: #000000;
-        width: 100%;
-        transition: border-color 0.2s ease-in-out;
-    }
-    #search-input:focus {
-        outline: none;
-        border-color: #4d90fe;
-    }
-    #filter-select {
-        padding: 8px;
-        font-size: 16px;
-        border: none;
-        border-radius: 4px;
-        background-color: #f2f2f2;
-        font-family: Arial, sans-serif;
-        color: #444;
-        width: 100%;
-        transition: background-color 0.2s ease-in-out;
-    }
-    #filter-select:focus {
-        outline: none;
-        background-color: #e0e0e0;
+        white-space: nowrap;
     }
 }

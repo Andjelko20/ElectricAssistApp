@@ -94,7 +94,11 @@
                 </a>
             </li>
             <li *ngIf="role==prosumer" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                <a class="nav-link" [routerLink]='["/profile"]'>
+                <a class="nav-link" [routerLink]='["/profile"]'*ngIf="showLink1===false">
+                    <span class="icon-holder"><i class="fa fa-cog" ></i></span>
+                    <span class="title">Profile</span>
+                </a>
+                <a class="nav-link" [routerLink]='["/profile"]' *ngIf="showLink1===true" style="background-color: #354871;color: white;">
                     <span class="icon-holder"><i class="fa fa-cog"></i></span>
                     <span class="title">Profile</span>
                 </a>

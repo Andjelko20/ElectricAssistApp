@@ -14,7 +14,6 @@
         <mat-form-field appearance="fill">
           <mat-label>Year</mat-label>
           <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
-          <mat-hint>YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
           <mat-datepicker #dp
                           startView="multi-year"
@@ -36,8 +35,7 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Year</th>
-                <th>Month</th>
+                <th>Date time</th>
                 <th>Consumption</th>
                 <th>Production</th>
 
@@ -47,10 +45,9 @@
               <tr *ngFor="let item1 of list1">
                 <ng-container *ngFor="let item2 of list2">
                   <ng-container *ngIf="item1.year == item2.year && item1.month == item2.month">
-                    <td>{{ item1.year }}</td>
-                    <td>{{ item1.month }}</td>
-                    <td>{{ item1.energyUsageResult }} kWh</td>
-                    <td>{{ item2.energyUsageResult }} kWh</td>
+                    <td>{{ item1.year }}/{{ item1.month }}</td>
+                    <td>{{ item1.energyUsageResult }} [kWh]</td>
+                    <td>{{ item2.energyUsageResult }} [kWh]</td>
                   </ng-container>
                 </ng-container>
               </tr>

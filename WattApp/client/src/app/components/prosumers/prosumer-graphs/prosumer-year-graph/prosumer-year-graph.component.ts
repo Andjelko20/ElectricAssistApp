@@ -43,7 +43,7 @@ export class ProsumerYearGraphComponent {
 
   maxYear = new Date();
   list1:YearsByMonth[]=[];
-  list2:YearsByMonth[]=[];
+  list1pred: number[] = [];
   mergedList: {month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
@@ -55,7 +55,7 @@ export class ProsumerYearGraphComponent {
   }
 
   date = new FormControl(moment());
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   setYear(year: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value!;
     ctrlValue.year(year.year());
@@ -66,25 +66,19 @@ export class ProsumerYearGraphComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const id = token.data.id as number;
-    if(this.selectedDate == undefined){
-      forkJoin([
-        this.deviceService.yearByMonthUser(id, 2),
-      ]).subscribe(([list1]) => {
-        this.list1 = list1;
-
-        this.BarPlotConsumption();
-      });
-    }
-    else{
       const year = this.selectedDate.getFullYear();
       forkJoin([
         this.deviceService.monthbyDayUserFilter(year,id, 2),
       ]).subscribe(([list1]) => {
         this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list1pred.push(increasedEnergy);
+            }
 
         this.BarPlotConsumption();
       });
-    }
   }
  
   BarPlotConsumption(){
@@ -189,33 +183,19 @@ export class ProsumerYearGraphComponent {
   }
 
   downloadCSV(): void {
-    this.mergedList = [];
-    for (let i = 0; i < this.list1.length; i++) {
-      for (let j = 0; j < this.list2.length; j++) {
-        if (this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
-          this.mergedList.push({
-            month: this.list1[i].month,
-            year: this.list1[i].year,
-            consumption: this.list1[i].energyUsageResult,
-            production: this.list2[j].energyUsageResult
-          });
-          break;
-        }
-      }
-  }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-year',
+    filename: 'consumption-year',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+    headers: ['Month', 'Year', 'Consumption [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);
-  const csvData = csvExporter.generateCsv(this.mergedList);
+  const csvData = csvExporter.generateCsv(this.list1);
 
   }
 }

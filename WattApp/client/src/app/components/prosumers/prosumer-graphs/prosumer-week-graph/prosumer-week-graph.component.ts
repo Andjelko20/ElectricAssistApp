@@ -56,7 +56,7 @@ export class ProsumerWeekGraphComponent {
   firstdate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   list1:WeekByDay[] = [];
-  list2:WeekByDay[] = [];
+  list1pred: number[] = [];
   dayNames: string[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
@@ -96,7 +96,7 @@ export class ProsumerWeekGraphComponent {
           const enddate = new Date(this.send)
           enddate.setDate(enddate.getDate()-1)
           while (currentDate <= enddate) {
-            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
             this.dayNames.push(dayName);
             currentDate.setDate(currentDate.getDate() + 1 );
           }
@@ -117,6 +117,11 @@ export class ProsumerWeekGraphComponent {
             this.deviceService.weekByDayUserFilter(string1,string2,id, 2),
           ]).subscribe(([list1]) => {
             this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list1pred.push(increasedEnergy);
+            }
             this.LineChartConsumption();
           });
     }
@@ -228,34 +233,19 @@ export class ProsumerWeekGraphComponent {
   }
 
   downloadCSV(): void {
-    this.mergedList = [];
-    for (let i = 0; i < this.list1.length; i++) {
-      for (let j = 0; j < this.list2.length; j++) {
-        if (this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
-          this.mergedList.push({
-            day: this.list1[i].day,
-            month: this.list1[i].month,
-            year: this.list1[i].year,
-            consumption: this.list1[i].energyUsageResult,
-            production: this.list2[j].energyUsageResult
-          });
-          break;
-        }
-      }
-  }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-week',
+    filename: 'consumption-week',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);
-  const csvData = csvExporter.generateCsv(this.mergedList);
+  const csvData = csvExporter.generateCsv(this.list1);
 
   }
 }

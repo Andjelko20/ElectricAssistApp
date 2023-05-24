@@ -59,6 +59,7 @@ export class DeviceWeekTabularComponent {
   firstdate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(),this.currentDate.getDate()-7);
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  dateTime: any[] = [];
   datePipe: any;
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.campaignOne.valueChanges.subscribe((value) => {
@@ -121,11 +122,23 @@ export class DeviceWeekTabularComponent {
           ]).subscribe(([list1, list2]) => {
             if(data.deviceCategory == "Electricity Consumer"){
               this.list1 = list1;
+              this.dateTime = [];
+              for (let i = 0; i < this.list1.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list1[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
               this.consumptionGraph = true;
 
             }
             else{
               this.list2 = list2;
+              this.dateTime = [];
+              for (let i = 0; i < this.list2.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list2[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
               this.productionGraph = true;
             }
           });

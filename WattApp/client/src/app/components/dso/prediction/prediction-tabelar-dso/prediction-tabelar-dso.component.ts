@@ -18,6 +18,7 @@ export class PredictionTabelarDsoComponent {
   settlements:Settlement[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   datePipe: any;
+  dateTime: any[] = [];
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService){}
 
   selectedOption: number = 0;
@@ -51,6 +52,12 @@ export class PredictionTabelarDsoComponent {
             this.deviceService.weekByDay(number, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.dateTime = [];
+              for (let i = 0; i < this.list1.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list1[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
             this.list2 = list2;
           });
           
@@ -61,6 +68,12 @@ export class PredictionTabelarDsoComponent {
             this.deviceService.weekByDaySettlement(this.selectedOption, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.dateTime = [];
+              for (let i = 0; i < this.list1.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list1[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
             this.list2 = list2;
           });
         }

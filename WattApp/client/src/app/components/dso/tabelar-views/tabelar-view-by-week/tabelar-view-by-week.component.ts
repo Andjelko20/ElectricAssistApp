@@ -61,6 +61,7 @@ export class TabelarViewByWeekComponent implements OnInit {
   settlements:Settlement[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   datePipe: any;
+  dateTime: any[] = [];
 
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
     this.campaignOne.valueChanges.subscribe((value) => {
@@ -106,16 +107,7 @@ export class TabelarViewByWeekComponent implements OnInit {
               }
             }
           })
-          if(this.selectedOption == 0 && (this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
-            forkJoin([
-              this.deviceService.weekByDay(number, 2),
-              this.deviceService.weekByDay(number, 1)
-            ]).subscribe(([list1, list2]) => {
-              this.list1 = list1;
-              this.list2 = list2;
-            });
-          }
-          else if(this.selectedOption == 0 && this.sdate != null && this.send != null){
+          if(this.selectedOption == 0 && this.sdate != null && this.send != null){
             const day1 = this.sdate.getDate();
             const month1 = this.sdate.getMonth()+1;
             let dayString1 = String(day1).padStart(2, '0');
@@ -134,6 +126,12 @@ export class TabelarViewByWeekComponent implements OnInit {
               this.deviceService.weekByDayCityFilter(string1,string2,number, 1)
             ]).subscribe(([list1, list2]) => {
               this.list1 = list1;
+              this.dateTime = [];
+              for (let i = 0; i < this.list1.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list1[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
               this.list2 = list2;
             });
           }
@@ -156,15 +154,12 @@ export class TabelarViewByWeekComponent implements OnInit {
               this.deviceService.weekByDaySettlementFilter(string1,string2,number, this.selectedOption)
             ]).subscribe(([list1, list2]) => {
               this.list1 = list1;
-              this.list2 = list2;
-            });
-          }
-          else{
-            forkJoin([
-              this.deviceService.weekByDaySettlement(this.selectedOption, 2),
-              this.deviceService.weekByDaySettlement(this.selectedOption, 1)
-            ]).subscribe(([list1, list2]) => {
-              this.list1 = list1;
+              this.dateTime = [];
+              for (let i = 0; i < this.list1.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list1[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
               this.list2 = list2;
             });
           }

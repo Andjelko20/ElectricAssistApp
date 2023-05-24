@@ -22,10 +22,6 @@
 	width: 100%;
 	text-align: center;
 }
-button{
-	width: 60%;
-    margin-left: 5px;
-}
 .location{
 	background-color: white;
 	cursor: pointer;
@@ -167,7 +163,6 @@ button{
 	font-size: 35px;
 	color: #a39d9d;
 	text-align: center;
-
 }
 .location{
 	padding: 3px;
@@ -187,21 +182,6 @@ button{
 }
 .c-grey-900 {
 	position: absolute;
-	top: 37%;
-	left: 83.5%;
-	transform: translate(-50%, -50%);
-	z-index: 9999;
-	background-color: white;
-	width: 20%;
-	height: 15%;
-	text-align: left;
-	padding: 10px;
-	border-radius: 10px;
-	border: 1px solid #D2D2D2;
-}
-
-.c-grey-900 {
-	position: absolute;
 	top: 35%;
 	left: 83.5%;
 	transform: translate(-50%, -50%);
@@ -215,7 +195,6 @@ button{
 	border: 1px solid #D2D2D2;
 	font-size: 16px;
 }
-
 @media screen and (max-width: 1900px) {
 	.c-grey-900 {
 		width:calc(21.8vw + 5vw);
@@ -232,7 +211,6 @@ button{
 		top: calc( 49% - 5.6vh);
 	}
 }
-
 @media screen and (max-width: 1023px) {
 	.c-grey-900 {
 		width:calc(40vw + 2vw);
@@ -241,7 +219,6 @@ button{
 		top: calc(40% - 6.6vh);
 	}
 }
-
 @media screen and (max-width: 768px) {
 	.c-grey-900 {
 		width:calc(40vw + 2vw);

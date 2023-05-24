@@ -66,7 +66,7 @@ export class TabelarViewByYearComponent implements OnInit{
   }
 
   date = new FormControl(moment());
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   setYear(year: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value!;
     ctrlValue.year(year.year());
@@ -90,17 +90,7 @@ export class TabelarViewByYearComponent implements OnInit{
           }
         }
       })
-      if(this.selectedOption == 0 && this.selectedDate == undefined){
-        forkJoin([
-          this.deviceService.yearByMonth(number, 2),
-          this.deviceService.yearByMonth(number, 1)
-        ]).subscribe(([list1, list2]) => {
-          this.list1 = list1;
-          this.list2 = list2;
-
-        });
-      }
-      else if(this.selectedOption == 0 && this.selectedDate != undefined){
+      if(this.selectedOption == 0 && this.selectedDate != undefined){
         const year = this.selectedDate!.getFullYear();
         forkJoin([
           this.deviceService.monthbyDayCityFilter(year,number, 2),
@@ -123,17 +113,6 @@ export class TabelarViewByYearComponent implements OnInit{
 
         });
       }
-      else{
-        forkJoin([
-          this.deviceService.yearByMonthSettlement(this.selectedOption, 2),
-          this.deviceService.yearByMonthSettlement(this.selectedOption, 1)
-        ]).subscribe(([list1, list2]) => {
-          this.list1 = list1;
-          this.list2 = list2;
-
-        });
-      }
-      
     })
   })
   }

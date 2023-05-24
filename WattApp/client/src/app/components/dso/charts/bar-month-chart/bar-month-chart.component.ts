@@ -54,6 +54,8 @@ export class BarMonthChartComponent {
   currentDate = new Date();
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
+  list1pred: number[] = [];
+  list2pred: number[] = [];
   settlements:Settlement[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
@@ -118,7 +120,17 @@ export class BarMonthChartComponent {
             this.deviceService.weekByDayCityFilter(string1,string2,number, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list1pred.push(increasedEnergy);
+            }
             this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list2pred.push(increasedEnergy);
+            }
             this.BarPlotConsumption();
             this.BarPlotProduction();
           });
@@ -139,7 +151,17 @@ export class BarMonthChartComponent {
             this.deviceService.weekByDaySettlementFilter(string1,string2, this.selectedOption,1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list1pred.push(increasedEnergy);
+            }
             this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list2pred.push(increasedEnergy);
+            }
             this.BarPlotConsumption();
             this.BarPlotProduction();
           });

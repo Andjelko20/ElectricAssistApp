@@ -46,6 +46,8 @@ export class DeviceYearComponent {
   maxYear = new Date();
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
+  list1pred: number[] = [];
+  list2pred: number[] = [];
   mergedList: {month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
@@ -58,7 +60,7 @@ export class DeviceYearComponent {
   consumptionGraph:boolean = false;
   productionGraph:boolean = false;
   date = new FormControl(moment());
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   setYear(year: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value!;
     ctrlValue.year(year.year());
@@ -69,28 +71,17 @@ export class DeviceYearComponent {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(id).subscribe(data=>{
-    if(this.selectedDate == undefined){
       
         if(data.deviceCategory == "Electricity Consumer")
         {
           this.consumptionGraph = true;
-          this.deviceService.yearByMonthDevice(id).subscribe(consumption =>{
-            this.list1 = consumption
-            this.BarPlotConsumption();
-          })
           
         }
         else{
           this.productionGraph = true;
-          this.deviceService.yearByMonthDevice(id).subscribe(production =>{
-            this.list2 = production
-            this.BarPlotProduction();
-          })
-          
         }
       
-    }
-    else{
+    
       const year = this.selectedDate.getFullYear();
       forkJoin([
         this.deviceService.monthbyDayDeviceFilter(year,id, 2),
@@ -98,19 +89,27 @@ export class DeviceYearComponent {
       ]).subscribe(([list1, list2]) => {
         if(data.deviceCategory == "Electricity Consumer"){
           this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list1pred.push(increasedEnergy);
+            }
           this.consumptionGraph = true;
           this.BarPlotConsumption();
         }
         else{
           this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list2pred.push(increasedEnergy);
+            }
           this.productionGraph = true;
           this.BarPlotProduction();
         }
       });
-    }
-     })
-    }
-    
+    })
+  }
     BarPlotProduction(){
 
       const chartId = 'barplot1';

@@ -38,13 +38,13 @@
 table {
   border-collapse: collapse;
   width: 100%;
+  overflow-x: auto;
   
 }
 
 td,
 th {
     border-bottom: 1px solid gray;
-    text-align: center;
     padding-top: 35px;
     padding-bottom: 35px;
     padding-left: 2px;
@@ -52,9 +52,9 @@ th {
 }
 
 th {
-    text-align: center;
     background-color: #2199e8;
     color: white;
+    text-align: left;
 }
 
 
@@ -162,21 +162,12 @@ li a {
   .slider.round:before {
     border-radius: 50%;
   }
-  #modalContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   .form-row {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    text-align: left;
-    align-items: center;
   }
   #subb{
     display: flex;
-    flex-direction: row;
     justify-content: right;
     text-align: right;
     align-items: right;
@@ -184,7 +175,7 @@ li a {
   }
   .header{
     background-color: #F7F7F7;
-    border-radius: 10px 10px 00px 0px;
+    border-radius: 10px 10px 0px 0px;
     border-bottom: 1px solid #D2D2D2;
     text-align: center;
     padding: 10px;   
@@ -264,7 +255,6 @@ li a {
   background-color: #354871;
   color: #f9f9f9;
 }
-
 .dropdown:focus .dropdown-content {
   display: block;
 }
@@ -278,8 +268,6 @@ li a {
 }
 
 table {
-   width: 100%;
-    overflow-x: auto;
     display: block;
 }
 table,

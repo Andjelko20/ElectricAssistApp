@@ -33,7 +33,7 @@ export class PredictionProsumerComponent {
           const enddate = new Date()
           enddate.setDate(enddate.getDate()+7)
           while (currentDate <= enddate) {
-            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
             this.dayNames.push(dayName);
             currentDate.setDate(currentDate.getDate() + 1 );
           }
