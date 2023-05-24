@@ -48,7 +48,7 @@ namespace Server.Filters
                 }
             }
 
-            //Sortiranje
+            //Na frontu moguce samo sortiranje prema nazivu uredjaja
             if(filter.sortCriteria != null)
             {
                 switch (filter.sortCriteria)
