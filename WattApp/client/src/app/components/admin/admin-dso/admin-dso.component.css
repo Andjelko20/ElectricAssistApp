@@ -210,8 +210,6 @@ li a {
   font-size: 18px;
   border: none;
   cursor: pointer;
-  background-color: #adb5bd;
-  border-radius: 5px;
 }
 
 .dropdown.show .dropdown-content {
@@ -293,6 +291,7 @@ td {
 th,
 td {
     white-space: nowrap;
+    text-align: left;
     text-align: left;
 }
 
