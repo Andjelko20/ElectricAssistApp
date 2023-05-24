@@ -1012,9 +1012,12 @@ namespace Server.Services.Implementations
 
                 using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        energyUsages = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        while (reader.Read())
+                        {
+                            energyUsages = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        }
                     }
                 }
 

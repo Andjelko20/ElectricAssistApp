@@ -138,7 +138,7 @@ namespace Server.Controllers
                 var result = historyFromToService.GetDeviceHistoryByDayFromTo(fromDate, toDate, byDayDeviceId);
                 return Ok(result);
             }
-            else if (byHourDeviceId != 0)
+            else //if (byHourDeviceId != 0)
             {
                 if (!_sqliteDb.Devices.Any(d => d.Id == byHourDeviceId))
                     return NotFound(new { message = "Device with ID: " + byHourDeviceId.ToString() + " does not exist." });
@@ -146,7 +146,7 @@ namespace Server.Controllers
                 var result = historyFromToService.GetDeviceHistoryByHourFromTo(fromDate, toDate, byHourDeviceId);
                 return Ok(result);
             }
-            else if (byMonthDeviceId != 0)
+            /*else if (byMonthDeviceId != 0)
             {
                 if (!_sqliteDb.Devices.Any(d => d.Id == byMonthDeviceId))
                     return NotFound(new { message = "Device with ID: " + byMonthDeviceId.ToString() + " does not exist." });
@@ -177,7 +177,7 @@ namespace Server.Controllers
 
                 var result = historyFromToService.GetSettlementHistoryByMonthFromTo(fromDate, toDate, deviceCategoryId, byMonthSettlementId);
                 return Ok(result);
-            }
+            }*/
         }
 
         /// <summary>

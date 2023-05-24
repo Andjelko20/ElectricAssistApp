@@ -19,7 +19,7 @@ namespace Server.Controllers
             this.currentPeriodHistoryService = currentPeriodHistoryService;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Device Consumption/Production for current year, month, day
         /// </summary>
         [HttpGet]
@@ -67,7 +67,7 @@ namespace Server.Controllers
                 var result = currentPeriodHistoryService.GetUsageHistoryForDeviceFromCurrentMonthByDay(monthByDayDeviceId);
                 return Ok(result);
             }
-        }
+        }*/
 
         /// <summary>
         /// Prosumer Consumption/Production for current year, month, day
@@ -77,7 +77,7 @@ namespace Server.Controllers
         public async Task<IActionResult> GetHistoryForProsumerFromCurrentYear([FromQuery] long deviceCategoryId, long dayByHourUserId, long monthByDayUserId, long yearByMonthUserId,
                                                                                           long doubleTodayUserId, long doubleMonthUserId, long doubleYearUserId)
         {
-            if (dayByHourUserId != 0)
+            /*if (dayByHourUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == dayByHourUserId))
                     return NotFound(new { message = "User with the ID: " + dayByHourUserId.ToString() + " does not exist." });
@@ -119,7 +119,7 @@ namespace Server.Controllers
                 var results = currentPeriodHistoryService.GetUsageHistoryForProsumerFromCurrentYearByMonth(yearByMonthUserId, deviceCategoryId);
                 return Ok(results);
             }
-            else if (doubleTodayUserId != 0)
+            else */if (doubleTodayUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == doubleTodayUserId))
                     return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not exist." });

@@ -25,7 +25,7 @@ namespace Server.Controllers
             this.prosumerService = prosumerService;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Total Consumption/Production in The Moment (country)
         /// </summary>
         [HttpGet]
@@ -34,15 +34,10 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer")]
         public async Task<IActionResult> GetTotalConsumptionInTheMomentForCategory([FromRoute] long deviceCategoryId)
         {
-            /*if(!_sqliteDb.Settlements.Any(s => EF.Functions.Like(s.Name, $"%{settlementName}%")))
-            {
-                return NotFound(new { message = "Settlement with the name: " + settlementName.ToString() + " does not exist." });
-            }*/
-
             if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
                 return NotFound(new { message = "Device Category with the ID: " + deviceCategoryId.ToString() + " does not exist." });
             return Ok(prosumerService.GetTotalConsumptionInTheMoment(deviceCategoryId));
-        }
+        }*/
 
         /// <summary>
         /// Total Consumption/Production in The Moment (Settlement)
@@ -99,7 +94,7 @@ namespace Server.Controllers
             return Ok(prosumerService.GetTotalConsumptionInTheMomentForOneProsumer(deviceCategoryId, userId));
         }
         
-        /// <summary>
+        /*/// <summary>
         /// Average Consumption/Production in The Moment (settlement)
         /// </summary>
         [HttpGet]
@@ -118,7 +113,7 @@ namespace Server.Controllers
             var energy = prosumerService.GetTotalConsumptionInTheMomentForSettlement(deviceCategoryId, settlementId);
             var averageEnergy = prosumerService.GetAverageConsumptionInTheMomentForSettlement(settlementId, energy);
             return Ok(averageEnergy);
-        }
+        }*/
 
         /// <summary>
         /// Average Consumption/Production in The Moment (city)
@@ -139,7 +134,7 @@ namespace Server.Controllers
             return Ok(averageEnergy);
         }
         
-        /// <summary>
+        /*/// <summary>
         /// Average Consumption/Production in The Moment (country)
         /// </summary>
         [HttpGet]
@@ -153,9 +148,9 @@ namespace Server.Controllers
             var energy = prosumerService.GetTotalConsumptionInTheMoment(deviceCategoryId);
             var averageEnergy = prosumerService.GetAverageConsumptionProductionInTheMomentForAllProsumers(energy);
             return Ok(averageEnergy);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Total number of consumption/production devices from all prosumers in the city or settlement
         /// </summary>
         [HttpGet]
@@ -176,9 +171,9 @@ namespace Server.Controllers
                 return Ok(TotalResult);
             }
             return BadRequest("Invalid parameter. Please use 'city' or 'settlement'.");
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// 1.) Today`s Consumption/Production for device (by hour) || 2.) Today`s Consumption/Production for one prosumer (double)
         /// </summary>
         [HttpGet]
@@ -186,15 +181,15 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer")]
         public async Task<IActionResult> GetDeviceEnergyFromTodaysDay([FromQuery] long deviceId, long doubleTodayUserId, long TodayByHourUserId, long deviceCategoryId)
         {
-            if(deviceId != 0)
-            {
+            //if(deviceId != 0)
+            //{
                 List<EnergyToday> energyTodayList = prosumerService.CalculateEnergyUsageForToday(deviceId);
                 if (energyTodayList == null)
                     return NotFound(new { message = "Device with the ID: " + deviceId.ToString() + " does not exist." });
 
                 return Ok(energyTodayList);
-            }
-            else if(doubleTodayUserId != 0)
+            //}
+            /*else if(doubleTodayUserId != 0)
             {
                 if (!_sqliteDb.Users.Any(u => u.Id == doubleTodayUserId))
                     return NotFound(new { message = "User with the ID: " + doubleTodayUserId.ToString() + " does not exist." });
@@ -216,9 +211,9 @@ namespace Server.Controllers
                 var energyUsageToday = prosumerService.ProsumerElectricityUsageForTodayByHour(TodayByHourUserId, deviceCategoryId);
                 return Ok(energyUsageToday);
             }
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// 1.) This month Consumption/Production for one prosumer (double)
         /// </summary>
         [HttpGet]
@@ -234,9 +229,9 @@ namespace Server.Controllers
 
             double energyUsageMonth = prosumerService.GetUserEnergyConsumptionForThisMonth(doubleMonthUserId, deviceCategoryId);
             return Ok(energyUsageMonth);
-        }
+        }*/
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("year")]
         public async Task<IActionResult> GetProsumerEnergyForThisYear(long doubleYearUserId, long deviceCategoryId)
         {
@@ -248,7 +243,7 @@ namespace Server.Controllers
 
             double energyUsageYear = prosumerService.GetUserEnergyConsumptionForThisYear(doubleYearUserId, deviceCategoryId);
             return Ok(energyUsageYear);
-        }
+        }*/
 
         /// <summary>
         /// Number of devices from one prosumer
