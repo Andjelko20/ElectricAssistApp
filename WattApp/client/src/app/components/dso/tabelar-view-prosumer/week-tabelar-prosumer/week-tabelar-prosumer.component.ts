@@ -57,6 +57,7 @@ export class WeekTabelarProsumerComponent implements OnInit{
   list2:WeekByDay[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   datePipe: any;
+  dateTime: any[] = [];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
@@ -80,17 +81,6 @@ export class WeekTabelarProsumerComponent implements OnInit{
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-  
-    if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
-      forkJoin([
-        this.deviceService.weekByDayUser(id, 2),
-        this.deviceService.weekByDayUser(id, 1),
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-    });
-    }
-    else{
       const day1 = this.sdate.getDate();
           const month1 = this.sdate.getMonth()+1;
           let dayString1 = String(day1).padStart(2, '0');
@@ -109,9 +99,14 @@ export class WeekTabelarProsumerComponent implements OnInit{
             this.deviceService.weekByDayUserFilter(string1,string2,id, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.dateTime = [];
+              for (let i = 0; i < this.list1.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list1[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
             this.list2 = list2;
           });
-    }
   }
   downloadCSV(): void {
     this.mergedList = [];

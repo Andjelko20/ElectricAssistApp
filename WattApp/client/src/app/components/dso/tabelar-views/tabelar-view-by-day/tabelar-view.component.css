@@ -1,5 +1,5 @@
 .container1 {
-  width: 10%;
+  width: 12%;
   float: left;
   margin-left: 5%;
 }
@@ -44,7 +44,7 @@
   .table th,
   .table td {
     width: 20%;
-    text-align: left;
+    text-align: right;
     padding: 8px;
     border-bottom: 1px solid #ddd;
   }
@@ -54,7 +54,6 @@
     color: white;
     font-weight: normal;
     padding: 10px;
-    text-align: left;
   }
   
   .table tr:nth-child(even) {

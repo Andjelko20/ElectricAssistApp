@@ -110,30 +110,7 @@ export class LineWeekChartComponent {
             }
           }
         })
-        
-        if(this.selectedOption == 0 && (this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
-          forkJoin([
-            this.deviceService.weekByDay(number, 2),
-            this.deviceService.weekByDay(number, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list1pred = [];
-            for (const obj of this.list1) {
-              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
-              this.list1pred.push(increasedEnergy);
-            }
-            this.list2 = list2;
-            this.list2pred = [];
-            for (const obj of this.list2) {
-              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
-              this.list2pred.push(increasedEnergy);
-            }
-            this.LineChartProduction();
-            this.LineChartConsumption();
-          });
-          
-        }
-        else if(this.selectedOption == 0 && (this.sdate != null && this.send != null)){
+        if(this.selectedOption == 0 && (this.sdate != null && this.send != null)){
           this.dayNames = []
           const currentDate = new Date(this.sdate);
           const enddate = new Date(this.send)
@@ -208,18 +185,6 @@ export class LineWeekChartComponent {
             this.list2 = list2;
             this.LineChartProduction();
             this.LineChartConsumption();
-          });
-        }
-        else{
-          forkJoin([
-            this.deviceService.weekByDaySettlement(this.selectedOption, 2),
-            this.deviceService.weekByDaySettlement(this.selectedOption, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.LineChartProduction();
-            this.LineChartConsumption();
-
           });
         }
         

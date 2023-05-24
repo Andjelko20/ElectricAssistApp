@@ -26,16 +26,14 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>Year</th>
-                  <th>Month</th>
+                  <th>Date Time</th>
                   <th>Consumption</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item1 of list1">
-                      <td>{{ item1.year }}</td>
-                      <td>{{ item1.month }}</td>
-                      <td>{{ item1.energyUsageResult }} kWh</td>
+                      <td>{{ item1.year }}/{{ item1.month }}</td>
+                      <td>{{ item1.energyUsageResult }} [kWh]</td>
                 </tr>
               </tbody>
             </table>
@@ -47,16 +45,14 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Year</th>
-                    <th>Month</th>
+                    <th>Date Time</th>
                     <th>Production</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item2 of list2">
-                        <td>{{ item2.year }}</td>
-                        <td>{{ item2.month }}</td>
-                        <td>{{ item2.energyUsageResult }} kWh</td>
+                        <td>{{ item2.year }}/{{ item2.month }}</td>
+                        <td>{{ item2.energyUsageResult }} [kWh]</td>
                 </tbody>
               </table>
             </div>

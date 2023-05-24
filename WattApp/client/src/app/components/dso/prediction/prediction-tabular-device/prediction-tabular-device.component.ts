@@ -20,6 +20,7 @@ export class PredictionTabularDeviceComponent {
   list2:WeekByDay[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   datePipe: any;
+  dateTime: any[] = [];
 
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     
@@ -32,6 +33,12 @@ export class PredictionTabularDeviceComponent {
       {
         this.deviceService.predictionDevice(id).subscribe(consumption =>{
           this.list1 = consumption;
+          this.dateTime = [];
+              for (let i = 0; i < this.list1.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list1[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
           this.consumptionGraph = true;
         })
         
@@ -39,6 +46,12 @@ export class PredictionTabularDeviceComponent {
       else{
         this.deviceService.predictionDevice(id).subscribe(production =>{
           this.list2 = production;
+          this.dateTime = [];
+              for (let i = 0; i < this.list2.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list2[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
           this.productionGraph = true;
         })
       }

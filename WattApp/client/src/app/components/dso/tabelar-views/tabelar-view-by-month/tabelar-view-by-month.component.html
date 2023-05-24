@@ -31,9 +31,7 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Year</th>
-                <th>Month</th>
-                <th>Day</th>
+                <th>Date Time</th>
                 <th>Consumption</th>
                 <th>Production</th>
 
@@ -41,13 +39,11 @@
             </thead>
             <tbody>
               <tr *ngFor="let item1 of list1">
-                <ng-container *ngFor="let item2 of list2">
+                <ng-container *ngFor="let item2 of list2; let i = index">
                   <ng-container *ngIf="item1.year == item2.year && item1.month == item2.month && item1.day == item2.day">
-                    <td>{{ item1.year }}</td>
-                    <td>{{ item1.month }}</td>
-                    <td>{{ item1.day }}</td>
-                    <td>{{ item1.energyUsageResult }} kWh</td>
-                    <td>{{ item2.energyUsageResult }} kWh</td>
+                    <td>{{ item1.year }}/{{item1.month}}/{{dateTime[i]}}</td>
+                    <td>{{ item1.energyUsageResult }} [kWh]</td>
+                    <td>{{ item2.energyUsageResult }} [kWh]</td>
                   </ng-container>
                 </ng-container>
               </tr>
