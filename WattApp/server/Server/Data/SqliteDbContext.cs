@@ -183,13 +183,19 @@ namespace Server.Data
                         },
                         new Settlement
                         {
-                            CityId = 1,
-                            Name = "Male Pcelice"
+                            CityId = 2,
+                            Name = "Karaburma"
                         },
                         new Settlement
                         {
-                            CityId = 1,
-                            Name = "Koricani"
+                            CityId = 2,
+                            Name = "Stari grad"
+                        },
+                        new Settlement
+                        {
+                            CityId = 3,
+                            Name = "Petrovoradin"
+
                         },
                         new Settlement
                         {
@@ -233,8 +239,8 @@ namespace Server.Data
                         },
                         new Settlement
                         {
-                            CityId = 2,
-                            Name = "Karaburma"
+                            CityId = 1,
+                            Name = "Male Pcelice"
                         },
                         new Settlement
                         {
@@ -278,8 +284,8 @@ namespace Server.Data
                         },
                         new Settlement
                         {
-                            CityId = 2,
-                            Name = "Stari grad"
+                            CityId = 1,
+                            Name = "Koricani"
                         },
                         new Settlement
                         {
@@ -350,12 +356,6 @@ namespace Server.Data
                         {
                             CityId = 3,
                             Name = "Liman"
-                        },
-                        new Settlement
-                        {
-                            CityId = 3,
-                            Name = "Petrovoradin"
-
                         },
                         new Settlement
                         {
