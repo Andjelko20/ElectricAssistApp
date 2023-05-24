@@ -1169,11 +1169,11 @@ namespace Server.Services.Implementations
             return DateTime.ParseExact(monthName, "MMMM", CultureInfo.CurrentCulture).Month;
         }
 
-        public List<EnergyToday> FillHoursWithoutResults(DateTime FromDate, DateTime toDate, List<EnergyToday> energyUsages)
+        public List<EnergyToday> FillHoursWithoutResults(DateTime FromDate, DateTime ToDate, List<EnergyToday> energyUsages)
         {
-            DateTime ToDate = toDate;
+            /*DateTime ToDate = toDate;
             if(toDate > DateTime.Now)
-                ToDate = DateTime.Now;
+                ToDate = DateTime.Now;*/
 
             int checker = 0;
             for (var date = FromDate; date < ToDate; date = date.AddHours(1))
