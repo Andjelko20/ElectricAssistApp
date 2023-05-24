@@ -67,13 +67,13 @@ export class LineWeekChartComponent {
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.currentDate){
-        this.sdate = null;
+      if(value.end == null){
+        this.send = this.currentDate;
       }
       else{
-        this.ngOnInit()
+        this.send = value.end
       }
+      this.ngOnInit();
     });
   }
 
@@ -88,8 +88,8 @@ export class LineWeekChartComponent {
     end: new FormControl()
   });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  sdate = this.firstdate;
+  send = this.currentDate;
 
   ngOnInit(): void {
     this.loader=true;

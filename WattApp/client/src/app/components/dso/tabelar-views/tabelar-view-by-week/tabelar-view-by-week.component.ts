@@ -66,13 +66,13 @@ export class TabelarViewByWeekComponent implements OnInit {
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.currentDate){
-        this.sdate = null;
+      if(value.end == null){
+        this.send = this.currentDate;
       }
       else{
-        this.ngOnInit()
+        this.send = value.end
       }
+      this.ngOnInit();
     });
   }
   selectedOption: number = 0;
@@ -83,8 +83,8 @@ export class TabelarViewByWeekComponent implements OnInit {
     end: new FormControl()
   });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  sdate = this.firstdate;
+  send = this.currentDate;
 
   onOptionSelected() {
     this.ngOnInit();

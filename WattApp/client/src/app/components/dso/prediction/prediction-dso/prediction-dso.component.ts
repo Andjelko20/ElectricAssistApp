@@ -50,9 +50,9 @@ export class PredictionDsoComponent {
         if(this.selectedOption == 0){
           this.dayNames = []
           const currentDate = new Date();
-          currentDate.setDate(currentDate.getDate()+1)
+          currentDate.setDate(currentDate.getDate())
           const enddate = new Date()
-          enddate.setDate(enddate.getDate()+7)
+          enddate.setDate(enddate.getDate()+6)
           while (currentDate <= enddate) {
             const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
             this.dayNames.push(dayName);
@@ -73,9 +73,9 @@ export class PredictionDsoComponent {
           this.dayNames = []
           const currentDate = new Date();
           const enddate = new Date()
-          enddate.setDate(enddate.getDate()+7)
+          enddate.setDate(enddate.getDate()+6)
           while (currentDate <= enddate) {
-            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
             this.dayNames.push(dayName);
             currentDate.setDate(currentDate.getDate() + 1 );
           }

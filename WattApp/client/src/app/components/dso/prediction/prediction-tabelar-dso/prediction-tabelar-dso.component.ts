@@ -48,8 +48,8 @@ export class PredictionTabelarDsoComponent {
         
         if(this.selectedOption == 0){
           forkJoin([
-            this.deviceService.weekByDay(number, 2),
-            this.deviceService.weekByDay(number, 1)
+            this.deviceService.predictionCity(number, 2),
+            this.deviceService.predictionCity(number, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.dateTime = [];
@@ -64,8 +64,8 @@ export class PredictionTabelarDsoComponent {
         }
         else{
           forkJoin([
-            this.deviceService.weekByDaySettlement(this.selectedOption, 2),
-            this.deviceService.weekByDaySettlement(this.selectedOption, 1)
+            this.deviceService.predictionSettlement(this.selectedOption, 2),
+            this.deviceService.predictionSettlement(this.selectedOption, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.dateTime = [];

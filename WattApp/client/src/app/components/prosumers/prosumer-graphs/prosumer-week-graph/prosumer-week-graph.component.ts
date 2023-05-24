@@ -61,13 +61,13 @@ export class ProsumerWeekGraphComponent {
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.currentDate){
-        this.sdate = null;
+      if(value.end == null){
+        this.send = this.currentDate;
       }
       else{
-        this.ngOnInit()
+        this.send = value.end
       }
+      this.ngOnInit();
     });
   }
   campaignOne: FormGroup = new FormGroup({
@@ -75,22 +75,13 @@ export class ProsumerWeekGraphComponent {
     end: new FormControl()
   });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  sdate = this.firstdate;
+  send = this.currentDate;
 
   ngOnInit(): void {
     let token=new JwtToken();
     const id = token.data.id as number;
 
-    if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
-      forkJoin([
-        this.deviceService.weekByDayUser(id, 2),
-      ]).subscribe(([list1]) => {
-        this.list1 = list1;
-        this.LineChartConsumption();
-    });
-    }
-    else{
           this.dayNames = []
           const currentDate = new Date(this.sdate);
           const enddate = new Date(this.send)
@@ -124,7 +115,6 @@ export class ProsumerWeekGraphComponent {
             }
             this.LineChartConsumption();
           });
-    }
   }
   
   LineChartConsumption(){

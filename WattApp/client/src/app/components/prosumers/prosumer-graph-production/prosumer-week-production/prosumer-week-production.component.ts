@@ -61,13 +61,13 @@ export class ProsumerWeekProductionComponent {
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.currentDate){
-        this.sdate = null;
+      if(value.end == null){
+        this.send = this.currentDate;
       }
       else{
-        this.ngOnInit()
+        this.send = value.end
       }
+      this.ngOnInit();
     });
   }
   campaignOne: FormGroup = new FormGroup({
@@ -75,8 +75,8 @@ export class ProsumerWeekProductionComponent {
     end: new FormControl()
   });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  sdate = this.firstdate;
+  send = this.currentDate;
 
   ngOnInit(): void {
     let token=new JwtToken();
