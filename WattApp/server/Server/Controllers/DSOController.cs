@@ -33,8 +33,8 @@ namespace Server.Controllers
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetSettlements([FromQuery] long cityId, [FromQuery] long settlementId, [FromQuery] long deviceCategoryId)
         {
-            if (cityId != 0)
-            {
+            //if (cityId != 0)
+            //{
                 if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
                     return NotFound(new { message = "City with ID: " + cityId.ToString() + " does not exist." });
 
@@ -44,7 +44,7 @@ namespace Server.Controllers
                     return NotFound(new { message = "Settlements for city with ID: " + cityId.ToString() + " don`t exist." });
 
                 return Ok(settlements);
-            }
+            /*}
             else
             {
                 if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
@@ -56,7 +56,7 @@ namespace Server.Controllers
                 var resultList = dsoService.CalculateSettlementEnergyUsageForToday(settlementId, deviceCategoryId);
 
                 return Ok(resultList);
-            }
+            }*/
         }
 
         /// <summary>

@@ -70,7 +70,7 @@ namespace Server.Controllers
                 var PredictionForNextWeek = predictionService.CityPredictionForTheNextWeek(cityId, deviceCategoryId);
                 return Ok(PredictionForNextWeek);
             }
-            else if (settlementId != 0)
+            else //if (settlementId != 0)
             {
                 if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
                     return NotFound(new { message = "Settlement with the ID: " + settlementId.ToString() + " does not exist." });
@@ -81,7 +81,7 @@ namespace Server.Controllers
                 var PredictionForNextWeek = predictionService.SettlementPredictionForTheNextWeek(settlementId, deviceCategoryId);
                 return Ok(PredictionForNextWeek);
             }
-            else if (previousCityId != 0)
+            /*else if (previousCityId != 0)
             {
                 if (!_sqliteDb.Cities.Any(s => s.Id == previousCityId))
                     return NotFound(new { message = "City with the ID: " + previousCityId.ToString() + " does not exist." });
@@ -121,7 +121,7 @@ namespace Server.Controllers
 
                 var PredictionForPastWeek = predictionService.DevicePredictionForThePastWeek(previousDeviceId);
                 return Ok(PredictionForPastWeek);
-            }
+            }*/
         }
     }
 }

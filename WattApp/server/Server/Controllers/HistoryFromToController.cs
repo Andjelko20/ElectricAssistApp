@@ -138,7 +138,7 @@ namespace Server.Controllers
                 var result = historyFromToService.GetDeviceHistoryByDayFromTo(fromDate, toDate, byDayDeviceId);
                 return Ok(result);
             }
-            else if (byHourDeviceId != 0)
+            else //if (byHourDeviceId != 0)
             {
                 if (!_sqliteDb.Devices.Any(d => d.Id == byHourDeviceId))
                     return NotFound(new { message = "Device with ID: " + byHourDeviceId.ToString() + " does not exist." });
@@ -146,7 +146,7 @@ namespace Server.Controllers
                 var result = historyFromToService.GetDeviceHistoryByHourFromTo(fromDate, toDate, byHourDeviceId);
                 return Ok(result);
             }
-            else if (byMonthDeviceId != 0)
+            /*else if (byMonthDeviceId != 0)
             {
                 if (!_sqliteDb.Devices.Any(d => d.Id == byMonthDeviceId))
                     return NotFound(new { message = "Device with ID: " + byMonthDeviceId.ToString() + " does not exist." });
@@ -177,7 +177,7 @@ namespace Server.Controllers
 
                 var result = historyFromToService.GetSettlementHistoryByMonthFromTo(fromDate, toDate, deviceCategoryId, byMonthSettlementId);
                 return Ok(result);
-            }
+            }*/
         }
 
         /// <summary>
@@ -198,6 +198,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "Device with ID: " + byHourDeviceId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetDeviceHistoryByHourFromToPagination(fromDate, toDate, byHourDeviceId, pageNumber, itemsPerPage);
+                    if(result == null)
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
+
                     return Ok(result);
                 }
                 else if (byHourUserId != 0)
@@ -206,6 +209,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "User with ID: " + byHourUserId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetUserHistoryByHourFromToPagination(fromDate, toDate, byHourUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
+
                     return Ok(result);
                 }
                 else if (byHourSettlementId != 0)
@@ -214,6 +220,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "Settlement with ID: " + byHourSettlementId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetSettlementHistoryByHourFromToPagination(fromDate, toDate, byHourSettlementId, deviceCategoryId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
+
                     return Ok(result);
                 }
                 else if (byHourCityId != 0)
@@ -222,6 +231,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "City with ID: " + byHourCityId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetCityHistoryByHourFromToPagination(fromDate, toDate, byHourCityId, deviceCategoryId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
+
                     return Ok(result);
                 }
                 else if (byDayUserId != 0)
@@ -230,6 +242,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "User with ID: " + byDayUserId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetUserHistoryByDayFromToPagination(fromDate, toDate, byDayUserId, deviceCategoryId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
+
                     return Ok(result);
                 }
                 else if (byDayDeviceId != 0)
@@ -238,6 +253,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "Device with ID: " + byDayDeviceId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetDeviceHistoryByDayFromToPagination(fromDate, toDate, byDayDeviceId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
+
                     return Ok(result);
                 }
                 else if (byDaySettlementId != 0)
@@ -246,6 +264,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "Settlement with ID: " + byDaySettlementId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetSettlementHistoryByDayFromToPagination(fromDate, toDate, byDaySettlementId, deviceCategoryId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
+
                     return Ok(result);
                 }
                 else //if (byDayCityId != 0)
@@ -254,6 +275,9 @@ namespace Server.Controllers
                         return NotFound(new { message = "City with ID: " + byDayCityId.ToString() + " does not exist." });
 
                     var result = historyFromToService.GetCityHistoryByDayFromToPagination(fromDate, toDate, byDayCityId, deviceCategoryId, pageNumber, itemsPerPage);
+                    if (result == null)
+                        return NotFound(new { message = "Page " + pageNumber + " does not exist." });
+
                     return Ok(result);
                 }
             }
