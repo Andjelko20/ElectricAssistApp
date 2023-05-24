@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { WeekByDay, YearsByMonth, updateDevices } from '../models/devices.model';
 import { NavigationStart, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import e from 'cors';
 @Injectable({
   providedIn: 'root'
 })
@@ -48,6 +49,32 @@ export class DevicesService {
         else{
           url.searchParams.set("turnOn", "false");
         }
+      }
+      if(!isNaN(filter.visibility) && filter.visibility > -1){
+        if(filter.visibility == 1)
+          url.searchParams.set("visibility", "true");
+        else
+          url.searchParams.set("visibility", "false");
+      }
+      if(!isNaN(filter.controlability) && filter.controlability > -1){
+        if(filter.controlability == 1)
+          url.searchParams.set("controlability", "true");
+        else
+          url.searchParams.set("controlability", "false");
+      }
+      if(filter.searchValue != "")
+        url.searchParams.set("searchValue", filter.searchValue);
+      if(!isNaN(filter.sortCriteria)){
+        if(filter.sortCriteria == 1)
+          url.searchParams.set("sortCriteria", "0");
+        else
+          url.searchParams.set("sortCriteria", "1");   
+      }
+      if(!isNaN(filter.byAscending)){
+        if(filter.byAscending == 1)
+          url.searchParams.set("byAscending", "true")
+        else
+        url.searchParams.set("byAscending", "false")
       }
         
     }

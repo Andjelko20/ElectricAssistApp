@@ -112,10 +112,11 @@ label {
     flex-direction: column;
 }
 
-#first-row{
+.first-row{
     display: flex;
     flex-direction: row;
     width: 100%;
+    margin-bottom: 5px;
 }
 
 .form-group{
@@ -134,7 +135,32 @@ option{
 
 
 
+#search{
+    width: 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-bottom: 2px;
+    height: 40px;
+    border: none;
+    padding-left: 15px;
+}
 
+.label{
+    display: flex;
+    flex-direction: row;
+}
+
+.clear-filters{
+    text-decoration: none;
+    font-size: 18px;
+    margin-left: 50%;
+}
+
+.label>h2{
+    font-size: 18px;
+    padding-left: 15px;
+}
+  
 
 @media (min-width: 768px) {
     .alldevices {
@@ -172,6 +198,7 @@ option{
         width: 200px;
         margin-right: 8%;
     }
+
     #deviceCategoryId {
         width: 20%;
         font-size: 20px;
@@ -179,6 +206,7 @@ option{
         margin-top: -50px;
         margin-bottom: 0.8rem;
     }
+
     label {
         display: inline-block;
         margin-left: 25%;
@@ -189,4 +217,58 @@ option{
         font-size: 40px;
     }
     
+    .filter{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .first-row{
+        display: flex;
+        flex-direction: row;
+        margin-left: 10%;
+        width: 90%;
+        margin-bottom: 5px;
+    }
+    
+    .form-group{
+        width: 50%;
+    }
+    
+    .form-group>select{
+        font-size: 20px;
+        width: 90%;
+        margin: auto;
+    }
+    
+    option{
+        font-size: 16px;
+        width: 90%;
+    }
+    
+    #search{
+        width: 95%;
+        margin-right: 2.5%;
+        margin-bottom: 2px;
+        height: 40px;
+        border: none;
+        padding-left: 15px;
+    }
+    
+    .label{
+        display: flex;
+        flex-direction: row;
+        margin-left: 10%;
+    }
+    
+
+    .clear-filters{
+        text-decoration: none;
+        font-size: 24px;
+        margin-left: 60%;
+    }
+    
+    .label>h2{
+        font-size: 24px;
+        padding-left: 15px;
+    }
 }

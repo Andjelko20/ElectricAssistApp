@@ -15,8 +15,8 @@ export class AllDevicesComponent implements OnInit {
   itemsPerPage:number=12;
   totalItems:number=10;
 
-  numberOfDevices : number = 0;
   devices:ShowDevices[] = [];
+  numberOfDevices : number = this.devices.length;
   pageNumber?:number;
   pageSize?:number;
   loader:boolean=false;
@@ -26,10 +26,10 @@ export class AllDevicesComponent implements OnInit {
     0, 
     0, 
     -1, 
-    false, 
-    false,
-    SortCriteriaValues.NAME, 
-    true, 
+    -1, 
+    -1,
+    1, 
+    1, 
     0, 
     false, 
     ""
@@ -64,7 +64,8 @@ export class AllDevicesComponent implements OnInit {
        visibility: u.visibility,
        controlability: u.controlability,
        turnOn: u.turnOn,
-      })as ShowDevices)
+      })as ShowDevices);
+      this.numberOfDevices = this.devices.length;
      }, error => {
       if (error.status === 404) {
         this.devices=[]
@@ -91,7 +92,8 @@ export class AllDevicesComponent implements OnInit {
 			 visibility: u.visibility,
 			 controlability: u.controlability,
 			 turnOn: u.turnOn,
-			})as ShowDevices)
+			})as ShowDevices);
+      this.numberOfDevices = this.devices.length;
 		   }, error => {
 			if (error.status === 404) {
 			  this.devices=[]
@@ -119,7 +121,8 @@ export class AllDevicesComponent implements OnInit {
          visibility: u.visibility,
          controlability: u.controlability,
          turnOn: u.turnOn,
-        })as ShowDevices)
+        })as ShowDevices);
+        this.numberOfDevices = this.devices.length;
        }, error => {
         if (error.status === 404) {
           this.devices=[]
@@ -146,7 +149,8 @@ export class AllDevicesComponent implements OnInit {
          visibility: u.visibility,
          controlability: u.controlability,
          turnOn: u.turnOn,
-        })as ShowDevices)
+        })as ShowDevices);
+        this.numberOfDevices = this.devices.length;
        }, error => {
         if (error.status === 404) {
           this.devices=[]
@@ -154,6 +158,91 @@ export class AllDevicesComponent implements OnInit {
        }} 
        );
     }
+
+    onSelectedVisibility(event:any){
+      this.loader=true;
+      this.filters.visibility = event.target.value;
+      this.deviceService.getAllDevices(1,12,this.filters).subscribe(devices => {
+        this.loader=false;
+        this.devices=devices.data.map((u:any)=>({
+         id:u.id,
+         userId: u.userId,
+         deviceCategory:u.deviceCategory,
+         deviceType: u.deviceType ,
+         deviceBrand: u.deviceBrand ,
+         deviceModel: u.deviceModel ,
+         name: u.name ,
+         energyInKwh: u.energyInKwh,
+         standByKwh: u.standByKwh,
+         visibility: u.visibility,
+         controlability: u.controlability,
+         turnOn: u.turnOn,
+        })as ShowDevices);
+        this.numberOfDevices = this.devices.length;
+       }, error => {
+        if (error.status === 404) {
+          this.devices=[]
+          console.log('Devices not found in database');
+       }} 
+       );
+    }
+
+    onSelectedControlability(event:any){
+      this.loader=true;
+      this.filters.controlability = event.target.value;
+      this.deviceService.getAllDevices(1,12,this.filters).subscribe(devices => {
+        this.loader=false;
+        this.devices=devices.data.map((u:any)=>({
+         id:u.id,
+         userId: u.userId,
+         deviceCategory:u.deviceCategory,
+         deviceType: u.deviceType ,
+         deviceBrand: u.deviceBrand ,
+         deviceModel: u.deviceModel ,
+         name: u.name ,
+         energyInKwh: u.energyInKwh,
+         standByKwh: u.standByKwh,
+         visibility: u.visibility,
+         controlability: u.controlability,
+         turnOn: u.turnOn,
+        })as ShowDevices);
+        this.numberOfDevices = this.devices.length;
+       }, error => {
+        if (error.status === 404) {
+          this.devices=[]
+          console.log('Devices not found in database');
+       }} 
+       );
+    }
+
+    onEnteredSearchValue(event:any){
+      this.loader=true;
+      this.filters.searchValue = event.target.value;
+      this.deviceService.getAllDevices(1,12,this.filters).subscribe(devices => {
+        this.loader=false;
+        this.devices=devices.data.map((u:any)=>({
+         id:u.id,
+         userId: u.userId,
+         deviceCategory:u.deviceCategory,
+         deviceType: u.deviceType ,
+         deviceBrand: u.deviceBrand ,
+         deviceModel: u.deviceModel ,
+         name: u.name ,
+         energyInKwh: u.energyInKwh,
+         standByKwh: u.standByKwh,
+         visibility: u.visibility,
+         controlability: u.controlability,
+         turnOn: u.turnOn,
+        })as ShowDevices);
+        this.numberOfDevices = this.devices.length;
+       }, error => {
+        if (error.status === 404) {
+          this.devices=[]
+          console.log('Devices not found in database');
+       }} 
+       );
+    }
+
 
     toggleDropdown() {
       this.showDropdown = !this.showDropdown;
@@ -176,16 +265,30 @@ export class AllDevicesComponent implements OnInit {
         typeId:0,
         brandId:0, 
         turnOn:-1, 
-        visibility:false, 
-        contolability:false, 
-        sortCriteria:SortCriteriaValues.NAME, 
-        byAscending:true, 
+        visibility:-1, 
+        controlability:-1, 
+        sortCriteria:1, 
+        byAscending:1, 
         greaterThan:false, 
         energyInKwhValue:0,
         searchValue:""
       };
       this.pageChanged(1); 
     }
+
+    countActiveFilters(){
+      let count = 0;
+      if(this.filters.categoryId != 0)
+        count++;
+      if(this.filters.turnOn != -1)
+        count++;
+      if(this.filters.visibility != -1)
+        count++;
+      if(this.filters.controlability != -1)
+        count++;
+      return count;
+    }
+
 }
 
 class DeviceFilterModel{
@@ -194,12 +297,12 @@ class DeviceFilterModel{
   typeId : number;
   brandId : number;
   turnOn : number;
-  visibility : boolean;
-  contolability : boolean;
+  visibility : number;
+  controlability : number;
 
   //Sortiranje
-  sortCriteria : SortCriteriaValues;
-  byAscending : boolean;
+  sortCriteria : number;
+  byAscending : number;
 
   //Potrosnja veca/manja od
   energyInKwhValue : number;
@@ -213,10 +316,10 @@ class DeviceFilterModel{
     typeId: number,
     brandId: number,
     turnOn: number,
-    visibility: boolean,
-    contolability: boolean,
-    sortCriteria: SortCriteriaValues,
-    byAscending: boolean,
+    visibility: number,
+    contolability: number,
+    sortCriteria: number,
+    byAscending: number,
     energyInKwhValue: number,
     greaterThan: boolean,
     searchValue: string
@@ -226,7 +329,7 @@ class DeviceFilterModel{
     this.brandId = brandId;
     this.turnOn = turnOn;
     this.visibility = visibility;
-    this.contolability = contolability;
+    this.controlability = contolability;
     this.sortCriteria = sortCriteria;
     this.byAscending = byAscending;
     this.energyInKwhValue = energyInKwhValue;
