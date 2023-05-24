@@ -204,11 +204,13 @@ li a {
 
 #clear-btn{
   color: #fff;
+  background-color: darkgrey;
   padding: 9px;
   padding-left: 35px;
   padding-right: 35px;
   font-size: 18px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
