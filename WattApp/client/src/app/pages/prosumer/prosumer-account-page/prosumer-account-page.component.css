@@ -99,6 +99,15 @@ a {
     background-color: #c0d9fd;
 }
 
+.aaaa {
+    margin-top: 10px;
+    border: 1px solid #c0d9fd;
+    width: 121px;
+    border-radius: 17px;
+    padding: 5px;
+    background-color: #c0d9fd;
+}
+
 .aaa {
     margin-top: 10px;
     border: 1px solid #c0d9fd;
@@ -189,7 +198,10 @@ a:hover {
         font-size: 24px;
     }
     .aa {
-        width: 225px;
+        width: 169px;
+    }
+    .aaaa {
+        width: 131px;
     }
     .aaa {
         width: 266px;
@@ -202,7 +214,8 @@ a:hover {
     }
     .container {
         display: block;
-        margin-left: 200px;
+        width: 620px;
+        margin-left: 120px;
     }
     .main {
         top: 0;
@@ -215,7 +228,7 @@ a:hover {
         min-height: 100vh;
     }
     .rounded-circle {
-        width: 200px;
+        width: 160px;
         margin-bottom: 37px;
     }
     .col-md-8 {
@@ -229,7 +242,7 @@ a:hover {
         color: white;
     }
     .col-md-6 {
-        margin-left: 119px;
+        width: 77%;
         font-size: 24px !important;
     }
     .col-md-6 input {
@@ -247,5 +260,13 @@ a:hover {
     app-footer {
         width: 100%;
         display: contents;
+    }
+}
+
+@media(min-width:838px) {
+    .container {
+        display: block;
+        width: 70%;
+        margin-left: 17%;
     }
 }
