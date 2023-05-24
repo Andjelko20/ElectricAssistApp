@@ -88,7 +88,7 @@ namespace Server.Filters
 
             if(filter.searchValue != null)
             {
-                devices = devices.Where(src => src.Name.StartsWith(filter.searchValue));
+                devices = devices.Where(src => src.Name.ToUpper().StartsWith(filter.searchValue.ToUpper()));
             }
 
             return devices;
