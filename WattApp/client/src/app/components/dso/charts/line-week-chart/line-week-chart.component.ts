@@ -221,6 +221,12 @@ export class LineWeekChartComponent {
             backgroundColor: 'rgba(29, 145, 192, 0.2)',
             borderWidth: 2,
            
+          },
+          {
+            label: 'Prediction',
+            data: this.list2pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
           }
           
         ]
