@@ -3,7 +3,6 @@
         <mat-form-field appearance="fill">
           <mat-label>Enter a date</mat-label>
           <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)" [(ngModel)]="currentDate">
-          <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -17,10 +16,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Year</th>
-                        <th>Month</th>
-                        <th>Day</th>
-                        <th>Hour</th>
+                        <th>Date Time</th>
                         <th>Consumption</th>
                         <th>Production</th>
 
@@ -28,14 +24,11 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item1 of list1">
-                        <ng-container *ngFor="let item2 of list2">
+                        <ng-container *ngFor="let item2 of list2; let i = index">
                             <ng-container *ngIf="item1.year == item2.year && item1.month == item2.month && item1.day == item2.day && item1.hour == item2.hour">
-                                <td>{{ item1.year }}</td>
-                                <td>{{ item1.month }}</td>
-                                <td>{{ item1.day }}</td>
-                                <td>{{ item1.hour }}</td>
-                                <td>{{ item1.energyUsageResult }} kWh</td>
-                                <td>{{ item2.energyUsageResult }} kWh</td>
+                                <td>{{ item1.year }}/{{ item1.month }}/{{ dateTime[i].day }}/{{ dateTime[i].hour }}</td>
+                                <td>{{ item1.energyUsageResult }} [kWh]</td>
+                                <td>{{ item2.energyUsageResult }} [kWh]</td>
                             </ng-container>
                         </ng-container>
                     </tr>

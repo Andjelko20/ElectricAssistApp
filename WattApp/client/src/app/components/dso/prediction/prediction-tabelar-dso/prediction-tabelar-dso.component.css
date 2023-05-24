@@ -28,7 +28,7 @@
   .table td {
     border: 1px solid #dee2e6;
     padding: 8px;
-    text-align: center;
+    text-align: right;
   }
   
   .table th {
@@ -43,6 +43,9 @@
     width: 15%;
     margin-left: 20%;
 
+  }
+  .form-select {
+    cursor: pointer;
   }
   .container3 {
     width: 15%;

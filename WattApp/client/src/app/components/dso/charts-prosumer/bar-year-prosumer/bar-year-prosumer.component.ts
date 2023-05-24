@@ -45,6 +45,8 @@ export class BarYearProsumerComponent {
   currentDate = new Date();
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
+  list1pred: number[] = [];
+  list2pred: number[] = [];
   mergedList: {month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
@@ -56,7 +58,7 @@ export class BarYearProsumerComponent {
   }
 
   date = new FormControl(moment());
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   setYear(year: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value!;
     ctrlValue.year(year.year());
@@ -66,29 +68,26 @@ export class BarYearProsumerComponent {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    if(this.selectedDate == undefined){
-      forkJoin([
-        this.deviceService.yearByMonthUser(id, 2),
-        this.deviceService.yearByMonthUser(id, 1)
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.BarPlotProduction();
-        this.BarPlotConsumption();
-      });
-    }
-    else{
       const year = this.selectedDate.getFullYear();
       forkJoin([
         this.deviceService.monthbyDayUserFilter(year,id, 2),
         this.deviceService.monthbyDayUserFilter(year,id, 1)
       ]).subscribe(([list1, list2]) => {
         this.list1 = list1;
-        this.list2 = list2;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list1pred.push(increasedEnergy);
+            }
+            this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list2pred.push(increasedEnergy);
+            }
         this.BarPlotProduction();
         this.BarPlotConsumption();
       });
-    }
     }
     
     BarPlotProduction(){

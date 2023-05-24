@@ -18,6 +18,7 @@ export class SidebarComponent implements OnInit{
   currentUrl?: string;
   tab?:string;
   showLink:boolean=false;
+  showLink1:boolean=false;
   id?:string;
   constructor(public router:Router,private usersService:AuthService,
     public route:ActivatedRoute,private location: Location,) { 
@@ -35,7 +36,7 @@ export class SidebarComponent implements OnInit{
         const path = this.location.path(); 
         const segments = path.split('/'); 
         this.id = segments[segments.length - 1]; 
-        this.showLink=false
+        this.showLink=this.showLink1=false
         if(event.url==='/prosumers?tab=table')
         {
           this.tab='table';
@@ -59,13 +60,21 @@ export class SidebarComponent implements OnInit{
           this.showLink=true
           
         }
-        if(event.url==='/device/'+this.id)
+        else if(event.url==='/device/'+this.id)
         {
           this.showLink=true
         }
         else if(event.url==='/devices')
         {
           this.showLink=false
+        }
+        else if(event.url==='/profile')
+        {
+          this.showLink1=false
+        }
+        else if(event.url==='/profile-edit' || event.url==='/prosumer-change-password')
+        {
+          this.showLink1=true
         }
       }
     });

@@ -21,7 +21,8 @@ export class LineDayProsumerComponent{
   }
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
-  
+  list1pred: number[] = [];
+  list2pred: number[] = [];
   selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
@@ -73,7 +74,17 @@ export class LineDayProsumerComponent{
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 1)
       ]).subscribe(([list1, list2]) => {
         this.list1 = list1;
-        this.list2 = list2;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list1pred.push(increasedEnergy);
+            }
+            this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list2pred.push(increasedEnergy);
+            }
         this.LineChartProduction();
         this.LineChartConsumption();
       });

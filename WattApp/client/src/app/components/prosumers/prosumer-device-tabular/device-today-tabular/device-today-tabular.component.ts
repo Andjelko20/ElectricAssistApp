@@ -23,7 +23,7 @@ export class DeviceTodayTabularComponent {
   }
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
-  
+  dateTime:{day:string,hour:string}[] = [];
   selectedDate: Date = new Date();
 
   onDateSelected(event: { value: Date; }) {
@@ -82,9 +82,29 @@ export class DeviceTodayTabularComponent {
         ]).subscribe(([list1, list2]) => {
           if(data.deviceCategory == "Electricity Consumer"){
             this.list1 = list1;
+            this.dateTime = [];
+            for (let i = 0; i < this.list1.length; i++) {
+              const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+              const formattedHour = `${pad(this.list1[i].hour)}:00:00`;
+              const formattedDay = `${pad(this.list1[i].day)}`;
+              this.dateTime.push({
+                hour : formattedHour,
+                day : formattedDay
+              })
+            }
           }
           else{
             this.list2 = list2;
+            this.dateTime = [];
+            for (let i = 0; i < this.list2.length; i++) {
+              const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+              const formattedHour = `${pad(this.list2[i].hour)}:00:00`;
+              const formattedDay = `${pad(this.list2[i].day)}`;
+              this.dateTime.push({
+                hour : formattedHour,
+                day : formattedDay
+              })
+            }
           }
         });
     })

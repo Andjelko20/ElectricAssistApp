@@ -20,6 +20,7 @@ export class PredictionDeviceComponent {
   loader:boolean=false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  dayNames: string[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     
   }
@@ -32,6 +33,15 @@ export class PredictionDeviceComponent {
       
       if(data.deviceCategory == "Electricity Consumer")
       {
+        this.dayNames = []
+          const currentDate = new Date();
+          const enddate = new Date()
+          enddate.setDate(enddate.getDate()+7)
+          while (currentDate <= enddate) {
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
+            this.dayNames.push(dayName);
+            currentDate.setDate(currentDate.getDate() + 1 );
+          }
         this.consumptionGraph = true;
         this.loader=false;
         this.deviceService.predictionDevice(id).subscribe(consumption =>{
@@ -44,6 +54,15 @@ export class PredictionDeviceComponent {
         
       }
       else{ 
+        this.dayNames = []
+          const currentDate = new Date();
+          const enddate = new Date()
+          enddate.setDate(enddate.getDate()+7)
+          while (currentDate <= enddate) {
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
+            this.dayNames.push(dayName);
+            currentDate.setDate(currentDate.getDate() + 1 );
+          }
         this.productionGraph=true;
         this.loader=false;
         this.deviceService.predictionDevice(id).subscribe(production =>{
@@ -74,7 +93,6 @@ export class PredictionDeviceComponent {
     }
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month1 = this.list2.map(day => day.day);
     let max=0;
     if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
     {
@@ -83,7 +101,7 @@ export class PredictionDeviceComponent {
     const Linechart = new Chart("linechartP", {
       type: 'line',
       data : {
-        labels: month1,
+        labels: this.dayNames,
         
         datasets:  [
           
@@ -199,7 +217,6 @@ export class PredictionDeviceComponent {
     }
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
-    const month2 = this.list1.map(day => day.day);
     let max=0;
     if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
     {
@@ -208,7 +225,7 @@ export class PredictionDeviceComponent {
     const Linechart = new Chart("linechartC", {
       type: 'line',
       data : {
-        labels: month2,
+        labels: this.dayNames,
         datasets:  [
           {
             label: 'consumption',

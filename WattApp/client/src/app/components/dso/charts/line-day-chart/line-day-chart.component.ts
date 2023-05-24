@@ -20,7 +20,9 @@ export class LineDayChartComponent {
   maxDate = new Date();
   currentDate = new Date();
   list1:DayByHour[] = [];
+  list1pred:number[] = [];
   list2:DayByHour[] = [];
+  list2pred:number[] = [];
   settlements:Settlement[] = [];
   mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number}[] = [];
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService) {
@@ -101,7 +103,17 @@ export class LineDayChartComponent {
             this.deviceService.dayByHourCityFilter(string1,string2,number, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list1pred.push(increasedEnergy);
+            }
             this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list2pred.push(increasedEnergy);
+            }
             this.LineChartProduction();
             this.LineChartConsumption();
           });
@@ -148,7 +160,17 @@ export class LineDayChartComponent {
             this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list1pred.push(increasedEnergy);
+            }
             this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list2pred.push(increasedEnergy);
+            }
             this.LineChartProduction();
             this.LineChartConsumption();
           });
@@ -190,7 +212,22 @@ export class LineDayChartComponent {
             pointHoverRadius: 6,
             fill:true,
             
-          }
+          },
+          {
+            label: 'Production Prediction ',
+            data: this.list2pred,
+            tension:0.1,
+            backgroundColor: 'rgba(127, 205, 187, 0.3)',
+            borderColor: ' rgba(127, 205, 187, 1)',
+            borderWidth: 1.5,
+            pointBackgroundColor: 'rgba(127, 205, 187, 1)',
+            pointBorderColor: 'rgba(127, 205, 187, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
+            pointHoverRadius: 6,
+            fill:true,
+            
+          },
         ]
       }
       ,
@@ -270,7 +307,8 @@ export class LineDayChartComponent {
     if (chartExists) {
         chartExists.destroy();
     }
-    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
+    const energyUsageResults1 = this.list1.map(day => day.energyUsageResult)
+
     const hours = this.list1.map(day => day.hour);
     let max=0;
     if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
@@ -298,7 +336,23 @@ export class LineDayChartComponent {
             fill:true,
             
           },
-        ]
+          {
+            label: 'Consumption Prediction ',
+            data: this.list1pred,
+            tension:0.1,
+            backgroundColor: 'rgba(127, 205, 187, 0.3)',
+            borderColor: ' rgba(127, 205, 187, 1)',
+            borderWidth: 1.5,
+            pointBackgroundColor: 'rgba(127, 205, 187, 1)',
+            pointBorderColor: 'rgba(127, 205, 187, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
+            pointHoverRadius: 6,
+            fill:true,
+            
+          },
+        ],
+        
       }
       ,
       options: {

@@ -45,6 +45,7 @@ export class ProsumerMonthTableComponent {
   currentDate = new Date();
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
+  dateTime: any[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   datePipe: any;
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService,private route:ActivatedRoute){
@@ -84,6 +85,12 @@ export class ProsumerMonthTableComponent {
             this.deviceService.weekByDayUserFilter(string1,string2,userId, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.dateTime = [];
+            for (let i = 0; i < this.list1.length; i++) {
+              const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+              const formattedDay = `${pad(this.list1[i].day)}`;
+              this.dateTime.push(formattedDay)
+            }
             this.list2 = list2;
           });
   }

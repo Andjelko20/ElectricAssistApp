@@ -47,6 +47,8 @@ export class BarMonthProsumerComponent {
   currentDate = new Date();
   list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
+  list1pred: number[] = [];
+  list2pred: number[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
@@ -84,7 +86,17 @@ export class BarMonthProsumerComponent {
             this.deviceService.weekByDayUserFilter(string1,string2,userId, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list1pred.push(increasedEnergy);
+            }
             this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list2pred.push(increasedEnergy);
+            }
             this.BarPlotProduction();
             this.BarPlotConsumption();
           });

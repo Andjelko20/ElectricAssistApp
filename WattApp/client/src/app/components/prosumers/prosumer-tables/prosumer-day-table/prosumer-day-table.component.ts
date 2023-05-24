@@ -17,6 +17,7 @@ export class ProsumerDayTableComponent {
   currentDate = new Date();
   list1:DayByHour[] = [];
   list2:DayByHour[] = [];
+  dateTime:{day:string,hour:string}[] = [];
   mergedList: { hour: number, day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private route:ActivatedRoute,private deviceService:HistoryPredictionService) {
     this.maxDate = new Date();
@@ -73,6 +74,16 @@ export class ProsumerDayTableComponent {
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 1)
       ]).subscribe(([list1, list2]) => {
         this.list1 = list1;
+        this.dateTime = [];
+            for (let i = 0; i < this.list1.length; i++) {
+              const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+              const formattedHour = `${pad(this.list1[i].hour)}:00:00`;
+              const formattedDay = `${pad(this.list1[i].day)}`;
+              this.dateTime.push({
+                hour : formattedHour,
+                day : formattedDay
+              })
+            }
         this.list2 = list2;
       });
   }

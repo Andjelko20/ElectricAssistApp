@@ -50,6 +50,7 @@ export class DeviceMonthTabularComponent {
   itemList: string[] = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'
   ,'20','21','22','23','24','25','26','27','28','29','30'];
   datePipe: any;
+  dateTime: any[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
       const arr1: any[] = [];
@@ -94,9 +95,21 @@ export class DeviceMonthTabularComponent {
           ]).subscribe(([list1, list2]) => {
             if(data.deviceCategory == "Electricity Consumer"){
               this.list1 = list1;
+              this.dateTime = [];
+              for (let i = 0; i < this.list1.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list1[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
             }
             else{
               this.list2 = list2;
+              this.dateTime = [];
+              for (let i = 0; i < this.list2.length; i++) {
+                const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+                const formattedDay = `${pad(this.list2[i].day)}`;
+                this.dateTime.push(formattedDay)
+              }
             }
           });
   })

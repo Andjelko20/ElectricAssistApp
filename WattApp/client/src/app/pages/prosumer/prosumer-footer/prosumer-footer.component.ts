@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 })
 export class ProsumerFooterComponent implements OnInit {
   showLink:boolean=false;
+  showLink1:boolean=false;
   id?:number;
   previousRoute:string=''
   constructor(public router:Router,
@@ -24,6 +25,14 @@ export class ProsumerFooterComponent implements OnInit {
     else if(this.location.path()==='/device/'+this.id)
     {
       this.showLink=true;
+    }
+    else if(this.location.path()==='/profile')
+    {
+      this.showLink1=false
+    }
+    else if(this.location.path()==='/profile-edit' || this.location.path()==='/prosumer-change-password')
+    {
+      this.showLink1=true
     }
     
   }

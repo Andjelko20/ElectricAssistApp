@@ -27,7 +27,7 @@ export class TabelarViewComponent implements OnInit{
   constructor(private authService:AuthService,private deviceService:HistoryPredictionService,private datePipe: DatePipe) {}
 
   selectedDate: Date = new Date();
-
+  dateTime:{day:string,hour:string}[] = [];
   onDateSelected(event: { value: Date; }) {
     this.selectedDate = event.value;
     this.ngOnInit();
@@ -92,6 +92,16 @@ export class TabelarViewComponent implements OnInit{
             this.deviceService.dayByHourCityFilter(string1,string2,number, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.dateTime = [];
+            for (let i = 0; i < this.list1.length; i++) {
+              const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+              const formattedHour = `${pad(this.list1[i].hour)}:00:00`;
+              const formattedDay = `${pad(this.list1[i].day)}`;
+              this.dateTime.push({
+                hour : formattedHour,
+                day : formattedDay
+              })
+            }
             this.list2 = list2;
           });
         }
@@ -137,6 +147,16 @@ export class TabelarViewComponent implements OnInit{
             this.deviceService.dayByHourSettlementFilter(string1,string2,number, this.selectedOption)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.dateTime = [];
+            for (let i = 0; i < this.list1.length; i++) {
+              const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+              const formattedHour = `${pad(this.list1[i].hour)}:00:00`;
+              const formattedDay = `${pad(this.list1[i].day)}`;
+              this.dateTime.push({
+                hour : formattedHour,
+                day : formattedDay
+              })
+            }
             this.list2 = list2;
           });
         }
