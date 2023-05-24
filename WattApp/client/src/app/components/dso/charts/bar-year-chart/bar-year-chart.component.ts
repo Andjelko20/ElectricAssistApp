@@ -156,7 +156,7 @@ export class BarYearChartComponent {
         type: 'bar',
        
         data : {
-          labels: month,
+          labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
           
           datasets: [
 
@@ -173,6 +173,7 @@ export class BarYearChartComponent {
               borderColor: 'rgba(252, 129, 155, 1)',
               backgroundColor: 'rgba(252, 129, 155, 0.2)',
               borderWidth: 2,
+              categoryPercentage:0.5
             },
             
           ]
@@ -206,7 +207,7 @@ export class BarYearChartComponent {
        
               title:{
                 display:true,
-                text: " Production (kWh)",
+                text: " Production [kWh]",
                 color: '#000',
                 font:{
                   size:15
@@ -216,6 +217,7 @@ export class BarYearChartComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{
@@ -270,7 +272,7 @@ export class BarYearChartComponent {
         type: 'bar',
        
         data : {
-          labels: month,
+          labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
           
           datasets: [
             {
@@ -287,6 +289,7 @@ export class BarYearChartComponent {
               borderColor: 'rgba(252, 129, 155, 1)',
               backgroundColor: 'rgba(252, 129, 155, 0.2)',
               borderWidth: 2,
+              categoryPercentage:0.5
             },
            
             
@@ -323,7 +326,7 @@ export class BarYearChartComponent {
               
               title:{
                 display:true,
-                text: "Consumption (kWh)",
+                text: "Consumption [kWh]",
                 color: '#000',
                 font:{
                   size:15
@@ -333,6 +336,7 @@ export class BarYearChartComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{

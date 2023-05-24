@@ -129,13 +129,21 @@ export class DeviceYearComponent {
             
             datasets: [
   
-              {
-                label: 'Production',
+             {
+                label: ' Production',
                 data: energyUsageResults2,
                 borderColor: 'rgba(29, 145, 192, 1)',
                 backgroundColor: 'rgba(29, 145, 192, 0.2)',
                 borderWidth: 2,
               },
+              {
+                label: ' Prediction',
+                data: this.list2pred,
+                borderColor: 'rgba(252, 129, 155, 1)',
+                backgroundColor: 'rgba(252, 129, 155, 0.2)',
+                borderWidth: 2,
+                categoryPercentage:0.5
+              }
              
               
             ]
@@ -178,6 +186,7 @@ export class DeviceYearComponent {
               }
               ,
               x:{
+                stacked:true,
                 ticks:{
                   color:'#000',
                   font:{
@@ -223,7 +232,7 @@ export class DeviceYearComponent {
       if (chartExists) {
           chartExists.destroy();
       }
-  
+      
       const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
       const month = this.list1.map(day => day.month);
   
@@ -234,12 +243,20 @@ export class DeviceYearComponent {
             labels: month,
             
             datasets: [
-              {
-                label: 'Consumption',
+               {
+                label: ' Consumption',
                 data: energyUsageResults1,
                 borderColor:  'rgba(127, 205, 187, 1)',
                 backgroundColor:  'rgba(127, 205, 187, 0.3)',
                 borderWidth: 2.5,
+              },
+              {
+                label: ' Prediction',
+                data: this.list1pred,
+                borderColor: 'rgba(252, 129, 155, 1)',
+                backgroundColor: 'rgba(252, 129, 155, 0.2)',
+                borderWidth: 2,
+                categoryPercentage:0.5
                 
               },
              
@@ -274,7 +291,7 @@ export class DeviceYearComponent {
                 position: "left",
                 title:{
                   display:true,
-                  text: "Consumption (kWh)",
+                  text: "Consumption [kWh]",
                   color: '#000',
                   font:{
                     size:13
@@ -284,6 +301,7 @@ export class DeviceYearComponent {
               }
               ,
               x:{
+                stacked:true,
                 ticks:{
                   color:'#000',
                   font:{

@@ -203,7 +203,7 @@ export class LineWeekChartComponent {
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     let max=0;
-    if(energyUsageResults2[0]===0 )
+    if(energyUsageResults2[0]===0)
     {
       max=1;
     }
@@ -211,16 +211,13 @@ export class LineWeekChartComponent {
       type: 'bar',
       data : {
         labels: this.dayNames,
-        
         datasets:  [
-          
           {
             label: ' Production',
             data: energyUsageResults2,
             borderColor: 'rgba(29, 145, 192, 1)',
             backgroundColor: 'rgba(29, 145, 192, 0.2)',
             borderWidth: 2,
-           
           },
           {
             label: ' Prediction',
@@ -228,6 +225,7 @@ export class LineWeekChartComponent {
             borderColor: 'rgba(252, 129, 155, 1)',
             backgroundColor: 'rgba(252, 129, 155, 0.2)',
             borderWidth: 2,
+            
           }
           
         ]
@@ -269,6 +267,7 @@ export class LineWeekChartComponent {
           }
           ,
           x:{
+           
             ticks:{
               color:'#000',
               font:{
@@ -317,7 +316,7 @@ export class LineWeekChartComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     let max=0;
-    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    if(energyUsageResults1[0]===0 )
     {
       max=1;
     }
@@ -340,6 +339,7 @@ export class LineWeekChartComponent {
             borderColor: 'rgba(252, 129, 155, 1)',
             backgroundColor: 'rgba(252, 129, 155, 0.2)',
             borderWidth: 2,
+            
           },
         ]
         
@@ -380,6 +380,7 @@ export class LineWeekChartComponent {
           }
           ,
           x:{
+            
             ticks:{
               color:'#000',
               font:{

@@ -198,6 +198,7 @@ export class BarMonthChartComponent {
               borderColor: 'rgba(252, 129, 155, 1)',
               backgroundColor: 'rgba(252, 129, 155, 0.2)',
               borderWidth: 2,
+             
             },
           ]
         },
@@ -229,7 +230,7 @@ export class BarMonthChartComponent {
               position: "left",
               title:{
                 display:true,
-                text: "Production (kWh)",
+                text: "Production [kWh]",
                 color: '#000',
                 font:{
                   size:15
@@ -238,6 +239,7 @@ export class BarMonthChartComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{
@@ -325,7 +327,7 @@ export class BarMonthChartComponent {
             }
           },  
           maintainAspectRatio: false,
-          responsive: true, // Enable responsiveness
+          responsive: true, 
           
           scales:{
             y: {
@@ -338,7 +340,7 @@ export class BarMonthChartComponent {
               position: "left",
               title:{
                 display:true,
-                text: "Consumption (kWh)",
+                text: "Consumption [kWh]",
                 color: '#000',
                 font:{
                   size:15
@@ -347,6 +349,7 @@ export class BarMonthChartComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{
