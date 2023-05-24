@@ -29,7 +29,7 @@
   .table td {
     border: 1px solid #dee2e6;
     padding: 8px;
-    text-align: center;
+    text-align: right;
   }
   
   .table th {
@@ -39,10 +39,13 @@
     text-transform: uppercase;
   }
 
- .container1 {
-    width: 15%;
+  .container1 {
+    width: 12%;
     float: left;
     margin-left: 5%;
+  }
+  .form-select {
+    cursor: pointer;
   }
   
   .container2 {

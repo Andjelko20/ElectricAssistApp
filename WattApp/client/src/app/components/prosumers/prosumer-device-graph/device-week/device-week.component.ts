@@ -58,6 +58,8 @@ export class DeviceWeekComponent {
   productionGraph:boolean = false;
   list1:WeekByDay[] = [];
   list2:WeekByDay[] = [];
+  list1pred: number[] = [];
+  list2pred: number[] = [];
   dayNames: string[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute,private authService:AuthService) {
@@ -83,34 +85,19 @@ export class DeviceWeekComponent {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(id).subscribe(data=>{
-    if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
-      
-        if(data.deviceCategory == "Electricity Consumer")
-        {
-          this.consumptionGraph = true;
-          this.deviceService.weekByDayDevice(id).subscribe(consumption =>{
-            this.list1 = consumption;
-            this.LineChartConsumption()
-          })
-          
-        }
-        else{
-          this.productionGraph = true;
-          this.deviceService.weekByDayDevice(id).subscribe(production =>{
-            this.list2 = production;
-            this.LineChartProduction();
-          })
-        }
-      
-      
-    }
-    else{
+      if(data.deviceCategory == "Electricity Consumer"){
+        this.consumptionGraph = true;
+      }
+      else{
+        this.productionGraph = true;
+      }
+
           this.dayNames = []
           const currentDate = new Date(this.sdate);
           const enddate = new Date(this.send)
           enddate.setDate(enddate.getDate()-1)
           while (currentDate <= enddate) {
-            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
             this.dayNames.push(dayName);
             currentDate.setDate(currentDate.getDate() + 1 );
           }
@@ -132,16 +119,25 @@ export class DeviceWeekComponent {
           ]).subscribe(([list1, list2]) => {
             if(data.deviceCategory == "Electricity Consumer"){
               this.list1 = list1;
-              this.consumptionGraph = true;
+              this.list1pred = [];
+              for (const obj of this.list1) {
+                const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+                this.list1pred.push(increasedEnergy);
+              }
+              
               this.LineChartConsumption();
             }
             else{
               this.list2 = list2;
-              this.productionGraph = true;
+              this.list2pred = [];
+              for (const obj of this.list2) {
+                const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+                this.list2pred.push(increasedEnergy);
+              }
+              
               this.LineChartProduction();
             }
           });
-    }
   })
   }
   LineChartProduction(){

@@ -50,6 +50,8 @@ export class BarYearChartComponent {
   list1:YearsByMonth[]=[];
   list2:YearsByMonth[]=[];
   settlements:Settlement[] = [];
+  list1pred: number[] = [];
+  list2pred: number[] = [];
   mergedList: {month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
@@ -65,7 +67,7 @@ export class BarYearChartComponent {
   }
 
   date = new FormControl(moment());
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   setYear(year: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value!;
     ctrlValue.year(year.year());
@@ -92,25 +94,24 @@ export class BarYearChartComponent {
             }
           }
         })
-        if(this.selectedOption == 0 && this.selectedDate == undefined){
-          forkJoin([
-            this.deviceService.yearByMonth(number, 2),
-            this.deviceService.yearByMonth(number, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.BarPlotProduction();
-            this.BarPlotConsumption();
-          });
-        }
-        else if(this.selectedOption == 0 && this.selectedDate != undefined){
+        if(this.selectedOption == 0 && this.selectedDate != undefined){
           const year = this.selectedDate!.getFullYear();
           forkJoin([
             this.deviceService.monthbyDayCityFilter(year,number, 2),
             this.deviceService.monthbyDayCityFilter(year,number, 1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list1pred.push(increasedEnergy);
+            }
             this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list2pred.push(increasedEnergy);
+            }
             this.BarPlotProduction();
             this.BarPlotConsumption();
           });
@@ -122,23 +123,21 @@ export class BarYearChartComponent {
             this.deviceService.monthbySettlementCityFilter(year, this.selectedOption,1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list1pred.push(increasedEnergy);
+            }
             this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list2pred.push(increasedEnergy);
+            }
             this.BarPlotProduction();
             this.BarPlotConsumption();
           });
-        }
-        else{
-          forkJoin([
-            this.deviceService.yearByMonthSettlement(this.selectedOption, 2),
-            this.deviceService.yearByMonthSettlement(this.selectedOption, 1)
-          ]).subscribe(([list1, list2]) => {
-            this.list1 = list1;
-            this.list2 = list2;
-            this.BarPlotProduction();
-            this.BarPlotConsumption();
-          });
-        }
-        
+        }  
       })
     })
   }

@@ -45,8 +45,8 @@ export const MY_FORMATS = {
 })
 export class ProsumerMonthProductionComponent {
   currentDate = new Date();
-  list1:WeekByDay[]=[];
   list2:WeekByDay[]=[];
+  list2pred: number[] = [];
   mergedList: { day: number, month: string, year: number, consumption: number, production: number }[] = [];
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.date.valueChanges.subscribe((selectedDate : any) => {
@@ -84,6 +84,11 @@ export class ProsumerMonthProductionComponent {
             this.deviceService.weekByDayUserFilter(string1,string2,userId, 1)
           ]).subscribe(([list2]) => {
             this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              this.list2pred.push(increasedEnergy);
+            }
             this.BarPlotProduction();
           });
   }
@@ -215,34 +220,19 @@ export class ProsumerMonthProductionComponent {
   }
 
   downloadCSV(): void {
-    this.mergedList = [];
-    for (let i = 0; i < this.list1.length; i++) {
-      for (let j = 0; j < this.list2.length; j++) {
-        if (this.list1[i].day === this.list2[j].day && this.list1[i].month === this.list2[j].month && this.list1[i].year === this.list2[j].year) {
-          this.mergedList.push({
-            day: this.list1[i].day,
-            month: this.list1[i].month,
-            year: this.list1[i].year,
-            consumption: this.list1[i].energyUsageResult,
-            production: this.list2[j].energyUsageResult
-          });
-          break;
-        }
-      }
-  }
   const options = {
     fieldSeparator: ',',
-    filename: 'consumption/production-month',
+    filename: 'production-month',
     quoteStrings: '"',
     useBom : true,
     decimalSeparator: '.',
     showLabels: true,
     useTextFile: false,
-    headers: ['Day', 'Month', 'Year', 'Consumption [kWh]', 'Production [kWh]']
+    headers: ['Day', 'Month', 'Year', 'Production [kWh]']
   };
 
   const csvExporter = new ExportToCsv(options);
-  const csvData = csvExporter.generateCsv(this.mergedList);
+  const csvData = csvExporter.generateCsv(this.list2);
 
   }
 

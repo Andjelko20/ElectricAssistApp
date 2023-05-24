@@ -7,9 +7,26 @@
 }
 
 .btn {
-    background-color: #bce9e4;
-    color: grey;
-}
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #2199e8;
+    color: white;
+    font-weight: normal;
+    text-align: center;
+  }
+  
+  .btn:hover {
+    background-color: #0d8beb;
+  }
+
+  .container3 {
+    width: 15%;
+    float: right;
+    margin-right: 5%;
+  }
 
 @media (min-width: 320px) {
     h1 {
