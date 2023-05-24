@@ -17,7 +17,7 @@ export class MonthProductionComponent implements OnInit{
     
   }
   ngOnInit(): void {
-    this.historyService.historyMonthUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe(number=>{
+    this.historyService.monthConsumptionUser(Number(this.route.snapshot.paramMap.get('id')),1).subscribe(number=>{
       if(number != null){
         this.value = number;  
         this.valuekWh = this.value.toFixed(2);

@@ -19,7 +19,7 @@ export class TodayConsumptionComponent implements OnInit{
   maxgwh: number = this.maxmwh*0.001;
   constructor(private historyService:HistoryPredictionService,private route:ActivatedRoute){}
   ngOnInit(): void {
-    this.historyService.historyDayUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe(number=>{
+    this.historyService.todayConsumptionUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe(number=>{
       
         this.value = number;  
         this.valuekWh = this.value.toFixed(2);

@@ -238,7 +238,6 @@ export class PredictionDsoComponent {
           {
             label: 'consumption',
             data: energyUsageResults1,
-            
             backgroundColor: 'rgba(127, 205, 187, 0.2)',
             borderColor: ' rgba(127, 205, 187, 1)',
             borderWidth: 2,

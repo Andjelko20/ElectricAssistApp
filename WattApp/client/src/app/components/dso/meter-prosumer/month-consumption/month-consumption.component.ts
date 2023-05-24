@@ -22,7 +22,7 @@ export class MonthConsumptionComponent implements OnInit{
     
   }
   ngOnInit(): void {
-    this.historyService.historyMonthUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe(number=>{
+    this.historyService.monthConsumptionUser(Number(this.route.snapshot.paramMap.get('id')),2).subscribe(number=>{
       
         this.value = number;  
         this.valuekWh = this.value.toFixed(2);
