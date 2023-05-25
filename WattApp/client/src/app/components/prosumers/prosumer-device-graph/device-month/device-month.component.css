@@ -1,8 +1,6 @@
 .chart canvas {
     width: 100%;
-    /* Set the width to 100% of the parent element */
     height: 300px;
-    /* Set the height to 500 pixels */
 }
 
 .chart {

@@ -9,7 +9,7 @@
 	<div class="search-container">
 		<div class="map-filters-container">
 			<div class="filter-select">
-				<label>Filter by zone:</label>
+				<label>Filter by zone</label>
 				<select name="zone" (change)="changeZone()" [(ngModel)]="zone">
 					<option value="0">All zones</option>
 					<option value="1">Green zone</option>
@@ -18,7 +18,7 @@
 				</select>
 			</div>
 			<div class="search-user">
-				<label>Search user by name or address:</label>
+				<label>Search user by name or address</label>
 				<input class="input-form-control" type="text" name="user" [(ngModel)]="name" (ngModelChange)="changeName()">
 				<div class="search-result" [class.hidden]="!searchResultVisible">
 					<div *ngIf="filteredUsers.length==0" class="no-results">

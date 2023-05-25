@@ -6,7 +6,7 @@
       <div class="filter" >
       <div class="dropdown" [class.show]="showDropdown">
         <a id="dropbtn1" class="btn btn-primary" (click)="toggleDropdown()">
-          Filters <span class="filter-count">{{ countActiveFilters() }}</span>
+          Filters <span class="filter-count">({{ countActiveFilters() }})</span>
         </a>
         <div class="dropdown-content">
           <div class="filter">
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="form-group" id="search">
-        <label>Search user by: </label>
+        <label>Search user by</label>
         <input type="text" name="search" [(ngModel)]="filters.name" class="form-control search" id="searchInput"placeholder="name, username or address" (ngModelChange)="pageChanged(1)">
       </div> 
     </div>

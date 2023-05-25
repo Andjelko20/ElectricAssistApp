@@ -53,9 +53,9 @@
 #linechart {
     width: 100%;
 }
-::ng-deep .mat-calendar-body .mat-calendar-body-selected {
+/* ::ng-deep .mat-calendar-body .mat-calendar-body-selected {
     background-color: #354871 !important;
-  }
+  } */
 
   
 @media(min-width:1200px) {
@@ -67,15 +67,15 @@
         display: inline-flex;
         width: 100%;
     }
-    ::ng-deep .mat-calendar-body .mat-calendar-body-selected {
+    /* ::ng-deep .mat-calendar-body .mat-calendar-body-selected {
         background-color: #354871 !important;
       }
-      
+       */
       
 }
-@media (hover: hover) {
+/* @media (hover: hover) {
     ::ng-deep .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
       background-color: green !important;
     }
   }
-  
+   */

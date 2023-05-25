@@ -145,7 +145,6 @@ export class PieChartComponent implements OnInit {
                   document.body.style.cursor = 'default';
               },
               
-              
             },
            
             

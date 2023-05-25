@@ -2,7 +2,7 @@
       
         <div class="container2">
           <div class="form-group">
-            <label for="dropdown ">Select by Settlement:</label>
+            <label for="dropdown ">Select by settlement</label>
             <select class="form-select" aria-label="Default select example" id="dropdown"  [(ngModel)]="selectedOption" (change)="onOptionSelected()">
               <option value="0">Total</option>
               <option *ngFor="let item of settlements" value="{{item.id}}">{{item.name}}</option>
