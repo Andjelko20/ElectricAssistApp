@@ -86,6 +86,8 @@ export class ProsumerAccountPageComponent {
   logout()
   {
     localStorage.removeItem('token');
+    localStorage.removeItem('filter');
+    sessionStorage.removeItem('filter');
     this.updateService.isLoginSubject.next(false)
     this.router.navigate(['/login']);
   }

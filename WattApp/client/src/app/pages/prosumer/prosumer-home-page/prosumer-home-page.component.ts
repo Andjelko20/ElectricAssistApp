@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { SessionService } from 'src/app/services/session.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
@@ -9,7 +10,7 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
 })
 export class ProsumerHomePageComponent implements OnInit {
   
-  constructor(private historyService:HistoryPredictionService){}
+  constructor(private historyService:HistoryPredictionService, private filterSession : SessionService){}
   meter!:string;
   meter1!:string;
   meter2!:string;
@@ -22,6 +23,8 @@ export class ProsumerHomePageComponent implements OnInit {
   todayProduction!:number;
   ngOnInit(): void {
     let token=new JwtToken();
+    this.filterSession.setSession("filter", null);
+    console.log(this.filterSession.getSession("filter"));
     this.id=token.data.id as number;
     this.historyService.currentUserProductionConsumption(this.id,2).subscribe(data =>{
       this.currentConsumption = data;
