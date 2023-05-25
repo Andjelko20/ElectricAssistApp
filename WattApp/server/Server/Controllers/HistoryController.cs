@@ -23,7 +23,7 @@ namespace Server.Controllers
             this.historyService = historyService;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Total device Consumption/Production in last year
         /// </summary>
         [HttpGet]
@@ -39,12 +39,12 @@ namespace Server.Controllers
             // ukoliko postoji vrati listu svih redova
             var historyList = historyService.GetUsageHistoryForDeviceInLastYear(deviceId);
             return Ok(historyList);
-        }
+        }*/
 
         /// <summary>
         /// Total device Consumption/Production in last month
         /// </summary>
-        [HttpGet]
+        /*[HttpGet]
         [Route("Month/Device/{deviceId:long}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceInLastMonth([FromRoute] long deviceId)
@@ -56,9 +56,9 @@ namespace Server.Controllers
 
             var historyList = historyService.GetUsageHistoryForDeviceInLastMonth(deviceId);
             return Ok(historyList);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Total device Consumption/Production in last day
         /// </summary>
         [HttpGet]
@@ -74,9 +74,9 @@ namespace Server.Controllers
 
             var HistoryForThePreviousDay = historyService.GetUsageHistoryForDeviceInLastDay(deviceId);
             return Ok(HistoryForThePreviousDay);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Total device Consumption/Production in last week
         /// </summary>
         [HttpGet]
@@ -92,7 +92,7 @@ namespace Server.Controllers
 
             var HistoryForThePreviousDay = historyService.GetUsageHistoryForDeviceInPastWeek(deviceId);
             return Ok(HistoryForThePreviousDay);
-        }
+        }*/
 
         /// <summary>
         /// Consumption/Production history for device in past year by month
@@ -109,7 +109,7 @@ namespace Server.Controllers
             return Ok(HistoryForThePreviousYear);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production history for device in past month by day
         /// </summary>
         [HttpGet]
@@ -122,7 +122,7 @@ namespace Server.Controllers
 
             var HistoryForThePreviousMonth = historyService.GetDailyEnergyUsageForPastMonth(deviceId);
             return Ok(HistoryForThePreviousMonth);
-        }
+        }*/
 
         /// <summary>
         /// Consumption/Production history for device in past week by day
@@ -139,7 +139,7 @@ namespace Server.Controllers
             return Ok(HistoryForThePreviousMonth);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for all user`s devices
         /// </summary>
         [HttpGet]
@@ -155,9 +155,9 @@ namespace Server.Controllers
 
             var HistoryForTotalConsumption = historyService.GetTotalEnergyConsumptionForUser(userId, deviceCategoryId);
             return Ok(HistoryForTotalConsumption);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for user, past day
         /// </summary>
         [HttpGet]
@@ -173,9 +173,9 @@ namespace Server.Controllers
 
             var HistoryForPastDay = historyService.GetUserEnergyConsumptionForPastDay(userId, deviceCategoryId);
             return Ok(HistoryForPastDay);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for user in past week
         /// </summary>
         [HttpGet]
@@ -191,9 +191,9 @@ namespace Server.Controllers
 
             var HistoryForPastWeek = historyService.GetUserEnergyConsumptionForPastWeek(userId, deviceCategoryId);
             return Ok(HistoryForPastWeek);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for user in past month
         /// </summary>
         [HttpGet]
@@ -209,12 +209,12 @@ namespace Server.Controllers
 
             var HistoryForPastMonth = historyService.GetUserEnergyConsumptionForPastMonth(userId, deviceCategoryId);
             return Ok(HistoryForPastMonth);
-        }
+        }*/
 
         /// <summary>
         /// Consumption/Production for user in past year
         /// </summary>
-        [HttpGet]
+        /*[HttpGet]
         [Route("Year/User/{userId:long}/{deviceCategoryId}")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetConsumptionByUserForYear([FromRoute] long userId, [FromRoute] long deviceCategoryId)
@@ -227,7 +227,7 @@ namespace Server.Controllers
 
             var HistoryForPastYearConsumption = historyService.GetUserEnergyConsumptionForPastYear(userId, deviceCategoryId);
             return Ok(HistoryForPastYearConsumption);
-        }
+        }*/
 
         /// <summary>
         /// Consumption/Production for all user`s devices in past year (by month)
@@ -257,7 +257,7 @@ namespace Server.Controllers
             return Ok(HistoryForPastYearByMonthConsumption);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for all user`s devices for last month (by day)
         /// </summary>
         [HttpGet]
@@ -279,7 +279,7 @@ namespace Server.Controllers
 
             var historyResult = historyService.UserHistoryForThePastMonth(userId, deviceCategoryId);
             return Ok(historyResult);
-        }
+        }*/
 
         /// <summary>
         /// Consumption/Production for all user`s devices for last week (by day)
@@ -309,7 +309,7 @@ namespace Server.Controllers
             return Ok(PredictionForNextWeek);
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for user (yesterday by hour)
         /// </summary>
         [HttpGet]
@@ -325,9 +325,9 @@ namespace Server.Controllers
 
             var resultsPastDayByHour = historyService.UserHistoryForThePastDayByHour(userId, deviceCategoryId);
             return Ok(resultsPastDayByHour);
-        }
-
-        /// <summary>
+        }*/
+        
+        /*/// <summary>
         /// Consumption/Production for all users from settlement for last week (by day)
         /// </summary>
         [HttpGet]
@@ -346,9 +346,9 @@ namespace Server.Controllers
 
 
             return Ok(historyService.SettlementHistoryForThePastWeek(settlementId, deviceCategoryId));
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for all users from city for last week (by day)
         /// </summary>
         [HttpGet]
@@ -364,9 +364,9 @@ namespace Server.Controllers
 
             var result = historyService.CityHistoryForThePastWeek(cityId, deviceCategoryId);
             return Ok(result);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for all users from settlement for last month (by day)
         /// </summary>
         [HttpGet]
@@ -382,9 +382,9 @@ namespace Server.Controllers
 
             var result = historyService.SettlementHistoryForThePastMonth(settlementId, deviceCategoryId);
             return Ok(result);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for all users from city for last month (by day)
         /// </summary>
         [HttpGet]
@@ -400,9 +400,9 @@ namespace Server.Controllers
 
             var result = historyService.CityHistoryForThePastMonth(cityId, deviceCategoryId);
             return Ok(result);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for all users from city for last year (by month)
         /// </summary>
         [HttpGet]
@@ -418,9 +418,9 @@ namespace Server.Controllers
 
             var result = historyService.CityHistoryForThePastYearByMonth(cityId, deviceCategoryId);
             return Ok(result);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Consumption/Production for all users from settlement for last year (by month)
         /// </summary>
         [HttpGet]
@@ -436,9 +436,9 @@ namespace Server.Controllers
 
             var result = historyService.SettlementHistoryForThePastYearByMonth(settlementId, deviceCategoryId);
             return Ok(result);
-        }
+        }*/
 
-        /// <summary>
+        /*/// <summary>
         /// Total device Consumption/Production in this month
         /// </summary>
         [HttpGet]
@@ -453,7 +453,7 @@ namespace Server.Controllers
 
             var historyList = historyService.GetUsageHistoryForDeviceInThisMonth(deviceId);
             return Ok(historyList);
-        }
+        }*/
 
         /// <summary>
         /// Total device Consumption/Production today
@@ -475,7 +475,7 @@ namespace Server.Controllers
         /// <summary>
         /// Total device Consumption/Production this year
         /// </summary>
-        [HttpGet]
+        /*[HttpGet]
         [Route("Year")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDeviceThisYear([FromQuery] long deviceId)
@@ -487,12 +487,12 @@ namespace Server.Controllers
 
             var historyList = historyService.GetUsageHistoryForDeviceThisYear(deviceId);
             return Ok(historyList);
-        }
+        }*/
 
         /// <summary>
         /// Total device Consumption/Production this year
         /// </summary>
-        [HttpGet]
+        /*[HttpGet]
         [Route("PreviousMonth")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
         public async Task<IActionResult> GetHistoryForDevicePreviousMonth([FromQuery] long deviceId)
@@ -504,7 +504,7 @@ namespace Server.Controllers
 
             var historyList = historyService.GetUsageHistoryForDeviceForPreviousMonth(deviceId);
             return Ok(historyList);
-        }
+        }*/
 
         [HttpGet]
         [Route("Pagination/{pageNumber:int}/{itemsPerPage:int}")]

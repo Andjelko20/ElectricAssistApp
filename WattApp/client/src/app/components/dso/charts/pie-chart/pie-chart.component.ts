@@ -18,6 +18,7 @@ Chart.register(ChartDataLabels);
 export class PieChartComponent implements OnInit {
   loader:boolean=false;
   settlements:Settlement[] = [];
+  settlements1:Settlement[] = [];
   settlementsValue:number[] = [];
   constructor(private authService:AuthService,private historyService:HistoryPredictionService) {
   
@@ -31,8 +32,13 @@ export class PieChartComponent implements OnInit {
           this.settlements.forEach(settlement =>{
             this.historyService.getCurrentConsumptionProductionSettlement(1,settlement.id).subscribe(value =>{
               this.loader=false;
-              this.settlementsValue.push(value);
-              this.PieChart();
+              if(value!=0)
+              {
+                this.settlements1.push(settlement);
+                this.settlementsValue.push(value);
+                this.PieChart();
+              }
+              
             })
           })
         })
@@ -41,46 +47,44 @@ export class PieChartComponent implements OnInit {
   }
 
   PieChart(){
-
-
     const chartId = 'piechart';
     const chartExists = Chart.getChart(chartId);
     if (chartExists) {
         chartExists.destroy();
     }
 
-    const name = this.settlements.map(name => name.name);
+    const name = this.settlements1.map(name => name.name);
     var data= [{
       label: '',
       data: this.settlementsValue,
       backgroundColor: [
         '#7fcdbb',
-          '#c7e9b4',  '#1d91c0', '#225ea8', '#253494', '#081d58',
-        // "#2B70A7",
-        // "#BF1E2E",
-        // "#E2B37D",
-        // "#EF4136",
-        // "#F15A2B",
-        // "#006838",
-        // "#B5D4EF",
-        // "#77B3E1",
-        // "#28AAE1",
-        // "#2A3890",
-        // "#F9ED32",
-        // "#D7E022",
-        // "#8DC73F",
-        // "#39B54A",
-        // "#009445",
-        // "#F5F194",
-        // "#F2F5CD",
-        // "#7B5231",
-        // "#68499E",
-        // "#662D91",
-        // "#AF7AC5",
-        // " #2E8B57 ", 
-        // "#87CEFA", 
-        // "#D7E022",
-          ],
+        '#c7e9b4',  
+        '#1d91c0', 
+        '#225ea8', 
+        '#253494', 
+        '#081d58',
+        '#52988f',
+        '#86b59d',
+        '#207b97',
+        '#2d6b8b',
+        '#2f317f',
+        '#0d1848',
+        '#3c6c68',
+        '#aec9c5',
+        '#749cab',
+        '#8b99a8',
+        '#141e70',
+        '#193d36',
+        '#8fc4c1',
+        '#5a908b',
+        '#15667c',
+        '#1e5386',
+        '#1f255e',
+        '#0a0e2d',
+        '#5d8581',
+        '#6f7a91'
+        ],
       borderWidth: 1,
       borderColor: "#00000",
   },]

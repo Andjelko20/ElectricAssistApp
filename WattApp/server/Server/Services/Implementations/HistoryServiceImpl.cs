@@ -989,19 +989,40 @@ namespace Server.Services.Implementations
 
         public double GetUsageHistoryForDeviceToday(long deviceId)
         {
-            // za trazeni uredjaj, samo kada je radio tokom danasenjeg dana
-            var deviceEnergyUsages = _context.DeviceEnergyUsages
-                .Where(usage => usage.DeviceId == deviceId && usage.StartTime.Date == DateTime.Today)
-                .ToList();
-
-            foreach (var usage in deviceEnergyUsages)
+            using (var _connection = _context.Database.GetDbConnection())
             {
-                // od 00:00h do ovog trenutka, danasnjeg dana
-                if (usage.EndTime > DateTime.Now)
-                    usage.EndTime = DateTime.Now;
-            }
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT 
+                                            SUM(CAST((strftime('%s', 
+                                                CASE 
+                                                    WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
+                                                    WHEN deu.EndTime > datetime('now', 'localtime') THEN datetime('now', 'localtime')
+                                                    ELSE deu.EndTime 
+                                                END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM DeviceEnergyUsages deu
+	                                         JOIN Devices d ON deu.DeviceId = d.Id AND deu.DeviceId = @deviceId
+	                                         JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                        WHERE deu.StartTime >= datetime('now', 'start of day') AND deu.StartTime < datetime('now', 'localtime')";
 
-            return GetConsumptionForForwardedList(deviceId, deviceEnergyUsages);
+                command.Parameters.Add(new SqliteParameter("@deviceId", deviceId));
+
+                double energyUsages = 0.0;
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            energyUsages = double.Parse(reader["EnergyUsageKwh"].ToString());
+                        }
+                    }
+                }
+
+                return Math.Round(energyUsages, 2);
+            }
         }
 
         public double GetUsageHistoryForDeviceThisYear(long deviceId)

@@ -93,7 +93,7 @@ export class ProsumerDayProductionComponent {
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
     let max=0;
-    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    if(energyUsageResults2[0]===0 )
     {
       max=1;
       
@@ -104,10 +104,9 @@ export class ProsumerDayProductionComponent {
         labels: hours,
         
         datasets: [
-          {
-            label: 'Production',
+         {
+            label: ' Production',
             data: energyUsageResults2,
-            tension:0.1,
             backgroundColor: 'rgba(29, 145, 192, 0.2)',
             borderColor: 'rgba(29, 145, 192, 1)',
             borderWidth: 1,
@@ -116,9 +115,24 @@ export class ProsumerDayProductionComponent {
             pointBorderWidth: 8,
             pointRadius: 1,
             pointHoverRadius: 6,
-            fill:true
-          }
-          
+            fill:true,
+            
+          },
+          {
+            label: ' Prediction',
+            data: this.list2pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(252, 129, 155, 1)',
+            pointBorderColor: 'rgba(252, 129, 155, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
+            pointHoverRadius: 6,
+            segment:{
+              borderDash:[6,6]
+            }
+            
+          },
         ]
         
       }
@@ -149,7 +163,7 @@ export class ProsumerDayProductionComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -175,8 +189,17 @@ export class ProsumerDayProductionComponent {
           }
           ,
         },
-        
+         interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+           tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend:{
             display:false

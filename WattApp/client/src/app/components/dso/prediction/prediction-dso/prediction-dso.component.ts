@@ -1,5 +1,4 @@
 import { Component, Injectable, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { ExportToCsv } from 'export-to-csv';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
@@ -50,9 +49,9 @@ export class PredictionDsoComponent {
         if(this.selectedOption == 0){
           this.dayNames = []
           const currentDate = new Date();
-          currentDate.setDate(currentDate.getDate()+1)
+          currentDate.setDate(currentDate.getDate())
           const enddate = new Date()
-          enddate.setDate(enddate.getDate()+7)
+          enddate.setDate(enddate.getDate()+6)
           while (currentDate <= enddate) {
             const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
             this.dayNames.push(dayName);
@@ -73,9 +72,9 @@ export class PredictionDsoComponent {
           this.dayNames = []
           const currentDate = new Date();
           const enddate = new Date()
-          enddate.setDate(enddate.getDate()+7)
+          enddate.setDate(enddate.getDate()+6)
           while (currentDate <= enddate) {
-            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+            const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
             this.dayNames.push(dayName);
             currentDate.setDate(currentDate.getDate() + 1 );
           }
@@ -162,7 +161,7 @@ export class PredictionDsoComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -238,7 +237,6 @@ export class PredictionDsoComponent {
           {
             label: 'consumption',
             data: energyUsageResults1,
-            
             backgroundColor: 'rgba(127, 205, 187, 0.2)',
             borderColor: ' rgba(127, 205, 187, 1)',
             borderWidth: 2,
@@ -283,7 +281,7 @@ export class PredictionDsoComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:15

@@ -153,7 +153,7 @@ export class PredictionDeviceComponent {
             position: "left",
             title:{
               display:true,
-              text: "Prediction (kWh)",
+              text: "Prediction [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -271,7 +271,7 @@ export class PredictionDeviceComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:13

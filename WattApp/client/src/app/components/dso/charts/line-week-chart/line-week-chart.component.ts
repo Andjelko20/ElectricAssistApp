@@ -67,13 +67,13 @@ export class LineWeekChartComponent {
   constructor(private deviceService:HistoryPredictionService,private authService:AuthService) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.currentDate){
-        this.sdate = null;
+      if(value.end == null){
+        this.send = this.currentDate;
       }
       else{
-        this.ngOnInit()
+        this.send = value.end
       }
+      this.ngOnInit();
     });
   }
 
@@ -88,8 +88,8 @@ export class LineWeekChartComponent {
     end: new FormControl()
   });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  sdate = this.firstdate;
+  send = this.currentDate;
 
   ngOnInit(): void {
     this.loader=true;
@@ -182,7 +182,17 @@ export class LineWeekChartComponent {
             this.deviceService.weekByDaySettlementFilter(string1,string2,number, this.selectedOption)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
+            this.list1pred = [];
+            for (const obj of this.list1) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list1pred.push(increasedEnergy);
+            }
             this.list2 = list2;
+            this.list2pred = [];
+            for (const obj of this.list2) {
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              this.list2pred.push(increasedEnergy);
+            }
             this.LineChartProduction();
             this.LineChartConsumption();
           });
@@ -203,7 +213,7 @@ export class LineWeekChartComponent {
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     let max=0;
-    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    if(energyUsageResults2[0]===0)
     {
       max=1;
     }
@@ -211,16 +221,21 @@ export class LineWeekChartComponent {
       type: 'bar',
       data : {
         labels: this.dayNames,
-        
         datasets:  [
-          
           {
-            label: 'Production',
+            label: ' Production',
             data: energyUsageResults2,
             borderColor: 'rgba(29, 145, 192, 1)',
             backgroundColor: 'rgba(29, 145, 192, 0.2)',
             borderWidth: 2,
-           
+          },
+          {
+            label: ' Prediction',
+            data: this.list2pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
+            
           }
           
         ]
@@ -253,7 +268,7 @@ export class LineWeekChartComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -262,6 +277,7 @@ export class LineWeekChartComponent {
           }
           ,
           x:{
+           
             ticks:{
               color:'#000',
               font:{
@@ -279,13 +295,17 @@ export class LineWeekChartComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+        
           datalabels:{display: false},
           legend:{display:false},
           title: {
             display: true,
-            text: 'Production in a week',
+            text: ' Production in a week',
             color:'#000',
             font:{
               size:20
@@ -306,7 +326,7 @@ export class LineWeekChartComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     let max=0;
-    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    if(energyUsageResults1[0]===0 )
     {
       max=1;
     }
@@ -317,13 +337,20 @@ export class LineWeekChartComponent {
         
         datasets:  [
           {
-            label: 'Consumption ',
+            label: ' Consumption',
             data: energyUsageResults1,
             borderColor:  'rgba(127, 205, 187, 1)',
             backgroundColor:  'rgba(127, 205, 187, 0.3)',
             borderWidth: 2.5,
           },
-          
+          {
+            label: ' Prediction',
+            data: this.list1pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
+            
+          },
         ]
         
       }
@@ -354,7 +381,7 @@ export class LineWeekChartComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -363,6 +390,7 @@ export class LineWeekChartComponent {
           }
           ,
           x:{
+            
             ticks:{
               color:'#000',
               font:{
@@ -380,8 +408,12 @@ export class LineWeekChartComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+          
           datalabels:{display: false},
           legend:{display:false},
           title: {

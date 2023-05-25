@@ -61,13 +61,13 @@ export class ProsumerWeekProductionComponent {
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.currentDate){
-        this.sdate = null;
+      if(value.end == null){
+        this.send = this.currentDate;
       }
       else{
-        this.ngOnInit()
+        this.send = value.end
       }
+      this.ngOnInit();
     });
   }
   campaignOne: FormGroup = new FormGroup({
@@ -75,8 +75,8 @@ export class ProsumerWeekProductionComponent {
     end: new FormControl()
   });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  sdate = this.firstdate;
+  send = this.currentDate;
 
   ngOnInit(): void {
     let token=new JwtToken();
@@ -141,7 +141,7 @@ export class ProsumerWeekProductionComponent {
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     let max=0;
-    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    if(energyUsageResults2[0]===0 )
     {
       max=1;
     }
@@ -152,12 +152,21 @@ export class ProsumerWeekProductionComponent {
         
         datasets:  [
           
+         
           {
-            label: 'Production',
+            label: ' Production',
             data: energyUsageResults2,
             borderColor: 'rgba(29, 145, 192, 1)',
             backgroundColor: 'rgba(29, 145, 192, 0.2)',
             borderWidth: 2,
+          },
+          {
+            label: ' Prediction',
+            data: this.list2pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
+            
           }
           
         ]
@@ -190,7 +199,7 @@ export class ProsumerWeekProductionComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -199,6 +208,7 @@ export class ProsumerWeekProductionComponent {
           }
           ,
           x:{
+            
             ticks:{
               color:'#000',
               font:{
@@ -216,7 +226,10 @@ export class ProsumerWeekProductionComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
           datalabels:{display: false},
           legend:{

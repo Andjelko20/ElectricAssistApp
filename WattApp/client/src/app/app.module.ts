@@ -9,14 +9,12 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AdminDsoAddComponent } from "./components/admin/admin-dso-add/admin-dso-add.component";
 import { AdminDsoComponent } from "./components/admin/admin-dso/admin-dso.component";
-import { ChangePasswordComponent } from "./components/change-password/change-password.component";
 import { AllProsumersComponent } from "./components/dso/all-prosumers/all-prosumers.component";
 import { BarMonthChartComponent } from "./components/dso/charts/bar-month-chart/bar-month-chart.component";
 import { BarYearChartComponent } from "./components/dso/charts/bar-year-chart/bar-year-chart.component";
 import { LineDayChartComponent } from "./components/dso/charts/line-day-chart/line-day-chart.component";
 import { LineWeekChartComponent } from "./components/dso/charts/line-week-chart/line-week-chart.component";
 import { PieChartComponent } from "./components/dso/charts/pie-chart/pie-chart.component";
-import { MapsComponent } from "./components/dso/maps/maps.component";
 import { MonthConsumptionComponent } from "./components/dso/meter-prosumer/month-consumption/month-consumption.component";
 import { MonthProductionComponent } from "./components/dso/meter-prosumer/month-production/month-production.component";
 import { TodayConsumptionComponent } from "./components/dso/meter-prosumer/today-consumption/today-consumption.component";
@@ -116,7 +114,6 @@ import { TodayProsumerComponent } from './components/weather/today-prosumer/toda
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    ChangePasswordComponent,
     PieChartComponent,
     ProsumerHomePageComponent,
     ProsumerDevicesPageComponent,
@@ -130,7 +127,6 @@ import { TodayProsumerComponent } from './components/weather/today-prosumer/toda
     ConsumptionTodayWattmeterComponent,
     ConsumptionMonthWattmeterComponent,
     ConsumptionYearWattmeterComponent,
-    MapsComponent,
     AllProsumersComponent,
     LineDayChartComponent,
     BarYearChartComponent,

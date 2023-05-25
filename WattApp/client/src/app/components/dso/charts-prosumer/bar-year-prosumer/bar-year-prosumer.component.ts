@@ -100,18 +100,32 @@ export class BarYearProsumerComponent {
   
       const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
       const month = this.list2.map(day => day.month);
+      let max
+      if(energyUsageResults2[0]===0)
+      {
+        max=1;
+      }
       const Linechart =new Chart("barplot1", {
           type: 'bar',
           data : {
-            labels: month,
+            labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
             datasets: [
               {
-                label: 'Production',
+                label: ' Production',
                 data: energyUsageResults2,
                 borderColor: 'rgba(29, 145, 192, 1)',
                 backgroundColor: 'rgba(29, 145, 192, 0.2)',
                 borderWidth: 2,
+               
               },
+              {
+                label: ' Prediction',
+                data: this.list2pred,
+                borderColor: 'rgba(252, 129, 155, 1)',
+                backgroundColor: 'rgba(252, 129, 155, 0.2)',
+                borderWidth: 2,
+                categoryPercentage:0.5
+              }
             ]
           },
           options: 
@@ -139,11 +153,10 @@ export class BarYearProsumerComponent {
                   }
                 },
                 position: "left",
-                suggestedMin: 5,
-                suggestedMax: 140,
+                suggestedMax: max,
                 title:{
                   display:true,
-                  text: "Production (kWh)",
+                  text: "Production [kWh]",
                   color: '#000',
                   font:{
                     size:15
@@ -153,12 +166,12 @@ export class BarYearProsumerComponent {
               }
               ,
               x:{
+                stacked:true,
                 ticks:{
                   color:'#000',
                   font:{
                     size:15
                   }
-                  
                 },
                 title:{
                   display:true,
@@ -170,12 +183,11 @@ export class BarYearProsumerComponent {
                 }
               }
               
-                
-              
-              
-              
             },
-            
+            interaction: {
+              intersect: false,
+              mode: 'index',
+            },
             plugins: {
               datalabels: {
                 display: false
@@ -205,26 +217,34 @@ export class BarYearProsumerComponent {
   
       const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
       const month = this.list1.map(day => day.month);
-  
+      let max=0;
+      if(energyUsageResults1[0]===0)
+      {
+        max=1;
+      }
       const Linechart =new Chart("barplot2", {
           type: 'bar',
          
           data : {
-            labels: month,
+            labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
             
             datasets: [
               {
-                label: 'Consumption',
+                label: ' Consumption',
                 data: energyUsageResults1,
                 borderColor:  'rgba(127, 205, 187, 1)',
                 backgroundColor:  'rgba(127, 205, 187, 0.3)',
                 borderWidth: 2.5,
-                
               },
-             
-              
+              {
+                label: ' Prediction',
+                data: this.list1pred,
+                borderColor: 'rgba(252, 129, 155, 1)',
+                backgroundColor: 'rgba(252, 129, 155, 0.2)',
+                borderWidth: 2,
+                categoryPercentage:0.5
+              },
             ]
-            
           },
           options: 
           {
@@ -251,11 +271,10 @@ export class BarYearProsumerComponent {
                   }
                 },
                 position: "left",
-                suggestedMin: 5,
-                suggestedMax: 140,
+                suggestedMax: max,
                 title:{
                   display:true,
-                  text: "Consumption (kWh)",
+                  text: "Consumption [kWh]",
                   color: '#000',
                   font:{
                     size:15
@@ -265,6 +284,7 @@ export class BarYearProsumerComponent {
               }
               ,
               x:{
+                stacked:true,
                 ticks:{
                   color:'#000',
                   font:{
@@ -283,7 +303,10 @@ export class BarYearProsumerComponent {
               }
 
             },
-            
+            interaction: {
+              intersect: false,
+              mode: 'index',
+            },
             plugins: {
               datalabels: {
                 display: false

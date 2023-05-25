@@ -1,10 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
-import { forkJoin, switchMap } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-import { MatDatepickerModule} from '@angular/material/datepicker';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
@@ -104,7 +103,11 @@ export class ProsumerMonthGraphComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const monthbyday = this.list1.map(day => day.day);
-
+    let max=0;
+    if(energyUsageResults1[0]===0 )
+    {
+      max=1;
+    }
     const Linechart =new Chart("barplot2", {
         type: 'bar',
        
@@ -113,11 +116,19 @@ export class ProsumerMonthGraphComponent {
           
           datasets: [
             {
-              label: 'Consumption',
+              label: ' Consumption',
               data: energyUsageResults1,
               borderColor:  'rgba(127, 205, 187, 1)',
               backgroundColor:  'rgba(127, 205, 187, 0.3)',
               borderWidth: 2.5,
+            },
+            {
+              label: ' Prediction',
+              data: this.list1pred,
+              borderColor: 'rgba(252, 129, 155, 1)',
+              backgroundColor: 'rgba(252, 129, 155, 0.2)',
+              borderWidth: 2,
+              
               
             },
             
@@ -139,7 +150,7 @@ export class ProsumerMonthGraphComponent {
             }
           },  
           maintainAspectRatio: false,
-          responsive: true, // Enable responsiveness
+          responsive: true, 
           
           scales:{
             y: {
@@ -149,10 +160,11 @@ export class ProsumerMonthGraphComponent {
                   size:13
                 }
               },
+              suggestedMax:max,
               position: "left",
               title:{
                 display:true,
-                text: "Consumption (kWh)",
+                text: "Consumption [kWh]",
                 color: '#000',
                 font:{
                   size:13
@@ -161,6 +173,7 @@ export class ProsumerMonthGraphComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{
@@ -178,7 +191,10 @@ export class ProsumerMonthGraphComponent {
               }
             }
           },
-         
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
           plugins: {
             datalabels: {
               display: false

@@ -127,7 +127,11 @@ export class DeviceMonthComponent {
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const monthbyday = this.list2.map(day => day.day);
-
+    let max=0;
+    if(energyUsageResults2[0]===0  )
+    {
+      max=1;
+    }
     const Linechart =new Chart("barplot1", {
         type: 'bar',
        
@@ -136,13 +140,20 @@ export class DeviceMonthComponent {
           
           datasets: [
             {
-              label: 'Production',
+              label: ' Production',
               data: energyUsageResults2,
               borderColor: 'rgba(29, 145, 192, 1)',
               backgroundColor: 'rgba(29, 145, 192, 0.2)',
               borderWidth: 2,
             },
-           
+            {
+              label: ' Prediction',
+              data: this.list2pred,
+              borderColor: 'rgba(252, 129, 155, 1)',
+              backgroundColor: 'rgba(252, 129, 155, 0.2)',
+              borderWidth: 2,
+              
+            }
             
           ]
           
@@ -162,7 +173,7 @@ export class DeviceMonthComponent {
             }
           },  
           maintainAspectRatio: false,
-          responsive: true, // Enable responsiveness
+          responsive: true, 
           
           scales:{
             y: {
@@ -172,10 +183,11 @@ export class DeviceMonthComponent {
                   size:13
                 }
               },
+              suggestedMax:max,
               position: "left",
               title:{
                 display:true,
-                text: "Production (kWh)",
+                text: "Production [kWh]",
                 color: '#000',
                 font:{
                   size:13
@@ -184,6 +196,7 @@ export class DeviceMonthComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{
@@ -201,7 +214,10 @@ export class DeviceMonthComponent {
               }
             }
           },
-         
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
           plugins: {
             datalabels: {
               display: false
@@ -232,7 +248,11 @@ export class DeviceMonthComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const monthbyday = this.list1.map(day => day.day);
-
+    let max=0;
+    if(energyUsageResults1[0]===0  )
+    {
+      max=1;
+    }
     const Linechart =new Chart("barplot2", {
         type: 'bar',
        
@@ -241,11 +261,18 @@ export class DeviceMonthComponent {
           
           datasets: [
             {
-              label: 'Consumption',
+              label: ' Consumption',
               data: energyUsageResults1,
               borderColor:  'rgba(127, 205, 187, 1)',
               backgroundColor:  'rgba(127, 205, 187, 0.3)',
               borderWidth: 2.5,
+            },
+            {
+              label: ' Prediction',
+              data: this.list1pred,
+              borderColor: 'rgba(252, 129, 155, 1)',
+              backgroundColor: 'rgba(252, 129, 155, 0.2)',
+              borderWidth: 2,
               
             },
             
@@ -267,8 +294,7 @@ export class DeviceMonthComponent {
           }
         },  
           maintainAspectRatio: false,
-          responsive: true, // Enable responsiveness
-          
+          responsive: true, 
           scales:{
             y: {
               ticks:{
@@ -277,10 +303,11 @@ export class DeviceMonthComponent {
                   size:13
                 }
               },
+              suggestedMax:max,
               position: "left",
               title:{
                 display:true,
-                text: "Consumption (kWh)",
+                text: "Consumption [kWh]",
                 color: '#000',
                 font:{
                   size:13
@@ -289,6 +316,7 @@ export class DeviceMonthComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{
@@ -306,7 +334,10 @@ export class DeviceMonthComponent {
               }
             }
           },
-         
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
           plugins: {
             datalabels: {
               display: false

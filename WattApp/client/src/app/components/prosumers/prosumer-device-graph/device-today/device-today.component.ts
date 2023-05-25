@@ -115,7 +115,7 @@ export class DeviceTodayComponent {
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
     let max=0;
-    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    if(energyUsageResults2[0]===0 )
     {
       max=1;
     }
@@ -126,9 +126,8 @@ export class DeviceTodayComponent {
         
         datasets: [
           {
-            label: 'Production',
+            label: ' Production',
             data: energyUsageResults2,
-            tension:0.1,
             backgroundColor: 'rgba(29, 145, 192, 0.2)',
             borderColor: 'rgba(29, 145, 192, 1)',
             borderWidth: 1,
@@ -137,8 +136,24 @@ export class DeviceTodayComponent {
             pointBorderWidth: 8,
             pointRadius: 1,
             pointHoverRadius: 6,
-            fill:true
-          }
+            fill:true,
+            
+          },
+          {
+            label: ' Prediction',
+            data: this.list2pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(252, 129, 155, 1)',
+            pointBorderColor: 'rgba(252, 129, 155, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
+            pointHoverRadius: 6,
+            segment:{
+              borderDash:[6,6]
+            }
+            
+          },
           
         ]
         
@@ -172,7 +187,7 @@ export class DeviceTodayComponent {
             position: "left",
             title:{
               display:true,
-              text: "Prediction (kWh)",
+              text: "Prediction [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -198,8 +213,17 @@ export class DeviceTodayComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend:{
             display:false
@@ -229,7 +253,7 @@ export class DeviceTodayComponent {
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
     let max=0;
-    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    if(energyUsageResults1[0]===0 )
     {
       max=1;
       
@@ -241,9 +265,8 @@ export class DeviceTodayComponent {
         
         datasets: [
           {
-            label: 'Consumption ',
+            label: ' Consumption',
             data: energyUsageResults1,
-            tension:0.1,
             backgroundColor: 'rgba(127, 205, 187, 0.3)',
             borderColor: ' rgba(127, 205, 187, 1)',
             borderWidth: 1.5,
@@ -253,6 +276,21 @@ export class DeviceTodayComponent {
             pointRadius: 1,
             pointHoverRadius: 6,
             fill:true,
+            
+          },
+          {
+            label: ' Prediction',
+            data: this.list1pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(252, 129, 155, 1)',
+            pointBorderColor: 'rgba(252, 129, 155, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
+            pointHoverRadius: 6,
+            segment:{
+              borderDash:[6,6]
+            }
             
           },
         ]
@@ -287,7 +325,7 @@ export class DeviceTodayComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -313,8 +351,17 @@ export class DeviceTodayComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend:{
             display:false

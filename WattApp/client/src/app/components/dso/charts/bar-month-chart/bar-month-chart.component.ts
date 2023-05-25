@@ -1,12 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { Settlement } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-import { MatDatepickerModule} from '@angular/material/datepicker';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
@@ -187,11 +186,19 @@ export class BarMonthChartComponent {
           labels: monthbyday,
           datasets: [
             {
-              label: 'Production',
+              label: ' Production',
               data: energyUsageResults2,
               borderColor: 'rgba(29, 145, 192, 1)',
               backgroundColor: 'rgba(29, 145, 192, 0.2)',
               borderWidth: 2,
+            },
+            {
+              label: ' Prediction',
+              data: this.list2pred,
+              borderColor: 'rgba(252, 129, 155, 1)',
+              backgroundColor: 'rgba(252, 129, 155, 0.2)',
+              borderWidth: 2,
+             
             },
           ]
         },
@@ -223,7 +230,7 @@ export class BarMonthChartComponent {
               position: "left",
               title:{
                 display:true,
-                text: "Production (kWh)",
+                text: "Production [kWh]",
                 color: '#000',
                 font:{
                   size:15
@@ -232,6 +239,7 @@ export class BarMonthChartComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{
@@ -249,7 +257,10 @@ export class BarMonthChartComponent {
               }
             }
           },
-         
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
           plugins: {
             datalabels:{display: false},
           legend:{display:false},
@@ -290,6 +301,13 @@ export class BarMonthChartComponent {
               backgroundColor:  'rgba(127, 205, 187, 0.3)',
               borderWidth: 2.5,
             },
+            {
+              label: ' Prediction',
+              data: this.list1pred,
+              borderColor: 'rgba(252, 129, 155, 1)',
+              backgroundColor: 'rgba(252, 129, 155, 0.2)',
+              borderWidth: 2,
+            },
             
           ]
           
@@ -309,7 +327,7 @@ export class BarMonthChartComponent {
             }
           },  
           maintainAspectRatio: false,
-          responsive: true, // Enable responsiveness
+          responsive: true, 
           
           scales:{
             y: {
@@ -322,7 +340,7 @@ export class BarMonthChartComponent {
               position: "left",
               title:{
                 display:true,
-                text: "Consumption (kWh)",
+                text: "Consumption [kWh]",
                 color: '#000',
                 font:{
                   size:15
@@ -331,6 +349,7 @@ export class BarMonthChartComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{
@@ -348,7 +367,10 @@ export class BarMonthChartComponent {
               }
             }
           },
-         
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
           plugins: {
             
             datalabels:{display: false},

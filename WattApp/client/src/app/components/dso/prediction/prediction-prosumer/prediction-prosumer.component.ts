@@ -38,12 +38,12 @@ export class PredictionProsumerComponent {
             currentDate.setDate(currentDate.getDate() + 1 );
           }
     this.deviceService.predictionUser(this.idProsumer,2).subscribe((data: WeekByDay[]) =>{
-      
+      this.loader=false;
       this.list1 = data;
       this.deviceService.predictionUser(this.idProsumer,1).subscribe((data: WeekByDay[]) =>{
 
         this.list2 = data;
-        this.loader=false;
+        
         this.LineChartProduction();
         this.LineChartConsumption();
       })
@@ -112,7 +112,7 @@ export class PredictionProsumerComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -233,7 +233,7 @@ export class PredictionProsumerComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:13

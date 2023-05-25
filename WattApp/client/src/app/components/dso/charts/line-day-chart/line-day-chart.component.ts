@@ -111,7 +111,7 @@ export class LineDayChartComponent {
             this.list2 = list2;
             this.list2pred = [];
             for (const obj of this.list2) {
-              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
+              const increasedEnergy = (obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01));
               this.list2pred.push(increasedEnergy);
             }
             this.LineChartProduction();
@@ -188,7 +188,7 @@ export class LineDayChartComponent {
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const hours = this.list2.map(day => day.hour);
     let max=0;
-    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    if(energyUsageResults2[0]===0 )
     {
       max=1;
     }
@@ -199,9 +199,8 @@ export class LineDayChartComponent {
         
         datasets: [
           {
-            label: 'Production',
+            label: ' Production',
             data: energyUsageResults2,
-            tension:0.1,
             backgroundColor: 'rgba(29, 145, 192, 0.2)',
             borderColor: 'rgba(29, 145, 192, 1)',
             borderWidth: 1,
@@ -214,18 +213,18 @@ export class LineDayChartComponent {
             
           },
           {
-            label: 'Production Prediction ',
+            label: ' Prediction',
             data: this.list2pred,
-            tension:0.1,
-            backgroundColor: 'rgba(127, 205, 187, 0.3)',
-            borderColor: ' rgba(127, 205, 187, 1)',
-            borderWidth: 1.5,
-            pointBackgroundColor: 'rgba(127, 205, 187, 1)',
-            pointBorderColor: 'rgba(127, 205, 187, 1)',
+            borderColor: 'rgba(252, 129, 155, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(252, 129, 155, 1)',
+            pointBorderColor: 'rgba(252, 129, 155, 1)',
             pointBorderWidth: 8,
             pointRadius: 1,
             pointHoverRadius: 6,
-            fill:true,
+            segment:{
+              borderDash:[6,6]
+            }
             
           },
         ]
@@ -257,7 +256,7 @@ export class LineDayChartComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -282,21 +281,54 @@ export class LineDayChartComponent {
             }
           }
           ,
+          
+        },
+        interaction: {
+          intersect: false,
+          mode: 'index',
         },
         plugins: {
-          datalabels:{display: false},
-          legend: {display: false
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
           },
+          datalabels:{display: false},
+          legend: {
+            labels:{
+            color:'#000',
+           
+            font:{
+              size:16
+            },
+            boxWidth:15,
+            boxHeight:15,
+            useBorderRadius:true,
+            borderRadius:7
+          },
+          
+          position: 'bottom',
+          onHover: function (event, legendItem, legend) {
+            document.body.style.cursor = 'pointer';
+          },
+          onLeave: function (event, legendItem, legend) {
+              document.body.style.cursor = 'default';
+          },
+          },
+          
           title: {
-            
             display: true,
             text: 'Production in one day',
             color: '#000',
             font:{
               size:20
             }
-          }
+          },
+          
+         
         }
+        
       }
     });
   }
@@ -308,10 +340,10 @@ export class LineDayChartComponent {
         chartExists.destroy();
     }
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult)
-
+    
     const hours = this.list1.map(day => day.hour);
     let max=0;
-    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    if(energyUsageResults1[0]===0 )
     {
       max=1;
     }
@@ -322,9 +354,8 @@ export class LineDayChartComponent {
         
         datasets: [
           {
-            label: 'Consumption ',
+            label: ' Consumption',
             data: energyUsageResults1,
-            tension:0.1,
             backgroundColor: 'rgba(127, 205, 187, 0.3)',
             borderColor: ' rgba(127, 205, 187, 1)',
             borderWidth: 1.5,
@@ -337,18 +368,18 @@ export class LineDayChartComponent {
             
           },
           {
-            label: 'Consumption Prediction ',
+            label: ' Prediction',
             data: this.list1pred,
-            tension:0.1,
-            backgroundColor: 'rgba(127, 205, 187, 0.3)',
-            borderColor: ' rgba(127, 205, 187, 1)',
-            borderWidth: 1.5,
-            pointBackgroundColor: 'rgba(127, 205, 187, 1)',
-            pointBorderColor: 'rgba(127, 205, 187, 1)',
+            borderColor: 'rgba(252, 129, 155, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(252, 129, 155, 1)',
+            pointBorderColor: 'rgba(252, 129, 155, 1)',
             pointBorderWidth: 8,
             pointRadius: 1,
             pointHoverRadius: 6,
-            fill:true,
+            segment:{
+              borderDash:[6,6]
+            }
             
           },
         ],
@@ -382,7 +413,7 @@ export class LineDayChartComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -408,7 +439,17 @@ export class LineDayChartComponent {
           }
           ,
         },
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend: { 
             display: false

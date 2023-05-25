@@ -61,13 +61,13 @@ export class ProsumerWeekGraphComponent {
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.currentDate){
-        this.sdate = null;
+      if(value.end == null){
+        this.send = this.currentDate;
       }
       else{
-        this.ngOnInit()
+        this.send = value.end
       }
+      this.ngOnInit();
     });
   }
   campaignOne: FormGroup = new FormGroup({
@@ -75,22 +75,13 @@ export class ProsumerWeekGraphComponent {
     end: new FormControl()
   });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  sdate = this.firstdate;
+  send = this.currentDate;
 
   ngOnInit(): void {
     let token=new JwtToken();
     const id = token.data.id as number;
 
-    if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
-      forkJoin([
-        this.deviceService.weekByDayUser(id, 2),
-      ]).subscribe(([list1]) => {
-        this.list1 = list1;
-        this.LineChartConsumption();
-    });
-    }
-    else{
           this.dayNames = []
           const currentDate = new Date(this.sdate);
           const enddate = new Date(this.send)
@@ -124,7 +115,6 @@ export class ProsumerWeekGraphComponent {
             }
             this.LineChartConsumption();
           });
-    }
   }
   
   LineChartConsumption(){
@@ -137,7 +127,7 @@ export class ProsumerWeekGraphComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     let max=0;
-    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    if(energyUsageResults1[0]===0 )
     {
       max=1;
     }
@@ -148,11 +138,20 @@ export class ProsumerWeekGraphComponent {
         
         datasets:  [
           {
-            label: 'Consumption ',
+            label: ' Consumption',
             data: energyUsageResults1,
             borderColor:  'rgba(127, 205, 187, 1)',
             backgroundColor:  'rgba(127, 205, 187, 0.3)',
             borderWidth: 2.5,
+          },
+          {
+            label: ' Prediction',
+            data: this.list1pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
+           
+            
           },
           
         ]
@@ -186,7 +185,7 @@ export class ProsumerWeekGraphComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -195,6 +194,7 @@ export class ProsumerWeekGraphComponent {
           }
           ,
           x:{
+           
             ticks:{
               color:'#000',
               font:{
@@ -212,8 +212,10 @@ export class ProsumerWeekGraphComponent {
           }
           ,
         },
-        
-      
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
           datalabels:{display: false},
           legend:{

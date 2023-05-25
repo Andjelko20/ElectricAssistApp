@@ -1,4 +1,4 @@
-import { Component, Injectable, ViewChild } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
@@ -8,7 +8,6 @@ import {
   MatDateRangeSelectionStrategy,
   DateRange,
   MAT_DATE_RANGE_SELECTION_STRATEGY,
-  MatDatepickerInputEvent,
 } from '@angular/material/datepicker';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -63,13 +62,13 @@ export class LineWeekProsumerComponent {
   constructor(private deviceService:HistoryPredictionService,private route:ActivatedRoute) {
     this.campaignOne.valueChanges.subscribe((value) => {
       this.sdate = value.start;
-      this.send = value.end;
-      if(this.send > this.currentDate){
-        this.sdate = null;
+      if(value.end == null){
+        this.send = this.currentDate;
       }
       else{
-        this.ngOnInit()
+        this.send = value.end
       }
+      this.ngOnInit();
     });
   }
   campaignOne: FormGroup = new FormGroup({
@@ -77,30 +76,17 @@ export class LineWeekProsumerComponent {
     end: new FormControl()
   });
 
-  sdate = this.campaignOne.value.start;
-  send = this.campaignOne.value.end;
+  sdate = this.firstdate;
+  send = this.currentDate;
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-
-    if((this.sdate == null && this.send == null) || (this.sdate != null && this.send == null)){
-      forkJoin([
-        this.deviceService.weekByDayUser(id, 2),
-        this.deviceService.weekByDayUser(id, 1),
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-        this.LineChartProduction();
-        this.LineChartConsumption();
-    });
-    }
-    else{
       this.dayNames = []
       const currentDate = new Date(this.sdate);
       const enddate = new Date(this.send)
       enddate.setDate(enddate.getDate()-1)
       while (currentDate <= enddate) {
-        const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+        const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
         this.dayNames.push(dayName);
         currentDate.setDate(currentDate.getDate() + 1 );
       }
@@ -116,7 +102,6 @@ export class LineWeekProsumerComponent {
       const year2 = this.send.getFullYear();
       let string1 = year1+'-'+monthString1+'-'+dayString1+' '+'00:00:00';
       let string2 = year2+'-'+monthString2+'-'+dayString2+' '+'00:00:00';
-
           forkJoin([
             this.deviceService.weekByDayUserFilter(string1,string2,id, 2),
             this.deviceService.weekByDayUserFilter(string1,string2,id, 1)
@@ -136,7 +121,6 @@ export class LineWeekProsumerComponent {
             this.LineChartProduction();
             this.LineChartConsumption();
           });
-    }
     
   }
   LineChartProduction(){
@@ -150,7 +134,7 @@ export class LineWeekProsumerComponent {
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
 
     let max=0;
-    if(energyUsageResults2[0]===0 && energyUsageResults2[1]===0 )
+    if(energyUsageResults2[0]===0  )
     {
       max=1;
     }
@@ -162,21 +146,19 @@ export class LineWeekProsumerComponent {
         datasets:  [
           
           {
-            label: 'Production',
+            label: ' Production',
             data: energyUsageResults2,
-            // tension:0.1,
-            // backgroundColor: 'rgba(29, 145, 192, 0.2)',
-            // borderColor: 'rgba(29, 145, 192, 1)',
-            // borderWidth: 1,
-            // pointBackgroundColor: 'rgba(29, 145, 192, 1)',
-            // pointBorderColor: 'rgba(29, 145, 192, 1)',
-            // pointBorderWidth: 8,
-            // pointRadius: 1,
-            // pointHoverRadius: 6,
-            // fill:true
             borderColor: 'rgba(29, 145, 192, 1)',
-              backgroundColor: 'rgba(29, 145, 192, 0.2)',
-              borderWidth: 2,
+            backgroundColor: 'rgba(29, 145, 192, 0.2)',
+            borderWidth: 2,
+           
+          },
+          {
+            label: ' Prediction',
+            data: this.list2pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
           }
           
         ]
@@ -209,7 +191,7 @@ export class LineWeekProsumerComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -235,7 +217,10 @@ export class LineWeekProsumerComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
           datalabels:{display: false},
           legend: {display:false
@@ -263,7 +248,7 @@ export class LineWeekProsumerComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     let max=0;
-    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    if(energyUsageResults1[0]===0 )
     {
       max=1;
     }
@@ -274,21 +259,18 @@ export class LineWeekProsumerComponent {
         
         datasets:  [
           {
-            label: 'Consumption ',
+            label: ' Consumption ',
             data: energyUsageResults1,
-            // tension:0.1,
-            // backgroundColor: 'rgba(127, 205, 187, 0.3)',
-            // borderColor: ' rgba(127, 205, 187, 1)',
-            // borderWidth: 1.5,
-            // pointBackgroundColor: 'rgba(127, 205, 187, 1)',
-            // pointBorderColor: 'rgba(127, 205, 187, 1)',
-            // pointBorderWidth: 8,
-            // pointRadius: 1,
-            // pointHoverRadius: 6,
-            // fill:true,
             borderColor:  'rgba(127, 205, 187, 1)',
             backgroundColor:  'rgba(127, 205, 187, 0.3)',
             borderWidth: 2.5,
+          },
+          {
+            label: ' Prediction',
+            data: this.list1pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
           },
           
         ]
@@ -321,7 +303,7 @@ export class LineWeekProsumerComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -347,7 +329,10 @@ export class LineWeekProsumerComponent {
           }
           ,
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
           datalabels:{display: false},
           legend: {display:false
