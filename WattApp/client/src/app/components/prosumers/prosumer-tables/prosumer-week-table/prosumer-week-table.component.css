@@ -8,18 +8,19 @@
 
 .container2 {
     display: inline-block;
-    width: 15%;
-    margin-left: 5%;
+    width: 68%;
+}
 
-  }
-  .container3 {
-    width: 15%;
+mat-form-field {
+    width: 87%;
+    float: left;
+}
+
+.container3 {
     float: right;
-    margin-right: 5%;
-  }
+}
 
-
-  .btn {
+.btn {
     padding: 8px;
     border: none;
     border-radius: 4px;
@@ -29,11 +30,11 @@
     color: white;
     font-weight: normal;
     text-align: center;
-  }
-  
-  .btn:hover {
-    background-color: #0d8beb;
-  }
+}
+
+.btn:hover {
+    background-color: #93ede2;
+}
 
 @media (min-width: 320px) {
     h1 {
@@ -62,5 +63,27 @@
     }
     .table {
         font-size: 25px;
+    }
+    .container2 {
+        display: inline-block;
+        width: 37%;
+    }
+    .container3 {
+        margin-right: 10%;
+    }
+    mat-form-field {
+        width: 100%;
+        float: left;
+    }
+}
+
+@media(min-width:1200px) {
+    .container2 {
+        display: inline-block;
+        width: 37%;
+    }
+    mat-form-field {
+        max-width: 55%;
+        float: right;
     }
 }
