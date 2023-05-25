@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { WeekByDay, YearsByMonth, updateDevices } from '../models/devices.model';
 import { NavigationStart, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import e from 'cors';
 @Injectable({
   providedIn: 'root'
 })
@@ -31,15 +32,57 @@ export class DevicesService {
   {
     return this.previousUrl;
   }
-  getAllDevices(pageNumber:number, pageSize:number,categoryId:number):Observable<any>
+  getAllDevices(pageNumber:number, pageSize:number,filter:any):Observable<any>
   {
-    if(categoryId!=0)
-    {
-     return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12&categoryId='+categoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    let url = new URL(environment.serverUrl + "/api/device");
+    url.searchParams.set("pageNumber",pageNumber.toString());
+	  url.searchParams.set("pageSize",pageSize.toString());
+    if(filter == null)
+      return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    else{
+      if(filter?.categoryId > 0)
+        url.searchParams.set("categoryId", filter.categoryId);
+      if(!isNaN(filter.turnOn) && filter.turnOn>-1){
+        if(filter.turnOn == 1){
+          url.searchParams.set("turnOn", "true");
+        }
+        else{
+          url.searchParams.set("turnOn", "false");
+        }
+      }
+      if(!isNaN(filter.visibility) && filter.visibility > -1){
+        if(filter.visibility == 1)
+          url.searchParams.set("visibility", "true");
+        else
+          url.searchParams.set("visibility", "false");
+      }
+      if(!isNaN(filter.controlability) && filter.controlability > -1){
+        if(filter.controlability == 1)
+          url.searchParams.set("controlability", "true");
+        else
+          url.searchParams.set("controlability", "false");
+      }
+      if(filter.searchValue != "")
+        url.searchParams.set("searchValue", filter.searchValue);
+      if(!isNaN(filter.sortCriteria)){
+        if(filter.sortCriteria == 1)
+          url.searchParams.set("sortCriteria", "0");
+        else
+          url.searchParams.set("sortCriteria", "1");   
+      }
+      if(!isNaN(filter.byAscending)){
+        if(filter.byAscending == 1)
+          url.searchParams.set("byAscending", "true")
+        else
+        url.searchParams.set("byAscending", "false")
+      }
+        
     }
-    else
-    { return this.http.get<any>(environment.serverUrl+'/api/device?pageNumber='+pageNumber+'&pageSize=12',{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
-    }
+    return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  getNumberOfDevices(userId : number):Observable<any>{
+    return this.http.get<any>(environment.serverUrl+"/api/Prosumer/numberOfDevices/" + userId);
   }
   getAllDevicesNoPaggination():Observable<any>
   {
@@ -88,7 +131,32 @@ export class DevicesService {
       
     return this.http.put(environment.serverUrl+"/api/device/controlability"+id,{controlability:true},{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}}); 
   }
- 
+
+  weekByDay(cityId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/WeekByDay/City/"+cityId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  weekByDaySettlement(settlementId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/WeekByDay/Settlement/"+settlementId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  monthByDay(cityId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/MonthByDay/City/"+cityId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  monthByDaySettlement(settlementId:number,deviceCategoryId:number): Observable<WeekByDay[]>{
+    return this.http.get<WeekByDay[]>(environment.serverUrl+"/api/History/MonthByDay/Settlement/"+settlementId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  yearByMonth(cityId:number,deviceCategoryId:number): Observable<YearsByMonth[]>{
+    return this.http.get<YearsByMonth[]>(environment.serverUrl+"/api/History/YearByMonth/City/"+cityId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  yearByMonthSettlement(settlementId:number,deviceCategoryId:number): Observable<YearsByMonth[]>{
+    return this.http.get<YearsByMonth[]>(environment.serverUrl+"/api/History/YearByMonth/Settlement/"+settlementId+"/"+deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+  }
+
+  
   
   
  

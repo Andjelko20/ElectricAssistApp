@@ -28,6 +28,10 @@ namespace Server.Filters
             {
                 devices = devices.Where(src => src.TurnOn == filter.turnOn);
             }
+            if (filter.visibility != null)
+            {
+                devices = devices.Where(src => src.Visibility == filter.visibility);
+            }
             if (filter.controlability != null)
             {
                 devices = devices.Where(src => src.Controlability == filter.controlability);
@@ -44,7 +48,7 @@ namespace Server.Filters
                 }
             }
 
-            //Sortiranje
+            //Na frontu moguce samo sortiranje prema nazivu uredjaja
             if(filter.sortCriteria != null)
             {
                 switch (filter.sortCriteria)
@@ -80,6 +84,11 @@ namespace Server.Filters
                         }
                         break;
                 }
+            }
+
+            if(filter.searchValue != null)
+            {
+                devices = devices.Where(src => src.Name.ToUpper().StartsWith(filter.searchValue.ToUpper()));
             }
 
             return devices;

@@ -131,9 +131,10 @@ export class AuthService {
   }
   getNumberOfDevices(id:number):Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+'/api/Prosumer/numberOfDevices/'+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    return this.http.get<any>(environment.serverUrl+'/api/Prosumer/numberOfDevices/'+localStorage.getItem('token'),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
 
   }
+ 
   getMyLocation(): Observable<{ latitude: number, longitude: number }> {
     const url = `${environment.serverUrl}/api/Users/my_location`;
     const headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
@@ -149,4 +150,5 @@ export class AuthService {
       })
     );
     }
+
 }

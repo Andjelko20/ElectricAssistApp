@@ -95,7 +95,7 @@ namespace Server.Controllers
         [HttpGet]
         [Route("page/filters")]
         [Authorize(Roles=Roles.Dispatcher)]
-        public async Task<IActionResult> GetPage([FromQuery] UserFilterModel userFilterModel, [FromQuery] ProsumerDSOFilterModel prosumerDSOFilter, [FromQuery] int pageNumber,[FromQuery] long cityId=0, [FromQuery] int pageSize=20)
+        public async Task<IActionResult> GetPage([FromQuery] ProsumerDSOFilterModel filter, [FromQuery] int pageNumber,[FromQuery] long cityId=0, [FromQuery] int pageSize=20)
         {
             try
             {
@@ -104,12 +104,12 @@ namespace Server.Controllers
                 var loggedInUser = await userService.GetUserById(id);
                 logger.LogInformation(cityId.ToString());
                 logger.LogInformation(loggedInUser.Settlement.CityId.ToString());
-                return Ok(await userService.GetPageOfUsersForDSO(pageNumber, pageSize, cityId, loggedInUser.Settlement.CityId, userFilterModel, prosumerDSOFilter));
+                return Ok(await userService.GetPageOfUsersForDSO(pageNumber, pageSize, cityId, loggedInUser.Settlement.CityId, filter));
 
             }
             catch (HttpRequestException ex)
             {
-                return StatusCode((int)ex.StatusCode.Value, new MessageResponseDTO(ex.Message));
+                return BadRequest(new MessageResponseDTO(ex.Message));
             }
             catch (Exception ex)
             {

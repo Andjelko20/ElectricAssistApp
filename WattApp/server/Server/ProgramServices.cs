@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Server.Data;
@@ -10,9 +9,6 @@ using Server.Services;
 using Server.Services.Implementations;
 using System.Reflection;
 using System.Text;
-using Server.Services.Implementations;
-using Server.Mappers;
-using Server.Controllers;
 
 namespace Server
 {

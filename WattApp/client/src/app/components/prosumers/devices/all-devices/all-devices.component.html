@@ -1,13 +1,57 @@
 <div class="adddevices">
-    <h1 id="allh1">All devices
-    </h1>
-    <label for="deviceCategoryId">Filter by:</label>
-    <select id="deviceCategoryId" class="form-select" aria-label="Default select example" name="deviceCategoryId" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>     
-                <option value="0" >All devices</option>
-                <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
-    </select>
-    <a class="btn btn-primary" [routerLink]='["/device-add"]' role="button">Add device</a>
-</div>
+    <h1 id="allh1">Your devices ({{numberOfDevices}})</h1>
+
+    <a class="btn btn-primary" [routerLink]='["/device-add"]' role="button"><span>Add device</span></a>
+    <br>
+    <div class="filter">
+        <div class="first-row">
+            <input type="text" placeholder="Search devices by name" [(ngModel)]="filters.searchValue" (input)="onEnteredSearchValue($event)" id="search">
+        </div>
+                <div class="filter">
+                    <div class="label">
+                        <h2>Filters ({{countActiveFilters()}})</h2>
+                        <a class="clear-filters" (click)="clearFilters()" role="button"><span>Clear filters</span></a>
+                    </div>
+                    
+                    <div class="first-row">
+                        <div class="form-group">
+                            <select id="deviceCategory" class="form-select"  name="deviceCategory" (change)="onSelectedCategory($event)" [(ngModel)]="filters.categoryId" required>     
+                                <option value="0">--Category--</option>
+                                <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select id="turnOn" class="form-select"  name="turnOn" (change)="onSelectedTurnOn($event)" [(ngModel)]="filters.turnOn">     
+                                <option value="-1" >--Status (on/off)--</option>
+                                <option value="1" >Turned on</option>
+                                <option value="2" >Turned off</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="first-row">
+                        <div class="form-group">
+                            <select id="visibility" class="form-select" name="visibility" [(ngModel)]="filters.visibility" (change)="onSelectedVisibility($event)">
+                                <option value="-1">--Visibility--</option>
+                                <option value="1">Allowed</option>
+                                <option value="0">Forbidden</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select id="controlability" class="form-select" name="controlability" [(ngModel)]="filters.controlability" (change)="onSelectedControlability($event)">
+                                <option value="-1">--Controlability--</option>
+                                <option value="1">Allowed</option>
+                                <option value="0">Forbidden</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+
+        </div>
+    <br>
+    
 <div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
 <div class="devices" *ngIf="devices.length!==0">
     <div class="devices-item" id="slide-1" *ngFor="let device of devices | paginate: {itemsPerPage,totalItems,currentPage}">

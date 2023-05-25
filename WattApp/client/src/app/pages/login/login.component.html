@@ -3,11 +3,10 @@
     <div class="containers">
 
         <div class="login-form-wrapper">
-
+            <div class="logo">
+                <img src="assets/white-logo-1.png">
+            </div>
             <div class="login-form">
-                <div class="logo">
-                    <img src="assets/img/logo.png">
-                </div>
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" name="username" class="form-control" [(ngModel)]="username" id="username" (keydown)="toPassword($event)" />
@@ -15,12 +14,14 @@
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" name="password" class="form-control" [(ngModel)]="password" id="password" (keydown)="toLogin($event)" />
-                   <label for="remember"> <input class="checkbox" type="checkbox" name="forgotpass" id="remember"> Remember me</label>
+                </div>
+                <div class="form-group">
+                    <label for="remember">
+                    <input class="checkbox" type="checkbox" name="forgotpass" id="remember"> Remember me</label>
                 </div>
 
                 <div class="btn-container">
                     <button class="btn btn-dark" (click)="login()">Login</button>
-                    <br>
                     <a class="linka" [routerLink]='["/forgot-password"]'>Forgot password?</a>
                 </div>
                 <div class="error-message" *ngIf="show">
