@@ -71,9 +71,6 @@ mat-form-field {
 }
 
 @media(min-width:768px) {
-    .container3 {
-        margin-right: 5%;
-    }
     .table {
         font-size: 20px;
     }

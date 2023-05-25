@@ -16,29 +16,45 @@
 
 .container2 {
     display: inline-block;
-    width: 15%;
-    margin-left: 5%;
+    width: 59%;
+    float: left;
+}
 
-  }
-  .container3 {
-    width: 15%;
+mat-form-field {
+    width: 100%;
+    float: left;
+}
+
+.container3 {
     float: right;
-    margin-right: 5%;
-  }
+}
 
-
-  .btn {
+.btn {
     padding: 8px;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #2199e8;
-    color: white;
+    background-color: #bce9e4;
+    color: grey;
     font-weight: normal;
     text-align: center;
-  }
-  
-  .btn:hover {
-    background-color: #0d8beb;
-  }
+}
+
+.btn:hover {
+    background-color: #93ede2;
+}
+
+@media (min-width:768px) {
+    mat-form-field {
+        width: 31%;
+        float: right;
+    }
+    .container2 {
+        display: inline-block;
+        width: 58%;
+    }
+    .container3 {
+        margin-right: 10%;
+    }
+}
