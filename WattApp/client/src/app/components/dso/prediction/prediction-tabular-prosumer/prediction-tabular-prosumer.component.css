@@ -18,6 +18,15 @@
     text-align: center;
 }
 
+.table {
+    color: #727272;
+}
+
+.table th {
+    border: 1px silver;
+    background-color: #bce9e4;
+}
+
 .btn:hover {
     background-color: #93ede2;
 }
@@ -57,5 +66,9 @@
     }
     .table {
         font-size: 25px;
+    }
+    .btn {
+        margin-top: 10px;
+        float: right;
     }
 }

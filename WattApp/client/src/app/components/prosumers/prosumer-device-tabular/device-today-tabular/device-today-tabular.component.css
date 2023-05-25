@@ -22,7 +22,7 @@
 
 .table {
     border-collapse: collapse;
-    font-size: 11px;
+    font-size: 15px;
     width: 100%;
 }
 
@@ -42,8 +42,11 @@
 
 .container2 {
     display: inline-block;
-    width: 15%;
-    margin-left: 5%;
+}
+
+mat-form-field {
+    width: 77%;
+    float: left;
 }
 
 .container3 {
@@ -56,18 +59,14 @@
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #2199e8;
-    color: white;
+    background-color: #bce9e4;
+    color: grey;
     font-weight: normal;
     text-align: center;
 }
 
 .btn:hover {
-    background-color: #0d8beb;
-}
-
-mat-form-field {
-    width: 60%;
+    background-color: #93ede2;
 }
 
 @media(min-width:768px) {

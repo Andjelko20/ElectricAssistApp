@@ -2,28 +2,30 @@
     margin: 20px 0;
 }
 
+.container2 {
+    display: inline-block;
+}
+
 .container3 {
-    width: 15%;
     float: right;
-    margin-right: 5%;
-  }
+}
 
-
-  .btn {
+.btn {
     padding: 8px;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #2199e8;
-    color: white;
+    background-color: #bce9e4;
+    color: grey;
     font-weight: normal;
     text-align: center;
-  }
-  
-  .btn:hover {
-    background-color: #0d8beb;
-  }
+    float: right;
+}
+
+.btn:hover {
+    background-color: #93ede2;
+}
 
 .table-wrapper {
     background-color: #f8f9fa;
@@ -42,7 +44,7 @@
 
 .table {
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 15px;
     width: 100%;
 }
 
@@ -63,6 +65,12 @@
 @media(min-width:1060px) {
     .btn {
         margin-left: 550px;
+    }
+    .table {
+        font-size: 20px;
+    }
+    .btn {
+        float: none;
     }
 }
 
