@@ -89,21 +89,35 @@ export class ProsumerYearProductionComponent {
     }
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-    const month = this.list2.map(day => day.month);
-
+    let max=0;
+    if(energyUsageResults2[0]===0 )
+    {
+      max=1;
+    }
     const Linechart =new Chart("barplot1", {
         type: 'bar',
         data : {
-          labels: month,
+          labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+            
           datasets: [
 
+          
             {
-              label: 'Production',
+              label: ' Production',
               data: energyUsageResults2,
               borderColor: 'rgba(29, 145, 192, 1)',
               backgroundColor: 'rgba(29, 145, 192, 0.2)',
               borderWidth: 2,
-            },        
+            },
+            {
+              label: ' Prediction',
+              data: this.list2pred,
+              borderColor: 'rgba(252, 129, 155, 1)',
+              backgroundColor: 'rgba(252, 129, 155, 0.2)',
+              borderWidth: 2,
+              categoryPercentage:0.5
+            }
+               
           ]
         },
         options: 
@@ -131,11 +145,10 @@ export class ProsumerYearProductionComponent {
                 }
               },
               position: "left",
-              suggestedMin: 5,
-              suggestedMax: 140,
+              suggestedMax:max,
               title:{
                 display:true,
-                text: "Production (kWh)",
+                text: "Production [kWh]",
                 color: '#000',
                 font:{
                   size:13
@@ -145,6 +158,7 @@ export class ProsumerYearProductionComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{
@@ -160,7 +174,11 @@ export class ProsumerYearProductionComponent {
                 }
               }
             }
-          },        
+          },       
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          }, 
           plugins: {
             datalabels: {
               display: false

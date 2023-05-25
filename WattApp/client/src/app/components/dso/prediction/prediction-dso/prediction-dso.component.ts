@@ -1,5 +1,4 @@
 import { Component, Injectable, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { ExportToCsv } from 'export-to-csv';
 import { Chart,registerables } from 'node_modules/chart.js'
 import { forkJoin } from 'rxjs';
@@ -162,7 +161,7 @@ export class PredictionDsoComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:15
@@ -282,7 +281,7 @@ export class PredictionDsoComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:15

@@ -103,7 +103,11 @@ export class ProsumerMonthProductionComponent {
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const monthbyday = this.list2.map(day => day.day);
-
+    let max=0;
+    if(energyUsageResults2[0]===0 )
+    {
+      max=1;
+    }
     const Linechart =new Chart("barplot1", {
         type: 'bar',
        
@@ -112,14 +116,20 @@ export class ProsumerMonthProductionComponent {
           
           datasets: [
             {
-              label: 'Production',
+              label: ' Production',
               data: energyUsageResults2,
               borderColor: 'rgba(29, 145, 192, 1)',
               backgroundColor: 'rgba(29, 145, 192, 0.2)',
               borderWidth: 2,
             },
-           
-            
+            {
+              label: ' Prediction',
+              data: this.list2pred,
+              borderColor: 'rgba(252, 129, 155, 1)',
+              backgroundColor: 'rgba(252, 129, 155, 0.2)',
+              borderWidth: 2,
+              
+            }
           ]
           
         },
@@ -138,7 +148,7 @@ export class ProsumerMonthProductionComponent {
             }
           },  
           maintainAspectRatio: false,
-          responsive: true, // Enable responsiveness
+          responsive: true, 
           
           scales:{
             y: {
@@ -148,10 +158,11 @@ export class ProsumerMonthProductionComponent {
                   size:13
                 }
               },
+              suggestedMax:max,
               position: "left",
               title:{
                 display:true,
-                text: "Production (kWh)",
+                text: "Production [kWh]",
                 color: '#000',
                 font:{
                   size:13
@@ -160,6 +171,7 @@ export class ProsumerMonthProductionComponent {
             }
             ,
             x:{
+              stacked:true,
               ticks:{
                 color:'#000',
                 font:{
@@ -177,8 +189,10 @@ export class ProsumerMonthProductionComponent {
               }
             }
           },
-          
-          
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
           plugins: {
             datalabels: {
               display: false
@@ -186,26 +200,6 @@ export class ProsumerMonthProductionComponent {
             legend:{
               display:false
             },
-            // legend: {
-            //   onHover: function (event, legendItem, legend) {
-            //     document.body.style.cursor = 'pointer';
-            //   },
-            //   onLeave: function (event, legendItem, legend) {
-            //       document.body.style.cursor = 'default';
-            //   },
-              
-            //   position: 'bottom',
-            //   labels: {
-            //     usePointStyle: true,
-            //     color: '#000',
-            //     font:{
-            //       size:15
-            //     } 
-            //     // ,
-            //     // boxHeight:100,
-            //     // boxWidth:100
-            //   }
-            // },
             title: {
               display: true,
               text: 'Production in a month',

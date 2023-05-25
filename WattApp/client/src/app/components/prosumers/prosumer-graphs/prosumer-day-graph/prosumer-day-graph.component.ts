@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ExportToCsv } from 'export-to-csv';
 import { Chart,registerables } from 'node_modules/chart.js'
-import { combineLatest, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { DayByHour } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
@@ -97,7 +97,7 @@ export class ProsumerDayGraphComponent {
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
     let max=0;
-    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    if(energyUsageResults1[0]===0 )
     {
       max=1;
     }
@@ -108,9 +108,8 @@ export class ProsumerDayGraphComponent {
         
         datasets: [
           {
-            label: 'Consumption ',
+            label: ' Consumption',
             data: energyUsageResults1,
-            tension:0.1,
             backgroundColor: 'rgba(127, 205, 187, 0.3)',
             borderColor: ' rgba(127, 205, 187, 1)',
             borderWidth: 1.5,
@@ -120,6 +119,22 @@ export class ProsumerDayGraphComponent {
             pointRadius: 1,
             pointHoverRadius: 6,
             fill:true,
+            
+          },
+          {
+            label: ' Prediction',
+            data: this.list1pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(252, 129, 155, 1)',
+            pointBorderColor: 'rgba(252, 129, 155, 1)',
+            pointBorderWidth: 8,
+            pointRadius: 1,
+            pointHoverRadius: 6,
+            segment:{
+              borderDash:[6,6]
+            }
+            
           },
         ]
         
@@ -151,7 +166,7 @@ export class ProsumerDayGraphComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -178,8 +193,17 @@ export class ProsumerDayGraphComponent {
           ,
         },
        
-      
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
+          tooltip: {
+            enabled: true,
+            boxHeight:5,
+            boxWidth:5,
+            boxPadding:3
+          },
           datalabels:{display: false},
           legend:{display:false},
         

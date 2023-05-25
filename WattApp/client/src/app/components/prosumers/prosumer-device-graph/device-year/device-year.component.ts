@@ -119,13 +119,16 @@ export class DeviceYearComponent {
       }
   
       const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
-      const month = this.list2.map(day => day.month);
-  
+      let max=0;
+      if(energyUsageResults2[0]===0 )
+      {
+        max=1;
+      }
       const Linechart =new Chart("barplot1", {
           type: 'bar',
          
           data : {
-            labels: month,
+            labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
             
             datasets: [
   
@@ -173,10 +176,11 @@ export class DeviceYearComponent {
                     size:13
                   }
                 },
+                suggestedMax:max,
                 position: "left",
                 title:{
                   display:true,
-                  text: "Production (kWh)",
+                  text: "Production [kWh]",
                   color: '#000',
                   font:{
                     size:13
@@ -204,7 +208,10 @@ export class DeviceYearComponent {
                 }
               }
             },
-            
+            interaction: {
+              intersect: false,
+              mode: 'index',
+            },
             plugins: {
               datalabels: {
                 display: false
@@ -235,12 +242,16 @@ export class DeviceYearComponent {
       
       const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
       const month = this.list1.map(day => day.month);
-  
+      let max=0;
+      if(energyUsageResults1[0]===0 )
+      {
+        max=1;
+      }
       const Linechart =new Chart("barplot2", {
           type: 'bar',
          
           data : {
-            labels: month,
+            labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
             
             datasets: [
                {
@@ -288,6 +299,7 @@ export class DeviceYearComponent {
                     size:13
                   }
                 },
+                suggestedMax:max,
                 position: "left",
                 title:{
                   display:true,
@@ -320,7 +332,10 @@ export class DeviceYearComponent {
               }
               
             },
-            
+            interaction: {
+              intersect: false,
+              mode: 'index',
+            },
             plugins: {
               datalabels: {
                 display: false

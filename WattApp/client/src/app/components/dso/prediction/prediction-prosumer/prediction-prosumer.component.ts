@@ -112,7 +112,7 @@ export class PredictionProsumerComponent {
             position: "left",
             title:{
               display:true,
-              text: "Production (kWh)",
+              text: "Production [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -233,7 +233,7 @@ export class PredictionProsumerComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:13

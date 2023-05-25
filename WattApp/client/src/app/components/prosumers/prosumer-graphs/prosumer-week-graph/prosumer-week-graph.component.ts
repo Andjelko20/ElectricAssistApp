@@ -127,7 +127,7 @@ export class ProsumerWeekGraphComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     let max=0;
-    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    if(energyUsageResults1[0]===0 )
     {
       max=1;
     }
@@ -138,11 +138,20 @@ export class ProsumerWeekGraphComponent {
         
         datasets:  [
           {
-            label: 'Consumption ',
+            label: ' Consumption',
             data: energyUsageResults1,
             borderColor:  'rgba(127, 205, 187, 1)',
             backgroundColor:  'rgba(127, 205, 187, 0.3)',
             borderWidth: 2.5,
+          },
+          {
+            label: ' Prediction',
+            data: this.list1pred,
+            borderColor: 'rgba(252, 129, 155, 1)',
+            backgroundColor: 'rgba(252, 129, 155, 0.2)',
+            borderWidth: 2,
+           
+            
           },
           
         ]
@@ -176,7 +185,7 @@ export class ProsumerWeekGraphComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -185,6 +194,7 @@ export class ProsumerWeekGraphComponent {
           }
           ,
           x:{
+           
             ticks:{
               color:'#000',
               font:{
@@ -202,8 +212,10 @@ export class ProsumerWeekGraphComponent {
           }
           ,
         },
-        
-      
+        interaction: {
+          intersect: false,
+          mode: 'index',
+        },
         plugins: {
           datalabels:{display: false},
           legend:{

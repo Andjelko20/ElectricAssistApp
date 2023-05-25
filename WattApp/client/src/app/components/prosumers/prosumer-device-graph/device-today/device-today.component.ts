@@ -187,7 +187,7 @@ export class DeviceTodayComponent {
             position: "left",
             title:{
               display:true,
-              text: "Prediction (kWh)",
+              text: "Prediction [kWh]",
               color:'#000',
               font:{
                 size:13
@@ -253,7 +253,7 @@ export class DeviceTodayComponent {
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const hours = this.list1.map(day => day.hour);
     let max=0;
-    if(energyUsageResults1[0]===0 && energyUsageResults1[1]===0 )
+    if(energyUsageResults1[0]===0 )
     {
       max=1;
       
@@ -325,7 +325,7 @@ export class DeviceTodayComponent {
             position: "left",
             title:{
               display:true,
-              text: "Consumption (kWh)",
+              text: "Consumption [kWh]",
               color:'#000',
               font:{
                 size:13

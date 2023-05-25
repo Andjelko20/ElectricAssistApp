@@ -127,7 +127,11 @@ export class DeviceMonthComponent {
 
     const energyUsageResults2 = this.list2.map(day => day.energyUsageResult);
     const monthbyday = this.list2.map(day => day.day);
-
+    let max=0;
+    if(energyUsageResults2[0]===0  )
+    {
+      max=1;
+    }
     const Linechart =new Chart("barplot1", {
         type: 'bar',
        
@@ -169,7 +173,7 @@ export class DeviceMonthComponent {
             }
           },  
           maintainAspectRatio: false,
-          responsive: true, // Enable responsiveness
+          responsive: true, 
           
           scales:{
             y: {
@@ -179,10 +183,11 @@ export class DeviceMonthComponent {
                   size:13
                 }
               },
+              suggestedMax:max,
               position: "left",
               title:{
                 display:true,
-                text: "Production (kWh)",
+                text: "Production [kWh]",
                 color: '#000',
                 font:{
                   size:13
@@ -243,7 +248,11 @@ export class DeviceMonthComponent {
 
     const energyUsageResults1 = this.list1.map(day => day.energyUsageResult);
     const monthbyday = this.list1.map(day => day.day);
-
+    let max=0;
+    if(energyUsageResults1[0]===0  )
+    {
+      max=1;
+    }
     const Linechart =new Chart("barplot2", {
         type: 'bar',
        
@@ -286,7 +295,6 @@ export class DeviceMonthComponent {
         },  
           maintainAspectRatio: false,
           responsive: true, 
-          
           scales:{
             y: {
               ticks:{
@@ -295,10 +303,11 @@ export class DeviceMonthComponent {
                   size:13
                 }
               },
+              suggestedMax:max,
               position: "left",
               title:{
                 display:true,
-                text: "Consumption (kWh)",
+                text: "Consumption [kWh]",
                 color: '#000',
                 font:{
                   size:13
