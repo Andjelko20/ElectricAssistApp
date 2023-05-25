@@ -56,7 +56,7 @@
 
 #deviceh3 {
     padding-top: 10px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 #imgdevice {
@@ -105,9 +105,11 @@ label {
     margin-top: 30%;
     font-size: 20px;
 }
+
 .custom-select {
     cursor: pointer;
-  }
+}
+
 @media (min-width: 768px) {
     .alldevices {
         top: 10%;
@@ -130,7 +132,7 @@ label {
         width: 75%;
     }
     #deviceh3 {
-        font-size: 35px;
+        font-size: 21px;
     }
     .devices-item {
         padding: 10px;
@@ -160,5 +162,10 @@ label {
         margin-top: 10%;
         font-size: 40px;
     }
-    
+}
+
+@media(min-width:1200px) {
+    #deviceh3 {
+        font-size: 30px;
+    }
 }
