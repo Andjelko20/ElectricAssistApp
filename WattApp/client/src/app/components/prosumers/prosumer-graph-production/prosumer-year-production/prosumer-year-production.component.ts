@@ -139,7 +139,7 @@ export class ProsumerYearProductionComponent {
           scales:{
             y: {
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -149,7 +149,7 @@ export class ProsumerYearProductionComponent {
               title:{
                 display:true,
                 text: "Production [kWh]",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -160,7 +160,7 @@ export class ProsumerYearProductionComponent {
             x:{
               stacked:true,
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }              
@@ -168,7 +168,7 @@ export class ProsumerYearProductionComponent {
               title:{
                 display:true,
                 text: "Months in a Year",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -185,7 +185,7 @@ export class ProsumerYearProductionComponent {
             },
             legend: {
               labels:{
-              color:'#000',
+              color:'gray',
              
               font:{
                 size:16
@@ -207,7 +207,7 @@ export class ProsumerYearProductionComponent {
             title: {
               display: true,
               text: 'Production in a year',
-              color: '#000',
+              color: 'gray',
               font:{
                 size:15
               }

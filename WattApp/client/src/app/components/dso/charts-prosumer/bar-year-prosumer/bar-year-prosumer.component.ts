@@ -147,7 +147,7 @@ export class BarYearProsumerComponent {
             scales:{
               y: {
                 ticks:{
-                  color:'#000',
+                  color:'gray',
                   font:{
                     size:15
                   }
@@ -157,7 +157,7 @@ export class BarYearProsumerComponent {
                 title:{
                   display:true,
                   text: "Production [kWh]",
-                  color: '#000',
+                  color: 'gray',
                   font:{
                     size:15
                   }
@@ -168,7 +168,7 @@ export class BarYearProsumerComponent {
               x:{
                 stacked:true,
                 ticks:{
-                  color:'#000',
+                  color:'gray',
                   font:{
                     size:15
                   }
@@ -176,7 +176,7 @@ export class BarYearProsumerComponent {
                 title:{
                   display:true,
                   text: "Months in a Year",
-                  color: '#000',
+                  color: 'gray',
                   font:{
                     size:15
                   }
@@ -194,7 +194,7 @@ export class BarYearProsumerComponent {
               },
               legend: {
                 labels:{
-                color:'#000',
+                color:'gray',
                
                 font:{
                   size:16
@@ -216,7 +216,7 @@ export class BarYearProsumerComponent {
               title: {
                 display: true,
                 text: 'Production in a year',
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:20
                 }
@@ -283,7 +283,7 @@ export class BarYearProsumerComponent {
             scales:{
               y: {
                 ticks:{
-                  color:'#000',
+                  color:'gray',
                   font:{
                     size:15
                   }
@@ -293,7 +293,7 @@ export class BarYearProsumerComponent {
                 title:{
                   display:true,
                   text: "Consumption [kWh]",
-                  color: '#000',
+                  color: 'gray',
                   font:{
                     size:15
                   }
@@ -304,7 +304,7 @@ export class BarYearProsumerComponent {
               x:{
                 stacked:true,
                 ticks:{
-                  color:'#000',
+                  color:'gray',
                   font:{
                     size:15
                   }
@@ -313,7 +313,7 @@ export class BarYearProsumerComponent {
                 title:{
                   display:true,
                   text: "Months in a Year",
-                  color: '#000',
+                  color: 'gray',
                   font:{
                     size:15
                   }
@@ -331,7 +331,7 @@ export class BarYearProsumerComponent {
               },
               legend: {
                 labels:{
-                color:'#000',
+                color:'gray',
                
                 font:{
                   size:16
@@ -353,7 +353,7 @@ export class BarYearProsumerComponent {
               title: {
                 display: true,
                 text: 'Consumption in a year',
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:20
                 }

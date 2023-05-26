@@ -130,7 +130,7 @@ export class PieChartComponent implements OnInit {
             },
             legend: {
               labels:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:15
                 }

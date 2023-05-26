@@ -183,7 +183,7 @@ export class LineWeekProsumerComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -192,7 +192,7 @@ export class LineWeekProsumerComponent {
             title:{
               display:true,
               text: "Production [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -201,7 +201,7 @@ export class LineWeekProsumerComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -209,7 +209,7 @@ export class LineWeekProsumerComponent {
             title:{
               display:true,
               text: "Days in a week",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -225,7 +225,7 @@ export class LineWeekProsumerComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -247,7 +247,7 @@ export class LineWeekProsumerComponent {
           title: {
             display: true,
             text: 'Production in a week',
-            color:'#000',
+            color:'gray',
             font:{
               size:20
             }
@@ -314,7 +314,7 @@ export class LineWeekProsumerComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -323,7 +323,7 @@ export class LineWeekProsumerComponent {
             title:{
               display:true,
               text: "Consumption [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -332,7 +332,7 @@ export class LineWeekProsumerComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -340,7 +340,7 @@ export class LineWeekProsumerComponent {
             title:{
               display:true,
               text: "Days in a week",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -356,7 +356,7 @@ export class LineWeekProsumerComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -378,7 +378,7 @@ export class LineWeekProsumerComponent {
           title: {
             display: true,
             text: ' Consumption in a week',
-            color:'#000',
+            color:'gray',
             font:{
               size:20
             }

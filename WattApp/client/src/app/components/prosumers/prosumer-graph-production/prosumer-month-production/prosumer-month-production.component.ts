@@ -1,10 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Chart,registerables } from 'node_modules/chart.js'
-import { forkJoin, switchMap } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
-import { MatDatepickerModule} from '@angular/material/datepicker';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
@@ -153,7 +152,7 @@ export class ProsumerMonthProductionComponent {
           scales:{
             y: {
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -163,7 +162,7 @@ export class ProsumerMonthProductionComponent {
               title:{
                 display:true,
                 text: "Production [kWh]",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -173,7 +172,7 @@ export class ProsumerMonthProductionComponent {
             x:{
               stacked:true,
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -182,7 +181,7 @@ export class ProsumerMonthProductionComponent {
               title:{
                 display:true,
                 text: "Days in a month",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -199,7 +198,7 @@ export class ProsumerMonthProductionComponent {
             },
             legend: {
               labels:{
-              color:'#000',
+              color:'gray',
              
               font:{
                 size:16
@@ -221,7 +220,7 @@ export class ProsumerMonthProductionComponent {
             title: {
               display: true,
               text: 'Production in a month',
-              color: '#000',
+              color: 'gray',
               font:{
                 size:15
               }

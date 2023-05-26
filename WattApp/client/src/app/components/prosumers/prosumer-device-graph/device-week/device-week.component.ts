@@ -200,7 +200,7 @@ export class DeviceWeekComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -210,7 +210,7 @@ export class DeviceWeekComponent {
             title:{
               display:true,
               text:"Prediction [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -219,7 +219,7 @@ export class DeviceWeekComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -227,7 +227,7 @@ export class DeviceWeekComponent {
             title:{
               display:true,
               text: "Days in a week",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -243,7 +243,7 @@ export class DeviceWeekComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -265,7 +265,7 @@ export class DeviceWeekComponent {
           title: {
             display: true,
             text: 'Production in a week for ',
-            color:'#000',
+            color:'gray',
             font:{
               size:15
             }
@@ -335,7 +335,7 @@ export class DeviceWeekComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -344,7 +344,7 @@ export class DeviceWeekComponent {
             title:{
               display:true,
               text:"Consumption [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -353,7 +353,7 @@ export class DeviceWeekComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -361,7 +361,7 @@ export class DeviceWeekComponent {
             title:{
               display:true,
               text: "Days in a week",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -377,7 +377,7 @@ export class DeviceWeekComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -399,7 +399,7 @@ export class DeviceWeekComponent {
           title: {
             display: true,
             text: ' Consumption in a week',
-            color:'#000',
+            color:'gray',
             font:{
               size:15
             }

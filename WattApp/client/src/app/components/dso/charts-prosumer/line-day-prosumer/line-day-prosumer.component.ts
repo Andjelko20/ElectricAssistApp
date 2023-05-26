@@ -161,7 +161,7 @@ export class LineDayProsumerComponent{
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -170,7 +170,7 @@ export class LineDayProsumerComponent{
             title:{
               display:true,
               text: "Production [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -179,7 +179,7 @@ export class LineDayProsumerComponent{
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -187,7 +187,7 @@ export class LineDayProsumerComponent{
             title:{
               display:true,
               text: "Hours in a day",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -209,7 +209,7 @@ export class LineDayProsumerComponent{
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -232,7 +232,7 @@ export class LineDayProsumerComponent{
             
             display: true,
             text: 'Production in one day',
-            color: '#000',
+            color: 'gray',
             font:{
               size:20
             }
@@ -313,7 +313,7 @@ export class LineDayProsumerComponent{
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -322,7 +322,7 @@ export class LineDayProsumerComponent{
             title:{
               display:true,
               text: "Consumption [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -331,7 +331,7 @@ export class LineDayProsumerComponent{
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -339,7 +339,7 @@ export class LineDayProsumerComponent{
             title:{
               display:true,
               text: "Hours in a day",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -361,7 +361,7 @@ export class LineDayProsumerComponent{
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -384,7 +384,7 @@ export class LineDayProsumerComponent{
             
             display: true,
             text: 'Consumption in one day',
-            color: '#000',
+            color: 'gray',
             font:{
               size:20
             }

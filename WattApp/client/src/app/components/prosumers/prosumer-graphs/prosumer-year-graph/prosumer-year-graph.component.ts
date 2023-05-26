@@ -73,7 +73,7 @@ export class ProsumerYearGraphComponent {
         this.list1 = list1;
             this.list1pred = [];
             for (const obj of this.list1) {
-              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
+              const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); 
               this.list1pred.push(increasedEnergy);
             }
 
