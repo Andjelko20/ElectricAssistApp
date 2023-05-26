@@ -262,10 +262,10 @@ export class AllDevicesComponent implements OnInit {
     onClick(event: MouseEvent) {
       const clickedElement = event.target as HTMLElement;
       const dropdownElement = this.elementRef.nativeElement;
-      const navbarElement = dropdownElement.querySelector('#dropbtn1') as HTMLElement;
-      const dropdownContent = dropdownElement.querySelector('.dropdown-content') as HTMLElement;
+      //const navbarElement = dropdownElement.querySelector('#dropbtn1') as HTMLElement;
+      //const dropdownContent = dropdownElement.querySelector('.dropdown-content') as HTMLElement;
   
-      if (!dropdownElement.contains(clickedElement) || (!navbarElement.contains(clickedElement) && !dropdownContent.contains(clickedElement))) {
+      if (!dropdownElement.contains(clickedElement) /*|| (!navbarElement.contains(clickedElement) && !dropdownContent.contains(clickedElement))*/) {
         this.showDropdown = false;
       }
     }
@@ -303,7 +303,7 @@ export class AllDevicesComponent implements OnInit {
 
 }
 
-class DeviceFilterModel{
+export class DeviceFilterModel{
   //Filteri
   categoryId : number;
   typeId : number;
