@@ -39,14 +39,15 @@
 
 .container2 {
     display: inline-block;
-    width: 15%;
-    margin-left: 5%;
+}
+
+mat-form-field {
+    width: 45%;
+    float: left;
 }
 
 .container3 {
-    width: 15%;
     float: right;
-    margin-right: 5%;
 }
 
 .btn {
@@ -55,40 +56,34 @@
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #2199e8;
-    color: white;
+    background-color: #bce9e4;
+    color: grey;
     font-weight: normal;
     text-align: center;
 }
 
 .btn:hover {
-    background-color: #0d8beb;
-}
-
-mat-form-field {
-    width: 60%;
+    background-color: #93ede2;
 }
 
 @media(min-width:768px) {
-    mat-form-field {
-        margin-left: 83px;
-    }
-    .btn {
-        margin-left: 169px;
-    }
     .table {
         font-size: 20px;
     }
-}
-
-@media(min-width:1060px) {
+    .container2 {
+        width: 100%;
+    }
     mat-form-field {
-        margin-left: 200px;
+        width: 29%;
+        float: none;
+        margin-left: 31%;
     }
 }
 
 @media(min-width:1200px) {
     mat-form-field {
-        margin-left: 400px;
+        width: 15%;
+        float: none;
+        margin-left: 41%;
     }
 }

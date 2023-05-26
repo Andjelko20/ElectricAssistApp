@@ -76,6 +76,6 @@
 
 @media(min-width:1200px) {
     .btn {
-        margin-left: 850px;
+        float: right;
     }
 }

@@ -45,7 +45,7 @@
 }
 
 mat-form-field {
-    width: 77%;
+    width: 45%;
     float: left;
 }
 
@@ -72,5 +72,19 @@ mat-form-field {
 @media(min-width:768px) {
     .table {
         font-size: 20px;
+    }
+    .container2 {
+        width: 100%;
+    }
+    mat-form-field {
+        width: 29%;
+        float: none;
+    }
+}
+
+@media(min-width:1200px) {
+    mat-form-field {
+        width: 15%;
+        float: none;
     }
 }
