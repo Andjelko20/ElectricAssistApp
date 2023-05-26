@@ -21,50 +21,58 @@
     width: 100%;
 }
 
-mat-form-field {
-    margin-left: 22px;
-}
-
 .container2 {
     display: inline-block;
-    width: 15%;
-    margin-left: 5%;
+    width: 100%;
+}
 
-  }
-  .container3 {
-    width: 15%;
+mat-form-field {
+    width: 52%;
+    float: left;
+}
+
+.container3 {
     float: right;
-    margin-right: 5%;
-  }
+}
 
-
-  .btn {
+.btn {
     padding: 8px;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #2199e8;
-    color: white;
+    background-color: #bce9e4;
+    color: grey;
     font-weight: normal;
     text-align: center;
-  }
-  
-  .btn:hover {
-    background-color: #0d8beb;
-  }
+}
+
+.btn:hover {
+    background-color: #93ede2;
+}
 
 @media only screen and (min-width: 768px) and (max-width: 1280px) {
-    @media only screen and (min-width: 768px) and (max-width: 1280px) {
-        .chart {
-            display: inline-block;
-        }
-        .chart-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 40vh;
-            width: 100%;
-        }
+    .chart {
+        display: inline-block;
+    }
+    .chart-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40vh;
+        width: 100%;
+    }
+    mat-form-field {
+        width: 37%;
+        float: none;
+        margin-left: 23%;
+    }
+}
+
+@media(min-width:1281px) {
+    mat-form-field {
+        width: 18%;
+        float: none;
+        margin-left: 39%;
     }
 }

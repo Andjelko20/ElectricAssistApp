@@ -42,6 +42,7 @@
 
 .container2 {
     display: inline-block;
+    width: 100%;
 }
 
 mat-form-field {
@@ -72,9 +73,6 @@ mat-form-field {
 @media(min-width:768px) {
     .table {
         font-size: 20px;
-    }
-    .container2 {
-        width: 100%;
     }
     mat-form-field {
         width: 29%;

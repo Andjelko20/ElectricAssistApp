@@ -1,15 +1,16 @@
-<div class="table-container responsive">
-    <div class="container2">
-        <mat-form-field appearance="fill">
-          <mat-label>Enter a date</mat-label>
-          <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)" [(ngModel)]="currentDate">
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div class="container3">
+<div class="container2">
+    <mat-form-field appearance="fill">
+        <mat-label>Enter a date</mat-label>
+        <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)" [(ngModel)]="currentDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div class="container3">
         <button class="btn" (click)="downloadCSV()">Export to CSV</button>
-      </div>
+    </div>
+</div>
+
+<div class="table-container responsive">
     <div class="table-container">
         <div class="table-wrapper">
             <h2 class="table-title">Consumption/Production</h2>

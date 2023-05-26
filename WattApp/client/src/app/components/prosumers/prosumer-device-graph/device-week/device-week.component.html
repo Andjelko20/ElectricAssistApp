@@ -1,18 +1,18 @@
 <div class="chart">
     <div class="container2">
         <mat-form-field appearance="fill">
-          <mat-label>Enter a date range</mat-label>
-          <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="picker" [max]="maxDate">
-            <input matStartDate placeholder="Start date" formControlName="start" [(ngModel)]="firstdate">
-            <input matEndDate placeholder="End date" formControlName="end" [(ngModel)]="currentDate">
-          </mat-date-range-input>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="picker" [max]="maxDate">
+                <input matStartDate placeholder="Start date" formControlName="start" [(ngModel)]="firstdate">
+                <input matEndDate placeholder="End date" formControlName="end" [(ngModel)]="currentDate">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
-      </div>
-      <div class="container3">
-        <button class="btn" (click)="downloadCSV()">Export to CSV</button>
-      </div>
+        <div class="container3">
+            <button class="btn" (click)="downloadCSV()">Export to CSV</button>
+        </div>
+    </div>
     <div class="chart-container" *ngIf="consumptionGraph">
         <canvas id="linechart2"></canvas>
     </div>

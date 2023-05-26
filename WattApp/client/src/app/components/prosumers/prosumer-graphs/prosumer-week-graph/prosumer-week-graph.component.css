@@ -14,14 +14,8 @@
     width: 100%;
 }
 
-.container2 {
-    display: inline-block;
-    width: 59%;
-    float: left;
-}
-
 mat-form-field {
-    width: 100%;
+    width: 54%;
     float: left;
 }
 
@@ -46,22 +40,14 @@ mat-form-field {
 }
 
 @media (min-width:768px) {
-    mat-form-field {
-        max-width: 61%;
-        float: right;
-    }
     .container2 {
         display: inline-block;
-        width: 58%;
+    }
+    mat-form-field {
+        width: 78%;
+        float: right;
     }
     .container3 {
         margin-right: 10%;
-    }
-}
-
-@media(min-width:1200px) {
-    mat-form-field {
-        max-width: 31%;
-        float: right;
     }
 }

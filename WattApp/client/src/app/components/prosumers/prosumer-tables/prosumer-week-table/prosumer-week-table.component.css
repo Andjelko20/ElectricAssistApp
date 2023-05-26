@@ -6,14 +6,15 @@
     overflow-x: auto;
 }
 
-.container2 {
-    display: inline-block;
-    width: 68%;
+mat-form-field {
+    width: 50%;
+    float: left;
 }
 
-mat-form-field {
-    width: 87%;
-    float: left;
+.container2 {
+    width: 100%;
+    margin-top: 15px;
+    display: inline-block;
 }
 
 .container3 {
@@ -26,10 +27,18 @@ mat-form-field {
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #2199e8;
-    color: white;
+    background-color: #bce9e4;
+    color: grey;
     font-weight: normal;
     text-align: center;
+}
+
+.table {
+    color: #998d80;
+}
+
+.table th {
+    background-color: #bce9e4;
 }
 
 .btn:hover {
@@ -52,11 +61,6 @@ mat-form-field {
     }
 }
 
-.btn {
-    background-color: #bce9e4;
-    color: grey;
-}
-
 @media (min-width: 768px) {
     h1 {
         font-size: 37px;
@@ -64,26 +68,21 @@ mat-form-field {
     .table {
         font-size: 25px;
     }
-    .container2 {
-        display: inline-block;
-        width: 37%;
+    mat-form-field {
+        width: 27%;
+        margin-left: 27%;
     }
     .container3 {
         margin-right: 10%;
     }
-    mat-form-field {
-        width: 100%;
-        float: left;
-    }
 }
 
 @media(min-width:1200px) {
-    .container2 {
-        display: inline-block;
-        width: 37%;
-    }
     mat-form-field {
-        max-width: 55%;
-        float: right;
+        width: 12%;
+        margin-left: 35%;
+    }
+    .container3 {
+        margin-right: 10%;
     }
 }

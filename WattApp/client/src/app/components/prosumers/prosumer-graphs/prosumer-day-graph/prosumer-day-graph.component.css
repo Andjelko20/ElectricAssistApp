@@ -14,12 +14,8 @@
     width: 100%;
 }
 
-.container2 {
-    display: inline-block;
-}
-
 mat-form-field {
-    width: 77%;
+    width: 43%;
     float: left;
 }
 
@@ -44,6 +40,9 @@ mat-form-field {
 }
 
 @media (min-width:768px) {
+    .container2 {
+        display: inline-block;
+    }
     mat-form-field {
         width: 78%;
         float: right;
