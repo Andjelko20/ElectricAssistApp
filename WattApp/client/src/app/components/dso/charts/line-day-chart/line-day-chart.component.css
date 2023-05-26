@@ -14,7 +14,7 @@
 }
 
 .container {
-  width: 10%;
+  width: 12%;
   float: left;
   margin-left: 5%;
 }
@@ -23,12 +23,14 @@
 }
 
   .container2 {
-    display: inline-block;
-    width: 15%;
+    display: inline-flex;
+    align-items: center;
+    width: 20%;
+   
 
   }
   .container3 {
-    width: 15%;
+    width: 10%;
     float: right;
     margin-right: 5%;
   }
@@ -44,6 +46,7 @@
     color: white;
     font-weight: normal;
     text-align: center;
+    align-items: center;
   }
   
   .btn:hover {
@@ -58,7 +61,7 @@
   } */
 
   
-@media(min-width:1200px) {
+@media(min-width:1024px) and (max-width:1280px)  {
     .chart-container {
         min-height: 50vh !important;
         width: 100%;
@@ -67,11 +70,33 @@
         display: inline-flex;
         width: 100%;
     }
+    .btn {
+      padding: 8px;
+      
+    }
+    .container {
+      width: 20%;
+    }
     /* ::ng-deep .mat-calendar-body .mat-calendar-body-selected {
         background-color: #354871 !important;
       }
        */
       
+}
+@media (min-width:768px) and (max-width:1023px)
+{
+  .container {
+    width: 27%;
+
+  }
+  .container2 {
+    width: 22%;
+  }
+  .btn {
+    padding: 0px;
+    
+    font-size: 14px;
+  }
 }
 /* @media (hover: hover) {
     ::ng-deep .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {

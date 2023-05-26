@@ -252,7 +252,7 @@ export class DeviceTodayComponent {
             text: 'Production in one day',
             color: 'gray',
             font:{
-              size:20
+              size:15
             }
           }
         }
@@ -413,9 +413,7 @@ export class DeviceTodayComponent {
         }
       }
     });
-
   }
-
   downloadCSV(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{

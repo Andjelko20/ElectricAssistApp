@@ -139,7 +139,7 @@ export class ProsumerYearGraphComponent {
           scales:{
             y: {
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -150,7 +150,7 @@ export class ProsumerYearGraphComponent {
               title:{
                 display:true,
                 text: "Consumption [kWh]",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }                
@@ -160,7 +160,7 @@ export class ProsumerYearGraphComponent {
             x:{
               stacked:true,
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -168,7 +168,7 @@ export class ProsumerYearGraphComponent {
               title:{
                 display:true,
                 text: "Months in a Year",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -185,7 +185,7 @@ export class ProsumerYearGraphComponent {
             },
             legend: {
               labels:{
-              color:'#000',
+              color:'gray',
              
               font:{
                 size:16
@@ -207,7 +207,7 @@ export class ProsumerYearGraphComponent {
             title: {
               display: true,
               text: 'Consumption in a year',
-              color: '#000',
+              color: 'gray',
               font:{
                 size:15
               }
