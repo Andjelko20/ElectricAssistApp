@@ -1,8 +1,9 @@
 #wrapper{
     background-color: white;
-    margin-top: 100px;
+    margin-top: 90px;
     margin-left: 50px;
     margin-right: 50px;
+    margin-bottom: 60px;
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -59,5 +60,10 @@
     #pred {
       flex-direction: column;
     }
-
+    #wrapper{
+      margin-bottom: 60px;
+    }
+    #graf{
+      margin-bottom: 60px;
+    }
   }

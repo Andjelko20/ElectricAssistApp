@@ -87,7 +87,15 @@ export class AccountPageComponent implements OnInit {
   }
   upDateUser()
   {
-    if(this.updateUserDetail.name!==this.logedDetail.name)
+    if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username && this.updateUserDetail.email!=this.logedDetail.email)
+    {
+      this.body="Your name, username and email have been successfully changed. You need to confirm your email." 
+    }
+    else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username )
+    {
+        this.body="Your name and username have been successfully changed." 
+    }
+    else if(this.updateUserDetail.name!==this.logedDetail.name)
     {
           this.body="Your name has been successfully changed." 
     }
@@ -102,16 +110,8 @@ export class AccountPageComponent implements OnInit {
     else if(this.updateUserDetail.name===this.logedDetail.name && this.updateUserDetail.username===this.logedDetail.username && this.updateUserDetail.email===this.logedDetail.email)
     {
       this.body="You didnt make any changes.";
-      
     }
-    else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username )
-    {
-        this.body="Your name and username have been successfully changed." 
-    }
-    else if(this.updateUserDetail.name!=this.logedDetail.name && this.updateUserDetail.username!=this.logedDetail.username && this.updateUserDetail.email!=this.logedDetail.email)
-    {
-      this.body="Your name, username and email have been successfully changed. You need to confirm your email" 
-    }
+    
     this.updateService.upDateLogedIn(this.logedDetail)
     .subscribe({
       next:()=>{

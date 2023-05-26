@@ -307,14 +307,14 @@ export class LineDayChartComponent {
             useBorderRadius:true,
             borderRadius:7
           },
-          
-          position: 'bottom',
-          onHover: function (event, legendItem, legend) {
-            document.body.style.cursor = 'pointer';
-          },
-          onLeave: function (event, legendItem, legend) {
-              document.body.style.cursor = 'default';
-          },
+            
+            position: 'bottom',
+            onHover: function (event, legendItem, legend) {
+              document.body.style.cursor = 'pointer';
+            },
+            onLeave: function (event, legendItem, legend) {
+                document.body.style.cursor = 'default';
+            },
           },
           
           title: {
@@ -451,8 +451,26 @@ export class LineDayChartComponent {
             boxPadding:3
           },
           datalabels:{display: false},
-          legend: { 
-            display: false
+          legend: {
+            labels:{
+            color:'#000',
+           
+            font:{
+              size:16
+            },
+            boxWidth:15,
+            boxHeight:15,
+            useBorderRadius:true,
+            borderRadius:7
+          },
+            
+            position: 'bottom',
+            onHover: function (event, legendItem, legend) {
+              document.body.style.cursor = 'pointer';
+            },
+            onLeave: function (event, legendItem, legend) {
+                document.body.style.cursor = 'default';
+            },
           },
           title: {
             display: true,

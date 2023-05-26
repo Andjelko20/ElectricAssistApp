@@ -128,7 +128,7 @@ export class ProsumerMonthProductionComponent {
               borderColor: 'rgba(252, 129, 155, 1)',
               backgroundColor: 'rgba(252, 129, 155, 0.2)',
               borderWidth: 2,
-              
+              categoryPercentage:0.5
             }
           ]
           
@@ -197,8 +197,26 @@ export class ProsumerMonthProductionComponent {
             datalabels: {
               display: false
             },
-            legend:{
-              display:false
+            legend: {
+              labels:{
+              color:'#000',
+             
+              font:{
+                size:16
+              },
+              boxWidth:15,
+              boxHeight:15,
+              useBorderRadius:true,
+              borderRadius:7
+            },
+              
+              position: 'bottom',
+              onHover: function (event, legendItem, legend) {
+                document.body.style.cursor = 'pointer';
+              },
+              onLeave: function (event, legendItem, legend) {
+                  document.body.style.cursor = 'default';
+              },
             },
             title: {
               display: true,
