@@ -80,7 +80,8 @@ export class ProsumerDayGraphComponent {
             this.list1pred = [];
             for (const obj of this.list1) {
               const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01); // Increase energy property by random percentage
-              this.list1pred.push(increasedEnergy);
+              const roundedEnergy = increasedEnergy.toFixed(2);
+              this.list1pred.push(Number(roundedEnergy));
             }
         this.LineChartConsumption();
 
