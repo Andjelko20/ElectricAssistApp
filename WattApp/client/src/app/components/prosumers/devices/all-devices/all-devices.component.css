@@ -274,7 +274,7 @@ option{
         font-size: 24px;
         padding-left: 15px;
 }
-
+}
 @media(min-width:1200px) {
     #deviceh3 {
         font-size: 30px;
