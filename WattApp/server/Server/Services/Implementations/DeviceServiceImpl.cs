@@ -59,9 +59,9 @@ namespace Server.Services.Implementations
 
                 //DeviceBrand
                 command.CommandText = @"select Name 
-                                            from DeviceTypes 
+                                            from DeviceBrands 
                                             where Id in (
-                                                         select DeviceTypeId 
+                                                         select DeviceBrandId 
                                                          from DeviceModels 
                                                          where Id = @id)";
                 //command.Parameters.Add(new SqliteParameter("@id", id));
