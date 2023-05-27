@@ -35,6 +35,7 @@ export class PredictionDeviceComponent {
       {
         this.dayNames = []
           const currentDate = new Date();
+          currentDate.setDate(currentDate.getDate()+1)
           const enddate = new Date()
           enddate.setDate(enddate.getDate()+7)
           while (currentDate <= enddate) {
@@ -56,6 +57,7 @@ export class PredictionDeviceComponent {
       else{ 
         this.dayNames = []
           const currentDate = new Date();
+          currentDate.setDate(currentDate.getDate()+1)
           const enddate = new Date()
           enddate.setDate(enddate.getDate()+7)
           while (currentDate <= enddate) {
@@ -145,7 +147,7 @@ export class PredictionDeviceComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -154,7 +156,7 @@ export class PredictionDeviceComponent {
             title:{
               display:true,
               text: "Prediction [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -163,7 +165,7 @@ export class PredictionDeviceComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -171,7 +173,7 @@ export class PredictionDeviceComponent {
             title:{
               display:true,
               text: "Days in a week",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -193,7 +195,7 @@ export class PredictionDeviceComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -216,7 +218,7 @@ export class PredictionDeviceComponent {
           title: {
             display: true,
             text: 'Prediction production in a week',
-            color:'#000',
+            color:'gray',
             font:{
               size:15
             }
@@ -281,7 +283,7 @@ export class PredictionDeviceComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -290,7 +292,7 @@ export class PredictionDeviceComponent {
             title:{
               display:true,
               text: "Consumption [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -299,7 +301,7 @@ export class PredictionDeviceComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -307,7 +309,7 @@ export class PredictionDeviceComponent {
             title:{
               display:true,
               text: "Days in a week",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -328,7 +330,7 @@ export class PredictionDeviceComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -350,7 +352,7 @@ export class PredictionDeviceComponent {
           title: {
             display: true,
             text: 'Prediction consuming in a week',
-            color:'#000',
+            color:'gray',
             font:{
               size:15
             }

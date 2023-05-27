@@ -178,7 +178,7 @@ export class DeviceMonthComponent {
           scales:{
             y: {
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -188,7 +188,7 @@ export class DeviceMonthComponent {
               title:{
                 display:true,
                 text: "Production [kWh]",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -198,7 +198,7 @@ export class DeviceMonthComponent {
             x:{
               stacked:true,
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -207,7 +207,7 @@ export class DeviceMonthComponent {
               title:{
                 display:true,
                 text: "Days in a month",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -224,7 +224,7 @@ export class DeviceMonthComponent {
             },
             legend: {
               labels:{
-              color:'#000',
+              color:'gray',
              
               font:{
                 size:16
@@ -246,7 +246,7 @@ export class DeviceMonthComponent {
             title: {
               display: true,
               text: 'Production in a month',
-              color: '#000',
+              color: 'gray',
               font:{
                 size:15
               }
@@ -316,7 +316,7 @@ export class DeviceMonthComponent {
           scales:{
             y: {
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -326,7 +326,7 @@ export class DeviceMonthComponent {
               title:{
                 display:true,
                 text: "Consumption [kWh]",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -336,7 +336,7 @@ export class DeviceMonthComponent {
             x:{
               stacked:true,
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -345,7 +345,7 @@ export class DeviceMonthComponent {
               title:{
                 display:true,
                 text: "Days in a month",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -362,7 +362,7 @@ export class DeviceMonthComponent {
             },
             legend: {
               labels:{
-              color:'#000',
+              color:'gray',
              
               font:{
                 size:16
@@ -384,7 +384,7 @@ export class DeviceMonthComponent {
             title: {
               display: true,
               text: 'Consumption in a month',
-              color: '#000',
+              color: 'gray',
               font:{
                 size:15
               }

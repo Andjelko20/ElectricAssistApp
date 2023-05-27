@@ -155,7 +155,7 @@ export class ProsumerDayProductionComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -164,7 +164,7 @@ export class ProsumerDayProductionComponent {
             title:{
               display:true,
               text: "Production [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -173,7 +173,7 @@ export class ProsumerDayProductionComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -181,7 +181,7 @@ export class ProsumerDayProductionComponent {
             title:{
               display:true,
               text: "Hours in a day",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -203,7 +203,7 @@ export class ProsumerDayProductionComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -226,7 +226,7 @@ export class ProsumerDayProductionComponent {
             
             display: true,
             text: 'Production in one day',
-            color: '#000',
+            color: 'gray',
             font:{
               size:15
             }

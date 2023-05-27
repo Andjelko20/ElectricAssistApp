@@ -177,7 +177,7 @@ export class DeviceTodayComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -188,7 +188,7 @@ export class DeviceTodayComponent {
             title:{
               display:true,
               text: "Prediction [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -197,7 +197,7 @@ export class DeviceTodayComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -205,7 +205,7 @@ export class DeviceTodayComponent {
             title:{
               display:true,
               text: "Hours in a day",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -227,7 +227,7 @@ export class DeviceTodayComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -250,9 +250,9 @@ export class DeviceTodayComponent {
             
             display: true,
             text: 'Production in one day',
-            color: '#000',
+            color: 'gray',
             font:{
-              size:20
+              size:15
             }
           }
         }
@@ -332,7 +332,7 @@ export class DeviceTodayComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -343,7 +343,7 @@ export class DeviceTodayComponent {
             title:{
               display:true,
               text: "Consumption [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -352,7 +352,7 @@ export class DeviceTodayComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -360,7 +360,7 @@ export class DeviceTodayComponent {
             title:{
               display:true,
               text: "Hours in a day",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -382,7 +382,7 @@ export class DeviceTodayComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -405,7 +405,7 @@ export class DeviceTodayComponent {
             
             display: true,
             text: 'Consumption in one day',
-            color: '#000',
+            color: 'gray',
             font:{
               size:15
             }
@@ -413,9 +413,7 @@ export class DeviceTodayComponent {
         }
       }
     });
-
   }
-
   downloadCSV(): void {
     const deviceId = Number(this.route.snapshot.paramMap.get('id'));
     this.authService.getDevice(deviceId).subscribe(data=>{

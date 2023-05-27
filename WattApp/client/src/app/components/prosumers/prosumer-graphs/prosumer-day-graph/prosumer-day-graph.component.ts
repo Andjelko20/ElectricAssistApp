@@ -158,7 +158,7 @@ export class ProsumerDayGraphComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -167,7 +167,7 @@ export class ProsumerDayGraphComponent {
             title:{
               display:true,
               text: "Consumption [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -176,7 +176,7 @@ export class ProsumerDayGraphComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -184,7 +184,7 @@ export class ProsumerDayGraphComponent {
             title:{
               display:true,
               text: "Hours in a day",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -207,7 +207,7 @@ export class ProsumerDayGraphComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -231,7 +231,7 @@ export class ProsumerDayGraphComponent {
             
             display: true,
             text: 'Consumption in one day',
-            color: '#000',
+            color: 'gray',
             font:{
               size:15
             }

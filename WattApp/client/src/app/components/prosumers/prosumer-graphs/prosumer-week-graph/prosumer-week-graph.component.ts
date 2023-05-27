@@ -175,7 +175,7 @@ export class ProsumerWeekGraphComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -185,7 +185,7 @@ export class ProsumerWeekGraphComponent {
             title:{
               display:true,
               text: "Consumption [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -195,7 +195,7 @@ export class ProsumerWeekGraphComponent {
           x:{
            
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -203,7 +203,7 @@ export class ProsumerWeekGraphComponent {
             title:{
               display:true,
               text: "Days in a week",
-              color:'#000',
+              color:'gray',
               font:{
                 size:13
               }
@@ -219,7 +219,7 @@ export class ProsumerWeekGraphComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -241,7 +241,7 @@ export class ProsumerWeekGraphComponent {
           title: {
             display: true,
             text: ' Consumption in a week',
-            color:'#000',
+            color:'gray',
             font:{
               size:15
             }

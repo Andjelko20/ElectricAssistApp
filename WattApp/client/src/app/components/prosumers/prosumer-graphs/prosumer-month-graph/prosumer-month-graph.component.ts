@@ -155,7 +155,7 @@ export class ProsumerMonthGraphComponent {
           scales:{
             y: {
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -165,7 +165,7 @@ export class ProsumerMonthGraphComponent {
               title:{
                 display:true,
                 text: "Consumption [kWh]",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -175,7 +175,7 @@ export class ProsumerMonthGraphComponent {
             x:{
               stacked:true,
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:13
                 }
@@ -184,7 +184,7 @@ export class ProsumerMonthGraphComponent {
               title:{
                 display:true,
                 text: "Days in a month",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:13
                 }
@@ -201,7 +201,7 @@ export class ProsumerMonthGraphComponent {
             },
             legend: {
               labels:{
-              color:'#000',
+              color:'gray',
              
               font:{
                 size:16
@@ -223,7 +223,7 @@ export class ProsumerMonthGraphComponent {
             title: {
               display: true,
               text: 'Consumption in a month',
-              color: '#000',
+              color: 'gray',
               font:{
                 size:15
               }

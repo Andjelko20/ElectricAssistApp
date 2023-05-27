@@ -248,7 +248,7 @@ export class LineDayChartComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -257,7 +257,7 @@ export class LineDayChartComponent {
             title:{
               display:true,
               text: "Production [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -274,7 +274,7 @@ export class LineDayChartComponent {
             title:{
               display:true,
               text: "Hours in a day",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -297,7 +297,7 @@ export class LineDayChartComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -320,7 +320,7 @@ export class LineDayChartComponent {
           title: {
             display: true,
             text: 'Production in one day',
-            color: '#000',
+            color: 'gray',
             font:{
               size:20
             }
@@ -404,7 +404,7 @@ export class LineDayChartComponent {
         scales:{
           y: {
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -414,7 +414,7 @@ export class LineDayChartComponent {
             title:{
               display:true,
               text: "Consumption [kWh]",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -423,7 +423,7 @@ export class LineDayChartComponent {
           ,
           x:{
             ticks:{
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -431,7 +431,7 @@ export class LineDayChartComponent {
             title:{
               display:true,
               text: "Hours in a day",
-              color:'#000',
+              color:'gray',
               font:{
                 size:15
               }
@@ -453,7 +453,7 @@ export class LineDayChartComponent {
           datalabels:{display: false},
           legend: {
             labels:{
-            color:'#000',
+            color:'gray',
            
             font:{
               size:16
@@ -475,7 +475,7 @@ export class LineDayChartComponent {
           title: {
             display: true,
             text: 'Consumption in one day',
-            color: '#000',
+            color: 'gray',
             font:{
               size:20
             }

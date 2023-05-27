@@ -198,7 +198,7 @@ export class BarYearChartComponent {
           scales:{
             y: {
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:15
                 }
@@ -208,7 +208,7 @@ export class BarYearChartComponent {
               title:{
                 display:true,
                 text: " Production [kWh]",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:15
                 }
@@ -219,7 +219,7 @@ export class BarYearChartComponent {
             x:{
               stacked:true,
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:15
                 }
@@ -228,7 +228,7 @@ export class BarYearChartComponent {
               title:{
                 display:true,
                 text: "Months in a Year",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:15
                 }
@@ -244,7 +244,7 @@ export class BarYearChartComponent {
             datalabels:{display: false},
             legend: {
               labels:{
-              color:'#000',
+              color:'gray',
              
               font:{
                 size:16
@@ -266,7 +266,7 @@ export class BarYearChartComponent {
             title: {
               display: true,
               text: 'Production in a year',
-              color: '#000',
+              color: 'gray',
               font:{
                 size:20
               }
@@ -334,7 +334,7 @@ export class BarYearChartComponent {
           scales:{
             y: {
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:15
                 }
@@ -345,7 +345,7 @@ export class BarYearChartComponent {
               title:{
                 display:true,
                 text: "Consumption [kWh]",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:15
                 }
@@ -356,7 +356,7 @@ export class BarYearChartComponent {
             x:{
               stacked:true,
               ticks:{
-                color:'#000',
+                color:'gray',
                 font:{
                   size:15
                 }
@@ -365,7 +365,7 @@ export class BarYearChartComponent {
               title:{
                 display:true,
                 text: "Months in a Year",
-                color: '#000',
+                color: 'gray',
                 font:{
                   size:15
                 }
@@ -381,7 +381,7 @@ export class BarYearChartComponent {
             datalabels:{display: false},
             legend: {
               labels:{
-              color:'#000',
+              color:'gray',
              
               font:{
                 size:16
@@ -403,7 +403,7 @@ export class BarYearChartComponent {
             title: {
               display: true,
               text: 'Consumption in a year',
-              color: '#000',
+              color: 'gray',
               font:{
                 size:20
               }
