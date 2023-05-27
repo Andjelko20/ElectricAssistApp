@@ -1,12 +1,86 @@
 <div class="containers">
-  <div class="sort-by">
-    <div class="form-group">
-      <label for="dropdown ">Select by Category:</label>
-      <select class="form-select" aria-label="Default select example" id="dropdown" style="cursor: pointer;" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>
-          <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
-      </select>
+
+  <div class="filters">
+    <div class="device-number">
+      <h2>Devices (5)</h2>
     </div>
+
+    <div class="first-row">
+      <div class="form-group">
+        <label for="dropdown ">Select by Category:</label>
+        <select class="form-select" aria-label="Default select example" id="dropdown" style="cursor: pointer;" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>
+          <option>-- Category --</option>  
+          <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="dropdown">Filter by Device Type</label>
+        <select class="form-select">
+          <option>-- Device Type --</option>
+          <option>Bojler</option>
+          <option>TV</option>
+          <option>Frizider</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="dropdown">Filter by Device Brand</label>
+        <select class="form-select">
+          <option>-- Device brand --</option>
+          <option>VOX</option>
+          <option>Tesla</option>
+          <option>XP</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="dropdown">Filter by Device Status</label>
+        <select class="form-select">
+          <option>-- On/Off --</option>
+          <option>Turn On</option>
+          <option>Turn Off</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="dropdown">Filter by Device Type</label>
+        <select class="form-select">
+          <option>-- Controllability --</option>
+          <option>Allowed</option>
+          <option>Forbbidn</option>
+        </select>
+      </div>
+
+      <div class="filters-clear">
+        <a href="#">Clear filters</a>
+      </div>
+    </div>
+
+    <div class="second-row">
+      Consumption 
+      <div class="form-group-consumption">
+        <select class="form-select">
+          <option>Greater</option>
+          <option>Less</option>
+        </select>
+      </div>
+
+      than 
+      <div class="form-group-value">
+        <input class="custom-input" type="number" placeholder="Enter value">
+      </div>
+
+      <div class="search">
+        <input type="text" class="custom-input" id="search" placeholder="Search devices by name">
+      </div>
+
+    </div>
+    
+    
   </div>
+
+
   <div class="table">
           <table>
             <thead>
