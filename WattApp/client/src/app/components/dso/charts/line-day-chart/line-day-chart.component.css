@@ -113,9 +113,9 @@
   }
   
   .container {
-  width: 10%;
-  float: left;
-  margin-left: 5%;
+    width: 10%;
+    float: left;
+    margin-left: 5%;
   }
   .form-select {
   cursor: pointer;
@@ -147,8 +147,14 @@
   .btn:hover {
     background-color: #0d8beb;
   }
+  @media (min-width:1024px) and (max-width:1900px) {
+    .container {
+      width: 15%;
   
-  @media(min-width:1280px) {
+    }
+   
+  }
+  @media (min-width:1280px) {
     .chart-container {
         min-height: 50vh !important;
         width: 100%;
@@ -162,5 +168,16 @@
     .chart-container {
       min-height: 30vh
     }
-    
+    .container {
+      width: 27%;
+  
+    }
+    .container2 {
+      width: 22%;
+    }
+    .btn {
+      padding: 0px;
+      
+      font-size: 14px;
+    }
   }

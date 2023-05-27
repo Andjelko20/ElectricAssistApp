@@ -22,13 +22,13 @@
               <thead>
                 <tr>
                   <th>Date Time</th>
-                  <th>Consumption</th>
+                  <th>Consumption in [kWh]</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item1 of list1; let i = index">
                       <td>{{ item1.year }}/{{item1.month}}/{{dateTime[i]}}</td>
-                      <td>{{ item1.energyUsageResult }} [kWh]</td>
+                      <td>{{ item1.energyUsageResult }}</td>
                 </tr>
               </tbody>
             </table>
@@ -41,13 +41,13 @@
                 <thead>
                   <tr>
                     <th>Date Time</th>
-                    <th>Production</th>
+                    <th>Production in [kWh]</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item2 of list2; let i = index">
                         <td>{{ item2.year }}/{{item2.month}}/{{dateTime[i]}}</td>
-                        <td>{{ item2.energyUsageResult }} [kWh]</td>
+                        <td>{{ item2.energyUsageResult }}</td>
                 </tbody>
               </table>
             </div>
