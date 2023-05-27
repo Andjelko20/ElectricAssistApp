@@ -75,6 +75,8 @@ export class AllDevicesDsoComponent implements OnInit{
         turnOn: u.turnOn,
     
     })as ShowDevices)
+    console.log(this.devicesList);
+    
     
     }, (error: { status: number; }) => {
     

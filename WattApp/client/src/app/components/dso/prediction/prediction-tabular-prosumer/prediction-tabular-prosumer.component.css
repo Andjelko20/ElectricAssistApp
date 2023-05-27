@@ -12,21 +12,29 @@
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #2199e8;
-    color: white;
+    background-color: #bce9e4;
+    color: grey;
     font-weight: normal;
     text-align: center;
-  }
-  
-  .btn:hover {
-    background-color: #0d8beb;
-  }
+}
 
-  .container3 {
-    width: 15%;
+.table {
+    color: #727272;
+}
+
+.table th {
+    border: 1px silver;
+    background-color: #bce9e4;
+}
+
+.btn:hover {
+    background-color: #93ede2;
+}
+
+
+/* .containter3 {
     float: right;
-    margin-right: 5%;
-  }
+} */
 
 @media (min-width: 320px) {
     h1 {
@@ -58,5 +66,9 @@
     }
     .table {
         font-size: 25px;
+    }
+    .btn {
+        margin-top: 10px;
+        float: right;
     }
 }

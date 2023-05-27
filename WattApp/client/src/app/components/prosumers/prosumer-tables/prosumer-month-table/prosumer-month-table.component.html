@@ -1,21 +1,17 @@
+<div class="container2">
+    <mat-form-field appearance="fill">
+        <mat-label>Month and Year</mat-label>
+        <input matInput [matDatepicker]="dp" [formControl]="date" [max]="currentDate">
+        <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp startView="multi-year" (monthSelected)="setMonthAndYear($event, dp)" panelClass="example-month-picker">
+        </mat-datepicker>
+    </mat-form-field>
+    <div class="container3">
+        <button class="btn" (click)="downloadCSV()">Export to CSV</button>
+    </div>
+</div>
 <div class="table-container responsive">
     <div class="col-md-12">
-        <div class="container2">
-            <mat-form-field appearance="fill">
-              <mat-label>Month and Year</mat-label>
-              <input matInput [matDatepicker]="dp" [formControl]="date" [max]="currentDate">
-              <mat-datepicker-toggle matIconSuffix [for]="dp" ></mat-datepicker-toggle>
-              <mat-datepicker #dp
-                              startView="multi-year"
-                              (monthSelected)="setMonthAndYear($event, dp)"
-                              panelClass="example-month-picker">
-              </mat-datepicker>
-            </mat-form-field>
-          </div>
-          
-          <div class="container3">
-            <button class="btn" (click)="downloadCSV()">Export to CSV</button>
-          </div>
         <div class="table-container">
             <div class="table-wrapper">
                 <h2 class="table-title">Consumption/Production</h2>
@@ -23,8 +19,8 @@
                     <thead>
                         <tr>
                             <th>Date Time</th>
-                            <th>Consumption</th>
-                            <th>Production</th>
+                            <th>Consumption in [kWh]</th>
+                            <th>Production in [kWh]</th>
 
                         </tr>
                     </thead>
@@ -33,8 +29,8 @@
                             <ng-container *ngFor="let item2 of list2; let i = index">
                                 <ng-container *ngIf="item1.year == item2.year && item1.month == item2.month && item1.day == item2.day">
                                     <td>{{ item1.year }}/{{item1.month}}/{{dateTime[i]}}</td>
-                                    <td>{{ item1.energyUsageResult }} [kWh]</td>
-                                    <td>{{ item2.energyUsageResult }} [kWh]</td>
+                                    <td>{{ item1.energyUsageResult }}</td>
+                                    <td>{{ item2.energyUsageResult }}</td>
                                 </ng-container>
                             </ng-container>
                         </tr>

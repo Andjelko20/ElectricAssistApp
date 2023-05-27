@@ -1440,8 +1440,8 @@ namespace Server.Services.Implementations
                                                SUM(CAST(
                                                     (strftime('%s', 
                                                         CASE 
-                                                            WHEN deu.EndTime IS NULL 
-                                                            THEN datetime('now', '+2 hour')
+                                                            WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
+					                                        WHEN deu.EndTime > datetime('now', 'localtime') THEN datetime('now', 'localtime')
                                                             ELSE deu.EndTime 
                                                         END
                                                     ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
@@ -1452,7 +1452,7 @@ namespace Server.Services.Implementations
 							            JOIN DeviceTypes dt ON dm.DeviceTypeId=dt.Id AND dt.CategoryId = @categoryId
 							            JOIN Users u ON d.UserId=u.Id
 							            JOIN Settlements s ON s.Id=u.SettlementId AND s.CityId = @cityId
-                                        WHERE deu.StartTime >= @fromDate AND deu.StartTime < @toDate
+                                        WHERE deu.StartTime >= @fromDate AND deu.StartTime < @toDate AND deu.StartTime < datetime('now', 'localtime')
                                             AND (deu.EndTime <= @toDate OR deu.EndTime IS NULL)
                                         GROUP BY strftime('%Y-%m', deu.StartTime)";
 
@@ -1516,8 +1516,8 @@ namespace Server.Services.Implementations
                                                SUM(CAST(
                                                     (strftime('%s', 
                                                         CASE 
-                                                            WHEN deu.EndTime IS NULL 
-                                                            THEN datetime('now', '+2 hour')
+                                                            WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
+					                                        WHEN deu.EndTime > datetime('now', 'localtime') THEN datetime('now', 'localtime')
                                                             ELSE deu.EndTime 
                                                         END
                                                     ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
@@ -1527,7 +1527,7 @@ namespace Server.Services.Implementations
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
 							            JOIN DeviceTypes dt ON dm.DeviceTypeId=dt.Id AND dt.CategoryId = @categoryId
 							            JOIN Users u ON d.UserId=u.Id AND u.SettlementId = @settlementId
-                                        WHERE deu.StartTime >= @fromDate AND deu.StartTime < @toDate
+                                        WHERE deu.StartTime >= @fromDate AND deu.StartTime < @toDate AND deu.StartTime < datetime('now', 'localtime')
                                             AND (deu.EndTime <= @toDate OR deu.EndTime IS NULL)
                                         GROUP BY strftime('%Y-%m', deu.StartTime)";
 
@@ -1591,8 +1591,8 @@ namespace Server.Services.Implementations
                                                SUM(CAST(
                                                     (strftime('%s', 
                                                         CASE 
-                                                            WHEN deu.EndTime IS NULL 
-                                                            THEN datetime('now', '+2 hour')
+                                                            WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
+					                                        WHEN deu.EndTime > datetime('now', 'localtime') THEN datetime('now', 'localtime')
                                                             ELSE deu.EndTime 
                                                         END
                                                     ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
@@ -1601,7 +1601,7 @@ namespace Server.Services.Implementations
                                         JOIN Devices d ON deu.DeviceId=d.Id AND d.UserId = @userId
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
 							            JOIN DeviceTypes dt ON dm.DeviceTypeId=dt.Id AND dt.CategoryId = @categoryId
-                                        WHERE deu.StartTime >= @fromDate AND deu.StartTime < @toDate
+                                        WHERE deu.StartTime >= @fromDate AND deu.StartTime < @toDate  AND deu.StartTime < datetime('now', 'localtime')
                                             AND (deu.EndTime <= @toDate OR deu.EndTime IS NULL)
                                         GROUP BY strftime('%Y-%m', deu.StartTime)";
 
@@ -1665,8 +1665,8 @@ namespace Server.Services.Implementations
                                                SUM(CAST(
                                                     (strftime('%s', 
                                                         CASE 
-                                                            WHEN deu.EndTime IS NULL 
-                                                            THEN datetime('now', '+2 hour')
+                                                            WHEN deu.EndTime IS NULL THEN datetime('now', 'localtime')
+					                                        WHEN deu.EndTime > datetime('now', 'localtime') THEN datetime('now', 'localtime')
                                                             ELSE deu.EndTime 
                                                         END
                                                     ) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh
@@ -1674,7 +1674,7 @@ namespace Server.Services.Implementations
                                         FROM DeviceEnergyUsages deu 
                                         JOIN Devices d ON deu.DeviceId=d.Id AND deu.DeviceId = @deviceId
 							            JOIN DeviceModels dm ON d.DeviceModelId=dm.Id
-                                        WHERE deu.StartTime >= @fromDate AND deu.StartTime < @toDate
+                                        WHERE deu.StartTime >= @fromDate AND deu.StartTime < @toDate AND deu.StartTime < datetime('now', 'localtime')
                                             AND (deu.EndTime <= @toDate OR deu.EndTime IS NULL)
                                         GROUP BY strftime('%Y-%m', deu.StartTime)";
 

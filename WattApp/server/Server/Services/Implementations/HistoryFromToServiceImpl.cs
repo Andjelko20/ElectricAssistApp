@@ -1134,8 +1134,8 @@ namespace Server.Services.Implementations
 
         public List<DailyEnergyConsumptionPastMonth> FillDaysWithoutResults(DateTime FromDate, DateTime ToDate, List<DailyEnergyConsumptionPastMonth> energyUsages)
         {
-            if (ToDate > DateTime.Now)
-                ToDate = DateTime.Now;
+            /*if (ToDate > DateTime.Now)
+                ToDate = DateTime.Now;*/
 
             int checker = 0;
             for (var date = FromDate; date < ToDate; date = date.AddDays(1))

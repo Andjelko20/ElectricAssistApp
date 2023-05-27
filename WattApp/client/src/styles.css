@@ -41,32 +41,3 @@ button {
     }
     
 }
-.select-form-control{
-    width: 88%;
-    padding: 0.525rem 0.75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.375rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    outline: 0;
-    cursor: pointer;
-}
-
-
-@media only screen and (min-width: 768px) and (max-width: 1280px){
-
-.select-form-control{
-
-width: 91%;
-
- padding: 0.525rem 0.75rem;
-}
-
-}
-
-

@@ -63,7 +63,14 @@ body {
 h1 {
     text-align: center;
     margin-top: 27px;
+    padding-bottom: 12px;
     font-size: 20px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-left: 15px;
+    padding-top: 10px;
 }
 
 ul {
@@ -85,6 +92,29 @@ a {
 
 .aa {
     margin-top: 10px;
+    border: 1px solid #c0d9fd;
+    width: 151px;
+    border-radius: 17px;
+    padding: 5px;
+    background-color: #c0d9fd;
+}
+
+.aaaa {
+    margin-top: 10px;
+    border: 1px solid #c0d9fd;
+    width: 121px;
+    border-radius: 17px;
+    padding: 5px;
+    background-color: #c0d9fd;
+}
+
+.aaa {
+    margin-top: 10px;
+    border: 1px solid #c0d9fd;
+    width: 225px;
+    border-radius: 17px;
+    padding: 5px;
+    background-color: #c0d9fd;
 }
 
 .aa a {
@@ -94,8 +124,16 @@ a {
     color: #727272;
 }
 
+.aaa #pass {
+    border-radius: 5px;
+    margin-top: 15px;
+    padding: 5px;
+    color: #727272;
+}
+
 .userimg {
     display: flex;
+    padding-top: 26px;
     justify-content: center;
 }
 
@@ -134,19 +172,22 @@ a:hover {
 }
 
 #number {
-    border-bottom: 1px solid rgb(183, 183, 183);
     max-width: 300px;
 }
 
 .phone {
     display: block;
-    padding-top: 61px;
+    padding-top: 45px;
     padding-bottom: 65px;
 }
 
 .rounded-circle {
     width: 100px;
     margin-bottom: 37px;
+}
+
+.backgr {
+    background-color: #c0d9fd;
 }
 
 @media(min-width:390px) {
@@ -156,6 +197,15 @@ a:hover {
     ul li {
         font-size: 24px;
     }
+    .aa {
+        width: 169px;
+    }
+    .aaaa {
+        width: 131px;
+    }
+    .aaa {
+        width: 266px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -164,7 +214,8 @@ a:hover {
     }
     .container {
         display: block;
-        margin-left: 200px;
+        width: 620px;
+        margin-left: 120px;
     }
     .main {
         top: 0;
@@ -177,7 +228,7 @@ a:hover {
         min-height: 100vh;
     }
     .rounded-circle {
-        width: 200px;
+        width: 160px;
         margin-bottom: 37px;
     }
     .col-md-8 {
@@ -191,7 +242,7 @@ a:hover {
         color: white;
     }
     .col-md-6 {
-        margin-left: 119px;
+        width: 77%;
         font-size: 24px !important;
     }
     .col-md-6 input {
@@ -209,5 +260,13 @@ a:hover {
     app-footer {
         width: 100%;
         display: contents;
+    }
+}
+
+@media(min-width:838px) {
+    .container {
+        display: block;
+        width: 70%;
+        margin-left: 17%;
     }
 }

@@ -1,24 +1,20 @@
+<div class="container2">
+    <mat-form-field appearance="fill">
+        <mat-label>Year</mat-label>
+        <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp startView="multi-year" (yearSelected)="setYear($event, dp)" panelClass="example-year-picker">
+            <mat-multi-year-view [selected]="date.value" (yearSelected)="dp.close()"></mat-multi-year-view>
+            <mat-year-view [activeDate]="date.value" (yearSelected)="dp.close()"></mat-year-view>
+            <mat-month-view></mat-month-view>
+        </mat-datepicker>
+    </mat-form-field>
+    <div class="container3">
+        <button class="btn" (click)="downloadCSV()">Export to CSV</button>
+    </div>
+</div>
 <div class="table-container responsive">
     <div class="col-md-12">
-        <div class="container2">
-            <mat-form-field appearance="fill">
-              <mat-label>Year</mat-label>
-              <input matInput [matDatepicker]="dp" [formControl]="date" [max]="maxYear">
-              <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-              <mat-datepicker #dp
-                              startView="multi-year"
-                              (yearSelected)="setYear($event, dp)"
-                              panelClass="example-year-picker">
-                <mat-multi-year-view [selected]="date.value" (yearSelected)="dp.close()"></mat-multi-year-view>
-                <mat-year-view [activeDate]="date.value" (yearSelected)="dp.close()"></mat-year-view>
-                <mat-month-view></mat-month-view>
-              </mat-datepicker>
-            </mat-form-field>
-          </div>
-            
-          <div class="container3">
-            <button class="btn" (click)="downloadCSV()">Export to CSV</button>
-          </div>
         <div class="table-container">
             <div class="table-wrapper">
                 <h2 class="table-title">Consumption/Production</h2>
@@ -26,8 +22,8 @@
                     <thead>
                         <tr>
                             <th>Date Time</th>
-                            <th>Consumption</th>
-                            <th>Production</th>
+                            <th>Consumption in [kWh]</th>
+                            <th>Production in [kWh]</th>
 
                         </tr>
                     </thead>
@@ -36,8 +32,8 @@
                             <ng-container *ngFor="let item2 of list2">
                                 <ng-container *ngIf="item1.year == item2.year && item1.month == item2.month">
                                     <td>{{ item1.year }}/{{ item1.month }}</td>
-                                    <td>{{ item1.energyUsageResult }} [kWh]</td>
-                                    <td>{{ item2.energyUsageResult }} [kWh]</td>
+                                    <td>{{ item1.energyUsageResult }}</td>
+                                    <td>{{ item2.energyUsageResult }}</td>
                                 </ng-container>
                             </ng-container>
                         </tr>

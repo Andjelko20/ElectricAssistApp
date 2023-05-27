@@ -1,15 +1,16 @@
-<div class="table-container responsive">
-    <div class="container2">
-        <mat-form-field appearance="fill">
-          <mat-label>Enter a date</mat-label>
-          <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)" [(ngModel)]="currentDate">
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div class="container3">
+<div class="container2">
+    <mat-form-field appearance="fill">
+        <mat-label>Enter a date</mat-label>
+        <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)" [(ngModel)]="currentDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    <div class="container3">
         <button class="btn" (click)="downloadCSV()">Export to CSV</button>
-      </div>
+    </div>
+</div>
+
+<div class="table-container responsive">
     <div class="table-container">
         <div class="table-wrapper">
             <h2 class="table-title">Consumption/Production</h2>
@@ -17,8 +18,8 @@
                 <thead>
                     <tr>
                         <th>Date Time</th>
-                        <th>Consumption</th>
-                        <th>Production</th>
+                        <th>Consumption in [kWh]</th>
+                        <th>Production in [kWh]</th>
 
                     </tr>
                 </thead>
@@ -27,8 +28,8 @@
                         <ng-container *ngFor="let item2 of list2; let i = index">
                             <ng-container *ngIf="item1.year == item2.year && item1.month == item2.month && item1.day == item2.day && item1.hour == item2.hour">
                                 <td>{{ item1.year }}/{{ item1.month }}/{{ dateTime[i].day }}/{{ dateTime[i].hour }}</td>
-                                <td>{{ item1.energyUsageResult }} [kWh]</td>
-                                <td>{{ item2.energyUsageResult }} [kWh]</td>
+                                <td>{{ item1.energyUsageResult }}</td>
+                                <td>{{ item2.energyUsageResult }}</td>
                             </ng-container>
                         </ng-container>
                     </tr>

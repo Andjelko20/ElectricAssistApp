@@ -20,40 +20,73 @@ namespace Server.Services.Implementations
 
         public List<DailyEnergyConsumptionPastMonth> ConsumptionPredictionForTheNextWeek(long deviceId)
         {
-            var Device = _context.Devices.Where(u => u.Id == deviceId).FirstOrDefault();
-            var StartDate = DateTime.Now.Date.AddDays(1);
-            var EndDate = StartDate.AddDays(7).AddSeconds(-1);
-
-            var UsageList = _context.DeviceEnergyUsages
-                            .Where(u => u.DeviceId == deviceId && u.StartTime >= StartDate && u.EndTime <= EndDate)
-                            .ToList();
-
-            var Results = new List<DailyEnergyConsumptionPastMonth>();
-
-            for (var date = StartDate; date <= EndDate; date = date.AddDays(1))
+            using (var _connection = _context.Database.GetDbConnection())
             {
-                var UsageForDate = UsageList.Where(u => u.StartTime.Date == date.Date).ToList(); // za taj dan
+                _connection.Open();
+                var command = _connection.CreateCommand();
+                command.CommandText = @"
+                                        SELECT DATE(deu.StartTime) AS YYMMDD,
+	                                           SUM(CAST((strftime('%s', CASE WHEN deu.EndTime > datetime('now', 'start of day', '+8 days')
+								                                          THEN datetime('now', 'start of day', '+8 days')
+								                                          WHEN deu.EndTime IS NULL THEN datetime('now', 'start of day', '+8 days')
+								                                          ELSE deu.EndTime
+							                                         END) - strftime('%s', deu.StartTime)) / 3600.0 AS REAL) * dm.EnergyKwh) AS EnergyUsageKwh
+                                        FROM DeviceEnergyUsages deu 
+                                        JOIN Devices d ON deu.DeviceId = d.Id AND d.Id = @deviceId
+                                        JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
+                                        WHERE deu.StartTime >= datetime('now', 'start of day', '+1 days') AND deu.StartTime < datetime('now', 'start of day', '+8 days')
+                                        GROUP BY DATE(deu.StartTime)";
 
-                double EnergyUsage = 0.0;
-                foreach (var usage in UsageForDate) // za taj dan
+                command.Parameters.Add(new SqliteParameter("@deviceId", deviceId));
+
+                var energyUsages = new List<DailyEnergyConsumptionPastMonth>();
+
+                using (var reader = command.ExecuteReader())
                 {
-                    var DeviceModel = _context.DeviceModels.FirstOrDefault(dm => dm.Id == Device.DeviceModelId);
-                    var EnergyKwh = DeviceModel.EnergyKwh;
-                    TimeSpan timeDifference = (TimeSpan)(usage.EndTime - usage.StartTime);
-                    double hours = Math.Abs(timeDifference.TotalHours);
-                    EnergyUsage += hours * EnergyKwh; // za svaki period kada je radio izracunaj koliko je trosio
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            DateTime date = DateTime.ParseExact(reader["YYMMDD"].ToString(), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                            var day = date.Day;
+                            var month = date.ToString("MMMM");
+                            var year = date.Year;
+                            var energyUsage = double.Parse(reader["EnergyUsageKwh"].ToString());
+
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = day,
+                                Month = month,
+                                Year = year,
+                                EnergyUsageResult = Math.Round(energyUsage, 2)
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
+                    }
+                    else
+                    {
+                        var startDate = DateTime.Now.Date;
+                        var endDate = DateTime.Now.Date.AddDays(7);
+
+                        for (var date = startDate; date < endDate; date = date.AddDays(1))
+                        {
+                            var dailyEnergyUsage = new DailyEnergyConsumptionPastMonth
+                            {
+                                Day = date.Day,
+                                Month = date.ToString("MMMM"),
+                                Year = date.Year,
+                                EnergyUsageResult = 0
+                            };
+
+                            energyUsages.Add(dailyEnergyUsage);
+                        }
+                    }
                 }
 
-                Results.Add(new DailyEnergyConsumptionPastMonth // klasa moze i za week
-                {
-                    Day = date.Day,
-                    Month = date.ToString("MMMM"),
-                    Year = date.Year,
-                    EnergyUsageResult = Math.Round(EnergyUsage, 2)
-                });
+                return energyUsages;
             }
-
-            return Results;
         }
 
         public List<DailyEnergyConsumptionPastMonth> UserPredictionForTheNextWeek(long userId, long deviceCategoryId)

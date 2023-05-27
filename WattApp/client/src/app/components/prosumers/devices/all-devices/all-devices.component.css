@@ -61,7 +61,7 @@
 
 #deviceh3 {
     padding-top: 10px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 #imgdevice {
@@ -162,6 +162,10 @@ option{
 }
   
 
+.custom-select {
+    cursor: pointer;
+}
+
 @media (min-width: 768px) {
     .alldevices {
         top: 10%;
@@ -184,7 +188,7 @@ option{
         width: 75%;
     }
     #deviceh3 {
-        font-size: 35px;
+        font-size: 21px;
     }
     .devices-item {
         padding: 10px;
@@ -226,7 +230,6 @@ option{
         display: flex;
         flex-direction: row;
         margin-left: 10%;
-        width: 90%;
         margin-bottom: 5px;
     }
     
@@ -270,5 +273,10 @@ option{
     .label>h2{
         font-size: 24px;
         padding-left: 15px;
+}
+}
+@media(min-width:1200px) {
+    #deviceh3 {
+        font-size: 30px;
     }
 }
