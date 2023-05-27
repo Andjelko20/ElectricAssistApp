@@ -149,5 +149,73 @@ td {
     td {
         white-space: nowrap;
     }
+    button {
+        background-color: white;
+        color: black;
+        border: 2px solid #1C315E;
+    }
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #2199e8;
+    }
+    li {
+        float: left;
+    }
+    li a {
+        display: block;
+        color: #1C315E;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+    .search-filter-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0 15px 20px;
+    }
+    .search-label,
+    .filter-label {
+        display: block;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        margin-bottom: 8px;
+        color: #444;
+    }
+    #search-input {
+        padding: 8px;
+        font-size: 16px;
+        border: none;
+        border-bottom: 2px solid #ddd;
+        background-color: transparent;
+        font-family: Arial, sans-serif;
+        color: #000000;
+        width: 100%;
+        transition: border-color 0.2s ease-in-out;
+    }
+    #search-input:focus {
+        outline: none;
+        border-color: #4d90fe;
+    }
+    #filter-select {
+        padding: 8px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+        color: #444;
+        width: 100%;
+        transition: background-color 0.2s ease-in-out;
+    }
+    #filter-select:focus {
+        outline: none;
+        background-color: #e0e0e0;
+    }
 }
-
+.hidden{
+	visibility: hidden;
+}

@@ -532,7 +532,7 @@ namespace Server.Controllers
             UserModel user = await userService.GetUserById(userId);
             if (!HashGenerator.Verify(requestBody.OldPassword, user.Password))
             {
-                return BadRequest(new { message = "Old password is not valid" });
+                return BadRequest(new { message = "Current password is not valid" });
             }
             user.Password = HashGenerator.Hash(requestBody.NewPassword);
             await _sqliteDb.SaveChangesAsync();
@@ -546,7 +546,7 @@ namespace Server.Controllers
         {
             var user = await userService.GetUserByEmail(requestBody.Email);
             if (user == null)
-                return BadRequest(new BadRequestStatusResponse("User not exist"));
+                return BadRequest(new MessageResponseDTO("Email doesn't exist in database."));
             if (user.Role.Name == "superadmin")
                 return Forbid();
             var resetPassword = await _sqliteDb.ResetPassword.FirstOrDefaultAsync(r => r.UserId == user.Id);
@@ -560,7 +560,7 @@ namespace Server.Controllers
                 };
             }
             else if (resetPassword.ExpireAt > DateTime.Now)
-                return BadRequest(new MessageResponseDTO("Reset key is already submited on your email"));
+                return BadRequest(new MessageResponseDTO("Reset key is already submited on your email."));
             resetPassword.ResetKey = PasswordGenerator.GenerateRandomPassword(15);
             resetPassword.ExpireAt = DateTime.Now.AddMinutes(5);
             try
@@ -569,7 +569,7 @@ namespace Server.Controllers
             }
             catch
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Email is not sent"));
+                return StatusCode(StatusCodes.Status500InternalServerError, new MessageResponseDTO("Fatal error! Email is not sent!"));
             }
             if (!exists)
                 _sqliteDb.ResetPassword.Add(resetPassword);

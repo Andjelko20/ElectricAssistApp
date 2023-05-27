@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class ForgotPasswordPageComponent {
 
 	@ViewChild("emailElement") emailDiv!:ElementRef<HTMLInputElement>;
 	public backgroundImage = 'assets/images/background.jpg';
-	constructor(public authService:AuthService) {
+	constructor(public authService:AuthService,private messageService:MessageService) {
 		
 	}
 	ngOnInit()
@@ -39,11 +40,16 @@ export class ForgotPasswordPageComponent {
 			return;
 		this.authService.sendEmail(this.email).subscribe({
 			next:(response)=>{
-				this.success=true;
+				//this.success=true;
+				this.messageService.add({severity:"success",summary:"Success",detail:"Email for password reset sent successfully."});
 			},
 			error:(response:HttpErrorResponse)=>{
-				this.success=false;
-				this.errorMessage=response.error.message;
+				console.log(response)
+				let message=response.error.message;
+				
+				this.messageService.add({severity:"error",summary:"Error",detail:message});
+				//this.success=false;
+				//this.errorMessage="This email doesn't exist in database";
 			}
 		})
 	}

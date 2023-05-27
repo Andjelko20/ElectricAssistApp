@@ -66,5 +66,5 @@
             </tr>
         </tbody>
     </table>
-    <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
+    <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems" [class.hidden]="loader"></app-page-control>
 </div>

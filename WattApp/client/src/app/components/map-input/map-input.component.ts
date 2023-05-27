@@ -142,7 +142,10 @@ export class MapInputComponent {
 		this.searchUrl.searchParams.set("street",this.address);
 		*/
 		this.searchResultVisible=true;
-		this.searchUrl.searchParams.set("q",this.address+","+JSON.parse(this.cityElement.value).name+","+JSON.parse(this.countryElement.value).name);
+		let countryName=JSON.parse(this.countryElement.value).name;
+		let cityName=JSON.parse(this.cityElement.value).name;
+		let address=countryName+","+cityName+","+this.address;
+		this.searchUrl.searchParams.set("q",address.trim());
 		fetch(this.searchUrl.toString(),{headers:{"Accept-Language":"en-US"}})
 		.then(res=>res.json())
 		.then(res=>{

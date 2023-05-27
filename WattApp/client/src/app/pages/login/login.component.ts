@@ -3,6 +3,7 @@ import { Route,Router,NavigationEnd } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { Location } from '@angular/common';
+import { MessageService } from 'primeng/api';
 // import jwt_decode from "jwt-decode";
 // import { Token } from '../../models/users.model';
 
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
 	errorMsg='';
 	show=false;
 	public backgroundImage = 'assets/images/background.jpg';
-	constructor(private authService: AuthService,private router:Router) { }
+	constructor(private authService: AuthService,private router:Router,private messageService:MessageService) { }
 
 	ngOnInit(): void {
 		this.backgroundImage = 'assets/img/smart.jpg';
@@ -58,10 +59,11 @@ export class LoginComponent implements OnInit {
 		const rememberMe = (document.querySelector("#remember") as HTMLInputElement).checked;
 	
 		this.authService.login(this.username, this.password).subscribe({
-			next: response => {
+			next: (response:any) => {
 				if (response.status == 401) {
 					this.errorMsg = " Wrong username/password!";
-					this.show=true;
+					this.messageService.add({severity:"error",summary:"Error",detail:this.errorMsg})
+					//this.show=true;
 					return;
 				}
 	
@@ -78,10 +80,11 @@ export class LoginComponent implements OnInit {
 				this.authService.isLoginSubject.next(true);
 				this.router.navigate([""]);
 			},
-			error: response => {
+			error: (response:any) => {
 				if (response.status == 401) {
 					this.errorMsg = " Wrong username/password!";
-					this.show=true;
+					//this.show=true;
+					this.messageService.add({severity:"error",summary:"Error",detail:this.errorMsg})
 					return;
 				}
 			}

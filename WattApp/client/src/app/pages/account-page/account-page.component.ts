@@ -4,6 +4,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 import { FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MessageService } from 'primeng/api';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-account-page',
   templateUrl: './account-page.component.html',
@@ -52,8 +54,13 @@ export class AccountPageComponent implements OnInit {
   btnAction:string=''  
   confirm:boolean=false;
   storePassword=localStorage.getItem("password");
+<<<<<<< HEAD
   constructor(
     private updateService:AuthService,private modalService: NgbModal) {
+=======
+  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,
+    private router:Router,private updateService:AuthService,private modalService: NgbModal,private messageService:MessageService) {
+>>>>>>> ljubomir
   
    }
   ngOnInit(): void {
@@ -62,7 +69,7 @@ export class AccountPageComponent implements OnInit {
     this.role=token.data.role as string;
 
     this.updateService.getlogInUser().subscribe({
-          next:(response)=>{
+          next:(response:any)=>{
             this.updateUserDetail={
               id:this.idUser,
               name:response.name,
@@ -160,7 +167,7 @@ export class AccountPageComponent implements OnInit {
       
       
         this.updateService.changePassword(oldpass,newpass).subscribe( 
-        { next:() => {  
+        { next:(response:any) => {  
             
           this.modalService.open(this.modalContent);
           this.body="Your password has been successfully changed.";
@@ -172,7 +179,9 @@ export class AccountPageComponent implements OnInit {
     } );
       
       this.isFormDirty = false;
-    }
+    } else {
+		this.messageService.add({severity:"error",summary:"Error",detail:"New password isn't confirmed!"});
+	}
     
   }
   checkIfInputsAreEqual(group: FormGroup) {
