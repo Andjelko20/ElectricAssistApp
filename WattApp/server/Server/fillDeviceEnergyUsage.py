@@ -58,19 +58,26 @@ cur.execute(f"SELECT * FROM Devices")
 
 curCategory = conn.cursor()
 curCategory.execute("""
-    SELECT dc.Id
+    SELECT d.Id as Id, d.Name as Name, dt.CategoryId as CategoryId
     FROM Devices d
     JOIN DeviceModels dm ON d.DeviceModelId = dm.Id
     JOIN DeviceTypes dt ON dm.DeviceTypeId = dt.Id
-    JOIN DeviceCategories dc ON dt.categoryId = dc.Id
 """)
 
 rows = cur.fetchall()
 rowsCategories = curCategory.fetchall()
-for i in range(0,len(rows)):
-    DeviceCategoryId = rowsCategories[i][0]
-    print(DeviceCategoryId)
-    popunjavanjeTabeleDeviceEnergyUsage(i+1, DeviceCategoryId) # i+1 se salje jer se uredjaji popunjavaju od id 1, ne od id 0
+column_names = [desc[0] for desc in curCategory.description]
+
+for row in rowsCategories:
+    DeviceCategoryId = row[column_names.index('CategoryId')]
+    DeviceId = row[column_names.index('Id')]
+    Name = row[column_names.index('Name')]
+    #print("ID:", DeviceId)
+    #print("DeviceName:", Name)
+    #print("DeviceCategoryId:", DeviceCategoryId)
+    print(".")
+    popunjavanjeTabeleDeviceEnergyUsage(DeviceId, DeviceCategoryId)
 
 conn.commit()
 conn.close()
+print("Completed database filling.")
