@@ -86,7 +86,8 @@ export class ProsumerMonthProductionComponent {
             this.list2pred = [];
             for (const obj of this.list2) {
               const increasedEnergy = obj.energyUsageResult * (1 + Math.random() * (0.20) - 0.01);
-              this.list2pred.push(increasedEnergy);
+              const roundedEnergy = increasedEnergy.toFixed(2);
+              this.list2pred.push(Number(roundedEnergy));
             }
             this.BarPlotProduction();
           });
