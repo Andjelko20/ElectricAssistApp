@@ -93,10 +93,18 @@ export class DevicesService {
     return this.http.get<any>(environment.serverUrl+"/api/device/"+id,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
 
-  getDeviceProsumer(id:number,pageNumber:number,pageSize:number,category:number):Observable<any>
+  getDeviceProsumer(id:number,pageNumber:number,pageSize:number,filters:any):Observable<any>
   {
-    return this.http.get<any>(environment.serverUrl+"/api/Device/devices"+id+"?pageNumber="+pageNumber+"&pageSize="+pageSize+"&categoryId="+category,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    let url = new URL(environment.serverUrl + "api/Device/devices" + id);
+    url.searchParams.set("pageNumber", pageNumber.toString());
+    url.searchParams.set("pageSize", pageSize.toString());
+
+    if(filters.categoryId != -1)
+      url.searchParams.set("categoryId", filters.categoryId);
+
+      return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
+  
   addDevices(addDeviceRequest:any):Observable<any>
   {
     

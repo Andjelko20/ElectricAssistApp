@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DeviceFilterModel } from 'src/app/components/prosumers/devices/all-devices/all-devices.component';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { SessionService } from 'src/app/services/session.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
@@ -9,7 +11,7 @@ import { JwtToken } from 'src/app/utilities/jwt-token';
 })
 export class ProsumerHomePageComponent implements OnInit {
   
-  constructor(private historyService:HistoryPredictionService){}
+  constructor(private historyService:HistoryPredictionService, private filterSession : SessionService){}
   meter!:string;
   meter1!:string;
   meter2!:string;
@@ -20,8 +22,23 @@ export class ProsumerHomePageComponent implements OnInit {
   todayConsumption!: number;
   monthConsumption!: number;
   todayProduction!:number;
+
+  filters : DeviceFilterModel = new DeviceFilterModel(
+    0, 
+    0, 
+    0, 
+    -1, 
+    -1, 
+    -1,
+    1, 
+    1, 
+    0, 
+    false, 
+    ""
+  );
   ngOnInit(): void {
     let token=new JwtToken();
+    this.filterSession.setSession("filter", this.filters);
     this.id=token.data.id as number;
     this.historyService.currentUserProductionConsumption(this.id,2).subscribe(data =>{
       this.currentConsumption = data;

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ShowDevices } from 'src/app/models/devices.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { DevicesService } from 'src/app/services/devices.service';
+import { SessionService } from 'src/app/services/session.service';
 import { Categories } from 'src/app/utilities/categories';
 
 @Component({
@@ -42,13 +43,18 @@ export class AllDevicesComponent implements OnInit {
 
   showDropdown = false;
   msgShow:boolean=false;
-  constructor(private router : Router,private deviceService : DevicesService,
-    private route : ActivatedRoute, private elementRef : ElementRef, 
-    private authService : AuthService) { }
+  constructor(
+    private router : Router,
+    private deviceService : DevicesService,
+    private route : ActivatedRoute,
+    private elementRef : ElementRef, 
+    private authService : AuthService, 
+    private filterSession : SessionService) { }
 
   ngOnInit(): void {
     this.loader=true;
-    this.deviceService.getAllDevices(1,this.itemsPerPage,this.filters).subscribe(devices => {
+    this.filters = this.filterSession.getSession("filter");
+    this.deviceService.getAllDevices(1,this.itemsPerPage,this.filterSession.getSession("filter")).subscribe(devices => {
       this.totalItems=devices.numberOfPages*this.itemsPerPage;
       this.loader=false;
 		this.devices=devices.data.map((u:any)=>({
@@ -77,7 +83,7 @@ export class AllDevicesComponent implements OnInit {
     
 	pageChanged(pageNumber:number){
 		this.currentPage=pageNumber;
-		this.deviceService.getAllDevices(pageNumber,this.itemsPerPage,this.filters).subscribe(devices => {
+		this.deviceService.getAllDevices(pageNumber,this.itemsPerPage,this.filterSession.getSession("filter")).subscribe(devices => {
 			this.totalItems=devices.numberOfPages*this.itemsPerPage;
 			  this.devices=devices.data.map((u:any)=>({
 			 id:u.id,
@@ -106,7 +112,8 @@ export class AllDevicesComponent implements OnInit {
     onSelectedCategory(event:any)
     {this.loader=true;
       this.filters.categoryId = event.target.value;
-      this.deviceService.getAllDevices(1,12,this.filters).subscribe(devices => {
+      this.filterSession.setSession("filter", this.filters);
+      this.deviceService.getAllDevices(1,12,this.filterSession.getSession("filter")).subscribe(devices => {
         this.loader=false;
         this.devices=devices.data.map((u:any)=>({
          id:u.id,
@@ -134,7 +141,8 @@ export class AllDevicesComponent implements OnInit {
     onSelectedTurnOn(event:any)
     {this.loader=true;
       this.filters.turnOn = event.target.value;
-      this.deviceService.getAllDevices(1,12,this.filters).subscribe(devices => {
+      this.filterSession.setSession("filter", this.filters);
+      this.deviceService.getAllDevices(1,12,this.filterSession.getSession("filter")).subscribe(devices => {
         this.loader=false;
         this.devices=devices.data.map((u:any)=>({
          id:u.id,
@@ -162,7 +170,8 @@ export class AllDevicesComponent implements OnInit {
     onSelectedVisibility(event:any){
       this.loader=true;
       this.filters.visibility = event.target.value;
-      this.deviceService.getAllDevices(1,12,this.filters).subscribe(devices => {
+      this.filterSession.setSession("filter", this.filters);
+      this.deviceService.getAllDevices(1,12,this.filterSession.getSession("filter")).subscribe(devices => {
         this.loader=false;
         this.devices=devices.data.map((u:any)=>({
          id:u.id,
@@ -190,7 +199,8 @@ export class AllDevicesComponent implements OnInit {
     onSelectedControlability(event:any){
       this.loader=true;
       this.filters.controlability = event.target.value;
-      this.deviceService.getAllDevices(1,12,this.filters).subscribe(devices => {
+      this.filterSession.setSession("filter", this.filters);
+      this.deviceService.getAllDevices(1,12,this.filterSession.getSession("filter")).subscribe(devices => {
         this.loader=false;
         this.devices=devices.data.map((u:any)=>({
          id:u.id,
@@ -218,7 +228,8 @@ export class AllDevicesComponent implements OnInit {
     onEnteredSearchValue(event:any){
       this.loader=true;
       this.filters.searchValue = event.target.value;
-      this.deviceService.getAllDevices(1,12,this.filters).subscribe(devices => {
+      this.filterSession.setSession("filter", this.filters);
+      this.deviceService.getAllDevices(1,12,this.filterSession.getSession("filter")).subscribe(devices => {
         this.loader=false;
         this.devices=devices.data.map((u:any)=>({
          id:u.id,
@@ -251,10 +262,10 @@ export class AllDevicesComponent implements OnInit {
     onClick(event: MouseEvent) {
       const clickedElement = event.target as HTMLElement;
       const dropdownElement = this.elementRef.nativeElement;
-      const navbarElement = dropdownElement.querySelector('#dropbtn1') as HTMLElement;
-      const dropdownContent = dropdownElement.querySelector('.dropdown-content') as HTMLElement;
+      //const navbarElement = dropdownElement.querySelector('#dropbtn1') as HTMLElement;
+      //const dropdownContent = dropdownElement.querySelector('.dropdown-content') as HTMLElement;
   
-      if (!dropdownElement.contains(clickedElement) || (!navbarElement.contains(clickedElement) && !dropdownContent.contains(clickedElement))) {
+      if (!dropdownElement.contains(clickedElement) /*|| (!navbarElement.contains(clickedElement) && !dropdownContent.contains(clickedElement))*/) {
         this.showDropdown = false;
       }
     }
@@ -273,6 +284,7 @@ export class AllDevicesComponent implements OnInit {
         energyInKwhValue:0,
         searchValue:""
       };
+      this.filterSession.setSession("filter", this.filters);
       this.pageChanged(1); 
     }
 
@@ -291,7 +303,7 @@ export class AllDevicesComponent implements OnInit {
 
 }
 
-class DeviceFilterModel{
+export class DeviceFilterModel{
   //Filteri
   categoryId : number;
   typeId : number;
@@ -340,8 +352,8 @@ class DeviceFilterModel{
 
 }
 
-
 enum SortCriteriaValues{
   NAME, 
   ENERGYINKWH
 }
+

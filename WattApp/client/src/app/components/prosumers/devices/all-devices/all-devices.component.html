@@ -5,7 +5,7 @@
     <br>
     <div class="filter">
         <div class="first-row">
-            <input type="text" placeholder="Search devices by name" [(ngModel)]="filters.searchValue" (input)="onEnteredSearchValue($event)" id="search">
+            <input type="text" value="" placeholder="Search devices by name" [(ngModel)]="filters.searchValue" (input)="onEnteredSearchValue($event)" id="search">
         </div>
                 <div class="filter">
                     <div class="label">
@@ -44,7 +44,6 @@
                             </select>
                         </div>
                     </div>
-                    
                     
                 </div>
             </div>

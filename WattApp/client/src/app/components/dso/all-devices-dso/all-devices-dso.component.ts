@@ -6,6 +6,8 @@ import { DevicesService } from 'src/app/services/devices.service';
 import { Categories } from 'src/app/utilities/categories';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
+import { DeviceFilterModel } from '../../prosumers/devices/all-devices/all-devices.component';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-all-devices-dso',
   templateUrl: './all-devices-dso.component.html',
@@ -28,21 +30,35 @@ export class AllDevicesDsoComponent implements OnInit{
   deviceCategoryId!: number;
   idDevice!: number;
   deviceCategory?:boolean=false;
-  constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute,private modalService: NgbModal,private datePipe: DatePipe) {}
-  categories=[
 
+  filters : DeviceFilterModel = new DeviceFilterModel(
+    0, 
+    0, 
+    0, 
+    0, 
+    0, 
+    0, 
+    0, 
+    0, 
+    0, 
+    false, 
+    ""
+  )
+
+  constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute,private modalService: NgbModal,private datePipe: DatePipe) {}
+  
+  categories=[
      {id:Categories.ELECTRICITY_PRODUCER_ID,name:Categories.ELECTRICITY_PRODUCER_NAME},
     
      {id:Categories.ELECTRICITY_CONSUMER_ID,name:Categories.ELECTRICITY_CONSUMER_NAME},
-    
- 
-    
-     ]
+  ]
+  types:Array<any>=[];
+  brands = [];
 
   ngOnInit(): void {
     this.deviceCategory=false
     this.deviceCategoryId = 2;
-    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.filters).subscribe(devices => {
     	this.totalItems=devices.numberOfPages*this.itemsPerPage;
 		this.devicesList=devices.data.map((u:any)=>({
         id:u.id,
@@ -72,6 +88,17 @@ export class AllDevicesDsoComponent implements OnInit{
     
     );
     
+  }
+
+  validateFormInput(input: any) {
+    const value = input.value.trim();
+    const regex = /^\d+(\.\d+)?$/;
+  
+    if (!regex.test(value) && value != "") {
+      input.style.border = '2px solid red';
+    } else {
+      input.style.borderColor = '';
+    }
   }
 
   pageChanged(pageNumber:number){
@@ -108,11 +135,15 @@ export class AllDevicesDsoComponent implements OnInit{
   }
 
   onSelectedCategory(event:any){
+    this.filters.categoryId = event.target.value;
 
-    this.deviceCategoryId = event.target.value as number;
-    this.deviceCategory = event.target.value === "1";
-
-    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
+    fetch(environment.serverUrl+"/types?categoryId="+this.filters.categoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
+    .then(res=>res.json())
+    .then(res=>{
+      this.types=res;
+     
+    });
+    this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.filters).subscribe(devices => {
 		
       this.totalItems=devices.numberOfPages*this.itemsPerPage;
 		this.devicesList=devices.data.map((u:any)=>({
@@ -141,6 +172,8 @@ export class AllDevicesDsoComponent implements OnInit{
     
     );
     }
+
+
     
        turnOn(id: number) {
         this.modalService.open(this.modalContent);
