@@ -68,11 +68,11 @@
 
       than 
       <div class="form-group-value">
-        <input class="custom-input" type="number" placeholder="Enter value">
+        <input class="custom-input" type="number" placeholder="Enter value" min="0" pattern="\d+(\.\d+)?" (input)="validateFormInput($event.target)">
       </div>
 
       <div class="search">
-        <input type="text" class="custom-input" id="search" placeholder="Search devices by name">
+        <input type="text" class="custom-input" id="search" placeholder="Search devices by name" >
       </div>
 
     </div>

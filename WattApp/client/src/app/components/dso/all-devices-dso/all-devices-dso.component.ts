@@ -72,6 +72,17 @@ export class AllDevicesDsoComponent implements OnInit{
     
   }
 
+  validateFormInput(input: any) {
+    const value = input.value.trim();
+    const regex = /^\d+(\.\d+)?$/;
+  
+    if (!regex.test(value) && value != "") {
+      input.style.border = '2px solid red';
+    } else {
+      input.style.borderColor = '';
+    }
+  }
+
   pageChanged(pageNumber:number){
 	this.currentPage=pageNumber;
 	this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),pageNumber,this.itemsPerPage,this.deviceCategoryId).subscribe(devices => {
