@@ -9,7 +9,7 @@
       <div class="form-group">
         <label for="dropdown ">Select by Category:</label>
         <select class="form-select" aria-label="Default select example" id="dropdown" style="cursor: pointer;" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>
-          <option>-- Category --</option>  
+          <option value="-1">-- Category --</option>  
           <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
         </select>
       </div>
@@ -18,9 +18,7 @@
         <label for="dropdown">Filter by Device Type</label>
         <select class="form-select">
           <option>-- Device Type --</option>
-          <option>Bojler</option>
-          <option>TV</option>
-          <option>Frizider</option>
+          <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
         </select>
       </div>
 
