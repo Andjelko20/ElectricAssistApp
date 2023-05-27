@@ -1,4 +1,4 @@
-.chart {
+/* .chart {
     background-color: white;
     border-radius: 5px;
     width: 100%;
@@ -56,9 +56,6 @@
 #linechart {
     width: 100%;
 }
-/* ::ng-deep .mat-calendar-body .mat-calendar-body-selected {
-    background-color: #354871 !important;
-  } */
 
   
 @media(min-width:1024px) and (max-width:1280px)  {
@@ -77,10 +74,7 @@
     .container {
       width: 20%;
     }
-    /* ::ng-deep .mat-calendar-body .mat-calendar-body-selected {
-        background-color: #354871 !important;
-      }
-       */
+
       
 }
 @media (min-width:768px) and (max-width:1023px)
@@ -97,10 +91,76 @@
     
     font-size: 14px;
   }
-}
-/* @media (hover: hover) {
-    ::ng-deep .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
-      background-color: green !important;
+} */
+
+   .chart {
+    background-color: white;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .chart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    min-height: 50vh;
+    width: 100%;
+  }
+  
+  #linechart {
+    width: 100%;
+  }
+  
+  .container {
+  width: 10%;
+  float: left;
+  margin-left: 5%;
+  }
+  .form-select {
+  cursor: pointer;
+  }
+  
+  .container2 {
+    display: inline-block;
+    width: 15%;
+  
+  }
+  .container3 {
+    width: 15%;
+    float: right;
+    margin-right: 5%;
+  }
+  
+  .btn {
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #2199e8;
+    color: white;
+    font-weight: normal;
+    text-align: center;
+  }
+  
+  .btn:hover {
+    background-color: #0d8beb;
+  }
+  
+  @media(min-width:1280px) {
+    .chart-container {
+        min-height: 50vh !important;
+        width: 100%;
+    }
+    #linechart {
+        display: inline-flex;
+        width: 100%;
     }
   }
-   */
+  @media(min-width:768px) and (max-width:1023px) {
+    .chart-container {
+      min-height: 30vh
+    }
+    
+  }
