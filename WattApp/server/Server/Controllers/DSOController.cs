@@ -1,14 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Data;
 using Server.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Server.Data;
-using Server.Models;
-using Server.Services;
-using Server.Models.DropDowns.Location;
 
 namespace Server.Controllers
 {
@@ -31,32 +23,17 @@ namespace Server.Controllers
         [HttpGet]
         [Route("Settlement/")]
         //[Authorize(Roles = "dispecer, prosumer, guest")]
-        public async Task<IActionResult> GetSettlements([FromQuery] long cityId, [FromQuery] long settlementId, [FromQuery] long deviceCategoryId)
+        public async Task<IActionResult> GetSettlements([FromQuery] long cityId)
         {
-            //if (cityId != 0)
-            //{
-                if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
-                    return NotFound(new { message = "City with ID: " + cityId.ToString() + " does not exist." });
+            if (!_sqliteDb.Cities.Any(c => c.Id == cityId))
+                return NotFound(new { message = "City with ID: " + cityId.ToString() + " does not exist." });
 
-                var settlements = dsoService.GetSettlements(cityId);
+            var settlements = dsoService.GetSettlements(cityId);
 
-                if (settlements == null)
-                    return NotFound(new { message = "Settlements for city with ID: " + cityId.ToString() + " don`t exist." });
+            if (settlements == null)
+                return NotFound(new { message = "Settlements for city with ID: " + cityId.ToString() + " don`t exist." });
 
-                return Ok(settlements);
-            /*}
-            else
-            {
-                if (!_sqliteDb.Settlements.Any(s => s.Id == settlementId))
-                    return NotFound(new { message = "Settlement with ID: " + settlementId.ToString() + " does not exist." });
-
-                if (!_sqliteDb.DeviceCategories.Any(dc => dc.Id == deviceCategoryId))
-                    return NotFound(new { message = "Device category with ID: " + deviceCategoryId.ToString() + " does not exist." });
-
-                var resultList = dsoService.CalculateSettlementEnergyUsageForToday(settlementId, deviceCategoryId);
-
-                return Ok(resultList);
-            }*/
+            return Ok(settlements);
         }
 
         /// <summary>
@@ -144,8 +121,6 @@ namespace Server.Controllers
             }
             else
                 return NotFound(new { message = "Value for pageNumber and itemsPerPage must be greater then 0." });
-
-            return BadRequest("Input parameters are empty.");
         }
     }
 }
