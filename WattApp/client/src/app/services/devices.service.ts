@@ -95,14 +95,48 @@ export class DevicesService {
 
   getDeviceProsumer(id:number,pageNumber:number,pageSize:number,filters:any):Observable<any>
   {
-    let url = new URL(environment.serverUrl + "api/Device/devices" + id);
+    let url = new URL(environment.serverUrl + "/api/Device/devices" + id);
     url.searchParams.set("pageNumber", pageNumber.toString());
     url.searchParams.set("pageSize", pageSize.toString());
 
-    if(filters.categoryId != -1)
-      url.searchParams.set("categoryId", filters.categoryId);
+    url.searchParams.set("sortCriteria", "0");
+    url.searchParams.set("byAscending", "true");
 
+    if(filters == null)
       return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
+    else{
+      if(filters.categoryId > 0)
+        url.searchParams.set("categoryId", filters.categoryId);
+      if(filters.typeId > 0)
+        url.searchParams.set("typeId", filters.typeId);
+      if(filters.brandId > 0)
+        url.searchParams.set("brandId", filters.brandId);
+      if(filters.turnOn > -1){
+        if(filters.turnOn == 1)
+          url.searchParams.set("turnOn", "true")
+        else
+          url.searchParams.set("turnOn", "false");
+      }
+      if(filters.controlability > -1){
+        if(filters.controlability == 1)
+          url.searchParams.set("controlability", "true")
+        else
+          url.searchParams.set("controlability", "false");
+      }
+      if(filters.energyInKwhValue != 0){
+        if(filters.greaterThan == 0){
+          url.searchParams.set("greaterThan", "false");
+        }
+        else{
+          url.searchParams.set("greaterThan", "true");
+        }
+
+        url.searchParams.set("energyByKwh", filters.energyInKwhValue);
+      }
+      if(filters.searchValue != "")
+        url.searchParams.set("searchValue", filters.searchValue);
+    }
+    return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
   
   addDevices(addDeviceRequest:any):Observable<any>

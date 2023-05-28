@@ -2,77 +2,80 @@
 
   <div class="filters">
     <div class="device-number">
-      <h2>Devices (5)</h2>
+      <h2>Devices ({{numberOfDevices}})</h2>
     </div>
 
     <div class="first-row">
       <div class="form-group">
         <label for="dropdown ">Select by Category:</label>
-        <select class="form-select" aria-label="Default select example" id="dropdown" style="cursor: pointer;" (change)="onSelectedCategory($event)" [(ngModel)]="deviceCategoryId" required>
-          <option value="-1">-- Category --</option>  
+        <select class="form-select" id="dropdown" style="cursor: pointer;" (change)="onSelectedCategory($event)" [(ngModel)]="filters.categoryId" required>
+          <option value="0">-- Category --</option>  
           <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="dropdown">Filter by Device Type</label>
-        <select class="form-select">
-          <option>-- Device Type --</option>
-          <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
+        <select class="form-select" (change)="onSelectedType($event)" [(ngModel)]="filters.typeId">
+          <option value="0">-- Device Type --</option>
+          <option *ngFor="let type of types" [value]="type.id" >{{type.name}}</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="dropdown">Filter by Device Brand</label>
-        <select class="form-select">
-          <option>-- Device brand --</option>
-          <option>VOX</option>
-          <option>Tesla</option>
-          <option>XP</option>
+        <select class="form-select" [(ngModel)]="filters.brandId" (change)="onSelectedBrand($event)">
+          <option value="0">-- Device brand --</option>
+          <option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="dropdown">Filter by Device Status</label>
-        <select class="form-select">
-          <option>-- On/Off --</option>
-          <option>Turn On</option>
-          <option>Turn Off</option>
+        <select class="form-select" [(ngModel)]="filters.turnOn" (change)="onSelectedTurnOn($event)">
+          <option value="-1">-- On/Off --</option>
+          <option value="1">Turn On</option>
+          <option value="0">Turn Off</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="dropdown">Filter by Device Type</label>
-        <select class="form-select">
-          <option>-- Controllability --</option>
-          <option>Allowed</option>
-          <option>Forbbidn</option>
+        <select class="form-select" [(ngModel)]="filters.controlability" (change)="onSelectedControlability($event)">
+          <option value="-1">-- Controllability --</option>
+          <option value="1">Allowed</option>
+          <option value="0">Forbbidn</option>
         </select>
       </div>
 
       <div class="filters-clear">
-        <a href="#">Clear filters</a>
+        <a (click)="clearFilters()" role="button" class="clear-filters">Clear filters</a>
       </div>
     </div>
 
     <div class="second-row">
-      Consumption 
+      Consumption/Production 
       <div class="form-group-consumption">
-        <select class="form-select">
-          <option>Greater</option>
-          <option>Less</option>
+        <select class="form-select" [(ngModel)]="filters.greaterThan" (click)="onSelectedGreaterThan($event)">
+          <option value="1">Greater</option>
+          <option value="0">Less or equal</option>
         </select>
       </div>
 
       than 
-      <div class="form-group-value">
-        <input class="custom-input" type="number" placeholder="Enter value" min="0" pattern="\d+(\.\d+)?" (input)="validateFormInput($event.target)">
+      <div class="form-group-value" id="inputEnergyInKwh" >
+        <input class="custom-input" type="number" placeholder="Enter value" min="0" pattern="\d+(\.\d+)?" (input)="validateFormInput($event.target)" [(ngModel)]="filters.energyInKwhValue" (input)="onSelectedEnergyInKwhValue($event)">
       </div>
 
+      <div class="filters-clear" id="reset">
+        <a (click)="reset()" role="button" class="clear-filters" id="reset">Reset</a>
+      </div>
+    
       <div class="search">
-        <input type="text" class="custom-input" id="search" placeholder="Search devices by name" >
+        <input type="text" class="custom-input" id="search" placeholder="Search devices by name" (input)="onSelectedSearchValue($event)" [(ngModel)]="filters.searchValue">
       </div>
 
+      
     </div>
     
     

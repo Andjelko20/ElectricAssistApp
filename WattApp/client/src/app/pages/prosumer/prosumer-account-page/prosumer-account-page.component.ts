@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DeviceFilterModel } from 'src/app/components/prosumers/devices/all-devices/all-devices.component';
 import { Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { SessionService } from 'src/app/services/session.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 import { Roles } from 'src/app/utilities/role';
 
@@ -40,7 +42,7 @@ export class ProsumerAccountPageComponent {
   public passwordGen='';
   public emailUp='';
   public adres!:string;
-  constructor(private route:ActivatedRoute,private router:Router,private updateService:AuthService) { 
+  constructor(private route:ActivatedRoute,private router:Router,private updateService:AuthService, private sessionService : SessionService) { 
     this.admin=Roles.ADMIN_NAME;
     this.dso=Roles.DISPATCHER_NAME;
     this.prosumer=Roles.PROSUMER_NAME;
@@ -48,6 +50,19 @@ export class ProsumerAccountPageComponent {
 
   ngOnInit(): void {
     let token=new JwtToken();
+    this.sessionService.setSession("filter", new DeviceFilterModel(
+      0, 
+      0, 
+      0, 
+      -1, 
+      -1, 
+      -1,
+      1, 
+      1, 
+      0, 
+      0, 
+      ""
+    ));
     this.idUser=token.data.id as number;
     this.updateService.getNumberOfDevices(this.idUser).subscribe({
       next:(response)=>{

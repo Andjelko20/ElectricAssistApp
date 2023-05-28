@@ -33,7 +33,7 @@ export class ProsumerHomePageComponent implements OnInit {
     1, 
     1, 
     0, 
-    false, 
+    0, 
     ""
   );
   ngOnInit(): void {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { SessionService } from 'src/app/services/session.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,7 +18,15 @@ export class AllProsumersComponent implements OnInit {
   prosumerValues: any[] = [];
   loader:boolean=false;
 
-  constructor( ) {}
+  filters : ProsumerFilterModel = new ProsumerFilterModel(
+	0, 
+	1, 
+	0, 
+	0, 
+	""
+  );
+
+  constructor(private service : AuthService) {}
 
   ngOnInit(): void {
     this.pageChanged(1);
@@ -51,6 +60,29 @@ export class AllProsumersComponent implements OnInit {
         		this.prosumerValues = res;
 					
 		})
-    
   }
+
+}
+
+export class ProsumerFilterModel{
+	settlementId : number;
+
+	categoryId : number;
+	greaterThan : number;
+	value : number;
+
+	searchValue : string;
+
+	constructor(settlementId : number, 
+				categoryId : number, 
+				greaterThan : number, 
+				value : number, 
+				searchValue : string)
+	{
+		this.settlementId = settlementId;
+		this.categoryId = categoryId;
+		this.greaterThan = greaterThan;
+		this.value = value;
+		this.searchValue = searchValue;
+	}
 }

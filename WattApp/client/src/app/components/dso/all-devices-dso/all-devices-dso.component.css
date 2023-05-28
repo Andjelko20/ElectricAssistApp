@@ -186,6 +186,15 @@ input:checked + .slider:before {
   width: 130px;
 }
 
+#inputEnergyInKwh{
+  margin-right: 20px !important;
+}
+
+#reset{
+  margin-right: 20px;
+  font-size: 16px !important;
+}
+
 .custom-input {
       display: block;
       width: 100%;
