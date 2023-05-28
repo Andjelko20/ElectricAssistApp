@@ -56,11 +56,11 @@ namespace Server.Filters
                     case SortValues.Name:
                         if (filter.byAscending == true)
                         {
-                            devices = devices.OrderBy(src => src.Name);
+                            devices = devices.OrderBy(src => src.Name.ToLower());
                         }
                         else
                         {
-                            devices = devices.OrderByDescending(src => src.Name);
+                            devices = devices.OrderByDescending(src => src.Name.ToLower());
                         }
                         break;
                     case SortValues.EnergyInKwh:

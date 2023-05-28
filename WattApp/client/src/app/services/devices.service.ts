@@ -99,6 +99,9 @@ export class DevicesService {
     url.searchParams.set("pageNumber", pageNumber.toString());
     url.searchParams.set("pageSize", pageSize.toString());
 
+    url.searchParams.set("sortCriteria", "0");
+    url.searchParams.set("byAscending", "true");
+
     if(filters == null)
       return this.http.get<any>(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
     else{
