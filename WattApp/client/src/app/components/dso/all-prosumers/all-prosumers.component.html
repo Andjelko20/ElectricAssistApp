@@ -3,7 +3,7 @@
     <div class="filters">
         <div class="first-row">
             <div class="form-group">
-                <select class="form-select">
+                <select class="form-select"\>
                     <option>Male Pcelice</option>
                     <option>Bubanj</option>
                 </select>
@@ -11,9 +11,9 @@
             
             <div class="value-comparation">
                 <div class="form-group">
-                    <select class="form-select">
-                        <option>Consumption</option>
-                        <option>Production</option>
+                    <select class="form-select" [(ngModel)]="filters.categoryId"> 
+                        <option value="1">Production</option>
+                        <option value="2">Consumption</option>
                     </select>
                 </div>
         

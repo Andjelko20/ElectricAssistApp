@@ -27,6 +27,7 @@ export class AllDevicesDsoComponent implements OnInit{
   offClick!: (this: HTMLElement, ev: MouseEvent) => any;
   
   devicesList:ShowDevices[] = [];
+  numberOfDevices : number = 0;
   deviceCategoryId!: number;
   idDevice!: number;
   deviceCategory?:boolean=false;
@@ -74,6 +75,7 @@ export class AllDevicesDsoComponent implements OnInit{
     
     })as ShowDevices)
     console.log(this.devicesList);
+    this.setNumberOfDevices();
     }, (error: { status: number; }) => {
     
     if (error.status === 404) {
@@ -116,7 +118,7 @@ export class AllDevicesDsoComponent implements OnInit{
 		  turnOn: u.turnOn,
 	  
 	  })as ShowDevices)
-	  
+	  this.setNumberOfDevices();
 	  }, (error: { status: number; }) => {
 	  
 	  if (error.status === 404) {
@@ -158,7 +160,7 @@ export class AllDevicesDsoComponent implements OnInit{
         turnOn: u.turnOn,
     
     })as ShowDevices)
-    
+    this.setNumberOfDevices();
     }, (error: { status: number; }) => {
     
     if (error.status === 404) {
@@ -196,6 +198,7 @@ export class AllDevicesDsoComponent implements OnInit{
           controlability: u.controlability,
           turnOn: u.turnOn,
       })as ShowDevices)
+      this.setNumberOfDevices();
       }, (error: { status: number; }) => {
       if (error.status === 404) {
         this.devicesList=[]
@@ -222,6 +225,7 @@ export class AllDevicesDsoComponent implements OnInit{
           controlability: u.controlability,
           turnOn: u.turnOn,
       })as ShowDevices)
+      this.setNumberOfDevices();
       }, (error: { status: number; }) => {
       if (error.status === 404) {
         this.devicesList=[]
@@ -231,12 +235,6 @@ export class AllDevicesDsoComponent implements OnInit{
 
     onSelectedTurnOn(event : any){
       this.filters.turnOn = event.target.value;
-
-      fetch(environment.serverUrl+"/brands?typeId="+this.filters.typeId,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
-        .then(res=>res.json())
-        .then(res=>{
-        this.brands=res;
-      });
 
       this.deviceService.getDeviceProsumer(Number(this.route.snapshot.paramMap.get('id')),1,this.itemsPerPage,this.filters).subscribe(devices => {
         this.totalItems=devices.numberOfPages*this.itemsPerPage;
@@ -254,6 +252,7 @@ export class AllDevicesDsoComponent implements OnInit{
           controlability: u.controlability,
           turnOn: u.turnOn,
       })as ShowDevices)
+      this.setNumberOfDevices();
       }, (error: { status: number; }) => {
       if (error.status === 404) {
         this.devicesList=[]
@@ -280,6 +279,7 @@ export class AllDevicesDsoComponent implements OnInit{
           controlability: u.controlability,
           turnOn: u.turnOn,
       })as ShowDevices)
+      this.setNumberOfDevices();
       }, (error: { status: number; }) => {
       if (error.status === 404) {
         this.devicesList=[]
@@ -306,6 +306,7 @@ export class AllDevicesDsoComponent implements OnInit{
           controlability: u.controlability,
           turnOn: u.turnOn,
       })as ShowDevices)
+      this.setNumberOfDevices();
       }, (error: { status: number; }) => {
       if (error.status === 404) {
         this.devicesList=[]
@@ -332,6 +333,7 @@ export class AllDevicesDsoComponent implements OnInit{
           controlability: u.controlability,
           turnOn: u.turnOn,
       })as ShowDevices)
+      this.setNumberOfDevices();
       }, (error: { status: number; }) => {
       if (error.status === 404) {
         this.devicesList=[]
@@ -358,6 +360,7 @@ export class AllDevicesDsoComponent implements OnInit{
           controlability: u.controlability,
           turnOn: u.turnOn,
       })as ShowDevices)
+      this.setNumberOfDevices();
       }, (error: { status: number; }) => {
       if (error.status === 404) {
         this.devicesList=[]
@@ -386,6 +389,11 @@ export class AllDevicesDsoComponent implements OnInit{
       this.filters.greaterThan = 1;
       this.filters.energyInKwhValue = 0;
     }    
+
+    setNumberOfDevices(){
+      this.numberOfDevices = this.devicesList.length;
+    }
+
        turnOn(id: number) {
         this.modalService.open(this.modalContent);
         this.confirmTurnOnOff=false;
