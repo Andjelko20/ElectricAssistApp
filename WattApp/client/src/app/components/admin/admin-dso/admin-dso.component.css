@@ -198,10 +198,12 @@ li a {
   font-size: 20px;
   border: none;
   cursor: pointer;
-  background-color: #354871;
+  background-color: #445d97;
   border-radius: 5px;
 }
-
+#dropbtn1:hover{
+  background-color: #354871 ;
+}
 #clear-btn{
   color: #fff;
   background-color: darkgrey;
@@ -213,7 +215,9 @@ li a {
   border-radius: 5px;
   cursor: pointer;
 }
-
+#clear-btn:hover{
+  background-color: grey;
+}
 .dropdown.show .dropdown-content {
   display: block;
 }
