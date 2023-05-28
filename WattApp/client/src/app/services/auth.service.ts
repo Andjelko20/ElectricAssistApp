@@ -129,12 +129,9 @@ export class AuthService {
   getSettlement(cityId:number):Observable<Settlement[]>{
     return this.http.get<Settlement[]>(environment.serverUrl+"/settlements?cityId="+cityId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
-  getNumberOfDevices(id:number):Observable<any>
-  {
-    return this.http.get<any>(environment.serverUrl+'/api/Prosumer/numberOfDevices/'+localStorage.getItem('token'),{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
-
+  getNumberOfDevices(userId : number):Observable<any>{
+    return this.http.get<any>(environment.serverUrl+"/api/Prosumer/numberOfDevices/" + userId,{headers:{"Authorization":"Bearer "+localStorage.getItem('token')}});
   }
- 
   getMyLocation(): Observable<{ latitude: number, longitude: number }> {
     const url = `${environment.serverUrl}/api/Users/my_location`;
     const headers = { 'Authorization': 'Bearer ' + localStorage.getItem('token') };
