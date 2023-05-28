@@ -12,7 +12,7 @@
           <div class="filter">
             <div class="form-group">
               <label for="role" class="filter-label">Filter by role</label>
-              <select class="form-control" name="role" [(ngModel)]="filters.role" (ngModelChange)="pageChanged(1)" id="role">
+              <select class="form-select" aria-label="Default select example" name="role" [(ngModel)]="filters.role" (ngModelChange)="pageChanged(1)" id="role">
                 <option value="0">All roles</option>
                 <option value="1">Admin</option>
                 <option value="2">Dispatcher</option>
@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
               <label for="blocked" class="filter-label">Filter by blocked status</label>
-              <select class="form-control" name="blocked" [(ngModel)]="filters.blocked" (ngModelChange)="pageChanged(1)" id="blocked">
+              <select class="form-select" aria-label="Default select example" name="blocked" [(ngModel)]="filters.blocked" (ngModelChange)="pageChanged(1)" id="blocked">
                 <option value="-1">Select status</option>
                 <option value="1">Blocked</option>
                 <option value="0">Active</option>
@@ -29,7 +29,7 @@
             </div>
             <div class="form-group">
               <label for="city" class="filter-label">Filter by city</label>
-              <select class="form-control" name="city" [(ngModel)]="filters.city" (ngModelChange)="cityChanged()" id="city">
+              <select class="form-select" aria-label="Default select example" name="city" [(ngModel)]="filters.city" (ngModelChange)="cityChanged()" id="city">
                 <option value="0">All cities</option>
                 <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
               </select>
@@ -37,7 +37,7 @@
             <div class="form-group">
               <label for="settlement" class="filter-label">Filter by settlement</label>
               <p *ngIf="filters.city==0" class="settlement-text">Select city first</p>
-              <select class="form-control" name="settlement" *ngIf="filters.city!=0" [(ngModel)]="filters.settlement" (ngModelChange)="pageChanged(1)" id="settlement">
+              <select class="form-select" aria-label="Default select example" name="settlement" *ngIf="filters.city!=0" [(ngModel)]="filters.settlement" (ngModelChange)="pageChanged(1)" id="settlement">
                 <option value="0">All settlements</option>
                 <option *ngFor="let settlement of settlements" [value]="settlement.id">{{settlement.name}}</option>
               </select>

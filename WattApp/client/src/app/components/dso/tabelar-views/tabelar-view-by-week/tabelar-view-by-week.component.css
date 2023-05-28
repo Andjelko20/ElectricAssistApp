@@ -50,7 +50,7 @@
   .container2 {
     display: inline-flex;
     width: 18%;
-
+    margin-left: 12px;
   }
   .container3 {
     width: 15%;
