@@ -28,10 +28,10 @@ namespace Server.Controllers
         public async Task<IActionResult> GetHistoryForCity([FromQuery] string fromDate, string toDate, 
                                                                        long deviceCategoryId,
                                                                        long cityId, long settlementId, 
-                                                                       long byMonthCityId, long byDayCityId, long byHourCityId,
-                                                                       long byMonthSettlementId, long byDaySettlementId, long byHourSettlementId, 
-                                                                       long byMonthUserId, long byDayUserId, long byHourUserId, long doubleUserId,
-                                                                       long doubleDeviceId, long byMonthDeviceId, long byHourDeviceId, long byDayDeviceId)
+                                                                       long byDayCityId, long byHourCityId,
+                                                                       long byDaySettlementId, long byHourSettlementId, 
+                                                                       long byDayUserId, long byHourUserId, long doubleUserId,
+                                                                       long doubleDeviceId, long byHourDeviceId, long byDayDeviceId)
         {
             if(cityId!=0)
             {
@@ -146,38 +146,6 @@ namespace Server.Controllers
                 var result = historyFromToService.GetDeviceHistoryByHourFromTo(fromDate, toDate, byHourDeviceId);
                 return Ok(result);
             }
-            /*else if (byMonthDeviceId != 0)
-            {
-                if (!_sqliteDb.Devices.Any(d => d.Id == byMonthDeviceId))
-                    return NotFound(new { message = "Device with ID: " + byMonthDeviceId.ToString() + " does not exist." });
-
-                var result = historyFromToService.GetDeviceHistoryByMonthFromTo(fromDate, toDate, byMonthDeviceId);
-                return Ok(result);
-            }
-            else if (byMonthUserId != 0)
-            {
-                if (!_sqliteDb.Users.Any(d => d.Id == byMonthUserId))
-                    return NotFound(new { message = "User with ID: " + byMonthUserId.ToString() + " does not exist." });
-
-                var result = historyFromToService.GetProsumerHistoryByMonthFromTo(fromDate, toDate, byMonthUserId, deviceCategoryId);
-                return Ok(result);
-            }
-            else if (byMonthCityId != 0)
-            {
-                if (!_sqliteDb.Cities.Any(c => c.Id == byMonthCityId))
-                    return NotFound(new { message = "City with ID: " + byMonthCityId.ToString() + " does not exist." });
-
-                var result = historyFromToService.GetCityHistoryByMonthFromTo(fromDate, toDate, deviceCategoryId, byMonthCityId);
-                return Ok(result);
-            }
-            else // if (byMonthSettlementId != 0)
-            {
-                if (!_sqliteDb.Settlements.Any(s => s.Id == byMonthSettlementId))
-                    return NotFound(new { message = "Settlement with ID: " + byMonthSettlementId.ToString() + " does not exist." });
-
-                var result = historyFromToService.GetSettlementHistoryByMonthFromTo(fromDate, toDate, deviceCategoryId, byMonthSettlementId);
-                return Ok(result);
-            }*/
         }
 
         /// <summary>

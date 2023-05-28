@@ -40,15 +40,17 @@
   }
   
   .container2 {
-    display: inline-block;
-    width: 15%;
-    margin-left: 5%;
+    display: inline-flex;
+    width: 18%;
+    margin-top: 20px;
+    margin-left: 41%;
 
   }
   .container3 {
     width: 15%;
     float: right;
-    margin-right: 5%;
+    margin-top: 30px;
+    margin-right: 2%;
   }
 
 
@@ -66,4 +68,21 @@
   
   .btn:hover {
     background-color: #0d8beb;
+  }
+  @media (min-width:1280px) and (max-width:1900px) {
+    .container2 {
+      margin-left: 41%;
+    }
+  }
+  @media(min-width:768px) and (max-width:1023px) {
+  
+    .container2 {
+      width: 24%;
+      margin-left: 38%;
+    }
+    .container3 {
+      width: 20%;
+      margin-right: 2%;
+      font-size: 14px;
+    }
   }

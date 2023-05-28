@@ -48,12 +48,12 @@ export class LoginComponent implements OnInit {
 		this.show=false;
 		if (this.username.trim().length === 0) {
 			this.errorMsg = " User name is required!";
-			this.show=true;
+			this.messageService.add({severity:"error",summary:"Error",detail:this.errorMsg})
 			return;
 		}
 		if (this.password.trim().length === 0) {
 			this.errorMsg = " Password is required!";
-			this.show=true;
+			this.messageService.add({severity:"error",summary:"Error",detail:this.errorMsg})
 			return;
 		}
 		const rememberMe = (document.querySelector("#remember") as HTMLInputElement).checked;

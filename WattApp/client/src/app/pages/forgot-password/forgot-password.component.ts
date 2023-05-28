@@ -26,12 +26,14 @@ export class ForgotPasswordPageComponent {
 	validateEmail(){
 		let regex=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 		if(regex.test(this.email)){
-			this.emailDiv.nativeElement.classList.remove("invalid");
+			
 			this.emailErrorMessage="";
+			this.messageService.add({severity:"error",summary:"Error",detail:this.emailErrorMessage});
 			return true;
 		}
-		this.emailDiv.nativeElement.classList.add("invalid");
+		
 		this.emailErrorMessage="Not email";
+		this.messageService.add({severity:"error",summary:"Error",detail:this.emailErrorMessage});
 		return false;
 	}
 
