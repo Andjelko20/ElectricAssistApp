@@ -15,6 +15,7 @@
     border-bottom: 1px solid rgb(197, 233, 230);
     position: relative;
     height: auto;
+    width: 100%;
 }
 
 #allh1 {
@@ -34,7 +35,7 @@
     text-align: center;
 }
 
-.btn>span{
+.btn>span {
     font-size: 16px;
 }
 
@@ -102,40 +103,38 @@ label {
     margin-top: 30%;
     font-size: 20px;
 }
+
 .custom-select {
     cursor: pointer;
-  }
+}
 
-
-.filter{
+.filter {
     display: flex;
     flex-direction: column;
 }
 
-.first-row{
+.first-row {
     display: flex;
     flex-direction: row;
     width: 100%;
     margin-bottom: 5px;
 }
 
-.form-group{
+.form-group {
     width: 50%;
 }
 
-.form-group>select{
+.form-group>select {
     width: 90%;
     margin: auto;
 }
 
-option{
+option {
     font-size: 12px;
     width: 90%;
 }
 
-
-
-#search{
+#search {
     width: 95%;
     margin-left: 2.5%;
     margin-right: 2.5%;
@@ -145,22 +144,21 @@ option{
     padding-left: 15px;
 }
 
-.label{
+.label {
     display: flex;
     flex-direction: row;
 }
 
-.clear-filters{
+.clear-filters {
     text-decoration: none;
     font-size: 18px;
     margin-left: 50%;
 }
 
-.label>h2{
+.label>h2 {
     font-size: 18px;
     padding-left: 15px;
 }
-  
 
 .custom-select {
     cursor: pointer;
@@ -173,7 +171,7 @@ option{
     }
     #allh1 {
         font-size: 30px;
-        padding-left: 12%;
+        padding-left: 16%;
         padding-bottom: 15px;
     }
     #imgdevice {
@@ -192,7 +190,11 @@ option{
     }
     .devices-item {
         padding: 10px;
-        width: 25%;
+        width: 29%;
+    }
+    .devices {
+        padding-left: 85px;
+        width: 100%;
     }
     .btn {
         background-color: #354871;
@@ -200,9 +202,8 @@ option{
         margin-top: -55px;
         font-size: 20px;
         width: 200px;
-        margin-right: 8%;
+        margin-right: 5%;
     }
-
     #deviceCategoryId {
         width: 20%;
         font-size: 20px;
@@ -210,7 +211,6 @@ option{
         margin-top: -50px;
         margin-bottom: 0.8rem;
     }
-
     label {
         display: inline-block;
         margin-left: 25%;
@@ -220,63 +220,62 @@ option{
         margin-top: 10%;
         font-size: 40px;
     }
-    
-    .filter{
-        display: flex;
+    .filter {
+        display: inline-block;
+        width: 100%;
         flex-direction: column;
     }
-    
-    .first-row{
+    .first-row {
         display: flex;
         flex-direction: row;
-        margin-left: 10%;
+        margin-left: 14%;
         margin-bottom: 5px;
+        width: 83%;
     }
-    
-    .form-group{
+    .form-group {
         width: 50%;
     }
-    
-    .form-group>select{
+    .form-group>select {
         font-size: 20px;
         width: 90%;
         margin: auto;
     }
-    
-    option{
+    option {
         font-size: 16px;
         width: 90%;
     }
-    
-    #search{
-        width: 95%;
+    #search {
+        width: 45%;
         margin-right: 2.5%;
         margin-bottom: 2px;
         height: 40px;
         border: none;
         padding-left: 15px;
     }
-    
-    .label{
+    .label {
         display: flex;
         flex-direction: row;
-        margin-left: 10%;
+        margin-left: 14%;
     }
-    
-
-    .clear-filters{
+    .clear-filters {
         text-decoration: none;
         font-size: 24px;
         margin-left: 60%;
     }
-    
-    .label>h2{
+    .label>h2 {
         font-size: 24px;
         padding-left: 15px;
+    }
 }
-}
+
 @media(min-width:1200px) {
     #deviceh3 {
         font-size: 30px;
+    }
+}
+
+@media(min-width:1280px) {
+    .devices {
+        margin-left: 2%;
     }
 }

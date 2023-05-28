@@ -175,8 +175,6 @@
             flex-direction: column;
         }
         .btn {
-            width: 50%;
-            padding: 10px;
             font-size: 22px;
             letter-spacing: 2px;
             background-color: rgb(41, 140, 255);
@@ -216,7 +214,10 @@
     
     @media(min-width:1280px) {
         .containers {
-            width: 30%;
+            width: 22%;
             margin-left: 55%;
+        }
+        .logo>img {
+            width: 45%;
         }
     }
