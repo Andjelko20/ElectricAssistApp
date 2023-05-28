@@ -1,7 +1,9 @@
 import { Component, ElementRef, ViewChildren, QueryList, ViewChild, OnInit} from '@angular/core';
 import { forkJoin } from 'rxjs';
+import { DeviceFilterModel } from 'src/app/components/prosumers/devices/all-devices/all-devices.component';
 import { WeekByDay } from 'src/app/models/devices.model';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
+import { SessionService } from 'src/app/services/session.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 
 @Component({
@@ -38,9 +40,22 @@ export class ProsumerReportsPageComponent implements OnInit {
   meter2!:string;
   meter3!:string;
   meter4!:string;
-  constructor(private elementRef: ElementRef,private historyService:HistoryPredictionService) {}
+  constructor(private elementRef: ElementRef,private historyService:HistoryPredictionService, private sessionService : SessionService) {}
   ngOnInit(): void {
     let token=new JwtToken();
+    this.sessionService.setSession("filter", new DeviceFilterModel(
+      0, 
+      0, 
+      0, 
+      -1, 
+      -1, 
+      -1,
+      1, 
+      1, 
+      0, 
+      false, 
+      ""
+    ));
     const id = token.data.id as number;
     this.isContentVisible = true;
     this.isContentVisible1 = false;
