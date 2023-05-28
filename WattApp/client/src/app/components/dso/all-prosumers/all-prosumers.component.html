@@ -3,7 +3,7 @@
     <div class="filters">
         <div class="first-row">
             <div class="form-group">
-                <select class="form-select"\>
+                <select class="form-select">
                     <option>Male Pcelice</option>
                     <option>Bubanj</option>
                 </select>
@@ -18,9 +18,9 @@
                 </div>
         
                 <div class="form-group">
-                    <select class="form-select">
-                        <option>Greater</option>
-                        <option>Less</option>
+                    <select class="form-select"  [(ngModel)]="filters.greaterThan">
+                        <option value="1">Greater</option>
+                        <option value="0">Less</option>
                     </select>
                 </div>
         
@@ -28,7 +28,7 @@
                  
         
                 <div class="form-group">
-                    <input class="custom-input" type="number" min="0" placeholder="Enter value">
+                    <input class="custom-input" type="number" min="0" placeholder="Enter value" [(ngModel)]="filters.value">
                 </div>
 
                 <div class="clear-label">
@@ -38,7 +38,7 @@
             
     
             <div class="form-group">
-                <input class="custom-input" id="search" type="text" placeholder="Search prosumers by name, username or address">
+                <input class="custom-input" id="search" type="text" placeholder="Search prosumers by name, username or address" [(ngModel)]="filters.searchValue">
             </div>
         </div>
     </div>
