@@ -25,6 +25,9 @@
 ::ng-deep .ngx-pagination li.small-screen{
 	display: none !important;
 }
+::ng-deep ul.ngx-pagination {
+    padding-left:0rem;
+}
 ::ng-deep #pagination .ngx-pagination .pagination-next a::after,
 ::ng-deep #pagination .ngx-pagination .pagination-next.disabled::after{
 	margin-left: 0 !important;
