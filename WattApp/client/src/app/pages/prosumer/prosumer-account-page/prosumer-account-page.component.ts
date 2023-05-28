@@ -60,7 +60,7 @@ export class ProsumerAccountPageComponent {
       1, 
       1, 
       0, 
-      false, 
+      0, 
       ""
     ));
     this.idUser=token.data.id as number;

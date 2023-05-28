@@ -53,7 +53,7 @@ export class ProsumerReportsPageComponent implements OnInit {
       1, 
       1, 
       0, 
-      false, 
+      0, 
       ""
     ));
     const id = token.data.id as number;

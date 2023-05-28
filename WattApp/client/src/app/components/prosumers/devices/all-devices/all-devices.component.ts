@@ -32,7 +32,7 @@ export class AllDevicesComponent implements OnInit {
     1, 
     1, 
     0, 
-    false, 
+    1, 
     ""
   );
 
@@ -280,7 +280,7 @@ export class AllDevicesComponent implements OnInit {
         controlability:-1, 
         sortCriteria:1, 
         byAscending:1, 
-        greaterThan:false, 
+        greaterThan:1, 
         energyInKwhValue:0,
         searchValue:""
       };
@@ -318,7 +318,7 @@ export class DeviceFilterModel{
 
   //Potrosnja veca/manja od
   energyInKwhValue : number;
-  greaterThan : boolean;
+  greaterThan : number;
 
   //Search prema nazivu uredjaja
   searchValue : string;
@@ -333,7 +333,7 @@ export class DeviceFilterModel{
     sortCriteria: number,
     byAscending: number,
     energyInKwhValue: number,
-    greaterThan: boolean,
+    greaterThan: number,
     searchValue: string
   ) {
     this.categoryId = categoryId;
