@@ -7,7 +7,7 @@
                     <a [routerLink]='["/device/"+idDevice]'><img id="turnback" src="assets/img/back.png" alt=""></a>
                 </div>
                 <h1>Update</h1>
-                <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="myForm">
+                <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="myForm" novalidate>
                     <div class="form-row">
                         <div class="form-group col-md-6 ">
 

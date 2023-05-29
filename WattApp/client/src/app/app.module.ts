@@ -109,6 +109,8 @@ import { ProsumerYearProductionComponent } from './components/prosumers/prosumer
 import { ProsumerSolarComponent } from "./components/prosumers/prosumer-solar/prosumer-solar.component";
 import { TodayProsumerComponent } from './components/weather/today-prosumer/today-prosumer.component';
 import { PrimeModule } from './prime/prime.module';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -231,7 +233,9 @@ import { PrimeModule } from './prime/prime.module';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-	PrimeModule
+	  PrimeModule,
+    InputTextModule,
+    DropdownModule
   ],
   providers: [DecimalPipe,DatePipe],
   bootstrap: [AppComponent]

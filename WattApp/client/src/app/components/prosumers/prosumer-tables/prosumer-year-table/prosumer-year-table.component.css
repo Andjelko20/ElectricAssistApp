@@ -20,7 +20,9 @@ mat-form-field {
 .container3 {
     float: right;
 }
-
+.table-title{
+    color: gray;
+}
 .btn {
     padding: 8px;
     border: none;
@@ -34,7 +36,7 @@ mat-form-field {
 }
 
 .table {
-    color: #998d80;
+    color: gray;
 }
 
 .table th {

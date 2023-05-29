@@ -10,7 +10,9 @@ mat-form-field {
     width: 47%;
     float: left;
 }
-
+.table-title{
+    color: gray;
+}
 .container2 {
     width: 100%;
     margin-top: 15px;
@@ -34,7 +36,7 @@ mat-form-field {
 }
 
 .table {
-    color: #998d80;
+    color: gray;
 }
 
 .table th {

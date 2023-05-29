@@ -48,7 +48,7 @@ form {
     width: 160px;
     margin-bottom: 20px;
 }
-.select-form-control{
+.form-select{
     width: 88%;
     padding: 0.525rem 0.75rem;
     font-size: 1rem;
@@ -61,6 +61,7 @@ form {
     border-radius: 0.375rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 	outline: 0;
+    cursor: pointer;
 }
 .add-button{
 	margin-top: 10px;

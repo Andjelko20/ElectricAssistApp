@@ -34,7 +34,7 @@ mat-form-field {
 }
 
 .table {
-    color: #998d80;
+    color: grey;
 }
 
 .table th {
@@ -44,7 +44,9 @@ mat-form-field {
 .btn:hover {
     background-color: #93ede2;
 }
-
+.table-title{
+    color: gray;
+}
 @media (min-width: 320px) {
     h1 {
         font-size: 20px;
