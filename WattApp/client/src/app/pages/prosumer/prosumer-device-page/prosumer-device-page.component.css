@@ -9,6 +9,18 @@
     margin-bottom: 0px;
 }
 
+.history-charts-body {
+    padding: 10px;
+}
+
+.history-charts-bodyy {
+    padding-top: 10px;
+}
+
+.graf {
+    padding: 10px;
+}
+
 .back {
     margin-top: 15px;
 }

@@ -7,7 +7,6 @@
     border-radius: 4px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     flex-basis: 48%;
-    padding: 20px;
 }
 
 .table-title {
@@ -72,16 +71,16 @@ mat-form-field {
         font-size: 20px;
     }
     mat-form-field {
-        width: 24%;
+        width: 29%;
         float: none;
-        margin-left: 31%;
+        margin-left: 23%;
     }
 }
 
-@media(min-width:1200px) {
+@media(min-width:1280px) {
     mat-form-field {
-        width: 15%;
+        width: 20%;
         float: none;
-        margin-left: 41%;
+        margin-left: 36%;
     }
 }

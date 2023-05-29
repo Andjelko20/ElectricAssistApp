@@ -69,16 +69,16 @@
 
                             </div>
                         </div>
-                        <div class="history-charts-body" *ngIf="compGraph">
+                        <div class="history-charts-bodyy" *ngIf="compGraph">
                             <app-device-today-tabular></app-device-today-tabular>
                         </div>
-                        <div class="history-charts-body" *ngIf="compGraph1">
+                        <div class="history-charts-bodyy" *ngIf="compGraph1">
                             <app-device-week-tabular></app-device-week-tabular>
                         </div>
-                        <div class="history-charts-body" *ngIf="compGraph2">
+                        <div class="history-charts-bodyy" *ngIf="compGraph2">
                             <app-device-month-tabular></app-device-month-tabular>
                         </div>
-                        <div class="history-charts-body" *ngIf="compGraph3">
+                        <div class="history-charts-bodyy" *ngIf="compGraph3">
                             <app-device-year-tabular></app-device-year-tabular>
                         </div>
                     </ng-container>
@@ -162,10 +162,10 @@
             <div class="content3">
                 <div class="toggle-container">
                     <div class="toggle-buttons">
-                        <input type="radio" (click)="showComponentTable()" name="toggle5" checked id="compTable-btn" >
+                        <input type="radio" (click)="showComponentTable()" name="toggle5" checked id="compTable-btn">
                         <label for="compTable-btn">Graphical view</label>
                         <span class="divider"></span>
-                        <input type="radio" (click)="showComponentTable1()" name="toggle5" id="compTable1-btn" >
+                        <input type="radio" (click)="showComponentTable1()" name="toggle5" id="compTable1-btn">
                         <label for="compTable1-btn">Tabular view</label>
                     </div>
                 </div>

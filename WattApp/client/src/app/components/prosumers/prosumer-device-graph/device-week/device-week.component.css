@@ -10,7 +10,6 @@
     justify-content: center;
     border-radius: 5px;
     width: 100%;
-    padding-top: 18px;
 }
 
 .chart-container {
@@ -71,8 +70,16 @@ mat-form-field {
 
 @media(min-width:1280px) {
     mat-form-field {
+        width: 20%;
+        float: none;
+        margin-left: 36%;
+    }
+}
+
+@media(min-width:1660px) {
+    mat-form-field {
         width: 15%;
         float: none;
-        margin-left: 39%;
+        margin-left: 39.5%;
     }
 }
