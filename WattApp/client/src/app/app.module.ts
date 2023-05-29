@@ -109,6 +109,7 @@ import { ProsumerYearProductionComponent } from './components/prosumers/prosumer
 import { ProsumerSolarComponent } from "./components/prosumers/prosumer-solar/prosumer-solar.component";
 import { TodayProsumerComponent } from './components/weather/today-prosumer/today-prosumer.component';
 import { PrimeModule } from './prime/prime.module';
+import { MapService } from "./services/map.service";
 
 @NgModule({
   declarations: [
@@ -233,7 +234,7 @@ import { PrimeModule } from './prime/prime.module';
     MatInputModule,
 	PrimeModule
   ],
-  providers: [DecimalPipe,DatePipe],
+  providers: [DecimalPipe,DatePipe,MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

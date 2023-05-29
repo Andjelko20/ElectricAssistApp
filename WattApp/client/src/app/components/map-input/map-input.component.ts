@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import { environment } from 'src/environments/environment';
 import { NgModel } from '@angular/forms';
+import { MapService } from 'src/app/services/map.service';
+import { data, error } from 'jquery';
 
 var cyrillic = ["а", "б", "в", "г", "д", "ђ", "е", "ж", "з", "и", "ј", "к", "л", "љ", "м", "н", "њ", "о", "п", "р", "с", "т", "ћ", "у", "ф", "х", "ц", "ч", "џ", "ш"];
 var latin = ["a", "b", "v", "g", "d", "đ", "e", "ž", "z", "i", "j", "k", "l", "lj", "m", "n", "nj", "o", "p", "r", "s", "t", "ć", "u", "f", "h", "c", "č", "dž", "š"];
@@ -54,7 +56,7 @@ export class MapInputComponent {
 	  public cityElement!:HTMLSelectElement;
 	  public settlementElement!:HTMLSelectElement;
 	  public countryElement!:HTMLSelectElement;
-	  constructor(){
+	  constructor(private mapService:MapService){
 		document.onclick=(event:any)=>{
 			let searchResult=document.getElementsByClassName("search-result")[0];
 			if(searchResult && event.target !== searchResult && !searchResult.contains(event.target as Node)){
@@ -63,6 +65,19 @@ export class MapInputComponent {
 		}
 	  }
 	  
+	  changeAddress(lat:number,lon:number){
+		this.mapService.getAddressByCoordinates(lat,lon).subscribe({
+			next:(res:any)=>{
+				try{
+					let place = res.data[0];
+					let address = place
+				}
+				catch{}
+			},
+			error:(err:any)=>{}
+		})
+	  }
+
 	  ngOnInit(): void {
 		this.countryElement=document.getElementById("country") as HTMLSelectElement
 		this.cityElement=document.getElementById("city") as HTMLSelectElement;
@@ -106,20 +121,22 @@ export class MapInputComponent {
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
 		this.marker = Leaflet.marker([44.01721187973962, 20.90732574462891], { draggable: true }).addTo(this.map); // postavljanje čiode
 		let latLng = this.marker.getLatLng();
-		this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng)
+		//this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng)
 
     	// postavljanje događaja na klik na mapu
 		this.map.on('click', (event: Leaflet.LeafletMouseEvent) => {
 			this.marker.setLatLng(event.latlng);
 			latLng = this.marker.getLatLng();
-			this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
+			//this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
 			this.locationChanged.emit(latLng);
+			this.changeAddress(latLng.lat,latLng.lng);
 		});
 		this.marker.on("dragend",(event:L.DragEndEvent)=>{
 			this.marker.setLatLng(event.target.getLatLng());
 			latLng = this.marker.getLatLng();
-			this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
+			//this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
 			this.locationChanged.emit(latLng);
+			this.changeAddress(latLng.lat,latLng.lng);
 		});
 	  }
 
