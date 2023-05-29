@@ -31,11 +31,6 @@
     background-color: #93ede2;
 }
 
-
-/* .containter3 {
-    float: right;
-} */
-
 @media (min-width: 320px) {
     h1 {
         font-size: 20px;
@@ -53,7 +48,7 @@
 }
 
 .container {
-    padding: 0;
+    padding: 10px;
 }
 
 .row {
