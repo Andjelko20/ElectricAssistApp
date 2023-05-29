@@ -1,63 +1,64 @@
-    <div class="first">
-      <div class="header">
+<div class="first">
+    <div class="header">
         <h3>All Users</h3>
-      </div>
-      <div id="all">
-      <div class="filter" >
-      <div class="dropdown" [class.show]="showDropdown">
-        <a id="dropbtn1" class="btn btn-primary" (click)="toggleDropdown()">
+    </div>
+    <div id="all">
+        <div class="filter">
+            <div class="dropdown" [class.show]="showDropdown">
+                <a id="dropbtn1" class="btn btn-primary" (click)="toggleDropdown()">
           Filters <span class="filter-count">({{ countActiveFilters() }})</span>
         </a>
-        <div class="dropdown-content">
-          <div class="filter">
-            <div class="form-group">
-              <label for="role" class="filter-label">Filter by role</label>
-              <select class="form-select" aria-label="Default select example" name="role" [(ngModel)]="filters.role" (ngModelChange)="pageChanged(1)" id="role">
+                <div class="dropdown-content">
+                    <div class="filter">
+                        <div class="form-group">
+                            <label for="role" class="filter-label">Filter by role</label>
+                            <select class="form-select" aria-label="Default select example" name="role" [(ngModel)]="filters.role" (ngModelChange)="pageChanged(1)" id="role">
                 <option value="0">All roles</option>
                 <option value="1">Admin</option>
                 <option value="2">Dispatcher</option>
                 <option value="3">Prosumer</option>
               </select>
-            </div>
-            <div class="form-group">
-              <label for="blocked" class="filter-label">Filter by blocked status</label>
-              <select class="form-select" aria-label="Default select example" name="blocked" [(ngModel)]="filters.blocked" (ngModelChange)="pageChanged(1)" id="blocked">
+                        </div>
+                        <div class="form-group">
+                            <label for="blocked" class="filter-label">Filter by blocked status</label>
+                            <select class="form-select" aria-label="Default select example" name="blocked" [(ngModel)]="filters.blocked" (ngModelChange)="pageChanged(1)" id="blocked">
                 <option value="-1">Select status</option>
                 <option value="1">Blocked</option>
                 <option value="0">Active</option>
               </select>
-            </div>
-            <div class="form-group">
-              <label for="city" class="filter-label">Filter by city</label>
-              <select class="form-select" aria-label="Default select example" name="city" [(ngModel)]="filters.city" (ngModelChange)="cityChanged()" id="city">
+                        </div>
+                        <div class="form-group">
+                            <label for="city" class="filter-label">Filter by city</label>
+                            <select class="form-select" aria-label="Default select example" name="city" [(ngModel)]="filters.city" (ngModelChange)="cityChanged()" id="city">
                 <option value="0">All cities</option>
                 <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
               </select>
-            </div>
-            <div class="form-group">
-              <label for="settlement" class="filter-label">Filter by settlement</label>
-              <p *ngIf="filters.city==0" class="settlement-text">Select city first</p>
-              <select class="form-select" aria-label="Default select example" name="settlement" *ngIf="filters.city!=0" [(ngModel)]="filters.settlement" (ngModelChange)="pageChanged(1)" id="settlement">
+                        </div>
+                        <div class="form-group">
+                            <label for="settlement" class="filter-label">Filter by settlement</label>
+                            <p *ngIf="filters.city==0" class="settlement-text">Select city first</p>
+                            <select class="form-select" aria-label="Default select example" name="settlement" *ngIf="filters.city!=0" [(ngModel)]="filters.settlement" (ngModelChange)="pageChanged(1)" id="settlement">
                 <option value="0">All settlements</option>
                 <option *ngFor="let settlement of settlements" [value]="settlement.id">{{settlement.name}}</option>
               </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="clearf">
+                    <button id="clear-btn" [ngClass]="{'button-blue': filters.name, 'button-gray': !filters.name}" (click)="clearFilters()">Clear All Filters</button>
+                </div>
             </div>
-          </div>
+            <div class="form-group" id="search">
+                <label>Search user by</label>
+                <input type="text" name="search" [(ngModel)]="filters.name" class="form-control search" id="searchInput" placeholder="name, username or address" (ngModelChange)="pageChanged(1)">
+            </div>
+
         </div>
-        <div class="form-group" id="clearf" >
-          <button id="clear-btn" (click)="clearFilters()">Clear All Filters</button>
-        </div>
-      </div>
-      <div class="form-group" id="search">
-        <label>Search user by</label>
-        <input type="text" name="search" [(ngModel)]="filters.name" class="form-control search" id="searchInput"placeholder="name, username or address" (ngModelChange)="pageChanged(1)">
-      </div> 
     </div>
-  </div>
-		<app-loader *ngIf="loading"></app-loader>
-		<div *ngIf="!loading && showUsers?.length==0" class="no-users">
-			There are no users to be shown.
-		</div>
+    <app-loader *ngIf="loading"></app-loader>
+    <div *ngIf="!loading && showUsers?.length==0" class="no-users">
+        There are no users to be shown.
+    </div>
     <div id="tableres">
         <table *ngIf="!loading && showUsers?.length!=0">
             <thead>
@@ -71,7 +72,7 @@
                     <th>Settlement</th>
                     <th>City</th>
                     <th>Blocked</th>
-                    <th>Actions</th>  
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,74 +86,71 @@
                     <td>{{show.settlement}}</td>
                     <td>{{show.city}}</td>
                     <td>
-                      <label class="switch" *ngIf="show.block===false" (click)="blockUser(show.id)">
+                        <label class="switch" *ngIf="show.block===false" (click)="blockUser(show.id)">
                         <input type="checkbox" [disabled]="!confirmBlock">
                         <span class="slider round"></span>
                       </label>
-                      <label class="switch" *ngIf="show.block===true"  (click)="unblockUser (show.id)">
+                        <label class="switch" *ngIf="show.block===true" (click)="unblockUser (show.id)">
                         <input type="checkbox" checked [disabled]="!confirmBlock">
                         <span class="slider round"></span>
                       </label>
                     </td>
                     <td>
-                      <a (click)="updatePage(show.id)" style="cursor: pointer;text-decoration: none; color: #2199e8;"><i class="fas fa-cog" style="color: #2199e8"></i> Edit</a>&nbsp;&nbsp;
-                      <a  (click)="deleteUser(show.id)" style="cursor: pointer; color: red;"><i class="fas fa-trash" style="color: red"></i> Delete</a>
-                  </td>
+                        <a (click)="updatePage(show.id)" style="cursor: pointer;text-decoration: none; color: #2199e8;"><i class="fas fa-cog" style="color: #2199e8"></i> Edit</a>&nbsp;&nbsp;
+                        <a (click)="deleteUser(show.id)" style="cursor: pointer; color: red;"><i class="fas fa-trash" style="color: red"></i> Delete</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
-		    <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
+        <app-page-control (pageChange)="pageChanged($event)" *ngIf="itemsPerPage<totalItems"></app-page-control>
     </div>
-  </div>
-    <!-- Modal -->
-    <ng-template #modalContent let-modal >
-      <div class="modal-header">
+</div>
+<!-- Modal -->
+<ng-template #modalContent let-modal>
+    <div class="modal-header">
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-      </div>
-      <div class="modal-body">
+    </div>
+    <div class="modal-body">
         <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
         <div id="subb">
-          <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>&nbsp;&nbsp;
-          <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+            <button type="button" class="btn btn-primary" (click)="modal.close('Save click')" id="popup">{{btnAction}}</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-danger" (click)="modal.dismiss('cancel')">Close</button>
         </div>
-      </div>
-    </ng-template>
-    <!-- Update Modal -->
-    <ng-template #modalContent1 let-modal >
-      <div class="modal-header">
+    </div>
+</ng-template>
+<!-- Update Modal -->
+<ng-template #modalContent1 let-modal>
+    <div class="modal-header">
         <h5 class="modal-title" id="modalTitle">Update {{oneUser}}</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-      </div>
-      <div class="modal-body">
+    </div>
+    <div class="modal-body">
         <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="userForm">
-          <div class="form-row">
-              <div class="form-group col-md-6 " >
-                  <br>
-                  <label for="email " class="form-label ">Email</label>
-                  <input type="text " class="form-control " id="id " name="email" formControlName="email" [(ngModel)]="updateUserDetail.email ">
-                  <br>
-              </div>
-          </div>
-          <div id="subb">
-            <button type=" submit " class="btn btn-primary mr-5 " id="change-pass-popup"(click)="modal.close('Save click')" >Save</button>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
-          </div>
+            <div class="form-row">
+                <div class="form-group col-md-6 ">
+                    <br>
+                    <label for="email " class="form-label ">Email</label>
+                    <input type="text " class="form-control " id="id " name="email" formControlName="email" [(ngModel)]="updateUserDetail.email ">
+                    <br>
+                </div>
+            </div>
+            <div id="subb">
+                <button type=" submit " class="btn btn-primary mr-5 " id="change-pass-popup" (click)="modal.close('Save click')">Save</button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-danger" (click)="modal.dismiss('cancel')">Close</button>
+            </div>
         </form>
-      </div>
-    </ng-template>
-    <!-- Email confirmation -->
-    <ng-template #modalContent2 let-modal >
-      <div class="modal-header">
+    </div>
+</ng-template>
+<!-- Email confirmation -->
+<ng-template #modalContent2 let-modal>
+    <div class="modal-header">
         <h5 class="modal-title" id="modalTitle">Update {{oneUser}}</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-      </div>
-      <div class="modal-body">
-        <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;" >{{body}}</h5>
-        <div id="subb" >
-          <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+    </div>
+    <div class="modal-body">
+        <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+        <div id="subb">
+            <button type="button" class="btn btn-outline-danger" (click)="modal.dismiss('cancel')">Close</button>
         </div>
-      </div>
-    </ng-template>
-    
-    
-    
+    </div>
+</ng-template>
