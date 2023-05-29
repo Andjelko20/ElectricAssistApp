@@ -53,13 +53,11 @@ form {
     justify-content: center;
 }
 
-#button1 {
+#btn1 {
     justify-content: center;
     margin-left: 25%;
-    width: 160px;
-    background-color: #1C315E;
+    width: 142px;
 }
-
 input.ng-invalid.ng-touched {
     border: 1px solid red;
 }
