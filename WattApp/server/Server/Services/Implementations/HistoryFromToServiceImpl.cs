@@ -992,8 +992,8 @@ namespace Server.Services.Implementations
 
         public void NoPaginationFillInWithZerosConsumptionProductionMonthByDay(DateTime FromDate, DateTime ToDate, List<DailyEnergyConsumptionPastMonth> energyUsages)
         {
-            if (ToDate > DateTime.Now)
-                ToDate = DateTime.Now;
+            /*if (ToDate > DateTime.Now)
+                ToDate = DateTime.Now;*/
 
             for (var date = FromDate; date < ToDate; date = date.AddDays(1))
             {
