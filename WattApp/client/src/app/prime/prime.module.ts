@@ -5,7 +5,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
-
+import { PasswordModule } from 'primeng/password';
 
 @NgModule({
   declarations: [],
@@ -16,7 +16,8 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 	ToastModule,
 	DialogModule,
 	ConfirmDialogModule,
-	ConfirmPopupModule
+	ConfirmPopupModule,
+	PasswordModule
   ],
   providers:[MessageService,ConfirmationService]
 })

@@ -3,20 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import { environment } from 'src/environments/environment';
 import { NgModel } from '@angular/forms';
+import { MapService } from 'src/app/services/map.service';
+import { data, error } from 'jquery';
 import  { Popover } from 'bootstrap';
 
 var cyrillic = ["а", "б", "в", "г", "д", "ђ", "е", "ж", "з", "и", "ј", "к", "л", "љ", "м", "н", "њ", "о", "п", "р", "с", "т", "ћ", "у", "ф", "х", "ц", "ч", "џ", "ш"];
 var latin = ["a", "b", "v", "g", "d", "đ", "e", "ž", "z", "i", "j", "k", "l", "lj", "m", "n", "nj", "o", "p", "r", "s", "t", "ć", "u", "f", "h", "c", "č", "dž", "š"];
-  
+
 
 function cyrillicToLatin(text:string):string {
-	
+
 	var result = "";
-  
+
 	for (var i = 0; i < text.length; i++) {
 	  var char = text.charAt(i);
 	  var index = cyrillic.indexOf(char.toLowerCase());
-  
+
 	  if (index !== -1) {
 		var latinChar = latin[index];
 		if (char === char.toUpperCase()) {
@@ -27,10 +29,10 @@ function cyrillicToLatin(text:string):string {
 		result += char;
 	  }
 	}
-  
+
 	return result;
   }
-  
+
 
 @Component({
   selector: 'map-input',
@@ -51,13 +53,13 @@ export class MapInputComponent implements OnInit, AfterViewInit,OnDestroy {
 
 	  public settlementId:number=0;
 	  public address:string="";
-	  
+
 	  popover: Popover | undefined;
 	  public popovers: Popover[] = [];
 	  public cityElement!:HTMLSelectElement;
 	  public settlementElement!:HTMLSelectElement;
 	  public countryElement!:HTMLSelectElement;
-	  constructor(){
+	  constructor(private mapService:MapService){
 		document.onclick=(event:any)=>{
 			let searchResult=document.getElementsByClassName("search-result")[0];
 			if(searchResult && event.target !== searchResult && !searchResult.contains(event.target as Node)){
@@ -65,13 +67,33 @@ export class MapInputComponent implements OnInit, AfterViewInit,OnDestroy {
 			}
 		}
 	  }
+
+	  changeAddress(lat:number,lon:number){
+		this.mapService.getAddressByCoordinates(lat,lon).subscribe({
+			next:(res:any)=>{
+				try{
+          let result = "";
+					let address = res.address;
+					if(address?.road !== undefined)
+            result=cyrillicToLatin(address.road);
+          if(address?.house_number !== undefined)
+            result+=" "+address?.house_number;
+          if(result != "")
+            this.address=result;
+				}
+				catch{}
+			},
+			error:(err:any)=>{}
+		})
+	  }
+
 	  ngAfterViewInit() {
 		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
 		const popoverList = Array.from(popoverTriggerList).map((popoverTriggerEl) => {
 		return new Popover(popoverTriggerEl);
 		});
 		this.popovers = popoverList;
-		
+
 	  }
 	  ngOnDestroy(): void {
 		this.popovers.forEach((popover) => {
@@ -103,7 +125,7 @@ export class MapInputComponent implements OnInit, AfterViewInit,OnDestroy {
 		this.searchUrl.searchParams.set("addressdetails","addressdetails");
 		this.searchUrl.searchParams.set("polygon_geojson","0");
 
-		
+
 		const icon = Leaflet.icon({
 		  iconUrl: 'assets/marker-icon.png',
 		  shadowUrl: 'assets/marker-shadow.png',
@@ -113,9 +135,9 @@ export class MapInputComponent implements OnInit, AfterViewInit,OnDestroy {
 		  tooltipAnchor: [16, -28],
 		  shadowSize: [41, 41]
 		});
-	
+
 		Leaflet.Marker.prototype.options.icon = icon;
-	  
+
 		this.map = Leaflet.map('prosumers-map').setView([44.01721187973962, 20.90732574462891], 13);// postavljanje mape i početni prikaz
 		Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		  attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
@@ -123,20 +145,22 @@ export class MapInputComponent implements OnInit, AfterViewInit,OnDestroy {
 		}).addTo(this.map); // dodavanje OpenStreetMap sloja
 		this.marker = Leaflet.marker([44.01721187973962, 20.90732574462891], { draggable: true }).addTo(this.map); // postavljanje čiode
 		let latLng = this.marker.getLatLng();
-		this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng)
+		//this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng)
 
     	// postavljanje događaja na klik na mapu
 		this.map.on('click', (event: Leaflet.LeafletMouseEvent) => {
 			this.marker.setLatLng(event.latlng);
 			latLng = this.marker.getLatLng();
-			this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
+			//this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
 			this.locationChanged.emit(latLng);
+			this.changeAddress(latLng.lat,latLng.lng);
 		});
 		this.marker.on("dragend",(event:L.DragEndEvent)=>{
 			this.marker.setLatLng(event.target.getLatLng());
 			latLng = this.marker.getLatLng();
-			this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
+			//this.marker.bindPopup('Latitude: ' + latLng.lat + ', Longitude: ' + latLng.lng);
 			this.locationChanged.emit(latLng);
+			this.changeAddress(latLng.lat,latLng.lng);
 		});
 	  }
 
@@ -145,7 +169,7 @@ export class MapInputComponent implements OnInit, AfterViewInit,OnDestroy {
 			this.searchResultVisible=false;
 			return;
 		}
-		
+
 		let trimmedAddress=this.address.trim();
 		if(trimmedAddress=="" && trimmedAddress.length<2){
 			this.searchResultVisible=false;

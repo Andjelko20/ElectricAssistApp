@@ -2,30 +2,30 @@
 	<div id="all" >
 		<label for="country">Country</label>
 		<br>
-		<select id="country" class="form-select" style="cursor: default; background-color: gainsboro;" aria-label="Default select example" name="country" disabled>     
+		<select id="country" class="form-select" style="cursor: default; background-color: gainsboro;" aria-label="Default select example" name="country" disabled>
 			<option [value]="stringify({id:1,name:'Serbia'})" >Serbia</option>
 		</select>
 		<br>
 		<label for="city">City</label>
 		<br>
-		<select id="city" class="form-select" aria-label="Default select example" name="city" (change)="onSelectedCity($event)">     
+		<select id="city" class="form-select" aria-label="Default select example" name="city" (change)="onSelectedCity($event)">
 			<option *ngFor="let city of cities" [value]="stringify(city)" >{{city.name}}</option>
 		</select>
 		<br>
 		<label for="settlement">Settlement</label>
 		<br>
-		<select id="settlement" class="form-select" aria-label="Default select example" name="settlement" [(ngModel)]="settlementId" (change)="sendData()">     
+		<select id="settlement" class="form-select" aria-label="Default select example" name="settlement" [(ngModel)]="settlementId" (change)="sendData()">
 			<option *ngFor="let settlement of settlements" [value]="settlement.id"  >{{settlement.name}}</option>
 		</select>
 		<br>
 		<div class="address-container">
-			<label for="Address">Address <a style="cursor: pointer;" data-bs-toggle="popover" data-bs-trigger="hover"  title="How to add Location" data-bs-content="Popover Content 1"><i class="fa fa-info-circle" ></i></a></label>
+			<label for="Address">Address <a style="cursor: pointer;" data-bs-toggle="popover" data-bs-trigger="hover"  title="How to add Location" data-bs-content="You can enter your address or move marker on map and address will be entered automatically."><i class="fa fa-info-circle" ></i></a></label>
 			<br>
 			<input type="text" class="form-control" id="address" name="address" [(ngModel)]="address" (ngModelChange)="changeLocations($event)">
 			<div class="search-result" [class.invisible]="!searchResultVisible">
 				<div *ngIf="locations.length==0" class="no-results">
 					<p>There are no results</p>
-				</div>	
+				</div>
 				<div *ngFor="let location of locations" (click)="changeFocus(location)" class="location">
 					{{location.display_name}}
 				</div>
