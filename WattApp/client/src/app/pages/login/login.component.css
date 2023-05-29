@@ -160,11 +160,12 @@
             font-size: 18px;
             letter-spacing: 1px;
             margin-bottom: 5%;
-        }
-        .form-control {
-            height: 50px;
+          }
+
+          .form-control{
+            height: 40px;
             border-radius: 0px;
-            font-size: 18px;
+            font-size: 16px;
             letter-spacing: 1px;
             color: rgba(0, 46, 100);
         }
@@ -220,4 +221,29 @@
         .logo>img {
             width: 45%;
         }
+
     }
+
+:host ::ng-deep #password,:host ::ng-deep #password input{
+	display: block;
+	width: 100%;
+	border-radius: 0;
+	font-size: 16px;
+	font-family: 'Source Sans Pro', sans-serif !important;
+	letter-spacing: 1px;
+}
+
+:host ::ng-deep #password .p-inputtext:enabled:focus{
+	box-shadow: 0 0 0 0.2rem rgba(0, 46, 100);
+}
+
+
+
+:host ::ng-deep #password input{
+	padding: 6px 12px;
+	height: 40px;
+}
+
+:host ::ng-deep #password > div{
+	width: 100%;
+}
