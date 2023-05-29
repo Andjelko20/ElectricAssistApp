@@ -71,22 +71,20 @@ mat-form-field {
 }
 
 @media(min-width:768px) {
-    .btn {
-        margin-left: 169px;
-    }
     .table {
         font-size: 20px;
     }
     mat-form-field {
-        width: 39%;
+        width: 37%;
         float: none;
+        margin-left: -1%;
     }
 }
 
-@media(min-width:1200px) {
+@media(min-width:1280px) {
     mat-form-field {
-        width: 23%;
+        width: 20%;
         float: none;
-        margin-left: 23%;
+        margin-left: 1.5%;
     }
 }

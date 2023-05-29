@@ -19,6 +19,7 @@ mat-form-field {
 
 .container3 {
     float: right;
+    margin-right: 10px;
 }
 
 .btn {
@@ -34,7 +35,7 @@ mat-form-field {
 }
 
 .table {
-    color: grey;
+    color: #727272;
 }
 
 .table th {
@@ -44,9 +45,11 @@ mat-form-field {
 .btn:hover {
     background-color: #93ede2;
 }
-.table-title{
-    color: gray;
+
+.table-title {
+    color: #727272;
 }
+
 @media (min-width: 320px) {
     h1 {
         font-size: 20px;
@@ -71,20 +74,34 @@ mat-form-field {
         font-size: 25px;
     }
     mat-form-field {
-        width: 27%;
-        margin-left: 27%;
+        width: 33%;
+        margin-left: 22%;
     }
     .container3 {
         margin-right: 10%;
     }
 }
 
-@media(min-width:1200px) {
+@media(min-width:912px) {
     mat-form-field {
-        width: 11%;
-        margin-left: 35%;
+        width: 28%;
+        margin-left: 25%;
     }
     .container3 {
         margin-right: 10%;
+    }
+}
+
+@media(min-width:1280px) {
+    mat-form-field {
+        width: 205px;
+        margin-left: 31%;
+    }
+}
+
+@media(min-width:1450px) {
+    mat-form-field {
+        width: 205px;
+        margin-left: 35%;
     }
 }
