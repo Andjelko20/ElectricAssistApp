@@ -2,10 +2,11 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { LogedUser, Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-account-page',
   templateUrl: './account-page.component.html',
@@ -54,13 +55,8 @@ export class AccountPageComponent implements OnInit {
   btnAction:string=''  
   confirm:boolean=false;
   storePassword=localStorage.getItem("password");
-<<<<<<< HEAD
-  constructor(
-    private updateService:AuthService,private modalService: NgbModal) {
-=======
   constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,
     private router:Router,private updateService:AuthService,private modalService: NgbModal,private messageService:MessageService) {
->>>>>>> ljubomir
   
    }
   ngOnInit(): void {

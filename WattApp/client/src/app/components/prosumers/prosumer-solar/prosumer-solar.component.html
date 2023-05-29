@@ -2,7 +2,9 @@
 
     <ngx-gauge style="background-color: white; border-radius: 200px;" [size]="200" [type]="type" [thick]="thick" [label]="label" [append]="append" [prepend]="prepend" [cap]="cap" [foregroundColor]="foregroundColor" [backgroundColor]="backgroundColor" [value]="value"
         [min]="min" [max]="max" [markers]="enableMarkers ? markerConfig: {}">
-
+        <ngx-gauge-value style="font-size: 37px;">{{value}}</ngx-gauge-value>
+        <ngx-gauge-append style="font-size: 22px">{{append}}</ngx-gauge-append>
+        <ngx-gauge-label style="font-size:20px">solar power now</ngx-gauge-label>
     </ngx-gauge>
 
 
@@ -11,7 +13,9 @@
 
     <ngx-gauge style="background-color: white; border-radius: 200px;" [size]="180" [type]="type" [thick]="thick" [label]="label" [append]="append" [prepend]="prepend" [cap]="cap" [foregroundColor]="foregroundColor" [backgroundColor]="backgroundColor" [value]="value"
         [min]="min" [max]="max" [markers]="enableMarkers ? markerConfig: {}">
-
+        <ngx-gauge-value style="font-size: 32px;">{{value}}</ngx-gauge-value>
+        <ngx-gauge-append style="font-size: 20px">{{append}}</ngx-gauge-append>
+        <ngx-gauge-label style="font-size:18px">solar power now</ngx-gauge-label>
     </ngx-gauge>
 
 
@@ -22,8 +26,6 @@
         [min]="min" [max]="max" [markers]="enableMarkers ? markerConfig: {}">
         <ngx-gauge-value style="font-size: 22px;">{{value}}</ngx-gauge-value>
         <ngx-gauge-append style="font-size: 12px">{{append}}</ngx-gauge-append>
-        <!-- <ngx-gauge-value style="position: absolute; top: -2px; left: 10px; right: 0; bottom: auto; font-size: 22px;display: flex; justify-content: left; align-items: flex-start; text-align: center;">{{value}}</ngx-gauge-value>
-        <ngx-gauge-append style="position: absolute; top: 8px; left: 80px; right: 0; bottom: auto; font-size: 13px;display: flex; justify-content: left; align-items: flex-start; text-align: center;">MWh</ngx-gauge-append> -->
         <ngx-gauge-label style="font-size:11px">solar power now</ngx-gauge-label>
     </ngx-gauge>
 </div>

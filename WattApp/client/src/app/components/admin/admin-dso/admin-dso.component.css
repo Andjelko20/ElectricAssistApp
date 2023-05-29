@@ -192,16 +192,18 @@ li a {
 
 #dropbtn1 {
   color: white;
-  padding: 11px;
-  padding-left: 88px;
-  padding-right: 88px;
+  padding: 7px;
+  padding-left: 68px;
+  padding-right: 68px;
   font-size: 20px;
   border: none;
   cursor: pointer;
-  background-color: #354871;
+  background-color: #445d97;
   border-radius: 5px;
 }
-
+#dropbtn1:hover{
+  background-color: #354871 ;
+}
 #clear-btn{
   color: #fff;
   background-color: darkgrey;
@@ -213,7 +215,9 @@ li a {
   border-radius: 5px;
   cursor: pointer;
 }
-
+#clear-btn:hover{
+  background-color: grey;
+}
 .dropdown.show .dropdown-content {
   display: block;
 }
@@ -225,7 +229,7 @@ li a {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  text-align: left;
+  text-align: center;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
@@ -258,6 +262,14 @@ li a {
 .dropdown:focus .dropdown-content {
   display: block;
 }
+.form-group select{
+  cursor: pointer;
+
+}
+.form-group{
+  text-align: left;
+}
+
 @media only screen and (min-width: 768px) and (max-width: 1281px) {
  
   #tableres{
@@ -382,8 +394,6 @@ li a {
     -ms-transform: translateX(26px);
     transform: translateX(26px);
   }
-  
-  /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
     
@@ -391,5 +401,8 @@ li a {
   
   .slider.round:before {
     border-radius: 50%;
+  }
+  #search{
+    margin-left: 16px;
   }
 }

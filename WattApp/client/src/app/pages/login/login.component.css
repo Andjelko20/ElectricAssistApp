@@ -1,6 +1,7 @@
     label[for="remember"] {
         cursor: pointer;
     }
+    
     .background-image {
         background-size: cover;
         background-position: center;
@@ -13,6 +14,7 @@
         background-size: cover;
         z-index: -1;
     }
+    
     main {
         width: 100%;
         min-height: 100vh;
@@ -21,23 +23,22 @@
         justify-content: center;
         background-color: rgba(0, 46, 100);
     }
-
+    
     .containers {
         display: flex;
         width: 90%;
-        height: 70%;
         align-items: center;
         justify-content: center;
         background-color: rgba(0, 46, 100, 0.95);
-        box-shadow: rgb(41,140,255) 0px 20px 20px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgb(41,140,255) 0px -2px 6px 0px inset;
+        box-shadow: rgb(41, 140, 255) 0px 20px 20px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgb(41, 140, 255) 0px -2px 6px 0px inset;
         color: whitesmoke;
-        border: 3px solid rgb(41,140,255);
+        border: 3px solid rgb(41, 140, 255);
         border-top: 0;
         border-bottom: 0;
         position: relative;
-      }
-
-      .containers::before {
+    }
+    
+    .containers::before .containers::after {
         content: "";
         position: absolute;
         top: 0;
@@ -45,153 +46,117 @@
         width: 50%;
         height: 2px;
         background-color: rgb(41, 140, 255);
-      }
-
-      .containers::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 50%;
-        height: 2px;
-        background-color: rgb(41, 140, 255);
-      }
-      
-      .login-form-wrapper {
+    }
+    
+    .login-form-wrapper {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 90%;
         height: 100%;
         flex-direction: column;
-      }
-      
-      .logo {
-        height: 30%;
-      }
-
-      .logo>img{
+    }
+    
+    .logo {
+        display: contents;
+    }
+    
+    .logo>img {
         height: 90%;
-      }
-      
-      .login-form {
+        width: 58%;
+    }
+    
+    .login-form {
         flex: 5;
         width: 95%;
-      }
-
-      .form-group{
+        margin-bottom: 15%;
+    }
+    
+    .form-group {
         font-size: 16px;
         letter-spacing: 1px;
         margin-bottom: 5%;
-      }
-
-      .form-control{
+    }
+    
+    .form-control {
         height: 40px;
         border-radius: 0px;
         font-size: 16px;
         letter-spacing: 1px;
         color: rgba(0, 46, 100);
-      }
-
-      .btn-container{
+    }
+    
+    .btn-container {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-      }
-
-      .btn{
+    }
+    
+    .btn {
         width: 75%;
         padding: 5px;
         font-size: 20px;
         letter-spacing: 2px;
-        background-color: rgb(41,140,255);
+        background-color: rgb(41, 140, 255);
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         transition: transform 0.3s ease;
-      }
-
-    .linka{
+    }
+    
+    .linka {
         font-size: 16px;
         letter-spacing: 1px;
-        color: rgb(121,154,195);
+        color: rgb(121, 154, 195);
         margin-top: 7px;
     }
-
-    .error-message{
+    
+    .error-message {
         display: flex;
         justify-content: center;
         align-items: center;
         color: red;
         font-size: 16px;
         letter-spacing: 1px;
-        padding: 10px;
-    }
-
-    .checkbox{
-      height: 15px;
-      width: 15px;
     }
     
-    @media(min-width:769px) {
+    .checkbox {
+        height: 15px;
+        width: 15px;
+    }
+    
+    @media(min-width:768px) {
         .containers {
             display: flex;
-            width: 30%;
-            height: 60%;
-            margin-left: 55%;
+            width: 52%;
             align-items: center;
             justify-content: center;
             background-color: rgba(0, 46, 100, 0.95);
-            box-shadow: rgb(41,140,255) 0px 20px 20px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgb(41,140,255) 0px -2px 6px 0px inset;
+            box-shadow: rgb(41, 140, 255) 0px 20px 20px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgb(41, 140, 255) 0px -2px 6px 0px inset;
             color: whitesmoke;
-            border: 3px solid rgb(41,140,255);
+            border: 3px solid rgb(41, 140, 255);
             border-top: 0;
             border-bottom: 0;
             position: relative;
-          }
-
-          .containers::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 2px;
-            background-color: rgb(41, 140, 255);
-          }
-
-          .containers::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 50%;
-            height: 2px;
-            background-color: rgb(41, 140, 255);
-          }
-          
-          .login-form-wrapper {
+        }
+        .login-form-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 90%;
             height: 100%;
             flex-direction: column;
-          }
-          
-          .logo {
+        }
+        .logo {
             height: 30%;
-          }
-
-          .logo>img{
+        }
+        .logo>img {
             height: 90%;
-          }
-          
-          .login-form {
+        }
+        .login-form {
             flex: 5;
             width: 90%;
-          }
-
-          .form-group{
+        }
+        .form-group {
             font-size: 18px;
             letter-spacing: 1px;
             margin-bottom: 5%;
@@ -203,50 +168,58 @@
             font-size: 16px;
             letter-spacing: 1px;
             color: rgba(0, 46, 100);
-          }
-
-          .btn-container{
+        }
+        .btn-container {
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-          }
-
-          .btn{
-            width: 50%;
-            padding: 10px;
+        }
+        .btn {
             font-size: 22px;
             letter-spacing: 2px;
-            background-color: rgb(41,140,255);
+            background-color: rgb(41, 140, 255);
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             transition: transform 0.3s ease;
-          }
-
-          .btn:hover{
+        }
+        .btn:hover {
             background-color: rgba(0, 46, 100);
-            border: 2px solid rgb(41,140,255);
+            border: 2px solid rgb(41, 140, 255);
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             transform: scale(1.02);
-          }
-
-        .linka{
-            color: rgb(121,154,195);
+        }
+        .linka {
+            color: rgb(121, 154, 195);
             letter-spacing: 1px;
             margin-top: 7px;
-            }
-
-        .error-message{
+        }
+        .error-message {
             display: flex;
             justify-content: center;
             align-items: center;
             color: red;
             letter-spacing: 1px;
-            padding: 10px;
         }
-
-        .checkbox{
-          height: 20px;
-          width: 20px;
+        .checkbox {
+            height: 20px;
+            width: 20px;
+        }
+    }
+    
+    @media(min-width:1024px) {
+        .containers {
+            width: 30%;
+            margin-left: 55%;
+        }
+    }
+    
+    @media(min-width:1280px) {
+        .containers {
+            width: 22%;
+            margin-left: 55%;
+        }
+        .logo>img {
+            width: 45%;
         }
 
     }

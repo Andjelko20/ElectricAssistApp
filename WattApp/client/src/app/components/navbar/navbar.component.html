@@ -7,7 +7,7 @@
           </button> -->
                 <a class="navbar-brand" [routerLink]='["/dashboard"]'>
                     <img src="../../assets/white-logo.png" class="logo">
-                    <span>WattApp</span>
+                    <span (click)=" refresh()">WattApp</span>
                 </a>
                 <div class="user">
                     <div class="dropdown" [class.show]="showDropdown">

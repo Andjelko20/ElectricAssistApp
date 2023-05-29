@@ -7,6 +7,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { AuthService } from 'src/app/services/auth.service';
 import { HistoryPredictionService } from 'src/app/services/history-prediction.service';
 import { Settlement } from 'src/app/models/users.model';
+import { nodeName } from 'jquery';
 Chart.register(ChartDataLabels);
 
 
@@ -20,6 +21,7 @@ export class PieChartComponent implements OnInit {
   settlements:Settlement[] = [];
   settlements1:Settlement[] = [];
   settlementsValue:number[] = [];
+  noData:number[]=[];
   constructor(private authService:AuthService,private historyService:HistoryPredictionService) {
   
   }
@@ -32,18 +34,23 @@ export class PieChartComponent implements OnInit {
           this.settlements.forEach(settlement =>{
             this.historyService.getCurrentConsumptionProductionSettlement(1,settlement.id).subscribe(value =>{
               this.loader=false;
-              if(value!=0)
+              if(value!==0)
               {
+                this.noData.push(1);
                 this.settlements1.push(settlement);
                 this.settlementsValue.push(value);
                 this.PieChart();
+              } 
+              if(this.noData[0]!=1)
+              { 
+                  this.loader=true;
               }
-              
             })
           })
         })
       })
     })
+    
   }
 
   PieChart(){
@@ -86,7 +93,7 @@ export class PieChartComponent implements OnInit {
         '#6f7a91'
         ],
       borderWidth: 1,
-      borderColor: "#00000",
+      borderColor: "gray",
   },]
     var ctx = "piechart";
     var myChart = new Chart(ctx, {

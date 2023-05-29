@@ -4,7 +4,7 @@
         <div class="header">
             <h3>Add User</h3>
         </div>
-        
+<!--         
         <form  (ngSubmit)="addUsers()" (ngModelChange)="onFormChange()" #form="ngForm">
             <div class="form-row row">
                 <div class="form-group add-user-form col-md-3" >
@@ -35,8 +35,38 @@
                 </div>
             </div>
             <button type="submit" id="button-add" class="btn btn-primary ">ADD</button>
+        </form> -->
+        <form  (ngSubmit)="addUsers()" (ngModelChange)="onFormChange()" [formGroup]="userForm" >
+            <div class="form-row row">
+                <div class="form-group add-user-form col-md-3" >
+                    <label for="name">Name</label>
+                    <br>
+                    <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid':isFormDirty2 && userForm.controls.name.errors}" [(ngModel)]="addUserRequest.name" (ngModelChange)="onFormChange()">
+                    <br>
+                    <label for="email">Email</label>
+                    <br>
+                    <input type="text" class="form-control" formControlName="email"  [ngClass]="{'is-invalid':isFormDirty2 && userForm.controls.email.errors}"[(ngModel)]="addUserRequest.email" (ngModelChange)="onFormChange()">
+                    <br>
+                    <label for="username">Username</label>
+                    <br>
+                    <input type="text" class="form-control" formControlName="username" [ngClass]="{'is-invalid':isFormDirty2 && userForm.controls.username.errors}"[(ngModel)]="addUserRequest.username" (ngModelChange)="onFormChange()">
+                    <br>
+                    <label for="role">Role</label>
+                    <br>
+                    <select  class="form-select" aria-label="Default select example" formControlName="role"[ngClass]="{'is-invalid':isFormDirty2 && userForm.controls.role.errors}" [(ngModel)]="addUserRequest.roleId">     
+                        <option class="optionRole" [value]="roles.ADMIN_ID">{{roles.ADMIN_NAME}}</option>
+                        <option class="optionRole" [value]="roles.DISPATCHER_ID">{{roles.DISPATCHER_NAME}}</option>
+                        <option class="optionRole" [value]="roles.PROSUMER_ID">{{roles.PROSUMER_NAME}}</option>
+                    </select>
+                    <br>
+                    <br>
+                </div>
+                <div class="form-group col-md-8 ">
+                    <map-input (locationChanged)="locationChanged($event)" (settlementChanged)="settlementChanged($event)"></map-input>
+                </div>
+            </div>
+            <button type="submit" id="button-add" class="btn btn-primary ">ADD</button>
         </form>
-        
     </div>
 </div>
 <ng-template #modalContent let-modal >

@@ -17,9 +17,9 @@
     width: 100%;
 }
 .container2 {
-    display: inline-block;
-    width: 15%;
-    margin-left: 20%;
+    float: left;
+    width: 10%;
+    margin-left: 5%;
 }
   .form-select {
     cursor: pointer;
@@ -30,6 +30,7 @@
     width: 15%;
     float: right;
     margin-right: 5%;
+    margin-top: 18px;
   }
 
 
@@ -48,7 +49,11 @@
   .btn:hover {
     background-color: #0d8beb;
   }
-
+  @media (min-width:1280px) and (max-width:1900px) {
+    .container2 {
+      width: 13%;
+    }
+  }
 @media(min-width:1200px) {
     .chart-container {
         min-height: 50vh !important;
@@ -58,4 +63,17 @@
         display: inline-flex;
         width: 100%;
     }
+}
+@media (min-width:1024px) and (max-width:1280px) {
+  .container2 {
+    width: 19%;
+  }
+}
+@media(min-width:768px) and (max-width:1023px) {
+  .container2 {
+    width: 25%;
+  }
+  .container3 {
+    width: 25%;
+  }
 }

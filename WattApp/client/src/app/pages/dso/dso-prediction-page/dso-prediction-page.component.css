@@ -18,6 +18,10 @@
 #title-pred{
   text-align: center;
   width: 100%;
+  margin-top: 10px;
+}
+#title-pred h1{
+      font-size: 40px;
 }
 
 .toggle-container {
@@ -65,5 +69,8 @@
     }
     #graf{
       margin-bottom: 60px;
+    }
+    #title-pred h1{
+      font-size: 26px;
     }
   }

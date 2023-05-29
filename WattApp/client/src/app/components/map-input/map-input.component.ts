@@ -1,10 +1,11 @@
-import { Component,OnInit, ViewChild,Output,EventEmitter } from '@angular/core';
+import { Component,OnInit, ViewChild,Output,EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import { environment } from 'src/environments/environment';
 import { NgModel } from '@angular/forms';
 import { MapService } from 'src/app/services/map.service';
 import { data, error } from 'jquery';
+import  { Popover } from 'bootstrap';
 
 var cyrillic = ["а", "б", "в", "г", "д", "ђ", "е", "ж", "з", "и", "ј", "к", "л", "љ", "м", "н", "њ", "о", "п", "р", "с", "т", "ћ", "у", "ф", "х", "ц", "ч", "џ", "ш"];
 var latin = ["a", "b", "v", "g", "d", "đ", "e", "ž", "z", "i", "j", "k", "l", "lj", "m", "n", "nj", "o", "p", "r", "s", "t", "ć", "u", "f", "h", "c", "č", "dž", "š"];
@@ -38,7 +39,7 @@ function cyrillicToLatin(text:string):string {
   templateUrl: './map-input.component.html',
   styleUrls: ['./map-input.component.css']
 })
-export class MapInputComponent {
+export class MapInputComponent implements OnInit, AfterViewInit,OnDestroy {
 	@Output() locationChanged:EventEmitter<any>=new EventEmitter<any>();
 	@Output() settlementChanged:EventEmitter<any>=new EventEmitter<any>();
 	public searchResultVisible:boolean=false;
@@ -52,7 +53,9 @@ export class MapInputComponent {
 
 	  public settlementId:number=0;
 	  public address:string="";
-
+	  
+	  popover: Popover | undefined;
+	  public popovers: Popover[] = [];
 	  public cityElement!:HTMLSelectElement;
 	  public settlementElement!:HTMLSelectElement;
 	  public countryElement!:HTMLSelectElement;
@@ -78,6 +81,21 @@ export class MapInputComponent {
 		})
 	  }
 
+	  ngAfterViewInit() {
+		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+		const popoverList = Array.from(popoverTriggerList).map((popoverTriggerEl) => {
+		return new Popover(popoverTriggerEl);
+		});
+		this.popovers = popoverList;
+		
+	  }
+	  ngOnDestroy(): void {
+		this.popovers.forEach((popover) => {
+			popover.dispose();
+		});
+		this.popovers = [];
+		this.popover = undefined;
+	  }
 	  ngOnInit(): void {
 		this.countryElement=document.getElementById("country") as HTMLSelectElement
 		this.cityElement=document.getElementById("city") as HTMLSelectElement;

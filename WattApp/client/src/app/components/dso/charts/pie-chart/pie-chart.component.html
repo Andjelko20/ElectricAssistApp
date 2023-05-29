@@ -1,5 +1,5 @@
-<div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
-<div class="chart">
+<div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader> <br> There is no production at night.</div>
+<div class="chart" *ngIf="!loader">
     <canvas id="piechart">
     </canvas>
   </div>

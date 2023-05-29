@@ -49,9 +49,9 @@
   }
   
   .container2 {
-    display: inline-block;
+    display: inline-flex;
     width: 15%;
-
+    margin-left: 30px;
   }
   .container3 {
     width: 15%;
@@ -74,4 +74,31 @@
   .btn:hover {
     background-color: #0d8beb;
   }
+  @media (min-width:1024px) and (max-width:1280px) {
+    .container1 {
+      width: 17%;
+    }
+    .container2 {
+      width: 17%;
+      margin-left: 0px;
+    }
+  }
+  @media(min-width:768px) and (max-width:1023px) {
+    .container1 {
+      width: 27%;
   
+    }
+    .container2 {
+      width: 24%;
+      margin-left: 0px;
+    }
+    .btn {
+      padding: 8px;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .container3 {
+      width: 20%;
+      
+    }
+  }

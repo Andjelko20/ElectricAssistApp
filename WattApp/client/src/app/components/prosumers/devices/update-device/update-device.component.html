@@ -7,7 +7,7 @@
                     <a [routerLink]='["/device/"+idDevice]'><img id="turnback" src="assets/img/back.png" alt=""></a>
                 </div>
                 <h1>Update</h1>
-                <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="myForm">
+                <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="myForm" novalidate>
                     <div class="form-row">
                         <div class="form-group col-md-6 ">
 
@@ -18,9 +18,9 @@
                             <label for="energyInKwh " class="form-label ">Energy in kWh</label>
                             <input type="number " class="form-control " id="id " name="energyInKwh " formControlName="nameform2" [(ngModel)]="updateDevice.energyInKwh " readonly>
                             <br>
-                            <label for="standByKwh " class="form-label ">Stand by in kWh</label>
+                            <!-- <label for="standByKwh " class="form-label ">Stand by in kWh</label>
                             <input type="number " class="form-control " id="id " name="standByKwh " formControlName="nameform3" [(ngModel)]="updateDevice.standByKwh " readonly>
-                            <br>
+                            <br> -->
 
                             <div class="swi">
                                 <label for="visibilityOnOff" class="form-label " *ngIf="updateDevice.visibility==false" style="margin-right: 10px;">Visibility</label>
