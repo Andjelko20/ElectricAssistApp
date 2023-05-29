@@ -52,14 +52,14 @@ namespace Server.Filters
                     if(filter.DeviceCategoryId == 1)
                     {
                         if(filter.greaterThan == true)
-                            users = users.Where(src => src.CurrentProduction > filter.Value);
+                            users = users.Where(src => src.CurrentProduction >= filter.Value);
                         else
                             users = users.Where(src => src.CurrentProduction <= filter.Value);
                     }
                     else if(filter.DeviceCategoryId == 2)
                     {
                         if (filter.greaterThan == true)
-                            users = users.Where(src => src.CurrentConsumption > filter.Value);
+                            users = users.Where(src => src.CurrentConsumption >= filter.Value);
                         else
                             users = users.Where(src => src.CurrentConsumption <= filter.Value);
                     }

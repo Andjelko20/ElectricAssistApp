@@ -1,17 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Server.DTOs;
 using Server.Models.DropDowns.Devices;
 using Server.Models.DropDowns.Location;
 using Server.Services;
+using Server.Services.Implementations;
 
 namespace Server.Controllers
 {
-    public class DropDownController
+    [ApiController]
+    public class DropDownController:ControllerBase
     {
         private readonly DropDownService _service;
-        public DropDownController(DropDownService service)
+        private readonly ITokenService tokenService;
+        private readonly IUserService userService;
+        public DropDownController(DropDownService service,ITokenService tokenService,IUserService userService)
         {
             _service = service;
+            this.tokenService = tokenService;
+            this.userService = userService;
         }
 
         [HttpGet("categories")]
@@ -43,6 +50,17 @@ namespace Server.Controllers
         {
             return _service.getSettlements(cityId);
         }
+
+        [HttpGet("my_settlements")]
+        [Authorize]
+        public async Task<List<Settlement>> GetMySettlementsAsync()
+        {
+            var id = long.Parse(tokenService.GetClaim(this.HttpContext, "Id"));
+            var user = await userService.GetUserById(id);
+            long cityId = user.Settlement.CityId;
+            return _service.getSettlements(cityId);
+        }
+
         [HttpGet("cities")]
         public List<City> getCities(long countryId)
         {

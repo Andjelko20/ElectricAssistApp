@@ -44,6 +44,7 @@ td {
     box-shadow: 5px 1px 1px gray;
 }
 
+/*
 .filters{
     display: flex;
     flex-direction: row;
@@ -135,7 +136,7 @@ td {
     color: #6c757d;
     opacity: 1;
   }
-
+*/
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .table-responsive {
@@ -171,6 +172,7 @@ td {
         padding: 14px 16px;
         text-decoration: none;
     }
+	/*
     .search-filter-container {
         display: flex;
         justify-content: space-between;
@@ -215,6 +217,7 @@ td {
         outline: none;
         background-color: #e0e0e0;
     }
+	*/
 }
 .hidden{
 	visibility: hidden;

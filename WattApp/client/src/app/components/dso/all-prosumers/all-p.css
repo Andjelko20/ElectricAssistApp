@@ -1,0 +1,163 @@
+#all {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+	margin-bottom: 30px;
+}
+
+.filter {
+    display: inline-block;
+}
+
+#clearf {
+    margin-left: 20px;
+    display: inline-block;
+    margin-right: 100px;
+}
+
+#search {
+    display: inline-block;
+}
+
+.first {
+    margin-bottom: 60px;
+    margin-top: 90px;
+    justify-content: center;
+    border: 1px solid #D2D2D2;
+    border-radius: 10px;
+}
+
+#searchInput {
+    width: 550px;
+    height: 40px;
+}
+
+#buttonAdd {
+    width: 100px;
+    height: 50px;
+}
+
+#buttonAdd:hover {
+    background-color: #2199e8;
+    color: white;
+}
+
+.form-row {
+    display: flex;
+    justify-content: center;
+}
+
+.header {
+    background-color: #F7F7F7;
+    border-radius: 10px 10px 0px 0px;
+    border-bottom: 1px solid #D2D2D2;
+    text-align: center;
+    padding: 10px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+#dropbtn1 {
+    color: white;
+    padding: 7px;
+    padding-left: 68px;
+    padding-right: 68px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    background-color: #445d97;
+    border-radius: 5px;
+}
+
+#dropbtn1:hover {
+    background-color: #354871;
+}
+
+.button-blue {
+    background-color: #445d97;
+    color: #fff;
+    padding: 9px;
+    padding-left: 35px;
+    padding-right: 35px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-gray {
+    color: #fff;
+    background-color: darkgrey;
+    padding: 9px;
+    padding-left: 35px;
+    padding-right: 35px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#clear-btn:hover {
+    background-color: grey;
+}
+
+.dropdown.show .dropdown-content {
+    display: block;
+}
+
+.dropdown-content {
+    border-radius: 5px;
+    width: 250px;
+    border: 1px solid #354871;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.filter-label {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.form-control {
+    width: 210px;
+}
+
+.dropdown-content a {
+    color: #354871;
+    padding: 15px 20px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #354871;
+    color: #f9f9f9;
+}
+
+.dropdown:focus .dropdown-content {
+    display: block;
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+.form-group {
+    text-align: left;
+}
+.small-bottom{
+	margin-bottom: 3px;
+}

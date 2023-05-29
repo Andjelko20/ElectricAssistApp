@@ -1,6 +1,6 @@
 <div *ngIf="loader" style="display: inline; justify-content: center;align-items: center;"><app-loader></app-loader></div>
 <div class="table-responsive">
-    <div class="filters" *ngIf="showFilters">
+    <!--<div class="filters" *ngIf="showFilters">
         <div class="first-row">
             <div class="form-group">
                 <select class="form-select">
@@ -41,7 +41,55 @@
                 <input class="custom-input" id="search" type="text" placeholder="Search prosumers by name, username or address" [(ngModel)]="filters.searchValue">
             </div>
         </div>
+	
+    </div>-->
+	<div id="all">
+        <div class="filter">
+            <div class="dropdown" [class.show]="showDropdown">
+                <a id="dropbtn1" class="btn btn-primary" (click)="toggleDropdown()">
+          Filters <span class="filter-count">({{ countActiveFilters() }})</span>
+        </a>
+                <div class="dropdown-content">
+                    <div class="filter">
+                        
+                        <div class="form-group">
+                            <label for="settlement" class="filter-label">Filter by settlement</label>
+                            
+                            <select class="form-select" aria-label="Default select example" name="settlement"  [(ngModel)]="filters.settlement" (ngModelChange)="pageChanged(1)" id="settlement">
+                <option value="0">All settlements</option>
+                <option *ngFor="let settlement of settlements" [value]="settlement.id">{{settlement.name}}</option>
+              </select>
+                        </div>
+                    </div>
+					<div *ngIf="false"><hr>
+					<div class="form-group">
+						<label for="" class="filter-label">Filter by </label>
+						<select class="form-select small-bottom" aria-label="Default select example" name="settlement" [(ngModel)]="filters.categoryId" (ngModelChange)="pageChanged(1)">
+
+							<option value="1">Production</option>
+							<option value="2">Consumtion</option>
+						</select>
+						<select class="form-select small-bottom" aria-label="Default select example" name="settlement" [(ngModel)]="filters.greaterThan" (ngModelChange)="pageChanged(1)">
+
+							<option value="true">Greater than</option>
+							<option value="false">Less than</option>
+						</select>
+						<input type="number" min="0" [(ngModel)]="filters.kWhValue" placeholder="kWh" (ngModelChange)="pageChanged(1)">
+					</div>
+				</div>
+                </div>
+                <div class="form-group" id="clearf">
+                    <button id="clear-btn" [ngClass]="{'button-blue': filters.name, 'button-gray': !filters.name}" (click)="clearFilters()">Clear All Filters</button>
+                </div>
+            </div>
+            <div class="form-group" id="search">
+                <label>Search user by</label>
+                <input type="text" name="search" [(ngModel)]="filters.name" class="form-control search" id="searchInput" placeholder="name, username or address" (blur)="pageChanged(1)">
+            </div>
+
+        </div>
     </div>
+	<p *ngIf="data?.length==0 && !loader">There are no prosumers to be shown</p>
     <table *ngIf="data?.length!=0 && !loader" class="table" >
         <thead>
             <tr>
