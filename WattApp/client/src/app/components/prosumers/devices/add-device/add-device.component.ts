@@ -74,7 +74,6 @@ export class AddDeviceComponent implements OnInit{
     
     
     this.addDeviceRequest.deviceCategoryId = event.target.value;
-    console.log(this.addDeviceRequest.deviceCategoryId );
     fetch(environment.serverUrl+"/types?categoryId="+this.addDeviceRequest.deviceCategoryId,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
     .then(res=>res.json())
     .then(res=>{
@@ -86,7 +85,6 @@ export class AddDeviceComponent implements OnInit{
   {
     this.addDeviceRequest.deviceTypeId = event.target.value;
     typeID=this.addDeviceRequest.deviceTypeId;
-    console.log(this.addDeviceRequest.deviceTypeId );
     
     
     fetch(environment.serverUrl+"/brands?typeId="+this.addDeviceRequest.deviceTypeId,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
@@ -103,12 +101,10 @@ export class AddDeviceComponent implements OnInit{
   {
     
     this.addDeviceRequest.deviceBrandId = event.target.value;
-    console.log( this.addDeviceRequest.deviceBrandId);
     fetch(environment.serverUrl+"/models?typeId="+typeID+"&brandId="+this.addDeviceRequest.deviceBrandId,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
     .then(res=>res.json())
     .then(res=>{
       this.models=res;
-      console.log(res);
       
     });
   }
@@ -116,6 +112,5 @@ export class AddDeviceComponent implements OnInit{
   onSelectModel(event:any)
   {
     this.addDeviceRequest.deviceModelId = event.target.value;
-    console.log( this.addDeviceRequest.deviceModelId);
   }
 }

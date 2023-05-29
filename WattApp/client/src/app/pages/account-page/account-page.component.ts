@@ -60,6 +60,7 @@ export class AccountPageComponent implements OnInit {
   
    }
   ngOnInit(): void {
+    this.confirm=false;
     let token=new JwtToken();
     this.idUser=token.data.id as number;
     this.role=token.data.role as string;
@@ -169,8 +170,9 @@ export class AccountPageComponent implements OnInit {
           this.body="Your password has been successfully changed.";
           this.ngOnInit();
       },error:()=>{
-        this.modalService.open(this.modalContent);
-        this.body="Your old password is not valid.";
+        
+        
+        this.messageService.add({severity:"error",summary:"Error",detail:"Your old password is not valid."});
       }
     } );
       

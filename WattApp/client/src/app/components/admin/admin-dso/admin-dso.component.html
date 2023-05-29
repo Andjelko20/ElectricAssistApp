@@ -124,12 +124,12 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
       <div class="modal-body">
-        <form #form="ngForm" (ngSubmit)="upDate()">
+        <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="userForm">
           <div class="form-row">
               <div class="form-group col-md-6 " >
                   <br>
                   <label for="email " class="form-label ">Email</label>
-                  <input type="text " class="form-control " id="id " name="email " [(ngModel)]="updateUserDetail.email ">
+                  <input type="text " class="form-control " id="id " name="email" formControlName="email" [(ngModel)]="updateUserDetail.email ">
                   <br>
               </div>
           </div>

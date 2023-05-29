@@ -33,7 +33,7 @@ import { UnsavedChangesGuardGuard } from './guards/unsaved-changes-guard.guard';
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
 	//login
-	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
+	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard],canDeactivate:[UnsavedChangesGuardGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password/:id',component:ResetPasswordPageComponent},
 	//home

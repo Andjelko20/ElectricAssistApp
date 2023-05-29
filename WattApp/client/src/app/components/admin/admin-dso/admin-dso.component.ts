@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShowUsers, Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @Component({
   selector: 'app-admin-dso',
@@ -18,6 +18,12 @@ export class AdminDsoComponent implements OnInit {
   @ViewChild('modalContent2') modalContent2!: TemplateRef<any>;
   body: string = ''; 
   btnAction:string='';
+
+  userForm=this.fb.group({
+
+    email:['',[Validators.required,Validators.email]],
+    
+  })
 
 	currentPage:number=1;
 	itemsPerPage:number=10;
@@ -57,7 +63,7 @@ export class AdminDsoComponent implements OnInit {
   showDropdown = false;
   msgShow:boolean=false;
   constructor(private router:Router,private usersService:AuthService,
-    private route:ActivatedRoute,private modalService: NgbModal,private elementRef: ElementRef) { }
+    private route:ActivatedRoute,private modalService: NgbModal,private elementRef: ElementRef,private fb:FormBuilder) { }
 
 	getSettlements(){
 

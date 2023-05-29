@@ -71,7 +71,9 @@ input.ng-valid {
 input.ng-touched {
     border: 1px solid blue;
 }
-
+.form-select{
+    cursor: pointer;
+}
 @media(min-width: 768px) {
     .main {
         top: 0px;
