@@ -329,7 +329,8 @@ namespace Server.Services.Implementations
                     {
                         while (reader.Read())
                         {
-                            energyUsages = double.Parse(reader["EnergyUsageKwh"].ToString());
+                            if (!reader.IsDBNull(reader.GetOrdinal("EnergyUsageKwh")))
+                                energyUsages = double.Parse(reader["EnergyUsageKwh"].ToString());
                         }
                     }
                 }
