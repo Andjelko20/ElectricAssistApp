@@ -1,11 +1,12 @@
 
-import { Component, InjectionToken, OnInit } from '@angular/core';
+import { Component, InjectionToken, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Categories } from '../../../../utilities/categories'
 import { DevicesService } from 'src/app/services/devices.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 import { environment } from 'src/environments/environment';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 let typeID:number=0;
 @Component({
@@ -32,12 +33,16 @@ export class AddDeviceComponent implements OnInit{
   models:Array<any>=[];
   idProsumer?:number;
 
+  body: string = ''; 
+  btnAction:string='';
+  @ViewChild('modalContent') modalContent!: TemplateRef<any>;
+  AddDevice!: (this: HTMLElement, ev: MouseEvent) => any;
   categories=[
     {id:Categories.ELECTRICITY_PRODUCER_ID,name:Categories.ELECTRICITY_PRODUCER_NAME},
     {id:Categories.ELECTRICITY_CONSUMER_ID,name:Categories.ELECTRICITY_CONSUMER_NAME},
   ]
 
-  constructor(private devicesService:DevicesService,private router:Router,private formBuilder: FormBuilder) {
+  constructor(private devicesService:DevicesService,private router:Router,private formBuilder: FormBuilder,private modalService: NgbModal) {
     this.addDeviceRequest.deviceCategoryId=this.categories[0]?.id
     this.myForm = this.formBuilder.group({
       nameform1: ['', Validators.required],
@@ -59,16 +64,28 @@ export class AddDeviceComponent implements OnInit{
   
   addDevices()
   {
-    
-    
-    this.devicesService.addDevices(this.addDeviceRequest)
-    .subscribe({
-      next:()=>{
-         this.router.navigate(['/devices']);
-      
-      }
-    });
+    this.modalService.open(this.modalContent);
+    const popup= document.getElementById('popup');
+    if(popup!=null)
+    {
+      this.body="Do you want to add this device?"
+        this.btnAction="Add";
+        popup.removeEventListener('click', this.AddDevice);
+        this.AddDevice=()=> {
+        this.devicesService.addDevices(this.addDeviceRequest)
+        .subscribe({
+          next:()=>{
+            this.router.navigate(['/devices']);
+          
+          }
+        });
+        popup.removeEventListener('click',this.AddDevice);
+      };
+      popup.addEventListener('click',this.AddDevice);
+    }
   }
+  
+  
   onSelectedCategory(event:any)
   {
     

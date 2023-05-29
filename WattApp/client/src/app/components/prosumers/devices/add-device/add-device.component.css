@@ -74,6 +74,14 @@ input.ng-touched {
 .form-select{
     cursor: pointer;
 }
+#subb {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    text-align: right;
+    align-items: right;
+}
+
 @media(min-width: 768px) {
     .main {
         top: 0px;

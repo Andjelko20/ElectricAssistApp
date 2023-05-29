@@ -20,6 +20,8 @@ export class UpdateDeviceComponent implements OnInit{
   offClickVisibility!: (this: HTMLElement, ev: MouseEvent) => any;
   onClickControlability!: (this: HTMLElement, ev: MouseEvent) => any;
   offClickControlability!: (this: HTMLElement, ev: MouseEvent) => any;
+  UpdateDevice!: (this: HTMLElement, ev: MouseEvent) => any;
+
   body: string = ''; 
   btnAction:string='';
   myForm = this.formBuilder.group({
@@ -110,15 +112,29 @@ export class UpdateDeviceComponent implements OnInit{
   }
   upDate()
   {
-    this.isForm=true
-    this.devicesService.upDateDevice(this.updateDevice)
-    .subscribe({
-      next:()=>{
-        this.router.navigate(['device/'+Number(this.route.snapshot.paramMap.get('id'))]);
-      }
-    });
+    
+    this.modalService.open(this.modalContent);
+    const popup= document.getElementById('popup');
+    if(popup!=null)
+    {
+      this.body="Do you want to update this device?"
+    this.btnAction="Update";
+        popup.removeEventListener('click', this.UpdateDevice);
+        this.UpdateDevice=()=> {
+          this.devicesService.upDateDevice(this.updateDevice)
+          .subscribe({
+            next:()=>{
+              this.router.navigate(['/device/'+Number(this.route.snapshot.paramMap.get('id'))]);
+            }
+          });
+        popup.removeEventListener('click',this.UpdateDevice);
+      };
+      popup.addEventListener('click',this.UpdateDevice);
+    }
+  this.isFormName=false
+   this.isFormToggle2=false
   }
-
+ 
   controlabilityOn(){
     if( this.updateDevice.visibility===false)
     {

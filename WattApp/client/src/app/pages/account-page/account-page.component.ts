@@ -193,22 +193,5 @@ export class AccountPageComponent implements OnInit {
 	}
     
   }
-  checkIfInputsAreEqual(group: FormGroup) {
-    const input1 = group.controls['nameform2'];
-    const input2 = group.controls['nameform3'];
-    const input3 = group.controls['nameform1'];
- 
-
-    if (input1.value !== input2.value) {
-      input2.setErrors({ notEqual: true });
-      input1.setErrors({ notEqual: true });
-    } else {
-      input2.setErrors(null);
-      input1.setErrors(null);
-      input3.setErrors(null);
-      
-    }
-
-    return null;
-  }
+  
 }
