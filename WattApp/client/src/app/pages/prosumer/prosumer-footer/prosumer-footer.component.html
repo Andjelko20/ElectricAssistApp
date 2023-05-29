@@ -1,12 +1,12 @@
 <footer id="pros">
     <a class="nav-link" [routerLink]='["/dashboard"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
         <span class="icon-holder"><i class="fa fa-home"></i></span>
-        <span class="title">Dashbord</span></a>
-    <a  class="nav-link" [routerLink]="['/devices']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"*ngIf="showLink===false">
-        <span class="icon-holder" ><i class="fa fa-mobile"></i></span>
+        <span class="title">Home</span></a>
+    <a class="nav-link" [routerLink]="['/devices']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="showLink===false">
+        <span class="icon-holder"><i class="fa fa-mobile"></i></span>
         <span class="title">Devices</span>
     </a>
-    <a  class="nav-link" [routerLink]="['/devices']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"*ngIf="showLink===true">
+    <a class="nav-link" [routerLink]="['/devices']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="showLink===true">
         <span class="icon-holder" style="color: #2fbcff;"><i class="fa fa-mobile"></i></span>
         <span class="title" style="color: #2fbcff;">Devices</span>
     </a>
@@ -14,12 +14,12 @@
         <span class="icon-holder"><i class="fas fa-chart-bar"></i></span>
         <span class="title">Reports</span>
     </a>
-    <a class="nav-link" [routerLink]='["/profile"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"*ngIf="showLink1===false">
+    <a class="nav-link" [routerLink]='["/profile"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="showLink1===false">
         <span class="icon-holder"><i class="fa fa-user"></i></span>
         <span class="title">Profile</span>
     </a>
-    <a class="nav-link" [routerLink]='["/profile"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"*ngIf="showLink1===true">
-        <span class="icon-holder"  style="color: #2fbcff;"><i class="fa fa-user"></i></span>
-        <span class="title"  style="color: #2fbcff;">Profile</span>
+    <a class="nav-link" [routerLink]='["/profile"]' [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" *ngIf="showLink1===true">
+        <span class="icon-holder" style="color: #2fbcff;"><i class="fa fa-user"></i></span>
+        <span class="title" style="color: #2fbcff;">Profile</span>
     </a>
 </footer>
