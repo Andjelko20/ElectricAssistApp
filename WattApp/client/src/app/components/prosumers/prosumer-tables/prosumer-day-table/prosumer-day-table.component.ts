@@ -74,7 +74,6 @@ export class ProsumerDayTableComponent {
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 1)
       ]).subscribe(([list1,list2]) => {
         this.list1 = list1;
-        console.log(this.list1)
         this.dateTime = [];
         for (let i = 0; i < this.list1.length; i++) {
           const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
@@ -86,8 +85,6 @@ export class ProsumerDayTableComponent {
           })
         }
         this.list2 = list2;
-        console.log(this.list2)
-
       });
     }
   downloadCSV(): void {
