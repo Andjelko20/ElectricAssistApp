@@ -40,13 +40,9 @@ export class NavbarComponent implements OnInit {
   }
   logout()
   {
-    const canDeactivateValue: boolean | Promise<boolean> =  this.unsavedChangesGuard.canDeactivate(this);
-
         localStorage.removeItem('token');
         this.usersService.isLoginSubject.next(false)
         this.router.navigate(['/login']);
- 
- 
   }
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
