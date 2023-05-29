@@ -33,7 +33,7 @@ import { UnsavedChangesGuardGuard } from './guards/unsaved-changes-guard.guard';
 const routes: Routes = [
 	{path:'',redirectTo:'dashboard',pathMatch:'full'},
 	//login
-	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard],canDeactivate:[UnsavedChangesGuardGuard]},
+	{path:'login',component:LoginComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'forgot-password',component:ForgotPasswordPageComponent,canActivate:[UnauthenticatedGuard]},
 	{path:'reset-password/:id',component:ResetPasswordPageComponent},
 	//home
@@ -56,9 +56,9 @@ const routes: Routes = [
 	{path:"device-update/:id",component:UpdateDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"device-add",component:AddDeviceComponent,canActivate:[ProsumerGuard]},
 	{path:"profile",component:ProsumerAccountPageComponent,canActivate:[ProsumerGuard]},
-	{path:"profile-edit",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard]},
+	{path:"profile-edit",component:ProsumerAccountSettingsPageComponent,canActivate:[ProsumerGuard],canDeactivate:[UnsavedChangesGuardGuard]},
 	{path:"prosumer-reports",component:ProsumerReportsPageComponent,canActivate:[ProsumerGuard]},
-	{path:"prosumer-change-password",component:ProsumerChangePasswordComponent,canActivate:[ProsumerGuard]},
+	{path:"prosumer-change-password",component:ProsumerChangePasswordComponent,canActivate:[ProsumerGuard],canDeactivate:[UnsavedChangesGuardGuard]},
 	//Login and NoLogin
 	{path:'email-confirmation',component:EmailConfirmationPageComponent},
 	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent},

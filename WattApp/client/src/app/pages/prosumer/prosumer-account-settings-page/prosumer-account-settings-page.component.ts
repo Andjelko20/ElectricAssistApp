@@ -56,7 +56,7 @@ export class ProsumerAccountSettingsPageComponent {
   @ViewChild('modalContent') modalContent!: TemplateRef<any>;
   body: string = ''; 
   confirm:boolean=false;
-  btnAction:string='' 
+  btnAction:string='';
   constructor(private formBuilder: FormBuilder,private modalService: NgbModal,private router:Router,private updateService:AuthService) { 
   
     this.admin=Roles.ADMIN_NAME;
