@@ -151,6 +151,11 @@ input {
 
 .history-charts-body {
     width: 100%;
+    padding: 10px;
+}
+
+.history-table-body {
+    padding: 10px;
 }
 
 .toggle-buttonss label {
@@ -361,6 +366,7 @@ button.active {
     .content {
         width: 100%;
         display: block;
+        padding: 0 18px;
         overflow: hidden;
         background-color: white;
     }
