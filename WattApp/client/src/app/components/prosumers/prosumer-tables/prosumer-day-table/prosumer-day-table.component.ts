@@ -72,21 +72,24 @@ export class ProsumerDayTableComponent {
       forkJoin([
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 2),
         this.deviceService.dayByHourUserFilter(string1,string2,userId, 1)
-      ]).subscribe(([list1, list2]) => {
+      ]).subscribe(([list1,list2]) => {
         this.list1 = list1;
+        console.log(this.list1)
         this.dateTime = [];
-            for (let i = 0; i < this.list1.length; i++) {
-              const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
-              const formattedHour = `${pad(this.list1[i].hour)}:00:00`;
-              const formattedDay = `${pad(this.list1[i].day)}`;
-              this.dateTime.push({
-                hour : formattedHour,
-                day : formattedDay
-              })
-            }
+        for (let i = 0; i < this.list1.length; i++) {
+          const pad = (num: number): string => (num < 10 ? '0' + num : String(num));
+          const formattedHour = `${pad(this.list1[i].hour)}:00:00`;
+          const formattedDay = `${pad(this.list1[i].day)}`;
+          this.dateTime.push({
+            hour : formattedHour,
+            day : formattedDay
+          })
+        }
         this.list2 = list2;
+        console.log(this.list2)
+
       });
-  }
+    }
   downloadCSV(): void {
       this.mergedList = [];
       for (let i = 0; i < this.list1.length; i++) {
