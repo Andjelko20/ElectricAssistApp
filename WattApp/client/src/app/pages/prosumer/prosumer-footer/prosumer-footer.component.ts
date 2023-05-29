@@ -22,7 +22,7 @@ export class ProsumerFooterComponent implements OnInit {
     {
       this.showLink=false;
     }
-    else if(this.location.path()==='/device/'+this.id)
+    else if(this.location.path()==='/device/'+this.id || this.location.path()==='/device-update/'+this.id || this.location.path()==='/device-add')
     {
       this.showLink=true;
     }
