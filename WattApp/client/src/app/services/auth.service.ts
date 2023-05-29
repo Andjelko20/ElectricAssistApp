@@ -35,7 +35,8 @@ export class AuthService {
   logout()
   {
     this.isLoginSubject.next(false);
-    return this.http.get(environment.serverUrl );
+	localStorage.removeItem("token");
+	//this.http.get(environment.serverUrl );
   }
 
   getAllUsers(pageNumber:number,pageSize:number=10,filters?:any):Observable<any>

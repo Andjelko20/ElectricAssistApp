@@ -111,8 +111,7 @@ export class ProsumerChangePasswordComponent {
 	}
 
   updatePasswordProsumer()
-  {
-    
+  { 
     const oldpass = (document.querySelector('input[id="oldPassword"]') as HTMLInputElement).value;
     const newpass = (document.querySelector('input[id="newPassword"]') as HTMLInputElement).value;
     const confpass = (document.querySelector('input[id="confirmPassword"]') as HTMLInputElement).value;

@@ -28,6 +28,7 @@ import { ChangeEmailConfirmationPageComponent } from './pages/change-email-confi
 import { AccountPageComponent } from './pages/account-page/account-page.component';
 import { ProsumerChangePasswordComponent } from './pages/prosumer/prosumer-change-password/prosumer-change-password.component';
 import { UnsavedChangesGuardGuard } from './guards/unsaved-changes-guard.guard';
+import { LogoutComponent } from './components/logout/logout.component';
 
 
 const routes: Routes = [
@@ -62,6 +63,7 @@ const routes: Routes = [
 	//Login and NoLogin
 	{path:'email-confirmation',component:EmailConfirmationPageComponent},
 	{path:"change-email-confirmation", component:ChangeEmailConfirmationPageComponent},
+	{path:"logout",component:LogoutComponent},
 	{path:'**',redirectTo:"login"},
 	
 	

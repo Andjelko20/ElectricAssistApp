@@ -103,7 +103,6 @@ export class AddDeviceComponent implements OnInit{
     this.addDeviceRequest.deviceTypeId = event.target.value;
     typeID=this.addDeviceRequest.deviceTypeId;
     
-    
     fetch(environment.serverUrl+"/brands?typeId="+this.addDeviceRequest.deviceTypeId,{headers:{"Authorization":"Bearer "+localStorage.getItem("token")}})
     .then(res=>res.json())
     .then(res=>{
@@ -122,7 +121,6 @@ export class AddDeviceComponent implements OnInit{
     .then(res=>res.json())
     .then(res=>{
       this.models=res;
-      
     });
   }
   

@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-all-prosumers',
   templateUrl: './all-prosumers.component.html',
-  styleUrls: ['./all-prosumers.component.css']
+  styleUrls: ['./all-p.css','./all-prosumers.component.css']
 })
 export class AllProsumersComponent implements OnInit {
   url = `${environment.serverUrl}/api/ProsumersDetails/page/filters`;
@@ -18,17 +18,18 @@ export class AllProsumersComponent implements OnInit {
   prosumerValues: any[] = [];
   loader:boolean=false;
   showFilters:boolean = !environment.production;
-  filters : ProsumerFilterModel = new ProsumerFilterModel(
-	0,
-	1,
-	0,
-	0,
-	""
-  );
+  settlements:any[]=[];
 
   constructor(private service : AuthService) {}
-
+  loadSettlements(){
+	fetch(`${environment.serverUrl}/my_settlements`,{headers:{Authorization:"Bearer "+localStorage.getItem("token")}})
+	.then(res=>res.json())
+	.then(res=>{
+		this.settlements=res;
+	});
+  }
   ngOnInit(): void {
+	this.loadSettlements();
     this.pageChanged(1);
   }
 
@@ -38,31 +39,82 @@ export class AllProsumersComponent implements OnInit {
 		url.searchParams.set("pageNumber",pageNumber.toString());
 		url.searchParams.set("pageSize",this.itemsPerPage.toString());
 		url.searchParams.set("cityId","-1");
+		if(this.filters.name != "")
+			url.searchParams.set("SearchValue",this.filters.name);
+		if(this.filters.settlement!=0)
+			url.searchParams.set("SettlmentId",this.filters.settlement.toString());
 		let controller=new AbortController();
 		setTimeout(()=>{
 			controller.abort();
 		},3000);
 		fetch(url.toString(),{headers:{"Authorization":"Bearer "+localStorage.getItem("token")},signal:controller.signal})
 		.then(res=>{
-			this.loader=false;
-			if(res.status==401 || res.status==403){
+			setTimeout(()=>{
+				this.loader=false;
+			},10)
+			
+			if(res.status>200){
 				return Promise.reject("aaa");
 			}
 			return res.json();
 		})
 		.then(res=>{
-			this.loader=false;
+			setTimeout(()=>{
+				this.loader=false;
+			},10)
 				if(res==undefined)
 					return;
 				this.data=res?.data;
 				this.currentPage=pageNumber;
 				this.totalItems=res.numberOfPages*this.itemsPerPage;
         		this.prosumerValues = res;
-
 		})
+		.catch(err=>{
+			console.log('err')
+			this.data=[];
+				this.currentPage=pageNumber;
+				this.totalItems=0;
+        		this.prosumerValues = [];
+		});
+  }
+
+  public filters={
+    settlement:0,
+    name:'',
+	categoryId:1,
+	greaterThan:"true",
+	kWhValue:0
+  };
+  showDropdown = false;
+  msgShow:boolean=false;
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+  countActiveFilters() {
+    let count = 0;
+    if (this.filters.settlement !== 0) {
+      count++;
+    }
+    if (this.filters.name.trim() !== '') {
+      count++;
+    }
+  
+    return count;
+  }
+  clearFilters() {
+    this.filters = {
+      settlement:0,
+      name:'',
+	  categoryId:1,
+	  greaterThan:"true",
+	  kWhValue:0
+    };
+    this.pageChanged(1); 
   }
 
 }
+
+
 
 export class ProsumerFilterModel{
 	settlementId : number;

@@ -30,11 +30,11 @@ export class LoginComponent implements OnInit {
 			this.password = storedPassword;
 		}
 	}
-	toPassword(event:any){
+	toPassword(event:any,pass:any){
 		let keycode = event.keyCode || event.which;
 		if(keycode==13)
 		{
-			document.getElementById("password")?.focus();
+			pass.input.nativeElement?.focus();
 		}
 	}
 	toLogin(event:any){

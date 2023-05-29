@@ -42,7 +42,6 @@ export class HomeDevicesComponent implements OnInit {
      })as ShowDevices)
     }, error => {
       if (error.status === 404) {
-        console.log('Devices not found in database');
         this.noDev=true;
      }} 
      );
