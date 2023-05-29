@@ -80,7 +80,8 @@ export class AdminDsoAddComponent implements OnInit{
       next:()=>{
         this.modalService.open(this.modalContent);
         this.body="Email confirmation has been successfully sent to the user's email.";
-         this.router.navigate(['dashboard']);
+        this.router.navigate(['/add-user']);
+        location.reload()
       
       }
     });

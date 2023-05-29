@@ -41,28 +41,28 @@
                 </h2>
                 <div id="collapseEdit" class="accordion-collapse collapse" aria-labelledby="headingEdit" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                      <form (ngSubmit)="upDateUser()"(ngModelChange)="onFormChange1()"#form1="ngForm"  >
+                      <form (ngSubmit)="upDateUser()"(ngModelChange)="onFormChange1()" [formGroup]="userForm"  >
                         <div class="form-group row mb-3">
                           <label for="name" class="col-sm-4 col-form-label">Name</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="logedDetail.name" (ngModelChange)="onFormChange1()">
+                            <input type="text" class="form-control"  formControlName="name" [(ngModel)]="logedDetail.name"[ngClass]="{'is-invalid':isFormDirty1 && userForm.controls.name.errors}" (ngModelChange)="onFormChange1()">
                           </div>
                         </div>
                         <div class="form-group row mb-3">
                           <label for="username" class="col-sm-4 col-form-label">Username</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" id="username" name="username" [(ngModel)]="logedDetail.username"(ngModelChange)="onFormChange1()" >
+                            <input type="text" class="form-control"  formControlName="username"[(ngModel)]="logedDetail.username"[ngClass]="{'is-invalid':isFormDirty1 && userForm.controls.username.errors}"(ngModelChange)="onFormChange1()" >
                           </div>
                         </div>
                         <div class="form-group row mb-3">
                           <label for="email" class="col-sm-4 col-form-label">E-mail</label>
                           <div class="col-sm-7">
-                            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="logedDetail.email" (ngModelChange)="onFormChange1()">
+                            <input type="email" class="form-control"  formControlName="email"[(ngModel)]="logedDetail.email"[ngClass]="{'is-invalid':isFormDirty1 && userForm.controls.email.errors}" (ngModelChange)="onFormChange1()">
                           </div>
                         </div>
                         <div class="form-group row mb-3">
                           <div class="col-sm-8 offset-sm-4">
-                            <button type="submit" class="btn btn-primary" [disabled]="!isFormDirty1">Save Changes</button>
+                            <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid || !isFormDirty1">Save Changes</button>
                           </div>
                         </div>
                       </form>
@@ -77,28 +77,28 @@
                     </h2>
                     <div id="collapsePassword" class="accordion-collapse collapse" aria-labelledby="headingPassword" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <form  (ngSubmit)="updatePasswordProsumer()"  (ngModelChange)="onFormChange()"#form="ngForm" >
+                        <form  (ngSubmit)="updatePasswordProsumer()"  (ngModelChange)="onFormChange()" [formGroup]="passForm" >
                         <div class="form-group row mb-3">
-                            <label for="exampleInputPassword1" class="col-sm-4 col-form-label">Current Password</label>
+                            <label for="old" class="col-sm-4 col-form-label">Current Password</label>
                             <div class="col-sm-7">
-                            <input type="password" class="form-control"  id="inputCurrentPassword" name="oldPassword" placeholder="Enter your current password" [(ngModel)]="oldPassword "(ngModelChange)="onFormChange()">
+                            <input type="password" class="form-control" id="oldPassword"   formControlName="old" [ngClass]="{'is-invalid':isFormDirty && passForm.controls.old.errors}" placeholder="Enter your current password" [(ngModel)]="oldPassword "(ngModelChange)="onFormChange()">
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="exampleInputPassword1" class="col-sm-4 col-form-label">New Password</label>
+                            <label for="new" class="col-sm-4 col-form-label">New Password</label>
                             <div class="col-sm-7">
-                            <input type="password" class="form-control" id="inputNewPassword"  name="newPassword" placeholder="Enter your new password" [(ngModel)]="newPassword"(ngModelChange)="onFormChange()">
+                            <input type="password" class="form-control" id="newPassword" formControlName="new" [ngClass]="{'is-invalid':isFormDirty && passForm.controls.new.errors}" placeholder="Enter your new password" [(ngModel)]="newPassword"(ngModelChange)="onFormChange()">
                             </div>
                         </div>
                         <div class="form-group row mb-3">
-                            <label for="exampleInputPassword1" class="col-sm-4 col-form-label">Confirm New Password</label>
+                            <label for="confirm" class="col-sm-4 col-form-label">Confirm New Password</label>
                             <div class="col-sm-7">
-                            <input type="password" class="form-control" id="inputConfirmPassword" name ="confirmPassword"placeholder="Confirm your new password" [(ngModel)]="confirmPassword"(ngModelChange)="onFormChange()">
+                            <input type="password" class="form-control"  id="confirmPassword" formControlName="confirm" [ngClass]="{'is-invalid':isFormDirty && passForm.controls.confirm.errors}" placeholder="Confirm your new password" [(ngModel)]="confirmPassword"(ngModelChange)="onFormChange()">
                             </div>
                         </div>
                         <div class="form-group row mb-3">
                             <div class="col-sm-8 offset-sm-4">
-                            <button type="submit" class="btn btn-primary" [disabled]="!isFormDirty">Save Changes</button>
+                            <button type="submit" class="btn btn-primary" [disabled]=" passForm.invalid || !isFormDirty">Save Changes</button>
                             </div>
                         </div>
                         </form>
