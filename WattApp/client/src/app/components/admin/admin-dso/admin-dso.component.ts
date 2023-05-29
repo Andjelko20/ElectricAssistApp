@@ -1,12 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShowUsers, Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { FormBuilder, Validators } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @Component({
   selector: 'app-admin-dso',
   templateUrl: './admin-dso.component.html',
@@ -317,10 +315,5 @@ export class AdminDsoComponent implements OnInit {
     };
     this.pageChanged(1); 
   }
-  logout()
-  {
-    localStorage.removeItem('token');
-    this.usersService.isLoginSubject.next(false)
-    this.router.navigate(['/login']);
-  }
+
 }

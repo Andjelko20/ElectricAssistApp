@@ -1,63 +1,73 @@
 <div class="containers">
 
-  <div class="filters">
+
     <div class="device-number">
       <h2>Devices ({{numberOfDevices}})</h2>
     </div>
-
-    <div class="first-row">
-      <div class="form-group">
-        <label for="dropdown ">Select by Category:</label>
-        <select class="form-select" id="dropdown" style="cursor: pointer;" (change)="onSelectedCategory($event)" [(ngModel)]="filters.categoryId" required>
-          <option value="0">-- Category --</option>  
-          <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
-        </select>
+    <div id="all">
+      <div class="filter">
+    <div class="dropdown" [class.show]="showDropdown">
+      <a id="dropbtn1" class="btn btn-primary" (click)="toggleDropdown()">
+      Filters <span class="filter-count">(0)</span>
+      </a>
+      <div class="dropdown-content">
+          <div class="filter">
+            <div class="first-row">
+              <div class="form-group">
+                <label for="dropdown ">Select by Category</label>
+                <select class="form-select" id="dropdown" style="cursor: pointer;" (change)="onSelectedCategory($event)" [(ngModel)]="filters.categoryId" required>
+                  <option value="0">-- Category --</option>  
+                  <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
+                </select>
+              </div>
+        
+              <div class="form-group">
+                <label for="dropdown">Filter by Device Type</label>
+                <select class="form-select" (change)="onSelectedType($event)" [(ngModel)]="filters.typeId">
+                  <option value="0">-- Device Type --</option>
+                  <option *ngFor="let type of types" [value]="type.id" >{{type.name}}</option>
+                </select>
+              </div>
+        
+              <div class="form-group">
+                <label for="dropdown">Filter by Device Brand</label>
+                <select class="form-select" [(ngModel)]="filters.brandId" (change)="onSelectedBrand($event)">
+                  <option value="0">-- Device brand --</option>
+                  <option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</option>
+                </select>
+              </div>
+        
+              <div class="form-group">
+                <label for="dropdown">Filter by Device Status</label>
+                <select class="form-select" [(ngModel)]="filters.turnOn" (change)="onSelectedTurnOn($event)">
+                  <option value="-1">-- On/Off --</option>
+                  <option value="1">Turn On</option>
+                  <option value="0">Turn Off</option>
+                </select>
+              </div>
+        
+              <div class="form-group">
+                <label for="dropdown">Filter by Device Type</label>
+                <select class="form-select" [(ngModel)]="filters.controlability" (change)="onSelectedControlability($event)">
+                  <option value="-1">-- Controllability --</option>
+                  <option value="1">Allowed</option>
+                  <option value="0">Forbbidn</option>
+                </select>
+              </div>
+              </div>
+          </div>
       </div>
+     
 
-      <div class="form-group">
-        <label for="dropdown">Filter by Device Type</label>
-        <select class="form-select" (change)="onSelectedType($event)" [(ngModel)]="filters.typeId">
-          <option value="0">-- Device Type --</option>
-          <option *ngFor="let type of types" [value]="type.id" >{{type.name}}</option>
-        </select>
       </div>
-
-      <div class="form-group">
-        <label for="dropdown">Filter by Device Brand</label>
-        <select class="form-select" [(ngModel)]="filters.brandId" (change)="onSelectedBrand($event)">
-          <option value="0">-- Device brand --</option>
-          <option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</option>
-        </select>
+      <div class="form-group" id="clearf">
+        <button id="clear-btn" [ngClass]="{'button-blue': filters.searchValue, 'button-gray': !filters.searchValue}" (click)="clearFilters()">Clear All Filters</button>
       </div>
-
-      <div class="form-group">
-        <label for="dropdown">Filter by Device Status</label>
-        <select class="form-select" [(ngModel)]="filters.turnOn" (change)="onSelectedTurnOn($event)">
-          <option value="-1">-- On/Off --</option>
-          <option value="1">Turn On</option>
-          <option value="0">Turn Off</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="dropdown">Filter by Device Type</label>
-        <select class="form-select" [(ngModel)]="filters.controlability" (change)="onSelectedControlability($event)">
-          <option value="-1">-- Controllability --</option>
-          <option value="1">Allowed</option>
-          <option value="0">Forbbidn</option>
-        </select>
-      </div>
-
-      <div class="filters-clear">
-        <a (click)="clearFilters()" role="button" class="clear-filters">Clear filters</a>
-      </div>
-    </div>
-
-    <div class="second-row">
+       <div class="second-row">
       Consumption/Production 
       <div class="form-group-consumption">
-        <select class="form-select" [(ngModel)]="filters.greaterThan" (click)="onSelectedGreaterThan($event)">
-          <option value="1">Greater</option>
+        <select class="form-select"style="cursor: pointer;text-align: left; "  [(ngModel)]="filters.greaterThan" (click)="onSelectedGreaterThan($event)">
+          <option value="1" >Greater</option>
           <option value="0">Less or equal</option>
         </select>
       </div>
@@ -70,20 +80,17 @@
       <div class="filters-clear" id="reset">
         <a (click)="reset()" role="button" class="clear-filters" id="reset">Reset</a>
       </div>
-    
-      <div class="search">
-        <input type="text" class="custom-input" id="search" placeholder="Search devices by name" (input)="onSelectedSearchValue($event)" [(ngModel)]="filters.searchValue">
+      <div class="form-group" id="search">
+        <label>Search user by</label>
+        <input type="text" name="search" [(ngModel)]="filters.searchValue" class="form-control search" id="searchInput" placeholder="search devices by name"(input)="onSelectedSearchValue($event)">
       </div>
-
-      
-    </div>
-    
-    
-
+      </div>
   </div>
 
 
-  <div class="table">
+ 
+  </div>
+   <div class="table">
           <table>
             <thead>
               <tr>
@@ -146,7 +153,6 @@
   </div>
 <ng-template #modalContent let-modal >
   <div class="modal-header">
-    <!-- <h5 class="modal-title" id="modalTitle">{{ title }}</h5> -->
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
@@ -157,10 +163,7 @@
     
     </div>
   </div>
-  <!-- <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup">{{btnAction}}</button>
-    <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
-  </div> -->
+
 </ng-template>
 <ng-template #modalContent1 let-modal >
   <div class="modal-header">

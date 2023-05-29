@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, TemplateRef, ViewChild ,ElementRef} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShowDevices } from 'src/app/models/devices.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -23,7 +23,7 @@ export class AllDevicesDsoComponent implements OnInit{
   currentPage:number=1;
   itemsPerPage:number=12;
   totalItems:number=10;
-  onClick!: (this: HTMLElement, ev: MouseEvent) => any;
+  oNClick!: (this: HTMLElement, ev: MouseEvent) => any;
   offClick!: (this: HTMLElement, ev: MouseEvent) => any;
   
   devicesList:ShowDevices[] = [];
@@ -31,6 +31,7 @@ export class AllDevicesDsoComponent implements OnInit{
   deviceCategoryId!: number;
   idDevice!: number;
   deviceCategory?:boolean=false;
+  showDropdown:boolean=false;
 
   filters : DeviceFilterModel = new DeviceFilterModel(
       0, 
@@ -45,8 +46,9 @@ export class AllDevicesDsoComponent implements OnInit{
       1, 
       ""
   )
+  
 
-  constructor(private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute,private modalService: NgbModal,private datePipe: DatePipe) {}
+  constructor(private elementRef: ElementRef,private authService:AuthService,private deviceService:DevicesService,private route:ActivatedRoute,private modalService: NgbModal,private datePipe: DatePipe) {}
   
   categories=[
      {id:Categories.ELECTRICITY_PRODUCER_ID,name:Categories.ELECTRICITY_PRODUCER_NAME},
@@ -87,7 +89,20 @@ export class AllDevicesDsoComponent implements OnInit{
     );
     
   }
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent) {
+    const clickedElement = event.target as HTMLElement;
+    const dropdownElement = this.elementRef.nativeElement;
+    const navbarElement = dropdownElement.querySelector('#dropbtn1') as HTMLElement;
+    const dropdownContent = dropdownElement.querySelector('.dropdown-content') as HTMLElement;
 
+    if (!dropdownElement.contains(clickedElement) || (!navbarElement.contains(clickedElement) && !dropdownContent.contains(clickedElement))) {
+      this.showDropdown = false;
+    }
+  }
   validateFormInput(input: any) {
     const value = input.value.trim();
     const regex = /^\d+(\.\d+)?$/;
@@ -406,8 +421,8 @@ export class AllDevicesDsoComponent implements OnInit{
        {
          this.body = 'Do you want to turn on this device?';
         this.btnAction="Turn On";
-            turnOn.removeEventListener('click', this.onClick);
-            this.onClick=() => {
+            turnOn.removeEventListener('click', this.oNClick);
+            this.oNClick=() => {
               this.idDevice=Number(this.route.snapshot.paramMap.get('id'))
               this.deviceService.turnOn(id,formattedDate).subscribe({
               next:()=>{
@@ -418,9 +433,9 @@ export class AllDevicesDsoComponent implements OnInit{
               }
               
               });
-              turnOn.removeEventListener('click', this.onClick);
+              turnOn.removeEventListener('click', this.oNClick);
           };
-          turnOn.addEventListener('click', this.onClick);
+          turnOn.addEventListener('click', this.oNClick);
        }
       
        
