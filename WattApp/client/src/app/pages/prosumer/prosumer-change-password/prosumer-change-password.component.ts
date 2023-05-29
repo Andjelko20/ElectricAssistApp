@@ -128,7 +128,6 @@ export class ProsumerChangePasswordComponent {
             
           this.modalService.open(this.modalContent);
           this.body="Your password has been successfully changed.";
-          this.ngOnInit();
       },error:()=>{
         
         

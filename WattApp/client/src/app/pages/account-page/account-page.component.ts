@@ -180,7 +180,6 @@ export class AccountPageComponent implements OnInit {
             
           this.modalService.open(this.modalContent);
           this.body="Your password has been successfully changed.";
-          this.ngOnInit();
       },error:()=>{
         
         
