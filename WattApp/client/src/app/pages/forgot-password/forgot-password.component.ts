@@ -46,7 +46,6 @@ export class ForgotPasswordPageComponent {
 				this.messageService.add({severity:"success",summary:"Success",detail:"Email for password reset sent successfully."});
 			},
 			error:(response:HttpErrorResponse)=>{
-				console.log(response)
 				let message=response.error.message;
 				
 				this.messageService.add({severity:"error",summary:"Error",detail:message});

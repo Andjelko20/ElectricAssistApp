@@ -39,9 +39,7 @@ export class NavbarComponent implements OnInit {
   }
   logout()
   {
-    localStorage.removeItem('token');
-    this.usersService.isLoginSubject.next(false)
-    this.router.navigate(['/login']);
+    this.router.navigateByUrl("/logout");
   }
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;

@@ -28,8 +28,7 @@ export class ChangeEmailConfirmationPageComponent implements OnInit, OnDestroy{
     this.loading = true;
     this.route.queryParams.subscribe(params => {
       const key = params['key'];
-      console.log(key);
-
+	  
       this._service.changeEmailAddressConfirmation(key).subscribe((response : ConfirmEmailResponseDTO) => {
         if(response){
           if(response.isConfirmed){

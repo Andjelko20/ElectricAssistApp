@@ -67,10 +67,6 @@ export class ProsumerChangePasswordComponent {
 
     this.role=token.data.role as string;
     this.pass = token.data.password as string;
-    console.log(this.pass);
-    
-    console.log(this.idUser);
-    console.log(this.role);
 
         this.updateService.getlogInUser()
         .subscribe({
@@ -126,9 +122,6 @@ export class ProsumerChangePasswordComponent {
     const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
     const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
     const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
-    console.log(oldpass);
-    console.log(newpass);
-    console.log(confpass);
 
     if(newpass==confpass)
     {

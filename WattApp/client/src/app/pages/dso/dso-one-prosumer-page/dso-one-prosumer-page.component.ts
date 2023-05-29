@@ -84,7 +84,6 @@ export class DsoOneProsumerPageComponent implements AfterViewInit,OnInit,OnDestr
         error => {
           if (error.status === 404) {
             this.devicesList = [];
-            console.log('Devices not found in database');
           }
         }
       );

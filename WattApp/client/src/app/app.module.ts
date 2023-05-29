@@ -112,6 +112,7 @@ import { PrimeModule } from './prime/prime.module';
 import { MapService } from "./services/map.service";
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -218,6 +219,7 @@ import { DropdownModule } from 'primeng/dropdown';
       ProsumerMonthProductionComponent,
       ProsumerYearProductionComponent,
       TodayProsumerComponent,
+      LogoutComponent,
   ],
   imports: [
     AppRoutingModule,

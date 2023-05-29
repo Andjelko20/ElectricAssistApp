@@ -72,7 +72,6 @@ export class PredictionDeviceComponent {
         const br: any = 0;
           if(production==br)
           {
-            console.log("Nemamo dovoljno podataka");
           }
           else{
             this.list2=production;

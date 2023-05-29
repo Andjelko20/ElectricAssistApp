@@ -74,7 +74,6 @@ export class AllDevicesDsoComponent implements OnInit{
         turnOn: u.turnOn,
     
     })as ShowDevices)
-    console.log(this.devicesList);
     this.setNumberOfDevices();
     }, (error: { status: number; }) => {
     
@@ -124,8 +123,6 @@ export class AllDevicesDsoComponent implements OnInit{
 	  if (error.status === 404) {
 	  
 		this.devicesList=[]
-	  
-		//console.log('Devices not found in database');
 	  
 	  }}
 	  

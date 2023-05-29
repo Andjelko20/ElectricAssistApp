@@ -75,7 +75,6 @@ export class AllDevicesComponent implements OnInit {
      }, error => {
       if (error.status === 404) {
         this.devices=[]
-        console.log('Devices not found in database');
      }} 
      );
     
@@ -103,7 +102,6 @@ export class AllDevicesComponent implements OnInit {
 		   }, error => {
 			if (error.status === 404) {
 			  this.devices=[]
-			  console.log('Devices not found in database');
 		   }} 
 		   );
 	}
@@ -133,7 +131,6 @@ export class AllDevicesComponent implements OnInit {
        }, error => {
         if (error.status === 404) {
           this.devices=[]
-          console.log('Devices not found in database');
        }} 
        );
     }
@@ -162,7 +159,6 @@ export class AllDevicesComponent implements OnInit {
        }, error => {
         if (error.status === 404) {
           this.devices=[]
-          console.log('Devices not found in database');
        }} 
        );
     }
@@ -191,7 +187,6 @@ export class AllDevicesComponent implements OnInit {
        }, error => {
         if (error.status === 404) {
           this.devices=[]
-          console.log('Devices not found in database');
        }} 
        );
     }
@@ -220,7 +215,6 @@ export class AllDevicesComponent implements OnInit {
        }, error => {
         if (error.status === 404) {
           this.devices=[]
-          console.log('Devices not found in database');
        }} 
        );
     }
@@ -249,7 +243,6 @@ export class AllDevicesComponent implements OnInit {
        }, error => {
         if (error.status === 404) {
           this.devices=[]
-          console.log('Devices not found in database');
        }} 
        );
     }
