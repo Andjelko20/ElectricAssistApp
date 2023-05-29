@@ -31,22 +31,25 @@ export class PieChartComponent implements OnInit {
       this.authService.getCityId(user.city).subscribe(number=>{
         this.authService.getSettlement(number).subscribe((settlement:Settlement[])=>{
           this.settlements = settlement;
-          this.settlements.forEach(settlement =>{
-            this.historyService.getCurrentConsumptionProductionSettlement(1,settlement.id).subscribe(value =>{
+          for (let i = 0; i < this.settlements.length; i++) {
+            this.historyService.getCurrentConsumptionProductionSettlement(1,settlement[i].id).subscribe(value =>{
               this.loader=false;
               if(value!==0)
               {
                 this.noData.push(1);
-                this.settlements1.push(settlement);
                 this.settlementsValue.push(value);
-                this.PieChart();
+                this.settlements1.push(settlement[i])
               } 
               if(this.noData[0]!=1)
               { 
                   this.loader=true;
               }
+              if(i == this.settlements.length-1){
+                this.PieChart()
+              }
             })
-          })
+            
+          }
         })
       })
     })
@@ -95,8 +98,7 @@ export class PieChartComponent implements OnInit {
       borderWidth: 1,
       borderColor: "gray",
   },]
-    var ctx = "piechart";
-    var myChart = new Chart(ctx, {
+    const myChart = new Chart("piechart", {
       
       type: 'doughnut',
       data: {

@@ -492,8 +492,6 @@ namespace Server.Services.Implementations
             }
         }
 
-        
-
         public List<DailyEnergyConsumptionPastMonth> GetProsumerHistoryByDayFromTo(string fromDate, string toDate, long userId, long categoryId)
         {
             DateTime FromDate;
@@ -974,8 +972,8 @@ namespace Server.Services.Implementations
 
         public void NoPaginationFillInWithZerosConsumptionProductionDayByHour(DateTime FromDate, DateTime ToDate, List<EnergyToday> energyUsages)
         {
-            if(ToDate > DateTime.Now)
-                ToDate = DateTime.Now;
+            /*if(ToDate > DateTime.Now)
+                ToDate = DateTime.Now;*/
 
             for (var date = FromDate; date < ToDate; date = date.AddHours(1))
             {
@@ -994,8 +992,8 @@ namespace Server.Services.Implementations
 
         public void NoPaginationFillInWithZerosConsumptionProductionMonthByDay(DateTime FromDate, DateTime ToDate, List<DailyEnergyConsumptionPastMonth> energyUsages)
         {
-            if (ToDate > DateTime.Now)
-                ToDate = DateTime.Now;
+            /*if (ToDate > DateTime.Now)
+                ToDate = DateTime.Now;*/
 
             for (var date = FromDate; date < ToDate; date = date.AddDays(1))
             {

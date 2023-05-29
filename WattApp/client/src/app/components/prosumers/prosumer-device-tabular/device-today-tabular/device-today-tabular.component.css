@@ -77,12 +77,14 @@ mat-form-field {
     mat-form-field {
         width: 29%;
         float: none;
+        margin-left: -9%;
     }
 }
 
-@media(min-width:1200px) {
+@media(min-width:1280px) {
     mat-form-field {
-        width: 15%;
+        width: 20%;
         float: none;
+        margin-left: 1%;
     }
 }

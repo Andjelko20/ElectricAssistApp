@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
 import { Roles } from 'src/app/utilities/role';
 import { Location } from '@angular/common';
+import { UnsavedChangesGuardGuard } from 'src/app/guards/unsaved-changes-guard.guard';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +22,7 @@ export class NavbarComponent implements OnInit {
   name!:string;
   id?:number;
   user!:Users;
-  constructor(private router:Router,private usersService:AuthService,private route:ActivatedRoute,private elementRef: ElementRef,private location: Location) {
+  constructor(private router:Router,private usersService:AuthService,private unsavedChangesGuard: UnsavedChangesGuardGuard,private elementRef: ElementRef,private location: Location) {
       this.admin=Roles.ADMIN_NAME;
       this.dso=Roles.DISPATCHER_NAME;
       this.prosumer=Roles.PROSUMER_NAME;

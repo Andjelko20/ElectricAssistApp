@@ -15,6 +15,7 @@
     background-color: #bce9e4;
     color: grey;
     font-weight: normal;
+    float: right;
     text-align: center;
 }
 
@@ -30,11 +31,6 @@
 .btn:hover {
     background-color: #93ede2;
 }
-
-
-/* .containter3 {
-    float: right;
-} */
 
 @media (min-width: 320px) {
     h1 {
@@ -53,7 +49,7 @@
 }
 
 .container {
-    padding: 0;
+    padding: 10px;
 }
 
 .row {

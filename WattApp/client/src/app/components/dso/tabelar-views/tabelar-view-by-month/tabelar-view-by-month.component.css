@@ -34,9 +34,10 @@
 
 .table th {
   background-color: #2199e8;
-  color: #fff;
+  color: white;
   font-weight: bold;
   text-transform: uppercase;
+  padding: 10px;
 }
 
 .container1 {

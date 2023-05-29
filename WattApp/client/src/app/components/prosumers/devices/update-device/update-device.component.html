@@ -7,13 +7,13 @@
                     <a [routerLink]='["/device/"+idDevice]'><img id="turnback" src="assets/img/back.png" alt=""></a>
                 </div>
                 <h1>Update</h1>
-                <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="myForm" novalidate>
+                <form #form="ngForm" (ngSubmit)="upDate()" [formGroup]="myForm" >
                     <div class="form-row">
                         <div class="form-group col-md-6 ">
 
                             <br>
                             <label for="name " class="form-label ">Name</label>
-                            <input type="text " class="form-control " id="id " name="name " formControlName="nameform1" [(ngModel)]="updateDevice.name " required>
+                            <input type="text " class="form-control " id="id " name="name " formControlName="nameform1"[ngClass]="{'is-invalid':isForm}"  [(ngModel)]="updateDevice.name " (ngModelChange)="formContr()" required>
                             <br>
                             <label for="energyInKwh " class="form-label ">Energy in kWh</label>
                             <input type="number " class="form-control " id="id " name="energyInKwh " formControlName="nameform2" [(ngModel)]="updateDevice.energyInKwh " readonly>
@@ -24,26 +24,26 @@
 
                             <div class="swi">
                                 <label for="visibilityOnOff" class="form-label " *ngIf="updateDevice.visibility==false" style="margin-right: 10px;">Visibility</label>
-                                <label class="switch" id="switch1" *ngIf="updateDevice.visibility==false" (click)="visibilityOn()">
-                                <input type="checkbox" [disabled]="!confirmVisibility">
+                                <label class="switch" id="switch1" *ngIf="updateDevice.visibility==false" (click)="visibilityOn()" >
+                                <input type="checkbox" [disabled]="!confirmVisibility"  >
                                 <span class="slider round"></span>
                               </label>
                                 <label for="visibilityOnOff" class="form-label " *ngIf="updateDevice.visibility==true" style="margin-right: 10px;">Visibility</label>
                                 <label class="switch" id="switch1" *ngIf="updateDevice.visibility==true" (click)="visibilityOff()">
-                                <input type="checkbox" checked [disabled]="!confirmVisibility">
+                                <input type="checkbox" checked [disabled]="!confirmVisibility" >
                                 <span class="slider round"></span>
                               </label>
                             </div>
 
 
                             <label for="controlabilityOnOff" class="form-label " *ngIf="updateDevice.controlability==false" style=" margin-right: 10px;">Controllabillity</label>
-                            <label class="switch" *ngIf="updateDevice.controlability==false" (click)="controlabilityOn()">
-                            <input type="checkbox"  [disabled]="!confirmControlability">
+                            <label class="switch" *ngIf="updateDevice.controlability==false" (click)="controlabilityOn()" >
+                            <input type="checkbox"  [disabled]="!confirmControlability" >
                             <span class="slider round"></span>
                           </label>
                             <label for="controlabilityOnOff" class="form-label " *ngIf="updateDevice.controlability==true" style=" margin-right: 10px;">Controllabillity</label>
                             <label class="switch" *ngIf="updateDevice.controlability==true" (click)="controlabilityOff()">
-                            <input type="checkbox" checked  [disabled]="!confirmControlability">
+                            <input type="checkbox" checked  [disabled]="!confirmControlability" >
                             <span class="slider round"></span>
                           </label>
                             <br>
@@ -51,7 +51,7 @@
 
                         </div>
                     </div>
-                    <button type=" submit " class="btn btn-primary mr-5 " id="btn1" style="cursor: pointer;" [disabled]="!form.valid">Save</button>
+                    <button type=" submit " class="btn btn-primary mr-5 " id="btn1" style="cursor: pointer;" [disabled]="myForm.invalid || isFormName===false && isFormToggle2===false ">Save</button>
                 </form>
 
             </div>
@@ -76,11 +76,11 @@
 </ng-template>
 <ng-template #modalContent1 let-modal>
     <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Warning!!!</h5>
+        <h5 class="modal-title" id="modalTitle">  <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i> Warning</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-        <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">You need to turn on visibility first!!!</h5>
+        <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">You need to turn on visibility first!</h5>
         <div id="subb">
             <button type="button" class="btn btn-outline-danger" (click)="modal.dismiss('cancel')">Close</button>
         </div>

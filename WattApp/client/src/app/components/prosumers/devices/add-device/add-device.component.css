@@ -53,13 +53,11 @@ form {
     justify-content: center;
 }
 
-button {
+#btn1 {
     justify-content: center;
     margin-left: 25%;
-    width: 160px;
-    background-color: #1C315E;
+    width: 142px;
 }
-
 input.ng-invalid.ng-touched {
     border: 1px solid red;
 }
@@ -70,6 +68,16 @@ input.ng-valid {
 
 input.ng-touched {
     border: 1px solid blue;
+}
+.form-select{
+    cursor: pointer;
+}
+#subb {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    text-align: right;
+    align-items: right;
 }
 
 @media(min-width: 768px) {

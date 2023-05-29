@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Prosumers, Users } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
@@ -14,7 +15,12 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./prosumer-account-settings-page.component.css']
 })
 export class ProsumerAccountSettingsPageComponent {
-  myForm: FormGroup;
+  myForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    email:['',[Validators.required,Validators.email]],
+    username: ['', Validators.required]
+    
+  })
 	roles!:any[];
   updateUserDetail:Prosumers={
     id: 0,
@@ -28,34 +34,31 @@ export class ProsumerAccountSettingsPageComponent {
     country: '',
     address:''
   }
+  isFormDirty:boolean=false;
   admin?:string;
   dso?:string;
   prosumer?:string;
   public idUser!:number;
   public role!:string;
-  public name!:string;
   public emailErrorMessage:string="";
 	public errorMessage:string="";
 	public success:boolean=false;
   public passwordGen='';
-  public emailUp='';
   public oldpass!:string;
-  oldPassword!:string;
-  newPassword!:string;
-  confirmPassword!:string;
+  public emailUp='';
+  public name='';
+  public username='';
   pass!:string;
   errorMsg='';
 
   storePassword=localStorage.getItem("password");
 
-
-
-  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,private router:Router,private updateService:AuthService) { 
-    this.myForm = this.formBuilder.group({
-      nameform1: ['', Validators.required],
-      nameform2: ['', Validators.required],
-      nameform3: ['', Validators.required]
-    },{ validator: this.checkIfInputsAreEqual });
+  @ViewChild('modalContent') modalContent!: TemplateRef<any>;
+  body: string = ''; 
+  confirm:boolean=false;
+  btnAction:string='';
+  constructor(private formBuilder: FormBuilder,private modalService: NgbModal,private router:Router,private updateService:AuthService) { 
+  
     this.admin=Roles.ADMIN_NAME;
     this.dso=Roles.DISPATCHER_NAME;
     this.prosumer=Roles.PROSUMER_NAME;
@@ -85,47 +88,56 @@ export class ProsumerAccountSettingsPageComponent {
               address:response.address
               };
               this.name=response.name;
+              this.emailUp=response.email;
+              this.username=response.username;
             }
           });
   }
   
   upDateProsumer()
   {
+    if(this.updateUserDetail.name!=this.name && this.updateUserDetail.username!=this.username && this.updateUserDetail.email!=this.emailUp)
+    {
+      this.body="Your name, username and email have been successfully changed. You need to confirm your email." 
+    }
+    else if(this.updateUserDetail.name!=this.name && this.updateUserDetail.username!=this.username )
+    {
+        this.body="Your name and username have been successfully changed." 
+    }
+    else if(this.updateUserDetail.name!==this.name)
+    {
+          this.body="Your name has been successfully changed." 
+    }
+    else if(this.updateUserDetail.email!==this.emailUp)
+    {
+          this.body="You need to confirm your email."   
+    }
+    else if(this.updateUserDetail.username!==this.username)
+    {
+      this.body="Your username has been successfully changed." 
+    }
+    else if(this.updateUserDetail.name===this.name && this.updateUserDetail.username===this.username && this.updateUserDetail.email===this.emailUp)
+    {
+      this.body="You didnt make any changes.";
+    }
     this.updateService.upDateLogedIn(this.updateUserDetail)
     .subscribe({
       next:()=>{
-        this.router.navigate(['prosumer-account-page']);
+        this.modalService.open(this.modalContent);
+        this.router.navigate(['/profile-edit']);
       }
     });
+    this.isFormDirty = false;
   }
-  updatePasswordProsumer()
-  {
-    const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
-    const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
-    const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
-    if(newpass==confpass)
+  onFormChange(){
+    if(this.updateUserDetail.name===this.name && this.updateUserDetail.username===this.username && this.updateUserDetail.email===this.emailUp)
     {
-      this.updateService.changePassword(oldpass,newpass).subscribe( 
-       { next:() => {  
-            this.router.navigate(['/prosumer-account-page']); 
-            
-     }} );
+      this.isFormDirty= false;
+      
     }
-    
-  }
-  checkIfInputsAreEqual(group: FormGroup) {
-    const input1 = group.controls['nameform2'];
-    const input2 = group.controls['nameform3'];
-
-    if (input1.value !== input2.value) {
-      input2.setErrors({ notEqual: true });
-      input1.setErrors({ notEqual: true });
-    } else {
-      input2.setErrors(null);
-      input1.setErrors(null);
+    else
+    {
+      this.isFormDirty = true;
     }
-
-    return null;
   }
-  
 }

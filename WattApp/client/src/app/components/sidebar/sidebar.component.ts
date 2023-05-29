@@ -60,7 +60,7 @@ export class SidebarComponent implements OnInit{
           this.showLink=true
           
         }
-        else if(event.url==='/device/'+this.id)
+        else if(event.url==='/device/'+this.id ||event.url==='/device-update/'+this.id || event.url==='/device-add')
         {
           this.showLink=true
         }

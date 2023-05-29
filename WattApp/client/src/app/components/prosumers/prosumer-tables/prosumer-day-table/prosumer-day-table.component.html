@@ -4,12 +4,11 @@
         <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)" [(ngModel)]="currentDate">
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+    </mat-form-field>
     <div class="container3">
         <button class="btn" (click)="downloadCSV()">Export to CSV</button>
     </div>
 </div>
-
 <div class="table-container responsive">
     <div class="table-container">
         <div class="table-wrapper">

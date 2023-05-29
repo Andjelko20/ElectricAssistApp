@@ -1,54 +1,55 @@
 <div class="container">
     <div class="row">
-      <div class="col-md-12">
         <div class="container2">
-          <mat-form-field appearance="fill">
-            <mat-label>Enter a date</mat-label>
-            <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)" [(ngModel)]="currentDate">
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <div class="container3">
-                    <button class="btn" (click)="downloadCSV()">Export to CSV</button>
-          </div>
-        </div>
-        <div class="table-container" *ngIf="consumptionGraph">
-          <div class="table-wrapper">
-            <h2 class="table-title">Consumption</h2>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Date Time</th>
-                  <th>Consumption in [kWh]</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item1 of list1; let i = index">
-                      <td>{{ item1.year }}/{{ item1.month }}/{{ dateTime[i].day }}/{{ dateTime[i].hour }}</td>
-                      <td>{{ item1.energyUsageResult }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="table-container" *ngIf="productionGraph">
-            <div class="table-wrapper">
-              <h2 class="table-title">Production</h2>
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Date Time</th>
-                    <th>Production in [kWh]</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item2 of list2; let i = index">
-                        <td>{{ item2.year }}/{{ item2.month }}/{{ dateTime[i].day }}/{{ dateTime[i].hour }}</td>
-                        <td>{{ item2.energyUsageResult }}</td>
-                </tbody>
-              </table>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter a date</mat-label>
+                <input matInput [matDatepicker]="picker" [max]="maxDate" (dateChange)="onDateSelected($event)" [(ngModel)]="currentDate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div class="container3">
+                <button class="btn" (click)="downloadCSV()">Export to CSV</button>
             </div>
-            
+        </div>
+        <div class="col-md-12">
+            <div class="table-container" *ngIf="consumptionGraph">
+                <div class="table-wrapper">
+                    <h2 class="table-title">Consumption</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date Time</th>
+                                <th>Consumption in [kWh]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item1 of list1; let i = index">
+                                <td>{{ item1.year }}/{{ item1.month }}/{{ dateTime[i].day }}/{{ dateTime[i].hour }}</td>
+                                <td>{{ item1.energyUsageResult }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="table-container" *ngIf="productionGraph">
+                <div class="table-wrapper">
+                    <h2 class="table-title">Production</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date Time</th>
+                                <th>Production in [kWh]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item2 of list2; let i = index">
+                                <td>{{ item2.year }}/{{ item2.month }}/{{ dateTime[i].day }}/{{ dateTime[i].hour }}</td>
+                                <td>{{ item2.energyUsageResult }}</td>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

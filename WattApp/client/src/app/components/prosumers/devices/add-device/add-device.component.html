@@ -11,25 +11,25 @@
                     <div class="form-row">
                         <div class="form-group col-md-6 ">
                             <label for="deviceCategoryId ">Device Category</label>
-                            <select id="deviceCategoryId" class="form-control" name="deviceCategoryId" (change)="onSelectedCategory($event)" required>     
+                            <select id="deviceCategoryId" class="form-select" aria-label="Default select example" name="deviceCategoryId" (change)="onSelectedCategory($event)" required>     
                         <option [value]='0'>Select Category</option>
                         <option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</option>
                     </select>
                             <br>
                             <label for="deviceTypeId ">Device Type</label>
-                            <select id="deviceTypeId" class="form-control" name="deviceTypeId" (change)="onSelectType($event)" required>     
+                            <select id="deviceTypeId" class="form-select" aria-label="Default select example" name="deviceTypeId" (change)="onSelectType($event)" required>     
                         <option [value]='0'>Select Type</option>
                         <option *ngFor="let type of types" [value]="type.id"  >{{type.name}}</option>
                     </select>
                             <br>
                             <label for="deviceBrandId ">Device Brand</label>
-                            <select id="deviceBrandId" class="form-control" name="deviceBrandId" (change)="onSelectBrand($event)" required>     
+                            <select id="deviceBrandId" class="form-select" aria-label="Default select example" name="deviceBrandId" (change)="onSelectBrand($event)" required>     
                         <option [value]='0'>Select Brand</option>
                         <option *ngFor="let brand of brands" [value]="brand.id"  >{{brand.name}}</option>
                     </select>
                             <br>
                             <label for="deviceModelId ">Device Model</label>
-                            <select id="deviceModelId" class="form-control" name="deviceModelId" (change)="onSelectModel($event)" required>     
+                            <select id="deviceModelId" class="form-select" aria-label="Default select example" name="deviceModelId" (change)="onSelectModel($event)" required>     
                         <option [value]='0'>Select Model</option>
                         <option *ngFor="let model of models" [value]="model.id">{{model.mark}}</option>
                     </select>
@@ -39,7 +39,7 @@
                             <br>
                         </div>
                     </div>
-                    <button class="btn btn-primary" style="cursor: pointer;" [disabled]="!form.valid">ADD</button>
+                    <button class="btn btn-primary mr-5 " id="btn1" style="cursor: pointer;" [disabled]="!form.valid">ADD</button>
                 </form>
 
             </div>
@@ -50,3 +50,16 @@
     <app-footer></app-footer>
     <app-prosumer-footer></app-prosumer-footer>
 </div>
+
+<ng-template #modalContent let-modal>
+    <div class="modal-header">
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+        <div id="subb">
+            <button type="button" class="btn btn-primary" (click)="modal.close('Save click')" id="popup">{{btnAction}}</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-danger" (click)="modal.dismiss('cancel')">Close</button>
+        </div>
+    </div>
+</ng-template>

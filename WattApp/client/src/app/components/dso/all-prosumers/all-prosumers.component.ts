@@ -17,12 +17,12 @@ export class AllProsumersComponent implements OnInit {
   data: any[] = [];
   prosumerValues: any[] = [];
   loader:boolean=false;
-
+  showFilters:boolean = !environment.production;
   filters : ProsumerFilterModel = new ProsumerFilterModel(
-	0, 
-	1, 
-	0, 
-	0, 
+	0,
+	1,
+	0,
+	0,
 	""
   );
 
@@ -58,7 +58,7 @@ export class AllProsumersComponent implements OnInit {
 				this.currentPage=pageNumber;
 				this.totalItems=res.numberOfPages*this.itemsPerPage;
         		this.prosumerValues = res;
-					
+
 		})
   }
 
@@ -73,10 +73,10 @@ export class ProsumerFilterModel{
 
 	searchValue : string;
 
-	constructor(settlementId : number, 
-				categoryId : number, 
-				greaterThan : number, 
-				value : number, 
+	constructor(settlementId : number,
+				categoryId : number,
+				greaterThan : number,
+				value : number,
 				searchValue : string)
 	{
 		this.settlementId = settlementId;

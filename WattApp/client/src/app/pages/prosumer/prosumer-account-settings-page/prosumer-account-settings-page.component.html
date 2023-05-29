@@ -12,23 +12,23 @@
             </div>
             <h1>{{name}}</h1>
 
-            <form #form="ngForm" (ngSubmit)="upDateProsumer()">
+            <form  (ngSubmit)="upDateProsumer()"(ngModelChange)="onFormChange()" [formGroup]="myForm">
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" class="form-control" id="id" name="username" [(ngModel)]="updateUserDetail.username ">
+                    <input type="text" class="form-control" formControlName="username" [ngClass]="{'is-invalid':isFormDirty && myForm.controls.username.errors}" [(ngModel)]="updateUserDetail.username " (ngModelChange)="onFormChange()">
                 </div>
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text" class="form-control" id="id" name="name" [(ngModel)]="updateUserDetail.name ">
+                    <input type="text" class="form-control" formControlName="name" [ngClass]="{'is-invalid':isFormDirty && myForm.controls.name.errors}"[(ngModel)]="updateUserDetail.name "(ngModelChange)="onFormChange()">
                 </div>
 
 
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="text" class="form-control" id="id" name="email" [(ngModel)]="updateUserDetail.email ">
+                    <input type="text" class="form-control" formControlName="email" [ngClass]="{'is-invalid':isFormDirty && myForm.controls.email.errors}"[(ngModel)]="updateUserDetail.email "(ngModelChange)="onFormChange()">
                 </div>
 
-                <button type="submite" class="btn btn-primary">Save</button>
+                <button type="submite" class="btn btn-primary" [disabled]="myForm.invalid || !isFormDirty">Save</button>
                 <button type="submite" class="btn btn-primary" id="giveupbutton" *ngIf="this.role==this.prosumer" [routerLink]="['/profile']">Cancel</button>
             </form>
         </div>
@@ -37,3 +37,15 @@
     <app-footer></app-footer>
     <app-prosumer-footer></app-prosumer-footer>
 </div>
+<ng-template #modalContent let-modal >
+    <div class="modal-header">
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <h5 class="modal-title" style="text-align: center; margin-bottom: 20px;">{{body}}</h5>
+      <div id="subb">
+        <button type="button" class="btn btn-primary" (click)="modal.close('Save click')"id="popup" *ngIf="confirm===true">{{btnAction}}</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss('cancel')">Close</button>
+      </div>
+    </div>
+  </ng-template>

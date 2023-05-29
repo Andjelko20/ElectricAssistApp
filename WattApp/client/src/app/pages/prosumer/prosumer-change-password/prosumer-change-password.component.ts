@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MessageService } from 'primeng/api';
 import { Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
@@ -13,7 +15,11 @@ import { Roles } from 'src/app/utilities/role';
   styleUrls: ['./prosumer-change-password.component.css']
 })
 export class ProsumerChangePasswordComponent {
-  myForm: FormGroup;
+  myForm = this.formBuilder.group({
+    old: ['', Validators.required],
+    new: ['', Validators.required],
+    confirm: ['', Validators.required]
+  })
 	roles!:any[];
   updateUserDetail:Prosumers={
     id: 0,
@@ -44,17 +50,16 @@ export class ProsumerChangePasswordComponent {
   confirmPassword!:string;
   pass!:string;
   errorMsg='';
-
+  isFormDirty: boolean = false;
   storePassword=localStorage.getItem("password");
 
 
-
-  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,private router:Router,private updateService:AuthService) { 
-    this.myForm = this.formBuilder.group({
-      nameform1: ['', Validators.required],
-      nameform2: ['', Validators.required],
-      nameform3: ['', Validators.required]
-    },{ validator: this.checkIfInputsAreEqual });
+  @ViewChild('modalContent') modalContent!: TemplateRef<any>;
+  body: string = ''; 
+  confirm:boolean=false;
+  btnAction:string='' 
+  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,private router:Router,private updateService:AuthService, private modalService: NgbModal,private messageService:MessageService) { 
+    
     this.admin=Roles.ADMIN_NAME;
     this.dso=Roles.DISPATCHER_NAME;
     this.prosumer=Roles.PROSUMER_NAME;
@@ -87,23 +92,11 @@ export class ProsumerChangePasswordComponent {
               this.name=response.name;
             },
 			error:(response)=>{
-				this.router.navigate(["prosumer-account-page"]);
+				this.router.navigate(["/prosumer-change-password"]);
 			}
           });
   }
   
-  
-  upDateProsumer()
-  {
-   
-    this.updateService.upDateLogedIn(this.updateUserDetail)
-    .subscribe({
-      next:()=>{
-        this.router.navigate(['prosumer-account-page']);
-      }
-    });
-  }
- 
   sendEmail(){
 		this.emailUp=this.updateUserDetail.email;
 		this.updateService.adminChangePasswordEmail(this.emailUp).subscribe({
@@ -118,37 +111,49 @@ export class ProsumerChangePasswordComponent {
 	}
 
   updatePasswordProsumer()
-  {
-    const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
-    const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
-    const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
-
-    if(newpass==confpass)
+  { 
+    const oldpass = (document.querySelector('input[id="oldPassword"]') as HTMLInputElement).value;
+    const newpass = (document.querySelector('input[id="newPassword"]') as HTMLInputElement).value;
+    const confpass = (document.querySelector('input[id="confirmPassword"]') as HTMLInputElement).value;
+    if(oldpass==="" && newpass==="" && confpass==="")
     {
-      this.updateService.changePassword(oldpass,newpass).subscribe( 
-       { next:() => {  
-            this.router.navigate(['/prosumer-account-page']); 
-            
-     }} );
+      this.isFormDirty = false;
     }
-  }
-  checkIfInputsAreEqual(group: FormGroup) {
-    const input1 = group.controls['nameform2'];
-    const input2 = group.controls['nameform3'];
-    const input3 = group.controls['nameform1'];
- 
-
-    if (input1.value !== input2.value) {
-      input2.setErrors({ notEqual: true });
-      input1.setErrors({ notEqual: true });
-    } else {
-      input2.setErrors(null);
-      input1.setErrors(null);
-      input3.setErrors(null);
+    else if(newpass===confpass) {
       
-    }
-
-    return null;
+      
+        this.updateService.changePassword(oldpass,newpass).subscribe( 
+        { next:(response:any) => {  
+            
+          this.modalService.open(this.modalContent);
+          this.body="Your password has been successfully changed.";
+      },error:()=>{
+        
+        
+        this.messageService.add({severity:"error",summary:"Error",detail:"Your old password is not valid."});
+      }
+    } );
+      
+      this.isFormDirty = false;
+    } else {
+		this.messageService.add({severity:"error",summary:"Error",detail:"New password isn't confirmed!"});
+	}
+    
+ 
+ 
   }
-  
+  onFormChange() {
+    const oldpass = (document.querySelector('input[id="oldPassword"]') as HTMLInputElement).value;
+    const newpass = (document.querySelector('input[id="newPassword"]') as HTMLInputElement).value;
+    const confpass = (document.querySelector('input[id="confirmPassword"]') as HTMLInputElement).value;
+    if(oldpass==="" && newpass==="" && confpass==="")
+    {
+      this.isFormDirty = false;
+    }
+    else
+    {
+      this.isFormDirty = true;
+    }
+    
+  }
 }

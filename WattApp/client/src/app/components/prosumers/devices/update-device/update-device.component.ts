@@ -20,9 +20,16 @@ export class UpdateDeviceComponent implements OnInit{
   offClickVisibility!: (this: HTMLElement, ev: MouseEvent) => any;
   onClickControlability!: (this: HTMLElement, ev: MouseEvent) => any;
   offClickControlability!: (this: HTMLElement, ev: MouseEvent) => any;
+  UpdateDevice!: (this: HTMLElement, ev: MouseEvent) => any;
+
   body: string = ''; 
   btnAction:string='';
-  myForm: FormGroup;
+  myForm = this.formBuilder.group({
+    nameform1: ['', Validators.required],
+     nameform2: [''],
+     
+    
+  });
   updateDevice:updateDevices={
     id: 0,
     userId: 0,
@@ -34,6 +41,12 @@ export class UpdateDeviceComponent implements OnInit{
     turnOn: false,
     
   }
+  previouseName:string=''
+  isForm:boolean=false;
+  isFormName:boolean=false;
+  isFormToggle:boolean=false;
+  isFormToggle1:boolean=false;
+  isFormToggle2:boolean=false;
   confirmVisibility: boolean = false;
   confirmControlability:boolean=false;
   devices:ShowDevices[] = [];
@@ -41,12 +54,7 @@ export class UpdateDeviceComponent implements OnInit{
   idDevice?:number;
   constructor(private devicesService:DevicesService,private router:Router,private route:ActivatedRoute
     ,private formBuilder: FormBuilder,private modalService: NgbModal) {
-    this.myForm = this.formBuilder.group({
-      nameform1: ['', Validators.required],
-       nameform2: ['', Validators.required],
-       nameform3: ['', Validators.required]
-      
-    });
+    
    }
 
   ngOnInit(): void {
@@ -67,26 +75,66 @@ export class UpdateDeviceComponent implements OnInit{
               controlability: response.controlability,
               turnOn: response.turnOn,
               };
+              this.previouseName=this.updateDevice.name
+              this.isFormToggle=this.updateDevice.visibility
+              this.isFormToggle1=this.updateDevice.controlability
             },
 			error:(response)=>{
 				this.router.navigate(["/devices"]);
 			}
           });
-
+          
    
   }
-  
+  formContr()
+  {
+    if(this.previouseName!=this.updateDevice.name)
+    {
+      this.isFormName=true
+    }
+    else if(this.previouseName===this.updateDevice.name)
+    {
+      this.isFormName=false
+    }
+    
+  }
+  formContr1(){
+    
+    if(this.isFormToggle===this.updateDevice.visibility && this.isFormToggle1===this.updateDevice.controlability)
+    {
+        this.isFormToggle2=false
+    }
+    else 
+    {
+      
+      this.isFormToggle2=true
+    }
+  }
   upDate()
   {
     
-    this.devicesService.upDateDevice(this.updateDevice)
-    .subscribe({
-      next:()=>{
-        this.router.navigate(['device/'+Number(this.route.snapshot.paramMap.get('id'))]);
-      }
-    });
+    this.modalService.open(this.modalContent);
+    const popup= document.getElementById('popup');
+    if(popup!=null)
+    {
+      this.body="Do you want to update this device?"
+    this.btnAction="Update";
+        popup.removeEventListener('click', this.UpdateDevice);
+        this.UpdateDevice=()=> {
+          this.devicesService.upDateDevice(this.updateDevice)
+          .subscribe({
+            next:()=>{
+              this.router.navigate(['/device/'+Number(this.route.snapshot.paramMap.get('id'))]);
+            }
+          });
+        popup.removeEventListener('click',this.UpdateDevice);
+      };
+      popup.addEventListener('click',this.UpdateDevice);
+    }
+  this.isFormName=false
+   this.isFormToggle2=false
   }
-
+ 
   controlabilityOn(){
     if( this.updateDevice.visibility===false)
     {
@@ -107,6 +155,7 @@ export class UpdateDeviceComponent implements OnInit{
         this.onClickControlability=()=> {
             this.updateDevice.controlability=true
             this.confirmControlability=true;
+            this.formContr1()
             controlabilityOnPopup.removeEventListener('click',this.onClickControlability);
       };
       controlabilityOnPopup.addEventListener('click',this.onClickControlability);
@@ -127,6 +176,7 @@ export class UpdateDeviceComponent implements OnInit{
       this.offClickControlability=()=> {
           this.updateDevice.controlability=false;
           this.confirmControlability=true;
+          this.formContr1()
           controlabilityOffPopup.removeEventListener('click',this.offClickControlability);
       };
       controlabilityOffPopup.addEventListener('click',this.offClickControlability);
@@ -149,7 +199,7 @@ export class UpdateDeviceComponent implements OnInit{
           this.updateDevice.visibility=true
           this.confirmVisibility=true;
 
-        
+          this.formContr1()
           visibilityOnPopup.removeEventListener('click',this.onClickVisibility);
      };
      visibilityOnPopup.addEventListener('click',this.onClickVisibility);
@@ -175,7 +225,7 @@ export class UpdateDeviceComponent implements OnInit{
           this.updateDevice.visibility=false;
           this.updateDevice.controlability=false;
           this.confirmVisibility=true;
-        
+          this.formContr1()
           visibilityOffPopup.removeEventListener('click',this.offClickVisibility);
      };
      visibilityOffPopup.addEventListener('click',this.offClickVisibility);

@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { LogedUser, Prosumers } from 'src/app/models/users.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { JwtToken } from 'src/app/utilities/jwt-token';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -34,6 +34,18 @@ export class AccountPageComponent implements OnInit {
     email: '',
     
   }
+  userForm=this.fb.group({
+    name:['',Validators.required],
+    email:['',[Validators.required,Validators.email]],
+    username:['',Validators.required],
+    
+  })
+  passForm=this.fb.group({
+    old:['',Validators.required],
+    new:['',Validators.required],
+    confirm:['',Validators.required],
+    
+  })
   @ViewChild('modalContent') modalContent!: TemplateRef<any>;
   body: string = ''; 
   public idUser!:number;
@@ -55,11 +67,12 @@ export class AccountPageComponent implements OnInit {
   btnAction:string=''  
   confirm:boolean=false;
   storePassword=localStorage.getItem("password");
-  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,
+  constructor(private fb: FormBuilder,private route:ActivatedRoute,
     private router:Router,private updateService:AuthService,private modalService: NgbModal,private messageService:MessageService) {
   
    }
   ngOnInit(): void {
+    this.confirm=false;
     let token=new JwtToken();
     this.idUser=token.data.id as number;
     this.role=token.data.role as string;
@@ -125,9 +138,9 @@ export class AccountPageComponent implements OnInit {
     this.isFormDirty1 = false;
   }
   onFormChange() {
-    const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
-    const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
-    const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
+    const oldpass = (document.querySelector('input[id="oldPassword"]') as HTMLInputElement).value;
+    const newpass = (document.querySelector('input[id="newPassword"]') as HTMLInputElement).value;
+    const confpass = (document.querySelector('input[id="confirmPassword"]') as HTMLInputElement).value;
     if(oldpass==="" && newpass==="" && confpass==="")
     {
       this.isFormDirty = false;
@@ -152,9 +165,9 @@ export class AccountPageComponent implements OnInit {
 
   updatePasswordProsumer()
   {
-    const oldpass = (document.querySelector('input[name="oldPassword"]') as HTMLInputElement).value;
-    const newpass = (document.querySelector('input[name="newPassword"]') as HTMLInputElement).value;
-    const confpass = (document.querySelector('input[name="confirmPassword"]') as HTMLInputElement).value;
+    const oldpass = (document.querySelector('input[id="oldPassword"]') as HTMLInputElement).value;
+    const newpass = (document.querySelector('input[id="newPassword"]') as HTMLInputElement).value;
+    const confpass = (document.querySelector('input[id="confirmPassword"]') as HTMLInputElement).value;
     if(oldpass==="" && newpass==="" && confpass==="")
     {
       this.isFormDirty = false;
@@ -167,10 +180,10 @@ export class AccountPageComponent implements OnInit {
             
           this.modalService.open(this.modalContent);
           this.body="Your password has been successfully changed.";
-          this.ngOnInit();
       },error:()=>{
-        this.modalService.open(this.modalContent);
-        this.body="Your old password is not valid.";
+        
+        
+        this.messageService.add({severity:"error",summary:"Error",detail:"Your old password is not valid."});
       }
     } );
       
@@ -180,22 +193,5 @@ export class AccountPageComponent implements OnInit {
 	}
     
   }
-  checkIfInputsAreEqual(group: FormGroup) {
-    const input1 = group.controls['nameform2'];
-    const input2 = group.controls['nameform3'];
-    const input3 = group.controls['nameform1'];
- 
-
-    if (input1.value !== input2.value) {
-      input2.setErrors({ notEqual: true });
-      input1.setErrors({ notEqual: true });
-    } else {
-      input2.setErrors(null);
-      input1.setErrors(null);
-      input3.setErrors(null);
-      
-    }
-
-    return null;
-  }
+  
 }
