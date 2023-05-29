@@ -150,8 +150,8 @@ export class TabelarViewByWeekComponent implements OnInit {
             let string2 = year2+'-'+monthString2+'-'+dayString2+' '+'00:00:00';
   
             forkJoin([
-              this.deviceService.weekByDaySettlementFilter(string1,string2,number, this.selectedOption),
-              this.deviceService.weekByDaySettlementFilter(string1,string2,number, this.selectedOption)
+              this.deviceService.weekByDaySettlementFilter(string1,string2,this.selectedOption,2),
+              this.deviceService.weekByDaySettlementFilter(string1,string2,this.selectedOption,1)
             ]).subscribe(([list1, list2]) => {
               this.list1 = list1;
               this.dateTime = [];

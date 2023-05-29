@@ -143,8 +143,8 @@ export class TabelarViewComponent implements OnInit{
             }
           }
           forkJoin([
-            this.deviceService.dayByHourSettlementFilter(string1,string2,number, this.selectedOption),
-            this.deviceService.dayByHourSettlementFilter(string1,string2,number, this.selectedOption)
+            this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,2),
+            this.deviceService.dayByHourSettlementFilter(string1,string2,this.selectedOption,1)
           ]).subscribe(([list1, list2]) => {
             this.list1 = list1;
             this.dateTime = [];

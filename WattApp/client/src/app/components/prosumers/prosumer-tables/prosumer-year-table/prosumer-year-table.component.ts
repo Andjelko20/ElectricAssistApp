@@ -52,7 +52,7 @@ export class ProsumerYearTableComponent {
   }
 
   date = new FormControl(moment());
-  selectedDate : Date | undefined;
+  selectedDate : Date = new Date();
   setYear(year: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value!;
     ctrlValue.year(year.year());
@@ -63,17 +63,6 @@ export class ProsumerYearTableComponent {
   ngOnInit(): void {
     let token=new JwtToken();
     const userId = token.data.id as number;
-  
-    if(this.selectedDate == undefined){
-      forkJoin([
-        this.deviceService.yearByMonthUser(userId, 2),
-        this.deviceService.yearByMonthUser(userId, 1)
-      ]).subscribe(([list1, list2]) => {
-        this.list1 = list1;
-        this.list2 = list2;
-      });
-    }
-    else{
       const year = this.selectedDate.getFullYear();
       forkJoin([
         this.deviceService.monthbyDayUserFilter(year,userId, 2),
@@ -82,7 +71,6 @@ export class ProsumerYearTableComponent {
         this.list1 = list1;
         this.list2 = list2;
       });
-    }
   }
   downloadCSV(): void {
     this.mergedList = [];
