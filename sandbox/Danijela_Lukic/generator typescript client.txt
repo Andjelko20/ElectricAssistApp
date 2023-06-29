@@ -1,4 +1,0 @@
-npm install openapi-typescript-codegen -g
-openapi -i swagger.json -o api -c axios 
-npm install nswag -g 
-nswag openapi2tsclient /input:https://localhost:44392/swagger/v1/swagger.json /output:generated/MyProjectModels.ts /typeScriptTemplate Axios
