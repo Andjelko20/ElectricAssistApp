@@ -1,31 +1,32 @@
 # WattApp
 
-## Struktura fajlova
+## 📂 Project Structure
 
-* **doc** - direktorijum u kome će se nalaziti dokumentacija
-* **src** - direktorijum u kome će se nalaziti frontend i backend projekat. sadrži poddirektorijume **client** i **server**
-  * **client** - Angular projekat
-  * **server** - C# projekat
-* **sandbox** - direktorijum unutar koga se nalaze direktorijumi sa imenima članova tima, koji služe za čuvanje pomoćnih kodova
+- **doc** – Documentation directory  
+- **src** – Contains both frontend and backend projects  
+  - **client** – Angular project (frontend)  
+  - **server** – C# project (backend)  
+- **sandbox** – Workspace directories named after team members, used for auxiliary code and experiments  
 
-## Pokretanje
-[Pokretanje fronta](./WattApp/client/README.md)  
-[Pokretanje servera](./WattApp/server/README.md)
+## 🚀 Running the Application
 
-## Url sajta
+- [Running the frontend](./WattApp/client/README.md)  
+- [Running the backend](./WattApp/server/README.md)  
+
+## 🌐 Website
 
 [http://softeng.pmf.kg.ac.rs:10032](http://softeng.pmf.kg.ac.rs:10032)
 
-## Nalozi
+## 👤 Test Accounts
 
-| username | password | role |
-| ----------- | ----------- | ----------- |
-| admin | admin | admin |
-| dsodso | dsodso | dispatcher |
-| dso.ns | dso.ns | dispatcher |
-| dso.bg | dso.bg | dispatcher |
-| dso.kg | dso.kg | dispatcher |
-| prosumer | prosumer | prosumer |
-| tijanatijanic | tijana | prosumer |
-| lazarlazarevic | lazar | prosumer |
-| miramirovic | mira | prosumer |
+| Username       | Password | Role        |
+| -------------- | -------- | ----------- |
+| admin          | admin    | admin       |
+| dsodso         | dsodso   | dispatcher  |
+| dso.ns         | dso.ns   | dispatcher  |
+| dso.bg         | dso.bg   | dispatcher  |
+| dso.kg         | dso.kg   | dispatcher  |
+| prosumer       | prosumer | prosumer    |
+| tijanatijanic  | tijana   | prosumer    |
+| lazarlazarevic | lazar    | prosumer    |
+| miramirovic    | mira     | prosumer    |
