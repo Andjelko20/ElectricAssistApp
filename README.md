@@ -1,4 +1,4 @@
-# WattApp
+# WattApp // Angular/.NET
 
 ## 📂 Project Structure
 
